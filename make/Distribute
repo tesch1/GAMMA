@@ -1,0 +1,181 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#                 Makefile For The GAMMA MR Simulation Platform               #
+#                      Copyright c 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile, Distribute, is to make a GAMMA distribution.  #
+# If these targets are called from the main GAMMA Makefile it will produce a  #
+# GAMMA distribution. If called from a GAMMA sub-directory makefile it makes  #
+# a distribution from that directory on down the GAMMA directory hierarchy.   #
+#                                                                             #
+# The typical events triggered by these targets are as fillows:               #
+#                                                                             #
+# 1.) It echoes what it is supposed to accompilish (local target distdir)     #
+# 2.) If run directly, an empty temp direct. is maked (local target distdir)  #
+# 3.) It recurses into any specified subdirectories & makes the same target.  # 
+# 4.) It copies all files into the temporary directory, same dir. location.   #
+# 5.) If run directly, it makes a tar file from the temporary directory.      #
+# 6.) If run directly, it makes a gnu zip file from tar file.                 #
+# 7.) if run directly, it makes a PC zip file from temporary directroy.       #
+# 8.) if run directly, it removes the tar file & temp. directory + files.     #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+#   distribute:  Make a GAMMA distribution (Both Unix gz and PC zip files)    #
+#   distributeg: Make a GAMMA distribution (Unix gz file only)                #
+#   distributez: Make a GAMMA distribution (PC zip file only)                 #
+#   showdist:    Display distribution Makefile variables                      #
+#   newdistdir:  Create new local distribution directory                      #
+#                                                                             #
+# Supplied Variables                                                          #
+# ==================                                                          #
+#                                                                             #
+# TARPGM        Program used to tar up directory TARDIR (tar)                 #
+# TARFLGS       Flags used in conjunction with program TAR (cf)               # 
+# GZIPPGM       Program used to compress TARFILE (gzip)                       #
+# GZIPFLGS      Flags used in conjunction with program GZIPPGM (none)         #
+# ZIPPGM        Program used to zip up directory TARDIR (zip)                 #
+# ZIPFLGS       Flags used in conjunctionwith program ZIPPGM (-r -q)          #
+#                                                                             #
+# Requirements                                                                #
+# ============                                                                #
+# MAKE:          Make program being used (automatic)                          #
+# NPD:           No print directory directive (--no-print-directory)          #
+# DISTSUBDIRS:   Subdirectories which should be recursed                      #
+# PASSFLAGS:     Variable settings that are passed to recursed Makefiles      #
+# MAKELEVEL:     Level of Makefile being run (automatic)                      #
+# CURDIR:        Current Makefile directory (automatic)                       #
+# DISTDIR:       Temporary directory for file copies & distribution.          #
+# TARDIR:        Same as DISTDIR but set relative to 1st Makefile directory.  #
+# force:         Required target for use of this makefile                     #
+# distdir:       Target that sets up temp dir. DISTDIR & cosmetic output      #
+# killdos:       Target that removes DOS line feeds from files in DISTFILES   #
+# copyall:       Target which copies files DISTFILES to temp dir. DISTDIR.    #
+# distzip:       Target that makes a PC zip file from temp. directory TARDIR. #
+# disttar:       Target which makes a tar file from temp. directory TARDIR.   #
+#                (TARPGM=tar pgm, TARFLGS=tar pgm flags, TARFILE=tar file)    #
+# distgzip:      Target which makes a gz file from tar file.                  #
+# deleteall:     Target which deletes temp. directory DISTDIR & all its files #
+#                                                                             #
+# Note: To change the way the distribution is built (tar.gz and/or .zip) use  #
+#       that targets dist (both), distg (tar.gz), or distz (.zip). To change  #
+#       the type of distribution, change the distribution files and cosmentic #
+#       output (local targets distdir & dist), the directory structure of how #
+#       and where the distribution is copied (DISTDIR and TARDIR), and the    #
+#       names of the distribution and tar files (TARFILE, GZIPFILE, ZIPFILE)  #
+#                                                                             #
+###############################################################################
+
+TARPGM     = tar
+TARFLGS    = cf
+GZIPPGM    = gzip
+GZIPFLGS   =
+ZIPPGM     = zip
+ZIPFLGS    = -r -q
+AUTOUPDATE = 0
+AUTODOSDIE = 0
+
+distribute: distdir
+	@echo
+	@for i in $(DISTSUBDIRS); do \
+	  cd ./$$i; \
+          $(MAKE) $(NPD) $(PASSFLAGS) $@; \
+	  cd ..; \
+	done
+        ifneq (0,${AUTOUPDATE})
+	  @${MAKE} $(NPD) update
+        endif
+        ifneq (0,${AUTODOSDIE})
+	  @${MAKE} $(NPD) killdos
+        endif
+	@${MAKE} $(NPD) copyall               # Copy released files to tmp directory
+        ifeq (0,${MAKELEVEL})
+	   @${MAKE} $(NPD) distzip            # (DOS) Zip up tmp distribution dir
+	   @${MAKE} $(NPD) disttar            # Tar up tmp distribution directory
+	   @${MAKE} $(NPD) distgzip           # (Gnu) Zip up tar of distribution dir
+	   @${MAKE} $(NPD) deleteall          # Delete temp released files & directory
+        endif
+
+distributeg: distdir
+	@echo
+	@for i in $(DISTSUBDIRS); do \
+          if [ -d ./$$i ] ; then \
+            if (rootme=`pwd`/ ; export rootme ; \
+              rootsrc=`cd $(srcdir); pwd`/ ; export rootsrc ; \
+              cd ./$$i; \
+              $(MAKE) $(NPD) $(PASSFLAGS) $@) ; then true ; \
+            else exit 1 ; fi ; \
+          else true ; fi ; \
+        done
+	@${MAKE} $(NPD) killdos               # Clean released files of DOS linefeeds
+	@${MAKE} $(NPD) copyall               # Copy released files to tmp directory
+        ifeq (0,${MAKELEVEL})
+	   @${MAKE} $(NPD) disttar            # Tar up tmp distribution directory
+	   @${MAKE} $(NPD) distgzip           # (Gnu) Zip up tar of distribution dir
+	   @${MAKE} $(NPD) deleteall          # Delete temp released files & directory
+        endif
+
+distributez: distdir
+	@echo
+	@for i in $(DISTSUBDIRS); do \
+          if [ -d ./$$i ] ; then \
+            if (rootme=`pwd`/ ; export rootme ; \
+              rootsrc=`cd $(srcdir); pwd`/ ; export rootsrc ; \
+              cd ./$$i; \
+              $(MAKE) $(NPD) $(PASSFLAGS) $@) ; then true ; \
+            else exit 1 ; fi ; \
+          else true ; fi ; \
+        done
+	@${MAKE} $(NPD) killdos               # Clean released files of DOS linefeeds
+	@${MAKE} $(NPD) copyall               # Copy released files to tmp directory
+        ifeq (0,${MAKELEVEL})
+	   @${MAKE} $(NPD) distzip            # (DOS) Zip up tmp distribution dir
+	   @${MAKE} $(NPD) deleteall          # Delete temp released files & directory
+        endif
+
+showdist: force
+	@echo
+	@echo "		                 Variables Used In Distributions"
+	@echo "		                 ==============================="
+	@echo
+	@echo "	Make command being used (MAKE):                ${MAKE}"			
+	@echo "	Directory print command (NPD):                 ${NPD}"			
+	@echo "	Make recursion level (MAKELEVEL):              ${MAKELEVEL}"
+	@echo "	The distribution directory (DISTDIR):          ${DISTDIR}"
+	@echo "	The directory contents (DIRCONTENTS):          ${DIRCONTENTS}"
+	@echo "	Subdirectories to be recursed (DISTSUBDIRS):"                 
+	@for i in $(DISTSUBDIRS); do \
+	  echo "	                                               $$i"; \
+	done
+	@${MAKE} $(NPD) showkilldos 
+	@${MAKE} $(NPD) showcopy
+        ifeq (0,${MAKELEVEL})
+	   @${MAKE} $(NPD) showtar
+	   @${MAKE} $(NPD) showgzip
+	   @${MAKE} $(NPD) showzip
+        endif
+
+newdistdir:
+	@echo " * Adding ${DIRCONTENTS} Subdirectory To Distribution"
+	@echo " * We Will Copy The ${DIRCONTENTS} Files To A Temporary"
+	@echo "   Directory $(DISTDIR)"
+	@if (test -d $(DISTDIR)) \
+	then \
+         echo " * This Distribution Directory Exists. Clearing It And Files Therein"; \
+         echo "   Removing Directory $(DISTDIR)" ; \
+         rm -rf $(DISTDIR); \
+	else \
+         echo " * First Construct Distribution Directory And Check Structure" ; \
+	fi
+	@echo " * Creating Fresh Distribution Directory"
+	@echo "   Making Directory $(DISTDIR)"
+	@mkdir $(DISTDIR)
+	@chmod ug+w $(DISTDIR)
+

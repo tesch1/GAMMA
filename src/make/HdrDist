@@ -1,0 +1,184 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#           Source Module Makefile For The GAMMA MR Simulation Platform       #
+#                      Copyright © 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile, HdrDist, is the distribution of GAMMA headers #
+# for this module. This will only distributed files from this directory that  #
+# are listed as header files and no others. Usually these targets are run as  #
+# part of a larger GAMMA distribution, although they can be run directly.     #
+# GAMMA headers are needed when GAMMA is distributed as a prebuilt library,   #
+# and in that case no source codes (.cc) are needed.                          #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.                           #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+#   hdrdist:   Produce a tar.gz and a zip distribution of module headers.     #
+#   hdrgdist:  Produce a tar.gz distribution of module headers.               #
+#   hdrddist:   Produce a zip distribution of module headers.                 #
+#                                                                             #
+# Requirements   							      #
+# ============                                                                #
+# MAKE           Make program being used (automatically set)                  #
+# NPD            No print directory directive                                 #
+# MODSRCFILES    Files to include in the distribution.                        #
+# MODLABEL       Cosmetic label for the source module.                        #
+# MODULEDIR      Directory name of the source module.                         #
+# force:         Required target for use of this makefile                     #
+# distdir:       Target to handle needed distribution directories.            #
+# killdossrc:    Target needed to remove ^M from distributed files.           #
+# copysrc:       Target which copies distributed files to dist. directory.    #
+# srctar:        Target needed to tar all files distributed.                  #
+# srczip:        Target needed to (GNU) compress tar of distributed files.    #
+# srcdzip:       Target needed to (DOS) compress all files distributed.       #
+# cleandist:     Target to remove temp files used in the distribution.        #
+#                                                                             #
+###############################################################################
+
+
+hdrdist: force $(MODHDRFILES)
+	 @${MAKE} $(NPD) distdir               # Make tmp distribution directory
+	 @${MAKE} $(NPD) killdoshdr            # Clean released files of DOS linefeeds
+	 @${MAKE} $(NPD) copyhdr               # Copy released files to tmp directory
+         ifneq (0,${MAKELEVEL})
+	   @${MAKE} $(NPD) hdrdzip             # (DOS) Zip up tmp distribution dir
+	   @${MAKE} $(NPD) hdrtar              # Tar up tmp distribution directory
+	   @${MAKE} $(NPD) hdrzip              # (GNU) Zip up tar of distribution dir
+	   @${MAKE} $(NPD) cleandist           # Remove any tmp files/directories
+         endif
+	 @echo
+
+
+hdrgdist: force $(MODHDRFILES)
+	 @${MAKE} $(NPD) distdir               # Make tmp distribution directory
+	 @${MAKE} $(NPD) killdoshdr            # Clean released files of DOS linefeeds
+	 @${MAKE} $(NPD) copyhdr               # Copy released files to tmp directory
+         ifneq (0,${MAKELEVEL})
+	   @${MAKE} $(NPD) hdrtar              # Tar up tmp distribution directory
+	   @${MAKE} $(NPD) hdrzip              # (GNU) Zip up tar of distribution dir
+	   @${MAKE} $(NPD) cleandist           # Remove any tmp files/directories
+         endif
+	 @echo
+
+hdrddist: force $(MODHDRFILES)
+	 @${MAKE} $(NPD) distdir               # Make tmp distribution directory
+	 @${MAKE} $(NPD) killdoshdr            # Clean released files of DOS linefeeds
+	 @${MAKE} $(NPD) copyhdr               # Copy released files to tmp directory
+         ifneq (0,${MAKELEVEL})
+	   @${MAKE} $(NPD) hdrdzip             # (DOS) Zip up tmp distribution dir
+	   @${MAKE} $(NPD) cleandist           # Remove any tmp files/directories
+         endif
+	 @echo
+
+
+###############################################################################
+#                             Target: hdrdistdir                              #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA source distribution target & NOT meant to  #
+# be run solo. It constructs a "mock" GAMMA directory of the current one. In  #
+# doing so it allows this makefile to generate a tar distribution file that,  #
+# when untarred in the GAMMA root directory, will generate all the released   #
+# files for this module having standard GAMMA directory structure.            #
+#                                                                             #
+# Note that if this target is run SOLO it will generate the full, isolated,   #
+# directory structure for this module alone beginning from the main GAMMA     #
+# directory.  If it is running recursively as part of the main GAMMA makefile #
+# it will only deal with the particular module test directory.                #
+#                                                                             #
+# force:       Commonly used force target.  Must be set externally.           #
+# NOTSOLO:     Flag whether makefile is running independently or being driven #
+#              by the main GAMMA makefile. This will be set by the main GAMMA #
+#              makefile (in PASSFLGS) or not if running SOLO.                 #
+# MODLABEL:    Name of module running the make. This will be declared in the  #
+#              module Makefile prior to importing this target.                #
+# MODLABUN:    Underline of module name for module running the make. This     #
+#              will be declared in the  module Makefile prior to including    #
+#              this target.                                                   #
+# MODDIR:      Name of module directory to be copied.                         #
+# COPY2DIR:    Directory where the copied module files will be placed. This   #
+#              will be relative if running SOLO or a full path name if not.   #
+# COPY2SRC:   This will be the "src" directory where the copied module        #
+#              will be placed. It will be the one that is zipped up if the    #
+#              module by itself is distributed (SOLO)                         # 
+#                                                                             #
+###############################################################################
+ 
+hdrdistdir: force
+        ifneq (0,${MAKELEVEL})
+	  @${MAKE} $(NPD) hdrdirsolo;
+        else
+	  @${MAKE} $(NPD) hdrdirrecursive;
+        endif
+ 
+hdrdirsolo:
+	@echo ""
+	@echo "     Making $(MODLABEL) Module Header Distribution";
+	@echo "     -------$(MODLABUN)---------------------------";
+	@echo ""
+	@echo "     $(MODLABEL) Directory Is $(MODULEDIR)"
+	@echo ""
+	@echo " * We Will Copy The $(MODLABEL) Files To A Temporary Directory"
+	@echo "   Directory Will Be $(COPY2DIR)"
+
+	@if (test -d $(COPY2BASE)) \
+        then \
+          echo " * Temp Directory ${COPY2BASE} Exists. We Must First Clear It And All"; \
+	  echo "   Files In All Its Subdirectories" ; \
+          echo " * Only $(MODLABEL) Being Packaged, Not Any Other GAMMA Files" ; \
+	  echo " * Removing Directory $(COPY2BASE)" ; \
+          rm -rf ./$(COPY2BASE); \
+ 	fi
+	@echo " * Constructing New Directory $(COPY2BASE)"
+	@mkdir $(COPY2BASE)
+	@echo " * Constructing New Directory $(COPY2SRC)"
+	@mkdir $(COPY2SRC)
+	@chmod ug+w $(COPY2SRC)
+	@echo " * Constructing New Directory $(COPY2DIR)"
+	@mkdir $(COPY2DIR)
+	@chmod ug+w $(COPY2DIR)
+ 
+hdrdirrecursive:
+	@echo " * Adding $(MODLABEL) Module Headers To Distribution"
+	@echo " * We Will Copy The $(MODLABEL) Files To A Temporary"
+	@echo "   Directory $(COPY2DIR)"
+	@if (test -d $(COPY2DIR)) \
+	then \
+          echo " * This Temp Directory Exists. Clearing It And Files Therein"; \
+          echo "   Removing Directory $(COPY2DIR)" ; \
+          rm -rf $(COPY2DIR); \
+	else \
+          echo " * First Construct Temp Directory And Check Structure" ; \
+	fi
+	@echo " * Creating Fresh Temporary Directory For This Module"
+	@echo "   Making Directory $(COPY2DIR)"
+	@mkdir $(COPY2DIR)
+	@chmod ug+w $(COPY2DIR)
+
+###############################################################################
+#                                                                             #
+#                      Targets: cleansrc, cleanshdr                           #
+#                                                                             #
+# These targets are part of the GAMMA source and header distribution targets. #
+# They are NOT meant to be run solo. They take specified files in the current #
+# module directory and strip out any DOS linefeeds (^M and ^Z). Although that #
+# isnt such a big deal with the source files, the Makefiles are wrecked for   #
+# Unix systems (They still function using CygWin under WinDoze). In contrast, #
+# using all Unix linefeeds works fine on Unix and Windows, so that is what we #
+# want.									      #
+#                                                                             #
+# This uses standard Unix functionality: cat, sed, & | 			      #
+#                                                                             #
+###############################################################################
+
+cleansrc: killdossrc
+cleanhdr: killdoshdr

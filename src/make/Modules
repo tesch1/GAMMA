@@ -1,0 +1,468 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#                                                                             #
+#               Source Definitions for the GAMMA MR Simulation Project        #
+#                      Copyright © 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32306-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# =========================================================================== #
+#                                                                             #
+#                                 Quick Info                                  #
+#                                                                             #
+# 1.) Sets Up GAMMA Module Specific Variables. Included in Main Makefile.     #
+# 2.) Needs No Other Variables Externally Set.                                #
+# 3.) Any GAMMA Source Additons Must Be Included Herein.                      #
+#                                                                             #
+# =========================================================================== #
+#                                                                             #
+# The concern of this Makefile are the definitions used for specific GAMMA    #
+# modules. A complete set of variables that uniquely define each desired      #
+# module should be set herein. This allows the modules definititons to be     #
+# accessible to both the main GAMMA makefile as well as individual module     #
+# makefiles.                                                                  #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.  This and other makefiles #
+# are typically packaged with the full GAMMA source distribution.  The full   #
+# src distrubution may be obtained from the GAMMA WWW site above or any of    #
+# its mirrors.                                                                #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                  COLLECTIVE VARIABLES SPANNING ALL MODULES                  #
+#                                                                             #
+# These variables are summed over all the defined modules and then exported.  #
+# They can then be used by other Makefiles which need global definitons of    #
+# what files and directories GAMMA handles.                                   #
+#                                                                             #
+# ALLCCFILES  - The .cc files in all the modules.                             #
+# ALLHFILES   - The .h files in all the modules.                              #
+# ALLPYFILES  - The .h files for Python in all the modules.                   #
+# ALLOFILES   - The .o files in all the modules.                              #
+# ALLMODDIRS  - The module directory names.                                   #
+# ALLMODHDRS  - The module summed header files.				      #
+#                                                                             #
+# These are defined empty below but they will be added to by each module.     #
+#                                                                             #
+###############################################################################
+
+ALLFILES   :=
+ALLCCFILES :=
+ALLHFILES  :=
+ALLPYFILES :=
+ALLOFILES  :=
+ALLMODDIRS :=
+ALLMODHDRS :=
+
+###############################################################################
+#                                                                             #
+#                         GAMMA BASICS MODULE VARIABLES                       #
+#                                                                             #
+###############################################################################
+
+BASICS      = Basics
+BASICSUL    = ------
+BASICSBASE  = Gutils Gconstants StringCut SinglePar ParamSet IsotopeData Isotope
+BASICSHDR   = GBasicsIF.h
+BASICSPY    = PyBasicsIF.h
+ALLFILES   += $(BASICSBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(BASICS)/, $(BASICSBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(BASICS)/, $(BASICSBASE)))
+ALLHFILES  += $(addprefix $(BASICS)/, $(BASICSHDR))
+ALLHFILES  += $(addprefix $(BASICS)/, $(BASICSPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(BASICS)/, $(BASICSBASE)))
+ALLMODDIRS += $(BASICS)
+ALLMODHDRS += $(BASICSHDR)
+ALLPYFILES += $(BASICSPY)
+BASICSTBAS  = TestBasics TestGconst TestGconstA TestSingPar TestSingParA TestSingParB\
+              TestIsoData TestStringCut
+
+
+###############################################################################
+#                                                                             #
+#                          GAMMA MATRIX MODULE VARIABLES                      #
+#                                                                             #
+###############################################################################
+
+MATRIX      = Matrix
+MATRIXUL    = ------
+MATRIXBASE  = complex MxModBas _matrix i_matrix d_matrix h_matrix n_matrix\
+              matrix col_vector row_vector py_matrix pyy_matrix
+MATRIXHDR   = matrixIF.h
+MATRIXPY    = PyMatrixIF.h
+ALLFILES   += $(MATRIXBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(MATRIX)/, $(MATRIXBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(MATRIX)/, $(MATRIXBASE)))
+ALLHFILES  += $(addprefix $(MATRIX)/, $(MATRIXHDR))
+ALLHFILES  += $(addprefix $(MATRIX)/, $(MATRIXPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(MATRIX)/, $(MATRIXBASE)))
+ALLMODDIRS += $(MATRIX)
+ALLMODHDRS += $(MATRIXHDR) 
+ALLPYFILES += $(MATRIXPY)
+MATRIXTBAS  = TestMatrix
+
+###############################################################################
+#                                                                             #
+#                      GAMMA HILBERT SPACE MODULE VARIABLES                   #
+#                                                                             #
+###############################################################################
+
+HSPACE      = HSLib
+HSPACEUL    = -----
+HSPACEBASE  = SpinOpSng SpinSys SpinOp SpinOpCmp SpinOpRot\
+              Basis GenOpRep GenOp SpinSystem\
+              HSacquire HSdetect HSdecomp HSprop HSham HSanalyze\
+              HSauxil PulseI PulseS PulseShp
+HSPACEHDR   = HSLibIF.h
+HSPACEPY    = PyHSLibIF.h
+ALLFILES   += $(HSPACEBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(HSPACE)/, $(HSPACEBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(HSPACE)/, $(HSPACEBASE)))
+ALLHFILES  += $(addprefix $(HSPACE)/, $(HSPACEHDR)) 
+ALLHFILES  += $(addprefix $(HSPACE)/, $(HSPACEPY)) 
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(HSPACE)/, $(HSPACEBASE)))
+ALLMODDIRS += $(HSPACE)
+ALLMODHDRS += $(HSPACEHDR)
+ALLPYFILES += $(HSPACEPY) 
+HSPACETBAS  = TestHSLi1b
+
+###############################################################################
+#                                                                             #
+#                          GAMMA LEVEL 1 MODULE VARIABLES                     #
+#                                                                             #
+###############################################################################
+
+LEVEL1      = Level1
+LEVEL1UL    = ------
+LEVEL1BASE  = coord coord_vec SphHarmic Wigner SpinT SpaceT nmr_tensor\
+              Exponential Lorentzian WindowFct ExProcessM
+LEVEL1HDR   = Level1IF.h
+LEVEL1PY    = PyLevel1.h
+ALLFILES   += $(LEVEL1BASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(LEVEL1)/, $(LEVEL1BASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(LEVEL1)/, $(LEVEL1BASE)))
+ALLHFILES  += $(addprefix $(LEVEL1)/, $(LEVEL1HDR)) 
+ALLHFILES  += $(addprefix $(LEVEL1)/, $(LEVEL1PY)) 
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(LEVEL1)/, $(LEVEL1BASE)))
+ALLMODDIRS += $(LEVEL1)
+ALLMODHDRS += $(LEVEL1HDR)
+ALLPYFILES += $(LEVEL1PY) 
+LEVEL1TBAS  = TestLevel1
+
+###############################################################################
+#                                                                             #
+#                     GAMMA LIOUVILLE SPACE MODULE VARIABLES                  #
+#                                                                             #
+###############################################################################
+
+LSPACE      = LSLib
+LSPACEUL    = -----
+LSPACEBASE  = SuperOp LSacquire LSprop sys_dynamic DensOp LSanalyze LSAux
+LSPACEHDR   = LSLibIF.h
+LSPACEPY    = PyLSLibIF.h
+ALLFILES   += $(LSPACEBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(LSPACE)/, $(LSPACEBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(LSPACE)/, $(LSPACEBASE))) 
+ALLHFILES  += $(addprefix $(LSPACE)/, $(LSPACEHDR))
+ALLHFILES  += $(addprefix $(LSPACE)/, $(LSPACEPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(LSPACE)/, $(LSPACEBASE)))
+ALLMODDIRS += $(LSPACE)
+ALLMODHDRS += $(LSPACEHDR)
+ALLPYFILES += $(LSPACEPY) 
+
+###############################################################################
+#                                                                             #
+#                          GAMMA LEVEL 2 MODULE VARIABLES                     #
+#                                                                             #
+###############################################################################
+
+LEVEL2      = Level2
+LEVEL2UL    = ------
+LEVEL2BASE  = TrnsTable1D acquire1D Quaternion EAngles MutExch \
+              RelaxBas BaseDecomp
+LEVEL2HDR   = Level2IF.h
+LEVEL2PY    = PyLevel2IF.h
+ALLFILES   += $(LEVEL2BASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(LEVEL2)/, $(LEVEL2BASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(LEVEL2)/, $(LEVEL2BASE)))
+ALLHFILES  += $(addprefix $(LEVEL2)/, $(LEVEL2HDR)) 
+ALLHFILES  += $(addprefix $(LEVEL2)/, $(LEVEL2PY)) 
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(LEVEL2)/, $(LEVEL2BASE)))
+ALLMODDIRS += $(LEVEL2)
+ALLMODHDRS += $(LEVEL2HDR)
+ALLPYFILES += $(LEVEL2PY) 
+LEVEL2TBAS  = TestLevel2 TestTrnsTable1D Testacquire1D \
+              TestQuaternion TestQuaternionA TestQuaternionB TestQuaternionC
+
+###############################################################################
+#                                                                             #
+#                           GAMMA BLOCH MODULE VARIABLES                      #
+#                                                                             #
+###############################################################################
+
+BLOCH       = Bloch
+BLOCHUL     = -----
+BLOCHBASE   = MagVec DetVec BlochSys BlochAcq BlochB BlochR BlochK BlochTraj \
+              BlochM BlochMx Bloch
+BLOCHHDR    = BlochIF.h
+BLOCHPY     = PyBlochIF.h
+ALLFILES   += $(BLOCHBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(BLOCH)/, $(BLOCHBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(BLOCH)/, $(BLOCHBASE)))
+ALLHFILES  += $(addprefix $(BLOCH)/, $(BLOCHHDR))
+ALLHFILES  += $(addprefix $(BLOCH)/, $(BLOCHPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(BLOCH)/, $(BLOCHBASE)))
+ALLMODDIRS += $(BLOCH)
+ALLMODHDRS += $(BLOCHHDR)
+ALLPYFILES += $(BLOCHPY)
+BLOCHTBAS   = 
+
+
+###############################################################################
+#                                                                             #
+#                        GAMMA INPUT/OUTPUT MODULE VARIABLES                  #
+#                                                                             #
+###############################################################################
+
+GAMIO       = GamIO
+GAMIOUL     = -----
+GAMIOBASE   = BinIOBase Gascii GgnuplotC Ggnuplot1D GgnuplotSph Ggnuplot \
+              ML4DElem ML4Tag ML5Hdr ML5Tag ML5SubE ML5AF ML5DA ML5AN \
+              ML5Reals ML5Imags ML5DElem MatLabFile \
+              FrameMaker FrameMakerC FrameMakerM FrameMakerP FrameMakerS FrameMakerSph\
+              XWinPSet XWinAcqPar XWinAcqus XWinFid XWinProcPar XWinProcs \
+              XWinSpec XWinMeta XWinOutd XWin1D XWinAcqu2s XWinSer \
+              XWinProc2s XWin2D
+#              XWinProc2s XWin2D \
+#              FTNMR Felix
+#NMRiFile
+
+GAMIOHDR    = GammaIOIF.h
+GAMIOPY     = PyGamIOIF.h
+ALLFILES   += $(GAMIOBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(GAMIO)/, $(GAMIOBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(GAMIO)/, $(GAMIOBASE)))
+ALLHFILES  += $(addprefix $(GAMIO)/, $(GAMIOHDR))
+ALLHFILES  += $(addprefix $(GAMIO)/, $(GAMIOPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(GAMIO)/, $(GAMIOBASE)))
+ALLMODDIRS += $(GAMIO)
+ALLMODHDRS += $(GAMIOHDR)
+ALLPYFILES += $(GAMIOPY) 
+
+###############################################################################
+#                                                                             #
+#                     GAMMA BWR RELAXATION MODULE VARIABLES                   #
+#                                                                             #
+###############################################################################
+
+BWRRLX      = BWRRelax
+BWRRLXUL    = --------
+BWRBASE     = relaxCSA  relaxDCSA relaxDip relaxExch relaxJ relaxQCSA \
+              relaxQuad relaxRand relaxNMR  relaxProp relaxRF relaxBWRexch \
+              relaxanalyze relaxAux
+BWRHDR      = relaxBWRIF.h
+BWRPY       = PyBWRIF.h
+ALLFILES   += $(BWRBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(BWRRLX)/, $(BWRBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(BWRRLX)/, $(BWRBASE)))
+ALLHFILES  += $(addprefix $(BWRRLX)/, $(BWRHDR))
+ALLHFILES  += $(addprefix $(BWRRLX)/, $(BWRPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(BWRRLX)/, $(BWRBASE)))
+ALLMODDIRS += $(BWRRLX)
+ALLMODHDRS += $(BWRHDR)
+ALLPYFILES += $(BWRPY) 
+
+###############################################################################
+#                                                                             #
+#                           GAMMA PULSE MODULE VARIABLES                      #
+#                                                                             #
+###############################################################################
+
+PULSE       = Pulses
+PULSEUL     = ------
+PULSEBASE   = PulGauss PulSinc PulAuxil Pulse PulComposite PulCycle \
+              PulDANTE PulGARP PulMLEV PulWALTZ PulCHIRP \
+              PulWaveform PulSupCycle PulTrain PulTrainSCyc
+PULSEHDR    = PulsesIF.h
+PULSEPY     = PyPulsesIF.h 
+ALLFILES   += $(PULSEBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(PULSE)/, $(PULSEBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(PULSE)/, $(PULSEBASE)))
+ALLHFILES  += $(addprefix $(PULSE)/, $(PULSEHDR))
+ALLHFILES  += $(addprefix $(PULSE)/, $(PULSEPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(PULSE)/, $(PULSEBASE)))
+ALLMODDIRS += $(PULSE)
+ALLMODHDRS += $(PULSEHDR)
+ALLPYFILES += $(PULSEPY) 
+
+###############################################################################
+#                                                                             #
+#                     GAMMA RANK 2 INTERACTIONS MODULE VARIABLES              #
+#                                                                             #
+###############################################################################
+
+IRANK2      = IntRank2
+IRANK2UL    = --------
+IRANK2BASE  = IntRank2ACmp IntRank2A IntRank2T IntRank2 IntCSA IntDip IntQuad IntG IntHF \
+              IntDipVec IntCSAVec IntQuadVec IntGVec IntHFVec CompRot SolidSys CartMx2A \
+              FrameMap HDipolar HQuadrup HShiftAnis HElectronG
+IRANK2HDR   = IntRank2IF.h
+IRANK2PY    = PyIntRank2.h
+ALLFILES   += $(IRANK2BASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(IRANK2)/, $(IRANK2BASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(IRANK2)/, $(IRANK2BASE)))
+ALLHFILES  += $(addprefix $(IRANK2)/, $(IRANK2HDR))
+ALLHFILES  += $(addprefix $(IRANK2)/, $(IRANK2PY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(IRANK2)/, $(IRANK2BASE)))
+ALLMODDIRS += $(IRANK2)
+ALLMODHDRS += $(IRANK2HDR)
+ALLMODHDRS += $(PULSEHDR)
+ALLPYFILES += $(IRANK2PY) 
+
+###############################################################################
+#                                                                             #
+#                         GAMMA FLOQUET MODULE VARIABLES                      #
+#                                                                             #
+###############################################################################
+
+FLOQ        = Floquet
+FLOQUL      = -------
+FLOQBASE    = FloqOp Floq2Op FloqAcq
+FLOQHDR     = FloquetIF.h
+FLOQPY      = PyFloquetIF.h
+ALLFILES   += $(FLOQBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(FLOQ)/, $(FLOQBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(FLOQ)/, $(FLOQBASE)))
+ALLHFILES  += $(addprefix $(FLOQ)/, $(FLOQHDR))
+ALLHFILES  += $(addprefix $(FLOQ)/, $(FLOQPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(FLOQ)/, $(FLOQBASE)))
+ALLMODDIRS += $(FLOQ)
+ALLMODHDRS += $(FLOQHDR)
+ALLPYFILES += $(FLOQPY) 
+ 
+###############################################################################
+#                                                                             #
+#                      GAMMA FIELD GRADIENTS MODULE VARIABLES                 #
+#                                                                             #
+###############################################################################
+
+FGRAD       = Gradients
+FGRADUL     = ---------
+FGRADBASE   = sys_gradz Gradients2 GrdPulses GrdEvolve GrdAcquire GrdDeprec
+FGRADHDR    = GradIF.h
+FGPY        = PyGradientsIF.h
+ALLFILES   += $(FGRADBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(FGRAD)/, $(FGRADBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(FGRAD)/, $(FGRADBASE)))
+ALLHFILES  += $(addprefix $(FGRAD)/, $(FGRADHDR))
+ALLHFILES  += $(addprefix $(FGRAD)/, $(FGPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(FGRAD)/, $(FGRADBASE)))
+ALLMODDIRS += $(FGRAD)
+ALLMODHDRS += $(FGRADHDR)
+ALLPYFILES += $(FGPY) 
+
+###############################################################################
+#                                                                             #
+#                      GAMMA MULTIPLE SYSTEM MODULE VARIABLES                 #
+#                                                                             #
+###############################################################################
+
+MULTISYS      = MultiSys
+MULTISYSUL    = --------
+MULTISYSBASE  = SpinMap ExProcess MultiSys MultiLib \
+                MultiSOp MultiHam MultiIPul MultiHSLib MultiLOp MultiWBR MultiExch
+MULTISYSHDR   = MultiSysIF.h
+MULTISYSPY    = PyMultiSysIF.h
+ALLFILES     += $(MULTISYSBASE)
+ALLCCFILES   += $(addsuffix .cc, $(addprefix $(MULTISYS)/, $(MULTISYSBASE)))
+ALLHFILES    += $(addsuffix .h,  $(addprefix $(MULTISYS)/, $(MULTISYSBASE)))
+ALLHFILES    += $(addprefix $(MULTISYS)/, $(MULTISYSHDR))
+#ALLHFILES    += $(addprefix $(MULTISYS)/, $(MULTISYSPY))
+ALLOFILES    += $(addsuffix .o,  $(addprefix $(MULTISYS)/, $(MULTISYSBASE)))
+ALLMODDIRS   += $(MULTISYS)
+ALLMODHDRS   += $(MULTISYSHDR)
+ALLPYFILES   += $(MULTISYSPY)
+
+###############################################################################
+#                                                                             #
+#                            GAMMA ESR MODULE VARIABLES                       #
+#                                                                             #
+###############################################################################
+
+ESR         = ESRLib
+ESRUL       = ------
+ESRBASE     = CubicIonData CubicIon
+# CubicSys ESRHam AngleSet Fibre
+ESRHDR      = ESRIF.h
+ESRPY       = PyESRLibIF.h
+ALLFILES   += $(ESRBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(ESR)/, $(ESRBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(ESR)/, $(ESRBASE)))
+ALLHFILES  += $(addprefix $(ESR)/, $(ESRHDR))
+#ALLHFILES  += $(addprefix $(ESR)/, $(ESRPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(ESR)/, $(ESRBASE)))
+ALLMODDIRS += $(ESR)
+ALLMODHDRS += $(ESRHDR)
+ALLPYFILES += $(ESRPY)
+
+###############################################################################
+#                                                                             #
+#                         GAMMA DEPRECATED MODULE VARIABLES                   #
+#                                                                             #
+###############################################################################
+
+DEPREC      = Deprecated
+DEPRECUL    = ----------
+DEPRECBASE  = block_1D block_2D acquire
+DEPRECHDR   = DeprecIF.h
+ALLFILES   += $(DEPRECBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(DEPREC)/, $(DEPRECBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(DEPREC)/, $(DEPRECBASE))) 
+ALLHFILES  += $(addprefix $(DEPREC)/, $(DEPRECHDR)) 
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(DEPREC)/, $(DEPRECBASE)))
+ALLMODDIRS += $(DEPREC)
+ALLMODHDRS += $(DEPRECHDR)
+
+#molecule
+
+###############################################################################
+#                                                                             #
+#                         GAMMA TESTING MODULE VARIABLES                      #
+#                                                                             #
+###############################################################################
+
+GTEST       = Testing
+GTESTUL     = -------
+GTESTBASE   = ConstTest SingleTest SectTest ClassTest ModTest GamTest
+GTESTHDR    = TestingIF.h
+GTESTPY     = PyTesting.h
+ALLFILES   += $(GTESTBASE)
+ALLCCFILES += $(addsuffix .cc, $(addprefix $(GTEST)/, $(GTESTBASE)))
+ALLHFILES  += $(addsuffix .h,  $(addprefix $(GTEST)/, $(GTESTBASE)))
+ALLHFILES  += $(addprefix $(GTEST)/, $(GTESTHDR))
+#ALLHFILES  += $(addprefix $(GTEST)/, $(GTESTPY))
+ALLOFILES  += $(addsuffix .o,  $(addprefix $(GTEST)/, $(GTESTBASE)))
+ALLMODDIRS += $(GTEST)
+ALLMODHDRS += $(GTESTHDR)
+ALLPYFILES += $(GTESTPY)
+
+###############################################################################
+#                                                                             #
+#                      GAMMA WWW INTERFACE MODULE VARIABLES                   #
+#                                                                             #
+###############################################################################
+
+WEBCGI     = WebCGI
+WEBCGIUL   = ------
+WEBCGIBASE = WWWGpage WWWcgi WWWclasses WWWplots WWWspsys WWWutils
+WEBCGIHDR  = WWWIF.h
+
+
+

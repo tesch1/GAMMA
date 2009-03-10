@@ -1,0 +1,601 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#           Testing Makefile For The GAMMA MR Simulation Platform             #
+#                     Copyright (C) 1999 Scott A. Smith                       #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile is GAMMA testing and test source distribution. #
+# Herein are are defined the targets that are used for such purposes. The     #
+# source distribution target will create a single release file containing     #
+# all testing programs. The test target will compile and run a program that   #
+# runs tests on the platform then outputting the results to screen.           #
+# Note that this file is included in the MAIN GAMMA makefile and should not   #
+# be confused with a similar file included in individual module makefiles.    #
+# This makefile recursively will invoke all of the GAMMA module makefiles.    #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform. This and other makefiles  #
+# are typically packaged with the GAMMA test distributions. It and other      #
+# GAMMA distrubutions may be obtained from the GAMMA WWW site above or any    #
+# of its mirrors.                                                             #
+#                                                                             #
+# Notes: We Still Need GNU Make For This To Work.                             #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                             Makefile Targets                                #
+#                                                                             #
+# test     : Test the GAMMA platform.  This will compile an overall test      #
+#            program then run it, sending the test results to screen.         #
+#            Unlike other GAMMA testing (testsuite) this does not demand use  #
+#            of the DejaGnu test framework (expect, tcl, etc..)               #
+# testdist : Creates a distribution file of GAMMA test programs.  A           #
+#            similar testdist is run recursively in GAMMA module makefiles.   #
+# testvars : Output all variables relevant to using this makefile to screen.  #
+#            This is done in a nicely formatted manner and useful in Makefile #
+#            debugging. Most GAMMA users will not wish to use this.           #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                             Makefile Variables                              #
+#                                                                             #
+# Bear in mind that this Makefile is simply included in the main GAMMA        #
+# makefile, $GAMMA/Makefile. As such, it will "inherit" all the variables     #
+# specified therein. So, THERE ARE NO VARIABLES DECLARED IN THIS FILE. There  #
+# are of course variables that are used by the targets in this makefile and   #
+# it is these which are listed below.                                         #
+#                                                                             #
+# TESTPGM    : GAMMA test program source name, in MakeGam, Makefile included. #
+# TESTBIN    : GAMMA test program binary name, in MakeGam, Makefile included. #
+# GAMMAPGM   : GAMMA program command, in MakeGam, Makefile included (gamma4)  #
+# GVERSION   : Current GAMMA version, in MakeGam, Makefile included (4.0.7)  #
+# MAKE:      : The makefile being worked with. Set when invoking Make         #
+# SUBDIRS    : Subdirectories with recursive Makefiles for the distribution   #
+#              This will be declared in the main GAMMA makefile.              #
+# PASSFLAGS  : The flags that will be passed to the recursed makefiles. This  #  
+#              variable will be specified in the main GAMMA makefile.         #
+# PROJECTPATH: Directory where the tar command is issued from. Hopefully      #
+#              this is also where the mock directory $GAMMA/test/ resides     #
+#              containing copied test distribution files. This variable will  #
+#              be defined in the main GAMMA Makefile.                         #
+# GAMDIST    : Name of test distribution mock directory. This will be used    #
+#              as the based directory where copied files are sent. This       #
+#              variable will be defined in  the Makefile MakeGam	      #
+# TESTDIST   : Name of test distribution mock test directory. This will be    #
+#              the location where GAMMA test directory files are copied to.   #
+#              From MakeGam as include by main Makefile.                      #
+# MAKEDIST     Name of test distribution mock make directory. This will be    #
+#               the location where GAMMA test related make files are copied   #
+# TESTTAR    : Name of the test distribution tar file to be created.          #
+#              This is defined Makefile MakeGam as include in main Makefile.  #
+# TESTZIP    : Name of the test distribution zip file to be created.          #
+#              This will be defined in the Makefile MakeGam                   #
+# TESTDIRF   : Files in the GAMMA test directory, not in a GAMMA test module  #
+#              directory, that will be included in the test source distrib.   #
+# TMAKEDIRF  : Files in the GAMMA make directory, not in a GAMMA test module  #
+#              directory, that will be included in the test source distrib.   #
+# TESTDIRFF  : Files in the GAMMA test directory, not in a GAMMA test module  #
+#              module directory, that will be included in the test source     #
+#              These are relative from the main GAMMA directory.              #
+# TMAKEDIRFF : Files in the GAMMA make directory, not in a GAMMA test module  #
+#              module directory, that will be included in the test source.    #
+#              These are relative from the main GAMMA directory.              #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+###############################################################################
+########################## TESTING TARGETS ARE BELOW ##########################
+###############################################################################
+###############################################################################
+
+###############################################################################
+#                                Target: test                                 #
+#                                                                             #
+# This target runs GAMMA tests that reside in the test subdirectory, usually  #
+# $GAMMA/test. Specifically, it will run the provided test program TESTPGM,   #
+# usally $GAMMA/test/TestGAMMA.cc. The target will check that both the test   #
+# directory and test program exist, the compile and run the test.	      #
+#                                                                             #
+# TESTDIR  : The GAMMA test directory, set in Makefile MakeGam (e.g. test)    #
+# TESTPGM  : The GAMMA test program source name, set in Makefile MakeGam.     #
+# TESTBIN  : The GAMMA test program binary name, set in Makefile MakeGam.     #
+# GAMPGMLOC: The local GAMMA program command, set MakeGam (e.g. ./gamma)      #
+# GAMMAPGM : The GAMMA program command, set in Makefile MakeGam (e.g. gamma4) #
+#                                                                             #
+###############################################################################
+
+GAMPGMLOC = $(PROJECTPATH)/gamma
+#	      $(GAMMAPGM) ./$(TESTDIR)/$(TESTPGM) -o $(TESTBIN); \
+#	      $(GAMPGMLOC) ./$(TESTDIR)/$(TESTPGM) -o $(TESTBIN); \
+#	      $(TESTBIN); \
+#	      rm $(TESTBIN); \
+
+test: force
+	@echo
+	@echo "                      Testing GAMMA Version $(GVERSION)"
+	@echo " "
+	$(GAMPGMLOC) ./$(TESTDIR)/$(TESTPGM)
+	@if (test -d ./$(TESTDIR)) \
+	then \
+          { if (test -f ./$(TESTDIR)/$(TESTPGM)) \
+	    then \
+              echo "   Compiling GAMMA Test Program ./$(TESTDIR)/$(TESTPGM)"; \
+              echo "   $(GAMPGMLOC) ./$(TESTDIR)/$(TESTPGM)"; \
+	      $(GAMPGMLOC) ./$(TESTDIR)/$(TESTPGM); \
+	    else \
+              echo " * Cannot File Testing Program GAMMA/test/$(TESTPGM)?" ; \
+              echo "   Problems With GAMMA Test Code Distribution...." ; \
+              echo; \
+              echo "                      CANNOT PERFORM GAMMA TESTING" ; \
+	  fi }; \
+	else \
+          echo; \
+          echo " * Cannot File Testing Directory, GAMMA/$(TESTDIR). It Does Not Exist." ; \
+          echo "   Has The GAMMA Test Code Distribution Been Properly Installed?" ; \
+          echo; \
+          echo "                      CANNOT PERFORM GAMMA TESTING" ; \
+          echo; \
+	fi
+
+###############################################################################
+#                                Target: TestModule                           #
+#                                                                             #
+# These targets run GAMMA tests on individual modules. They do so by simply   #
+# calling "make test" in the modules Makefile.  All we do is change into the  #
+# module test directory then run the make. We make assumptions about the      #
+# test module directgory names with respect to the make target.               #
+#                                                                             #
+# TESTDIR  : The GAMMA test directory, set in Makefile MakeGam (e.g. test)    #
+# MAKE:     The program being worked with. This will be automatically set     #
+#           when make is run from the command line.                           #
+# NPD:      Direct print supression flag (--no-print-directory).  This will   #
+#           be defined in the generic file $GAMMAVER/$MAKE/MakeGam but that   #
+#           definition will only be used when running NONSOLO.  If SOLO the   #
+#           definition of NPD will stem from the definition in this file.     #
+#                                                                             #
+###############################################################################
+
+TestBasics: 
+	@cd ./$(TESTDIR)/Basics; $(MAKE) $(NPD) test
+
+TestMatrix: 	
+	@cd ./$(TESTDIR)/Matrix; $(MAKE) $(NPD) test
+
+TestHSLib: 	
+	@cd ./$(TESTDIR)/HSLib; $(MAKE) $(NPD) test
+
+TestLevel1: 	
+	@cd ./$(TESTDIR)/Level1; $(MAKE) $(NPD) test
+
+TestLSLib: 	
+	@cd ./$(TESTDIR)/LSLib; $(MAKE) $(NPD) test
+
+TestLevel2: 	
+	@cd ./$(TESTDIR)/Level2; $(MAKE) $(NPD) test
+
+TestWBR:
+	@cd ./$(TESTDIR)/WBR; $(MAKE) $(NPD) test
+
+TestIntRank2:
+	@cd ./$(TESTDIR)/IntRank2; $(MAKE) $(NPD) test
+
+TestFloquet:
+	@cd ./$(TESTDIR)/Floquet; $(MAKE) $(NPD) test
+
+TestGamIO:
+	@cd ./$(TESTDIR)/GamIO; $(MAKE) $(NPD) test
+
+TestGradients:
+	@cd ./$(TESTDIR)/Gradients; $(MAKE) $(NPD) test
+
+TestPulses:
+	@cd ./$(TESTDIR)/Pulses $(MAKE) $(NPD) test
+
+TestMultiSys:
+	@cd ./$(TESTDIR)/MultiSys; $(MAKE) $(NPD) test
+
+TestESRLib:
+	@cd ./$(TESTDIR)/ESRLib; $(MAKE) $(NPD) test
+
+TestDeprecated:
+	@cd ./$(TESTDIR)/Deprecated; $(MAKE) $(NPD) test
+
+TestTesting:
+	@cd ./$(TESTDIR)/Testing; $(MAKE) $(NPD) test
+
+###############################################################################
+###############################################################################
+##################### TEST DISTRIBUTION TARGETS ARE BELOW #####################
+###############################################################################
+###############################################################################
+
+###############################################################################
+#                               Target: testdist                              #
+#                                                                             #
+# This target will copy ALL GAMMA released direct test source files from this #
+# and module directories to a temp directory.  It will then tar those files   #
+# and compress them into a package for distribution. Finally it will delete   #
+# the copied files and temporary directory, leaving only the packaged file.   #  
+#                                                                             #
+# GVERSION: The current GAMMA version, set in Makefile MakeGam (e.g. 4.0.7)  #
+# MAKE:     The makefile being worked with. Set when invoking Make            #
+# SUBDIRS:  The subdirectories with recursive Makefiles for the distribution. #
+#           This will be declared in the main GAMMA makefile.                 #
+# PASSFLAGS:The flags that will be passed to the recursed makefiles. This     #  
+#           variable will be specified in the main GAMMA makefile.            #
+#                                                                             #
+###############################################################################
+ 
+testdist:
+	@echo
+	@echo "            Making A Direct Test Source Distribution"
+	@echo "                    GAMMA Version $(GVERSION)"
+	@echo
+	@${MAKE} $(NPD) testdir
+	@echo
+	@for i in $(SUBDIRS); do \
+           if [ -d ./test/$$i ] ; then \
+             if (rootme=`pwd`/ ; export rootme ; \
+               rootsrc=`cd $(testdir); pwd`/ ; export rootsrc ; \
+               cd ./test/$$i; \
+               $(MAKE) $(NPD) $(PASSFLGS) $@) ; then true ; \
+             else exit 1 ; fi ; \
+	  else true ; fi ; \
+	done
+	@${MAKE} $(NPD) teststdcopy
+	@${MAKE} $(NPD) testtarfile
+	@${MAKE} $(NPD) testzipfile
+	@${MAKE} $(NPD) testclean
+
+###############################################################################
+#                              Target: testdir                                #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA direct test source distribution target &   #
+# is NOT really meant to run solo. It constructs a "mock" GAMMA directory off #
+# of the current directory. In doing so it allows this makefile to generate   #
+# a tar distribution file that, when untarred in the GAMMA root directory,    #
+# generates all the released files having standard GAMMA directory structure. #
+#                                                                             #
+# PROJECTPATH - Directory where the tar command is issued from. Hopefully     #
+#               this is also where the mock directory $GAMMA/test/ resides    #
+#               containing copied test distribution files. This variable will #
+#               be defined in the main GAMMA Makefile.                        #
+# GAMDIST     - Name of test distribution mock directory. This will be used   #
+#               as the based directory where copied files are sent. This      #
+#               variable will be defined in  the Makefile MakeGam	      #
+# TESTDIST    - Name of test distribution mock test directory. This will be   #
+#               the location where GAMMA test directory files are copied to.  #
+#               This variable will be defined in the Makefile MakeGam         #
+# MAKEDIST    - Name of test distribution mock make directory. This will be   #
+#               the location where GAMMA test related make files are copied   #
+#               to. The variable will be defined in the Makefile MakeGam      #
+#                                                                             #
+###############################################################################
+
+testdir:
+	@echo ""
+	@echo " Making GAMMA Direct Test Source Code Distrubution Directory"
+	@echo " -----------------------------------------------------------"
+	@echo ""
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@echo " * Copy GAMMA Sources To Temporary Directory ./$(GAMDIST)"
+	@if (test -d ./$(GAMDIST)) \
+	then \
+          echo; \
+          echo " * Temp Directory Exists. First Clearing It" ; \
+          echo "   Removing Directory ./$(GAMDIST)" ; \
+          rm -rf ./$(GAMDIST); \
+	fi
+	@echo ""
+	@echo " * Must First Construct This New Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)"
+	@mkdir $(GAMDIST)
+	@chmod ug+w $(GAMDIST)
+	@echo " * Next Construct This Test Temporary Directory"
+	@echo "   Making Directory ./$(TESTDIST)"
+	@mkdir $(TESTDIST)
+	@chmod ug+w $(TESTDIST)
+	@echo " * Next Construct GAMMA Temporary Makefile Directory"
+	@echo "   Making Directory ./$(MAKEDIST)"
+	@mkdir $(MAKEDIST)
+	@chmod ug+w $(MAKEDIST)
+
+###############################################################################
+#                                                                             #
+#                             Target: teststdcopy                             #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA test source distribution target & is NOT   #
+# meant to run solo. It just takes all of the local standard files associated #
+# with the GAMMA testing sources and copies them into the temporary test      #
+# source directory. Note that the files defined here should be those NOT      #
+# handled by module test Makefiles                                            #
+#                                                                             #
+# TESTDIRF   - Files in the GAMMA test directory, not in a GAMMA test module  #
+#              module directory, that will be included in the test source     #
+# TMAKEDIRF  - Files in the GAMMA make directory, not in a GAMMA test module  #
+#              module directory, that will be included in the test source.    #
+# TESTDIRFF  - Files in the GAMMA test directory, not in a GAMMA test module  #
+#              module directory, that will be included in the test source     #
+#              These are relative from the main GAMMA directory.              #
+# TMAKEDIRFF - Files in the GAMMA make directory, not in a GAMMA test module  #
+#              module directory, that will be included in the test source.    #
+#              These are relative from the main GAMMA directory.              #
+# TESTDIST   - Name of test distribution mock test directory. This will be    #
+#              the location where GAMMA test directory files are copied to.   #
+#              This variable will be defined in the Makefile MakeGam          #
+# MAKEDIST   - Name of test distribution mock make directory. This will be    #
+#              the location where GAMMA test related make files are copied    #
+#              to. The variable will be defined in the Makefile MakeGam       #
+#                                                                             #
+###############################################################################
+ 
+teststdcopy:
+	@echo
+	@echo " * Copying Standard Testing Files"
+	@echo
+	@echo " * Copying Specific Files From The GAMMA Test Directory"
+	@echo "   Including $(TESTDIRF) ...."
+	@cp $(TESTDIRFF) $(TESTDIST)
+	@echo
+	@echo " * Copying Files From The GAMMA Makefile Directory"
+	@echo "   Including $(TMAKEDIRF)
+	@cp $(TMAKEDIRFF) $(MAKEDIST)
+	@echo
+
+###############################################################################
+#                                                                             #
+#                            Target: testtarfile                              #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA platform test source distribution target,  #
+# testdist, and not meant to run solo. It takes all of the files that are to  #
+# be released in the testing package and tars them into a single file. All    #
+# released files have hopefully been copied into a mock test directory from   #
+# the main GAMMA directory that appears (appropriately) as a $GAMMA/test/...  #
+# directory but using $GAMMA is this temporary directory rather than the true #
+# GAMMA home directory.                                                       #
+#                                                                             #
+# PROJECTPATH - Directory where the tar command is issued from. Hopefully     #
+#               this is also where the mock directory $GAMMA/test/ resides    #
+#               containing copied test distribution files. This variable will #
+#               be defined in the main GAMMA Makefile.                        #
+# TESTTAR     - Name of the test distribution tar file to be created.         #
+#               This will be defined in the Makefile MakeGam                  #
+# GAMDIST     - Name of test distribution mock directory. This will be used   #
+#               in issuing the tar command. This variable will be defined in  #
+#               the Makefile MakeGam                                          #
+#                                                                             #
+###############################################################################
+
+testtarfile:
+	@echo
+	@echo " * Generating Tar File Of GAMMA Testing Source Distribution"
+	@echo "   Making New TarFile From $(PROJECTPATH)"
+	@echo "   New TarFile Will Be Called $(TESTTAR)"
+	@if (test -f $(TESTTAR)) \
+	then \
+	  echo "   First Deleting Existing Tar File $(TESTTAR)"; \
+	  rm -f $(TESTTAR); \
+	fi
+	@echo "   Tar Done Using Relative Directory ./$(GAMDIST)"
+	@tar cf $(TESTTAR) ./$(GAMDIST)
+	@echo "   New Tar File $(TESTTAR) Complete"
+ 
+###############################################################################
+#                                                                             #
+#                             Target: testzipfile                             #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA platform test source distribution target,  #
+# testdist, and not meant to run solo. It takes the single tar file generated #
+# in target "testtarfile", hopefully residing in the main GAMMA directory,    #
+# and compresses it using GNU zip.  The result will be a single test source   #
+# distribution file. When uncompressed from the main GAMMA directory it will  #
+# build and fill the GAMMA test directory hierarchy.                          #
+#                                                                             #
+# PROJECTPATH - Directory where the zip command is issued from. Hopefully     #
+#               this is also where the test distribution tar resides. This    #
+#               variable will be defined in the main GAMMA Makefile.          #
+# TESTTAR     - Name of the test distribution tar file to be created.         #
+#               This will be defined in the Makefile MakeGam                  #
+# TESTZIP     - Name of the test distribution zip file to be created.         #
+#               This will be defined in the Makefile MakeGam                  #
+#                                                                             #
+###############################################################################
+ 
+testzipfile: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA Test Source Distribution"; 
+	@echo "   The Tar File $(TESTTAR) Will Be Compressed Using gzip";
+	@if (test -f $(TESTZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(TESTZIP)"; \
+          rm -f $(TESTZIP); \
+        fi
+	@echo "   Making New Zip File From $(TESTTAR)"
+	@gzip $(TESTTAR)
+	@echo "   New Zip File Completed, Named $(TESTZIP) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+ 
+###############################################################################
+#                               Target: testclean                             #
+#                                                                             #
+# During a GAMMA test source distribution a mock directory is produced which  #
+# mimicks the GAMMA directory hierarchy. It contains copies of the testing    #
+# sources and any other files to be included in the distribution. This target #
+# removes any temporary directories and files that have been produced in a    #
+# GAMMA test source distribution.                                             #
+#                                                                             #
+# GAMDIST     - Name of test distribution mock directory. This will be used   #
+#               in issuing the tar command. This variable will be defined in  #
+#               the Makefile MakeGam                                          #
+#                                                                             #
+###############################################################################
+ 
+testclean:
+	@echo ""
+	@echo " * Cleaning Up Temporary Source Files And Any Directories"
+	@echo "   Removing Files Below ./$(GAMDIST) And ./$(GAMDIST) Directory"
+	@rm -rf $(GAMDIST)
+	@echo ""
+
+###############################################################################
+#                               Target: testvars                              #
+#                                                                             #
+# During a GAMMA test source distribution files are moved around, directories #
+# created and destroyed. This can be dangerous if some variables in the       #
+# Makefile are improperly set. At the vary least, the different targets will  #
+# not work. At worst, important files are destroyed.  This target will simply #
+# spit out all of the variables that are (overtly) used in the makefile. This #
+# way one can have a look if things appear proper prior to running anything   #
+# that does file/directory manipulations. This target is not normally run by  #
+# a GAMMA user, it is more useful in building makefiles and debugging them.   #  
+#                                                                             #
+###############################################################################
+ 
+testvars:
+	@echo
+	@echo "   Make Variables Used For GAMMA Test Source Distrubutions"
+	@echo "   -------------------------------------------------------"
+	@echo
+	@echo "  GVERSION     The GAMMA Version                 = $(GVERSION)"
+	@echo "  GAMDIST      Relative Temp GAMMA Dist. Dir.    = $(GAMDIST)"
+	@echo "  GAMMAPGM     The GAMMA Program Name            = $(GAMMAPGM)"
+	@echo "  TESTDIR      The GAMMA Test Directory Name     = $(TESTDIR)"
+	@echo "  TESTDIST     The GAMMA Mock Test Directory     = $(TESTDIST)"
+	@echo "  TESTPGM      The Test Program Source Name      = $(TESTPGM)"
+	@echo "  TESTBIN      The Test Program Binary Name      = $(TESTBIN)"
+	@echo "  TESTNAME     Test Source Package Name          = $(TESTNAME)"
+	@echo "  TESTTAR      Tarred Source Package Name        = $(TESTTAR)"
+	@echo "  TESTZIP      Zipped Source Package Name        = $(TESTZIP)"
+	@echo "  MAKEDIST     The GAMMA Mock Make Directory     = $(MAKEDIST)"
+	@echo "  MAKE         The Make Program Being Used       = $(MAKE)"
+	@echo "  PROJECTPATH  GAMMA Project Path (Full Direct.) = $(PROJECTPATH)"
+	@for i in $(TESTDIRF); do \
+	echo "  TESTDIRF     File Names To Include From Test   = $$i"; \
+	done
+	@echo "  TESTDIRFF    Full Files (From Above) Included  = $(TESTDIRFF)"
+	@for i in $(TMAKEDIRF); do \
+	echo "  TMAKEDIRF    Full Files to Include From Make   = $$i"; \
+	done
+	@for i in $(TMAKEDIRFF); do \
+	echo "  TMAKEDIRFF   Full Files (From Above) Included  = $$i"; \
+	done
+	@echo "  PASSFLGS     Variables Sent To Recursive Makes :"
+	@echo
+	@for i in $(PASSFLGS); do \
+	echo "   $$i"; \
+	done
+	@echo
+	@for i in $(SUBDIRS); do \
+	  if [ -d ./$(TESTDIR)/$$i ] ; then \
+	    if (rootme=`pwd`/ ; export rootme ; \
+	      rootsrc=`cd $(testdir); pwd`/ ; export rootsrc ; \
+                cd ./$(TESTDIR)/$$i; \
+                $(MAKE) $(NPD) $(PASSFLGS) $@) ; then true ; \
+	      else exit 1 ; fi ; \
+	    else true; \
+	  fi; \
+	done
+ 
+###############################################################################
+#                               Target: testmakes                             #  
+#                                                                             #
+# All module test Makefiles, $GAMMA/$TESTDIR/$MODULE/Makefile, are equal.     #
+# When changes are to be made to them they should be made to only one and     #  
+# subesequently that should be propagated to all module subdirectories.  Such #
+# is the purpose of this target.  When this target is made it will copy the   #
+# standard "boilerplate" source Makefile, $GAMMA/make/MakeModTestBP, to all   #
+# module Makefiles, $GAMMA/test/$MODULE/Makefile. This may also useful if any #
+# module Makefiles get messed up from work having been done on a Wintel       #  
+# based system with automatic file transfer to Unix.  Often each line will be #
+# left with a ^M on the end and this can mess up a Makfile. However, that     #  
+# should not really happen because individual module makefiles should never   #
+# be edited, either on a Unix or PC.  It should always be the boilerplate     #  
+# Makefile that is edited then propagated to all module sub-directories.      #  
+#                                                                             #
+# Note that it's the individual MakeDefs files, $GAMMA/test/$Module/MakeDefs, #
+# that cause each module's makefile to be unique. It is these latter files    #
+# that may be edited to suit individual modules.                              #
+#                                                                             #
+# SUBDIRS:       Subdirectories with recursive Makefiles for the distribution #
+#                This will be declared in the main GAMMA makefile.            #  
+# TESTDIR:       Name of the source directory (e.g. test)                     #  
+# MAKEDIR:       Name of the makefile direcotry (e.g. make)                   #  
+# MakeModTestBP: Name of module boilerplate source Makefile                   #
+#                                                                             #
+###############################################################################
+ 
+testmakes: force
+	@echo
+	@echo " * Updating Makefiles In All Module Test Directories"
+	@for i in $(SUBDIRS); do \
+	  if [ -d ./$(TESTDIR)/$$i ] ; then \
+             if (rootme=`pwd`/ ; export rootme ; \
+               rootsrc=`cd $(srcdir); pwd`/ ; export rootsrc ; \
+               echo "    - Updating Makefile In" $$i "Test Module"; \
+               cp -f ./$(MAKEDIR)/MakeModTestBP ./$(TESTDIR)/$$i); then true; \
+             else exit 1 ; fi ; \
+	  else true ; fi ; \
+	done
+	@echo ""
+
+###############################################################################
+#                                                                             #
+#                    GAMMA TESTING MAKEFILE PATTERNS & TARGETS                #
+#                                                                             #
+# The patterns and targets in this section are they that involve testing of   #
+# GAMMA performance. For the tests herein to work, GAMMA must be installed    #
+# with a vaild C++ compiler and the test programs residing in $GAMMA/test.    #
+# The first two are fundamental before GAMMA will work and the latter is what #
+# probably provided this file.                                                #
+#                                                                             #
+# Test Primary Targets:                                                       #
+#                                                                             #
+# test     : Test the GAMMA platform.  This will compile an overall test      #
+#            program then run it, sending the test results to screen.         #
+#            Unlike other GAMMA testing (testsuite) this does not demand use  #
+#            of the DejaGnu test framework (expect, tcl, etc..)               #
+# testdist : Creates a distribution file of GAMMA test programs.  A           #
+#            similar testdist is run recursively in GAMMA module makefiles.   #
+# testvars : Output all variables relevant to using this makefile to screen.  #
+#            This is done in a nicely formatted manner and useful in Makefile #
+#            debugging. Most GAMMA users will not wish to use this.           #
+#                                                                             #
+# Test Secondary Targets:                                                     #
+#                                                                             #
+# testdir    : This deals with handling the test distribution temporary file  # 
+#              directories.  During a test source distribution (testdist) the #
+#              test sources and related files are all copied into a fresh     #
+#              subdirectory that mimicks the GAMMA directory structure. This  #
+#              is done so that the resulting package will untar/uncompresses  #
+#              to reproduce this directory structure.  The target testdist    #
+#              will make a new directory hierarchy so that the distribution   #
+#              starts afresh.                                                 #
+# teststdcopy: This copies any files NOT handled in module makefiles to the   #
+#              the temporary distribution directory.  They will then be       #
+#              included in the release.                                       #
+# testtarfile: Generates a single tar file from the temporary distribution    #
+#              directory.  All released files will be included along with     #
+#              their proper directory placement.                              #
+# testzipfile: Generates a single zip file from the distribution tar file of  #
+#              the previous target.                                           #
+# testclean:   Deletes any directories and files that were generated/copied   #
+#              during the test source distribution.                           #
+#                                                                             #
+###############################################################################
+

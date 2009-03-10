@@ -1,0 +1,124 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#           Source Module Makefile For The GAMMA MR Simulation Platform       #
+#                      Copyright © 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile, DieDOSDie, is the removal of the nasty DOS    #
+# related garbage that might be present in GAMMA files. The targets herein    #
+# take any specified files in the current module directory and strip out any  #
+# DOS linefeeds (^M and ^Z). Although this isn't such a big deal with the     #
+# GAMMA source files, the Makefiles are wrecked for Unix systems (They still  #
+# function using CygWin under WinDoze). In contrast, using all Unix linefeeds #
+# works fine on Unix and Windows, so that is what we want.                    #
+#                                                                             #
+# How do these damn ^M and ^Z characters get into GAMMA files? Well, although #
+# I generally hate Microsoft products, I do not mind the MSVC++ IDE. The      #
+# compiler is often a big pain (but getting better), but the interface is     #
+# nice for editing. It is largely responsible for any DOS crud.               #
+#                                                                             #
+# These targets use standard Unix functionality: cat, sed, & |. This is as is #
+# suggested by GNU standards                                                  #
+#                                                                             #
+#              http://www.gnu.org/prep/standards_52.html#SEC52                #
+#                                                                             #
+# These targets will ALWAYS be run before any GAMMA distributions are done.   #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.                           #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+# * killdos:    Clean all files defined in MODDISTFILES                       #
+#   killdossrc: Clean all files defined in MODSRCFILES                        #
+#   killdoshdr: Clean all files defined in MODHDRFILES                        #
+#                                                                             #
+# * Target killdos is the target one should typically use.                    #
+#                                                                             #
+# Requirements   							      #
+# ============                                                                #
+# MODLABEL:      Cosmetic label for the source module.                        #
+# MODULEDIR:     Directory name of the source module.                         #
+# MODDISTFILES:  All files that will be distributed with the module.          #
+# MODSRCFILES:   Source files that will be distributed with the module.       #
+# MODHDRFILES:   Header files that will be distributed with the module.       #
+# force:         Required target for use of this makefile                     #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                       Variables Helpful In Using sed                        #
+#                                                                             #
+# The following variables are defined for use with any sed substitution       #
+# commands used in the targets herein. Since sed substitions use / and or \   #
+# as well as $ there can be conflicts produced from filenames and make        #
+# variables. use of these definitions alleviates that.                        #
+#                                                                             #
+###############################################################################
+
+DOLSIGN = $$
+SEDSUB1 = "s/^M\\{1,\\}$(DOLSIGN)//"
+SEDSUB2 = "$(DOLSIGN) s/^Z//"
+
+###############################################################################
+#                                                                             #
+#                 Targets: killdos, killdossrc, killdosshdr                   #
+#                                                                             #
+# These targets are are NOT meant to be run solo. They take specified files   #
+# in the current module directory and strip out any DOS linefeeds (^M & ^Z).  #
+# Although that isn't such a big deal with the source files, the Makefiles    #
+# are wrecked for Unix systems (They still work using CygWin under WinDoze).  #
+# In contrast, using all Unix linefeeds works fine on Unix and Windows, so    #
+# that is what we want.							      #
+#                                                                             #
+# This uses standard Unix functionality: cat, sed, & | 			      #
+#                                                                             #
+# Requirements   							      #
+# ============                                                                #
+# MODLABEL:      Cosmetic label for the source module.                        #
+# MODULEDIR:     Directory name of the source module.                         #
+# MODDISTFILES:  All files that will be distributed with the module.          #
+# MODSRCFILES:   Source files that will be distributed with the module.       #
+# MODHDRFILES:   Header files that will be distributed with the module.       #
+# force:         Required target for use of this makefile                     #
+#                                                                             #
+###############################################################################
+
+killdos: force
+	@echo " * Cleaning $(MODLABEL) Source Module Files To Remove DOS Linefeeds"
+	@echo "   From: $(MODULEDIR)"
+	@for i in $(MODDISTFILES); do \
+	  echo  "   File: $$i"; \
+          cat $$i | sed $(SEDSUB1) | sed $(SEDSUB2) > $$i.tmp; \
+          mv -f $$i.tmp $$i; \
+	done
+	@echo " * Finished With Cleaning $(MODLABEL) Source Module Files"
+
+killdossrc: force
+	@echo " * Cleaning $(MODLABEL) Source Files To Remove DOS Linefeeds"
+	@echo "   From: $(MODULEDIR)"
+	@for i in $(MODSRCFILES); do \
+	  echo  "   File: $$i"; \
+          cat $$i | sed $(SEDSUB1) | sed $(SEDSUB2) > $$i.tmp; \
+          mv -f $$i.tmp $$i; \
+	done
+	@echo " * Finished With Cleaning $(MODLABEL) Source Files"
+
+killdoshdr: force
+	@echo ""
+	@echo " * Copying $(MODLABEL) Header Files To Remove DOS Linefeeds"
+	@echo "   From: $(MODULEDIR)"
+	@for i in $(MODHDRFILES); do \
+	  echo  "   File: $$i"; \
+          cat $$i | sed $(SEDSUB1) | sed $(SEDSUB2) > $$i.tmp; \
+          mv -f $$i.tmp $$i; \
+	done
+	@echo " * Finished With Cleaning $(MODLABEL) Header Files"
+

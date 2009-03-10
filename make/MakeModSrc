@@ -1,0 +1,698 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#  Module Source Distribution Makefile For The GAMMA MR Simulation Platform   #
+#                      Copyright © 1999 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of the Makefile is GAMMA source code distribution.  Typically   #
+# GAMMA sources are copied to a temporary directory, compressed into a single #
+# file, then moved to a release location.  The sources that are copies in the #
+# temporary location are subsequently deleted. This makefile handles source   #
+# distribution of single GAMMA modules, not that the entire platform.  When   #
+# "make srcdist" is run from the main GAMMA directory it will recurse through #
+# all of its modules in the SRC directory and run their individual makefiles. #
+# These module makefiles will invoke this generic makefile when a source is   #
+# being generated.  Note that this file will be included in each module's     #
+# makefile and should not be confused with a similarly named file included    #
+# in the main GAMMA makefile. They are very different!                        #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.  Sources for all GAMMA    #
+# modules are typically packaged in a GAMMA source distribution. Source       #
+# distrubution for a particular module can be accomplished but is not often   #
+# performed (e.g. "make srcBasics" from the main GAMMA directory).            #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+###############################################################################
+############################# VARIABLES ARE BELOW #############################
+###############################################################################
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#           OVERALL VARIABLES CONCEPT & MANDATORY EXTERNAL VARIABLES          #
+#                                                                             #
+# Since the intent of this makefile is to simply be included into module      #  
+# makefiles that handle module source distributions, it does not add in any   #
+# variables needed by other makefiles.  It does however require that some     #  
+# variables be set and it will make some variables to use for its own         #
+# convenience.  One must simply insure that any required external variables   #
+# have been specified prior to running any targets defined herein. Thus, the  #
+# module Makefile, $(GAMMAVER)/$(SRC)/$(MODULE)/Makefile, must supply all     #
+# required external variables. Here is what we will need defined:             #
+# places where needed external variables are defined:			      #
+#                                                                             #
+# NOTSOLO:     Flag if running independently or recursively by Main makefile  #
+# BASENAME:    Base name of distribution file.  Not used unless run NONSOLO.  #
+#              This will be explicitly defined in the module makefile         #
+#              $(GAMMAVER)/$(SRC)/$(MODULE)/Makefile.                         #
+# COPY2BASE:   This will serve as the point just below where the copied test  #
+#              directory will reside. For a SOLO distribution of a single     #
+#              module that will be ".", but for a larger source code dist-    #
+#              ribtion this will be a full path to a copied GAMMA directory.  #
+# GVERDIR:     Name of GAMMA version directory (gamma-4.0.7)                 #
+# SRCDIR:      Name of GAMMA source directory (src)                           #
+# MODULEDIR:   The is the source module directory. If the makefile is running #
+#              SOLO it will simply be the current directory.  If it is run as #
+#              part of a larger source code distribution it will be the full  #
+#              path directory name (which will be $GAMMA/src or so)           #
+# MODLABEL:    Name of module running the make. This will be declared in the  #
+#              module Makefile prior to importing this target.                #
+# MODLABUN:    Underline of module name for module running the make. This     #
+#              will be declared in the  module Makefile prior to including    #
+#              this target.                                                   #
+# MODSRCFILES: List of files that will be in the source distribution.         #
+# MODHDRFILES: List of files that will be in the header distribution.         #
+# TARPGM:      Tar program to use (usually tar). Used when running SOLO with  #
+#              Unix style output.                                             #
+# TARFLGS:     Tar program flags to use (ususally cf). Used when running SOLO #
+#              with Unix style output.                                        #
+# GZIPPGM:     Compression program that will work on TARFILE (usually gzip).  #
+#              Used when runnin SOLO with Unix style output.                  #   
+# GZIPFLGS:    Compression program flags (usually nothing). Used when running #
+#              SOLO with Unix style output.                                   #
+# ZIPPGM:      Compression program that condenses distribution (pkzip or zip).#
+#              Used when runnin SOLO with Windows style output.               #   
+# ZIPFLGS:     Compression program flags. Used when running SOLO with Windows #
+#              style output (-p -r).                                          #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                            CONVENIENCE VARIABLES                            #
+#                                                                             #
+# These variables are built from those defined above. They are only needed in #
+# this makefile and only created to simplify the targets herein defined. The  #
+# starred names are those which are only used in SOLO mode.                   #
+#                                                                             #
+# *SRCTARFILE:   Tar file name, that produced upon source distribution of     #
+#                this specific module. Only used if running SOLO and using    #
+#                a Unix compression (tar/gnuzip).                             #
+# *HDRCTARFILE:  Tar file name, that produced upon header distribution of     #
+#                this specific module. Only used if running SOLO and using    #
+#                a Unix compression (tar/gnuzip).                             #
+# *SRCGZIPFILE:  Compressed file name, that produced upon source distribution #
+#                of this specific module. Made from compression of source     #
+#                tar file (SRCTARFILE). Only used if running SOLO and using   #
+#                a Unix compression (tar/gnuzip).                             #
+# *HDRGZIPFILE:  Compressed file name, that produced upon header distribution #
+#                of this specific module. Made from compression of header     #
+#                tar file (HDRTARFILE). Only used if running SOLO and using   #
+#                a Unix compression (tar/gnuzip).                             #
+# *SRCZIPFILE:   Zip file name, that produced upon source distribution of     #
+#                this specific module. Only used if running SOLO and using a  #
+#                Windows compression method (pkzip)                           #
+# *HDRZIPFILE:   Zip file name, that produced upon header distribution of     #
+#                this specific module. Only used if running SOLO and using a  #
+#                Windows compression method (pkzip)                           #
+# COPY2SRC:      Source directory where distributed files will be copied.     #
+# COPY2DIR:      Module directory where distributed files will be copied.     #
+# MODSRCFILES:   Source files that will be distributed with the module.       #
+# MODHDRFILES:   Header files that will be distributed with the module.       #
+#                                                                             #
+###############################################################################
+
+SRCTARFILE    = $(BASENAME).tar
+HDRTARFILE    = $(BASENAME)H.tar
+SRCGZIPFILE   = $(SRCTARFILE).gz
+HDRGZIPFILE   = $(HDRTARFILE).gz
+SRCZIPFILE    = XXsrc
+HDRZIPFILE    = XXhdr
+COPY2SRC      = ${COPY2BASE}/${SRCDIR}
+COPY2DIR      = ${COPY2SRC}/${DIRNAME}
+
+###############################################################################
+###############################################################################
+############################## TARGETS ARE BELOW ##############################
+###############################################################################
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                               Target: srcdist                               #
+#                                                                             #
+# This target will copy all released GAMMA source files from this module to a #
+# temporary directory.  If not called recursively, it will then tar those     #
+# files and compress them into a package for distribution and afterwards      #
+# delete the copied files and temporary directory, leaving only the packaged  #
+# file. If called recursively, the temporary copied files are left to be      #
+# packaged and later removed by the Makefile calling this one recursively.    #
+#                                                                             #
+# FILES:    List of files the src distribution depends upon. The file list    #
+#           will arise from a combination of 1.) the module definitions found #
+#           in $GAMMAVER/$SRC/$MODULE/MakeDefs which sets the Module name and #
+#           2.) the module specifications found in $GAMMAVER/$MAKE/MakeMods.  #
+# MAKE:     The make program being worked with.  Will be automatically        #
+#           supplied from the command line when make is invoked.              #
+# NPD:      Direct print supression flag (--no-print-directory).  This will   #
+#           be defined in the generic file $GAMMAVER/$MAKE/MakeGam but that   #
+#           definition will only be used when running NONSOLO.  If SOLO the   #
+#           definition of NPD will stem from the definition in this file.     #
+#                                                                             #
+# srcdist  - Makes tar/gzipped file of all GAMMA module sources.  (SOLO)      #
+#          - Copies all modules sources to temporary directory.   (NONSOLO)   #
+# hdrdist  - Makes tar/gzipped file of all GAMMA module headers.  (SOLO)      #
+#          - Copies all modules headers to temporary directory.   (NONSOLO)   #
+# srcddist - Makes zipped file of all GAMMA module sources.       (SOLO)      #
+#          - Copies all modules sources to temporary directory.   (NONSOLO)   #
+# hdrddist - Makes zipped file of all GAMMA module headers.       (SOLO)      #
+#          - Copies all modules headers to temporary directory.   (NONSOLO)   #
+#                                                                             #
+# Note that these targets depend upon $(FILES) which define which .cc & .h    #
+# sources are to be released with the module.  In turn, $(FILES) will depend  #
+# upon $(SUPPF) which are supplementary files to be included in the source    #
+# distrubution.                                                               #
+#                                                                             #
+###############################################################################
+
+srcdist: force $(MODSRCFILES)
+	 @${MAKE} $(NPD) srcdir                # Make tmp distribution directory
+	 @${MAKE} $(NPD) cleansrc              # Clean released files of DOS linefeeds
+	 @${MAKE} $(NPD) copysrc               # Copy released files to tmp directory
+	 @${MAKE} $(NPD) srctar                # Tar up tmp distribution directory
+	 @${MAKE} $(NPD) srczip                # Zip up tar of distribution dir
+	 @${MAKE} $(NPD) srcclean              # Remove any tmp files/directories
+	 @echo
+
+hdrdist: force $(MODHDRFILES)
+	 @${MAKE} $(NPD) srcdir                # Make tmp distribution directory
+	 @${MAKE} $(NPD) cleanhdr              # Clean released files of DOS linefeeds
+	 @${MAKE} $(NPD) copyhdr               # Copy released files to tmp directory
+	 @${MAKE} $(NPD) hdrtar                # Tar up tmp distribution directory
+	 @${MAKE} $(NPD) hdrzip                # Zip up tar of distribution dir
+	 @${MAKE} $(NPD) srcclean              # Remove any tmp files/directories
+	 @echo
+
+srcddist: force $(MODSRCFILES)
+	 @${MAKE} $(NPD) srcdir                # Make tmp distribution directory
+	 @${MAKE} $(NPD) cleansrc              # Clean released files of DOS linefeeds
+	 @${MAKE} $(NPD) copysrc               # Copy released files to tmp directory
+	 @${MAKE} $(NPD) srcdzip               # Zip up tmp distribution dir
+	 @${MAKE} $(NPD) srcclean              # Remove any tmp files/directories
+	 @echo
+
+hdrddist: force $(MODHDRFILES)
+	 @${MAKE} $(NPD) srcdir                # Make tmp distribution directory
+	 @${MAKE} $(NPD) cleanhdr              # Clean released files of DOS linefeeds
+	 @${MAKE} $(NPD) copyhdr               # Copy released files to tmp directory
+	 @${MAKE} $(NPD) hdrdzip               # Zip up tmp distribution dir
+	 @${MAKE} $(NPD) srcclean              # Remove any tmp files/directories
+	 @echo
+
+srcclear: force
+	@echo " * Cleaning $(MODLABEL) Source Files"
+	@echo "   From: $(MODULEDIR)"
+	@echo "     Removing All *~ Files"
+	@rm -rf *~
+	@echo "     Removing All *~* Files"
+	@rm -rf *~*
+	@echo "     Removing All *exe Files"
+	@rm -rf *exe
+	@echo "     Removing All *out Files"
+	@rm -rf *out
+	
+
+###############################################################################
+#                               Target: srcdir                                #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA source distribution target & NOT meant to  #
+# be run solo. It constructs a "mock" GAMMA directory of the current one. In  #
+# doing so it allows this makefile to generate a tar distribution file that,  #
+# when untarred in the GAMMA root directory, will generate all the released   #
+# files for this module having standard GAMMA directory structure.            #
+#                                                                             #
+# Note that if this target is run SOLO it will generate the full, isolated,   #
+# directory structure for this module alone beginning from the main GAMMA     #
+# directory.  If it is running recursively as part of the main GAMMA makefile #
+# it will only deal with the particular module test directory.                #
+#                                                                             #
+# force:       Commonly used force target.  Must be set externally.           #
+# NOTSOLO:     Flag whether makefile is running independently or being driven #
+#              by the main GAMMA makefile. This will be set by the main GAMMA #
+#              makefile (in PASSFLGS) or not if running SOLO.                 #
+# MODLABEL:    Name of module running the make. This will be declared in the  #
+#              module Makefile prior to importing this target.                #
+# MODLABUN:    Underline of module name for module running the make. This     #
+#              will be declared in the  module Makefile prior to including    #
+#              this target.                                                   #
+# MODDIR:      Name of module directory to be copied.                         #
+# COPY2DIR:    Directory where the copied module files will be placed. This   #
+#              will be relative if running SOLO or a full path name if not.   #
+# COPY2SRC:   This will be the "src" directory where the copied module        #
+#              will be placed. It will be the one that is zipped up if the    #
+#              module by itself is distributed (SOLO)                         # 
+#                                                                             #
+###############################################################################
+ 
+srcdir: force
+	@if (test -z $(NOTSOLO)) \
+	then \
+          ${MAKE} $(NPD) srcdirsolo; \
+	else \
+          ${MAKE} $(NPD) srcdirrecursive; \
+	fi
+ 
+srcdirsolo:
+	@echo ""
+	@echo "     Making $(MODLABEL) Module Source Distribution"; \
+	@echo "     -------$(MODLABUN)---------------------------"; \
+	@echo ""
+	@echo "     $(MODLABEL) Directory Is $(MODULEDIR)"
+	@echo ""
+	@echo " * We Will Copy The $(MODLABEL) Files To A Temporary"
+	@echo "   Directory $(COPY2DIR)"
+
+	@if (test -d $(COPY2SRC)) \
+        then \
+          echo " * Temp Directory Exists. First Clear It And Files Therein" ; \
+          echo " * Only $(MODLABEL) Being Packaged, Not All Test Sources" ; \
+          echo "   Must Also Clear Main Test Temp Dir. & Its Sub-Directories" ; \
+	  echo " * Removing Directory $(COPY2SRC)" ; \
+          rm -rf ./$(COPY2SRC); \
+        else \
+          echo " * First Construct This Temp Directory And Check Structure" ; \
+        fi
+	@echo " * Constructing New Directory $(COPY2SRC)"
+	@mkdir $(COPY2SRC)
+	@chmod ug+w $(COPY2SRC)
+	@echo " * Constructing New Directory $(COPY2DIR)"
+	@mkdir $(COPY2DIR)
+	@chmod ug+w $(COPY2DIR)
+ 
+srcdirrecursive:
+	@echo " * Adding $(MODLABEL) Module Sources To Distribution"
+	@echo " * We Will Copy The $(MODLABEL) Files To A Temporary"
+	@echo "   Directory $(COPY2DIR)"
+	@if (test -d $(COPY2DIR)) \
+	then \
+          echo " * This Temp Directory Exists. Clearing It And Files Therein"; \
+          echo "   Removing Directory $(COPY2DIR)" ; \
+          rm -rf $(COPY2DIR); \
+	else \
+          echo " * First Construct Temp Directory And Check Structure" ; \
+	fi
+	@echo " * Creating Fresh Temporary Directory For This Module"
+	@echo "   Making Directory $(COPY2DIR)"
+	@mkdir $(COPY2DIR)
+	@chmod ug+w $(COPY2DIR)
+
+###############################################################################
+#                                                                             #
+#                      Targets: cleansrc, cleanshdr                           #
+#                                                                             #
+# These targets are part of the GAMMA source and header distribution targets. #
+# They are NOT meant to be run solo. They take specified files in the current #
+# module directory and strip out any DOS linefeeds (^M and ^Z). Although that #
+# isnt such a big deal with the source files, the Makefiles are wrecked for   #
+# Unix systems (They still function using CygWin under WinDoze). In contrast, #
+# using all Unix linefeeds works fine on Unix and Windows, so that is what we #
+# want.									      #
+#                                                                             #
+# This uses standard Unix functionality: cat, sed, & | 			      #
+#                                                                             #
+###############################################################################
+
+DOLSIGN = $$
+SEDSUB1 = "s/^M\\{1,\\}$(DOLSIGN)//"
+SEDSUB2 = "$(DOLSIGN) s/^Z//"
+
+cleansrc: force
+	@echo " * Cleaning $(MODLABEL) Source Files To Remove DOS Linefeeds"
+	@echo "   From: $(MODULEDIR)"
+	@for i in $(MODSRCFILES); do \
+	  echo  "   File: $$i"; \
+          cat $$i | sed $(SEDSUB1) | sed $(SEDSUB2) > $$i.tmp; \
+          mv -f $$i.tmp $$i; \
+	done
+	@echo " * Finished With Cleaning $(MODLABEL) Source Files"
+
+cleanhdr: force
+	@echo ""
+	@echo " * Copying $(MODLABEL) Header Files To Remove DOS Linefeeds"
+	@echo "   From: $(MODULEDIR)"
+	@for i in $(MODHDRFILES); do \
+	  echo  "   File: $$i"; \
+          cat $$i | sed $(SEDSUB1) | sed $(SEDSUB2) > $$i.tmp; \
+          mv -f $$i.tmp $$i; \
+	done
+	@echo " * Finished With Cleaning $(MODLABEL) Header Files"
+
+
+###############################################################################
+#                                                                             #
+#                       Targets: copysrc, copyshdr                            #
+#                                                                             #
+# These targets are part of the GAMMA source and header distribution targets. #
+# They are NOT meant to be run solo. They copy specified files in the current #
+# module directory into the temporary directory $(COPY2DIR) which mimicks the #
+# module, thus adding these "released" files into the GAMMA source/header     #
+# distribution. Assuming that this target is called from target srcdist or    #
+# hdrdist, all of the files to be released will be up to date.                #
+#                                                                             #
+# MODLABEL:   Name of module running the make. This will be declared in the   #
+#             module Makefile prior to importing this target.                 #  
+# NOTSOLO:    Flag whether makefile is running independently or being driven  #
+#             by the main GAMMA makefile. This will be set by the main GAMMA  #
+#             makefile (in PASSFLGS) or not if running SOLO.                  #  
+# MODULEDIR:  The is the GAMMA module directory. If the makefile is running   #
+#             SOLO it will simply be the current directory.  If it is run as  #
+#             part of a larger GAMAM source distribution it will be the full  #
+#             path directory name (which will be $GAMMA/src or so)            #  
+# COPY2DIR:   Directory where the copied module files will be placed. This    #
+#             will be relative if running SOLO or a full path name if not.    #
+#                                                                             #
+###############################################################################
+
+copysrc: force
+	@echo " * Copying $(MODLABEL) Source Files To Temporary Directory"
+	@echo "   From: $(MODULEDIR)"
+	@echo "   To:   $(COPY2DIR)"
+	@for i in $(MODSRCFILES); do \
+	  echo  "   File: $$i"; \
+	done
+	@cp $(MODSRCFILES) $(COPY2DIR)
+	@echo " * Finished With Copying $(MODLABEL) Source Files"
+
+copyhdr: force
+	@echo ""
+	@echo " * Copying $(MODLABEL) Header Files To Temporary Directory"
+	@echo "   From: $(MODULEDIR)"
+	@echo "   To:   $(COPY2DIR)"
+	@for i in $(MODHDRFILES); do \
+	  echo  "   File: $$i"; \
+	done
+	@cp $(MODHDRFILES) $(COPY2DIR)
+	@echo " * Finished With Copying $(MODLABEL) Header Files"
+
+###############################################################################
+#                                                                             #
+#                                Target: srctar                               #
+#                                                                             #
+# This target is part of the Basics module source distribution target and is  #
+# not meant to run solo. It takes all of the files to be released and tars    #
+# them into a single file.  All released files are hopefully in a mock test   #
+# directory from here that appears as in the appropriate $GAMMA/src/...       #
+# directory but using $GAMMA as this current directory rather than the true   #
+# TARPGM      Tar program to use.                                             #
+# GAMMA home directory.  Note that this only has an effect if the Makefile is #
+# being run SOLO, i.e. not from the main test Makefile in $GAMMA. If it       #
+# is not being run SOLO, i.e. it is being run as part of a large source       #
+# release, the earlier makefile will handle tarring up things.                #
+#                                                                             #
+# NOTSOLO:    Flag whether makefile is running independently or being driven  #
+#             by the main GAMMA makefile. This will be set by the main GAMMA  #
+#             makefile (in PASSFLGS) or not if running SOLO.                  #  
+# MODLABEL:   Name of module running the make. This will be declared in the   #
+#             module Makefile prior to importing this target.                 #  
+# TARPGM      Tar program to use.                                             #
+# TARFLGS     Tar program flags to use.                                       #
+# TARFILE:    Tar file name, that produced upon GAMMA source distribution     #  
+#             of this specific module. Only used if running SOLO.             #  
+# SRCTARFILE: Tar file name, that produced upon GAMMA source distribution     #  
+#             of this specific module. Only used if running SOLO.             #  
+# HDRTARFILE: Tar file name, that produced upon GAMMA header distribution     #  
+#             of this specific module. Only used if running SOLO.             #  
+# MODULEDIR:  The is the GAMMA module directory. If the makefile is running   #
+#             SOLO it will simply be the current directory.  If it is run as  #
+#             part of a larger GAMAM source distribution it will be the full  #
+#             path directory name (which will be $GAMMA/src or so)            #  
+#                                                                             #
+###############################################################################
+
+srctar:
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo; \
+	  echo " * Generating Tar File Of $(MODLABEL) Source Distribution"; \
+	fi
+	@if (test -f $(SRCTARFILE) && test -z $(NOTSOLO)) \
+	then \
+	  echo "   First Deleting Existing Tar File $(TARFILE)"; \
+          rm -f $(SRCTARFILE); \
+	fi
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo "   Making New TarFile From $(COPY2DIR)"; \
+	  echo "   Corresponds to Tarring Directory .$(MODULEDIR)"; \
+	  $(TARPGM) $(TARFLGS) $(SRCTARFILE) $(COPY2DIR);\
+	  echo "   New Tar File Is $(SRCTARFILE)"; \
+	fi
+
+hdrtar:
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo; \
+	  echo " * Generating Tar File Of $(MODLABEL) Header Distribution"; \
+	fi
+	@if (test -f $(HDRTARFILE) && test -z $(NOTSOLO)) \
+	then \
+	  echo "   First Deleting Existing Tar File $(HDRTARFILE)"; \
+          rm -f $(HDRTARFILE); \
+	fi
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo "   Making New TarFile From $(COPY2DIR)"; \
+	  echo "   Corresponds to Tarring Directory .$(MODULEDIR)"; \
+	  $(TARPGM) $(TARFLGS) $(HDRTARFILE) $(COPY2DIR);\
+	  echo "   New Tar File Is $(HDRTARFILE)"; \
+	fi
+
+###############################################################################
+#                                                                             #
+#                         Target: srczip,  hdrzip                             #
+#                                 srcdzip, hdrdzip                            #
+#                                                                             #
+# These targets are part of the a module source/header distribution targets   #
+# and are not meant to run solo. They take either 1) a single tar file in     #
+# this directory  (generated from previous "tar" targets) and compresses it   #
+# using (GNU) zip or 2) takes the entire source/header distribution directory #
+# for the module and compresees it into a single (pkzip/zip) zip file.  In    #
+# both cases the result will be a single source/header distribution file.     #
+# Note that these targets are only active if the Makefile is being run SOLO,  #
+# i.e. not from the main GAMMA Makefile in $GAMMAVER. If it is not being run  #
+# SOLO, i.e. it is being run as part of a large source/header release, the    #
+# earlier makefile will handle zipping up things.                             #
+#                                                                             #
+# NOTSOLO:    Flag whether makefile is running independently or being driven  #
+#             by the main GAMMA makefile. This will be set by the main GAMMA  #
+#             makefile (in PASSFLGS) or not if running SOLO.                  #
+# MODLABEL:   Name of module running the make. This will be declared in the   #
+#             module Makefile prior to importing this target.                 #
+# SRCTARFILE: Tar file name, that produced upon GAMMA source distribution     #
+#             of this specific module. Only used if running SOLO.             #
+# HDRTARFILE: Tar file name, that produced upon GAMMA header distribution     #
+#             of this specific module. Only used if running SOLO.             #
+# GZIPPGM     Compression program that will work on TARFILE (usually gzip)    #
+# GZIPFLGS    Compression program flags (usually nothing)                     #
+# GZIPFILE:   Zip file name, that produced upon GAMMA source distribution     #
+#             of this module. Only used if running SOLO (usually x.tar.gz)    #
+# ZIPPGM      Compression program that will work on temp. source directory.   #
+#             This is usually zip (in unix) or pkzip (in windows)             #
+# ZIPFLGS     Compression program flags (-p -r for pkzip)                     #
+# ZIPFILE     Compressed source distribution file name made directly from the #
+#             temp directory hierarchy. For windows (usually x.zip)           #
+# MODULEDIR:  The is the GAMMA module directory. If the makefile is running   #
+#             SOLO it will simply be the current directory.  If it is run as  #
+#             part of a larger GAMMA source distribution it will be the full  #
+#             path directory name (which will be $GAMMA/src or so)            #
+#                                                                             #
+###############################################################################
+
+srczip:
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo; \
+	  echo " * Generating Zipped File Of $(MODLABEL) Source Distribution"; \
+	  echo "   The Tar File $(SRCTARFILE) Will Be Compressed Using $(GZIPPGM)"; \
+	fi
+	@if (test -f $(SRCGZIPFILE) && test -z $(NOTSOLO)) \
+	then \
+	  echo "   First Deleting Existing Zip File $(SRCGZIPFILE)"; \
+          rm -f $(SRCGZIPFILE); \
+	fi
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo "   Making New Zip File From $(TARFILE) Using $(GZIPPGM)"; \
+	  $(GZIPPGM) $(GZIPFLGS) $(SRCTARFILE); \
+	  echo "   New Zip File Completed, Named $(SRCGZIPFILE) In Current Directory"; \
+	  echo "   The Current Directory Is $(MODULEDIR)"; \
+	fi
+	
+hdrzip:
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo; \
+	  echo " * Generating Zipped File Of $(MODLABEL) Header Distribution"; \
+	  echo "   The Tar File $(HDRTARFILE) Will Be Compressed Using $(GZIPPGM)"; \
+	fi
+	@if (test -f $(HDRGZIPFILE) && test -z $(NOTSOLO)) \
+	then \
+	  echo "   First Deleting Existing Zip File $(HDRGZIPFILE)"; \
+          rm -f $(HDRGZIPFILE); \
+	fi
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo "   Making New Zip File From $(HDRTARFILE) Using $(GZIPPGM)"; \
+	  $(GZIPPGM) $(GZIPFLGS) $(HDRTARFILE); \
+	  echo "   New Zip File Completed, Named $(HDRGZIPFILE) In Current Directory"; \
+	  echo "   The Current Directory Is $(MODULEDIR)"; \
+	fi
+
+srcdzip:
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo; \
+	  echo " * Generating Zipped File Of $(MODLABEL) Source Distribution"; \
+	  echo "   The Directory $(COPY2BASE) Will Be Compressed Using $(ZIPPGM)"; \
+	  $(ZIPPGM) $(ZIPFLGS) $(SRCZIPFILE) $(COPY2BASE); \
+	  echo "   New Zip File Completed, Named $(SRCZIPFILE) In Current Directory"; \
+	  echo "   The Current Directory Is $(MODULEDIR)"; \
+	fi
+
+hdrdzip:
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo; \
+	  echo " * Generating Zipped File Of $(MODLABEL) Header Distribution"; \
+	  echo "   The Directory $(COPY2BASE) Will Be Compressed Using $(ZIPPGM)"; \
+	  $(ZIPPGM) $(ZIPFLGS) $(HDRZIPFILE) $(COPY2BASE); \
+	  echo "   New Zip File Completed, Named $(HDRZIPFILE) In Current Directory"; \
+	  echo "   The Current Directory Is $(MODULEDIR)"; \
+	fi
+
+###############################################################################
+#                                Target: srcclean                             #
+#                                                                             #
+# During a GAMMA source distribution a mock directory is produced which will  #
+# mimick the GAMMA directory hierarchy. It contains copies of all module      #
+# sources and any other files to be included in the distribution. This target #
+# removes any temporary directories and files that have been produced in a    #
+# GAMMA module source distribution. If this module's sources have been        #
+# specifically packaged then the copies made must be deleted.  In a full      #
+# GAMMA source distrubution all temporary files are deleted in the main GAMMA #
+# makefile, but that is NOT done here. This target section only deals with a  #
+# single module distribution and won't do anything unless it is being run in  #
+# SOLO mode.                                                                  #
+#                                                                             #
+# NOTSOLO:     Flag whether makefile is running independently or being driven #
+#              by the main GAMMA makefile. This will be set by the main GAMMA #
+#              makefile (in PASSFLGS) or not if running SOLO.                 #
+# COPY2SRC:    This will be the "src" directory where the copied module       #
+#              will be placed. It will be the one that is zipped up if the    #
+#              module by itself is distributed (SOLO)                         #
+#                                                                             #
+###############################################################################
+
+srcclean:  force
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo; \
+	  echo " * Cleaning Up Temporary Source Files And Any Directories"; \
+	  echo "   Removing Files Below $(COPY2SRC)"; \
+	  rm -rf $(COPY2SRC); \
+	fi
+ 
+###############################################################################
+#                               Target: srcvars                               #
+#                                                                             #
+# During a GAMMA source distribution files are moved around, directories      #
+# created and destroyed. This can be dangerous if some variables in the       #
+# Makefile are improperly set. At the vary least, the different targets will  #
+# not work. At worst, important files are destroyed.  This target will simply #
+# spit out all of the variables that are overtly used in this makefile. This  #
+# way one can have a look if things appear proper prior to running anything   #
+# that does file/directory manipulations. This target is not normally run by  #
+# a GAMMA user, it is more useful in building makefiles and debugging them.   #
+#                                                                             #
+# NOTSOLO:     Flag whether makefile is running independently or being driven #
+#              by the main GAMMA makefile. This will be set by the main GAMMA #
+#              makefile (in PASSFLGS) or not if running SOLO.                 #  
+# MODLABEL:    Name of module running the make. This will be declared in the  #
+#              module Makefile prior to importing this target.                #  
+# MODLABUN:    Underline of module name for module running the make. This     #  
+#              will be declared in the  module Makefile prior to including    #
+#              this target.                                                   #
+# SRCDIR:      The GAMMA source directory name (e.g. src), in MakeGam         #  
+# DIRNAME:     The module directory name (e.g. Basics, Matrix, ...) Set in    #  
+#              makefile that includes this one ($GAMMA/src/$MODULE/Makefile)  #
+# PROJECTPATH: The full directory name of the GAMMA project (version). This   #
+#              will have been set to empty above but will be set to some      #
+#              other value if being run recursively.                          #
+# MODULEDIR:   Name of module directory to be copied. Set above in this file. #
+# COPY2BASE:   Serves as the point just below where the copied source         #
+#              directory will reside. For a SOLO distribution of a single     #
+#              module that will be ".", but for a larger source distribution  #
+#              this will be a full path to a copied GAMMA directory.          #
+# COPY2DIR:    Directory where the copied module source files will be placed. #
+# FNAMES:      Test source file base names to be included in the module test  #
+#              distribution. These names will have a .cc appended to them and #
+#              they should reside in the module directory.                    #
+# TARFILE:     Tar file name, that produced upon source distribution of this  #
+#              specific module. Only used if running SOLO.                    #
+# ZIPFILE:     Zip file name, that produced upon source distribution of this  #
+#              of this specific module. Only used if running SOLO.            #
+# SRCLOCAL     This directory (full system path name)                         #
+# PASSFLGS:    The flags that are passed from the main GAMMA makefile during  #  
+#              recursion into this file. If running SOLO then this is set to  #
+#              be an empty string (done earlier in this makefile)             #
+#                                                                             #
+###############################################################################
+
+srcvars:   
+	@echo ""
+	@echo "   Variables Used ${MODLABEL} Module Source Distribution Makefile"
+	@echo
+	@if (test -z $(NOTSOLO)) \
+	then \
+          echo "  NOTSOLO       Make Being Run Directly            = $(NOTSOLO)"; \
+	else \
+          echo "  NOTSOLO       Make Being Run Recursively         = $(NOTSOLO)"; \
+        fi
+	@echo "  MODLABEL      The Module Label for Output        = $(MODLABEL)"
+	@echo "  MODLABUN      The Module Label Underline Output  = $(MODLABUN)"
+	@echo "  MODULEDIR     Module Full Directory Name         = $(MODULEDIR)"
+	@echo "  GVERDIR       The GAMMA Version Directory Name   = $(GVERDIR)"
+	@echo "  SRCDIR        The GAMMA Src Directory Name       = $(SRCDIR)"
+	@echo "  COPY2BASE     Distribution Temp Base Directory   = $(COPY2BASE)"
+	@echo "  COPY2SRC      Distribution Temp Source Directory = $(COPY2SRC)"
+	@echo "  COPY2DIR      Distribution Module Temp Directory = $(COPY2DIR)"
+	@for i in $(MODSRCFILES); do \
+	echo "  MODSRCFILES   Source Distribution File Names     = $$i"; \
+	done
+	@for i in $(MODHDRFILES); do \
+	echo "  MODHDRFILES   Header Distribution File Names     = $$i"; \
+	done
+	@if (test -z $(NOTSOLO)) \
+	then \
+	  echo "  SRCTARFILE    Produced Src Distribution Tarfile  = $(SRCTARFILE)"; \
+	  echo "  SRCGZIPFILE   Produced Src Distribution Zipfile  = $(SRCGZIPFILE)"; \
+	  echo "  SRCZIPFILE    Produced Src Distribution Zipfile  = $(SRCZIPFILE)"; \
+	  echo "  HDRTARFILE    Produced Hdr Distribution Tarfile  = $(HDRTARFILE)"; \
+	  echo "  HDRGZIPFILE   Produced Hdr Distribution Zipfile  = $(HDRGZIPFILE)"; \
+	  echo "  HDRZIPFILE    Produced Hdr Distribution Zipfile  = $(HDRZIPFILE)"; \
+	  echo "  SRCLOCAL      Where Tar & Zip Files Reside       = $(SRCLOCAL)"; \
+	else \
+	  if (test -z $(PASSFLGS)) \
+	  then \
+	    echo "  PASSFLGS      Variables Imparted By Main Make    = $(PASSFLGS)"; \
+	  else \
+	    echo "  PASSFLGS      Variables Imparted By Main Make:"; \
+	    for i in $(PASSFLGS); do \
+	      echo "   $$i"; \
+	    done \
+	  fi \
+	fi
+	@echo
+
+
+#	@echo "  DIRNAME       The GAMMA Src Module Dir. Name     = $(DIRNAME)"
+#	@echo "  PROJECTPATH   Module Full Directory Name         = $(PROJECTPATH)"

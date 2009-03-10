@@ -1,0 +1,74 @@
+###############################################################################
+#                                                                             #
+#               Makefile For The GAMMA MR Simulation Platform                 #
+#                     Copyright (C) 1999 Scott A. Smith                       #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32306-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of the Makefile is GAMMA defined files used in all Makefiles.   #
+# Each module will contribute its own definitions of primary files (source,   #
+# header, etc.) which will be dealt with herein with additonal variables used #
+# to collect them for the main GAMMA Makefile.                                #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.  The GAMMA Basics module  #
+# source distrubution is typically packaged with the full GAMMA source        #
+# distribution.  The full src distrubution and one for just the Basics module #
+# which may be obtained from the GAMMA WWW site above or any of its mirrors.  #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                            Files Under Make Control                         #
+#                                                                             #
+# Below are the files that this Makefile deals with.  Any additonal files for #
+# source distrubution and/or compilation should be added in this section.     #
+# Here are the current definitions:                                           #
+#                                                                             #
+# FNAMES: "filename" where filename.h & filename.cc are souce code files that #
+#         are part of this module.  These will be compiled into the module    #
+#         library. DEFINED IN EACH MODULE.                                    #
+# BINSUPP:Supplementary files to be included in the binary distrubution.      #
+# SUPPF:  Supplementary files to be include in the source distrubution.       #
+# CCFILES:The source code files for the module that will compile to .o files  #
+# HFILES: The header files (interface) corresponding to the .cc files CCFILES #
+# FILES:  These are automatically formed  herein from the base filenames set  #
+#         in FNAMES. The are the source interface and implementation files.   #
+# OBJ:    These are automatically formed herein from the base filenames set   #
+#         in FNAMES. The are the object file names after source compilation.  #
+#         Note that unlike the names in FILES, these will contain the full    #
+#         GAMMA library path.                                                 #
+# OBJP:   Same as OBJ but used when profiling.                                #
+# ALLCC:  All .cc source files from this and previous modules                 #
+# ALLH:   All header files from this and previous modules                     #
+#                                                                             #
+# Note that the file defined by FNAMES.h should also be represented in the    #
+# module header file called HDRFILE as well as in the RCS control script      #
+# RCSSCR. The former will affect how GAMMA generally takes this package       #
+# whereas the latter helps to maintain these files (but does not affect GAMMA #
+# program directly.)                                                          #
+#                                                                             #
+###############################################################################
+
+BINSUPP   = $(HDRFILE)
+SUPPF     = Makefile MakeDefs $(HDRFILE)
+#SUPPF     = Makefile.in $(HDRFILE)
+
+CCFILES   = $(addsuffix .cc, $(addprefix $(SRCLOCAL)/, $(FNAMES)))
+HFILES    = $(addsuffix .h,  $(addprefix $(SRCLOCAL)/, $(FNAMES)))
+
+FILES     = $(addsuffix .cc,   $(addprefix $(SRCLOCAL)/, $(FNAMES)))\
+            $(addsuffix .h ,   $(addprefix $(SRCLOCAL)/, $(FNAMES)))
+
+OBJ       = $(addsuffix .o,   $(addprefix $(LIB)/, $(FNAMES)))
+OBJP	  = $(addsuffix _p.o, $(addprefix $(LIB)/, $(FNAMES)))
+
+#ALLCC    += CCFILES
+#ALLH     += HFILES
+#ALLOBJ   += OBJ
+#ALLOBJP  += OBJP
+

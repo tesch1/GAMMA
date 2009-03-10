@@ -1,0 +1,226 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0063)http://gamma2.magnet.fsu.edu/install/msvc/compiler/Q181506.html -->
+<HTML><HEAD><TITLE>Q181506 - HOWTO: Make VC++ Recognize File Extensions as C/C++ Files</TITLE>
+<META http-equiv=CONTENT-Type content="text/html; charset=iso-8859-1">
+<META http-equiv=PICS-Label 
+content='(PICS-1.1 "http://www.rsac.org/ratingsv01.html" l gen true comment "RSACi North America Server" by "Inet@microsoft.com" for "http://support.microsoft.com" on "1998.02.17T12:28-0800" r (n 0 s 0 v 0 l 0))'>
+<META content=EN-US name=ms.locale>
+<META content="Support; KB Article" name=Category>
+<META content=Support name=Premium>
+<META content="Support; KB; visualc" name=KBArea>
+<META content=Q181506 name=KBID>
+<META content="HOWTO: Make VC++ Recognize File Extensions as C/C++ Files" 
+name=KBTitle>
+<META 
+content="Microsoft's Visual C++ Integrated Development Environment (IDE) recognizes&#10;the following file extensions as C++ source files: .c, .cpp, and .cxx. In&#10;some cases, a programmer may want to use other file extensions for C++&#10;files; for example, " 
+name=Description>
+<META content=visualc name=Product>
+<META content="February 20, 1998" name=KBCreate>
+<META content="May 15, 2000" name=KBModify>
+<META content="January 29, 1999" name=EditDate>
+<META content="" name=Question>
+<META content="WINDOWS:6.0,97; winnt:4.0,4.0a,4.1,4.2,4.2b,5.0,6.0" 
+name=Versions>
+<META content="" name=Component>
+<META content=kbvcSearch name=Technology>
+<META content="103280 164931" name=Links>
+<META 
+content="kbCompiler kbide kbVC400 kbVC410 kbVC420 kbVC500 kbVC600 kbGrpDSTools kbvc600faq" 
+name=Keywords>
+<META content="WINDOWS winnt" name=Platform>
+<META content="" name=Hardware>
+<META content="" name=SolutionType>
+<META content=kbhowto name=IssueType>
+<META content=xreftext name=BoilerPlate>
+<META content="" name=ProducedView>
+<META content="MSHTML 5.50.4807.2300" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff leftMargin=0 topMargin=0 rightMargin=0 MARGINWIDTH="0" 
+MARGINHEIGHT="0">
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top>
+      <CENTER>
+      <TABLE cellSpacing=0 cellPadding=0 width="95%" border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top><FONT face="Verdana, Arial, Helvetica" size=2>
+            <TABLE>
+              <TBODY>
+              <TR>
+                <TD>
+                  <H2>HOWTO: Make VC++ Recognize File Extensions as C/C++ 
+                  Files</H2></TD></TR></TBODY></TABLE>
+            <HR>
+            The information in this article applies to:<BR>
+            <UL>
+              <LI>Microsoft Visual Studio versions 97, 6.0 
+              <LI>Microsoft Visual C++, 32-bit Editions, versions 4.0, 4.0a, 
+              4.1, 4.2, 4.2b, 5.0, 6.0</LI></UL>
+            <HR>
+            <BR>
+            <H2>SUMMARY</H2>
+            <P>Microsoft's Visual C++ Integrated Development Environment (IDE) 
+            recognizes the following file extensions as C++ source files: .c, 
+            .cpp, and .cxx. In some cases, a programmer may want to use other 
+            file extensions for C++ files; for example, Unix C++ source files 
+            often use the .cc extension. <BR><BR>Using the steps in this 
+            article, source files with other file extensions may benefit from 
+            the Visual C++ IDE's syntax coloring, automatic indentation, and 
+            other usage enhancements. This article describes how to 
+            automatically compile such files as C/C++ and associate the C++ icon 
+            with these files in Windows Explorer. </P><BR>
+            <H2>MORE INFORMATION</H2>
+            <P>The following procedure causes the Visual C++ IDE to recognize 
+            extensions other than .c, .cpp, and .cxx as a C/C++ source file. 
+            These changes involve altering registry settings. 
+            <BR><BR><B>WARNING</B>: Using Registry Editor incorrectly can cause 
+            serious, system-wide problems that may require you to reinstall 
+            Windows to correct them. Microsoft cannot guarantee that any 
+            problems resulting from the use of Registry Editor can be solved. 
+            Use this tool at your own risk. <BR><BR>Microsoft STRONGLY 
+            recommends saving the current registry settings before starting this 
+            procedure. For additional information, please see the following 
+            articles in the Microsoft Knowledge Base (the second link applies to 
+            Windows 95 as well): 
+            <BLOCKQUOTE><A class=LINK 
+              href="http://support.microsoft.com/support/kb/articles/Q103/2/80.ASP">Q103280</A> 
+              Using an Emergency Repair Disk Created by Windows NT </BLOCKQUOTE>
+            <BLOCKQUOTE><A class=LINK 
+              href="http://support.microsoft.com/support/kb/articles/Q164/9/31.ASP">Q164931</A> 
+              Using Regedit to Backup Your Windows NT Registry </BLOCKQUOTE>To 
+            start the Registry Editor: 
+            <OL>
+              <LI>Close any running instances of Developer Studio. <BR><BR>
+              <LI>On the <B>Start</B> menu, click <B>Run</B>. <BR><BR>
+              <LI>Type <B>regedit</B> and click <B>OK</B> to start the Registry 
+              Editor. <BR><BR></LI></OL>In the Registry Editor, repeat the 
+            following four steps for each new file extension to associate with a 
+            C/C++ icon. These steps illustrate how to associate the .cc file 
+            extension with the C++ source file icon: 
+            <OL>
+              <LI>Right-click <B>HKEY_CLASSES_ROOT</B> and select <B>New | 
+              Key</B>. <BR><BR>
+              <LI>A key name will appear; change <B>New Key #1</B> to <B>.cc</B> 
+              (the period is mandatory). <BR><BR>
+              <LI>Click the new <B>.cc</B> key, then double-click <B>Default</B> 
+              in the right-hand pane of the Registry Editor. <BR><BR>
+              <LI>In the <B>Value Data</B> field, type <B>cppfile</B>. Click 
+              <B>OK</B>. <BR><BR></LI></OL><B>NOTE</B>: To associate a file 
+            extension with the C source file icon, use <B>cfile</B> instead of 
+            <B>cppfile</B>. The values <B>hppfile</B> and <B>hfile</B> associate 
+            file extensions with C++ and C header file icons, respectively. (In 
+            Windows Explorer, the appropriate icon should now accompany files 
+            with the extension added in steps 1 through 4. Clicking the icon 
+            will launch Visual C++. Don't do this just yet, though.) <BR><BR>The 
+            following steps apply to keys and values located on the home key. In 
+            the Registry Editor, locate the user settings home key for Developer 
+            Studio. For various versions, the home key is: <BR><BR><BR><BR>
+            <H4>Version 6.0 (ships with Visual Studio 6.0)</H4><BR><KBD 
+            class=FIXEDTEXT>HKEY_CURRENT_USER\Software\Microsoft\DevStudio\6.0\ 
+            </KBD><BR><BR><BR><BR>
+            <H4>Version 5.0 (ships with Visual Studio 97)</H4><BR><KBD 
+            class=FIXEDTEXT>HKEY_CURRENT_USER\Software\Microsoft\DevStudio\5.0\ 
+            </KBD><BR><BR><BR><BR>
+            <H4>Versions 4.x</H4><BR><KBD 
+            class=FIXEDTEXT>HKEY_CURRENT_USER\Software\Microsoft\Developer 
+            </KBD><BR><BR><BR><BR>The following registry keys cause the IDE to 
+            load the C/C++ compiler tool for the specified file extensions (.cc 
+            illustrated): <BR><BR>
+            <OL>
+              <LI>Locate the following keys under Build 
+              System\Components\Platforms: <BR><BR><KBD 
+              class=FIXEDTEXT>Win32(ALPHA)\Tools\C/C++ Compiler for Alpha 
+              Win32(PowerPC)\Tools\C/C++ Compiler for PowerPC 
+              Win32(x86)\Tools\C/C++ Compiler for 80x86 </KBD><BR><BR>If WinCE 
+              2.0 is installed, the following keys will also be present: 
+              <BR><BR><KBD class=FIXEDTEXT>Win32(WCE x86em)\Tools\C++ Compiler 
+              for 80x86em (Emulation) Win32(WCE MIPS)\Tools\C/C++ Compiler Mips 
+              R4100 Win32(WCE SH)\Tools\C/C++ Compiler for SH </KBD><BR><BR>
+              <LI>Each of those keys has a setting called <B>Input_Spec</B>. 
+              Double-click <B>Input_Spec</B>; then, in the <B>Value Data</B> 
+              field, add <B>;*.cc</B> to the end of the existing list of 
+              extensions. Click <B>OK</B>. <BR><BR></LI></OL>The following 
+            registry key determines the file extensions selected for syntax 
+            coloring, smart indentation, and so on: <BR><BR>
+            <OL>
+              <LI>Locate the key Text:<BR><BR><KBD 
+              class=FIXEDTEXT>Editor\Tabs/Language Settings\C/C++ </KBD><BR><BR>
+              <LI>Double-click the <B>FileExtensions</B> setting; add <B>;cc</B> 
+              to the end of the existing list of extensions. Click <B>OK</B>. 
+              <BR><BR>
+              <LI>Close the Registry Editor. <BR><BR>
+              <LI>Start Developer Studio and create a new file or open an 
+              existing one with the extension(s) just added. Syntax coloring and 
+              automatic indentation should be in effect. 
+            <BR><BR></LI></OL><B>NOTE</B>: The new extensions will not appear in 
+            the <B>Files of type</B> list when you click <B>Open</B> on the 
+            <B>File</B> menu. Use <B>All Files (*.*)</B> to view files with 
+            nonstandard extensions. Alternatively, double-click the file from 
+            Windows Explorer; once it loads into Visual C++, right-click inside 
+            the file's window and select <B>Insert File into Project</B> to add 
+            the file to a project.<BR><BR><B>NOTE</B>: External makefiles that 
+            are generated from Developer Studio will not have the correct 
+            inference rules for new file extensions. Inference rules must be 
+            added by either copying existing rules within the makefile (for 
+            example, adding SUFFIXES:.cc at the beginning of the makefile and 
+            copying the .cpp.obj: rule to create a .cc.obj: rule), or by adding 
+            rules in the TOOLS.INI file. <BR><BR>Although the IDE starts the 
+            C/C++ compiler tool for the file extensions added in the steps 
+            above, the compiler needs to know whether to compile the file as C 
+            or C++. The compiler normally compiles .c files as C, and compiles 
+            .cpp and .cxx as C++. For all other extensions, the compiler needs 
+            an explicit parameter: /TC compiles files as C, /TP compiles files 
+            as C++. Each project that includes files with custom extensions 
+            needs an explicit /TC or /TP parameter. The following steps 
+            illustrate how to do this: <BR>
+            <OL>
+              <LI>Open a project in Developer Studio. <BR><BR>
+              <LI>Click <B>Settings</B> on the <B>Project</B> menu. <BR><BR>
+              <LI>In the resulting dialog box, select a configuration and a 
+              project (do <B>not</B> select <B>All Configurations</B> or 
+              multiple projects). <BR><BR>
+              <LI>Click the <B>C/C++</B> tab. <BR><BR>
+              <LI>In the <B>Project Options</B> text box at the bottom, add 
+              <B>/TP</B> or <B>/TC</B> to the end of the listed options. 
+<BR><BR>
+              <LI>Repeat steps 3 through 5 for each configuration and each 
+              project in the workspace whose explicit compile type needs to be 
+              set. Click <B>OK</B>. <BR><BR></LI></OL><B>NOTE:</B> Using 
+            /Tp"file.cc" and /Tc"file.cc" nevertheless generates the warnings 
+            D4024 and D4027 with VC++ 6.0. However, with the registry changes 
+            mentioned here, the file is properly compiled as the type specified. 
+            You may disregard the warnings in this case.<BR><BR>This setting 
+            treats ALL source files built by the CL compiler tool in the project 
+            as C++ (/TP) or C (/TC) files (the project options cannot be edited 
+            on a per-file basis). The entire project now uses either the C++ 
+            compiler or the C compiler. To treat individual files in a project 
+            as C++ or C source files, use the <B>/Tp&lt;source file&gt;</B> or 
+            <B>/Tc&lt;source file&gt;</B> settings. See REFERENCES for more 
+            information on the use of compiler settings. <BR><BR>If necessary, a 
+            custom build step can launch the C/C++ compiler (CL.EXE) with 
+            settings specific to a single file. This is less desirable, because 
+            the custom build step requires explicitly listing all of the 
+            compiler options. See REFERENCES for online documentation of 
+            instructions on adding a custom build step. 
+            <P></P><BR>
+            <H2>REFERENCES</H2>
+            <P><I>Visual C++ Programmer's Guide</I>, Compiling and Linking, 
+            Details, Compiler Reference. <BR><BR><I>Visual C++, Developer Studio 
+            Environment User's Guide</I>, Working With Projects, How Do I... 
+            Topics: Working With Projects, Customizing a Build Process. </P>
+            <P>Additional query words: </P>
+            <P>Keywords : kbCompiler kbide kbVC400 kbVC410 kbVC420 kbVC500 
+            kbVC600 kbGrpDSTools kbvc600faq <BR>Version : WINDOWS:6.0,97; 
+            winnt:4.0,4.0a,4.1,4.2,4.2b,5.0,6.0 <BR>Platform : WINDOWS winnt 
+            <BR>Issue type : kbhowto <BR>Technology : kbvcSearch </P><!--CONVLEGACY DELIMITER--></FONT></TD></TR></TBODY></TABLE>
+      <P>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top>
+            <CENTER><BR><FONT face="Verdana, Arial, Helvetica" size=1>Last 
+            Reviewed: May 15, 2000<BR><A 
+            href="http://support.microsoft.com/support/misc/cpyright.asp">© 2000 
+            Microsoft Corporation. All rights reserved. Terms of 
+            Use.</A><BR></FONT></CENTER></TD></TR></TBODY></TABLE></P></CENTER></TD></TR></TBODY></TABLE></BODY></HTML>

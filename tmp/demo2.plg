@@ -1,0 +1,32 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: demo2 - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\bsoher\LOCALS~1\Temp\RSP291E.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /I "../src" /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Release/demo2.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"C:\bsoher\code\packages\gamma-4.1.0\tmp\demo2.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\bsoher\LOCALS~1\Temp\RSP291E.tmp" 
+Creating temporary file "C:\DOCUME~1\bsoher\LOCALS~1\Temp\RSP291F.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib gamma.dll.lib /nologo /subsystem:console /incremental:no /pdb:"Release/demo2.pdb" /machine:I386 /nodefaultlib:"LIBCMTD" /out:"demo2.exe" /libpath:"..\i686-pc-msvc" 
+".\Release\demo2.obj"
+]
+Creating command line "link.exe @C:\DOCUME~1\bsoher\LOCALS~1\Temp\RSP291F.tmp"
+<h3>Output Window</h3>
+Compiling...
+demo2.cpp
+Linking...
+
+
+
+<h3>Results</h3>
+demo2.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

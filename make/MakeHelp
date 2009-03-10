@@ -1,0 +1,52 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#                Makefile For The GAMMA MR Simulation Platform                #
+#                      Copyright © 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile, MakeHelp, is simply to provide the user with  #
+# the ability to see what the main GAMMA makefile is able to to. This is      #
+# applicable only to the main GAMMA makefile.                                 #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.                           #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+#   none                                                                      #
+#                                                                             #
+# Supplied Variables                                                          #
+# ==================                                                          #
+#                                                                             #
+#   none                                                                      #
+#                                                                             #
+# Requirements   							      #
+# ============                                                                #
+#                                                                             #
+#   none                                                                      #
+#                                                                             #
+###############################################################################
+
+help: force
+	@echo 
+	@echo 
+	@echo "   This Makefile is for the GAMMA magnetic resonance simulation platform."
+	@echo "   It handles compilation of GAMMA source codes into binary libraries,"
+	@echo "   GAMMA distributions, testing, and the running of demonstration programs."
+	@echo "   Some of the more common make targets are as follows:" 
+	@echo 
+	@echo "	* make dist	  - Make a GAMMA distribution" 
+	@echo "	  make help       - Show what the GAMMA does" 
+	@echo "	  make killdos    - Removes DOS linefeeds from GAMMA files" 
+	@echo "	  make cleandir   - Removes spurious files from GAMMA directories" 
+	@echo 
+	@echo "   The targets starred (*) are those which conform to GNU recommendations"
+	@echo "   as to which targets should be present in a Makefile."
+	@echo 
+

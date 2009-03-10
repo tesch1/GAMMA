@@ -1,0 +1,546 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+  <TITLE>MSVC++ GAMMA DLL</TITLE>
+  <META NAME="GENERATOR"       CONTENT="GNU m4 in Unix/WinNT">
+  <META NAME="AUTHOR"          CONTENT="Scott A. Smith">
+  <META HTTP-EQUIV="Copyright" CONTENT="Dr. Scott A. Smith">
+  <META HTTP-EQUIV="Author"    CONTENT="Dr. Scott A. Smith">
+  <META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+  
+  <META name="description" content="GAMMA Build & Use Of MSVC++ DLL.">
+  
+  <META name="keywords" content="NMR, ESR, EMR, MRI, FID, resonance, science, education, simulation"> 
+  
+  <META HTTP-EQUIV="Content-style-type" CONTENT="text/css">
+  <STYLE TYPE="text/css">
+    A:link, A:visited  { text-decoration:none; }
+  </STYLE> 
+</HEAD>
+<BODY bgcolor="#ffffff" background="../../doc/directories/../figs/bkground.gif">
+
+
+<P>
+<TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" WIDTH="650">
+  <TR>
+    <TD align=left valign="top" rowspan="2" WIDTH="118">
+      
+<!---                           Begin GAMMA Links Table                        --->
+
+      <TABLE BORDER="0" WIDTH="118" CELLPADDING="0" CELLSPACING="0" bgcolor="#7675FD">
+        <TR><TD align=center><IMG SRC="../../doc/directories/../figs/goldG.gif"></TD></TR>
+
+       <TR> <TD align=center><HR></TD> </TR>
+        <TR>
+          <TH align=center><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../index.html" TARGET="_top"><FONT color="yellow"><STRONG>&#915; LOCAL</STRONG></FONT></A>&nbsp;
+          </FONT></TH>
+        </TR>
+        <TR> <TD align=center><HR></TD> </TR>
+
+       <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../info/index.html" TARGET="_top"><FONT color="black"><STRONG>Information</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../download/index.html" TARGET="_top"><FONT color="black"><STRONG>Downloading</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../install/index.html" TARGET="_top"><FONT color="black"><STRONG>Installation</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../../demo/index.html" TARGET="_top"><FONT color="black"><STRONG>Base Demos</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../tutor/index.html" TARGET="_top"><FONT color="black"><STRONG>Tutorials</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../example/index.html" TARGET="_top"><FONT color="black"><STRONG>Examples</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../../example/index.html" TARGET="_top"><FONT color="black"><STRONG>Example Dir.</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../online/index.html" TARGET="_top"><FONT color="black"><STRONG>Online Pgms.</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../html/index.html" TARGET="_top"><FONT color="black"><STRONG>HTML Docs</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../pdf/index.html" TARGET="_top"><FONT color="black"><STRONG>PDF Docs</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../PyGAMMA/index.html" TARGET="_top"><FONT color="black"><STRONG>PyGAMMA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        
+        <TR>
+          <TD align=left valign="top">
+            <FONT size=-1><STRONG>&nbsp;
+      <A HREF="../../doc/directories/index.html"><FONT color="yellow">Directories</FONT></A>
+      </STRONG></FONT>
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../../doc/directories/../../src/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>Sources</STRONG></FONT></A>
+          </STRONG></FONT>
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../../doc/directories/../../demo/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>Demos</STRONG></FONT></A>
+          </STRONG></FONT>
+            <FONT size=-2><STRONG>
+       <BR><A HREF="../index.html" TARGET="_top"><FONT color="yellow">&nbsp;&nbsp;&middot;&nbsp;Visual C++</FONT></A>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="../configure.html" TARGET="_top"><FONT color="black">--&nbsp;<STRONG>Configure</STRONG></FONT></A>
+          </STRONG></FONT>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="../static/index.html" TARGET="_top"><FONT color="black">--&nbsp;<STRONG>Static Lib</STRONG></FONT></A>
+          </STRONG></FONT>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="../dynamic/index.html" TARGET="_top"><FONT color="yellow">--&nbsp;<STRONG>DLL</STRONG></FONT></A>
+          </STRONG></FONT>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="../pygamma/index.html" TARGET="_top"><FONT color="black">--&nbsp;<STRONG>PyGAMMA</STRONG></FONT></A>
+          </STRONG></FONT>
+       </STRONG></FONT>
+
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../../doc/directories/../../primal/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>Primal Makefiles</STRONG></FONT></A>
+          </STRONG></FONT>
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../../doc/directories/../../devc++/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>DevC++ Projects</STRONG></FONT></A>
+          </STRONG></FONT>
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../../doc/directories/../../test/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>Testing</STRONG></FONT></A>
+          </STRONG></FONT>
+          </TD>
+        </TR> 
+
+        
+       
+       
+
+        
+        <TR> <TD align=center><HR></TD> </TR>
+        <TR>
+          <TH align=center><FONT size="-1">
+          &nbsp;<A HREF="../../doc/directories/../mirrors.html" TARGET="_top"><FONT color="black"><STRONG>&#915; WWW Sites</STRONG></FONT></A>&nbsp;
+          </FONT></TH>
+        </TR>
+        <TR> <TD align=center><HR></TD> </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma.magnet.fsu.edu/index.html" TARGET="_top"><FONT color="black"><STRONG>MainSite, USA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma2.magnet.fsu.edu/index.html" TARGET="_top"><FONT color="black"><STRONG>Florida, USA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma3.magnet.fsu.edu/index.html" TARGET="_top"><FONT color="black"><STRONG>Florida, USA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma.ethz.ch/index.html" TARGET="_top"><FONT color="black"><STRONG>Z&uuml;rich, CH</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+      </TABLE>
+
+<!---                             End GAMMA Links Table                        --->
+
+    </TD>
+    <TD align="left" valign="top" width="27">&nbsp;</TD>
+    <TD align="left" valign="top" width="515">
+       
+      <TABLE BORDER=0>
+        <TR ALIGN=LEFT>
+          <TD><IMG SRC="../../doc/directories/../figs/gamma.gif" HEIGHT=47 WIDTH=253 ALT="GAMMA"></TD>
+           <TD rowspan=2 align=center valign="top">
+             <FONT size="6"><A NAME="TOP">MSVC++ DLL<BR>Build & Projects</A></FONT>
+             <BR>
+             (&#915; Version 4.1.0)
+            </TD>
+        </TR>
+        <TR>
+          <TD><IMG SRC="../../doc/directories/../figs/meaning.gif" HEIGHT=24 WIDTH=253 ALT=""></TD>
+        </TR>
+      </TABLE>
+
+    </TD>
+  </TR>
+  <TR>
+    <TD ALIGN="left" width="27" valign="top">&nbsp;</TD>
+    <TD ALIGN="left" width="515" valign="top">
+      <TABLE border=0 valign="top">
+         <TR>
+           <TD valign=top>
+             <A NAME="TOP">&nbsp;</A><P>
+             This directory contains an MSVC++ workspace <STRONG>gamma.dsw</STRONG> which will build
+             a Windows based GAMMA dynamic library (DLL) as well as smaller projects which will compile/run
+	     demonstration and testing programs which use the DLL. These notes were gleaned
+	     from my experience with MSVC++ version 6.0 adjusted to handle <EM>.cc</EM> files. You MUST
+	     have MSVC++ on your computer system (PC) before these files will be of any use to you.
+
+          <P>
+          <TABLE BORDER=1 ALIGN=CENTER>
+            <TR>
+              <TD align=center>
+                <TABLE>
+                  <TR>
+                    <TH colspan=2>MSVC++ Projects In Workspace gamma.dsw</TH>
+                  </TR>
+                  <TR>
+                    <TD align="center">Name</TD><TD align="center">Description</TD>
+                  </TR>
+                  <TR>
+                    <TD>gamma</TD><TD>Builds GAMMA as a Dynamically Linked Library (DLL)</TD>
+                 </TR>
+                  <TR>
+                    <TD>moduledemos&nbsp;&nbsp;</TD><TD>Compiles & Runs a program that demos GAMMA modules</TD>
+                  </TR>
+                  <TR>
+                    <TD>moduletests&nbsp;&nbsp;</TD><TD>Compiles & Runs a program that tests GAMMA modules</TD>
+                  </TR>
+                </TABLE>
+              </TD>
+            </TR>
+          </TABLE>
+
+          <P>
+          <H3>Recommended Steps</H3>
+          <OL>
+            <LI><A HREF="#CONFIG">Configure MSVC++ For GAMMA Project Builds
+            <LI><A HREF="#BUILD">Build The GAMMA DLL</A> (if needed)
+            <LI><A HREF="#DEMO">Build/Run GAMMA Module Demos
+            <LI><A HREF="#TEST">Build/Run GAMMA Module Tests
+            <LI><A HREF="#CLEAN">Clean Out Any Unneeded Files From Builds (if desired)</A>
+          </OL>
+
+          <P>
+          <HR>
+          <P>
+          <CENTER><H3><A NAME="CONFIG">MSVC++ Workspace Configuration For GAMMA</A></H3></CENTER>
+
+          The GAMMA supplied MSVC++ workspace/projects may fail if Visual C++ itself is not set
+          up properly. This document will assume that you have already accomplished the 
+          <A HREF = "../configure.html">global configuration</A>, and need only perform any
+          localized configuration required for individual projects. Each individual project will
+          have its own particular settings, however most of these have <STRONG>already been set</STRONG>.
+          <P>
+          The following is a list of settings which the user should adjust if there
+          are problems building the GAMMA DLL, demo program, test program, or
+          any other GAMMA project in the workspace. The settings listed are those which differ
+          from the MSVC++ defaults used when setting up a DLL project not using MFC.
+          Again, let me emphasize that most of these settings should already be in place. The
+          primary reason for listing them is so users can build their own GAMMA MSVC++ projects.
+          <P>
+ 
+             <CENTER><H3>MSVC++ Project Settings For GAMMA</H3></CENTER>
+
+            <TABLE BORDER=1 align="CENTER"><TR><TD>
+             <TABLE align="CENTER">
+             <TR><TD><IMG SRC="../figs/win.gif">  &nbsp;</TD><TD> 1.) Open GAMMA Project: Click on <STRONG>gamma.dsw</STRONG> icon</TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>2.) Set Release Build: Upper Menu Bar Select <EM>Win32 Release</EM></TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>3.) Open Project Settings: Right Click <EM>gamma files</EM> - <U>S</U>ettings...</TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>4.) Select <U>S</U>ettings For: Win32 Release - C/C++</TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>5.) C/C++ Tab Project <U>O</U>ptions: Add /TP /Zm200 to list</TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>6.) Select Tab Link</TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>7.) Output file <U>n</U>ame:<U>I</U>../../i686-pc-msvc/gamma.dll</TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>7.) Project <U>O</U>pionts:/implib:"../../i686-pc-msvc/gamma.dll.lib"</TD></TR>
+             <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>9.) Close Project Settings</TD></TR>
+             </TABLE>
+             </TD></TR></TABLE>
+
+          <P>
+          <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+          <P>
+          <HR>
+          <P>
+ 
+          <CENTER><H3><A NAME="BUILD">MSVC++ Build Of The GAMMA DLL</A></H3></CENTER>
+
+          <P>
+          <EM>Do You Need To Build The DLL?</EM>
+          <P>
+          You may already have the DLL! It may have come with your GAMMA distribution or
+          it probably can be directly downloaded from a GAMMA WWW site. There are two files associated with the
+          MSVC++ GAMMA DLL, <EM>gamma.dll</EM> and <EM>gamma.dll.lib</EM>. The former is the
+          dynamically linked library while the latter is the DLL imports library. It is this
+          latter file to which users link to when building GAMMA based programs using the DLL.
+
+          <P>
+          If you have a viable GAMMA DLL already you will have both of these files as well as
+          all the GAMMA headers. Check to see if the headers exist in the folders stemming from
+          the <A HREF="../../src/">source directory</A> (scads of .h files). Check to see if
+          you have the imports library in the <A HREF="../../i686-pc-msvc/">MSVC++ binaries directory</A>.
+          The DLL may be in this binary directory too or it may have been moved to a directory that is
+          in the Windows path (e.g. C:/WinNT). You may have to search for the actual DLL. If you have
+          all of this (DLL, imports library, GAMMA headers) then you do not need to build it unless
+	  there is some unforseen troubles.
+
+          <P>
+          <EM>You Have Set Up MSVC++ For GAMMA Right?</EM>
+          <P>
+          The build of the DLL will fail if you have not properly set up MSVC++. There are
+          <A HREF="../configure.html">global settings</A> as well as <A HREF="#CONFIGURE">project
+          settings</A>. Make sure both have been done.
+
+          <P>
+          <EM>You Have The GAMMA Sources Too?</EM>
+          <P>
+          You cannot build the DLL without having the GAMMA sources, both the .cc and .h
+          files. Have an look in the <A HREF="../../src/">source directory</A> to make sure there
+          are lots of these in the sub-folders from this one.
+
+          <P>
+          <EM>Here is How To Build The DLL</EM>
+          <P>
+
+          The primary project <STRONG>gamma</STRONG> will build GAMMA from sources as a dynamically
+          linked library (DLL). There are two important files created during the build, the DLL
+          named <STRONG>gamma.dll</STRONG> and the associated static imports library named
+          <STRONG>gamma.dll.lib</STRONG>. It is the latter that GAMMA programs (such as those in
+          moduledemos and moduletests) actually link to. The build will produce the dynamic library
+          <STRONG>gamma.dll</STRONG> as well as the imports library <STRONG>gamma.dll.lib</STRONG>
+          in the binary directory GAMMAVER/i686-pc-msvc. The DLL, imports library, and object files
+          will all be placed into this directory. Note that if you clean the GAMMA library project
+          all object files <STRONG>and the two library files</STRONG> will be deleted.
+
+          <P>
+          <CENTER><H3>DLL Build Instructions</H3></CENTER>
+	     </TD>
+	   </TR>
+	   <TR>
+	     <TD align=center>
+
+            <TABLE BORDER=1><TR><TD>
+            <TABLE align="CENTER" CELLSPACING="3">
+              <TR>
+                <TD><IMG SRC="../figs/win.gif">  &nbsp;</TD>
+                <TD align="LEFT">1.) Open MSVC++ Workspace: Click on gamma.dsw icon [this dir]</TD>
+              </TR>
+             <TR>
+                <TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD>
+                <TD align="LEFT">2.) Set GAMMA project default: <U>P</U>roject - Set Acti<U>v</U>e Project - Gamma</TD>
+             </TR>
+             <TR>
+                <TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD>
+                <TD align="LEFT">3.) Clean GAMMA project: <U>B</U>uild - Cl<U>e</U>an</TD>
+             </TR>
+             <TR>
+                <TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD>
+                <TD align="LEFT">4.) Build GAMMA Project: <U>B</U>uild - <U>B</U>uild Gamma.lib</TD>
+             </TR>
+             <TR>
+                <TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD>
+                <TD align="LEFT">5.) Set Test project default: <U>P</U>roject - Set Acti<U>v</U>e Project - TestGamma</TD>
+             </TR>
+             <TR>
+                <TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD>
+                <TD align="LEFT">6.) Clean Test project: <U>B</U>uild - Cl<U>e</U>an</TD>
+             </TR>
+             <TR>
+                <TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD>
+                <TD align="LEFT">7.) Build Test Project: <U>B</U>uild - <U>B</U>uild TestGAMMA.exe</TD>
+             </TR>
+             <TR>
+                <TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD>
+                <TD align="LEFT">8.) Run Test Project: <U>B</U>uild - !&nbsp;E<U>x</U>ecute TestGamma.exe</TD>
+             </TR>
+            </TABLE>
+            </TD></TR></TABLE>
+          <P>
+          <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+          <P>
+          <HR>
+          <P>
+ 
+          <CENTER><H3><A NAME="DEMO">MSVC++ Build & Run GAMMA Module Demos Using DLL</A></H3></CENTER>
+	     </TD>
+	   </TR>
+	   <TR>
+	     <TD>
+
+          GAMMA comes with a series of demonstration programs which will take the user through each
+          module and detail what it provides and how it is used. The supplied MSVC++ workspace in this
+          directory, <STRONG>gamma.dsw</STRONG> contains a project <EM>ModuleDemos</EM> for building and
+          running these demos in a single program. It will produce an executable <STRONG>DemoGAMMA.exe</STRONG>
+          in this directory, then run it. The demo runs interactively and will demand user input.
+          Of course, you must have the GAMMA DLL (gamma.dll), the associated static library (gamma.dll.lib),
+          and the GAMMA headers on your system in order to build and run the demo program. The stati library is
+          <EM>gamma.dll.lib</EM> and should reside in the Visual C++ binary directory ../../i686-pc-msvc. 
+          The headers will be the .h files found in the folders stemming from the source directory ../../src.
+          The DLL, gamma.dll, should be placed in a system folder in order to be generally used.
+
+
+          <P>
+            <TABLE BORDER=1><TR><TD>
+            <TABLE align="CENTER" CELLSPACING="3">
+            <TR><TD><IMG SRC="../figs/win.gif">  &nbsp;</TD><TD>1.) Open MSVC++ Workspace: Click on gamma.dsw icon [this dir]</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>2.) Demo Project Default: <U>P</U>roject - Set Acti<U>v</U>e Project - ModuleDemos</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>3.) Clean Demo Project: <U>B</U>uild - Cl<U>e</U>an</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>4.) Build Demo Project: <U>B</U>uild - <U>B</U>uild DemoGAMMA.exe</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>5.) Run Demo Project: <U>B</U>uild - !&nbsp;E<U>x</U>ecute DemoGamma.exe</TD></TR>
+            </TABLE>
+            </TD></TR></TABLE>
+
+          <P>
+          <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+          <P>
+          <HR>
+          <P>
+ 
+          <CENTER><H3><A NAME="TEST">MSVC++ GAMMA Testing Build/Run Using The DLL</A></H3></CENTER>
+
+          GAMMA comes with a series of testing programs which will attempt to verify that GAMMA is working
+          properly. The supplied MSVC++ workspace in this directory, <STRONG>gamma.dsw</STRONG> contains
+          a project <EM>testmodules</EM> for building and running these tests in a single program. It will
+          produce an executable <STRONG>TestGAMMA.exe</STRONG> in this directory, then run it. The test
+          program will link to the static library and runs interactively. It will demand some user input.
+          Of course, you must have the GAMMA static library and the GAMMA headers on your system in
+          order to build and run the test program. The library is <EM>gamma.lib</EM> and should reside
+          in the Visual C++ binary directory ../../i686-pc-msvc. The headers will be the .h files
+          found in the folders stemming from the source directory ../../src.
+
+          <P>
+            <TABLE BORDER=1><TR><TD>
+            <TABLE align="CENTER" CELLSPACING="3">
+            <TR><TD><IMG SRC="../figs/win.gif">  &nbsp;</TD><TD>1.) Open MSVC++ Workspace: Click on gamma.dsw icon [this dir]</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>2.) Temo Project Default: <U>P</U>roject - Set Acti<U>v</U>e Project - ModuleTests</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>3.) Clean Test Project: <U>B</U>uild - Cl<U>e</U>an</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>4.) Build Test Project: <U>B</U>uild - <U>B</U>uild TestGAMMA.exe</TD></TR>
+            <TR><TD><IMG SRC="../figs/vcpp.gif"> &nbsp;</TD><TD>5.) Run Test Project: <U>B</U>uild - !&nbsp;E<U>x</U>ecute TestGamma.exe</TD></TR>
+            </TABLE>
+            </TD></TR></TABLE>
+
+          <P>
+          <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+          <P>
+          <HR>
+          <P>
+ 
+          <CENTER><H3><A NAME="CLEAN">MSVC++ GAMMA DLL Cleanup</A></H3></CENTER>
+
+          If you have built the GAMMA library there will be many binary object files placed into the MSVC++
+          binary directory of GAMMA, ../../i686-pc-msvc. These are not needed to build GAMMA programs, only
+          the DLL and its static library are needed, so you may consider that the object files should be 
+          removed in order to save disk space. In addition, if you have run the demo program then there 
+          will be many files cluttering up this directory that were produced when the demo ran. In order 
+          to quickly remove these there is a batch file provided, <EM>clean.bat</EM>.
+          <P>
+          If you click (from Windows) the icon for <EM>clean.bat</EM> it will remove any files produced from
+          running the tests and demos, including the executables (which are easily remade). It will also
+          remove the object files in the MSVC++ binary directory of GAMMA. It will NOT remove the DLL & its static
+          GAMMA library. In short, running <EM>clean.bat</EM> will take away all files that did not come
+          with the GAMMA distribution EXCEPT the GAMMA libraries. Recall that using the MSVC++ clean
+          function for the DLL build will delete the DLL, the associated static library and object files,
+          which is why it is probably best to use <EM>clean.bat</EM> after the build is done if you intend 
+          to keep the library.
+
+          <P>
+          <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+          </TD>
+        </TR>
+      </TABLE>
+             
+      
+    </TD>
+  </TR>
+</TABLE>
+
+
+<TABLE border="0" width="650" align="LEFT">
+  <TR>
+    <TD align="left" valign="top" width="118" rowspan="4">&nbsp; &nbsp;</TD>
+    <TD align="left" valign="top" width="27" rowspan="4">&nbsp; &nbsp;</TD>
+    <TD align="left" valign="top" width="515">
+      <TABLE border="0" width="515" align="left">
+        
+        <TR>
+          <TD ALIGN="center">
+            <FONT SIZE=2>
+            <STRONG>
+            &#915; WWW Hosting Provided by Michael Davidson at the NHMFL
+            <BR>
+            &#169; 2003 S.A. Smith &nbsp; &nbsp; All Rights Reserved.
+            </STRONG>
+            </FONT>
+          </TD>
+        </TR>
+
+      </TABLE>
+    </TD>
+  </TR>
+  
+  <TR>
+    <TD align=left width="515">
+      <FONT size=1>
+      <STRONG>
+      No GAMMA WWW pages or GAMMA specific images
+      therein may be reproduced or used in any
+      manner outside of personal Web Browsers without
+      permission from the copyright holders.
+      <BR>
+      Send problems &amp; suggestions to 
+      <A HREF="mailto:gamma@magnet.fsu.edu">gamma@magnet.fsu.edu</A>
+      </STRONG>
+      </FONT>
+    </TD>
+  </TR>
+
+  
+  <TR>
+    <TD width="515">
+      <FONT size=1>
+        Last Modification Wed Mar 26 10:40:31 EST 2003
+
+      </FONT>
+    </TD>
+  </TR>
+
+  
+</TABLE>
+
+
+
+</BODY>
+</HTML>
+
+

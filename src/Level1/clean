@@ -1,0 +1,7 @@
+#!/bin/sh
+
+rm -f *.o
+rm -f *.exe
+rm -f *.exe.*
+rm -f *~
+rm -f *.~*

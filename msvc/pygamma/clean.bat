@@ -1,0 +1,37 @@
+del Debug\*.obj
+del Debug\*.exe
+del ModDemos\Debug\*.obj
+del ModDemos\Debug\*.exe
+del ModDemos\Release\*.obj
+del ModDemos\Release\*.exe
+del ModDemos\*.exe
+del ModDemos\*.asc
+del ModDemos\*.gnu
+del ModDemos\*.plg
+del ModDemos\*.exe
+del ModDemos\*.dll
+del ModDemos\*.mif
+del ModTests\Debug\*.obj
+del ModTests\Debug\*.exe
+del ModTests\*.plg
+del ModTests\*.exe
+del ModTests\*.dll
+del ModTests\*.log
+del Modules\Debug\*.obj
+del Modules\Debug\*.exe
+del Modules\Debug\*.map
+del Modules\Release\*.obj
+del Modules\Release\*.exe
+del Modules\Release\*.map
+del Modules\Release\*.dll
+del Modules\Release\*.lib
+del Modules\Release\*.exp
+del Modules\*.plg
+del Modules\*.exe
+del Modules\*.dll
+del Modules\*.map
+del Modules\*.exe
+del *.dll
+del *.plg
+
+

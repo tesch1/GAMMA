@@ -1,0 +1,101 @@
+###############################################################################
+#                                                                             #
+#                 Makefile For GAMMA Binaries Distributions                   #
+#                      Copyright c 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32306-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# =========================================================================== #
+#                                                                             #
+# Quick Info: 1.) GAMMA Source Directory Makefile.                            #
+#             2.) Handles Source Module Distributions.                        #
+#             3.) Recursively calls Makefiles in source module directories.   #
+#                                                                             #
+#                                                                             #
+###############################################################################
+# SRCDIR    Name of the sources subdirectory
+# DISTBASE  Base distribution directory
+# TARDIST   Name of distribution directory (local)
+# DISTDIR   Name of distribution directory (full)
+# PASSFLAGS Variables passed to recursive Makefiles
+
+DISTBASE      = ${CURDIR}/${GVERDIR}
+TARDIR        = ./${GVERDIR}
+DISTDIR       = ${DISTBASE}
+PASSFLAGS     = "DISTBASE=${DISTDIR}"
+
+
+###############################################################################
+###############################################################################
+########################## GAMMA MinGW Distributions ##########################
+###############################################################################
+###############################################################################
+#                                                                             #
+# The targests below will deal with distributions of MinGW GAMMA binaries.    #
+# In order to build the binaries one must either be working with MinGW or     #
+# have a cross-compiler for it that works on the system running the make.     #
+# That is too much to ask. Instead, a message will be issued about how the    #
+# the libraries should be updated, but the update (fresh build) will not be   #
+# performed. The distribution targets will look for the MinGW libraries to be #
+# released and complain if they are not found.				      #
+#                                                                             #
+###############################################################################
+
+MINGWDIR = i686-pc-mingw32w
+MINGWBIN = libgamma.a libgamma.dll libgamma.dll.a
+DISTTYPE = "MinGW"
+DISTTYUL = "-----"
+
+mingw:
+mingw: bindistx
+
+bindistx:
+	@echo ""
+	@echo "     Making GAMMA ${DISTTYPE} Binary Distribution";
+	@echo "     -------------${DISTTYUL}---------------------";
+	@echo ""
+	@echo " * We Will Copy The Binary Distribution Files To A Temporary Directory"
+	@echo "   Directory Will Be $(DISTDIR)"
+
+#	@if (test -d $(DISTBASE)) \
+#        then \
+#          echo " * Temp Directory ${DISTBASE} Exists."; \
+#	  echo "   We Must First Clear It And All Its Contents" ; \
+#          echo " * Only $(MODLABEL) Being Packaged, Not Any Other GAMMA Files" ; \
+#	  echo " * Removing Directory $(DISTBASE)" ; \
+#          rm -rf $(DISTBASE); \
+# 	fi
+#	@echo " * Constructing New Directory $(DISTDIR)"
+#	@mkdir $(DISTDIR)
+#	@chmod ug+w $(DISTDIR)
+
+
+disttar: TARFILE = ${GVERDIR}.tar
+disttar: tardir 
+srctar:  TARFILE = ${GVERDIR}.src.tar
+srctar:  tardir 
+hdrtar:  TARFILE = ${GVERDIR}.hdr.tar
+hdrtar:  tardir 
+
+distgzip: TARFILE  = ${GVERDIR}.tar
+distgzip: GZIPFILE = ${GVERDIR}.tar.gz
+distgzip: gziptar
+srcgzip:  TARFILE  = ${GVERDIR}.src.tar
+srcgzip:  GZIPFILE = ${GVERDIR}.src.tar.gz
+srcgzip:  gziptar
+hdrgzip:  TARFILE  = ${GVERDIR}.hdr.tar
+hdrgzip:  GZIPFILE = ${GVERDIR}.hdr.tar.gz
+hdrgzip:  gziptar
+
+distzip: ZIPFILE = ${GVERDIR}.zip
+distzip: zipdir
+srczip:  ZIPFILE = ${GVERDIR}.src.zip
+srczip:  zipdir
+hdrzip:  ZIPFILE = ${GVERDIR}.hdr.zip
+hdrzip:  zipdir
+
+include ${MAINMAKEDIR}/TarZipDir
+

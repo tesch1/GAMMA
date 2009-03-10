@@ -1,0 +1,65 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#           Source Module Makefile For The GAMMA MR Simulation Platform       #
+#                      Copyright © 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile, FirstTart, is to supply all GAMMA source      #
+# module makefiles with a simple target as the first one present. Hence it    #
+# will be the one executed if the user invokes "make" in this directory.      #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+#   firsttarget:   First target in a GAMMA source module Makefile.            #
+#   preamble:      Intital text written when firsttarget is run.              #
+#   postable:      Final text written when firsttarget is run.                #
+#                                                                             #
+# Requirements   							      #
+# ============                                                                #
+# MAKE           Make program being used (automatically set)                  #
+# MAKELEVEL	 Make level, recursive (automatically set)                    #
+# NPD            No print directory directive                                 #
+# LIBBASE:       Source module base name.                                     #
+# MODULEDIR:     Directory name of the source module.                         #
+# allblurb:      Target outputting text about a particular source module.     #
+#                                                                             #
+###############################################################################
+
+
+firsttarget:
+        ifeq (0,${MAKELEVEL})
+	  @${MAKE} ${NPD} preamble
+	  @${MAKE} ${NPD} allblurb
+	  @${MAKE} ${NPD} postamble
+        else
+	  @${MAKE} ${NPD} allblurb
+        endif
+
+preamble: force
+	@echo
+	@echo
+	@echo "  The GAMMA ${LIBBASE} Source Module Provides The Following"
+	@echo
+
+postamble: force
+	@echo
+	@echo "  Normally This Source Module Makefile Is Not Directly Run But"
+	@echo "  Is Run From The Main GAMMA Makefile. Please Either Run Make From"
+	@echo "  The Main GAMMA Directory, Or Select An Appropriate Target For"
+	@echo "  Running Make From This Directory. For Example:"
+	@echo
+	@echo " make showvars   Display Defined Module Make Variables"
+	@echo " make killdos    Remove All MS-DOS ^M From All Module Files"
+	@echo " make cleandir   Remove All Non-GAMMA Files From This Directory"
+	@echo " make showcopy   Detail The Files Distributed From This Directory"
+	@echo
+	@echo
+
+help: firsttarget
+

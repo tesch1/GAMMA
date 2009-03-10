@@ -1,0 +1,125 @@
+# @configure_input@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#               Makefile For The GAMMA MR Simulation Platform                 #
+#                     Copyright (C) 1999 Scott A. Smith                       #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32306-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# =========================================================================== #
+#                                                                             #
+#                                 Quick Info                                  #
+#                                                                             #
+# 1.) Sets System/OS/Compiler Specific Variables. Included in Main Makefile.  #
+# 2.) Variables Set Automatically In Configuration.                           #
+# 3.) Does NOT require any externally set variables.                          #
+#                                                                             #
+# =========================================================================== #
+#                                                                             #
+# The concern of this Makefile is general definitions used throughout the     #
+# Makefile hierarchy used in GAMMA builds, testing, & code distribution.      #
+# Herein are defined variables of general purpose for these needs.            #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.  This and other makefiles #
+# are typically packaged with the full GAMMA source distribution.  The full   #
+# src distrubution may be obtained from the GAMMA WWW site above or any of    #
+# its mirrors.                                                                #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#           Begin With Typical Boiler-Plate Configuration Ala GNU             #
+#                        (See GNU Coding Standards)                           #
+#                                                                             #
+# .SUFFIXES  - Clears out any implicit make rules that might be present       #
+# .SUFFIXES  - Adds back in implicit make rules that we might want to use     #
+# SHELL      - Don't want SHELL variable inherited from environment (want sh) #
+# srcdir     - Where the source for this Makefile resides                     #
+# top_srcdir - Relative srcdir pushed to recursive Makefiles                  #
+# libdir     - Where to put the GAMMA libraries                               #
+# infodir    - Where to put the GAMMA info files                              #
+# mandir     - Where to put the GAMMA man pages                               #
+# host       - Unique name (architecture specific) for platform dependents..  #
+#                                                                             #
+# Note: Some of these I don't even use, but I'm including them anyway to get  #
+#       in the habit of doing such things in my Makefiles.                    #
+#                                                                             #
+###############################################################################
+
+.SUFFIXES:
+.SUFFIXES: .c .cc .o
+SHELL       = /bin/sh
+VPATH       = @srcdir@
+top_srcdir  = @top_srcdir@
+srcdir      = @srcdir@
+prefix      = @prefix@
+exec_prefix = @exec_prefix@
+bindir      = $(exec_prefix)/bin
+libdir      = $(prefix)/lib/gamma
+infodir     = $(prefix)/info
+mandir      = $(prefix)/man/man1
+host        = @host@
+subdirs     = @subdirs@
+
+###############################################################################
+#                                                                             #
+#                          Compiler Setup Variables                           #
+#                                                                             #
+# These variables/values dictate how the GAMMA source codes will be compiled. #
+# The first set are variables that are automatically filled in during the     #
+# Makefile configuration whereas the latter set are those that GAMMA uses.    #
+# You may wish to reset some of these, but the defaults are probably O.K.     #
+#                                                                             #
+# CC        - The C   Compiler To Be Used                                     #
+# CXX       - The C++ Compiler To Be Used                                     #
+# CXXFLAGS  - The C++ Compiler Flags To Be Used                               #
+# RANLIB    - The ranlib program to use.  Set as RANLIB = : if not required.  #
+#                                                                             #
+# GCXXFLAGS - Additonal C++ Compiler Flags That GAMMA Uses                    #
+#       finline.. = Automatically Make Simple Functions Inline NOT ANSI C     #
+#       fkeep-i.. = Insure Declared Inline Functions Are Kept That Way        #
+#       Wall      = Output All Warning Messages                               #
+#       Wwrite... = Output All Warning Messages                               #
+#       I$(SRC)   = Look In Directory "SRC" For GAMMA Files                   #
+# C++FLAGS  - All C++ Compiler Flags Collected That GAMMA Will Use            #
+#                                                                             #
+# Note: Some of these I don't even use, but I'm including them anyway to get  #
+#       in the habit of doing such things in my Makefiles.  Who knows, maybe  #
+#       I'll need them at some later time.                                    #
+# Note: The traditional CXXFLAGS should be -g -O (debugging/optimization).    #
+#       The latter makes for better binary code whereas the former allows     #
+#       debuggers to look into the code.  Those of you who don't want to ever #
+#       use a debugger can remove -g from the CXXFLAGS definition below.      #
+# Note: Some of these are overwritten by the main GAMMA makefile if this is   #
+#       run recursively (as it should be).                                    #
+#                                                                             #
+###############################################################################
+
+CC         = @CC@
+CPPFLAGS   = @CPPFLAGS@
+CXX        = @CXX@
+CXXFLAGS   = @CXXFLAGS@
+CFLAGS     = @CFLAGS@
+LIBS       = @LIBS@
+LDFLAGS    = @LDFLAGS@
+INSTALL    = @INSTALL@
+CXX        = @CXX@
+CXXFLAGS   = @CXXFLAGS@
+AR         = ar
+ARFLAGS    = rc
+RANLIB     = @RANLIB@
+
+
+GCXXFLAGS  = -finline-functions -fkeep-inline-functions \
+             -felide-constructors -Wall -Wwrite-strings -I$(SRC)
+C++FLAGS   = $(CXXFLAGS) $(GCXXFLAGS)
+
+
+
+

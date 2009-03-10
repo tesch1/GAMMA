@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+  <TITLE>MSVC++ Configuration For GAMMA</TITLE>
+  <META NAME="GENERATOR"       CONTENT="GNU m4 in Unix/WinNT">
+  <META NAME="AUTHOR"          CONTENT="Scott A. Smith">
+  <META HTTP-EQUIV="Copyright" CONTENT="Dr. Scott A. Smith">
+  <META HTTP-EQUIV="Author"    CONTENT="Dr. Scott A. Smith">
+  <META HTTP-EQUIV="Content-Type" content="text/html; charset=utf-8">
+  
+  <META name="description" content="Configuration of MSVC for GAMMA.">
+
+  
+  <META name="keywords" content="NMR, ESR, EMR, MRI, FID, resonance, science, education, simulation">
+
+  
+  <META HTTP-EQUIV="Content-style-type" CONTENT="text/css">
+  <STYLE TYPE="text/css">
+    A:link, A:visited  { text-decoration:none; }
+  </STYLE> 
+</HEAD>
+<BODY bgcolor="#ffffff" background="../doc/directories/../figs/bkground.gif">
+
+
+<P>
+<TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" WIDTH="650">
+  <TR>
+    <TD align=left valign="top" rowspan="2" WIDTH="118">
+      
+<!---                           Begin GAMMA Links Table                        --->
+
+      <TABLE BORDER="0" WIDTH="118" CELLPADDING="0" CELLSPACING="0" bgcolor="#7675FD">
+        <TR><TD align=center><IMG SRC="../doc/directories/../figs/goldG.gif"></TD></TR>
+
+       <TR> <TD align=center><HR></TD> </TR>
+        <TR>
+          <TH align=center><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../index.html" TARGET="_top"><FONT color="yellow"><STRONG>&#915; LOCAL</STRONG></FONT></A>&nbsp;
+          </FONT></TH>
+        </TR>
+        <TR> <TD align=center><HR></TD> </TR>
+
+       <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../info/index.html" TARGET="_top"><FONT color="black"><STRONG>Information</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../download/index.html" TARGET="_top"><FONT color="black"><STRONG>Downloading</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../install/index.html" TARGET="_top"><FONT color="black"><STRONG>Installation</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../../demo/index.html" TARGET="_top"><FONT color="black"><STRONG>Base Demos</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../tutor/index.html" TARGET="_top"><FONT color="black"><STRONG>Tutorials</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../example/index.html" TARGET="_top"><FONT color="black"><STRONG>Examples</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../../example/index.html" TARGET="_top"><FONT color="black"><STRONG>Example Dir.</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../online/index.html" TARGET="_top"><FONT color="black"><STRONG>Online Pgms.</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../html/index.html" TARGET="_top"><FONT color="black"><STRONG>HTML Docs</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../pdf/index.html" TARGET="_top"><FONT color="black"><STRONG>PDF Docs</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../PyGAMMA/index.html" TARGET="_top"><FONT color="black"><STRONG>PyGAMMA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        
+        <TR>
+          <TD align=left valign="top">
+            <FONT size=-1><STRONG>&nbsp;
+      <A HREF="../doc/directories/index.html"><FONT color="yellow">Directories</FONT></A>
+      </STRONG></FONT>
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../doc/directories/../../src/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>Sources</STRONG></FONT></A>
+          </STRONG></FONT>
+            <FONT size=-2><STRONG>
+       <BR><A HREF="./index.html" TARGET="_top"><FONT color="yellow">&nbsp;&nbsp;&middot;&nbsp;Visual C++</FONT></A>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="./configure.html" TARGET="_top"><FONT color="yellow">--&nbsp;<STRONG>Configure</STRONG></FONT></A>
+          </STRONG></FONT>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="./static/index.html" TARGET="_top"><FONT color="black">--&nbsp;<STRONG>Static Lib</STRONG></FONT></A>
+          </STRONG></FONT>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="./dynamic/index.html" TARGET="_top"><FONT color="black">--&nbsp;<STRONG>DLL</STRONG></FONT></A>
+          </STRONG></FONT>
+       <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;&nbsp;<A HREF="./pygamma/index.html" TARGET="_top"><FONT color="black">--&nbsp;<STRONG>PyGAMMA</STRONG></FONT></A>
+          </STRONG></FONT>
+       </STRONG></FONT>
+
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../doc/directories/../../primal/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>Primal Makefiles</STRONG></FONT></A>
+          </STRONG></FONT>
+            <BR>
+          <FONT size="-2"><STRONG>
+          &nbsp;&nbsp;<A HREF="../doc/directories/../../devc++/index.html" TARGET="_top"><FONT color="black">&middot;&nbsp;<STRONG>DevC++ Projects</STRONG></FONT></A>
+          </STRONG></FONT>
+          </TD>
+        </TR> 
+
+        
+       
+       
+
+        
+        <TR> <TD align=center><HR></TD> </TR>
+        <TR>
+          <TH align=center><FONT size="-1">
+          &nbsp;<A HREF="../doc/directories/../mirrors.html" TARGET="_top"><FONT color="black"><STRONG>&#915; WWW Sites</STRONG></FONT></A>&nbsp;
+          </FONT></TH>
+        </TR>
+        <TR> <TD align=center><HR></TD> </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma.magnet.fsu.edu/index.html" TARGET="_top"><FONT color="black"><STRONG>MainSite, USA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma2.magnet.fsu.edu/index.html" TARGET="_top"><FONT color="black"><STRONG>Florida, USA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma3.magnet.fsu.edu/index.html" TARGET="_top"><FONT color="black"><STRONG>Florida, USA</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma.ethz.ch/index.html" TARGET="_top"><FONT color="black"><STRONG>Z&uuml;rich, CH</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR>
+        <TR>
+          <TD align=left valign="top"><FONT size="-1">
+          &nbsp;<A HREF="http://gamma.ch.wani.osaka-u.ac.jp/index.html" TARGET="_top"><FONT color="black"><STRONG>Osaka, Japan</STRONG></FONT></A>&nbsp;
+          </FONT></TD>
+        </TR> 
+      </TABLE>
+
+<!---                             End GAMMA Links Table                        --->
+
+    </TD>
+    <TD align="left" valign="top" width="27">&nbsp;</TD>
+    <TD align="left" valign="top" width="515">
+       
+      <TABLE BORDER=0>
+        <TR ALIGN=LEFT>
+          <TD><IMG SRC="../doc/directories/../figs/gamma.gif" HEIGHT=47 WIDTH=253 ALT="GAMMA"></TD>
+           <TD rowspan=2 align=center valign="top">
+             <FONT size="6"><A NAME="TOP">MSVC++<BR>Configuration</A></FONT>
+             <BR>
+             (&#915; Version 4.1.0)
+            </TD>
+        </TR>
+        <TR>
+          <TD><IMG SRC="../doc/directories/../figs/meaning.gif" HEIGHT=24 WIDTH=253 ALT=""></TD>
+        </TR>
+      </TABLE>
+
+    </TD>
+  </TR>
+  <TR>
+    <TD ALIGN="left" width="27" valign="top">&nbsp;</TD>
+    <TD ALIGN="left" width="515" valign="top">
+      <TABLE border=0 valign="top">
+        <TR>
+          <TD>
+          &nbsp;<P>
+          This directory exists in support of using Microsoft Visual C++ to
+          build GAMMA and GAMMA based programs on Windows/Intel based computers.
+          You MUST have a working version of MSVC++ on your computer system (PC) before
+          these files will be of any use to you.
+         </TR>
+         <TR>
+           <TD>
+             <P>
+             <A NAME="TOP">In</A> order to successfully use the workspaces provided with GAMMA there are three
+             essential details which you must attend to:
+             <OL>
+               <LI><A HREF="#VERSION">Use a recent version of MSVC++</A>.
+               <LI><A HREF="#CC">Tell MSVC++ that .cc files are C++ files</A>.
+               <LI><A HREF="#TOOLS">Set up the global MSVC++ environment for GAMMA.
+             </OL>
+           </TD>
+         </TR>
+         <TR>
+           <TD>
+             <HR>
+             <A NAME="VERSION"><H3>MSVC++ Version</H3></A>
+             GAMMA code is (mostly) ANSI compliant, so to build and use GAMMA one should have
+             an ANSI compatible C++ compiler. Microsoft Visual C++ Version 5 and beyond is
+             (mostly) ANSI compliant also. As far as I know, MSVC++ versions prior to 5 did NOT
+             have full ANSI compatiblity (but I am not completely certain). GAMMA has been built
+             using MSVC++ 5.0, 6.0, and 7.0. Of course, it is impossible to keep up will all
+             versions of MSVC with all versions of GAMMA.
+             <P>
+             One should use a minimum of MSVC++ 5.0, probably better with 6.0 and beyond. At the
+             time of this writing, the author is using MSVC++ 6.0 and working with GAMMA 4.1.0.
+             Make sure that the latest service packs have been installed. This is just a good
+             idea in general, but particularly important for version 5.0.  The service packs can
+             be obtained from the Microsoft WWW site. These are usually very large so you need a
+             decent internet connection. Here is one such site where you can get the latest service
+             pack for 6.0:
+             <P>
+             <CENTER>
+             <A HREF ="http://msdn.microsoft.com/vstudio/downloads/VisualStudio6.asp"><IMG SRC="./figs/msvcmed.gif" BORDER=0 WIDTH=41 HEIGHT=25 BORDER=0 valign="center" align="center"></A>
+             <A HREF ="http://msdn.microsoft.com/vstudio/downloads/VisualStudio6.asp">MSVC++ 6 Service Packs</A>
+             </CENTER>
+             <P>
+             Please contact the GAMMA administrators if you believe there are MSVC++ compatibility
+             problems with the GAMMA code.
+             
+             <P>
+             <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+             <P>
+             <HR>
+             <A NAME="CC"><H3>Setting .cc As C++ Files</H3></A>
+             A big issue for GAMMA builds under MSVC++ is use of .cc versus .cpp file suffixes
+             when designating a file of C++ code. MSCV++ will NOT inherently take .cc files.
+             I am not certain this is still true in Visual Studio.net, so perhaps users of it
+             can ignore this section. Lack of treating .cc files makes it difficult to compile
+             GAMMA sources and programs since the .cc suffix is what has been traditionally used.
+             Either all .cc files supplied with GAMMA must be changed to .cpp (including all
+             references to .cc) OR Visual C++ must be taught how to deal with .cc files. We
+             prefer the latter and luckily Microsoft has not left us in the dark on this issue.
+             All one has to do is change the registry in a few places with regedit. This is
+             discussed in the MS Knowledge Base, Article Q181506.
+            <P>
+             This is not very difficult to do, it will take you only 15 minutes (working slow.)
+             If they haven't changed things at their site, this link will take you there directly:
+             <A HREF="http://support.microsoft.com/support/kb/articles/Q181/5/06.ASP"><font color="blue">KB Article Q181506</font></A>.
+             If that does not work, go to the
+             <A HREF="http://search.support.microsoft.com/kb/"><font color="blue">MS Knowledge Base Search</font></A>.
+             Just search in the area <EM>Visual C++</EM> for a <EM>Specific article ID number</EM> with number
+             <EM>Q181506</EM>. Follow the instructions found in that document and teach MSVC++ to
+             understand what .cc files are.  I have also put a local copy of this article here, hopefully
+             fullfilling MS requirements to avoid any copyright infringements:
+             <A HREF="./settingcc.html"><font color="blue">Q181506 Local Copy</font></A>.
+             <P>
+             A viable alternative would be to change all of the GAMMA .cc files
+             to .cpp files. This is also easy to accomplish using any of
+             several shareware programs that perform bulk file renaming. In
+             contrast to use of the above change(s), which allows users to
+             compile either .cc or .cpp files, this leaves MSVC++ with the
+             inherent limitation of only recognizing .cpp files as containing
+             valid C++ source code.  Also, the provided workspaces for
+             building GAMMA will no longer work without the user changing all
+             of their file listings as well.
+             
+             <P>
+             <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+             <P>
+             <HR>
+             <A NAME="TOOLS"><H3>Setting MSVC++ Global Environment</H3></A>
+             These MSVC++ workspace settings as are global, that is, they affect every
+             project build in MSVC++. You may wish to record any changes if you need to
+             set things back for other (non-GAMMA) project builds at a later time.
+             The primary reason they may need adjustment is for
+             differences in GAMMA installation directories as well as any changes made
+             when building other MSVC++ projects. Note that the settings used here are
+             adequate to build both GAMMA and PyGAMMA. Shown are those which differ from
+             the MSVC++ defaults set when creating a typical project not using MFC.
+             
+
+             <CENTER><H3>MSVC++ Settings For GAMMA</H3></CENTER>
+
+            <CENTER>
+            <TABLE BORDER=1><TR><TD>
+             <TABLE align="CENTER">
+             <TR><TD><IMG SRC="./figs/win.gif">  &nbsp;</TD><TD> 1.) Open GAMMA Project: Click on <STRONG>pygamma.dws</STRONG> icon</TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 2.) Open Options: <U>T</U>ools - <U>O</U>ptions</TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 3.) Select Tabs Tab: Set <U>T</U>ab Size 8, <U>I</U>ndent Size 8, Keep Tabs</TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 4.) Select Directories Tab</TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 5.) Look at Include files: <U>S</U>how directories for: Include files</TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 6.) <SUP>#</SUP>Set GAMMA Headers: <FONT SIZE="-1">C:\GAMMA\GAMMA-4.1.0\SRC</FONT></TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 7.) <SUP>*</SUP>Set Python Headers: <FONT SIZE="-1">C:\PROGRAM FILES\PYTHON22\INCLUDE</FONT></TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 8.) <SUP>*</SUP>Set Boost.Python Headers: <FONT SIZE="-1">C:\PROGRAM FILES\BOOST\BOOST_1_28_0\</FONT></TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD> 9.) Look at Library files: <U>S</U>how directories for: Library files</TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD>10.) Include GAMMA Library: <FONT SIZE="-1">C:\GAMMA\GAMMA-4.1.0\I686-PC-MSVC</FONT></TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD>11.) <SUP>*</SUP>Include Python Library: <FONT SIZE="-1">C:\PROGRAM FILES\PYTHON22\LIBS</FONT></TD></TR>
+             <TR><TD valign="top"><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD>12.) <SUP>*</SUP>Include Boost.Python Library:<BR>
+             <FONT SIZE="-1">e.g. C:\Program Files\Boost\boost_1_28_0\libs<BR>\python\build\bin\boost_python.dll\msvc\release\runtime-link-dynamic</FONT></TD></TR>
+             <TR><TD><IMG SRC="./figs/vcpp.gif"> &nbsp;</TD><TD>13.) Close Tools</TD></TR>
+             </TABLE>
+             </TD></TR></TABLE>
+            </CENTER>
+
+            &nbsp;<BR>
+            <FONT SIZE="-1">
+            <SUP>#</SUP> Set this to where the sources of your version of GAMMA resides.<BR>
+            <SUP>*</SUP> The Python and Boost header and library includes are not needed unless one wishes to build
+              PyGAMMA, the interactive version of GAMMA that runs under Python. Again, these must be set
+              only if PyGAMMA is built. However, if they are present they will not adversely affect any other
+              GAMMA builds.
+            </FONT>
+
+             <P>
+             <CENTER><FONT SIZE="-1"><STRONG><A HREF="#TOP">Back To Top</A></STRONG></FONT></CENTER>
+
+          </TD>
+        </TR>
+      </TABLE>
+      
+    </TD>
+  </TR>
+</TABLE>
+
+
+<TABLE border="0" width="650" align="LEFT">
+  <TR>
+    <TD align="left" valign="top" width="118" rowspan="4">&nbsp; &nbsp;</TD>
+    <TD align="left" valign="top" width="27" rowspan="4">&nbsp; &nbsp;</TD>
+    <TD align="left" valign="top" width="515">
+      <TABLE border="0" width="515" align="left">
+        
+        <TR>
+          <TD ALIGN="center">
+            <FONT SIZE=2>
+            <STRONG>
+            &#915; Support Provided by the National High Magnetic
+            Field Laboratory
+            <BR>
+            &#169; 1996 S.A. Smith, The NHMFL, and 
+            Florida State University.
+            <BR>
+             All Rights Reserved.
+            </STRONG>
+            </FONT>
+          </TD>
+        </TR>
+
+      </TABLE>
+    </TD>
+  </TR>
+  
+  <TR>
+    <TD align=left width="515">
+      <FONT size=1>
+      <STRONG>
+      No GAMMA WWW pages or GAMMA specific images
+      therein may be reproduced or used in any
+      manner outside of personal Web Browsers without
+      permission from the copyright holders.
+      <BR>
+      Send problems &amp; suggestions to 
+      <A HREF="mailto:gamma@magnet.fsu.edu">gamma@magnet.fsu.edu</A>
+      </STRONG>
+      </FONT>
+    </TD>
+  </TR>
+
+  
+  <TR>
+    <TD width="515">
+      <FONT size=1>
+        Last Modification Sun Oct 27 09:22:37  2002
+
+      </FONT>
+    </TD>
+  </TR>
+
+  
+</TABLE>
+
+
+
+</BODY>
+</HTML>
+
+

@@ -1,0 +1,918 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#               Makefile For The GAMMA MR Simulation Platform                 #
+#                     Copyright (C) 1999 Scott A. Smith                       #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile is GAMMA project distribution for Microsoft    #
+# Visual C++. Herein are defined the targets that are used for such purposes. #
+# They are intended to produce project files which can be used to re-compile  #
+# various aspects of the plaftorm using Visual C++. They will not deal with   #
+# any addon files. Note this file is included in the MAIN GAMMA makefile.     #
+#                                                                             #
+# Note that the targets herein assume that MSVC++ project distributions are   #
+# placed on top of GAMMA source code distributions.  In effect that means     #
+# that any documentation files not specifically associated with MSVC++ but    #
+# essential are assumed to have been obtained from the source code dist.      #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.  This and other makefiles #
+# are typically packaged with the full GAMMA source distribution.  The full   #
+# src distrubution may be obtained from the GAMMA WWW site above or any of    #
+# its mirrors.                                                                #
+#                                                                             #
+# Notes: We Still Need GNU Make For This To Work.                             #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+# Primary Targets:                                                            #
+#                                                                             #
+# msvcstatic:     Creates a distribution file of the GAMMA MSVC++ workspace   #
+#                 and projects which build static libraries.                  #
+# msvcdynamic:    Creates a distribution file of the GAMMA MSVC++ workspace   #
+#                 and projects which build dynamic (DLL) libraries.           #
+# msvctest:       Creates a distribution file of the GAMMA MSVC++ workspace   #
+#                 and projects which build GAMMA testing programs.            #
+# msvcexample:    Creates a distribution file of the GAMMA MSVC++ workspace   #
+#                 and projects which build GAMMA example programs.            #
+# msvcstaticlib:  Creates a distribution file of the GAMMA MSVC++ built static#
+#                 single library.                                             #
+# msvcdynamiclib: Creates a distribution file of the GAMMA MSVC++ built       #
+#                 dynamic single library.                                     #
+# msvcstaticlibs: Creates a distribution file of the GAMMA MSVC++ built static#
+#                 multiple module libraries.                                  #
+# msvcdynamiclibs:Creates a distribution file of the GAMMA MSVC++ built       #
+#                 dynamic multiple module libraries.                          #
+# msvcinstalldoc: Creates a distribution file of the GAMMA MSVC++ related     #
+#                 html installation documentation.                            #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                             Makefile Variables                              #
+#                                                                             #
+# Bear in mind that this Makefile is simply included in the main GAMMA        #
+# makefile, $GAMMA/Makefile. As such, it will "inherit" all the variables     #
+# specified therein. So, THERE ARE NO VARIABLES DECLARED IN THIS FILE. There  #
+# are of course variables that are used by the targets in this makefile and   #
+# it is these which are listed below.                                         #
+#                                                                             #
+# GVERSION   : Current GAMMA version, in MakeGam, Makefile included (4.0.7)  #
+# MAKE       : The makefile being worked with. Set when invoking Make         #
+# SUBDIRS    : Subdirectories with recursive Makefiles for the distribution   #
+#              This will be declared in the main GAMMA makefile.              #
+# PASSFLAGS  : The flags that will be passed to the recursed makefiles. This  #
+#              variable will be specified in the main GAMMA makefile.         #
+# PROJECTPATH: Directory where the tar command is issued from. Hopefully      #
+#              this is also where the mock directory $GAMMA/src/ resides      #
+#              containing copied source distribution files. This variable will#
+#              be defined in the main GAMMA Makefile.                         #
+# GAMDIST    : Name of source distribution mock directory. This will be used  #
+#              as the based directory where copied files are sent. This       #
+#              variable will be defined in  the Makefile MakeGam              #
+# SRCDIST    : Name of source distribution mock source directory. This is     #
+#              the location where GAMMA source directory files are copied.    #
+#              This variable will be defined in the Makefile MakeGam          #
+# MAKEDIST   : Name of source distribution mock make directory. This will be  #
+#              the location where GAMMA source related make files are copied  #
+#              to. The variable will be defined in the Makefile MakeGam       #
+# SRCDIRF    : Files in the GAMMA source directory, not in a GAMMA module     #
+#              directory, that will be included in the source distribution.   #
+# SMAKEDIRF  : Files in the GAMMA make directory, not in a GAMMA source       #
+#              module directory, that will be included in the source distrib. #
+# SRCDIR     : Name of the source directory (e.g. src)                        #
+# MAKEDIR    : Name of the makefile direcotry (e.g. make)                     #
+# MAINFILES  : Name of the files, not in the module source directory, but     #
+#              they which reside in the main GAMMA directory, that should be  #
+#              include in the source distribution.                            #
+# SRCDIRFF   : Files in the GAMMA source directory, not in a GAMMA module     #
+#              module directory, that will be included in the source distrib. #
+#              These are relative from the main GAMMA directory.              #
+# SMAKEDIRFF : Files in the GAMMA make directory, not in a GAMMA source       #
+#              directory, that will be included in the source distribution.   #
+#              These are relative from the main GAMMA directory.              #
+# SRCTAR     : Name of the source distribution tar file to be created.        #
+#              This is defined Makefile MakeGam as include in main Makefile.  #
+# SRCZIP     : Name of the source distribution zip file to be created.        #
+#              This will be defined in the Makefile MakeGam                   #
+#                                                                             #
+###############################################################################
+
+#MSVCSTATICDIR  = static
+#MSVCDYNAMICDIR = dynamic
+#MSVCLIBDIR     = i786-pc-msvc
+#MSVCTESTDIR    = test
+#MSVCEXAMPLEDIR = example
+#NPD            = --no-print-directory
+#ZIPPGM         = zip
+#ZIPFLGS        = -r -q
+#MSVCSTATICTAR  = $(SRCTAR)
+
+###############################################################################
+#                   Targets: msvcstatic    msvcstaticlib                      #
+#                            msvcdynamic   msvcdynamiclib                     #
+#                            msvctest      msvcstaticlibs                     #
+#                            msvcexample   msvcdynamiclibs                    #
+#                                  msvcinstalldoc                             #
+#                                                                             #
+# These targets generate all of the GAMMA packages related to use with MSVC++ #
+# Typically, each target will generate a temporary directory hierarchy that   #
+# mimicks that used in GAMMA.  Next all the files for the package (target)    #
+# being distributed will be copied into its directory. Then the files for the #
+# package will all be zipped into one and the temporary files deleted,        #
+# leaving only the packaged file.                                             #
+#                                                                             #
+# GVERSION: The current GAMMA version (e.g. 4.0.7)                           #
+# MAKE:     The make program being worked with                                #
+# NPD:      Direct print supression flag (--no-print-directory)               #
+#                                                                             #
+# msvcstaticprojdir - Builds a temp directory for MSVC++ static lib workspace #
+# msvcstaticmode    - Sets mode non-executable on static lib workspace files  #
+# msvcstaticcopy    - Copies all static lib workspace files to temp direct.   #
+# msvcstaticzip     - Creates a zip file of copied static lib workspace files #
+# msvcdynamicprojdir- Builds a temp directory for MSVC++ dynam. lib workspace #
+# msvcdynamicmode   - Sets mode non-executable on dynam. lib workspace files  #
+# msvcdynamiccopy   - Copies all dynam. lib workspace files to temp direct.   #
+# msvcdynamiczip    - Creates a zip file of copied dynam. lib workspace files #
+#                                                                             #
+###############################################################################
+
+msvcdist:
+	@echo
+	@echo "              MSVC++ Distribution, GAMMA Version $(GVERSION)"
+	@echo "              ------------------------------------$(GVERSUL)"
+	@echo "              ------------------------------------$(GVERSUL)"
+	@echo "              ------------------------------------$(GVERSUL)"
+	@${MAKE} $(NPD) msvcstatic
+	@${MAKE} $(NPD) msvcstaticlib
+	@${MAKE} $(NPD) msvcstaticlibs
+#	@${MAKE} $(NPD) msvcdynamic
+#	@${MAKE} $(NPD) msvcdynamiclib
+#	@${MAKE} $(NPD) msvcdynamiclibs
+	@${MAKE} $(NPD) msvcdemo
+#	@${MAKE} $(NPD) msvcexample
+#	@${MAKE} $(NPD) msvctest
+	@${MAKE} $(NPD) msvcdocs
+
+msvcstatic:
+	@echo
+	@echo "              MSVC++ Static Project Distribution, GAMMA Version $(GVERSION)"
+	@echo "              --------------------------------------------------$(GVERSUL)"
+	@${MAKE} $(NPD) msvcstaticprojdir
+	@${MAKE} $(NPD) msvcstaticmode
+	@${MAKE} $(NPD) msvcstaticcopy
+	@${MAKE} $(NPD) msvcstaticprojzip
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvcdynamic:
+	@echo
+	@echo "              MSVC++ Dynamic Project Distribution, GAMMA Version $(GVERSION)"
+	@echo "              ---------------------------------------------------$(GVERSUL)"
+	@echo
+	@${MAKE} $(NPD) msvcdynamicprojdir
+	@${MAKE} $(NPD) msvcdynamicmode
+	@${MAKE} $(NPD) msvcdynamiccopy
+	@${MAKE} $(NPD) msvcdynamiczipfile
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvctest:
+	@echo
+	@echo "              MSVC++ Test Project Distribution, GAMMA Version $(GVERSION)"
+	@echo "              ------------------------------------------------$(GVERSUL)"
+	@echo
+	@${MAKE} $(NPD) msvctestprojdir
+	@${MAKE} $(NPD) msvctestmode
+	@${MAKE} $(NPD) msvctestcopy
+	@${MAKE} $(NPD) msvctestzipfile
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvcexample:
+	@echo
+	@echo "          MSVC++ Example Project Distribution, GAMMA Version $(GVERSION)"
+	@echo "          ----------------------------------------------------$(GVERSUL)"
+	@echo
+	@${MAKE} $(NPD) msvcexampleprojdir
+	@${MAKE} $(NPD) msvcexamplemode
+	@${MAKE} $(NPD) msvcexamplecopy
+	@${MAKE} $(NPD) msvcexamplezipfile
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvcstaticlib:
+	@echo
+	@echo "              MSVC++ Static Library Distribution, GAMMA Version $(GVERSION)"
+	@echo "              --------------------------------------------------$(GVERSUL)"
+	@echo
+	@${MAKE} $(NPD) msvclibdistdir
+	@${MAKE} $(NPD) msvcstatlibcopy
+	@${MAKE} $(NPD) msvcstaticlibzipfile
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvcdynamiclib:
+	@echo
+	@echo "MSVC++ Dynamic Library Distribution, GAMMA Version $(GVERSION)"
+	@echo
+	@${MAKE} $(NPD) msvcexampleprojdir
+	@${MAKE} $(NPD) msvcexamplemode
+	@${MAKE} $(NPD) msvcexamplecopy
+	@${MAKE} $(NPD) msvcexamplezipfile
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvcstaticlibs:
+	@echo
+	@echo "       MSVC++ Static Module Libraries Distribution, GAMMA Version $(GVERSION)"
+	@echo "       -----------------------------------------------------------$(GVERSUL)"
+	@echo
+	@${MAKE} $(NPD) msvclibdistdir
+	@${MAKE} $(NPD) msvcstatlibscopy
+	@${MAKE} $(NPD) msvcstaticmodlibzipfile
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvcdynamiclibs:
+	@echo
+	@echo "MSVC++ Dynamic Module Libraries Distribution, GAMMA Version $(GVERSION)"
+	@echo
+	@${MAKE} $(NPD) msvcexampleprojdir
+	@${MAKE} $(NPD) msvcexamplemode
+	@${MAKE} $(NPD) msvcexamplecopy
+	@${MAKE} $(NPD) msvcexamplezipfile
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+msvcdemo:
+	@echo
+	@echo "              MSVC++ Demo Projects Distribution, GAMMA Version $(GVERSION)"
+	@echo "              -------------------------------------------------$(GVERSUL)"
+	@${MAKE} $(NPD) msvcdemoprojdir
+	@${MAKE} $(NPD) msvcdemocopy
+	@${MAKE} $(NPD) msvcdemoprojzip
+	@${MAKE} $(NPD) msvcclean
+	@echo
+
+
+msvcdoc:
+	@echo
+	@echo "        MSVC++ Installation Documentation Distribution, GAMMA Version $(GVERSION)"
+	@echo "        --------------------------------------------------------------$(GVERSUL)"
+#	@${MAKE} $(NPD) msvcdemoprojdir
+#	@${MAKE} $(NPD) msvcdemocopy
+#	@${MAKE} $(NPD) msvcdemoprojzip
+#	@${MAKE} $(NPD) msvcclean
+
+###############################################################################
+#                               Target: msvcdir                               #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA source distribution target & is NOT really #
+# meant to run solo. It constructs a "mock" GAMMA directory off of the        #
+# current directory. In doing so it allows this makefile to generate a tar    #
+# distribution file that, when untarred in the GAMMA root directory, will     #
+# generate all the released files having standard GAMMA directory structure.  #
+#                                                                             #
+# PROJECTPATH - Directory where the current GAMMA version base is. This will  #
+#               be the directory with the main GAMMA Makefile, and the one    #
+#               from which other directories (e.g. src, make, msvc,...) will  #
+#               branch off of. This will be a full path name. This variable   #
+#               will be defined (or included) in the main GAMMA makefile and  #
+#               is normally set automatically during the GAMMA configuration. #
+# GAMDIST     - Name of source distribution mock directory. This will be used #
+#               as the based directory where copied files are sent. This      #
+#               variable will be defined in the Makefile MakeGam              #
+# MSVCDIR     - Name of Microsoft Visual C++ project distribution directory.  #
+#               This is the location where GAMMA MSVC++ project files are     #
+#               copied. This variable will be defined in the Makefile MakeGam #
+#                                                                             #
+###############################################################################
+
+msvcstaticprojdir:
+	@echo ""
+	@echo " * Making GAMMA MS Visual C++ Static Project Distrubution Directory"
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@${MAKE} $(NPD) msvcgammadir
+	@${MAKE} $(NPD) msvcdir
+	@${MAKE} $(NPD) msvcstatdir
+
+msvcdynamicprojdir:
+	@echo ""
+	@echo " * Making GAMMA MS Visual C++ Dynamic Project Distrubution Directory"
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@${MAKE} $(NPD) msvcgammadir
+	@${MAKE} $(NPD) msvcdir
+	@${MAKE} $(NPD) msvcdynamicdir
+
+msvctestprojdir:
+	@echo ""
+	@echo " * Making GAMMA MS Visual C++ Test Project Distrubution Directory"
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@${MAKE} $(NPD) msvcgammadir
+	@${MAKE} $(NPD) msvcdir
+	@${MAKE} $(NPD) msvctestdir
+
+msvcexampleprojdir:
+	@echo ""
+	@echo " * Making GAMMA MS Visual C++ Example Project Distrubution Directory"
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@${MAKE} $(NPD) msvcgammadir
+	@${MAKE} $(NPD) msvcdir
+	@${MAKE} $(NPD) msvcexampledir
+
+msvclibdistdir:
+	@echo ""
+	@echo " * Making GAMMA MS Visual C++ Library Distrubution Directory"
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@${MAKE} $(NPD) msvcgammadir
+	@${MAKE} $(NPD) msvclibdir
+
+msvcgammadir:
+	@echo " * Will Copy MSVC Related Files Below Temporary Directory ./$(GAMDIST)"
+	@if (test -d ./$(GAMDIST)) \
+	then \
+          echo; \
+          echo " * Temp Directory Exists. First Clearing It" ; \
+          echo "   Removing Directory ./$(GAMDIST)" ; \
+          rm -rf ./$(GAMDIST); \
+	fi
+	@echo ""
+	@echo " * Must First Construct A New Temporary GAMMA Directory"
+	@echo "   Making Directory ./$(GAMDIST)"
+	@mkdir $(GAMDIST)
+	@chmod ug+w $(GAMDIST)
+
+msvcdemoprojdir:
+	@echo ""
+	@echo " * Making GAMMA MS Visual C++ Demos Project Distrubution Directory"
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@${MAKE} $(NPD) msvcgammadir
+	@${MAKE} $(NPD) msvcdir
+	@${MAKE} $(NPD) msvcdemodir
+
+msvcdir:
+	@echo " * Next Construct A MSVC Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)/$(MSVCDIR)"
+	@mkdir ./$(GAMDIST)/$(MSVCDIR)
+	@chmod ug+w ./$(GAMDIST)/$(MSVCDIR)
+
+msvcstatdir:
+	@echo " * Next Construct A Static Project Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)/$(MSVCDIR)/$(MSVCSTATICDIR)"
+	@mkdir ./$(GAMDIST)/$(MSVCDIR)/$(MSVCSTATICDIR)
+	@chmod ug+w ./$(GAMDIST)/$(MSVCDIR)/$(MSVCSTATICDIR)
+
+msvcdynamicdir:
+	@echo " * Next Construct A Dynamic Project Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDYNAMICDIR)"
+	@mkdir ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDYNAMICDIR)
+	@chmod ug+w ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDYNAMICDIR)
+
+msvcdemodir:
+	@echo " * Next Construct A Demo Project Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDEMODIR)"
+	@mkdir ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDEMODIR)
+	@chmod ug+w ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDEMODIR)
+
+msvcexampledir:
+	@echo " * Next Construct A Example Project Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)"
+	@mkdir ./$(GAMDIST)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)
+	@chmod ug+w ./$(GAMDIST)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)
+
+msvclibdir:
+	@echo " * Next Construct A Library Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)/$(MSVCDIR)/$(MSVCLIBDIR)"
+	@mkdir ./$(GAMDIST)/$(MSVCLIBDIR)
+	@chmod ug+w ./$(GAMDIST)/$(MSVCLIBDIR)
+
+###############################################################################
+#                                                                             #
+#                          Targets: msvcstaticmode                            #
+#                                   msvcdynamicmode                           #
+#                                   msvcelibmode                              #
+#                                   msvcetestmode                             #
+#                                   msvceexamplemode                          #
+#                                                                             #
+# These targets are part of the GAMMA MSVC++ project distribution targets &   #
+# NOT intended to  be run solo (although they could be.) These will just      #
+# change the mode to not be executable on all of the MSVC++ related files     #
+# contained within particular GAMMA MSVC++ directories.                       #
+#                                                                             #
+# PROJECTPATH    - Directory where the current GAMMA version base is. This    #
+#                  will  be the directory with the main GAMMA Makefile, and   #
+#                  the one from which other directories (e.g. src, make,      #
+#                  msvc,...) will branch off of. This will be a full path     #
+#                  name. This variable will be defined (or included) in the   #
+#                  main GAMMA makefile and is normally set automatically      #
+#                  during the GAMMA configuration.                            #
+# MSCVDIR        - Name of Microsoft Visual C++ project distribution          #
+#                  directory.  This is the location where GAMMA MSVC++        #
+#                  project files are copied. This variable will be defined in #
+#                  the Makefile MakeGam. This variable will be a simple name  #
+#                  such as "msvc".                                            #
+# MSCVSTATDIR    - Name of Microsoft Visual C++ static project distribution   #
+#                  directory. This will be a simple name such as "static"     #
+# MSCVDYNAMICDIR - Name of Microsoft Visual C++ dynamic project distribution  #
+#                  directory. This will be a simple name such as "dynamic"    #
+# MSCVTESTDIR    - Name of Microsoft Visual C++ testing project distribution  #
+#                  directory. This will be a simple name such as "test"       #
+# MSCVEXAMPLEDIR - Name of Microsoft Visual C++ example project distribution  #
+#                  directory. This will be a simple name such as "example"    #
+#                                                                             #
+###############################################################################
+
+msvcstaticmode:
+	@echo
+	@echo " * Changing Static Project Files To Be Non-Executable"
+	@chmod a-x $(PROJECTPATH)/$(MSVCDIR)/$(MSVCSTATICDIR)/*
+	@echo
+
+msvcdynamicmode:
+	@echo
+	@echo " * Changing Dynamic Project Files To Be Non-Executable"
+	@chmod a-x $(PROJECTPATH)/$(MSVCDIR)/$(MSVCDYNAMICDIR)/*
+	@echo
+
+msvcdemomode:
+	@echo
+	@echo " * Changing Demo Project Files To Be Non-Executable"
+	@chmod a-x $(PROJECTPATH)/$(MSVCDIR)/$(MSVCDEMODIR)/*
+	@echo
+
+msvclibmode:
+	@echo
+	@echo " * Changing Library Files To Be Non-Executable"
+	@chmod a-x $(PROJECTPATH)/$(MSVCDIR)/$(MSVCLIBDIR)/*
+	@echo
+
+msvctestmode:
+	@echo
+	@echo " * Changing Test Project Files To Be Non-Executable"
+	@chmod a-x $(PROJECTPATH)/$(MSVCDIR)/$(MSVCTESTDIR)/*
+	@echo
+
+msvcexamplemode:
+	@echo
+	@echo " * Changing Example Project Files To Be Non-Executable"
+	@chmod a-x $(PROJECTPATH)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)/*
+	@echo
+
+###############################################################################
+#                                                                             #
+#                         Target: msvcstaticcopy                              #
+#                                 msvcdynamicopy                              #
+#                                 msvctestcopy                                #
+#                                                                             #
+#                            DO NOT RUN THESE TARGETS                         #
+#                                                                             #
+# These targets are part of GAMMA MSVC++ project distribution targets & NOT   #
+# intended to  be run solo. Each will take all of the MSVC++ related files    #
+# associated with particular GAMMA Visual C++ workspace and copy them to a    #
+# temporary directory.                                                        #
+#                                                                             #
+# PROJECTPATH    - Directory where the current GAMMA version base is. This    #
+#                  will  be the directory with the main GAMMA Makefile, and   #
+#                  the one from which other directories (e.g. src, make,      #
+#                  msvc,...) will branch off of. This will be a full path     #
+#                  name. This variable will be defined (or included) in the   #
+#                  main GAMMA makefile and is normally set automatically      #
+#                  during the GAMMA configuration.                            #
+# MSCVDIR        - Name of Microsoft Visual C++ project distribution          #
+#                  directory.  This is the location where GAMMA MSVC++        #
+#                  project files are copied. This variable will be defined in #
+#                  the Makefile MakeGam. This variable will be a simple name  #
+#                  such as "msvc".                                            #
+# MSCVSTATDIR    - Name of Microsoft Visual C++ static project distribution   #
+#                  directory. This will be a simple name such as "static"     #
+# MSCVDYNAMICDIR - Name of Microsoft Visual C++ dynamic project distribution  #
+#                  directory. This will be a simple name such as "dynamic"    #
+# MSCVTESTDIR    - Name of Microsoft Visual C++ testing project distribution  #
+#                  directory. This will be a simple name such as "test"       #
+#                                                                             #
+###############################################################################
+
+STATICFROM  = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCSTATICDIR)
+STATICTO    = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCSTATICDIR)
+DYNAMICFROM = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCDYNAMICDIR)
+DYNAMICTO   = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDYNAMICDIR)
+TESTFROM    = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCTESTDIR)
+TESTTO      = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCTESTDIR)
+EXAMPLEFROM = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)
+EXAMPLETO   = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)
+LIBFROM     = $(PROJECTPATH)/$(MSVCLIBDIR)
+LIBTO       = ./$(GAMDIST)/$(MSVCLIBDIR)
+DEMOFROM    = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCDEMODIR)
+DEMOTO      = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDEMODIR)
+
+msvcstaticcopy:
+	@echo
+	@echo " * Copying MSVC++ Static Project Files"
+	@echo
+	@echo " * Copying From: $(STATICFROM)"
+	@echo " * Copying To:   $(STATICTO)"
+	@cp -f $(STATICFROM)/*dsp   $(STATICTO) 
+	@cp -f $(STATICFROM)/*plg   $(STATICTO)
+	@cp -f $(STATICFROM)/*html  $(STATICTO)
+	@cp -f $(STATICFROM)/gamma* $(STATICTO)
+	@echo
+
+msvcdynamiccopy:
+	@echo
+	@echo " * Copying MSVC++ Dynamic Project Files"
+	@echo
+	@echo " * Copying From: $(DYNAMICFROM)"
+	@echo " * Copying To:   $(DYNAMICTO)"
+	@cp -f $(DYNAMICFROM)/*dsp   $(DYNAMICTO) 
+	@cp -f $(DYNAMICFROM)/*plg   $(DYNAMICTO)
+	@cp -f $(DYNAMICFROM)/*html  $(DYNAMICTO)
+	@cp -f $(DYNAMICFROM)/gamma* $(DYNAMICTO)
+	@echo
+
+msvctestcopy:
+	@echo
+	@echo " * Copying MSVC++ Test Project Files"
+	@echo
+	@echo " * Copying From: $(TESTFROM)"
+	@echo " * Copying To:   $(TESTTO)"
+	@cp -f $(TESTFROM)/*dsp   $(TESTTO) 
+	@cp -f $(TESTFROM)/*plg   $(TESTTO)
+	@cp -f $(TESTFROM)/*html  $(TESTTO)
+	@cp -f $(TESTFROM)/gamma* $(TESTTO)
+	@echo
+
+msvcexamplecopy:
+	@echo
+	@echo " * Copying MSVC++ Example Project Files"
+	@echo
+	@echo " * Copying From: $(TESTFROM)"
+	@echo " * Copying To:   $(TESTTO)"
+	@cp -f $(EXAMPLEFROM)/*dsp   $(EXAMPLETO) 
+	@cp -f $(EXAMPLEFROM)/*plg   $(EXAMPLETO)
+	@cp -f $(EXAMPLEFROM)/*html  $(EXAMPLETO)
+	@cp -f $(EXAMPLEFROM)/gamma* $(EXAMPLETO)
+	@echo
+	
+msvcstatlibcopy:
+	@echo
+	@echo " * Copying MSVC++ GAMMA Full Binary Static Library"
+	@echo
+	@echo " * Copying From: $(LIBFROM)"
+	@echo " * Copying To:   $(LIBTO)"
+	@cp -f $(LIBFROM)/Gamma.lib $(LIBTO)/Gamma.lib 
+	@echo
+	
+msvcstatlibscopy:
+	@echo
+	@echo " * Copying MSVC++ GAMMA Module Binary Static Libraries"
+	@echo
+	@echo " * Copying From: $(LIBFROM)"
+	@echo " * Copying To:   $(LIBTO)"
+	@cp -f $(LIBFROM)/*.lib $(LIBTO)/
+	@rm -f $(LIBTO)/Gamma.lib
+	@echo
+
+msvcdemocopy:
+	@echo
+	@echo " * Copying MSVC++ Demo Project Files"
+	@echo
+	@echo " * Copying From: $(DEMOFROM)"
+	@echo " * Copying To:   $(DEMOTO)"
+	@cp -f $(DEMOFROM)/*dsw   $(DEMOTO)
+	@cp -f $(DEMOFROM)/*dsp   $(DEMOTO)
+	@cp -f $(DEMOFROM)/*plg   $(DEMOTO)
+	@cp -f $(DEMOFROM)/*html  $(DEMOTO)
+	@cp -f $(DEMOFROM)/*sys   $(DEMOTO)
+	@echo
+
+###############################################################################
+#                                                                             #
+	
+###############################################################################
+#                                                                             #
+#                             Target: msvcdoccopy                             #
+#                            DO NOT RUN THIS TARGET                           #
+#                                                                             #
+# This target is part of the GAMMA MSVC++ project distribution target & NOT   #
+# intended to  be run solo. It just takes documentation files assoicated with #
+# use of MSVC++ to build GAMMA and GAMMA programs. Unlike other targets in    #
+# this file, here we will recursively use documentation makefile targets! So, #
+# those targets must be included in whatever file includes this one (i.e. in  #
+# the main GAMMA Makefile.)                                                   #
+#                                                                             #
+###############################################################################
+#STATICFROM  = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCSTATICDIR)
+#STATICTO    = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCSTATICDIR)
+#DYNAMICFROM = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCDYNAMICDIR)
+#DYNAMICTO   = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCDYNAMICDIR)
+#TESTFROM    = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCTESTDIR)
+#TESTTO      = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCTESTDIR)
+#EXAMPLEFROM = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)
+#EXAMPLETO   = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCEXAMPLEDIR)
+#LIBFROM     = $(PROJECTPATH)/$(MSVCDIR)/$(MSVCLIBDIR)
+#LIBTO       = ./$(GAMDIST)/$(MSVCDIR)/$(MSVCLIBDIR)
+
+
+msvcdoccopy:
+	@echo
+	@echo " * Copying MSVC++ Related GAMMA HTML Documentation Files"
+	@echo
+#	@echo " * Copying From: $(STATICFROM)"
+#	@echo " * Copying To:   $(STATICTO)"
+#	@echo
+
+###############################################################################
+#                                                                             #
+#                    Targets: msvcstaticprojzipfile                           #
+#                             msvcdynamicprojzipfile                          #
+#                             msvctestprojzipfile                             #
+#                             msvcexampleprojzipfile                          #
+#                             msvcstaticlibzipfile                            #
+#                             msvcdynamiclibzipfile                           #
+#                             msvcstaticmodlibzipfile                         #
+#                             msvcdynamicmodlibzipfile                        #
+#                                                                             #
+#                           DO NOT RUN THESE TARGETS                          #
+#                                                                             #
+# These targets are part of the GAMMA Microsoft Visual C++ related package    #
+# distribution targets and not meant to run solo. It takes a sub-directory    #
+# (generated from previous targets) and compresses the files in the directory #
+# hierarchy into a single file using zip. The result will be a zippled file   #
+# representing a GAMMA MSVC++ package distribution.                           #
+#                                                                             #
+# GAMDIST     - Name of distribution mock directory. This will be used as the #
+#               base directory where copied files were placed (./gamma-x.x.x) #
+#               and used as the starting point for the compression. This      #
+#               variable will be defined in  the Makefile MakeGam.            #
+# ZIPPGM      - Name of program which does the compression.                   #
+# ZIPFLGS     - Program flags to use with compression execution.              #
+# GVERLEV0    - GAMMA version level 0 (e.g. 4 of 4.0.7)                      #
+# GVERLEV1    - GAMMA version level 1 (e.g. 0 of 4.0.7)                      #
+# GSUBVER     - GAMMA version sublevel (e.g. 7 of 4.0.6)                    #
+#                                                                             #
+# STATPRJZIP  - Name of static library project zip file.                      #
+# DLLPRJZIP   - Name of dynamic library project zip file.                     #
+# DEMOPRJZIP  - Name of demo project zip file.                                #
+# EXMPPRJZIP  - Name of example project zip file.                             #
+# STATLIBZIP  - Name of static library zip file.                              #
+# DLLLIBZIP   - Name of dynamic library zip file.                             #
+# STATLIBSZIP - Name of module static libraries zip file.                     #
+# DLLLIBSZIP  - Name of module dynamic libraries zip file.                    #
+#                                                                             #
+###############################################################################
+
+STATPRJZIP  = GamStatPrj$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+DLLPRJZIP   = GamDLLPrj$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+TESTPRJZIP  = GamTestPrj$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+EXMPPRJZIP  = GamExmpPrj$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+STATLIBZIP  = GamStatLib$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+DLLLIBZIP   = GamDLLLib$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+STATLIBSZIP = GamStatLibs$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+DLLLIBSZIP  = GamDLLLibs$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+DEMOPRJZIP  = GamDemoPrj$(GVERLEV0)$(GVERLEV1)$(GSUBVER)
+
+msvcstaticprojzip: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Static Project Distribution";
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(STATPRJZIP)";
+	@if (test -f $(STATPRJZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(STATPRJZIP)"; \
+          rm -f $(STATPRJZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(STATPRJZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+msvcdynamicprojzipfil: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Dynamic Project Distribution";
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(DLLPRJZIP)";
+	@if (test -f $(DLLPRJZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(DLLPRJZIP)"; \
+          rm -f $(DLLPRJZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(DLLPRJZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+msvcdemoprojzip: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Demo Project Distribution"; 
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(DEMOPRJZIP)";
+	@if (test -f $(DEMOPRJZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(DEMOPRJZIP)"; \
+          rm -f $(DEMOPRJZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(DEMOPRJZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+msvcexampleprojzip: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Example Project Distribution"; 
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(EXMPPRJZIP)";
+	@if (test -f $(EXMPPRJZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(EXMPPRJZIP)"; \
+          rm -f $(EXMPPRJZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(EXMPPRJZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+msvcstaticlibzipfile: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Static Library Distribution"; 
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(STATLIBZIP)";
+	@if (test -f $(STATLIBZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(STATLIBZIP)"; \
+          rm -f $(STATLIBZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(STATLIBZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+msvcdynamiclibzipfile: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Dynamic Library Distribution"; 
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(DLLLIBZIP)";
+	@if (test -f $(DLLLIBZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(DLLLIBZIP)"; \
+          rm -f $(DLLLIBZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(DLLLIBZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+msvcstaticmodlibzipfile: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Module Static Libraries Distribution"; 
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(STATLIBSZIP)";
+	@if (test -f $(STATLIBSZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(STATLIBSZIP)"; \
+          rm -f $(STATLIBSZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(STATLIBSZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+msvcdynamicmodlibzipfile: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA MSVC++ Module Dynamic Libraries Distribution"; 
+	@echo "   All Files In ./$(GAMDIST) Will Be Compressed Using $(ZIPPGM)";
+	@echo "   The Resulting File Will Be Named $(DLLLIBSZIP)";
+	@if (test -f $(DLLLIBSZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(DLLLIBSZIP)"; \
+          rm -f $(DLLLIBSZIP); \
+        fi
+	@echo "   Making New Zip File From ./$(GAMDIST)";
+	@$(ZIPPGM) $(ZIPFLGS) $(DLLLIBSZIP) $(GAMDIST)
+	@echo "   New Zip File Completed, Named $(GAMDIST) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+###############################################################################
+#                             Target: msvcdemosrc                             #
+#                                                                             #
+# This target will copy ALL GAMMA released demo source files from the GAMMA   #
+# demo directory to a temp directory.  It will then zip those files into a    #
+# package for distribution. Lastly it will delete the copied files and the    #
+# temporary directory, leaving only the packaged file.                        #
+#                                                                             #
+# GVERSION: The current GAMMA version                                         #
+# MAKE:     The makefile being worked with                                    #
+# SUBDIRS:  The subdirectories with recursive Makefiles for the distribution. #
+# PASSFLAGS:The flags that will be passed to the recursed makefiles.          #
+#                                                                             #
+###############################################################################
+ 
+msvcdemosrc:
+	@echo
+	@echo "MSVC++ Demo Source Distribution, GAMMA Version $(GVERSION)"
+	@echo
+	@echo
+
+###############################################################################
+#                             Target: msvcdemoprj                             #
+#                                                                             #
+# This target will copy ALL GAMMA released MSCV++ demo project files from the #
+# Microsoft Visual C++ demo directory to a temp directory.  It will then zip  #
+# those files into a package for distribution. Lastly it will delete the      #
+# copied files and the temporary directory, leaving only the packaged file.   #
+#                                                                             #
+# GVERSION: The current GAMMA version                                         #
+# MAKE:     The makefile being worked with                                    #
+# SUBDIRS:  The subdirectories with recursive Makefiles for the distribution. #
+# PASSFLAGS:The flags that will be passed to the recursed makefiles.          #
+#                                                                             #
+###############################################################################
+ 
+msvcdemoprj:
+	@echo
+	@echo "MSVC++ Demo Project Distribution, GAMMA Version $(GVERSION)"
+	@echo
+	@echo
+
+###############################################################################
+#                                Target: msvcclean                            #
+#                                                                             #
+# This removes any temporary directories and files that have been produced in #
+# a GAMMA source distribution.                                                #
+#                                                                             #
+# GAMDIST     - Name of source distribution mock directory. This will be used #
+#               as the based directory where copied files are sent. This      #
+#               variable will be defined in  the Makefile MakeGam             #
+#                                                                             #
+###############################################################################
+ 
+msvcclean:
+	@echo ""
+	@echo " * Cleaning Temporary MSVC++ Project Files And Any Directories"
+	@echo "   Removing Files Below ./$(GAMDIST) And ./$(GAMDIST) Directory"
+	@rm -rf $(GAMDIST)
+	@echo ""
+
+###############################################################################
+#                               Target: srcvars                               #
+#                                                                             #
+# During a GAMMA source distribution files are moved around, directories      #
+# created and destroyed. This can be dangerous if some variables in the       #
+# Makefile are improperly set. At the vary least, the different targets will  #
+# not work. At worst, important files are destroyed.  This target will simply #
+# spit out all of the variables that are (overtly) used in the makefile. This #
+# way one can have a look if things appear proper prior to running anything   #
+# that does file/directory manipulations. This target is not normally run by  #
+# a GAMMA user, it is more useful in building makefiles and debugging them.   #
+#                                                                             #
+###############################################################################
+
+msvcsrcvars:   
+	@echo ""
+	@echo "   Make Variables Used For GAMMA MSVC++ Related Distrubutions"
+	@echo "   ----------------------------------------------------------"
+	@echo ""
+	@echo "  GVERSION     The GAMMA Version                 = $(GVERSION)"
+	@echo "  GAMDIST      Relative Temp GAMMA Dist. Dir.    = $(GAMDIST)"
+	@echo "  SRCDIR       The GAMMA Source Directory Name   = $(SRCDIR)"
+	@echo "  SRCDIST      The GAMMA Mock Source Directory   = $(SRCDIST)"
+	@echo "  SRCNAME      Source Package Name               = $(SRCNAME)"
+	@echo "  SRCTAR       Tarred Source Package Name        = $(SRCTAR)"
+	@echo "  SRCZIP       Zipped Source Package Name        = $(SRCZIP)"
+	@echo "  MAKEDIR      The GAMMA Makefile Directory Name = $(MAKEDIR)"
+	@echo "  MAKEDIST     The GAMMA Mock Makefile Directory = $(MAKEDIST)"
+	@echo "  MAKE         The Make Program Being Used       = $(MAKE)"
+	@echo "  PROJECTPATH  GAMMA Project Path (Full Direct.) = $(PROJECTPATH)"
+	@echo "  SRCDIRF      Files Included From Source Dir.   = $(SRCDIRF)"
+	@echo "  SRCDIRFF     Full Files (From Above) Included  = $(SRCDIRFF)"
+	@for i in $(SMAKEDIRF); do \
+	echo "  SMAKEDIRF    Makefile Included From Make Dir   = $$i"; \
+	done
+	@for i in $(SMAKEDIRFF); do \
+	echo "  SMAKEDIRFF   Full Files (Above Two) Included   = $$i"; \
+	done
+	@for i in $(MAINFILES); do \
+	echo "  MAINFILES    GAMMA Main Direct. Files Included = $$i"; \
+	done
+	@echo "  PASSFLGS     Variables Sent To Recursive Makes :"
+	@echo
+	@for i in $(PASSFLGS); do \
+	echo "   $$i"; \
+	done
+	@echo
+	@echo ""

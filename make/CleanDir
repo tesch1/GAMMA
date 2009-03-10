@@ -1,0 +1,71 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#                Makefile For The GAMMA MR Simulation Platform                #
+#                      Copyright © 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile, CleanDir, is the removal of any spurious      #
+# files that might have gotten into the GAMMA directories. This can happen    #
+# during test builds (.o, .exe, .out, .a, .so files left behind), or maybe    #
+# editing (~ files left), or running programs that leave output files (.asc,  #
+# .gnu, .log). Whatever their cause, this target should be used to remove     #
+# them. The target will recurse through the subdirectories listed in variable #
+# CLEANSUBDIR. What files are cleaned in any particular subdirectory must be  #
+# specified by the target LOCcleandir in the Makefile that will handle the    #
+# cleaning. Note that this is NOT the same as the common GNU targets          #
+# "make clean" or "make distclean". They function quite differently.          #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.                           #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+# cleandir:   Remove spurious files for directory                             #
+#                                                                             #
+# Requirements   							      #
+# ============                                                                #
+# MAKELEVEL:     Level of recursed makefile (automatic)                       #
+# CLEANCONTENTS: Contents of directory (cosmetic)                             #
+# CLEANSUBDIRS:  Directories to recuse in cleaning.                           #
+# MAKE:          Make program being used (automatic)                          #
+# NPD:           No print directory directive (--no-print-directory)          #
+# PASSFLAGS:     Variables to pass to recursive make files.                   #
+# CURDIR:        Current directory name (automatic)                           #
+# cleanfiles:    Target which does the cleaning locally                       #
+# force:         Required target for use of this makefile                     #
+#                                                                             #
+###############################################################################
+
+cleandir: force
+        ifeq (0,${MAKELEVEL})
+	  @echo ""
+	  @echo "                Spurious File Removal"
+	  @echo "                ====================="
+	  @echo " * Cleaning All Spurious Non-Essential Files In ${CLEANCONTENTS}"
+        endif
+	@for i in $(CLEANSUBDIRS); do \
+          if [ -d ./$$i ] ; then \
+            echo " * Recursing To Clean Files In Sub-Directory $$i"; \
+            if (rootme=`pwd`/ ; export rootme ; \
+              rootsrc=`cd $(srcdir); pwd`/ ; export rootsrc ; \
+              cd ./$$i; \
+              $(MAKE) $(NPD) $(PASSFLAGS) $@) ; then true ; \
+            else exit 1 ; fi ; \
+          else true ; fi ; \
+	done
+        ifeq (0,${MAKELEVEL})
+	  @echo "   Cleaning Files In ${CURDIR}"
+        else
+	  @echo "     Cleaning Files In ${CURDIR}"
+        endif
+	@${MAKE} ${NPD} cleanfiles
+        ifeq (0,${MAKELEVEL})
+	  @echo " * Finished With Spurious File Cleaning In ${CLEANCONTENTS}"
+	  @echo ""
+        endif

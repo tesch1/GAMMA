@@ -1,0 +1,372 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#                                                                             #
+#                Makefile for the GAMMA MR Simulation Project                 #
+#                     Copyright (C) 1999 Scott A. Smith                       #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32306-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile is GAMMA binary distributions. Herein are      #
+# are defined the targets that are used for such purposes.  They are intended #
+# to produce files which can be used link to the plaftorm, but they           #
+# will not deal with any addon files. Note that this file is included in the  #
+# MAIN GAMMA makefile and should not be confused with a similar file included #
+# in makefiles associated to specific GAMMA modules. They are very different! #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.  This and other makefiles #
+# are typically packaged with the full GAMMA source distribution.  The full   #
+# src distrubution may be obtained from the GAMMA WWW site above or any of    #
+# its mirrors.                                                                #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                               Target: bindist                               #
+#                                                                             #
+# This target will copy ALL GAMMA released binary files from this and module  #
+# directories to a temp directory.  It will then tar those files and compress #
+# them into a package for distribution. Finally it will delete the copied     #
+# files and temporary directory, leaving only the packaged file.              #
+#                                                                             #
+# GVERSION    - GAMMA version being worked with.                              # 
+# host        - Target host for build (ala GNU conformance)                   #
+# MAKE        - The make program being used                                   #
+# bindir      - Target binary directory for build (ala GNU conformance)       #
+# SUBDIRB     - Subdirectories with Makefiles handling binary distributions.  #
+# PASSFLGS    - Flags passed to recursive makefiles.                          #
+# MAINBFILES  - Main directory files added to binary distribution             #
+#                                                                             #
+###############################################################################
+
+bindist:
+	@echo
+	@echo "         Building GAMMA Binary Distribution Version $(GVERSION)"
+	@echo "         --------------------------------------------$(GVERSUL)"
+	@echo "         --------------------------------------------$(GVERSUL)"
+	@echo
+	@echo
+	@echo "               Making Sure GAMMA Libraries & Headers Current"
+	@echo "               ---------------------------------------------"
+	@echo
+	@echo
+	@echo "                      Making Binary Distribution File"
+	@echo "                      -------------------------------"
+	@echo "                     GAMMA $(GVERSION) For $(host)"
+	@echo
+	@${MAKE} bindir
+	@echo
+	@for i in $(SUBDIRB); do \
+           echo "Making $@ in ./src/$${i} ..." ; \
+           if [ -d ./src/$$i ] ; then \
+             if (rootme=`pwd`/ ; export rootme ; \
+               rootsrc=`cd $(srcdir); pwd`/ ; export rootsrc ; \
+               cd ./src/$$i; \
+               $(MAKE) --no-print-directory $(PASSFLGS) $@) ; then true ; \
+             else exit 1 ; fi ; \
+           else true ; fi ; \
+        done
+	@${MAKE} --no-print-directory binstdcopy
+	@${MAKE} --no-print-directory bintar
+	@${MAKE} --no-print-directory bingzip
+	@${MAKE} --no-print-directory srcclean
+
+bindistd:
+	@echo "                               |---------|"
+	@echo "                               |---------|"
+	@echo "                               | DRY RUN |"
+	@echo "                               |---------|"
+	@echo "                               |---------|"
+	@echo
+	@echo "         Building GAMMA Binary Distribution Version $(GVERSION)"
+	@echo "         --------------------------------------------$(GVERSUL)"
+	@echo "         --------------------------------------------$(GVERSUL)"
+	@echo
+	@echo "               Making Sure GAMMA Libraries & Headers Current"
+	@echo "               ---------------------------------------------"
+	@echo
+	@echo $(MAKE) all
+	@echo
+	@echo "                      Making Binary Distribution File"
+	@echo "                      -------------------------------"
+	@echo "                     GAMMA $(GVERSION) For $(host)"
+	@echo
+	@$(MAKE) bindird
+	@echo
+	@for i in $(SUBDIRB); do \
+           echo "                      Distributing $${i} Module Files"; \
+           if [ -d ./src/$$i ] ; then \
+             if (rootme=`pwd`/ ; export rootme ; \
+               rootsrc=`cd $(srcdir); pwd`/ ; export rootsrc ; \
+               cd ./src/$$i; \
+               $(MAKE) --no-print-directory $(PASSFLGS) $@) ; then true ; \
+             else exit 1 ; fi ; \
+           else true ; fi ; \
+        done
+	@${MAKE} --no-print-directory binstdcopyd
+	@${MAKE} --no-print-directory bintard
+	@${MAKE} --no-print-directory bingzipd
+#	@${MAKE} --no-print-directory srcclean
+
+###############################################################################
+#                               Target: bindir                                #
+#                           DO NOT RUN THIS TARGET                            #
+#                                                                             #
+# This target is part of the GAMMA binary distribution target & is NOT really #
+# meant to run solo. It constructs a "mock" GAMMA directory off of the        #
+# current directory. In doing so it allows this makefile to generate a tar    #
+# distribution file that, when untarred in the GAMMA root directory, will     #
+# generate all the released files having standard GAMMA directory structure.  #
+#                                                                             #
+# PROJECTPATH - The base GAMMA directory for this version.                    #
+# GAMDIST     - Directory where binary distribution will be created.          #
+# HOSTDIST    - Directory where distribution for this host will be.           #
+# LIBDIST     - Directory where library files will be copied (deprecated).    #
+# BINDIST     - Directory where binary files will be copied (deprecated).     #
+# SRCDIST     - Directory where source files will be copied.                  #
+#                                                                             #
+###############################################################################
+bindir:
+	@echo ""
+	@echo "                     Making GAMMA Binary Distrubution Directory"
+	@echo "                     ------------------------------------------"
+	@echo ""
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@echo " * Copy Headers & Libraries To Temp Directory ./$(GAMDIST)"
+	@if (test -d ./$(GAMDIST)) \
+	then \
+          echo; \
+          echo " * Temp Directory Exists. First Clearing It" ; \
+          echo "   Removing Directory ./$(GAMDIST)" ; \
+          rm -rf ./$(GAMDIST); \
+	fi
+	@echo ""
+	@echo " * Must First Construct This New Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)"
+	@mkdir $(GAMDIST)
+	@chmod ug+w $(GAMDIST)
+	@echo " * Next Construct The Host Temporary Directory"
+	@echo "   Making Directory ./$(HOSTDIST)"
+	@mkdir $(HOSTDIST)
+	@chmod ug+w $(HOSTDIST)
+	@if (test ! -d ./$(LIBDIST)) \
+	then \
+	  echo " * Next Construct The Lib Temporary Directory If Needed"; \
+	  echo "   Making Directory ./$(LIBDIST)"; \
+	  mkdir $(LIBDIST); \
+	  chmod ug+w $(LIBDIST); \
+	fi
+	@if (test ! -d ./$(BINDIST)) \
+	then \
+	  echo " * Next Construct The Bin Temporary Directory If Needed"; \
+	  echo "   Making Directory ./$(BINDIST)"; \
+	  mkdir $(BINDIST); \
+	  chmod ug+w $(BINDIST); \
+	fi
+	@echo " * Next Construct The Src Headers Temporary Directory"
+	@echo "   Making Directory ./$(SRCDIST)"
+	@mkdir $(SRCDIST)
+	@chmod ug+w $(SRCDIST)
+
+bindird:
+	@echo ""
+	@echo "     Making GAMMA Binary Distrubution Directory"
+	@echo "     ------------------------------------------"
+	@echo ""
+	@echo " * Current GAMMA Directory Is $(PROJECTPATH)"
+	@echo ""
+	@echo " * Copy GAMMA Sources To Temporary Directory ./$(GAMDIST)"
+	@if (test -d ./$(GAMDIST)) \
+	then \
+          echo; \
+          echo " * Temp Directory Exists. First Clearing It" ; \
+          echo "   Removing Directory ./$(GAMDIST)" ; \
+          echo "   Using Command rm -rf ./$(GAMDIST)" ; \
+	fi
+	@echo ""
+	@echo " * Must First Construct This New Temporary Directory"
+	@echo "   Making Directory ./$(GAMDIST)"
+	@echo "   Using command mkdir $(GAMDIST)"
+	@echo "   Using command chmod ug+w $(GAMDIST)"
+	@echo " * Next Construct The Host Temporary Directory"
+	@echo "   Making Directory ./$(HOSTDIST)"
+	@echo "   Using Command @mkdir $(HOSTDIST)"
+	@echo "   Using Command chmod ug+w $(HOSTDIST)"
+	@if (test ! $(LIBDIST) = $(HOSTDIST)) \
+	then \
+	  echo " * Next Construct The Lib Temporary Directory If Needed"; \
+	  echo "   Making Directory ./$(LIBDIST)"; \
+	  echo "   Using Command mkdir $(LIBDIST)"; \
+	  echo "   Using Command chmod ug+w $(LIBDIST)"; \
+	fi
+	@if (test ! $(BINDIST) = $(HOSTDIST)) \
+	then \
+	  echo " * Next Construct The Bin Temporary Directory If Needed"; \
+	  echo "   Making Directory ./$(BINDIST)"; \
+	  echo "   Using Command mkdir $(BINDIST)"; \
+	  echo "   Using Command chmod ug+w $(BINDIST)"; \
+	fi
+	@echo " * Next Construct The Src Headers Temporary Directory"
+	@echo "   Making Directory ./$(SRCDIST)"
+	@echo "   Using Command mkdir $(SRCDIST)"
+	@echo "   Using Command chmod ug+w $(SRCDIST)"
+
+
+###############################################################################
+#                                                                             #
+#                               Target: bincopy                               #
+#                                                                             #
+# This target is part of the GAMMA binary distribution target & NOT meant to  #
+# run solo. It just takes all of the local standard files associated with the #
+# GAMMA binaries and copies them into the temporary binary directory.         #
+#                                                                             #
+# MAINBFILES  - Main directory files added to binary distribution             #
+# GAMDIST     - Directory where binary distribution was created.              #
+# SRC         - Directory where source files reside.                          #
+# SRCDIST     - Directory where source files will be copied.                  #
+# LIB         - Directory where library binary files reside.                  #
+# LIBDIST     - Directory where library files will be copied.                 #
+#                                                                             #
+###############################################################################
+ 
+binstdcopy:
+	@echo
+	@echo " * Copying Base Binary Release Files"
+	@echo
+	@echo " * Copying Files From The Main GAMMA Directory"
+	@echo "   Including Makefile, gamma script, etc...."
+	@cp $(MAINBFILES) $(GAMDIST)
+	@echo " * Including gamma.h in $(SRC)"
+	@cp $(SRC)/gamma.h $(SRCDIST)
+	@echo " * Copying Module Library Files in $(LIB)"
+	cp $(LIB)/*.a $(LIBDIST)
+	@echo " * Stripping Library Files in $(LIBDIST)"
+	strip $(LIBDIST)/*.a
+ 
+binstdcopyd:
+	@echo
+	@echo " * Copying Base Binary Release Files"
+	@echo
+	@echo " * Copying Files From The Main GAMMA Directory"
+	@echo "   Including Makefile, gamma script, etc...."
+	@echo "   Using command cp $(MAINBFILES) $(GAMDIST)"
+	@echo " * Including gamma.h in $(SRC)"
+	@echo "   Using command cp $(SRC)/gamma.h $(SRCDIST)"
+	@echo " * Copying Module Library Files in $(LIB)"
+	@echo "   Using command cp $(LIB)/*.a $(LIBDIST)"
+	@echo " * Stripping Library Files in $(LIBDIST)"
+	@echo "   Using command strip $(LIBDIST)/*.a"
+
+###############################################################################
+#                                                                             #
+#                                Target: bintar                               #
+#                                                                             #
+# This target is part of the GAMMA binary distribution target and not meant   #
+# to run solo. It takes all of the files for a binary release and tars them   #
+# them into a single file.  All released files are hopefully in a mock test   #
+# directory $(GAMDIST) which replicates the true $GAMMA directory structure.  #
+#                                                                             #
+# PROJECTPATH - Where zipped binary distribution resides.                     #
+# BINTAR      - Binary distribution tar file.                                 #
+# GAMDIST     - Directory where binary distribution was created.              #
+#                                                                             #
+###############################################################################
+
+bintar:
+	@echo
+	@echo " * Generating Tar File Of GAMMA Binary Distribution"
+	@echo "   Making New TarFile From $(PROJECTPATH)"
+	@echo "   New TarFile Will Be Called $(BINTAR)"
+	@if (test -f $(BINTAR)) \
+	then \
+	  echo "   First Deleting Existing Tar File $(BINTAR)"; \
+	  rm -f $(BINTAR); \
+	fi
+	@echo "   Tar Done Using Relative Directory ./$(GAMDIST)"
+	@tar cf $(BINTAR) ./$(GAMDIST)
+	@echo "   New Tar File $(BINTAR) Complete"
+
+bintard:
+	@echo
+	@echo " * Generating Tar File Of GAMMA Binary Distribution"
+	@echo "   Making New TarFile From $(PROJECTPATH)"
+	@echo "   New TarFile Will Be Called $(BINTAR)"
+	@if (test -f $(BINTAR)) \
+	then \
+	  echo "   First Deleting Existing Tar File $(BINTAR)"; \
+	fi
+	@echo "   Tar Done Using Relative Directory ./$(GAMDIST)"
+	@echo "   Using command tar cf $(BINTAR) ./$(GAMDIST)"
+	@echo "   New Tar File $(BINTAR) Complete"
+ 
+ 
+###############################################################################
+#                                                                             #
+#                                Target: bingzip                              #
+#                                                                             #
+# This target is part of the GAMMA program binary distribution target and not #
+# meant to run solo. It takes the single binary tar file in this directory    #
+# (generated from previous targets) and compresses them using GNU zip.  The   #
+# result will be a single GAMMA binary distribution file.                     #
+#                                                                             #
+# BINTAR      - Binary distribution tar file.                                 #
+# BINZIP      - Binary distribution zipped file.                              #
+# PROJECTPATH - Where zipped binary distribution resides.                     #
+#                                                                             #
+###############################################################################
+ 
+bingzip: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA Binary Distribution"; 
+	@echo "   The Tar File $(BINTAR) Will Be Compressed Using gzip";
+	@if (test -f $(BINZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(BINZIP)"; \
+          rm -f $(BINZIP); \
+        fi
+	@echo "   Making New Zip File From $(BINTAR)"
+	@gzip $(BINTAR)
+	@echo "   New Zip File Completed, Named $(BINZIP) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+ 
+bingzipd: 
+	@echo
+	@echo " * Generating Zipped File Of GAMMA Binary Distribution"; 
+	@echo "   The Tar File $(BINTAR) Will Be Compressed Using gzip";
+	@if (test -f $(BINZIP)) \
+        then \
+          echo "   First Deleting Existing Zip File $(BINZIP)"; \
+        fi
+	@echo "   Making New Zip File From $(BINTAR)"
+	@echo "   Command is gzip $(BINTAR)"
+	@echo "   New Zip File Completed, Named $(BINZIP) In Current Directory"
+	@echo "   The Current Directory Is $(PROJECTPATH)"
+
+
+###############################################################################
+#                                Target: binclean                             #
+#                                                                             #
+# This removes any temporary directories and files that have been produced in #
+# a binary distribution of GAMMA programs.                                    #
+#                                                                             #
+# GAMDIST - Directory where binary distribution was created.                  #
+#                                                                             #
+###############################################################################
+ 
+binclean:
+	@echo ""
+	@echo " * Cleaning Up Temporary Binary Files And Any Directories"
+	@echo "   Removing Files Below ./$(GAMDIST) And ./$(GAMDIST) Directory"
+	@rm -rf $(GAMDIST)
+	@echo ""
+
+bincleand:
+	@echo ""
+	@echo " * Cleaning Up Temporary Binary Files And Any Directories"
+	@echo "   Removing Files Below ./$(GAMDIST) And ./$(GAMDIST) Directory"
+	@echo ""

@@ -1,0 +1,58 @@
+###############################################################################
+#                                                                             #
+#                                 G A M M A                                   #
+#           Source Module Makefile For The GAMMA MR Simulation Platform       #
+#                      Copyright © 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32307-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# The concern of this Makefile, CleanDir, is the removal of any temporary     #
+# that may exist in this directory. During the course of GAMMA developement   #
+# spurious files can be left behind that clutter up the directory. They have  #
+# little to do with GAMMA and should be removed, especially if backups of the #
+# platform (all files, all directories) are to be performed. This can vastly  #
+# reduce the disk space needed to contain GAMMA. The target can be run on a   #
+# regular basis.                                                              #
+#                                                                             #
+# These targets use standard Unix functionality: rm. This is as is suggested  #
+# by GNU standards                                                            #
+#                                                                             #
+#              http://www.gnu.org/prep/standards_52.html#SEC52                #
+#                                                                             #
+# These targets will ALWAYS be run before any GAMMA distributions are done.   #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.                           #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+#   cleandir:   Clean all spurious files from this directory.                 #
+#                                                                             #
+# Requirements   							      #
+# ============                                                                #
+# MODLABEL:      Cosmetic label for the source module.                        #
+# MODULEDIR:     Directory name of the source module.                         #
+# force:         Required target for use of this makefile                     #
+#                                                                             #
+###############################################################################
+
+cleandir: force
+	@echo " * Cleaning Unneeded Files From $(MODLABEL) Source Module Directory"
+	@echo "   From: $(MODULEDIR)"
+	@echo "   Removing All Object Files";
+	@rm -f *.o
+	@echo "   Removing All Executable Files";
+	@rm -f *.exe
+	@rm -f *.out
+	@echo "   Removing All Library Files";
+	@rm -f *.a
+	@rm -f *.so
+	@rm -f *.dll
+	@echo "   Removing All Editor Backup Files";
+	@rm -f *~
+	@rm -f *.~*
+	@echo " * Finished With Cleaning $(MODLABEL) Directory "

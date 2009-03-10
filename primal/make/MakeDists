@@ -1,0 +1,74 @@
+###############################################################################
+#                                                                             #
+#            Makefile For GAMMA Primal Makefiles Documentation Figures        #
+#                      Copyright c 2002 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32306-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# =========================================================================== #
+#                                                                             #
+# Quick Info: 1.) GAMMA Primal Makefile Figures Directory Makefile.           #
+#             2.) Handles Primal Makefile Figures Distributions.              #
+#                                                                             #
+# =========================================================================== #
+#                                                                             #
+# This Makefile serves only to handle GAMMA distributions. The figures in     #
+# this directory are distributed when ever the GAMMA primal Makefiles are     #
+# distributed. That occurs in both a normal distribution, a source code       #
+# distribution, and a documentation distribution.                             #
+#                                                                             #
+# Supplied Targets                                                            #
+# ================                                                            #
+#                                                                             #
+# dist:         GNU distribution target                                       #
+# distdir:      Local distribution (called from main make distribute target)  #
+# distdirsolo:  Distribution target run if only specific directory            #
+# distrecursive:Distribution target run if recursed makefile                  #
+#                                                                             #
+# Supplied Variables                                                          #
+# ==================                                                          #
+# DISTFILES     Files that are distributed                                    #
+#                                                                             #
+# Requirements                                                                #
+# ============                                                                #
+# MODLABEL:      Cosmetic label for the source module.                        #
+# MODULEDIR:     Directory name of the source module.                         #
+# force:         Required target for use of this makefile                     #
+#                                                                             #
+###############################################################################
+
+DISTFILES   = ${HDRFILES} ${CCFILES} ${HTMLFILES} ${INCFILES} ${IMGFILES}
+DISTGVER    = ${CURDIR}/$(GVERDIR)
+DISTBASE    = ${DISTGVER}/${PRIMALDIR}
+DISTDIR     = ${DISTBASE}/${THISDIR}
+
+dist: 
+        ifeq (0,${MAKELEVEL})
+	  @${MAKE} $(NPD) distdirsolo;
+        endif
+        ifneq (0,${MAKELEVEL})
+	  @${MAKE} $(NPD) distribute;
+        endif
+
+distdir: distdirrecursive
+
+distdirsolo:
+	@echo ""
+	@echo "     Making GAMMA Primal ${THISDIR} Makefile Distribution";
+	@echo "     --------------------${THISDUL} ---------------------";
+	@echo ""
+	@echo "   Sorry. Distributions of Just a Specific GAMMA Primal Makefile"
+	@echo "   Is Not Allowed. There Is No Reason That I Can Think Of For"
+	@echo "   Needing These Makefiles Without The Documentation Files That"
+	@echo "   Go Along With Them. Please Run Distribution Targets From"
+	@echo "   (At Least) One Level Back In The GAMMA Directory Hierarchy."
+	@echo
+
+distdirrecursive:
+	@echo " * Adding Primal ${THISDIR} Makefile Files To This Distribution"
+	@echo " * We Will Copy The Primal ${THISDIR} Files To A Temporary"
+	@echo "   Directory $(DISTDIR)"
+	@${MAKE} $(NPD) newdistdir;

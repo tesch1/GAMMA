@@ -1,0 +1,90 @@
+###############################################################################
+#                                                                             #
+#             Makefile Definitions For The GAMMA Floquet Module               #
+#                      Copyright © 2000 Scott A. Smith                        #
+#                  National High Magnetic Field Laboratory                    #
+#                         1800 E. Paul Dirac Drive                            #
+#                     Tallahassee, FL, USA 32306-4005                         #
+#                          ssmith@magnet.fsu.edu                              #
+#                      On WWW See gamma.magnet.fsu.edu                        #
+#                                                                             #
+# This is to be included in the generic GAMMA module Makefile soas to make it #
+# specific for the Floquet module. The definitions set herein should apply    #
+# exclusively to the Floquet module. Its inclusion into the generic module    #
+# Makefile will set up all variables needed by the Floquet module.            #
+#                                                                             #
+# Note that module base definitions are set in $GAMMA/make/MakeMods.          #
+# This is done for all GAMMA modules and allows for global collective         #
+# definitions to be set for the main GAMMA makefile.  This file just selects  #
+# out the definitions needed for the Floquet module. There MUST be some match #
+# between the names in $GAMMA/make/MakeMods and the ones used here.           #
+#                                                                             #
+# Users are free to copy this file for personal use but may NOT give out      #
+# modifications with or without the GAMMA platform.  This GAMMA module's      #
+# source distrubution is typically packaged with the full GAMMA source        #
+# distribution.  The full src distrubution and one for just this module may   #
+# be obtained from the GAMMA WWW site above or any of its mirrors.            #
+#                                                                             #
+###############################################################################
+
+###############################################################################
+#                                                                             #
+#                            GAMMA Module Definitions                         #
+#                                                                             #
+# This following include brings in the variables which define ALL of the      #
+# GAMMA modules with respect to GAMMA Makefiles.  Here we select out those    #
+# which are specific to the Floquet module and it is they will be used in the #
+# module specific Makefile in this directory.  It is the module specific      #
+# Makefile that controls all builds and distributions of the Floquet module.  #
+#                                                                             #
+###############################################################################
+
+include ../../make/MakeMods
+
+###############################################################################
+#                                                                             #
+#                         Module Specific Definitions                         #
+#                                                                             #
+# LIBBASE   - Base Name of Module Library                                     #
+# DIRNAME   - The Local Directory Name                                        #
+# DIRNAMEUL - Cosmetic Underlining of the Local Directory Name                #
+#                                                                             #
+###############################################################################
+
+LIBBASE         = $(FLOQ)
+DIRNAME         = $(FLOQ)
+DIRNAMEUL       = $(FLOQUL)
+
+###############################################################################
+#                                                                             #
+#                            Files Under Make Control                         #
+#                                                                             #
+# Below are the files that this Makefile deals with.  Any additonal files for #
+# source distrubution and/or compilation should be added in this section.     #
+# Here are the current definitions:                                           #
+#                                                                             #
+# FNAMES:  All files "filename" where filename.h & filename.cc are souce code #
+#          files that are part of this module. These will be compiled into    #
+#          the module library and are given out in source code distributions. #
+# HDRFILE: File that includes all header files for the module. This is then   #
+#          included in both source and binary distributions.                  #
+#                                                                             #
+###############################################################################
+
+FNAMES  = $(FLOQBASE)
+HDRFILE = $(FLOQHDR)
+PYGFILE = $(FLOQPY)
+
+################################################################################
+#                                                                              #
+# This target is just for cosmetics when the module Makefile is run.  It is    #
+# used to echo to the screen what the purpose of the module is.  If it were    #
+# left blank it would not hinder any other targets as it only affects screen   #
+# output when running make.                                                    #
+#                                                                              #
+################################################################################
+
+allblurb: force
+	@echo "        * Single Rotation Floquet Operators"
+	@echo "        * Double Rotation Floquet Operators"
+	@echo "        * Fast Floquet Acquisitions"
