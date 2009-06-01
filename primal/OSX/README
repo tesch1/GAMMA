@@ -1,0 +1,6 @@
+This Makefile is known to work w/OS X 10.5.7 for building the default 
+target which is the gamma dylib. The library will be created in the 
+mac-darwin directory off the root of this install. 
+
+`make clean` also works; other Makefile targets haven't been tested. 
+

@@ -131,7 +131,7 @@ string cutBlksXBlks(string& Sinp, const string& X, bool xwhite)
   if(!Sinp.length()) return string("");	// Bail of no input string
   string cutSinp;				// This will be the return
   if(xwhite) cutWhite(Sinp);			// Remove initial blanks
-#if defined(_MSC_VER) || defined(__SUNPRO_CC) || defined(__GCC3xx__) || defined(__BORLANDC__)
+#if defined(_MSC_VER) || defined(__SUNPRO_CC) || defined(__GNUC__) || defined(__BORLANDC__)
   if(!Sinp.compare(0,X.length(),X))		// See if X at start in Sinp
 #else
  if(!Sinp.compare(X,0,X.length()))		// See if X at start in Sinp

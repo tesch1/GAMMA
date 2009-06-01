@@ -132,23 +132,23 @@ bool WeRBigEnd()
    the function below to convert to _Ios_Openmode. If not, the function
    will do nothing but return the same integer!                     */
 
-#if defined(__GCC3xx__)
-  const _Ios_Openmode Int2Mode(int mode)
+#if defined(__GNUC__)
+  const std::ios_base::openmode Int2Mode(int mode)
     {
     switch(mode)
       {
-       case 1:   return ios_base::in;        break;
-       case 2:   return ios_base::out;       break;
-       case 4:   return ios_base::ate;       break;
-       case 8:   return ios_base::app;       break;
-       case 16:  return ios_base::trunc;     break;
-//     case 32:  return ios_base::nocreate;  break;
-//     case 64:  return ios_base::noreplace; break;
-       case 128: return ios_base::binary;    break;
+       case 1:   return std::ios_base::in;        break;
+       case 2:   return std::ios_base::out;       break;
+       case 4:   return std::ios_base::ate;       break;
+       case 8:   return std::ios_base::app;       break;
+       case 16:  return std::ios_base::trunc;     break;
+//     case 32:  return std::ios_base::nocreate;  break;
+//     case 64:  return std::ios_base::noreplace; break;
+       case 128: return std::ios_base::binary;    break;
      }
 //  MLFerror(24, 1);                      // File can't open at end
 //  MLFfatality(25);                      // Must be opened without ios::ate
-    return ios_base::in;
+    return std::ios_base::in;
     }
 #else
   int Int2Mode(int mode) { return mode; }

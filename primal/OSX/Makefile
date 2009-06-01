@@ -21,8 +21,8 @@
 #  4. Type "make clean" to remove all object files.			#
 #  5. Type "make distclean" to remove all object files libraries, exes.	#
 #  6. The sources are assumed in SRCDIR == ../../src			#
-#  7. The object are be produced in BINDIR ==  ../../powerpc-mac-darwin #
-#  8. The lib files are produced in BINDIR ==  ../../powerpc-mac-darwin #
+#  7. The object are be produced in BINDIR ==  ../../mac-darwin		#
+#  8. The lib files are produced in BINDIR ==  ../../mac-darwin		#
 #  9. Any executable files (test,demo) are produced in this directory.	#
 # 10. The important static library file is libgamma.a 			#
 # 11. The important DLL library files are gamma.dll and libgamma.dll.a	#
@@ -171,7 +171,7 @@ PYG_NAME    = pygamma.dll
 
 include ../../make/MakeMods
 SRCDIR   =  ../../src
-BINDIR   = ../../powerpc-mac-darwin
+BINDIR   = ../../mac-darwin
 
 LIB_SRCS = $(ALLCCFILES)
 LIB_OBJS = $(addsuffix .o, $(addprefix $(BINDIR)/, $(ALLFILES)))
@@ -212,7 +212,7 @@ LSPACE    = LSLib
 LEVEL2    = Level2
 BLOCH     = Bloch
 GAMIO     = GamIO
-BWR       = WBR
+BWR       = BWRRelax
 PULSES    = Pulses
 INTRANK2  = IntRank2
 FLOQUET   = Floquet
@@ -386,7 +386,7 @@ ${BINDIR}/%.soo : ${SRCDIR}/${TESTING}/%.cc
 #									#
 #########################################################################
 
-all: $(BINDIR)/$(SO_NAME)
+all: $(BINDIR) $(BINDIR)/$(SO_NAME)
 #all: $(BINDIR)/$(LIB_NAME) $(BINDIR)/$(SO_NAME)
 #all: $(LIB_NAME) $(SO_NAME) $(PY_NAME)
 
@@ -526,7 +526,7 @@ ${SO_NAME}: ${BINDIR}/${SO_NAME}
 
 ${BINDIR}/${SO_NAME}: ${BINDIR}/${SO_NAMEXXX}
 	@rm -f ${BINDIR}/${SO_NAME}
-	@cp -f ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
+	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
 
 $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo
@@ -537,14 +537,16 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@g++ ${SO_LDFLAGS} -install_name ${BINDIR}/${SO_NAMEX} \
          -compatibility_version ${COMPVER} -current_version ${CURRVER} \
          -o ${BINDIR}/${SO_NAMEXXX} ${SO_OBJS} $(SO_LDLIBS)
-	@rm -f ${BINDIR}/${SO_NAMEX} ${BINDIR}/${SO_NAME}
+	@# gcc creates both libgamma.dylib and libgamma.4.1.0.dylib; we
+	@# only want the latter.
+	@rm -f ${BINDIR}/${SO_NAME} ${BINDIR}/${SO_NAMEX} 
 	@echo "   * Linking ${BINDIR}/${SO_NAMEX} To This Library"
 	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAMEX}
 	@echo "   * Linking ${BINDIR}/${SO_NAME} To This Library"
 	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
 	@echo
 	@echo
-
+	
 #########################################################################
 #                                                                       #
 #                     Build The PyGAMMA Shared Library 			#
@@ -807,7 +809,7 @@ TestGAMMA.o: %o: %cc
 # the version may be 4.1.0 and compiled for OSX. On my OSX box that 	#
 # means my GAMMA script will know that /E/gamma/gamma-4.1.0 is my base  #
 # GAMMA directory, that /E/gamma/gamma-4.1.0/src is where it can find   #
-# the GAMMA source headers, & /E/gamma/gamma-4.1.0/powerpc-mac-darwin 	#
+# the GAMMA source headers, & /E/gamma/gamma-4.1.0/mac-darwin	 	#
 # is where any OSX specific GAMMA binaries will be located.		#
 #									#
 # When using the Gnu configuration process all of this information is	#
@@ -879,9 +881,6 @@ install: force
 	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
 	@echo " * Setting Link For libgamma.so"
-	@echo " * Running ldconfig To Update Cache Of Known Shared Libraries"
-	@echo " *         (This May Take A Couple Of Seconds)"
-	@${LDCONFIG} -n ${LIBINSTALLDIR}
 	@echo " * Adding Link For GAMMA Base Library Name"
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
 	@echo " * Finished. Compile Command gamma Should Now Work"
@@ -906,6 +905,9 @@ clean:
 	@rm -f *.gnu
 	@rm -f $(DEMO_OBJ)
 	@rm -f $(DEMO_PGM)
+	@rm -f ${BINDIR}/${SO_NAME}
+	@rm -f ${BINDIR}/${SO_NAMEX}
+	@rm -f ${BINDIR}/${SO_NAMEXX}
 	@rm -f ${BINDIR}/${SO_NAMEXXX}
 
 strip:

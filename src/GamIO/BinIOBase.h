@@ -83,8 +83,8 @@ int MakeADir(const std::string& dname, int no);
    the function below to convert to _Ios_Openmode. If not, the function
    will do nothing but return the same integer!                     */
 
-#if defined(__GCC3xx__)
-   const std::_Ios_Openmode Int2Mode(int mode);
+#if defined(__GNUC__)
+   const std::ios_base::openmode Int2Mode(int mode);
 #else
    int Int2Mode(int mode);
 #endif
