@@ -508,10 +508,10 @@ ${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
 #									#
 #########################################################################
 
-all: ihatewindows $(BINDIR)/$(SO_NAME)
-lib: ihatewindows $(BINDIR)/$(LIB_NAME)
-so:  ihatewindows $(BINDIR)/$(SO_NAME)
-pyg: ihatewindows $(BINDIR)/$(PY_NAME)
+all: ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
+lib: ihatewindows $(BINDIR) $(BINDIR)/$(LIB_NAME)
+so:  ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
+pyg: ihatewindows $(BINDIR) $(BINDIR)/$(PY_NAME)
 
 ${LIB_NAME}: ${BINDIR}/${LIB_NAME}
 ${SO_NAME}:  ${BINDIR}/${SO_NAME}
