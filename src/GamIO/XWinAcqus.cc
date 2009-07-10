@@ -318,10 +318,12 @@ ostream& XWinAcqus::dpa(ostream& ostr) const
   {
   ostr << "\n" << string(29, ' ') << "Acquisition Parameters";
   ostr << "\n" << string(79, '=') << "\n\n";
-  bru(ostr, "Date_",    _DATE,         "",                           0);
-bru(ostr, "Time",     "NOCH NICHT",         "",                           1);
+	// *** _DATE has been redefined as a time_t.  
+	// Cast as long on output to make sure no loss of data.
+  bru(ostr, "Date_",    static_cast<long>(_DATE),         "",        0);
+  bru(ostr, "Time",     "NOCH NICHT",         "",                    1);
 // int tf = pset.getString("Time",sval2);
-//  bru(ostr, "Time",     _TIME,         "",                           1);
+//  bru(ostr, "Time",     _TIME,         "",                         1);
   bru(ostr, "PULPROG",  _PULPROG,      "",                           0);
   bru(ostr, "AQ_mod",   AQ_modS(),     "",                           1);
   bru(ostr, "TD",       TD(),          "",                           0);

@@ -39,6 +39,9 @@
 
 #include <Deprecated/block_1D.h>	// Include class interface
 #include <Basics/Gutils.h>		// Include GAMMA errors
+#include <assert.h>
+#include <iostream>
+using namespace std;
  
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------
@@ -197,19 +200,27 @@ block_1D operator - (const block_1D &BLK1, const block_1D &BLK2)
   return BLK;
   }
 
-
 block_1D operator - (const block_1D &BLK1)
 
 	// Input		BLK1  : a block_1D
 	// Return		BLK   : block_1D which is the negative
-        //	                        of the input block_1D, BLK = - BLK1
+  //	                of the input block_1D, BLK = - BLK1
 
   {
   block_1D BLK;
-  BLK.row_vector::operator= (-BLK1);	// vector negation
+	
+#ifdef _MSC_VER
+	// *DCT* This call leads to infinite recursion and will not compile on windows.
+	cout << "\nFATAL: Call to this deprecated funtion leads to infinite recursion.\n";
+	assert(0);
+#else
+	BLK.row_vector::operator= (-BLK1);	// vector negation
   BLK.ParameterSet::operator= (BLK1);		// copy parameter set BLK1 into BLK
+#endif
+
   return BLK;
   }
+
 
 
 void block_1D::operator -= (const block_1D &BLK2)

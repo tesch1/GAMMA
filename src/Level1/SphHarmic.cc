@@ -788,14 +788,19 @@ complex Y3m3(double theta, double phi)
 { return Y3m3rad(theta*DEG2RAD, phi*DEG2RAD); } 
 
 
+/*
 double Y40(double theta)
 
 	// Input		theta : spherical angle
 	// Output		z     : rank 4 normalized spherical harmonic
 	// Note			      : angle theta input in radians
 
-{ return Y40(theta*DEG2RAD); } 
-
+	{ 
+	return Y40(theta*DEG2RAD); 
+	// *** Should this be return Y40rad(...) ?
+	// *** currently, calling this would cause endless recursion.
+	} 
+*/
 
 complex Y41(double theta, double phi)
 

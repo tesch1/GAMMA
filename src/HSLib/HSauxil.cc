@@ -552,7 +552,7 @@ void mqt_v(const spin_sys& sys, gen_op &H, int qn=1, int type=0, int ncols=3)
 // To center each row (for 80 columns) we need rst = 80 - {ncols*collen + (ncols-1)*sep}/2
 
     int idig = 1;				// Transition index printed size
-    while(pow(long(10),idig) < size)		// Get the transition index printed size
+    while(pow(double(10.0),idig) < size)		// Get the transition index printed size
       idig++;
     std::string Sidig = std::string("%d") + Gdec(idig);
     int tlen = 2*idig+5;			// This length for # --> #
@@ -724,7 +724,7 @@ void wavefunction(const spin_sys& sys, gen_op &Op, int wf, int pbf=0)
   int bf = 0;
   int bout = 0;
   int idig = 1;					// Basis fct index printed size
-  while(pow(long(10),idig) < size)		// Get the index printed size
+  while(pow(double(10.0),idig) < size)		// Get the index printed size
     idig++;
   std::string ind = Gdec(wf);
   std::string blanks = "                       ";

@@ -774,7 +774,15 @@ inline double norm(const complex& z)
         // Output               r : Norm of z, r = sqrt | |re|  + |im|  |
 	//						[               ]
 
-  { return hypot(z.re, z.im); }
+  {
+  #ifdef _MSC_VER
+  // Need to confirm this has no effect on results.
+  // Could also wrap hypot() in #pragma waning(disable: ...) then enable:
+  return _hypot(z.re, z.im); 
+  #else
+  return hypot(z.re, z.im);
+  #endif  
+  }
 
 
 inline double phase(const complex& z)

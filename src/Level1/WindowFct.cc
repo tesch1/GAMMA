@@ -166,7 +166,11 @@ row_vector Kaiser (int size, double theta, int offset)
     x = double(i-offset)*fact;
     x = 1 - x*x;
     x = theta*sqrt(x);
-    BLK.put(j0(x)/j0(theta), i);		// Kaiser function
+#ifdef _MSC_VER
+    BLK.put(_j0(x)/_j0(theta), i);		// Kaiser function
+#else
+    BLK.put(j0(x)/j0(theta), i);		  // Kaiser function
+#endif
     }						// Uses Math Lib.
   return BLK;					// zero order Bessel
   } 

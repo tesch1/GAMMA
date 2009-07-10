@@ -79,6 +79,7 @@ MSVCDLL std::string cutInt(std::string&       Sinp,                       bool x
 
 MSVCDLL std::string Gitoa(int i);
 MSVCDLL std::string Gdec(int i);
+MSVCDLL std::string Gdec2(long li);
 MSVCDLL std::string Gdec(const std::string& fmt, int i);
 MSVCDLL std::string Gdec(int i, int digs);
  

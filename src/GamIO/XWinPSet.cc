@@ -464,8 +464,16 @@ void XWinPSet::bru(ostream& ostr, const string& label,
   }
 
 void XWinPSet::bru(ostream& ostr, const string& label, 
-                              int value, const string& units, int type) const
-  { bru(ostr, label, Gdec(value), units, type); }
+                   int value, const string& units, int type) const
+  { 
+	bru(ostr, label, Gdec(value), units, type); 
+  }
+
+void XWinPSet::bru(ostream& ostr, const string& label, 
+                   long value, const string& units, int type) const
+  { 
+	bru(ostr, label, Gdec2(value), units, type); 
+  }
 
 void XWinPSet::bru(ostream& ostr, const string& label, 
       double value, const string& units, const string& parse, int type) const

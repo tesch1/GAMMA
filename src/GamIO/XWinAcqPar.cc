@@ -138,14 +138,26 @@ void XWinAcqPar::SetDefaults(const string& fname)
   _DATATYPE = "Parameter Values";
   _ORIGIN   = "UXNMR, Bruker Analytische Messtechnik GmbH";
   _OWNER    = "GAMMA";
-  struct tm *ptr;               	// For setting current date
+  //struct tm *ptr;               	// For setting current date
   time_t longtime;              	// Need a time structure
   longtime  = time('\0'); 
-  ptr       = localtime(&longtime);
-  _DAY      = asctime(ptr); 
+
+#ifdef _MSC_VER
+  struct tm newtime;
+	errno_t err = localtime_s(&newtime, &longtime);
+	char day[31];
+	err = asctime_s(day, 30, &newtime);
+	_DAY = day;
+  string cwd;
+  cwd = string(_getcwd(NULL, 128));
+#else
+  const struct tm * ptr = localtime(&longtime);
+  _DAY  = asctime(ptr); 
   string cwd;
   cwd = string(getcwd(NULL, 128));
-  _NAME = cwd + "/" + fname; 		// Full file name
+#endif
+  
+	_NAME = cwd + "/" + fname; 		// Full file name
   _AQSEQ    = 0;			// Acquire sequence in 2D/3D
   _AQ_mod   = 1;			// Acquisiton mode = qsim
   _AUNM     = "";			// Acquisiton program
@@ -965,8 +977,16 @@ void XWinAcqPar::XW_IN(int i, double in)      { _IN[i]   = in;               }
 void XWinAcqPar::O1(double of)             { SetO(0, of);                 }
 void XWinAcqPar::O2(double of)             { SetO(1, of);                 }
 void XWinAcqPar::O(int i, double of)       { SetO(i, of);                 }
-void XWinAcqPar::NAME(const string& nm)    { _NAME   = string(getcwd(NULL,128))
-                                                     + "/" + nm;          }
+
+void XWinAcqPar::NAME(const string& nm)    
+  { 
+#ifdef _MSC_VER
+	_NAME   = string(_getcwd(NULL,128));
+#else
+	_NAME   = string(getcwd(NULL,128));
+#endif
+	_NAME += "/" + nm;          
+  }
 void XWinAcqPar::NS(int ns)                { _NS      = ns;               }
 void XWinAcqPar::NUC(int i,const string& N){ _NUC[i]  = N;                }
 void XWinAcqPar::NUCLEI(int CH, const string& I, double OF, int warn)
@@ -1021,8 +1041,10 @@ bool XWinAcqPar::readAPar(int warn)
 
 bool XWinAcqPar::parsePSet(int defs, int warn)
   {
-  if(defs==2) SetDefaults2(parfile);		// First set the default
-  else        SetDefaults1(parfile);		// parameters (same name)
+  if(defs==2) 
+		SetDefaults2(parfile);		// First set the default
+  else        
+		SetDefaults1(parfile);		// parameters (same name)
 
 //                    First Try And Access All Single Parameters
 
@@ -1047,7 +1069,9 @@ bool XWinAcqPar::parsePSet(int defs, int warn)
   getPar("CPDPRGB",  _CPDPRGB);			// Try and get this
   getPar("CPDPRGT",  _CPDPRGT);			// Try and get this
 						// D# Delays Parsed in Loop
-  getPar("DATE",     i); _DATE = long(i);	// Try and get file date
+  getPar("DATE",     i); 
+	//_DATE = long(i);	// Try and get file date
+	_DATE = time_t(i);
 						// DBL# values Parsed in Loop
 						// DBP# values Parsed in Loop
   getPar("DBP07",    _DBP07);			// Try and get this

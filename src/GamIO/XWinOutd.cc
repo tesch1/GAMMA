@@ -128,11 +128,21 @@ void XWinOutd::SetDefaults()
   _TITLE    = "Parameter File,  Version XWIN-NMR  GAMMA";
   _JCAMPDX  = "5.0";
   _DATATYPE = "Parameter Values";
-  struct tm *ptr;               // For setting current date
   time_t longtime;              // Need a time structure
   longtime = time('\0');        //
+
+#ifdef _MSC_VER
+	struct tm newtime;
+  localtime_s(&newtime,&longtime);
+	char date[31];
+	asctime_s(date, 30, &newtime);
+  _DATE = date;
+#else
+  struct tm *ptr;               // For setting current date
   ptr = localtime(&longtime);
   _DATE = asctime(ptr);
+#endif
+
   _CURPLOT = string("hpdj550");	// Default plotter
   _CURPRIN = string("$hpdj550c");// The default printer
   _DFORMAT = "normdp";		// The default format
@@ -260,12 +270,22 @@ int XWinOutd::write(int warn) const
   ofstr << nn << "TITLE= "    << _TITLE << "\n";
   ofstr << nn << "JCAMPDX= "  << _JCAMPDX << "\n";
   ofstr << nn << "DATATYPE= " << _DATATYPE << "\n";
-  struct tm *ptr;
   time_t longtime;				// Need a time structure
   longtime = time('\0');
+
+#ifdef _MSC_VER
+	struct tm newtime;
+  localtime_s(&newtime,&longtime);
+	char timebuf[31];
+	asctime_s(timebuf, 30, &newtime);
+  ofstr << ss << " " << timebuf;
+#else
+  struct tm *ptr;
   ptr = localtime(&longtime);
   ofstr << ss << " " << asctime(ptr);
-  ofstr << nns << "CURPLOT= <" << _CURPLOT << ">\n";
+#endif
+
+	ofstr << nns << "CURPLOT= <" << _CURPLOT << ">\n";
   ofstr << nns << "CURPRIN= <" << _CURPRIN << ">\n";
   ofstr << nns << "DFORMAT= <" << _DFORMAT << ">\n";
   ofstr << nns << "LFORMAT= <" << _LFORMAT << ">\n";

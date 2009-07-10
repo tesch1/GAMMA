@@ -136,11 +136,21 @@ void XWinProcPar::SetDefaults(const string& fname)
   _DATATYPE = "Parameter Values";
   _ORIGIN   = "UXNMR, Bruker Analytische Messtechnik GmbH";
   _OWNER    = "GAMMA";
-  struct tm *ptr;		// For setting current date
   time_t longtime;              // Need a time structure
   longtime = time('\0');	//
+
+#ifdef _MSC_VER
+  struct tm newtime;		// For setting current date
+  localtime_s(&newtime, &longtime);
+	char date[31];
+	asctime_s(date,30,&newtime);
+  _DATE = date;
+#else
+  struct tm *ptr;		// For setting current date
   ptr = localtime(&longtime);
   _DATE = asctime(ptr);	
+#endif
+
   _ABSF1   = 0;
   _ABSF2   = 0;
   _ABSG    = 0;
@@ -680,13 +690,31 @@ int XWinProcPar::writePPar(int warn) const
     ofstr << nn << "ORIGIN= "   << _ORIGIN << "\n";
   if(_OWNER != "")
     ofstr << nn << "OWNER= "    << _OWNER << "\n";
-  struct tm *ptr;
   time_t longtime;                              // Need a time structure
   longtime = time('\0');
+
+#ifdef _MSC_VER
+  struct tm newtime;		// For setting current date
+  localtime_s(&newtime, &longtime);
+	char date[31];
+	asctime_s(date,30,&newtime);
+	ofstr << ss << " " << date;
+#else
+  struct tm *ptr;
   ptr = localtime(&longtime);
   ofstr << ss << " " << asctime(ptr);		// Output current date & time
+#endif
+
   string cwd;
+
+#ifdef _MSC_VER
+	char cwdtmp[130];
+  _getcwd(cwdtmp, 128);		// Current working directory
+	cwd = string(cwdtmp);
+#else
   cwd = string(getcwd(NULL, 128));		// Current working directory
+#endif
+
   ofstr << ss << " " << cwd			// Output full file name
         << "/" << parfile << "\n";
   ofstr << nns << "ABSF1= " << _ABSF1   << "\n";// Left limit for bc (ppm)

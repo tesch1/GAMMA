@@ -2026,14 +2026,16 @@ void n_matrix::picture(std::ostream& ostr, const MxPrint& PF) const
 
 void n_matrix::write(std::ofstream &fp, int form)
   {
-  float d;
+	// *** converted from float d to double d 
+	// and from sizeof(float) to sizeof(double)
+  double d;
   for(int i=0, pos=0; i<rows(); i++)	// First loop over the matrix rows
     for(int j=0; j<cols(); j++,pos++)	// Now loop over the matrix columns
       {
       d = Re(data[pos]);
-      fp.write((char*)&d, sizeof(float));
+      fp.write((char*)&d, sizeof(double));
       d = Im(data[pos]);
-      fp.write((char*)&d, sizeof(float));
+      fp.write((char*)&d, sizeof(double));
       }
   return;
   form = 0;				// Compiler likes form to be used

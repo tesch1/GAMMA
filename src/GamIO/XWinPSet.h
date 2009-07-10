@@ -183,6 +183,8 @@ void        XWinPSet::bru15(std::ostream& ostr, const std::string& label) const;
 void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,
                         int value, const std::string& units, int type=0) const;
 void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,
+                        long value, const std::string& units, int type=0) const;
+void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,
          const std::string& value, const std::string& units, int type=0) const;
 
 void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,

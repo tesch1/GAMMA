@@ -72,7 +72,8 @@ class XWinAcqPar: public XWinPSet
   std::string  _CPDPRGT;                // 
   double       _D_[32];			// Delay times (sec)
 //  double       _D[32];			// Delay times (sec)
-  long         _DATE;                   // When the file was made
+  //long         _DATE;                   // When the file was made
+	time_t	     _DATE;
   double       _DBL[8];			// 
   double       _DBP[8];			// 
   double       _DBP07;

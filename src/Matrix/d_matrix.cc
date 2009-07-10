@@ -2194,7 +2194,8 @@ void d_matrix::picture(std::ostream& ostr, const MxPrint & PFlgs) const
 
 void d_matrix::write(std::ofstream &fp, int form) const
   {
-  float dr,di,dz=0.0;
+	// **** changed float to double
+  double dr,di,dz=0.0;
   int j;
   for(int i=0; i<rows_; i++)			// Loop over all the rows
     {
@@ -2202,8 +2203,8 @@ void d_matrix::write(std::ofstream &fp, int form) const
     di = Im(data[i]);				// Im(<i|dmx|i>)
     if(!form)					// Just write diagonals if form
       {						// is GAMMA format (default)
-      fp.write((char*)&dr, sizeof(float));
-      fp.write((char*)&di, sizeof(float));
+      fp.write((char*)&dr, sizeof(double));
+      fp.write((char*)&di, sizeof(double));
       }
     else					// Write all elements if form is
       {						// not GAMMA
@@ -2211,13 +2212,13 @@ void d_matrix::write(std::ofstream &fp, int form) const
         {  
         if(i==j)
           {
-          fp.write((char*)&dr, sizeof(float));
-          fp.write((char*)&di, sizeof(float));
+          fp.write((char*)&dr, sizeof(double));
+          fp.write((char*)&di, sizeof(double));
           }
         else
           {
-          fp.write((char*)&dz, sizeof(float));
-          fp.write((char*)&dz, sizeof(float));
+          fp.write((char*)&dz, sizeof(double));
+          fp.write((char*)&dz, sizeof(double));
           }
         }
       }

@@ -303,9 +303,41 @@ string cutInt(string& Sinp, bool xwhite)
 
 string Gitoa(int i) { return Gdec(i); }
 string Gdec(int i)
-  { char buffer[80]; sprintf(buffer, "%d", i); return string(buffer); }
+  { 
+	char buffer[81];  
+
+#ifdef _MSC_VER
+	sprintf_s(buffer, 80, "%d", i); 
+#else
+	sprintf(buffer, "%d", i); 
+#endif
+
+	return string(buffer); 
+	}
+string Gdec2(long li)
+  { 
+	char buffer[161]; 
+
+#ifdef _MSC_VER
+	sprintf_s(buffer, 160, "%ld", li); 
+#else
+	sprintf(buffer, "%ld", li); 
+#endif
+
+	return string(buffer); 
+	}
 string Gdec(const string& fmt, int i)
-  { char buffer[80]; sprintf(buffer, fmt.c_str(), i); return string(buffer); }
+  { 
+	char buffer[81]; 
+
+#ifdef _MSC_VER
+	sprintf_s(buffer, 80, fmt.c_str(), i);
+#else
+	sprintf(buffer, fmt.c_str(), i); 
+#endif
+
+	return string(buffer); 
+	}
 string Gdec(int i, int digs)
   { string fmt = string("%") + Gdec(digs) + string("d"); return Gdec(fmt, i); }
 
@@ -320,9 +352,29 @@ string Gdec(int i, int digs)
    the GAMMA code and replaced them with Gform functions defined below.      */
 
 string Gform(const string& fmt, double d)
-  { char buffer[80]; sprintf(buffer, fmt.c_str(), d); return string(buffer); }
+  { 
+	char buffer[81]; 
+
+#ifdef _MSC_VER
+	sprintf_s(buffer, 80, fmt.c_str(), d); 
+#else
+	sprintf(buffer, fmt.c_str(), d); 
+#endif
+
+	return string(buffer); 
+	}
 string Gform(const string& fmt, int i)
-  { char buffer[80]; sprintf(buffer, fmt.c_str(), i); return string(buffer); }
+  { 
+	char buffer[81]; 
+
+#ifdef _MSC_VER
+	sprintf_s(buffer, 80, fmt.c_str(), i); 
+#else
+	sprintf(buffer, fmt.c_str(), i); 
+#endif
+
+	return string(buffer); 
+	}
 
 // ____________________________________________________________________________
 // D                        LINE READING FUNCTIONS

@@ -1518,10 +1518,15 @@ spin_op T_mult(spin_T& SphT1, spin_T& SphT2, int L, int M)
   int span2 = 2*l2+1;				// Range of m2
   int m1 = 0;					// Initial m1
   int m2 = 0;					// Initial m2
-  double norm = sqrt(2*L+1);			// For Wigner 3J use over CG
-  double prefact = 				// For Wigner 3J use over CG
-   pow(long(-1.0), long(abs(2*l2+L-M)));
-  for(int M1=0; M1<span1; M1++)			// Loop over m1 values
+
+	//Changed long(2*L+1) to double(2*L+1)
+  double norm = sqrt(double(2*L+1));			// For Wigner 3J use over CG
+
+	// Changed long(-1.0) to double(-1.0)
+	double prefact = 				// For Wigner 3J use over CG
+   pow(double(-1.0), long(abs(2*l2+L-M)));
+  
+	for(int M1=0; M1<span1; M1++)			// Loop over m1 values
     for(int M2=0; M2<span2; M2++)		// Loop over m2 values
       {
       m1 = l1-M1;				// Calculate actual m1
@@ -1687,10 +1692,15 @@ spin_op spin_T::rotate(int l, int m, const coord& EA)
 	  				equivalent results                   */
 
 spin_op T_prod(spin_T& SphT, space_T& SphA, int l, int m)
-{ return pow(long(-1.0),long(abs(m))) * T_comp(SphT,l, m) * SphA.component(l, -m); }
+	{ 
+	// changed long(-1.0) to double(-1.0)
+	return pow(double(-1.0),long(abs(m))) * T_comp(SphT,l, m) * SphA.component(l, -m); 
+	}
 
 spin_op T_prod(space_T& SphA, spin_T& SphT, int l, int m)
-{ return pow(long(-1.0), long(abs(m))) * SphA.component(l, m) * T_comp(SphT, l, -m); }
+	{ 
+	return pow(double(-1.0), long(abs(m))) * SphA.component(l, m) * T_comp(SphT, l, -m); 
+	}
 
 
 /*
@@ -1797,7 +1807,8 @@ double Clebsch_Gordan(int a, int b, int alpha, int beta, int c, int gamma)
         {
         term3 = fact(a-alpha-nu) * fact(c-b+alpha+nu) * fact(b+beta-nu);
         term3 *= fact(c-a-beta+nu) * fact(nu) * fact(a+b-c-nu);
-        term2 += pow(long(-1.0), long(abs(nu)))/term3;
+				// changed long(-1.0) to double(-1.0)
+        term2 += pow(double(-1.0), long(abs(nu)))/term3;
         }
       nu++;
       }
@@ -1878,7 +1889,9 @@ double Clebsch_Gordan(int a, int b, int alpha, int beta, int c, int gamma)
  
 double Wigner_3j(int a, int b, int c, int alpha, int beta, int gamma)
   {
-  double r = pow(long(-1.0),long(abs(a-b-gamma)))/sqrt(2*c+1);
+	// changed long(-1.0) to double(-1.0)
+	// also changed sqrt(2*c+1) to sqrt(double(2*c+1)
+  double r = pow(double(-1.0),long(abs(a-b-gamma)))/sqrt(double(2*c+1));
   return r*Clebsch_Gordan(a, b, alpha, beta, c, -gamma);
   }
 

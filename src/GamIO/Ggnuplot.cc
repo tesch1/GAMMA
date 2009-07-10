@@ -38,6 +38,7 @@
 #include <Basics/Gconstants.h>		// Include definition of RAD2DEG
 #include <Basics/Gutils.h>		// Include GAMMA errors
 #include <iostream>			// Include libstdc++ file streams
+#include <fstream>
 #include <string>			// Include libstdc++ ANSI strings
 #include <vector>			// Include libstdc++ STL vectors
 #include <cstdio>			// Include FILE
@@ -46,6 +47,7 @@
 using std::string;			// Using libstdc++ strings
 using std::vector;			// Using libstdc++ vectors
 using std::cout;			// Using libstdc++ standard output
+using std::ifstream;
 
 // ____________________________________________________________________________
 // i                      GAMMA Gnuplot Error Handling
@@ -161,6 +163,88 @@ string GPFind(bool vocal)
   int N = GPNames.size();			// Number of path names
   string GPE, GPName;				// Gnuplot execution command
   bool found = false;				// Flag if found executable
+  ifstream gexec;           // Gnuplot executable?
+  int i=0;
+  for(; i<N && !found; i++)
+    {
+    GPE = GPNames[i]; 				// Try this name first
+    if(vocal)
+      cout << "\n\t Seeking Gnuplot Executable " << GPE;
+
+    //gexec = fopen(GPE.c_str(), "rb");		// Does this file exist?
+    //if(gexec != NULL) found=true;			// If so, use this command
+	  gexec.open(GPE.c_str(), ifstream::binary);
+    if(gexec.good()== true)
+			found = true;			
+
+    if(vocal)
+      if(found) 
+				cout << " - Success!"; 
+      else      
+				cout << " - Not Found"; 
+    }
+
+  if(found) 
+	  { 
+	  gexec.close(); 
+	  return GPE; 
+	  } 
+
+  for(i=0; i<N && !found; i++)
+    {
+    GPE = GPNames[i] + string(".exe"); 				// Then try this name
+    if(vocal)
+      cout << "\n\t Seeking Gnuplot Executable " << GPE;
+
+	  gexec.open(GPE.c_str(), ifstream::binary);
+    if(gexec.good()== true)
+			found = true;	
+    
+		if(vocal)
+      if(found) 
+				cout << " - Success!"; 
+      else      
+				cout << " - Not Found"; 
+    }
+
+  if(found) 
+	  { 
+		gexec.close(); 
+		return GPE; 
+	  } 
+
+  for(i=0; i<N && !found; i++)
+    {
+    GPE = GPNames[i] + string(".out"); 				// Try this name first
+    if(vocal)
+      cout << "\n\t Seeking Gnuplot Executable " << GPE;
+
+	  gexec.open(GPE.c_str(), ifstream::binary);
+    if(gexec.good()== true)
+			found = true;	
+
+    if(vocal)
+      if(found) 
+				cout << " - Success!"; 
+      else      
+				cout << " - Not Found"; 
+    }
+  if(found) 
+	  { 
+	  gexec.close(); 
+		return GPE; 
+	  } 
+
+  return string("");
+  }
+
+/* saved version *
+string GPFind(bool vocal)
+  {
+  vector<string> GPNames = GPSeekStrings();	// Gnuplot path names
+  int N = GPNames.size();			// Number of path names
+  string GPE, GPName;				// Gnuplot execution command
+  bool found = false;				// Flag if found executable
   FILE* gexec = NULL;				// Gnuplot executable?
   int i=0;
   for(; i<N && !found; i++)
@@ -204,7 +288,7 @@ string GPFind(bool vocal)
   if(found) { fclose(gexec); return GPE; } 
   return string("");
   }
-
+*/
 
 string GPExec(int warn)
   {

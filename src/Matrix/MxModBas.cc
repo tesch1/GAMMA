@@ -143,13 +143,46 @@ volatile void MxModFatal()
    MxModdec & MxModform so that the GAMMA matrix module is standalone.       */
 
 std::string MxModdec(int i)
-  { char buffer[200]; sprintf(buffer, "%d", i); return std::string(buffer); }
+  { 
+	char buffer[201]; 
+
+#ifdef _MSC_VER
+	sprintf_s(buffer, 200, "%d", i); 
+#else
+	sprintf(buffer, "%d", i); 
+#endif
+
+	return std::string(buffer); 
+	}
 std::string MxModdec(const std::string& fmt, int i)
-  { char buf[200]; sprintf(buf, fmt.c_str(),i); return std::string(buf); }
+  { 
+	char buf[201]; 
+
+#ifdef _MSC_VER
+	sprintf_s(buf, 200, fmt.c_str(),i); 
+#else
+	sprintf(buf, fmt.c_str(),i); 
+#endif
+
+	return std::string(buf); 
+	}
 std::string MxModdec(int i, int digs)
-  { std::string fmt=std::string("%")+MxModdec(digs)+std::string("d"); return MxModdec(fmt,i); }
+  { 
+	std::string fmt=std::string("%")+MxModdec(digs)+std::string("d"); 
+	return MxModdec(fmt,i); 
+	}
 std::string MxModform(const std::string& fmt, double d)
-  { char buf[200]; sprintf(buf, fmt.c_str(), d); return std::string(buf); }
+  { 
+	char buf[201]; 
+
+#ifdef _MSC_VER
+	sprintf_s(buf, 200, fmt.c_str(), d); 
+#else
+	sprintf(buf, fmt.c_str(), d);
+#endif
+
+	return std::string(buf); 
+	}
 
    
 #endif							// MxModBas.cc

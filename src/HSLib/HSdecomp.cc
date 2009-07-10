@@ -94,7 +94,10 @@ void Prod_base_dec(const spin_sys &sys, const gen_op &Op, double thres)
 
    long int long4 = 4;			// Function pow needs long int
    long int longn = nspins;
-   for ( i=1; i<pow(long4,longn); i++)	// Loop over all 4**N base operators
+	 // *** made changes here.
+	 long fourToN;
+	 fourToN = static_cast<long>(.1+ pow(static_cast<double>(long4),longn));
+   for ( i=1; i<fourToN; i++)	// Loop over all 4**N base operators
       { 
       for (int ii=0; ii<nspins; ii++)	// Initialize all base function
 	basef_nu[ii]= 0;		// codes to contain zeros
@@ -154,7 +157,7 @@ void Prod_base_dec(const spin_sys &sys, const gen_op &Op, double thres)
 
         long int long2 = 2;
         long int longq = q-1;
-	double scaling = pow(long2,longq);	// B normalization via EBW (2.1.87)
+	double scaling = pow(double(long2),longq);	// B normalization via EBW (2.1.87)
 //gen_op BOp = B;			// Projection of Op on unnormalized B
 //gen_op BOp(B.matrix());			// Projection of Op on unnormalized B
 gen_op BOp(B);			// Projection of Op on unnormalized B
@@ -170,8 +173,11 @@ complex coeff = proj(OpX,BOp);	// Projection of Op on unnormalized B
 	if (norm(coeff) > thres) 
           {
 	  std::cout << coeff << "*\t" ;
-	  if (pow(long2,longq) != 1)
-            std::cout << Gdec(int(pow(long2,longq))) << "*";
+	  if (pow(double(long2),longq) != 1)
+			      // changed long2 to double(long2)
+						// *** may also need to change int(pow...) to
+						// static_cast<int>(pow(...) + .1)
+            std::cout << Gdec(int(pow(double(long2),longq))) << "*";
           std::cout << "\t" << name << "\n";
           }	
     }

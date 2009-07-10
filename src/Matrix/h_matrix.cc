@@ -3017,7 +3017,8 @@ void h_matrix::picture(std::ostream& ostr, const MxPrint & PFlgs) const
 
 void h_matrix::write(std::ofstream& fp, int form)
   {
-  float dr,di;
+	// *** changed float to double.
+  double dr,di;
   int i,j,pos,cpos;
   for(i=0, pos=0; i<rows_; i++)
     {
@@ -3026,15 +3027,15 @@ void h_matrix::write(std::ofstream& fp, int form)
       cpos = j*cols_-(j*(j-1))/2+i-j;
       dr = Re(data[cpos]);
       di = -Im(data[cpos]);
-      fp.write((char*)&dr, sizeof(float));
-      fp.write((char*)&di, sizeof(float));
+      fp.write((char*)&dr, sizeof(double));
+      fp.write((char*)&di, sizeof(double));
       }
     for(j=i; j<cols_; j++,pos++)
       {
       dr = Re(data[pos]);
       di = Im(data[pos]);
-      fp.write((char*)&dr, sizeof(float));
-      fp.write((char*)&di, sizeof(float));
+      fp.write((char*)&dr, sizeof(double));
+      fp.write((char*)&di, sizeof(double));
       }
     }
   }
@@ -3050,11 +3051,11 @@ void h_matrix::read(std::ifstream &fp)
         //                        Data ordering: Re(<i|mx|i>), Im(<i|mx|i>)
  
   {
-  float dr,di;
+  double dr,di;
   for(int pos=0; pos<size; pos++ )
     {
-    fp.read((char*)&dr, sizeof(float));
-    fp.read((char*)&di, sizeof(float));
+    fp.read((char*)&dr, sizeof(double));
+    fp.read((char*)&di, sizeof(double));
     data[pos] = complex(dr,di);
     }
   }

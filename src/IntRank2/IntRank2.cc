@@ -705,10 +705,14 @@ IntRank2::IntRank2(double Iqn, double Sqn,
   _XI = Xi;				// Set the interaction constant
   setSPSP();				// Set up DIP spin tensor
   }
-
+/*
 IntRank2::IntRank2(const string& IsoI, const string& IsoS,
                              double Xi, const coord& AxAyAz, const EAngles& EA)
-  { *this = IntRank2(IsoI, IsoS, Xi, AxAyAz, EA); }
+  { 
+	*this = IntRank2(IsoI, IsoS, Xi, AxAyAz, EA); 
+	// Currently this would cause infinite recursion.
+	}
+*/
 
 IntRank2::IntRank2(const Isotope& IsoI, const Isotope& IsoS,
                              double Xi, const coord& AxAyAz, const EAngles& EA)

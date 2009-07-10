@@ -66,9 +66,14 @@ union intchars
 // the same as MSVC but it is based on GCC 2.95.x... perhaps a later
 // version that that I am using with Cygwin & Linux.
 
-#if defined(_MSC_VER) || defined(__MINGW32__)
+#if defined(__MINGW32__)
   int MakeADir(const std::string& dname, int no)
     { return mkdir(dname.c_str()); }
+#elif defined(_MSC_VER)
+  int MakeADir(const std::string& dname, int no)
+    { 
+		return _mkdir(dname.c_str()); 
+	  }
 #else
   int MakeADir(const std::string& dname, int no)
     { return mkdir(dname.c_str(),  no); }

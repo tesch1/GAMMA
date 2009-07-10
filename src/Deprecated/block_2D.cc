@@ -37,6 +37,10 @@
 #  endif
 
 #include <Deprecated/block_2D.h>
+#include <assert.h>
+#include <iostream>
+using namespace std;
+
 
 // ----------------------------------------------------------------------
 // ------------------------ PRIVATE FUNCTIONS ---------------------------
@@ -196,7 +200,7 @@ block_2D operator - (block_2D &BLK1, block_2D &BLK2)
   return BLK3;
   }
 
-
+/* *** This function is currently endlessly recursive. */
 block_2D operator - (block_2D &BLK1)
 
 	// Input		BLK1  : a block_2D
@@ -205,10 +209,19 @@ block_2D operator - (block_2D &BLK1)
 
   {
   block_2D BLK(BLK1);
+
+#ifdef _MSC_VER
+	// *DCT* This call leads to infinite recursion and will not compile on windows.
+	cout << "\nFATAL: Call to this deprecated funtion leads to infinite recursion.\n";
+	assert(0);
+#else
   BLK.matrix::operator= (-BLK1);	// matrix negation
   BLK.ParameterSet::operator= (BLK1);		// copy parameter set BLK1 into BLK
+#endif
+
   return BLK;
   }
+
 
 
 void block_2D::operator -= (block_2D &BLK2)

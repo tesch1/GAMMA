@@ -223,7 +223,7 @@ void decomp::spin3halves(const spin_sys& sys)
   BaseCoherences[7] = 1;				// This is T21
   BaseCoherences[8] = 2;				// This is T22
   BaseCoefficients[4] = 1/sqrt(2.);			// This is T2-2
-  BaseCoefficients[5] = 1/sqrt(2);			// This is T2-1
+  BaseCoefficients[5] = 1/sqrt(2.);			// This is T2-1
   BaseCoefficients[6] = 0.5;				// This is T20
   BaseCoefficients[7] = 1/sqrt(2.);			// This is T21
   BaseCoefficients[8] = 1/sqrt(2.);			// This is T22

@@ -53,6 +53,8 @@
 #include <cstdio>				// Include FILE
 #include <cmath>				// Inlcude for HUGE_VAL
 
+using namespace std;
+
 #ifndef _MSC_VER				// If we are not using MSVC++
   std::string LBrak("\[");			// set string for bracket here
 #else						// else we must define one
@@ -151,8 +153,8 @@ void FM_Axis_tics (std::ostream &out, int ID, char direction, double offset,
     sf = 1;
   if(fabs(max-min) < 1.e-9*sf)		// Warning if Plot is Horizontal
     FM_error(4);
-  double delta = exp(log(10)*		// Estimate the distance between two tics
-       (floor(log(max-min)/log(10))-2));
+  double delta = exp(log(double(10))*		// Estimate the distance between two tics
+       (floor(log(max-min)/log(double(10)))-2));
   double z[3];				// Search for a delta to yeild
   z[0] = delta;				// approx. 6 tick marks. Begin with
   z[1] = 2.0*delta;			// three guesses and keep increasing until
@@ -364,13 +366,92 @@ std::vector<std::string> FMSeekStrings()
 
   return FMNames;
   }
-
+/*
+  ifstream infile;
+	infile.open ("C:\\dev\\TextFile1.txt", ifstream::binary);
+  if(infile.good())
+*/
 std::string FMFind(bool vocal)
   {
   std::vector<std::string> FMNames = FMSeekStrings();	// FrameMaker path names
   int N = FMNames.size();			// Number of path names
   std::string FME, FMName;				// FrameMaker execution command
   bool found = false;				// Flag if found executable
+	ifstream gexec;				    // FrameMaker executable?
+  int i=0;
+ 
+	for(; i<N && !found; i++)
+    {
+    FME = FMNames[i]; 				// Try this name first
+    if(vocal)
+      std::cout << "\n\t Seeking FrameMaker Executable " << FME;
+		gexec.open(FME.c_str(), ios_base::binary);
+    if(gexec.good() == true) 
+			found=true;			// If so, use this command
+    if(vocal)
+      if(found) 
+				std::cout << " - Success!"; 
+      else      
+				std::cout << " - Not Found"; 
+    }
+  if(found) 
+		{ 
+		gexec.close(); 
+		return FME; 
+		}
+
+  for(i=0; i<N && !found; i++)
+    {
+    FME = FMNames[i] + std::string(".exe"); 				// Try this name first
+    if(vocal)
+      std::cout << "\n\t Seeking FrameMaker Executable " << FME;
+		gexec.open(FME.c_str(), ios_base::binary);
+    if( gexec.good() == true )
+			found=true;			// If so, use this command
+		if(vocal)
+			if(found) 
+				std::cout << " - Success!"; 
+			else      
+				std::cout << " - Not Found"; 
+    }
+  if(found) 
+		{ 
+		gexec.close(); 
+		return FME; 
+		} 
+
+  for(i=0; i<N && !found; i++)
+    {
+    FME = FMNames[i] + std::string(".out"); 				// Try this name first
+    if(vocal)
+      std::cout << "\n\t Seeking FrameMaker Executable " << FME;
+		gexec.open(FME.c_str(), ios_base::binary);
+		if( gexec.good() == true ) 
+			found=true;			// If so, use this command
+    if(vocal)
+      if(found) 
+				std::cout << " - Success!"; 
+      else      
+				std::cout << " - Not Found"; 
+    }
+  if(found) 
+		{ 
+		gexec.close(); 
+		return FME; 
+		} 
+
+  return std::string("");
+  }
+
+
+/*
+std::string FMFind(bool vocal)
+  {
+  std::vector<std::string> FMNames = FMSeekStrings();	// FrameMaker path names
+  int N = FMNames.size();			// Number of path names
+  std::string FME, FMName;				// FrameMaker execution command
+  bool found = false;				// Flag if found executable
+
   FILE* gexec = NULL;				// FrameMaker executable?
   int i=0;
   for(; i<N && !found; i++)
@@ -414,7 +495,7 @@ std::string FMFind(bool vocal)
   if(found) { fclose(gexec); return FME; } 
   return std::string("");
   }
-
+*/
 
 std::string FMExec(int warn)
   {
@@ -1937,8 +2018,9 @@ int contour_extr(FMcont& FMCP, int posneg, double& threshold, double& extremum)
          {
          FMCP.CLI = fabs(FMCP.CLI);		// Insure CLI increases contour level 
          extremum = threshold;			// Start with extremum at threshold
+         // **** Revisit if double casting is really needed.
          for(int i=1; i<FMCP.steps; i++)	// Calculate extremum
-           extremum += pow(long(FMCP.CLM),long(i-1))*FMCP.CLI;
+           extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),long(i-1))*FMCP.CLI);
          if(extremum > FMCP.dmax) 		// Insure it isn't greater than max
                          extremum = FMCP.dmax;
          }
@@ -1950,8 +2032,9 @@ int contour_extr(FMcont& FMCP, int posneg, double& threshold, double& extremum)
         if(FMCP.CPN > 0) threshold = -FMCP.thresh;
         FMCP.CLI = -fabs(FMCP.CLI);		// Insure CLI decreases contour level
         extremum = threshold;			// Start with extremum at threshold
+				// **** Are two static_casts<>() really needed.
         for(int i=1; i<FMCP.steps; i++)		// Calculate extremum
-          extremum += pow(long(FMCP.CLM),long(i-1))*FMCP.CLI;
+          extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),long(i-1))*FMCP.CLI);
         if(extremum<FMCP.dmin) 			// Insure it isn't less than min
                          extremum = FMCP.dmin;	// Insure it isn't less than min
          }
@@ -3009,13 +3092,24 @@ void FM_Matrix_Real_Number(std::ostream &out, double num,
 	// Note			  : Sign is included in output
 
 {
-   char format[5];
-   if (fabs(int(num) - num) > threshold) {
-      sprintf(format,"%%.%df",prec); 
-    }
+	 // Changed format[5] to format[51].
+   char format[51];
+   if (fabs(int(num) - num) > threshold) 
+		{
+#ifdef _MSC_VER
+      sprintf_s(format, 30, "%%.%df", prec); 
+#else
+			sprintf(format,"%%.%df",prec);
+#endif
+		}
    else
+		{
+#ifdef _MSC_VER
+      sprintf_s(format, 30, "%%.0f"); 
+#else    
       sprintf(format,"%%.0f"); 
-      
+#endif
+		}
    out << "num" << LBrak << Gform(format,num) << ",\"" << Gform(format,num) << "\"]";
 }
 
@@ -3061,7 +3155,7 @@ void FM_Matrix_Complex_Number (std::ostream &out, complex num,
 	// Note			  : Sign is included in output
 
 {
-   float rep,imp;
+   double rep, imp;
    rep = Re(num);
    imp = Im(num);
 
