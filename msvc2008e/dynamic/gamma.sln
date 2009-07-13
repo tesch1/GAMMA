@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamma", "gamma.vcproj", "{DE7E3001-2F69-4785-885F-CA2FDCFB220C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moduledemos", "moduledemos.vcproj", "{9B819A94-CED3-4159-844E-F63CF3012669}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "moduletests", "moduletests.vcproj", "{F96F4CCD-65C1-4662-8A01-AA7094EFDB9F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE7E3001-2F69-4785-885F-CA2FDCFB220C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DE7E3001-2F69-4785-885F-CA2FDCFB220C}.Debug|Win32.Build.0 = Debug|Win32
+		{DE7E3001-2F69-4785-885F-CA2FDCFB220C}.Release|Win32.ActiveCfg = Release|Win32
+		{DE7E3001-2F69-4785-885F-CA2FDCFB220C}.Release|Win32.Build.0 = Release|Win32
+		{9B819A94-CED3-4159-844E-F63CF3012669}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9B819A94-CED3-4159-844E-F63CF3012669}.Debug|Win32.Build.0 = Debug|Win32
+		{9B819A94-CED3-4159-844E-F63CF3012669}.Release|Win32.ActiveCfg = Release|Win32
+		{9B819A94-CED3-4159-844E-F63CF3012669}.Release|Win32.Build.0 = Release|Win32
+		{F96F4CCD-65C1-4662-8A01-AA7094EFDB9F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F96F4CCD-65C1-4662-8A01-AA7094EFDB9F}.Debug|Win32.Build.0 = Debug|Win32
+		{F96F4CCD-65C1-4662-8A01-AA7094EFDB9F}.Release|Win32.ActiveCfg = Release|Win32
+		{F96F4CCD-65C1-4662-8A01-AA7094EFDB9F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
