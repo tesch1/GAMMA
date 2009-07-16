@@ -869,21 +869,13 @@ SEDSUB     = 's|CONFIGUREDGAMMAPATH|${GAMMA_PATH}|g'
 
 install: force
 	@echo
-	@echo "           Installing OSX GAMMA"
+	@echo "           Installing GAMMA"
 	@echo
-	@echo " * GAMMA Script Installation Directory Is ${INSTALLDIR}"
-	@echo " * The GAMMA Path Is Set to ${GAMMA_PATH}"
-	@echo " * Setting GAMMA Script To Know GAMMA Path"
-	@sed ${SEDSUB} ${GSCRIPTIN}>${GSCRIPT}
-	@echo " * Copying GAMMA Script ${GSCRIPT} To Installation Directory"
-	@cp -f ./${GSCRIPT} ${INSTALLDIR}
-	@echo " * GAMMA Library Installation Directory Is ${LIBINSTALLDIR}"
-	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
+	@echo " * GAMMA library installation directory is ${LIBINSTALLDIR}"
+	@echo " * Copying ${SO_NAMEXXX} to ${LIBINSTALLDIR}"
 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
-	@echo " * Setting Link For ${SO_NAME}"
-	@echo " * Adding Link For GAMMA Base Library Name"
+	@echo " * Linking ${SO_NAME} to ${SO_NAMEXXX}"
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
-	@echo " * Finished. Compile Command gamma Should Now Work"
 	@echo
 
 #########################################################################
