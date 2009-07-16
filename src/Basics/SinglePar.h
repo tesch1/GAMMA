@@ -25,7 +25,8 @@
 *************************************************************************/
      
 #ifndef   SinglePar_h_			// Is this file already included?
-#  define SinglePar_h_ 1		// If no, then remember it
+#define   SinglePar_h_  1		// If no, then remember it
+
 #  if defined(GAMPRAGMA)		// Using the GNU compiler?
 #    pragma interface			// Then this is the interface
 #  endif
@@ -60,8 +61,8 @@ public:
         // Output               none    : Error message
         //                                Program execution stopped
 
-         void SinglePar::SPerror(int   eidx, int noret=0) const;
-volatile void SinglePar::SPfatality(int eidx)             const;
+         void SPerror(int   eidx, int noret=0) const;
+volatile void SPfatality(int eidx)             const;
 
 // ____________________________________________________________________________
 // ii                       TYPE MORPHING FUNCTIONS
@@ -78,8 +79,8 @@ volatile void SinglePar::SPfatality(int eidx)             const;
  
 // Additional functions name & state are public and found in file section B
 
-void SinglePar::type(int         Type);
-void SinglePar::data(std::string Data);
+void type(int         Type);
+void data(std::string Data);
 
 // ____________________________________________________________________________
 // iii                SINGLE PARAMETER INPUT FUNCTIONS
@@ -88,14 +89,14 @@ void SinglePar::data(std::string Data);
 /* These Are Functions That Facilitate Input Of Parameters From ASCII Files.
    They Could Be Abused So They Are Kept Private Here.                       */
 
-int SinglePar::setCoord(std::string& input);
+int setCoord(std::string& input);
 
 	// Input	    par : A single parameter (this)
 	//		    line: String representing part of ASCII input line
 	// Return	     TF	: TRUE if coord parameter set from line
  
 
-int SinglePar::setTensor(std::ifstream& inp, std::string& input);
+int setTensor(std::ifstream& inp, std::string& input);
 
 	// Input	    par : A single parameter (this)
 	//		    inp : Input parameter stream
@@ -115,8 +116,8 @@ int SinglePar::setTensor(std::ifstream& inp, std::string& input);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC SinglePar::SinglePar();				// Default constructor
-MSVCDLC SinglePar::SinglePar(const SinglePar& par);	// Self constructor
+MSVCDLC SinglePar();				// Default constructor
+MSVCDLC SinglePar(const SinglePar& par);	// Self constructor
 
 // ----------------------------------------------------------------------------
 //                Constructors That Set Up The Parameter
@@ -127,10 +128,10 @@ MSVCDLC SinglePar::SinglePar(const SinglePar& par);	// Self constructor
         //                  ptype : An integer designating the parameter type
         //                 pstate : A string for a comment concerning parameter
 
-MSVCDLC SinglePar::SinglePar(const std::string& pname, int ptype, const std::string& pdata, const std::string& pstate);
-MSVCDLC SinglePar::SinglePar(const std::string& pname,                           int pdata, const std::string& pstate);
-MSVCDLC SinglePar::SinglePar(const std::string& pname,                        double pdata, const std::string& pstate);
-MSVCDLC SinglePar::SinglePar(const std::string& pname,            const std::string& pdata, const std::string& pstate);
+MSVCDLC SinglePar(const std::string& pname, int ptype, const std::string& pdata, const std::string& pstate);
+MSVCDLC SinglePar(const std::string& pname,                           int pdata, const std::string& pstate);
+MSVCDLC SinglePar(const std::string& pname,                        double pdata, const std::string& pstate);
+MSVCDLC SinglePar(const std::string& pname,            const std::string& pdata, const std::string& pstate);
 
 // ----------------------------------------------------------------------------
 //                Odd Constructors, Destructor, Assignment
@@ -141,9 +142,9 @@ MSVCDLC SinglePar::SinglePar(const std::string& pname,            const std::str
         //                          name input
  	// Note			  : This ONLY sets the name, nothing else
   
-                   SinglePar::SinglePar(const std::string& pname);
-MSVCDLC            SinglePar::~SinglePar();
-MSVCDLL SinglePar& SinglePar::operator=(const SinglePar& par);
+                   SinglePar(const std::string& pname);
+MSVCDLC            ~SinglePar();
+MSVCDLL SinglePar& operator=(const SinglePar& par);
 
 // ____________________________________________________________________________
 // B                  SINGLE PARAMETER ACCESS FUNCTIONS
@@ -156,10 +157,10 @@ MSVCDLL SinglePar& SinglePar::operator=(const SinglePar& par);
         //        (state)    state : string containing parameter comment
 
   
-MSVCDLL const std::string&  SinglePar::name()  const;		// Can't alter name here
-MSVCDLL       int           SinglePar::type()  const;		// Can't alter type here
-MSVCDLL const std::string&  SinglePar::data()  const;		// Can't alter data here
-MSVCDLL const std::string&  SinglePar::state() const;		// Can't alter state here
+MSVCDLL const std::string&  name()  const;		// Can't alter name here
+MSVCDLL       int           type()  const;		// Can't alter type here
+MSVCDLL const std::string&  data()  const;		// Can't alter data here
+MSVCDLL const std::string&  state() const;		// Can't alter state here
 
 
         // Input              par : A single parameter (this)
@@ -169,8 +170,8 @@ MSVCDLL const std::string&  SinglePar::state() const;		// Can't alter state here
 
 // Additional functions type & data are private and found in file section ii
 
-MSVCDLL void SinglePar::name(const  std::string& Name);		// This sets name to Name
-MSVCDLL void SinglePar::state(const std::string& State);	// This sets state to State
+MSVCDLL void name(const  std::string& Name);		// This sets name to Name
+MSVCDLL void state(const std::string& State);	// This sets state to State
 
 // ____________________________________________________________________________
 // C                      SINGLE PARAMETER PARSING FUNCTIONS
@@ -185,7 +186,7 @@ MSVCDLL void SinglePar::state(const std::string& State);	// This sets state to S
         //                  state : Parameter statement
         // Output            none : Name and statement set from par
  
-MSVCDLL void SinglePar::GetNS(std::string& name, std::string& state) const;
+MSVCDLL void GetNS(std::string& name, std::string& state) const;
 
         // Input              par : A parameter (this)
         //                   name : string for parameter name
@@ -203,14 +204,14 @@ MSVCDLL void SinglePar::GetNS(std::string& name, std::string& state) const;
 	// rank,diso,delz,deta..  : name,rank,diso,delz,deta,alpha,beta,.. set
  
 
-MSVCDLL bool SinglePar::parse(std::string& name, int&         val, std::string& state, int warn=0) const;
-MSVCDLL bool SinglePar::parse(std::string& name, double&      val, std::string& state, int warn=0) const; 
-MSVCDLL bool SinglePar::parse(std::string& name, std::string& val, std::string& state, int warn=0) const;
+MSVCDLL bool parse(std::string& name, int&         val, std::string& state, int warn=0) const;
+MSVCDLL bool parse(std::string& name, double&      val, std::string& state, int warn=0) const; 
+MSVCDLL bool parse(std::string& name, std::string& val, std::string& state, int warn=0) const;
 
-MSVCDLL bool SinglePar::parse(std::string& name, double& dx, double& dy, double& dz,
+MSVCDLL bool parse(std::string& name, double& dx, double& dy, double& dz,
                                                std::string& state, int warn=0) const;
 
-MSVCDLL bool SinglePar::parse(std::string& name, int& rank, double& diso, double& delz,
+MSVCDLL bool parse(std::string& name, int& rank, double& diso, double& delz,
                double& deta, double& alpha, double& beta, double& gamma,
                                                std::string& state, int warn=0) const;
 
@@ -228,15 +229,15 @@ MSVCDLL bool SinglePar::parse(std::string& name, int& rank, double& diso, double
         //                          contain the information about
         //                          the parameter
 
-MSVCDLL        std::vector<std::string> SinglePar::printStrings() const;
-MSVCDLL        std::ostream&            SinglePar::print(std::ostream& ostr) const;
+MSVCDLL        std::vector<std::string> printStrings() const;
+MSVCDLL        std::ostream&            print(std::ostream& ostr) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const SinglePar& par);
 
 // ----------------------------------------------------------------------------
 //             Write In Stanardiszed Format, As To Parameter Set
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool SinglePar::write(std::ofstream& ostr, int namelen=10) const;
+MSVCDLL bool write(std::ofstream& ostr, int namelen=10) const;
 
         // Input            par : A single parameter (this)
         //                ostr  : An output filestream
@@ -252,7 +253,7 @@ MSVCDLL bool SinglePar::write(std::ofstream& ostr, int namelen=10) const;
 // E                  SINGLE PARAMETER INPUT FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL int SinglePar::read(std::ifstream& inp);
+MSVCDLL int read(std::ifstream& inp);
      
         // Input            par : A single parameter (this)
         //                  inp : An input filestream
@@ -265,10 +266,10 @@ MSVCDLL int SinglePar::read(std::ifstream& inp);
 // E         SINGLE PARAMETER LIST (Parameter Set) SUPPORT FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL bool SinglePar::operator==(const SinglePar& par) const;
-MSVCDLL bool SinglePar::operator!=(const SinglePar& par) const;
-MSVCDLL bool SinglePar::operator< (const SinglePar& par) const;
-MSVCDLL bool SinglePar::operator> (const SinglePar& par) const;
+MSVCDLL bool operator==(const SinglePar& par) const;
+MSVCDLL bool operator!=(const SinglePar& par) const;
+MSVCDLL bool operator< (const SinglePar& par) const;
+MSVCDLL bool operator> (const SinglePar& par) const;
 
 // _____________________________________________________________________________
 // F                        PYGAMMA CODE (Member)
@@ -284,14 +285,14 @@ MSVCDLL bool SinglePar::operator> (const SinglePar& par) const;
 #ifdef PYGAMMA					// If compiling PyGAMMA
 
 // -----------------------------------------------------------------------------
-//                Code For Overloaded SinglePar::parse Functions
+//                Code For Overloaded parse Functions
 // -----------------------------------------------------------------------------
 
-MSVCDLL int SinglePar::parseSPAR1(std::string name, int i, std::string state, int warn=0) const;
-MSVCDLL int SinglePar::parseSPAR2(std::string name, double d, std::string state, int warn=0) const;
-MSVCDLL int SinglePar::parseSPAR3(std::string name, std::string val, std::string stat, int warn=0) const;
-MSVCDLL int SinglePar::parseSPAR4(std::string name, double dx, double dy, double dz, std::string state, int warn=0) const;
-MSVCDLL int SinglePar::parseSPAR5(std::string name, int rank, double diso, double delz, double deta, double alpha, double beta, double gamma, std::string state, int warn = 0) ;
+MSVCDLL int parseSPAR1(std::string name, int i, std::string state, int warn=0) const;
+MSVCDLL int parseSPAR2(std::string name, double d, std::string state, int warn=0) const;
+MSVCDLL int parseSPAR3(std::string name, std::string val, std::string stat, int warn=0) const;
+MSVCDLL int parseSPAR4(std::string name, double dx, double dy, double dz, std::string state, int warn=0) const;
+MSVCDLL int parseSPAR5(std::string name, int rank, double diso, double delz, double deta, double alpha, double beta, double gamma, std::string state, int warn = 0) ;
 
 // -----------------------------------------------------------------------------
 //                             Code For __str__

@@ -1994,9 +1994,9 @@ void contour_setup(const matrix& mx, FMcont& FMCP, FMclev& FMCL)
 int contour_extr(FMcont& FMCP, int posneg, double& threshold, double& extremum)
 
 	// Input	FMCP      : Contour plot parameters
-	// 		posneg 	  : Positive or negative contouring
-	//		treshold  : Initial contour level
-	//		extremum  : Largest level in contouring
+	// 				posneg 	  : Positive or negative contouring
+	//				treshold  : Initial contour level
+	//				extremum  : Largest level in contouring
 	// Return       stop      : Flag for stopping contouring
 	// Note			  : If requested contours are all above
 	//			    (or below) the array maximum, stop is
@@ -2013,14 +2013,17 @@ int contour_extr(FMcont& FMCP, int posneg, double& threshold, double& extremum)
   switch(posneg)
     {
     case 0:					// Positive (or increasing) contours
-      if(FMCP.CPN < 0) stop = 1;		// Stop if only negative contours
+      if(FMCP.CPN < 0) 
+				stop = 1;		// Stop if only negative contours
       else
          {
          FMCP.CLI = fabs(FMCP.CLI);		// Insure CLI increases contour level 
          extremum = threshold;			// Start with extremum at threshold
-         // **** Revisit if double casting is really needed.
-         for(int i=1; i<FMCP.steps; i++)	// Calculate extremum
-           extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),long(i-1))*FMCP.CLI);
+
+         // FIXME if needed **** i.e. Revisit if double casting is really needed.
+         for(int i=1; i<FMCP.steps; i++)	// Calculate extremum				  
+           extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),int(i-1))*FMCP.CLI);
+					
          if(extremum > FMCP.dmax) 		// Insure it isn't greater than max
                          extremum = FMCP.dmax;
          }
@@ -2029,12 +2032,14 @@ int contour_extr(FMcont& FMCP, int posneg, double& threshold, double& extremum)
       if(FMCP.CPN == 0) stop = 1;			// Stop if only positive contours
       else
         {
-        if(FMCP.CPN > 0) threshold = -FMCP.thresh;
+        if(FMCP.CPN > 0) 
+					threshold = -FMCP.thresh;
         FMCP.CLI = -fabs(FMCP.CLI);		// Insure CLI decreases contour level
         extremum = threshold;			// Start with extremum at threshold
-				// **** Are two static_casts<>() really needed.
+
+				// FIXME if needed **** i.e. Are two static_casts<>() really needed.
         for(int i=1; i<FMCP.steps; i++)		// Calculate extremum
-          extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),long(i-1))*FMCP.CLI);
+          extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),int(i-1))*FMCP.CLI);
         if(extremum<FMCP.dmin) 			// Insure it isn't less than min
                          extremum = FMCP.dmin;	// Insure it isn't less than min
          }
@@ -2067,7 +2072,7 @@ double thresh_inc(FMcont& FMCP, FMclev& FMCL, double fact=1.0)
   {
   double CLM = FMCP.CLM;		// Contour level modifier
   double CLI = FMCP.CLI;		// Contour level increment
-  long level = FMCL.level;		// Contour level
+  int level = FMCL.level;		// Contour level
   return pow(CLM,level)*CLI*fact;
   }
  
