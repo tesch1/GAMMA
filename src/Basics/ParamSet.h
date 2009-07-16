@@ -167,14 +167,14 @@ public:
    Note that in the function "strip" the returned parameter set contains
    parameters whos names no longer are prefixed with [#].                   */
 
-MSVCDLL int ParameterSet::contains(const std::string& pname) const;
-MSVCDLL int ParameterSet::contains(const SinglePar& par)     const;
+MSVCDLL int contains(const std::string& pname) const;
+MSVCDLL int contains(const SinglePar& par)     const;
 
-MSVCDLL stdlistSP::const_iterator ParameterSet::seek(const std::string& pname) const;
-MSVCDLL stdlistSP::const_iterator ParameterSet::seek(const SinglePar&   par)   const;
+MSVCDLL stdlistSP::const_iterator seek(const std::string& pname) const;
+MSVCDLL stdlistSP::const_iterator seek(const SinglePar&   par)   const;
  
-MSVCDLL ParameterSet ParameterSet::strip(int indx) const;
-MSVCDLL int          ParameterSet::countpar(const std::string& pnamein, int idx0=0);
+MSVCDLL ParameterSet strip(int indx) const;
+MSVCDLL int          countpar(const std::string& pnamein, int idx0=0);
 
 // ____________________________________________________________________________
 // F                     PARAMETER SET OUTPUT FUNCTIONS
@@ -194,12 +194,12 @@ MSVCDLL int          ParameterSet::countpar(const std::string& pnamein, int idx0
                 Return          void : pset is sent to the output stream 
                                 int  : T/F write to output pset file.        */
 
-MSVCDLL std::vector<std::string> ParameterSet::printStrings()           const;
-       std::ostream&     ParameterSet::print(std::ostream& out) const;
+MSVCDLL std::vector<std::string> printStrings()           const;
+       std::ostream&     print(std::ostream& out) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& out, const ParameterSet& pset);
 
-MSVCDLL bool ParameterSet::write(const std::string& fileout, int warn=2) const;
-MSVCDLL bool ParameterSet::write(std::ofstream& ofstr,       int warn=2) const;
+MSVCDLL bool write(const std::string& fileout, int warn=2) const;
+MSVCDLL bool write(std::ofstream& ofstr,       int warn=2) const;
 
 // ____________________________________________________________________________
 // G                    PARAMETER SET INPUT FUNCTIONS
@@ -220,8 +220,8 @@ MSVCDLL bool ParameterSet::write(std::ofstream& ofstr,       int warn=2) const;
 	//				  or input stream inp
         //
 
-MSVCDLL bool ParameterSet::read(const std::string& filein, int fflag=0);
-MSVCDLL bool ParameterSet::read(std::ifstream& inp,        int fflag=0);
+MSVCDLL bool read(const std::string& filein, int fflag=0);
+MSVCDLL bool read(std::ifstream& inp,        int fflag=0);
 
 // ____________________________________________________________________________
 // H                    PARAMETER SET INTERACTIVE FUNCTIONS
@@ -241,7 +241,7 @@ MSVCDLL bool ParameterSet::read(std::ifstream& inp,        int fflag=0);
         //                                containing recognized sys parameters
         // Note                         : The parameter set is modifed (filled)
 
-MSVCDLL std::string ParameterSet::ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
 
         // Input                pset    : Parameter set (this)
         //                      value	: Value of parameter desired
@@ -250,13 +250,13 @@ MSVCDLL std::string ParameterSet::ask_read(int argc, char* argv[], int argn);
         //                                a {string, int, double}. The value
 	//				  will be set to parameter value
 
-MSVCDLL bool ParameterSet::getParameter(const std::string& name, std::string& value) const;
-MSVCDLL bool ParameterSet::getParameter(const std::string& name, int&         value) const;
-MSVCDLL bool ParameterSet::getParameter(const std::string& name, double&      value) const;
+MSVCDLL bool getParameter(const std::string& name, std::string& value) const;
+MSVCDLL bool getParameter(const std::string& name, int&         value) const;
+MSVCDLL bool getParameter(const std::string& name, double&      value) const;
 
-MSVCDLL bool ParameterSet::getString(const std::string& name, std::string& value) const;
-MSVCDLL bool ParameterSet::getInt(const    std::string& name, int&         value) const;
-MSVCDLL bool ParameterSet::getDouble(const std::string& name, double&      value) const;
+MSVCDLL bool getString(const std::string& name, std::string& value) const;
+MSVCDLL bool getInt(const    std::string& name, int&         value) const;
+MSVCDLL bool getDouble(const std::string& name, double&      value) const;
 
 // __________________________________________________________________________
 // I                            PyGAMMA Code
@@ -267,41 +267,41 @@ MSVCDLL bool ParameterSet::getDouble(const std::string& name, double&      value
 //                      Bypass STL List Functions
 // -------------------------------------------------------------------------
 
-void ParameterSet::pushback(const SinglePar& par);
+void pushback(const SinglePar& par);
 
 // -------------------------------------------------------------------------
 //                      Bypass For Overloaded Contains()
 // -------------------------------------------------------------------------
 
-int ParameterSet::containsPSET1(const std::string& pname) const;
-int ParameterSet::containsPSET2(const SinglePar&   par)   const;
+int containsPSET1(const std::string& pname) const;
+int containsPSET2(const SinglePar&   par)   const;
 
 // -------------------------------------------------------------------------
 //                      Bypass For Overloaded seek()
 // -------------------------------------------------------------------------
 
-stdlistSP::const_iterator ParameterSet::seekPSET1(const std::string& pname) const;
-stdlistSP::const_iterator ParameterSet::seekPSET2(const SinglePar&   par)   const;
+stdlistSP::const_iterator seekPSET1(const std::string& pname) const;
+stdlistSP::const_iterator seekPSET2(const SinglePar&   par)   const;
 
 // -------------------------------------------------------------------------
 //                      Bypass For Overloaded write()
 // -------------------------------------------------------------------------
 
-bool ParameterSet::writePSET1(const std::string& fileout) const;
-//bool ParameterSet::writePSET1(const std::string& fileout, int warn=2) const;
-//bool ParameterSet::writePSET2(std::ofstream& sstr,        int warn=2) const;
+bool writePSET1(const std::string& fileout) const;
+//bool writePSET1(const std::string& fileout, int warn=2) const;
+//bool writePSET2(std::ofstream& sstr,        int warn=2) const;
 
 // -------------------------------------------------------------------------
 //                      Bypass For Overloaded read()
 // -------------------------------------------------------------------------
 
-int ParameterSet::readPSET1(const std::string& filein);
-//int ParameterSet::readPSET2(const std::string& filein, int fflag);
-//int ParameterSet::readPSET3(std::ifstream& inp,        int fflag=0);
+int readPSET1(const std::string& filein);
+//int readPSET2(const std::string& filein, int fflag);
+//int readPSET3(std::ifstream& inp,        int fflag=0);
 
-std::string ParameterSet::getStringPSET(const std::string& name);
-int         ParameterSet::getIntPSET(const    std::string& name);
-double      ParameterSet::getDoublePSET(const std::string& name);
+std::string getStringPSET(const std::string& name);
+int         getIntPSET(const    std::string& name);
+double      getDoublePSET(const std::string& name);
 
 // -------------------------------------------------------------------------
 //                      Bypass For Standard Output

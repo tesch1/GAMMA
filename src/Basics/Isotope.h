@@ -94,12 +94,12 @@ volatile void Isofatal(int eidx, const std::string& pname)              const;
 /* const double ISODEFVAL = -1.1e6;                     // Default value    */
  
  
-void Isotope::set_Isotope_list();
+void set_Isotope_list();
  
         // Input                I : A dummy isotope (this)
         // Output            void : Fills isotopes list with all spins
  
-void Isotope::SetRel1HF();
+void SetRel1HF();
 
         // Input                I : A dummy isotope (this)
         // Output            void : Sets the relative 1H frequency
@@ -133,7 +133,7 @@ void Isotope::SetRel1HF();
 // iii              Class Isotope Private Parameter Set Functions
 // ____________________________________________________________________________
 
-bool Isotope::SetIsotope(const ParameterSet& pset, int idx=-1, bool warn=true);
+bool SetIsotope(const ParameterSet& pset, int idx=-1, bool warn=true);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -145,11 +145,11 @@ public:
 // A                    ISOTOPE CONSTRUCTION, ASSIGNMENT
 // ____________________________________________________________________________
 
-MSVCDLC          Isotope::Isotope();
-MSVCDLC          Isotope::Isotope(const         Isotope& I);
-MSVCDLC          Isotope::Isotope(const    std::string&  I);
-MSVCDLL Isotope& Isotope::operator= (const      Isotope& I);
-MSVCDLC virtual  Isotope::~Isotope();
+MSVCDLC          Isotope();
+MSVCDLC          Isotope(const         Isotope& I);
+MSVCDLC          Isotope(const    std::string&  I);
+MSVCDLL Isotope& operator= (const      Isotope& I);
+MSVCDLC virtual  ~Isotope();
 
         // Input               I : An isotope (this)
         // Output           none : Isotope is destructed (do nothing)
@@ -180,19 +180,19 @@ MSVCDLC virtual  Isotope::~Isotope();
        gamma            (double)  1/T-s   2.67519*10^8 
  relative_frequency    	(double)   MHz    400.13, 155.503, ...                */
 
-      MSVCDLL double       Isotope::qn()                 const;
-      MSVCDLL int          Isotope::HS()                 const;
-      MSVCDLL std::string  Isotope::momentum()           const;
-const MSVCDLL std::string& Isotope::symbol()             const;
-const MSVCDLL std::string& Isotope::name()               const;
-const MSVCDLL std::string& Isotope::element()            const;
-      MSVCDLL int          Isotope::number()             const;
-      MSVCDLL int          Isotope::mass()               const;
-      MSVCDLL double       Isotope::weight()             const;
-      MSVCDLL double       Isotope::gamma()              const;
-      MSVCDLL double       Isotope::receptivity()        const;
-      MSVCDLL double       Isotope::relative_frequency() const;
-      MSVCDLL bool         Isotope::electron()           const;
+      MSVCDLL double       qn()                 const;
+      MSVCDLL int          HS()                 const;
+      MSVCDLL std::string  momentum()           const;
+const MSVCDLL std::string& symbol()             const;
+const MSVCDLL std::string& name()               const;
+const MSVCDLL std::string& element()            const;
+      MSVCDLL int          number()             const;
+      MSVCDLL int          mass()               const;
+      MSVCDLL double       weight()             const;
+      MSVCDLL double       gamma()              const;
+      MSVCDLL double       receptivity()        const;
+      MSVCDLL double       relative_frequency() const;
+      MSVCDLL bool         electron()           const;
 
 // ____________________________________________________________________________
 // D                        ISOTOPE I/O FUNCTIONS
@@ -201,8 +201,8 @@ const MSVCDLL std::string& Isotope::element()            const;
 /* These are function that will read/write an Isotope designation from/to
    an external ASCII file.                                                   */
 
-virtual MSVCDLL bool Isotope::read(const std::string& filename, int idx=-1, int warn=2);
-virtual MSVCDLL bool Isotope::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+virtual MSVCDLL bool read(const std::string& filename, int idx=-1, int warn=2);
+virtual MSVCDLL bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 /* These are functions that output formatted information concerning the
    Isotope to a specified output stream of file. 
@@ -212,8 +212,8 @@ virtual MSVCDLL bool Isotope::read(const ParameterSet& pset,    int idx=-1, int 
            Output               none    : Isotope info placed into the
                                           output stream ostr                 */
 
-MSVCDLL std::vector<std::string> Isotope::printStrings(bool hdr=true) const;
-virtual MSVCDLL std::ostream& Isotope::print(std::ostream& ostr) const;
+MSVCDLL std::vector<std::string> printStrings(bool hdr=true) const;
+virtual MSVCDLL std::ostream& print(std::ostream& ostr) const;
 friend  MSVCDLL std::ostream& operator<< (std::ostream&    ostr, const Isotope& I);
 
 // ____________________________________________________________________________
@@ -234,12 +234,12 @@ friend  MSVCDLL std::ostream& operator<< (std::ostream&    ostr, const Isotope& 
 	   Note			  : Will return FALSE if symbol not found
 	  			    due to no isotope list                    */
 
-virtual MSVCDLL int                      Isotope::seek(const   IsotopeData& ID);
-virtual MSVCDLL bool                     Isotope::exists(const std::string& symbol);
-static  MSVCDLL bool                     Isotope::known(const  std::string& symbol);
-static  MSVCDLL int                      Isotope::size();
-static  MSVCDLL std::vector<std::string> Isotope::PrintListStrings();
-static  MSVCDLL void                     Isotope::PrintList(std::ostream& ostr, bool hdr=true);
+virtual MSVCDLL int                      seek(const   IsotopeData& ID);
+virtual MSVCDLL bool                     exists(const std::string& symbol);
+static  MSVCDLL bool                     known(const  std::string& symbol);
+static  MSVCDLL int                      size();
+static  MSVCDLL std::vector<std::string> PrintListStrings();
+static  MSVCDLL void                     PrintList(std::ostream& ostr, bool hdr=true);
 
 // ____________________________________________________________________________
 // F                   Isotope List Expansion Functions
@@ -254,7 +254,7 @@ static  MSVCDLL void                     Isotope::PrintList(std::ostream& ostr, 
    may NOT remove any "standard" isotopes in GAMMA nor may one add an isotope
    that already exists.                                                      */
 
-static MSVCDLL bool Isotope::AddIsotope(const IsotopeData& ID, int warn=2);
+static MSVCDLL bool AddIsotope(const IsotopeData& ID, int warn=2);
 
 // ____________________________________________________________________________
 // G                Isotope Container Support Functions
@@ -266,10 +266,10 @@ static MSVCDLL bool Isotope::AddIsotope(const IsotopeData& ID, int warn=2);
    point to the same entry in the isotopes list.  For sorting purposes we
    go by the spin Hilbert space associated with the isotope.                 */
 
-virtual MSVCDLL bool Isotope::operator== (const Isotope& I) const;
-virtual MSVCDLL bool Isotope::operator!= (const Isotope& I) const;
-virtual MSVCDLL bool Isotope::operator<  (const Isotope& I) const;
-virtual MSVCDLL bool Isotope::operator>  (const Isotope& I) const;
+virtual MSVCDLL bool operator== (const Isotope& I) const;
+virtual MSVCDLL bool operator!= (const Isotope& I) const;
+virtual MSVCDLL bool operator<  (const Isotope& I) const;
+virtual MSVCDLL bool operator>  (const Isotope& I) const;
 
 // ____________________________________________________________________________
 // H                    Isotope Auxiliary Functions
@@ -277,10 +277,10 @@ virtual MSVCDLL bool Isotope::operator>  (const Isotope& I) const;
 
 /* These are just handy to have available for other parts of GAMMA           */
 
-MSVCDLL bool Isotope::nepair(const Isotope& S) const;
-MSVCDLL bool Isotope::enpair(const Isotope& S) const;
-MSVCDLL bool Isotope::eepair(const Isotope& S) const;
-MSVCDLL bool Isotope::nnpair(const Isotope& S) const;
+MSVCDLL bool nepair(const Isotope& S) const;
+MSVCDLL bool enpair(const Isotope& S) const;
+MSVCDLL bool eepair(const Isotope& S) const;
+MSVCDLL bool nnpair(const Isotope& S) const;
 
 // ____________________________________________________________________________
 // I                        PyGAMMA Code (Member)
@@ -304,8 +304,8 @@ MSVCDLL bool Isotope::nnpair(const Isotope& S) const;
 
 #ifdef PYGAMMA					// If we are compiling PyGAMMA
 
-std::string Isotope::PyPrint();
-std::string Isotope::PyPrintList();
+std::string PyPrint();
+std::string PyPrintList();
 
 #endif						// End PyGAMMA code
 

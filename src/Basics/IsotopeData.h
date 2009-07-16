@@ -70,10 +70,10 @@ public:
 // ____________________________________________________________________________
 
 
-MSVCDLC IsotopeData::IsotopeData();
-MSVCDLC IsotopeData::IsotopeData(const IsotopeData& data);
+MSVCDLC IsotopeData();
+MSVCDLC IsotopeData(const IsotopeData& data);
   
-MSVCDLC IsotopeData::IsotopeData(int HS_, const std::string& symb_, const std::string& name_, 
+MSVCDLC IsotopeData(int HS_, const std::string& symb_, const std::string& name_, 
                         std::string element_, int number_, int mass_, double weight_,
                          double recept_, double rel_freq_, bool is_electron_=false);
  
@@ -93,7 +93,7 @@ MSVCDLC IsotopeData::IsotopeData(int HS_, const std::string& symb_, const std::s
 	//			    Allows users to "make" pseudo isotopes!
 
 
-MSVCDLC IsotopeData::IsotopeData(const std::string& symbol_);
+MSVCDLC IsotopeData(const std::string& symbol_);
  
         // Input          symbol_ : A string of an Isotope symbol
         // Output            this : Constructs IsotopeData for the
@@ -103,8 +103,8 @@ MSVCDLC IsotopeData::IsotopeData(const std::string& symbol_);
  	//			    other data parameters aren't filled.
 
  
-MSVCDLL void IsotopeData::operator= (const IsotopeData& ID1);
-MSVCDLC      IsotopeData::~IsotopeData();
+MSVCDLL void operator= (const IsotopeData& ID1);
+MSVCDLC      ~IsotopeData();
 
 // ____________________________________________________________________________ 
 // B                    SINGLE ISOTOPE ACCESS FUNCTIONS
@@ -125,18 +125,18 @@ MSVCDLC      IsotopeData::~IsotopeData();
          recept.  double             5680, 1540, .....
          rel.frq. double             400.13, 155.503, .. in MHz (1H based)   */
 
-       MSVCDLL double       IsotopeData::qn()	    const;		// Calculated
-       MSVCDLL int          IsotopeData::HS()	    const;		// Stored
-       MSVCDLL std::string  IsotopeData::momentum() const;		// Calculated
-const  MSVCDLL std::string& IsotopeData::symbol()   const;		// Stored
-const  MSVCDLL std::string& IsotopeData::name()	    const;		// Stored
-const  MSVCDLL std::string& IsotopeData::element()  const;		// Stored
-       MSVCDLL int          IsotopeData::number()   const;		// Stored
-       MSVCDLL int          IsotopeData::mass()	    const;		// Stored
-       MSVCDLL double       IsotopeData::weight()   const;		// Stored
-       MSVCDLL double       IsotopeData::recept()   const;		// Stored
-       MSVCDLL bool         IsotopeData::electron() const;		// Stored
-       MSVCDLL double       IsotopeData::rel_freq() const;		// Stored
+       MSVCDLL double       qn()	    const;		// Calculated
+       MSVCDLL int          HS()	    const;		// Stored
+       MSVCDLL std::string  momentum() const;		// Calculated
+const  MSVCDLL std::string& symbol()   const;		// Stored
+const  MSVCDLL std::string& name()	    const;		// Stored
+const  MSVCDLL std::string& element()  const;		// Stored
+       MSVCDLL int          number()   const;		// Stored
+       MSVCDLL int          mass()	    const;		// Stored
+       MSVCDLL double       weight()   const;		// Stored
+       MSVCDLL double       recept()   const;		// Stored
+       MSVCDLL bool         electron() const;		// Stored
+       MSVCDLL double       rel_freq() const;		// Stored
  
 // ____________________________________________________________________________
 // C                    SINGLE ISOTOPE I/O FUNCTIONS
@@ -148,8 +148,8 @@ const  MSVCDLL std::string& IsotopeData::element()  const;		// Stored
         // Output            ostr : The output stream, modified to 
         //                          contain the information about ID
  
-MSVCDLL std::vector<std::string> IsotopeData::printStrings(bool hdr=true) const;
-MSVCDLL std::ostream& IsotopeData::print(std::ostream& ostr, int lf=1, bool hdr=true) const;
+MSVCDLL std::vector<std::string> printStrings(bool hdr=true) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int lf=1, bool hdr=true) const;
 MSVCDLL friend  std::ostream& operator<< (std::ostream& ostr, const IsotopeData& ID);
 
 
@@ -159,7 +159,7 @@ MSVCDLL friend  std::ostream& operator<< (std::ostream& ostr, const IsotopeData&
 
 #ifdef PYGAMMA					// If we are compiling PyGAMMA
 
-MSVCDLL std::string IsotopeData::PyPrint() const;
+MSVCDLL std::string PyPrint() const;
 
 #endif
 
