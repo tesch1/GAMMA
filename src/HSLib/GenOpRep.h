@@ -53,18 +53,18 @@ public:
         // Output               void    : An error message is output   (error)
         //                                or program execution stopped (fatal)
  
-         void genoprep::OpReperror(int eidx, int noret=0) const;
-volatile void genoprep::OpRepfatal(int eidx)              const;
+         void OpReperror(int eidx, int noret=0) const;
+volatile void OpRepfatal(int eidx)              const;
  
 // ____________________________________________________________________________
 // A            OPERATOR REPRESENTATION CONSTRUCTORS/DETRUCTOR
 // ____________________________________________________________________________
 
-MSVCDLC genoprep::genoprep();
-MSVCDLC genoprep::genoprep(const genoprep& OpRep);
-MSVCDLC genoprep::genoprep(const matrix& mx, const basis& bs, int pty);
-MSVCDLC genoprep::~genoprep();
-genoprep& genoprep::operator= (const genoprep& OpRep); 
+MSVCDLC genoprep();
+MSVCDLC genoprep(const genoprep& OpRep);
+MSVCDLC genoprep(const matrix& mx, const basis& bs, int pty);
+MSVCDLC ~genoprep();
+genoprep& operator= (const genoprep& OpRep); 
 
 // ____________________________________________________________________________
 // J                    OPERATOR REPRESENTATION CHECKS
@@ -79,7 +79,7 @@ genoprep& genoprep::operator= (const genoprep& OpRep);
 	// Output		bool : True if OprRep matrix mx square.
         //			       & its dimension matches its basis
 
-MSVCDLL bool genoprep::OpRepCheck(int warn=2) const;
+MSVCDLL bool OpRepCheck(int warn=2) const;
 
 // ____________________________________________________________________________
 // K                  CLASS OPERATOR REPRESENTATION I/O FUNCTIONS
@@ -92,7 +92,7 @@ MSVCDLL bool genoprep::OpRepCheck(int warn=2) const;
                                 full : Flag for amount of output
                 Return          void : OpRep is sent to the output stream    */
  
-MSVCDLL        std::ostream& genoprep::print(std::ostream& ostr, int full=0) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr,const genoprep &OpRep);
  
 // ------------------------ Binary Output Functions ---------------------------
@@ -105,8 +105,8 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& ostr,const genoprep &OpRe
                 Note                 : Output format is partially set by
                                        class matrix (matrix typing)          */  
 
-MSVCDLL void           genoprep::write(const std::string& fn) const;
-MSVCDLL std::ofstream& genoprep::write(std::ofstream& fp)     const;
+MSVCDLL void           write(const std::string& fn) const;
+MSVCDLL std::ofstream& write(std::ofstream& fp)     const;
 
 // ------------------------ Binary Input Functions ----------------------------
 
@@ -116,17 +116,17 @@ MSVCDLL std::ofstream& genoprep::write(std::ofstream& fp)     const;
                 Return          void : OpRep is read in from either the
                                        specified file or filestream.         */  
 
-MSVCDLL void           genoprep::read(const std::string& fn);
-MSVCDLL std::ifstream& genoprep::read(std::ifstream& fp);
+MSVCDLL void           read(const std::string& fn);
+MSVCDLL std::ifstream& read(std::ifstream& fp);
 
 // ____________________________________________________________________________
 // L        OPERATOR REPRESENTATION LIST/VECTOR SUPPORT FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL bool genoprep::operator==(const genoprep& OpRep) const;
-MSVCDLL bool genoprep::operator!=(const genoprep& OpRep) const;
-MSVCDLL bool genoprep::operator<(const  genoprep& OpRep) const;
-MSVCDLL bool genoprep::operator>(const  genoprep& OpRep) const;
+MSVCDLL bool operator==(const genoprep& OpRep) const;
+MSVCDLL bool operator!=(const genoprep& OpRep) const;
+MSVCDLL bool operator<(const  genoprep& OpRep) const;
+MSVCDLL bool operator>(const  genoprep& OpRep) const;
 
 // ____________________________________________________________________________
 // S                         PyGAMMA Code (Non-Member)

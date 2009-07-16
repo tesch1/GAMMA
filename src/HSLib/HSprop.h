@@ -89,14 +89,14 @@ public:
 // A         CLASS HILBERT SPACE PROPAGATOR CONSTRUCTION, DESTRUCTION
 // ____________________________________________________________________________
 
-MSVCDLC HSprop::HSprop();					// Null constructor
-MSVCDLC HSprop::HSprop(int HS);					// Identity constructor
-MSVCDLC HSprop::HSprop(const gen_op& H, double tevol);
-MSVCDLC HSprop::HSprop(const gen_op& H, double tevol, bool prop);
-MSVCDLC HSprop::HSprop(const HSprop& U);
+MSVCDLC HSprop();					// Null constructor
+MSVCDLC HSprop(int HS);					// Identity constructor
+MSVCDLC HSprop(const gen_op& H, double tevol);
+MSVCDLC HSprop(const gen_op& H, double tevol, bool prop);
+MSVCDLC HSprop(const HSprop& U);
 
-MSVCDLC         HSprop::~HSprop();
-MSVCDLL HSprop& HSprop::operator= (const HSprop& U1);
+MSVCDLC         ~HSprop();
+MSVCDLL HSprop& operator= (const HSprop& U1);
 
 // ____________________________________________________________________________
 // B               HILBERT SPACE PROPAGATOR ACCESS FUNCTIONS
@@ -111,15 +111,15 @@ MSVCDLL HSprop& HSprop::operator= (const HSprop& U1);
                   LS       int    The Liouville space dimension of U.
                   H       gen_op  The effective Hamiltonian of U.            */
 
-MSVCDLL double HSprop::time()   const;
-MSVCDLL double HSprop::length() const;
-MSVCDLL int    HSprop::dim()    const;
-MSVCDLL matrix HSprop::Mx()     const;
-MSVCDLL basis  HSprop::Bs()     const;
-MSVCDLL int    HSprop::HS()     const;
-MSVCDLL int    HSprop::LS()     const;
-MSVCDLL gen_op HSprop::Op()     const;
-MSVCDLL gen_op HSprop::H()      const;
+MSVCDLL double time()   const;
+MSVCDLL double length() const;
+MSVCDLL int    dim()    const;
+MSVCDLL matrix Mx()     const;
+MSVCDLL basis  Bs()     const;
+MSVCDLL int    HS()     const;
+MSVCDLL int    LS()     const;
+MSVCDLL gen_op Op()     const;
+MSVCDLL gen_op H()      const;
 
 // ____________________________________________________________________________
 // C                   PROPAGATOR BASIS FUNCTIONS
@@ -129,8 +129,8 @@ MSVCDLL gen_op HSprop::H()      const;
         //                      Op      : An operator   
         // Output               Op1     : U put into current basis of Op
 
-MSVCDLL void HSprop::SetEBR() const;
-MSVCDLL void HSprop::SetBasis(const gen_op& Op);
+MSVCDLL void SetEBR() const;
+MSVCDLL void SetBasis(const gen_op& Op);
  
 // ____________________________________________________________________________
 // D                   PROPAGATOR EVOLUTION FUNCTIONS
@@ -140,7 +140,7 @@ MSVCDLL void HSprop::SetBasis(const gen_op& Op);
         //                      Op      : An operator 
         // Output               Op1     : Op evolved under prop U
 
-MSVCDLL gen_op HSprop::evolve(const gen_op& Op) const;
+MSVCDLL gen_op evolve(const gen_op& Op) const;
 
 // ____________________________________________________________________________
 // E           PROPAGATOR FUNCTIONS, PROPAGATOR WITH PROPAGATOR
@@ -154,16 +154,16 @@ MSVCDLL gen_op HSprop::evolve(const gen_op& Op) const;
 
                             Order matters - U1*U2 != U2*U1                   */
 
-MSVCDLL HSprop HSprop::operator *  (const HSprop& U) const;
-MSVCDLL void   HSprop::operator *= (const HSprop& U);
-MSVCDLL void   HSprop::operator &= (const HSprop& U);
+MSVCDLL HSprop operator *  (const HSprop& U) const;
+MSVCDLL void   operator *= (const HSprop& U);
+MSVCDLL void   operator &= (const HSprop& U);
 
 // ____________________________________________________________________________
 // F             PROPAGATOR FUNCTIONS, PROPAGATOR WITH OPERATOR
 // ____________________________________________________________________________
 
 
-MSVCDLL HSprop HSprop::sim_trans(const gen_op& Op);
+MSVCDLL HSprop sim_trans(const gen_op& Op);
  
         // Input                U       : HS propagator (this). 
         //                      Op      : General operator 
@@ -172,7 +172,7 @@ MSVCDLL HSprop HSprop::sim_trans(const gen_op& Op);
         //                                       U1 = Op * U * [Op] 
  
 
-MSVCDLL void HSprop::sim_trans_ip(const gen_op& Op);
+MSVCDLL void sim_trans_ip(const gen_op& Op);
 
         // Input                U       : HS propagator (this).
         //                      Op      : General operator
@@ -181,7 +181,7 @@ MSVCDLL void HSprop::sim_trans_ip(const gen_op& Op);
         //                                        U = Op * U * [Op]
 
 
-MSVCDLL HSprop HSprop::Pow(int n) const;
+MSVCDLL HSprop Pow(int n) const;
 
         // Input                U       : HS propagator (this).
         //                      n       : power
@@ -253,10 +253,10 @@ MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& U);
    not, these operators are necessary if any STL container classes are to
    be used based on propagators (e.g. list<HSprop> or vector<HSprop>)        */  
 
-MSVCDLL bool HSprop::operator== (const HSprop& U) const;
-MSVCDLL bool HSprop::operator!= (const HSprop& U) const;
-MSVCDLL bool HSprop::operator<  (const HSprop& U) const;
-MSVCDLL bool HSprop::operator>  (const HSprop& U) const;
+MSVCDLL bool operator== (const HSprop& U) const;
+MSVCDLL bool operator!= (const HSprop& U) const;
+MSVCDLL bool operator<  (const HSprop& U) const;
+MSVCDLL bool operator>  (const HSprop& U) const;
  
 // ____________________________________________________________________________
 // Z               HILBERT SPACE PROPAGATOR OUTPUT FUNCTIONS
@@ -268,7 +268,7 @@ MSVCDLL bool HSprop::operator>  (const HSprop& U) const;
         // Output               ostr    : Output stream that has had
         //                                U written into it 
 
-MSVCDLL std::ostream& HSprop::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream &operator << (std::ostream &ostr, const HSprop& U);
 
 };

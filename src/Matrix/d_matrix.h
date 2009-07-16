@@ -56,17 +56,17 @@ class d_matrix : public _matrix
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void d_matrix::DMxerror(int idx,                        int nr=0) const; 
-         void d_matrix::DMxerror(int idx, const std::string& PN, int nr=0) const;
-volatile void d_matrix::DMxfatal(int idx)                                  const;
-volatile void d_matrix::DMxfatal(int idx, const std::string& PN)           const;
+         void DMxerror(int idx,                        int nr=0) const; 
+         void DMxerror(int idx, const std::string& PN, int nr=0) const;
+volatile void DMxfatal(int idx)                                  const;
+volatile void DMxfatal(int idx, const std::string& PN)           const;
 
 // ____________________________________________________________________________
 // ii                     CLASS D_MATRIX CHECKING
 // ____________________________________________________________________________
 
-virtual bool d_matrix::CheckDims(_matrix* mx,                int warn=1);
-virtual bool d_matrix::CheckDim(_matrix*  mx, bool mul=true, int warn=1);
+virtual bool CheckDims(_matrix* mx,                int warn=1);
+virtual bool CheckDim(_matrix*  mx, bool mul=true, int warn=1);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -95,11 +95,11 @@ public:
    destructor only destroys the data array, anything else is destroyed in
    the base class.                                                           */
 
-        d_matrix::d_matrix( );
-        d_matrix::d_matrix(int i, int j);
-        d_matrix::d_matrix(int i, int j, const complex& z);
-        d_matrix::d_matrix(const d_matrix& m);
-virtual d_matrix::~d_matrix();
+        d_matrix( );
+        d_matrix(int i, int j);
+        d_matrix(int i, int j, const complex& z);
+        d_matrix(const d_matrix& m);
+virtual ~d_matrix();
 
 // ____________________________________________________________________________
 // B                  CLASS D_MATRIX ACCESS AND ASSIGNMENT
@@ -143,13 +143,13 @@ virtual d_matrix::~d_matrix();
     the operation cannot be handled by a diagonal array so the array type
     is changed to be more generic.  The the operation is reattempted.       */
 
-void             d_matrix::operator= (const d_matrix& dmx);
-virtual complex& d_matrix::operator() (int i, int j);
-virtual complex  d_matrix::get(int i, int j) const;
-virtual bool     d_matrix::put (const complex& z, int i, int j);
-virtual bool     d_matrix::put_h(const complex& z, int i, int j);
-virtual _matrix* d_matrix::get_block(int row, int col, int nrows, int ncols);
-virtual bool     d_matrix::put_block(int row, int col, _matrix* mx );
+void             operator= (const d_matrix& dmx);
+virtual complex& operator() (int i, int j);
+virtual complex  get(int i, int j) const;
+virtual bool     put (const complex& z, int i, int j);
+virtual bool     put_h(const complex& z, int i, int j);
+virtual _matrix* get_block(int row, int col, int nrows, int ncols);
+virtual bool     put_block(int row, int col, _matrix* mx );
 
 // ____________________________________________________________________________
 // C                 CLASS D_MATRIX HERMITIAN_TYPE HANDLING
@@ -172,8 +172,8 @@ virtual bool     d_matrix::put_block(int row, int col, _matrix* mx );
  
 // Note:  Functions set_hermitian & check_hermitian are found in class matrix
 
-virtual hermitian_type d_matrix::stored_hermitian ( )              const;
-virtual hermitian_type d_matrix::test_hermitian(double d = GMxCut) const;
+virtual hermitian_type stored_hermitian ( )              const;
+virtual hermitian_type test_hermitian(double d = GMxCut) const;
  
 // ____________________________________________________________________________
 // D                  CLASS D_MATRIX MATRIX_TYPE HANDLING
@@ -198,11 +198,11 @@ virtual hermitian_type d_matrix::test_hermitian(double d = GMxCut) const;
 // Note:  Functions set set_type & check_type are in class matrix, not here.
  
 
-virtual matrix_type d_matrix::stored_type( ) const;
-virtual matrix_type d_matrix::test_type(matrix_type m = n_matrix_type,
+virtual matrix_type stored_type( ) const;
+virtual matrix_type test_type(matrix_type m = n_matrix_type,
                                                         double d=GMxCut) const;
-virtual std::string d_matrix::mxtype()        const;
-virtual std::string d_matrix::mxtype(bool pf) const;
+virtual std::string mxtype()        const;
+virtual std::string mxtype(bool pf) const;
 
 // ____________________________________________________________________________
 // E                  CLASS D_MATRIX VARIOUS MATRIX CHECKS
@@ -221,16 +221,16 @@ virtual std::string d_matrix::mxtype(bool pf) const;
    is_square      bool   TF if rows_ == cols_                (TRUE)
    is_equal       bool   TF if ||<i|dmx-mx|j>||<d    all i,j (def. d GMxCut) */
 
-virtual bool d_matrix::is_symmetric(double          d=GMxCut) const;
-virtual bool d_matrix::is_hermitian(double          d=GMxCut) const;
-virtual bool d_matrix::is_unitary(double            d=GMxCut) const;
-virtual bool d_matrix::is_real(double               d=GMxCut) const;
-virtual bool d_matrix::is_imaginary(double          d=GMxCut) const;
-virtual bool d_matrix::is_complex(double            d=GMxCut) const;
-virtual bool d_matrix::is_zero(double               d=GMxCut) const;
-virtual bool d_matrix::is_diagonal(double           d=GMxCut) const;
-virtual bool d_matrix::is_square( )                           const;
-virtual bool d_matrix::is_equal(_matrix* mx, double d=GMxCut) const;
+virtual bool is_symmetric(double          d=GMxCut) const;
+virtual bool is_hermitian(double          d=GMxCut) const;
+virtual bool is_unitary(double            d=GMxCut) const;
+virtual bool is_real(double               d=GMxCut) const;
+virtual bool is_imaginary(double          d=GMxCut) const;
+virtual bool is_complex(double            d=GMxCut) const;
+virtual bool is_zero(double               d=GMxCut) const;
+virtual bool is_diagonal(double           d=GMxCut) const;
+virtual bool is_square( )                           const;
+virtual bool is_equal(_matrix* mx, double d=GMxCut) const;
 
 // ____________________________________________________________________________
 // F              CLASS D_MATRIX BINARY ARITHMETIC FUNCTIONS
@@ -290,14 +290,14 @@ virtual _matrix* divide_two(const complex &z );
    transpose  <i|dmx|j> -> <j|dmx|i>      adjoint   <i|dmx|j>-><j|dmx*|i>   */
 
 
-virtual _matrix* d_matrix::negate();
-virtual _matrix* d_matrix::RE();
-virtual _matrix* d_matrix::IM();
-virtual _matrix* d_matrix::conjugate();
-virtual _matrix* d_matrix::transpose();
-virtual _matrix* d_matrix::adjoint();
-virtual _matrix* d_matrix::mxexp();
-virtual complex  d_matrix::trace();
+virtual _matrix* negate();
+virtual _matrix* RE();
+virtual _matrix* IM();
+virtual _matrix* conjugate();
+virtual _matrix* transpose();
+virtual _matrix* adjoint();
+virtual _matrix* mxexp();
+virtual complex  trace();
 
 /*     Function    Output                       Description
      ------------  -------  ---------------------------------------------------
@@ -311,15 +311,15 @@ virtual complex  d_matrix::trace();
         minIm      double   Returns smallest imaginary value in the array
         minZ       complex  Returns smallest complex (norm) value in array   */
 
-virtual _matrix*         d_matrix::swaprows(int i, int j);
-virtual _matrix*         d_matrix::swapcols(int i, int j);
-virtual _matrix*         d_matrix::permute( int i, int j);
-virtual double           d_matrix::maxRe()                            const;
-virtual double           d_matrix::maxIm()                            const;
-virtual complex          d_matrix::maxZ()                             const;
-virtual double           d_matrix::minRe()                            const;
-virtual double           d_matrix::minIm()                            const;
-virtual complex          d_matrix::minZ()                             const;
+virtual _matrix*         swaprows(int i, int j);
+virtual _matrix*         swapcols(int i, int j);
+virtual _matrix*         permute( int i, int j);
+virtual double           maxRe()                            const;
+virtual double           maxIm()                            const;
+virtual complex          maxZ()                             const;
+virtual double           minRe()                            const;
+virtual double           minIm()                            const;
+virtual complex          minZ()                             const;
 
 // ____________________________________________________________________________
 // I                CLASS D_MATRIX SIMPLE BINARY FUNCTIONS
@@ -433,10 +433,10 @@ virtual _matrix* LUinv(int *indx, _matrix* LU);
                                   incremented external by the call origin.   */
 
 
-virtual std::vector<int> d_matrix::BlockDiag(_matrix*    &BD, _matrix* &U);
-virtual void             d_matrix::HermTriDiag(_matrix* &HTD, _matrix* &U);
-virtual void             d_matrix::SymTriDiag(_matrix*  &STD, _matrix* &U);
-virtual void             d_matrix::SymDiag(_matrix*       &D, _matrix* &U);
+virtual std::vector<int> BlockDiag(_matrix*    &BD, _matrix* &U);
+virtual void             HermTriDiag(_matrix* &HTD, _matrix* &U);
+virtual void             SymTriDiag(_matrix*  &STD, _matrix* &U);
+virtual void             SymDiag(_matrix*       &D, _matrix* &U);
 
 virtual void diag(_matrix* &D,                    _matrix* &U);
  
@@ -502,15 +502,15 @@ virtual _matrix* tensor_product(_matrix* mx);
    are output (GAMMA format) whereas a non-zero flag will force all elements
    (diagonals and zero off-diagonals) to be output.                         */
 
-virtual std::vector<std::string> d_matrix::printStrings(const   MxPrint& pf) const;
-virtual std::vector<std::string> d_matrix::pictureStrings(const MxPrint& pf) const;
+virtual std::vector<std::string> printStrings(const   MxPrint& pf) const;
+virtual std::vector<std::string> pictureStrings(const MxPrint& pf) const;
 
-virtual void d_matrix::print(std::ostream&   ostr, const MxPrint& pf) const; 
-virtual void d_matrix::picture(std::ostream& ostr, const MxPrint& pf) const; 
-virtual void d_matrix::write(std::ofstream &fp, int form=0) const;
-virtual void d_matrix::read(std::ifstream &fp);
-virtual void d_matrix::readASC(std::istream& istr);
-virtual void d_matrix::ask( );
+virtual void print(std::ostream&   ostr, const MxPrint& pf) const; 
+virtual void picture(std::ostream& ostr, const MxPrint& pf) const; 
+virtual void write(std::ofstream &fp, int form=0) const;
+virtual void read(std::ifstream &fp);
+virtual void readASC(std::istream& istr);
+virtual void ask( );
 
 // ____________________________________________________________________________
 // M                 CLASS D_MATRIX MISCELLANEOUS FUNCTIONS
@@ -562,7 +562,7 @@ virtual void convert(_matrix* mx);
 //                  (Been Having Troubles With The Old One)
 
 
-virtual i_matrix* d_matrix::IMX();
+virtual i_matrix* IMX();
 
         // Input                dmx     : A diagonal matrix (this)
         // Output               imx	: A new identity matrix whose
@@ -571,7 +571,7 @@ virtual i_matrix* d_matrix::IMX();
         // Note                         : This will allocate memory
 
 
-virtual d_matrix* d_matrix::DMX();
+virtual d_matrix* DMX();
 
         // Input                dmx     : A diagonal matrix (this)
         // Output               dmx     : A new d_matrix matrix whose
@@ -580,7 +580,7 @@ virtual d_matrix* d_matrix::DMX();
 	//				: Return is just dmx
 
 
-virtual h_matrix* d_matrix::HMX();
+virtual h_matrix* HMX();
 
         // Input                dmx     : A diagonal matrix (this)
         // Output               nmx     : A new h_matrix matrix whose
@@ -588,7 +588,7 @@ virtual h_matrix* d_matrix::HMX();
         // Note                         : This will allocate memory
  
  
-virtual n_matrix* d_matrix::NMX();
+virtual n_matrix* NMX();
  
         // Input                dmx     : A diagonal matrix (this)
         // Output               nmx     : A new n_matrix matrix whose
@@ -600,8 +600,8 @@ virtual n_matrix* d_matrix::NMX();
 
 #ifdef PYGAMMA				// Begin PyGAMMA code block
 
-virtual std::string d_matrix::PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string d_matrix::PyPicture(const MxPrint& PFlgs) const;
+virtual std::string PyPrint(const   MxPrint& PFlgs) const;
+virtual std::string PyPicture(const MxPrint& PFlgs) const;
 
 #endif					// End of PyGAMMA code block
 

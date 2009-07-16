@@ -60,10 +60,10 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void col_vector::CVerror(int eidx, int noret=0) const;
-         void col_vector::CVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void col_vector::CVfatality(int eidx) const;
-volatile void col_vector::CVfatality(int eidx, const std::string& pname) const;
+         void CVerror(int eidx, int noret=0) const;
+         void CVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void CVfatality(int eidx) const;
+volatile void CVfatality(int eidx, const std::string& pname) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -88,13 +88,13 @@ public:
           mx            A col vector equivalent to input matrix mx
                         (in this case mx MUST be of dimension nx1)           */
 
-MSVCDLC col_vector::col_vector ( );
-MSVCDLC col_vector::col_vector (int i);
-MSVCDLC col_vector::col_vector (int i, double d);
-MSVCDLC col_vector::col_vector (int i, const complex& z);
-MSVCDLC col_vector::col_vector (const col_vector& cvec);
-MSVCDLC col_vector::col_vector (const matrix& mx);
-MSVCDLC col_vector::~col_vector ();
+MSVCDLC col_vector ( );
+MSVCDLC col_vector (int i);
+MSVCDLC col_vector (int i, double d);
+MSVCDLC col_vector (int i, const complex& z);
+MSVCDLC col_vector (const col_vector& cvec);
+MSVCDLC col_vector (const matrix& mx);
+MSVCDLC ~col_vector ();
 
 // ____________________________________________________________________________
 // B               COLUMN VECTOR ACCESS AND ASSIGNMENT
@@ -109,14 +109,14 @@ MSVCDLC col_vector::~col_vector ();
       getIm(int)        Copy of imaginary part of element <i|cvec>
        put(int)         Assigns element <i|cvec>                            */
 
-MSVCDLL col_vector& col_vector::operator = (const col_vector& cvec);
-MSVCDLL col_vector& col_vector::operator = (const row_vector& rvec);
-MSVCDLL col_vector& col_vector::operator = (const matrix& mx);
-MSVCDLL complex&    col_vector::operator() (int i);
-MSVCDLL complex     col_vector::get(int i) const;
-MSVCDLL double      col_vector::getRe(int i) const;
-MSVCDLL double      col_vector::getIm(int i) const;
-MSVCDLL void        col_vector::put(const complex& z, int i);
+MSVCDLL col_vector& operator = (const col_vector& cvec);
+MSVCDLL col_vector& operator = (const row_vector& rvec);
+MSVCDLL col_vector& operator = (const matrix& mx);
+MSVCDLL complex&    operator() (int i);
+MSVCDLL complex     get(int i) const;
+MSVCDLL double      getRe(int i) const;
+MSVCDLL double      getIm(int i) const;
+MSVCDLL void        put(const complex& z, int i);
 
 // ____________________________________________________________________________
 // E             CLASS COLUMN VECTOR VARIOUS CHECKS & PARAMETERS
@@ -131,8 +131,8 @@ MSVCDLL void        col_vector::put(const complex& z, int i);
       refs     int    Returns # of vector references - handled by matrix
       pts      int    Returns # of vector elements   - handled by matrix     */
 
-MSVCDLL int col_vector::elements( ) const;
-MSVCDLL int col_vector::size( )     const;
+MSVCDLL int elements( ) const;
+MSVCDLL int size( )     const;
 /*
 int matrix::rows();		     // Number of matrix rows       INHERITED
 int matrix::cols();		     // Number of matrix columns    INHERITED
@@ -171,17 +171,17 @@ MSVCDLL friend col_vector operator * (const complex& z, const col_vector& cvec);
 MSVCDLL friend col_vector operator * (double         d, const col_vector& cvec);
 MSVCDLL friend col_vector operator * (const matrix& mx, const col_vector& cvec);
 
-MSVCDLL col_vector col_vector::operator + (const col_vector& cvec) const;
-MSVCDLL col_vector col_vector::operator + (const matrix&     mx)   const;
-MSVCDLL col_vector col_vector::operator - (const col_vector& cvec) const;
-MSVCDLL col_vector col_vector::operator - (const matrix&     mx)   const;
-MSVCDLL complex    col_vector::operator * (const col_vector& cvec) const;
-MSVCDLL matrix     col_vector::operator * (const row_vector& rvec) const;
-MSVCDLL matrix     col_vector::operator * (const matrix&     mx)   const;
-MSVCDLL col_vector col_vector::operator * (const complex&    z)    const;
-MSVCDLL col_vector col_vector::operator * (double            d)    const;
-MSVCDLL col_vector col_vector::operator / (const complex&    z)    const;
-MSVCDLL col_vector col_vector::operator / (double            d)    const;
+MSVCDLL col_vector operator + (const col_vector& cvec) const;
+MSVCDLL col_vector operator + (const matrix&     mx)   const;
+MSVCDLL col_vector operator - (const col_vector& cvec) const;
+MSVCDLL col_vector operator - (const matrix&     mx)   const;
+MSVCDLL complex    operator * (const col_vector& cvec) const;
+MSVCDLL matrix     operator * (const row_vector& rvec) const;
+MSVCDLL matrix     operator * (const matrix&     mx)   const;
+MSVCDLL col_vector operator * (const complex&    z)    const;
+MSVCDLL col_vector operator * (double            d)    const;
+MSVCDLL col_vector operator / (const complex&    z)    const;
+MSVCDLL col_vector operator / (double            d)    const;
 
 // ____________________________________________________________________________
 // G                COLUMN VECTOR UNARY ARITHMETIC FUNCTIONS
@@ -190,14 +190,14 @@ MSVCDLL col_vector col_vector::operator / (double            d)    const;
 // Note: These operators, as they are unable to change the type of the
 //       result, can only be those which return col_vector.
 
-MSVCDLL void col_vector::operator += (const col_vector& cvec1);
-MSVCDLL void col_vector::operator += (const matrix&        mx);
-MSVCDLL void col_vector::operator -= (const col_vector& cvec1);
-MSVCDLL void col_vector::operator -= (const matrix&        mx);
-MSVCDLL void col_vector::operator *= (const complex&        z);
-MSVCDLL void col_vector::operator *= (      double          d);
-MSVCDLL void col_vector::operator /= (const complex&        z);
-MSVCDLL void col_vector::operator /= (const double          d);
+MSVCDLL void operator += (const col_vector& cvec1);
+MSVCDLL void operator += (const matrix&        mx);
+MSVCDLL void operator -= (const col_vector& cvec1);
+MSVCDLL void operator -= (const matrix&        mx);
+MSVCDLL void operator *= (const complex&        z);
+MSVCDLL void operator *= (      double          d);
+MSVCDLL void operator /= (const complex&        z);
+MSVCDLL void operator /= (const double          d);
 
 // ____________________________________________________________________________
 // J                   COLUMN VECTOR SIMPLE UNARY FUNCTIONS
@@ -214,16 +214,16 @@ MSVCDLL void col_vector::operator /= (const double          d);
    transpose  rvec    Returns row vector where <i|cvec> = <i|cvec>
      trace    ----    This is disallowed for row vectors (but MUST exist)    */
 
-// col_vector col_vector::operator- ();                   // MATRIX INHERITED
+// col_vector operator- ();                   // MATRIX INHERITED
 
 MSVCDLL friend row_vector adjoint(const   col_vector& cvec);
 MSVCDLL friend row_vector transpose(const col_vector& cvec);
 MSVCDLL friend complex    trace(const     col_vector& cvec);
 
-MSVCDLL row_vector col_vector::adjoint()      const;
-MSVCDLL row_vector col_vector::transpose()    const;
-MSVCDLL complex    col_vector::trace()        const;
-MSVCDLL col_vector col_vector::differential() const;
+MSVCDLL row_vector adjoint()      const;
+MSVCDLL row_vector transpose()    const;
+MSVCDLL complex    trace()        const;
+MSVCDLL col_vector differential() const;
 
 // ____________________________________________________________________________
 // I                    COLUMN VECTOR SIMPLE BINARY FUNCTIONS
@@ -261,20 +261,20 @@ MSVCDLL col_vector col_vector::differential() const;
                            <0         imaginary
                            >0           real                                 */
 
-MSVCDLL double           col_vector::norm()          const;
-MSVCDLL complex          col_vector::sum()           const;
-MSVCDLL double           col_vector::maxRe()         const;
-MSVCDLL double           col_vector::maxIm()         const;
-MSVCDLL complex          col_vector::maxZ()          const;
-MSVCDLL double           col_vector::minRe()         const;
-MSVCDLL double           col_vector::minIm()         const;
-MSVCDLL complex          col_vector::minZ()          const;
-MSVCDLL int              col_vector::max(int type=0) const;
-MSVCDLL int              col_vector::min(int type=0) const;
-MSVCDLL void             col_vector::flip();
-MSVCDLL complex          col_vector::sum(int st, int ne) const;
-MSVCDLL void             col_vector::zero();
-MSVCDLL std::vector<int> col_vector::sort(int type=0) const;
+MSVCDLL double           norm()          const;
+MSVCDLL complex          sum()           const;
+MSVCDLL double           maxRe()         const;
+MSVCDLL double           maxIm()         const;
+MSVCDLL complex          maxZ()          const;
+MSVCDLL double           minRe()         const;
+MSVCDLL double           minIm()         const;
+MSVCDLL complex          minZ()          const;
+MSVCDLL int              max(int type=0) const;
+MSVCDLL int              min(int type=0) const;
+MSVCDLL void             flip();
+MSVCDLL complex          sum(int st, int ne) const;
+MSVCDLL void             zero();
+MSVCDLL std::vector<int> sort(int type=0) const;
 
 // ____________________________________________________________________________
 // J                  COLUMN VECTOR COMPLEX UNARY FUNCTIONS
@@ -302,10 +302,10 @@ MSVCDLL friend col_vector IFFT(const col_vector& cvec);
         // Output >     T/F  : Returns TRUE if cvec1 is equal to cvec2.
 	// Output <     T/F  : Returns TRUE if cvec1 is NOT equal to cvec2.
 
-//bool col_vector::operator==(const col_vector& cvec) const	// INHERITED
-//bool col_vector::operator!=(const col_vector& cvec) const	// INHERITED
-//bool col_vector::operator> (const col_vector& cvec) const	// INHERITED
-//bool col_vector::operator< (const col_vector& cvec) const	// INHERITED
+//bool operator==(const col_vector& cvec) const	// INHERITED
+//bool operator!=(const col_vector& cvec) const	// INHERITED
+//bool operator> (const col_vector& cvec) const	// INHERITED
+//bool operator< (const col_vector& cvec) const	// INHERITED
 
 // ____________________________________________________________________________
 // J                COLUMN VECTOR COMPLEX BINARY FUNCTIONS
@@ -327,9 +327,9 @@ MSVCDLL friend col_vector IFFT(const col_vector& cvec);
 MSVCDLL friend col_vector product(const col_vector& cvec1, const col_vector& cvec2);
 MSVCDLL friend col_vector product(const col_vector& cvec,        row_vector& rvec);
 
-MSVCDLL col_vector col_vector::product()                        const;
-MSVCDLL col_vector col_vector::product(const row_vector& rvec)  const;
-MSVCDLL col_vector col_vector::product(const col_vector& cvec2) const;
+MSVCDLL col_vector product()                        const;
+MSVCDLL col_vector product(const row_vector& rvec)  const;
+MSVCDLL col_vector product(const col_vector& cvec2) const;
 
 // ----------------------------------------------------------------------------
 //                              Scalar Product
@@ -347,9 +347,9 @@ MSVCDLL friend double  scalar_product(const col_vector& cvec);
 MSVCDLL friend complex scalar_product(const col_vector& cvec1, const col_vector& cvec2);
 MSVCDLL friend complex scalar_product(const col_vector& cvec,  const row_vector& rvec);
 
-MSVCDLL double  col_vector::scalar_product()                        const;
-MSVCDLL complex col_vector::scalar_product(const col_vector& cvec2) const;
-MSVCDLL complex col_vector::scalar_product(const row_vector& rvec)  const;
+MSVCDLL double  scalar_product()                        const;
+MSVCDLL complex scalar_product(const col_vector& cvec2) const;
+MSVCDLL complex scalar_product(const row_vector& rvec)  const;
 
 // ____________________________________________________________________________
 // L                       COLUMN VECTOR I/O FUNCTIONS
@@ -362,11 +362,11 @@ MSVCDLL complex col_vector::scalar_product(const row_vector& rvec)  const;
                                 full    : Flag for amount of output
                 Return          void    : cvec is sent to the output stream  */
 
-MSVCDLL std::string              col_vector::hdrString() const;
-MSVCDLL std::vector<std::string> col_vector::printStrings(const MxPrint& PFlgs) const;
+MSVCDLL std::string              hdrString() const;
+MSVCDLL std::vector<std::string> printStrings(const MxPrint& PFlgs) const;
 
-MSVCDLL        std::ostream& col_vector::printcols(std::ostream& ost, int nc=4,int rc=1,int ne=0) const;
-MSVCDLL        std::ostream& col_vector::print(std::ostream& ostr, int full=0) const;
+MSVCDLL        std::ostream& printcols(std::ostream& ost, int nc=4,int rc=1,int ne=0) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const col_vector& cvec);
 MSVCDLL friend std::istream& operator >> (std::istream& istr, col_vector& cvec);
 
@@ -377,7 +377,7 @@ MSVCDLL friend std::istream& operator >> (std::istream& istr, col_vector& cvec);
         //                             specify the vector.  rvec is modified.
         // Note                      : Function is for INTERACTIVE programs
 
-MSVCDLL void col_vector::ask();
+MSVCDLL void ask();
 
 
 // ____________________________________________________________________________
@@ -386,7 +386,7 @@ MSVCDLL void col_vector::ask();
 
 #ifdef PYGAMMA					// Begin PyGAMMA code block
 
-std::string col_vector::PyPrint() const;
+std::string PyPrint() const;
 
 //-----------------------------------------------------------------------------
 //                            ACCESS FUNCTIONS
@@ -395,14 +395,14 @@ std::string col_vector::PyPrint() const;
 /* These add to the put function for Python because there is no automatic
    cast from double complex as is done in C++.                               */
 
-void col_vector::putCVEC(double d, int i);
+void putCVEC(double d, int i);
 
 //-----------------------------------------------------------------------------
 //                            Simple Unary Functions
 //-----------------------------------------------------------------------------
 
-complex col_vector::sum1() const;
-complex col_vector::sum2(int st, int ne) const;
+complex sum1() const;
+complex sum2(int st, int ne) const;
 
 //-----------------------------------------------------------------------------
 //                            Product Functions
@@ -412,13 +412,13 @@ complex col_vector::sum2(int st, int ne) const;
    numbers we cannot directly export them into Python using Boost.Python. So
    instead we just make function copies with different names.                */
 
-col_vector col_vector::Pyproduct1()                        const;
-col_vector col_vector::Pyproduct2(const row_vector& rvec)  const;
-col_vector col_vector::Pyproduct3(const col_vector& cvec2) const;
+col_vector Pyproduct1()                        const;
+col_vector Pyproduct2(const row_vector& rvec)  const;
+col_vector Pyproduct3(const col_vector& cvec2) const;
 
-double     col_vector::Pyscalar_product1()                        const;
-complex    col_vector::Pyscalar_product2(const col_vector& cvec2) const;
-complex    col_vector::Pyscalar_product3(const row_vector& rvec)  const;
+double     Pyscalar_product1()                        const;
+complex    Pyscalar_product2(const col_vector& cvec2) const;
+complex    Pyscalar_product3(const row_vector& rvec)  const;
 
 #endif						// End of PyGAMMA code block
 

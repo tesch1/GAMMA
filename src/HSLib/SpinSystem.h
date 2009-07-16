@@ -69,17 +69,17 @@ class spin_system: public spin_sys
         //                      noret   : Flag for linefeed (0=linefeed)
         //                      pname   : string in message
      
-void spin_system::SYSTerror(int eidx, int noret=0) const;
-void spin_system::SYSTerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void spin_system::SYSTfatality(int eidx) const;
-volatile void spin_system::SYSTfatality(int eidx, const std::string& pname) const;
+void SYSTerror(int eidx, int noret=0) const;
+void SYSTerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void SYSTfatality(int eidx) const;
+volatile void SYSTfatality(int eidx, const std::string& pname) const;
 
 // ____________________________________________________________________________
 // ii                   CLASS SPIN SYSTEM SETUP FUNCTIONS
 // ____________________________________________________________________________
 
 
-virtual int spin_system::setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
+virtual int setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
 
 	// Input		sys      : Spin system (this)
 	// 			pset     : A parameter set
@@ -107,7 +107,7 @@ virtual int spin_system::setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
 
 protected:
 
-bool spin_system::setOm(const ParameterSet& pset);
+bool setOm(const ParameterSet& pset);
 
         // Input                sys     : A spin system (this)
         //                      pset    : A parameter set
@@ -158,10 +158,10 @@ public:
 ///F_list ~			- Destructor
 ///F_list =			- Assignment	
 
-MSVCDLC               spin_system::spin_system(int spins=0);
-MSVCDLC               spin_system::spin_system(const spin_system &sys);
-MSVCDLL virtual       spin_system::~spin_system ();
-MSVCDLL spin_system&  spin_system::operator= (const spin_system &sys);
+MSVCDLC               spin_system(int spins=0);
+MSVCDLC               spin_system(const spin_system &sys);
+MSVCDLL virtual       ~spin_system ();
+MSVCDLL spin_system&  operator= (const spin_system &sys);
 
 // ____________________________________________________________________________
 // B                CHEMICAL SHIFT AND G-FACTOR MANIPULATIONS
@@ -209,12 +209,12 @@ MSVCDLL         double PPM (int) const;
    electron.  Note that e- has a negative gyromagnetic ratio, thus electrons
    with a positive shift are shielded!                                       */
 
-MSVCDLL double spin_system::gfactor(int    spin) const;
-MSVCDLL void   spin_system::gfactor(int    spin, double g);
-MSVCDLL double spin_system::eshift(int     spin) const;
-MSVCDLL double spin_system::lab_eshift(int spin) const;
-MSVCDLL double spin_system::efield(int     spin) const;
-MSVCDLL double spin_system::efield_lab(int spin) const;
+MSVCDLL double gfactor(int    spin) const;
+MSVCDLL void   gfactor(int    spin, double g);
+MSVCDLL double eshift(int     spin) const;
+MSVCDLL double lab_eshift(int spin) const;
+MSVCDLL double efield(int     spin) const;
+MSVCDLL double efield_lab(int spin) const;
 
 // ____________________________________________________________________________
 // C           SCALAR & HYPERFINE COUPLING CONSTANT MANIPULATIONS
@@ -238,10 +238,10 @@ MSVCDLL double spin_system::efield_lab(int spin) const;
 	//        J(d,i,j)      none	: Sets (i,j) J coupling to Jval
 	//        J(i,j)	double	: Returns (i,j) J coupling in Hz
 
-MSVCDLL virtual void   spin_system::Js(double Jval=0);
-MSVCDLL virtual void   spin_system::J(int, int, double);
-MSVCDLL virtual void   spin_system::J(double, int, int);
-MSVCDLL         double spin_system::J(int, int) const;
+MSVCDLL virtual void   Js(double Jval=0);
+MSVCDLL virtual void   J(int, int, double);
+MSVCDLL virtual void   J(double, int, int);
+MSVCDLL         double J(int, int) const;
 
 
 // --------------------- Hyperfine Coupling Functions -------------------------
@@ -256,11 +256,11 @@ MSVCDLL         double spin_system::J(int, int) const;
 	//        A(i,j)	double	: Returns (i,j) HF coupling in G
 	//        AHz(i,j)	double	: Returns (i,j) HF coupling in Hz
 
-MSVCDLL virtual void   spin_system::As(double Aval=0);
-MSVCDLL virtual void   spin_system::A(int, int, double);
-MSVCDLL virtual void   spin_system::A(double, int, int);
-MSVCDLL         double spin_system::A(int, int)   const;
-MSVCDLL         double spin_system::AHz(int, int) const;
+MSVCDLL virtual void   As(double Aval=0);
+MSVCDLL virtual void   A(int, int, double);
+MSVCDLL virtual void   A(double, int, int);
+MSVCDLL         double A(int, int)   const;
+MSVCDLL         double AHz(int, int) const;
 
 // ____________________________________________________________________________
 // D                SPECTROMETER FREQUENCY & FIELD MANIPULATIONS
@@ -298,13 +298,13 @@ MSVCDLL         double spin_system::AHz(int, int) const;
        Bo            double               Get Field Strength (Tesla)
        OmegaAdjust   double      Om       Set 1H Larmor freq. to Om (MHz)    */
 
-MSVCDLL void   spin_system::Omega(double Om);				// Om : 1H spect. freq.  (MHz)
-MSVCDLL void   spin_system::Omega(double Om, const std::string& iso);	// Om : iso spect. freq. (MHz)
-MSVCDLL double spin_system::Omega(int spin=-1) const;			// Return Larmor of spin (MHz)
-MSVCDLL double spin_system::Omega(const std::string& iso) const;	// Return Larmor of iso  (MHz)
-MSVCDLL double spin_system::Bo() const;					// Return Field (Gauss)
-MSVCDLL void   spin_system::OmegaAdjust(double Om);			// Reset 1H Larmor, PPM static
-MSVCDLL void   spin_system::FieldAdjust(double B);			// Reset Field Strength
+MSVCDLL void   Omega(double Om);				// Om : 1H spect. freq.  (MHz)
+MSVCDLL void   Omega(double Om, const std::string& iso);	// Om : iso spect. freq. (MHz)
+MSVCDLL double Omega(int spin=-1) const;			// Return Larmor of spin (MHz)
+MSVCDLL double Omega(const std::string& iso) const;	// Return Larmor of iso  (MHz)
+MSVCDLL double Bo() const;					// Return Field (Gauss)
+MSVCDLL void   OmegaAdjust(double Om);			// Reset 1H Larmor, PPM static
+MSVCDLL void   FieldAdjust(double B);			// Reset Field Strength
 
 /* These functions work but are now deprecated, they're identical to Omega. */
         
@@ -317,7 +317,7 @@ MSVCDLL double spectrometer_frequency() const;
 
 // --------- Functions Which Get/Set Spin Pair Flags Within The System --------
 
-MSVCDLL void spin_system::spflags(int TF);
+MSVCDLL void spflags(int TF);
 
         // Input                   TF : TRUE/FALSE status
         // Output                none : All spin pairs  have their flags set
@@ -325,7 +325,7 @@ MSVCDLL void spin_system::spflags(int TF);
         ///F_list flags               - Set all spin pair flags TRUE or FALSE
 
 
-MSVCDLL void spin_system::spflag(int spin1, int spin2, int TF);
+MSVCDLL void spflag(int spin1, int spin2, int TF);
 
         // Input               spin1 : Spin in the system
         //                     spin2 : Another spin in the system
@@ -335,7 +335,7 @@ MSVCDLL void spin_system::spflag(int spin1, int spin2, int TF);
         ///F_list flag               - Set or retrieve specific spin pair flag T/F status.
 
  
-MSVCDLL int spin_system::spflag(int spin1, int spin2) const;
+MSVCDLL int spflag(int spin1, int spin2) const;
  
         // Input               spin1 : Spin in the system
         //                     spin2 : Another spin in the system
@@ -347,7 +347,7 @@ MSVCDLL int spin_system::spflag(int spin1, int spin2) const;
 // ____________________________________________________________________________
 ///Center Spin System Associated Functions 
 
-MSVCDLL double spin_system::center(int spin=0);
+MSVCDLL double center(int spin=0);
 
 	// Input	sys	: Spin system(this)
 	// 		spin	: Spin number
@@ -383,9 +383,9 @@ MSVCDLL double spin_system::center(int spin=0);
 	// 3. Isotope	 iso    : Based on this isotope
 
 
-MSVCDLL double spin_system::Nyquist(int spin,               double fact, double lwhh) const;
-MSVCDLL double spin_system::Nyquist(const std::string& iso, double fact, double lwhh) const;
-MSVCDLL double spin_system::Nyquist(const Isotope& iso,     double fact, double lwhh) const;
+MSVCDLL double Nyquist(int spin,               double fact, double lwhh) const;
+MSVCDLL double Nyquist(const std::string& iso, double fact, double lwhh) const;
+MSVCDLL double Nyquist(const Isotope& iso,     double fact, double lwhh) const;
 
 // ____________________________________________________________________________
 // H                         PARAMETER SET FUNCTIONS
@@ -430,7 +430,7 @@ MSVCDLL virtual void PSetAdd(ParameterSet& pset, int idx=-1) const;
 //            Functions To Make A Spin System From A Parameter Set
 // ----------------------------------------------------------------------------
 
-MSVCDLL void spin_system::setJs(const ParameterSet& pset);
+MSVCDLL void setJs(const ParameterSet& pset);
 
         // Input                ssys    : A spin system (this)
         //                      pset    : A parameter set
@@ -438,7 +438,7 @@ MSVCDLL void spin_system::setJs(const ParameterSet& pset);
         //                                are set from parameters in pset
 
 
-MSVCDLL void spin_system::setAs(const ParameterSet& pset);
+MSVCDLL void setAs(const ParameterSet& pset);
 
         // Input                ssys    : A spin system (this)
         //                      pset    : A parameter set
@@ -450,7 +450,7 @@ MSVCDLL void spin_system::setAs(const ParameterSet& pset);
         //                                in with this function
  
 
-MSVCDLL void spin_system::setShifts(const ParameterSet& pset);
+MSVCDLL void setShifts(const ParameterSet& pset);
         // Input                ssys    : A spin system (this)
         //                      pset    : A parameter set
         // Output               none    : Spin system isotropic shifts
@@ -460,7 +460,7 @@ MSVCDLL void spin_system::setShifts(const ParameterSet& pset);
         //                                shifts are disabled
 
 
-MSVCDLL void spin_system::setGs(const ParameterSet& pset);
+MSVCDLL void setGs(const ParameterSet& pset);
 
         // Input                ssys    : A spin system (this)
         //                      pset    : A parameter set
@@ -521,8 +521,8 @@ MSVCDLL virtual int write(std::ofstream& ofstr,        int idx=-1, int warn=2) c
 	//				   containing recognized sys parameters
 
 
-MSVCDLL virtual int spin_system::read(const std::string& fn,    int idx=-1, int warn=2);
-MSVCDLL virtual int spin_system::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL virtual int read(const std::string& fn,    int idx=-1, int warn=2);
+MSVCDLL virtual int read(const ParameterSet& pset, int idx=-1, int warn=2);
 
 	// Input		sys      : Spin system (this)
 	// 			pset	 : A parameter set
@@ -537,8 +537,8 @@ MSVCDLL virtual int spin_system::read(const ParameterSet& pset, int idx=-1, int 
 	//				   TRUE if system filled properly
 
 
-MSVCDLL virtual std::string spin_system::ask_read(int argc, char* argv[], int argn);
-MSVCDLL virtual std::string spin_system::ask_read(int argc, char* argv[], int argn,
+MSVCDLL virtual std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL virtual std::string ask_read(int argc, char* argv[], int argn,
                                                     const std::string& def);
 
 	// Input		sys     : A spin system (this)
@@ -579,11 +579,11 @@ MSVCDLL virtual std::string spin_system::ask_read(int argc, char* argv[], int ar
         //                                info sent to the output stream
  
 
-MSVCDLL std::ostream& spin_system::printvs(std::ostream& ostr) const;
-MSVCDLL std::ostream& spin_system::printGs(std::ostream& ostr) const;
-MSVCDLL std::ostream& spin_system::printJs(std::ostream& ostr) const;
-MSVCDLL std::ostream& spin_system::printAs(std::ostream& ostr) const;
-MSVCDLL std::ostream& spin_system::printO(std::ostream&  ostr) const;
+MSVCDLL std::ostream& printvs(std::ostream& ostr) const;
+MSVCDLL std::ostream& printGs(std::ostream& ostr) const;
+MSVCDLL std::ostream& printJs(std::ostream& ostr) const;
+MSVCDLL std::ostream& printAs(std::ostream& ostr) const;
+MSVCDLL std::ostream& printO(std::ostream&  ostr) const;
  
         // Input                out      : output stream
         // Output               none	 : modifies output stream
@@ -595,14 +595,14 @@ MSVCDLL friend  std::ostream& operator<<(std::ostream& out, const spin_system& s
 //                    Strings Used For Generic Output Functions
 //-----------------------------------------------------------------------------
 
-MSVCDLL virtual std::vector<std::string> spin_system::SYSStrings(int w1=10,int w2=12,int w3=1) const;
-MSVCDLL std::vector<std::string> spin_system::VStrings(int   colwd=12, int digs=2) const;
-MSVCDLL std::vector<std::string> spin_system::PPMStrings(int colwd=12, int digs=2) const;
-MSVCDLL std::vector<std::string> spin_system::GFStrings(int  colwd=12, int digs=2) const;
-MSVCDLL std::vector<std::string> spin_system::BeStrings(int  colwd=12, int digs=2) const;
-MSVCDLL std::vector<std::string> spin_system::JStrings(int   colwd=12, int digs=2) const;
-MSVCDLL std::vector<std::string> spin_system::AStrings(int   colwd=12, int digs=2) const;
-MSVCDLL std::vector<std::string> spin_system::OmStrings(int  colwd=12, int digs=2) const;
+MSVCDLL virtual std::vector<std::string> SYSStrings(int w1=10,int w2=12,int w3=1) const;
+MSVCDLL std::vector<std::string> VStrings(int   colwd=12, int digs=2) const;
+MSVCDLL std::vector<std::string> PPMStrings(int colwd=12, int digs=2) const;
+MSVCDLL std::vector<std::string> GFStrings(int  colwd=12, int digs=2) const;
+MSVCDLL std::vector<std::string> BeStrings(int  colwd=12, int digs=2) const;
+MSVCDLL std::vector<std::string> JStrings(int   colwd=12, int digs=2) const;
+MSVCDLL std::vector<std::string> AStrings(int   colwd=12, int digs=2) const;
+MSVCDLL std::vector<std::string> OmStrings(int  colwd=12, int digs=2) const;
 
 // ____________________________________________________________________________
 //                           SpinSystem Python Code
@@ -616,8 +616,8 @@ MSVCDLL std::vector<std::string> spin_system::OmStrings(int  colwd=12, int digs=
 
 std::string PyPrint();
 
-double spin_system::OmegaSSA()     const;
-double spin_system::OmegaSSB(int i) const;
+double OmegaSSA()     const;
+double OmegaSSB(int i) const;
 
 #endif							// End of PyGAMMA code
 

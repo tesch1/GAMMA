@@ -56,16 +56,16 @@ class complex
    optional string may be included.  The flag noret signals whether to add
    a line feed at the end of the error message.                              */
 
-void complex::Zerror(int eidx, int noret=0) const;
-void complex::Zerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void complex::Zfatality(int eidx) const;
+void Zerror(int eidx, int noret=0) const;
+void Zerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void Zfatality(int eidx) const;
 
 // ____________________________________________________________________________
 // ii                     Class Complex Ouptut Format
 // ____________________________________________________________________________
 
-void complex::SetForm();
-//void complex::SetForm(const std::string& fmt);
+void SetForm();
+//void SetForm(const std::string& fmt);
 
 
 public:
@@ -79,11 +79,11 @@ MSVCDLL friend inline void Swap(complex& z1, complex& z2);
 // A                    COMPLEX CONSTRUCTION, ASSIGNMENT
 // ____________________________________________________________________________
               
-MSVCDLC          complex::complex();
-MSVCDLC          complex::complex(double r,   double i=0.0);
-MSVCDLC          complex::complex(const complex& z);
-MSVCDLC complex& complex::operator= (const complex& z);
-MSVCDLC complex& complex::operator= (double r);
+MSVCDLC          complex();
+MSVCDLC          complex(double r,   double i=0.0);
+MSVCDLC          complex(const complex& z);
+MSVCDLC complex& operator= (const complex& z);
+MSVCDLC complex& operator= (double r);
 
 // ____________________________________________________________________________
 // B                   COMPLEX ELEMENT ACCESS FUNCTIONS
@@ -104,10 +104,10 @@ MSVCDLC complex& complex::operator= (double r);
    Re(z), set_real_part(z)   Set the real component
  Im(z),set_imaginary_part(z) Set the imaginary component                     */
 
-MSVCDLL inline        double& complex::Relem();
-MSVCDLL inline        double& complex::Ielem();
-MSVCDLL inline const  double& complex::Rec();
-MSVCDLL inline const  double& complex::Imc();
+MSVCDLL inline        double& Relem();
+MSVCDLL inline        double& Ielem();
+MSVCDLL inline const  double& Rec();
+MSVCDLL inline const  double& Imc();
 
 MSVCDLL friend inline double& zRe(complex& z);
 MSVCDLL friend inline double& zIm(complex& z);
@@ -139,24 +139,24 @@ MSVCDLL friend inline void Im(complex& z, double r);
       /        z,z1          z/z1           /       z,r            z/r
       /=       z,z1          z/z1           /=      z,r            z/r      */
 
-MSVCDLL inline complex  complex::operator+  ()                  const;
-MSVCDLL inline complex  complex::operator+  (const complex& z)  const;
-MSVCDLL inline complex  complex::operator+  (double r)          const;
-MSVCDLL inline complex& complex::operator+= (const complex& z);
-MSVCDLL inline complex& complex::operator+= (double r);
-MSVCDLL inline complex  complex::operator-  ()                  const;
-MSVCDLL inline complex  complex::operator-  (double r);
-MSVCDLL inline complex  complex::operator-  (const complex& z)  const;
-MSVCDLL inline complex& complex::operator-= (const complex& z);
-MSVCDLL inline complex& complex::operator-= (double r);
-MSVCDLL inline complex  complex::operator*  (const complex& z)  const;
-MSVCDLL inline complex  complex::operator*  (double r)          const;
-MSVCDLL inline complex& complex::operator*= (const complex& z);
-MSVCDLL inline complex& complex::operator*= (double r);
-MSVCDLL inline complex  complex::operator/  (const complex& z)  const;
-MSVCDLL inline complex  complex::operator/  (double r)          const;
-MSVCDLL inline complex& complex::operator/= (const complex& z);
-MSVCDLL inline complex& complex::operator/= (double r);
+MSVCDLL inline complex  operator+  ()                  const;
+MSVCDLL inline complex  operator+  (const complex& z)  const;
+MSVCDLL inline complex  operator+  (double r)          const;
+MSVCDLL inline complex& operator+= (const complex& z);
+MSVCDLL inline complex& operator+= (double r);
+MSVCDLL inline complex  operator-  ()                  const;
+MSVCDLL inline complex  operator-  (double r);
+MSVCDLL inline complex  operator-  (const complex& z)  const;
+MSVCDLL inline complex& operator-= (const complex& z);
+MSVCDLL inline complex& operator-= (double r);
+MSVCDLL inline complex  operator*  (const complex& z)  const;
+MSVCDLL inline complex  operator*  (double r)          const;
+MSVCDLL inline complex& operator*= (const complex& z);
+MSVCDLL inline complex& operator*= (double r);
+MSVCDLL inline complex  operator/  (const complex& z)  const;
+MSVCDLL inline complex  operator/  (double r)          const;
+MSVCDLL inline complex& operator/= (const complex& z);
+MSVCDLL inline complex& operator/= (double r);
 
 MSVCDLL friend inline complex operator+ (double r, const complex& z);
 MSVCDLL friend inline complex operator- (double r, const complex& z);
@@ -226,8 +226,8 @@ MSVCDLL friend inline void div(complex& z, const complex& z1,       double    r)
        norm(z,r)        Norm of z:              norm set to r
        phase(r)         Phase of z:             phase set to r               */
 
-MSVCDLL complex complex::conj() const;
-MSVCDLL complex complex::conj_times(const complex& z) const;
+MSVCDLL complex conj() const;
+MSVCDLL complex conj_times(const complex& z) const;
 
 MSVCDLL friend inline complex conj(const complex& z);
 MSVCDLL friend inline complex conj(const complex& z, const complex& z1);
@@ -246,7 +246,7 @@ MSVCDLL friend inline complex sqrt(const complex& z);
 	// Output 	       z1 : Returns the square root of z, z1 = sqrt(z)
 
 
-MSVCDLL inline complex complex::Zexp() const;
+MSVCDLL inline complex Zexp() const;
 
 	// Input 		z : A complex number, unaltered
 	// Output 	       z1 : Returns the exponential of z, z1 = exp(z)
@@ -275,18 +275,18 @@ MSVCDLL friend inline complex pow(const complex& z, const complex& z1);
 // F           HYPERBOLIC & INVERSE TRIGONOMETRIC FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL complex complex::Zsin()   const;
-MSVCDLL complex complex::Zcos()   const;
-MSVCDLL complex complex::Ztan()   const;
-MSVCDLL complex complex::Zasin()  const;
-MSVCDLL complex complex::Zacos()  const;
-MSVCDLL complex complex::Zatan()  const;
-MSVCDLL complex complex::Zsinh()  const;
-MSVCDLL complex complex::Zcosh()  const;
-MSVCDLL complex complex::Ztanh()  const;
-MSVCDLL complex complex::Zasinh() const;
-MSVCDLL complex complex::Zacosh() const;
-MSVCDLL complex complex::Zatanh() const;
+MSVCDLL complex Zsin()   const;
+MSVCDLL complex Zcos()   const;
+MSVCDLL complex Ztan()   const;
+MSVCDLL complex Zasin()  const;
+MSVCDLL complex Zacos()  const;
+MSVCDLL complex Zatan()  const;
+MSVCDLL complex Zsinh()  const;
+MSVCDLL complex Zcosh()  const;
+MSVCDLL complex Ztanh()  const;
+MSVCDLL complex Zasinh() const;
+MSVCDLL complex Zacosh() const;
+MSVCDLL complex Zatanh() const;
 
 MSVCDLL friend complex sin(const   complex& z);
 MSVCDLL friend complex cos(const   complex& z);
@@ -335,27 +335,27 @@ MSVCDLL friend complex atanh(const complex& z);
    The default value of the above three is 6,2,false setting the format to
    be %6.2f = _form.                                                            */
 
-MSVCDLL static void complex::Reiphi(bool TF);
-MSVCDLL static void complex::delim(bool  TF);
-MSVCDLL static void complex::scinot(bool TF);
-MSVCDLL static void complex::digits(int  digs);
-MSVCDLL static void complex::dadp(int    adp);
+MSVCDLL static void Reiphi(bool TF);
+MSVCDLL static void delim(bool  TF);
+MSVCDLL static void scinot(bool TF);
+MSVCDLL static void digits(int  digs);
+MSVCDLL static void dadp(int    adp);
 
 // ----------------------------------------------------------------------------
 //                    Functions To Facilite Complex Output
 // ----------------------------------------------------------------------------
 
-MSVCDLL static int         complex::dlength();			// Length of printed d
-MSVCDLL static std::string complex::dformat();			// Format of printed d
-MSVCDLL static int         complex::zlength();			// Length of printed z
-MSVCDLL static bool        complex::normphase();		// True if R,phi out
+MSVCDLL static int         dlength();			// Length of printed d
+MSVCDLL static std::string dformat();			// Format of printed d
+MSVCDLL static int         zlength();			// Length of printed z
+MSVCDLL static bool        normphase();		// True if R,phi out
 
 
-//static void complex::form(std::string& form);
+//static void form(std::string& form);
 // friend void complex_setf(int phase, int math, int science,
 //			                    int digits, int digs_aft_dpoint );
 
-MSVCDLL static void complex::complex_getf(bool& phase, bool& math, bool& science,
+MSVCDLL static void complex_getf(bool& phase, bool& math, bool& science,
 			                  int &digits, int &digs_aft_dpoint );
 
 MSVCDLL friend void complex_getf(std::string& form);
@@ -376,8 +376,8 @@ MSVCDLL friend void complex_getf(std::string& form);
 	//			       complex number z in the format set
 	//			       in complex_setf function
 
-MSVCDLL        std::string   complex::printString() const;
-MSVCDLL        std::ostream& complex::print(std::ostream& ostr) const;
+MSVCDLL        std::string   printString() const;
+MSVCDLL        std::ostream& print(std::ostream& ostr) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const complex& z);
 
 	// Input 		istr : An input stream
@@ -401,8 +401,8 @@ MSVCDLL friend std::istream& operator>> (std::istream& istr, complex& z);
         //                              into file fp at current location
         // Note                       : The file format is BINARY
 
-MSVCDLL void complex::write(const std::string& fn);
-MSVCDLL void complex::write(std::ofstream& fp) const;
+MSVCDLL void write(const std::string& fn);
+MSVCDLL void write(std::ofstream& fp) const;
 
         // Input                z     : Complex number (this)
         //                      fn    : Filename
@@ -411,17 +411,17 @@ MSVCDLL void complex::write(std::ofstream& fp) const;
         //                              from a file called filename
         //                              or from file fp at current location
 
-MSVCDLL void complex::read(const std::string& fn);
-MSVCDLL void complex::read(std::ifstream& fp);
+MSVCDLL void read(const std::string& fn);
+MSVCDLL void read(std::ifstream& fp);
 
 // ____________________________________________________________________________
 // H         Complex Class Container Support Functions
 // ____________________________________________________________________________
 
-MSVCDLL inline bool complex::operator== (const complex& z) const;
-MSVCDLL inline bool complex::operator!= (const complex& z) const;
-MSVCDLL        bool complex::operator<  (const complex& z) const;
-MSVCDLL        bool complex::operator>  (const complex& z) const;
+MSVCDLL inline bool operator== (const complex& z) const;
+MSVCDLL inline bool operator!= (const complex& z) const;
+MSVCDLL        bool operator<  (const complex& z) const;
+MSVCDLL        bool operator>  (const complex& z) const;
 
 // ____________________________________________________________________________
 // I                             PyGAMMA Code

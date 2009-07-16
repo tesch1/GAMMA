@@ -87,9 +87,9 @@ class spin_sys
         //                      noret   : Flag for linefeed (0=linefeed)
         //                      pname   : string in message
 
-void spin_sys::error(int eidx, int noret=0) const;
-void spin_sys::error(int eidx, const std::string& pname, int noret=0) const;
-volatile void spin_sys::fatality(int eidx) const;
+void error(int eidx, int noret=0) const;
+void error(int eidx, const std::string& pname, int noret=0) const;
+volatile void fatality(int eidx) const;
 
 // ____________________________________________________________________________
 // ii                 CLASS SPIN SYSTEM SETUP FUNCTIONS
@@ -97,7 +97,7 @@ volatile void spin_sys::fatality(int eidx) const;
 
 protected:
 
-virtual int spin_sys::setSsys(const ParameterSet& pset, int idx=-1, int warn=2);
+virtual int setSsys(const ParameterSet& pset, int idx=-1, int warn=2);
 
 	// Input		sys      : Spin system (this)
 	// 			pset     : A parameter set
@@ -119,7 +119,7 @@ virtual int spin_sys::setSsys(const ParameterSet& pset, int idx=-1, int warn=2);
 	//				   add the information read here
 
 
-void spin_sys::setBasis(const matrix& mx);
+void setBasis(const matrix& mx);
 
 	// Input		sys	: Spin system (this)
 	// 			mx	: A default basis matrix
@@ -146,8 +146,8 @@ public:
         // Note                         : If die is set non-zero, a program
         //                                abort will be sent
 
-int spin_sys::check_spin(int  spin,             int die=1) const;
-int spin_sys::check_spins(int spin1, int spin2, int die=1) const;
+int check_spin(int  spin,             int die=1) const;
+int check_spins(int spin1, int spin2, int die=1) const;
 
 // ____________________________________________________________________________
 // A                SPIN SYSTEM CONSTRUCTION, DESTRUCTION
@@ -157,11 +157,11 @@ int spin_sys::check_spins(int spin1, int spin2, int die=1) const;
 ///F_list spin_sys	      - Constructor
 ///F_list =	              - Assignment
 
-MSVCDLC                   spin_sys::spin_sys();
-MSVCDLC                   spin_sys::spin_sys(int    spins);
-MSVCDLC                   spin_sys::spin_sys(const  spin_sys& sys);
-MSVCDLC virtual           spin_sys::~spin_sys();
-MSVCDLL virtual spin_sys& spin_sys::operator=(const spin_sys& sys);
+MSVCDLC                   spin_sys();
+MSVCDLC                   spin_sys(int    spins);
+MSVCDLC                   spin_sys(const  spin_sys& sys);
+MSVCDLC virtual           ~spin_sys();
+MSVCDLL virtual spin_sys& operator=(const spin_sys& sys);
 
 // ____________________________________________________________________________
 // B                              COMPARISONS
@@ -189,10 +189,10 @@ MSVCDLL int operator!=(const spin_sys &sys) const;
 	// Output HS		int   : Size of spin system Hilbert Space
 	// Output HS(i)     	int   : Size of specific spin Hilbert Space
 
-MSVCDLL int spin_sys::spins()     const;
-MSVCDLL int spin_sys::spinpairs() const;
-MSVCDLL int spin_sys::HS()        const;
-MSVCDLL int spin_sys::HS(int spin) const;
+MSVCDLL int spins()     const;
+MSVCDLL int spinpairs() const;
+MSVCDLL int HS()        const;
+MSVCDLL int HS(int spin) const;
 
 // ____________________________________________________________________________
 // D          SPIN ANGULAR MOMENTUM AND ISOTOPE MANIUPLATIONS
@@ -234,19 +234,19 @@ gamma       Iso       Return gyromagnetic ration of isotope I
 
    Note that spin indices span [0, nspins-1]                                 */
 
-MSVCDLL virtual        void        spin_sys::isotope(int, const std::string&);
-MSVCDLL virtual        void        spin_sys::isotope(int, const Isotope&);
-MSVCDLL virtual const  Isotope&    spin_sys::isotope(int)                  const;
-MSVCDLL                double      spin_sys::weight(int)                   const;
-MSVCDLL                std::string spin_sys::symbol(int spin)              const;
-MSVCDLL                double      spin_sys::qn(int spin)                  const;
-MSVCDLL                double      spin_sys::qn()                          const;
-MSVCDLL                std::string spin_sys::element(int spin)             const;
-MSVCDLL                std::string spin_sys::momentum(int spin)            const;
-MSVCDLL                std::string spin_sys::momentum()                    const;
-MSVCDLL                double      spin_sys::gamma(int spin)               const;
-MSVCDLL                double      spin_sys::gamma(const std::string& iso) const;
-MSVCDLL         const  std::vector<Isotope>& spin_sys::IsoVec()            const;
+MSVCDLL virtual        void        isotope(int, const std::string&);
+MSVCDLL virtual        void        isotope(int, const Isotope&);
+MSVCDLL virtual const  Isotope&    isotope(int)                  const;
+MSVCDLL                double      weight(int)                   const;
+MSVCDLL                std::string symbol(int spin)              const;
+MSVCDLL                double      qn(int spin)                  const;
+MSVCDLL                double      qn()                          const;
+MSVCDLL                std::string element(int spin)             const;
+MSVCDLL                std::string momentum(int spin)            const;
+MSVCDLL                std::string momentum()                    const;
+MSVCDLL                double      gamma(int spin)               const;
+MSVCDLL                double      gamma(const std::string& iso) const;
+MSVCDLL         const  std::vector<Isotope>& IsoVec()            const;
 
 // ----------------------------------------------------------------------------
 //        Functions To Access Spin States & Default Basis Functions
@@ -281,8 +281,8 @@ MSVCDLL         const  std::vector<Isotope>& spin_sys::IsoVec()            const
 ///F_list qnDist	- Retrieve a statistic over the quantum numbers
 ///F_list CoherDist	- Retrieve a statistic over the different coherences
 
-MSVCDLL std::vector<int> spin_sys::HSvect() const;
-MSVCDLL row_vector       spin_sys::qState(int state) const;
+MSVCDLL std::vector<int> HSvect() const;
+MSVCDLL row_vector       qState(int state) const;
 
 	// Input                sys	   : Spin system (this)
 	// 			state	   : State index [0, HS)
@@ -295,7 +295,7 @@ MSVCDLL row_vector       spin_sys::qState(int state) const;
 	//					  2      -0.5,  0.5
 	//					  3      -0.5, -0.5
 	
-MSVCDLL matrix spin_sys::qStates() const;
+MSVCDLL matrix qStates() const;
 
 	// Input                sys	: Spin system (this)
 	// Output 		matrix	: Matrix (HS x ns) where each 
@@ -375,21 +375,21 @@ MSVCDLL row_vector CoherDist() const;
      isotopes       i      string  Isotope type of (isotope) index i
      isotopes     string    bool   True if isotope of type input in system   */
 
-MSVCDLL bool        spin_sys::homonuclear()                  const;
-MSVCDLL bool        spin_sys::heteronuclear()                const;
-MSVCDLL bool        spin_sys::electron(int i)                const;
-MSVCDLL bool        spin_sys::nucleon(int i)                 const;
-MSVCDLL bool        spin_sys::spinhalf()                     const;
-MSVCDLL int         spin_sys::electrons()                    const;
-MSVCDLL int         spin_sys::nucleons()                     const;
-MSVCDLL bool        spin_sys::nepair(int i,  int j)          const;
-MSVCDLL bool        spin_sys::enpair(int i,  int j)          const;
-MSVCDLL bool        spin_sys::eepair(int i,  int j)          const;
-MSVCDLL bool        spin_sys::nnpair(int i,  int j)          const;
-MSVCDLL int         spin_sys::pairidx(int i, int j)          const;
-MSVCDLL int         spin_sys::isotopes()                     const;
-MSVCDLL std::string spin_sys::isotopes(int idx)              const;
-MSVCDLL bool        spin_sys::isotopes(const std::string& I) const;
+MSVCDLL bool        homonuclear()                  const;
+MSVCDLL bool        heteronuclear()                const;
+MSVCDLL bool        electron(int i)                const;
+MSVCDLL bool        nucleon(int i)                 const;
+MSVCDLL bool        spinhalf()                     const;
+MSVCDLL int         electrons()                    const;
+MSVCDLL int         nucleons()                     const;
+MSVCDLL bool        nepair(int i,  int j)          const;
+MSVCDLL bool        enpair(int i,  int j)          const;
+MSVCDLL bool        eepair(int i,  int j)          const;
+MSVCDLL bool        nnpair(int i,  int j)          const;
+MSVCDLL int         pairidx(int i, int j)          const;
+MSVCDLL int         isotopes()                     const;
+MSVCDLL std::string isotopes(int idx)              const;
+MSVCDLL bool        isotopes(const std::string& I) const;
 
 // ____________________________________________________________________________
 // E                           SPIN FLAG FUNCTIONS
@@ -413,16 +413,16 @@ MSVCDLL bool        spin_sys::isotopes(const std::string& I) const;
   GetFlags      i,TF,DTF      vector  Get vector of sys flags, all DTF but i=TF
   GetFlags    isoin,TF,DTF    vector  Get vector of sys flags, isoin?TF:DTF  */
 
-MSVCDLL void    spin_sys::SetFlag(int spin, bool TF);
-MSVCDLL void    spin_sys::SetFlags(bool TF);
-MSVCDLL void    spin_sys::SetFlags(const std::string& isoin, bool TF);
-MSVCDLL void    spin_sys::SetFlags(const Isotope& Iso, bool TF);
-MSVCDLL bool    spin_sys::GetFlag(int i) const;
-MSVCDLL flagvec spin_sys::GetFlags() const;
-MSVCDLL flagvec spin_sys::GetFlags(bool TF) const;
-MSVCDLL flagvec spin_sys::GetFlags(int spin, bool TF, bool DefTF=0) const;
-MSVCDLL flagvec spin_sys::GetFlags(const std::string& isoin,bool TF,bool DTF=0) const;
-MSVCDLL flagvec spin_sys::GetFlags(const Isotope& isoin,bool TF,bool DTF=0) const;
+MSVCDLL void    SetFlag(int spin, bool TF);
+MSVCDLL void    SetFlags(bool TF);
+MSVCDLL void    SetFlags(const std::string& isoin, bool TF);
+MSVCDLL void    SetFlags(const Isotope& Iso, bool TF);
+MSVCDLL bool    GetFlag(int i) const;
+MSVCDLL flagvec GetFlags() const;
+MSVCDLL flagvec GetFlags(bool TF) const;
+MSVCDLL flagvec GetFlags(int spin, bool TF, bool DefTF=0) const;
+MSVCDLL flagvec GetFlags(const std::string& isoin,bool TF,bool DTF=0) const;
+MSVCDLL flagvec GetFlags(const Isotope& isoin,bool TF,bool DTF=0) const;
 
 // ____________________________________________________________________________
 // F                          SPIN SYSTEM NAME
@@ -436,8 +436,8 @@ MSVCDLL flagvec spin_sys::GetFlags(const Isotope& isoin,bool TF,bool DTF=0) cons
 	//                                 or name of spin i returned (i>=0)
 	///F_list name	                 - Set or retrieve spin system name.
 
-MSVCDLL       void         spin_sys::name(const std::string& name);
-MSVCDLL const std::string& spin_sys::name(int i=-1) const;
+MSVCDLL       void         name(const std::string& name);
+MSVCDLL const std::string& name(int i=-1) const;
 
         // Input                sys     : A spin system (this)
         //                      warnf   : Warning flag
@@ -447,8 +447,8 @@ MSVCDLL const std::string& spin_sys::name(int i=-1) const;
         //                                non-fatal problems issue a warning
         //                                message or not
 
-MSVCDLL void spin_sys::warnings(int warnf);
-MSVCDLL int  spin_sys::warnings() const;
+MSVCDLL void warnings(int warnf);
+MSVCDLL int  warnings() const;
 
 
 MSVCDLL std::string IsoDefault();
@@ -503,7 +503,7 @@ MSVCDLL virtual void PSetAdd(ParameterSet& pset, int idx=-1) const;
 // ----------------------------------------------------------------------------
 
 
-MSVCDLL int spin_sys::getSpins(const ParameterSet& pset, int warn=0) const;
+MSVCDLL int getSpins(const ParameterSet& pset, int warn=0) const;
  
         // Input                sys	: A spin system (this)
         //                      pset    : A parameter set
@@ -517,7 +517,7 @@ MSVCDLL int spin_sys::getSpins(const ParameterSet& pset, int warn=0) const;
 	// Note				: Return -1 if # of spins not found
  
 
-MSVCDLL void spin_sys::setName(const ParameterSet& pset);
+MSVCDLL void setName(const ParameterSet& pset);
 
         // Input                sys     : A spin system (this)
         //                      pset    : A parameter set
@@ -526,7 +526,7 @@ MSVCDLL void spin_sys::setName(const ParameterSet& pset);
         // Note                         : This is not a required parameter
 
      
-MSVCDLL void spin_sys::setIs(const ParameterSet& pset);
+MSVCDLL void setIs(const ParameterSet& pset);
  
         // Input                sys     : A spin system (this)
         //                      pset    : A parameter set
@@ -554,7 +554,7 @@ MSVCDLL void operator=(const ParameterSet& pset);
 //      Functions To Output Spin System To ASCII From A Parameter Set
 // ----------------------------------------------------------------------------
 
-MSVCDLL virtual int spin_sys::write(const std::string &filename, int ix=-1, int wn=2) const;
+MSVCDLL virtual int write(const std::string &filename, int ix=-1, int wn=2) const;
  
         // Input                ss      : Spin system (base)
         //                      filename: Output file name 
@@ -565,7 +565,7 @@ MSVCDLL virtual int spin_sys::write(const std::string &filename, int ix=-1, int 
         //                                parameter set to file filename
 
  
-MSVCDLL virtual int spin_sys::write(std::ofstream& ofstr, int idx=-1, int warn=2) const;
+MSVCDLL virtual int write(std::ofstream& ofstr, int idx=-1, int warn=2) const;
  
         // Input                ss      : Spin system (base)
         //                      ofstr   : Output file stream
@@ -600,11 +600,11 @@ MSVCDLL virtual int spin_sys::write(std::ofstream& ofstr, int idx=-1, int warn=2
 	// Note			 	 : The file should be an ASCII file
 	//				   containing recognized sys parameters
 
-MSVCDLL virtual int spin_sys::read(const std::string& filename, int idx=-1, int warn=2);
-MSVCDLL virtual int spin_sys::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL virtual int read(const std::string& filename, int idx=-1, int warn=2);
+MSVCDLL virtual int read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
-MSVCDLL virtual std::string spin_sys::ask_read(int argc, char* argv[], int argn);
-MSVCDLL virtual std::string spin_sys::ask_read(int argc, char* argv[], int argn,
+MSVCDLL virtual std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL virtual std::string ask_read(int argc, char* argv[], int argn,
                                                     const std::string& def);
 
 	// Input		sys     : A basic spin system (this)
@@ -650,7 +650,7 @@ MSVCDLL basis get_basis() const;
 //-----------------------------------------------------------------------------
 
 
-MSVCDLL matrix spin_sys::BasisMap1() const;
+MSVCDLL matrix BasisMap1() const;
 
         // Input                sys      : Spin system (this)
         // Output               bmap     : An ns x hs array of basis mappings.
@@ -663,7 +663,7 @@ MSVCDLL matrix spin_sys::BasisMap1() const;
         //                                 total basis Fz - spin's mz
 
  
-MSVCDLL matrix spin_sys::TransitionMap1() const;
+MSVCDLL matrix TransitionMap1() const;
 
         // Input                sys      : Spin system (this)
         // Output               tmap     : Array (ns x hs) of coherence maps
@@ -679,7 +679,7 @@ MSVCDLL matrix spin_sys::TransitionMap1() const;
 //                              Spin Pair Mapping
 //-----------------------------------------------------------------------------
  
-MSVCDLL matrix spin_sys::BasisMap2() const;
+MSVCDLL matrix BasisMap2() const;
  
         // Input                sys      : Spin system (this)
         // Output               bmap     : A nd x hs array of basis mappings.
@@ -692,7 +692,7 @@ MSVCDLL matrix spin_sys::BasisMap2() const;
         //                                 total basis Fz - spin pair's mz
 
 
-MSVCDLL matrix spin_sys::TransitionMap2() const;
+MSVCDLL matrix TransitionMap2() const;
 
         // Input                sys      : Spin system (this)
         // Output               tmap     : An nd x hs array of coherence maps.
@@ -718,10 +718,10 @@ MSVCDLL matrix spin_sys::TransitionMap2() const;
         // Input                out      : output stream;
         // Output               none     : modifies output stream
 
-MSVCDLL virtual std::ostream& spin_sys::print(std::ostream& out, bool hdr=true) const;
+MSVCDLL virtual std::ostream& print(std::ostream& out, bool hdr=true) const;
 MSVCDLL friend  std::ostream& operator<<(std::ostream& out, const spin_sys& sys);
 
-MSVCDLL virtual std::vector<std::string> spin_sys::printstrings() const;
+MSVCDLL virtual std::vector<std::string> printstrings() const;
      
         // Input                sys      : Spin system (this)
         // Output               SV       : string vector containing strings
@@ -743,10 +743,10 @@ MSVCDLL virtual std::vector<std::string> spin_sys::printstrings() const;
 
    where the column widths have default and minimal values built in.         */
 
-MSVCDLL virtual std::vector<std::string> spin_sys::SYSStrings(int w1=10,int w2=5,int w3=1) const;
-MSVCDLL std::vector<std::string> spin_sys::SIStrings(int  colwd=10) const;
-MSVCDLL std::vector<std::string> spin_sys::SYMStrings(int colwd=10) const;
-MSVCDLL std::vector<std::string> spin_sys::SAMStrings(int colwd=10) const;
+MSVCDLL virtual std::vector<std::string> SYSStrings(int w1=10,int w2=5,int w3=1) const;
+MSVCDLL std::vector<std::string> SIStrings(int  colwd=10) const;
+MSVCDLL std::vector<std::string> SYMStrings(int colwd=10) const;
+MSVCDLL std::vector<std::string> SAMStrings(int colwd=10) const;
 
 // ____________________________________________________________________________
 // K				Basics Python Code
@@ -765,27 +765,27 @@ MSVCDLL std::vector<std::string> spin_sys::SAMStrings(int colwd=10) const;
 
 #ifdef PYGAMMA						// If compiling PyGAMMA
 
-void           spin_sys::isotopeSSA(int, const std::string&);
-void           spin_sys::isotopeSSB(int, const Isotope&);
-const Isotope& spin_sys::isotopeSSC(int) const;
+void           isotopeSSA(int, const std::string&);
+void           isotopeSSB(int, const Isotope&);
+const Isotope& isotopeSSC(int) const;
 
-double spin_sys::gammaSSA(int spin)               const;
-double spin_sys::gammaSSB(const std::string& iso) const;
+double gammaSSA(int spin)               const;
+double gammaSSB(const std::string& iso) const;
 
-int         spin_sys::isotopesSSA()                     const;
-std::string spin_sys::isotopesSSB(int idx)              const;
-bool        spin_sys::isotopesSSC(const std::string& I) const;
+int         isotopesSSA()                     const;
+std::string isotopesSSB(int idx)              const;
+bool        isotopesSSC(const std::string& I) const;
 
-void spin_sys::SetFlagsSSA(bool TF);
-void spin_sys::SetFlagsSSB(const std::string& isoin, bool TF);
-void spin_sys::SetFlagsSSC(const Isotope& Iso, bool TF);
+void SetFlagsSSA(bool TF);
+void SetFlagsSSB(const std::string& isoin, bool TF);
+void SetFlagsSSC(const Isotope& Iso, bool TF);
 
-      void         spin_sys::nameSSA(const std::string& name);
-const std::string& spin_sys::nameSSB() const;
-const std::string& spin_sys::nameSSC(int i) const;
+      void         nameSSA(const std::string& name);
+const std::string& nameSSB() const;
+const std::string& nameSSC(int i) const;
 
-void spin_sys::warningsSSA(int warnf);
-int  spin_sys::warningsSSB() const;
+void warningsSSA(int warnf);
+int  warningsSSB() const;
 
 std::string IsoDefaultSSA();
 void        IsoDefaultSSB(const std::string& DI);
@@ -797,11 +797,11 @@ void        IsoDefaultSSB(const std::string& DI);
 /* Not only are these overloaded, the return a STL vector<>. Both can present
    problems for Boost.Python ans so we need the functions Pythonized.         */
 
-flagvec spin_sys::GetFlagsSYS1() const;
-flagvec spin_sys::GetFlagsSYS2(bool TF) const;
-flagvec spin_sys::GetFlagsSYS3(int spin, bool TF, bool DefTF=0) const;
-flagvec spin_sys::GetFlagsSYS4(const std::string& isoin,bool TF,bool DTF=0) const;
-flagvec spin_sys::GetFlagsSYS5(const Isotope& isoin,bool TF,bool DTF=0) const;
+flagvec GetFlagsSYS1() const;
+flagvec GetFlagsSYS2(bool TF) const;
+flagvec GetFlagsSYS3(int spin, bool TF, bool DefTF=0) const;
+flagvec GetFlagsSYS4(const std::string& isoin,bool TF,bool DTF=0) const;
+flagvec GetFlagsSYS5(const Isotope& isoin,bool TF,bool DTF=0) const;
 
 //-----------------------------------------------------------------------------
 //                           SYSTEM READ FUNCTIONS
@@ -813,14 +813,14 @@ flagvec spin_sys::GetFlagsSYS5(const Isotope& isoin,bool TF,bool DTF=0) const;
    of new functions to allow for any input combination. These are Pythonized
    so they do not interfere with the functions defined earlier.              */
 
-virtual int spin_sys::readSYS1(const std::string& filename);
-virtual int spin_sys::readSYS2(const std::string& filename, int idx=-1);
+virtual int readSYS1(const std::string& filename);
+virtual int readSYS2(const std::string& filename, int idx=-1);
 
 //-----------------------------------------------------------------------------
 //                            ASCII OUTPUT FUNCTIONS
 //-----------------------------------------------------------------------------
 
-std::string spin_sys::PyPrint();
+std::string PyPrint();
 
 #endif							// End of PyGAMMA code
 };

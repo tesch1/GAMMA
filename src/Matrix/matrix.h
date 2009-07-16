@@ -67,10 +67,10 @@ class matrix
 	Output			none    : Error message output
         				  Program execution stopped if fatal     */
 
-void matrix::Mxerror(int eidx, int noret=0) const;
-void matrix::Mxerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void matrix::Mxfatality(int eidx) const;
-volatile void matrix::Mxfatality(int eidx, const std::string& pname) const;
+void Mxerror(int eidx, int noret=0) const;
+void Mxerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void Mxfatality(int eidx) const;
+volatile void Mxfatality(int eidx, const std::string& pname) const;
 
 // ____________________________________________________________________________
 // ii             CLASS MATRIX VIRTUAL MATRIX HANDLING
@@ -146,23 +146,23 @@ matrix(int i, int j, const complex& z,
                   matrix_type t=n_matrix_type, hermitian_type h=non_hermitian);
 */
 
-MSVCDLC matrix::matrix( );
-MSVCDLC matrix::matrix(int i);
+MSVCDLC matrix( );
+MSVCDLC matrix(int i);
 
-MSVCDLC matrix::matrix(int i, int j);
-MSVCDLC matrix::matrix(int i, int j,                   matrix_type t);
-MSVCDLC matrix::matrix(int i, int j,                   matrix_type t, hermitian_type h);
+MSVCDLC matrix(int i, int j);
+MSVCDLC matrix(int i, int j,                   matrix_type t);
+MSVCDLC matrix(int i, int j,                   matrix_type t, hermitian_type h);
 
-MSVCDLC matrix::matrix(int i, int j, const complex& z);
-MSVCDLC matrix::matrix(int i, int j, const complex& z, matrix_type t);
-MSVCDLC matrix::matrix(int i, int j, const complex& z, matrix_type t, hermitian_type h);
+MSVCDLC matrix(int i, int j, const complex& z);
+MSVCDLC matrix(int i, int j, const complex& z, matrix_type t);
+MSVCDLC matrix(int i, int j, const complex& z, matrix_type t, hermitian_type h);
 
-MSVCDLC matrix::matrix(int i, int j, double d);
-MSVCDLC matrix::matrix(int i, int j, double d,         matrix_type t);
-MSVCDLC matrix::matrix(int i, int j, double d,         matrix_type t, hermitian_type h);
+MSVCDLC matrix(int i, int j, double d);
+MSVCDLC matrix(int i, int j, double d,         matrix_type t);
+MSVCDLC matrix(int i, int j, double d,         matrix_type t, hermitian_type h);
 
-MSVCDLC matrix::matrix(const matrix& mx);
-MSVCDLC matrix::~matrix ();
+MSVCDLC matrix(const matrix& mx);
+MSVCDLC ~matrix ();
  
 // ____________________________________________________________________________
 // B                    CLASS MATRIX ACCESS AND ASSIGNMENT
@@ -205,18 +205,18 @@ MSVCDLC matrix::~matrix ();
     access (put/get_block) begins at element <r|mx|c> and ends with element
     will be <r+R|mx|c+C> where desired put/get array is R x C               */
 
-MSVCDLL       matrix&  matrix::operator= (const matrix& mx);
-MSVCDLL const complex& matrix::operator() (int i, int j) const;
-MSVCDLL       complex& matrix::operator() (int i, int j);
-MSVCDLL       complex& matrix::elem(int  i, int j);
-MSVCDLL       complex  matrix::get(int   i, int j) const;
-MSVCDLL       double   matrix::getRe(int i, int j) const;
-MSVCDLL       double   matrix::getIm(int i, int j) const; 
-MSVCDLL       void     matrix::put(const   complex& z, int i, int j);
-MSVCDLL       void     matrix::put_h(const complex& z, int i, int j);
+MSVCDLL       matrix&  operator= (const matrix& mx);
+MSVCDLL const complex& operator() (int i, int j) const;
+MSVCDLL       complex& operator() (int i, int j);
+MSVCDLL       complex& elem(int  i, int j);
+MSVCDLL       complex  get(int   i, int j) const;
+MSVCDLL       double   getRe(int i, int j) const;
+MSVCDLL       double   getIm(int i, int j) const; 
+MSVCDLL       void     put(const   complex& z, int i, int j);
+MSVCDLL       void     put_h(const complex& z, int i, int j);
 
-MSVCDLL       matrix   matrix::get_block(int row, int col, int nrows, int ncols);
-MSVCDLL       void     matrix::put_block(int row, int col, const matrix& mx);
+MSVCDLL       matrix   get_block(int row, int col, int nrows, int ncols);
+MSVCDLL       void     put_block(int row, int col, const matrix& mx);
 
 // ____________________________________________________________________________
 // C                CLASS MATRIX HERMITIAN_TYPE HANDLING
@@ -229,10 +229,10 @@ MSVCDLL       void     matrix::put_block(int row, int col, const matrix& mx);
  set_hermitian     void    Sets matrix hermitian, may result in data loss
  test_hermitian    h_type  Returns possible hermitian type (w/ mx(ij)<d = 0) */
 
-MSVCDLL hermitian_type matrix::stored_hermitian( ) const;
-MSVCDLL hermitian_type matrix::check_hermitian(double       d = GMxCut);
-MSVCDLL void           matrix::set_hermitian(hermitian_type h = _hermitian);
-MSVCDLL hermitian_type matrix::test_hermitian(double        d = GMxCut) const;
+MSVCDLL hermitian_type stored_hermitian( ) const;
+MSVCDLL hermitian_type check_hermitian(double       d = GMxCut);
+MSVCDLL void           set_hermitian(hermitian_type h = _hermitian);
+MSVCDLL hermitian_type test_hermitian(double        d = GMxCut) const;
 
 // ____________________________________________________________________________
 // D                   CLASS MATRIX MATRIX_TYPE HANDLING
@@ -250,11 +250,11 @@ MSVCDLL hermitian_type matrix::test_hermitian(double        d = GMxCut) const;
     Note: check_type will convert the arrray if no data loss will occur.
           If it is not possible, the current matrix type is returned.         */
 
-MSVCDLL matrix_type matrix::stored_type( ) const;
-MSVCDLL matrix_type matrix::test_type(matrix_type t, double d=GMxCut) const;
-MSVCDLL void        matrix::set_type(matrix_type t);
-MSVCDLL matrix_type matrix::check_type(const matrix_type t, const double d = GMxCut);
-MSVCDLL std::string matrix::mxtype() const;
+MSVCDLL matrix_type stored_type( ) const;
+MSVCDLL matrix_type test_type(matrix_type t, double d=GMxCut) const;
+MSVCDLL void        set_type(matrix_type t);
+MSVCDLL matrix_type check_type(const matrix_type t, const double d = GMxCut);
+MSVCDLL std::string mxtype() const;
 
 // ____________________________________________________________________________
 // E             CLASS MATRIX VARIOUS MATRIX CHECKS & PARAMETERS
@@ -267,10 +267,10 @@ MSVCDLL std::string matrix::mxtype() const;
       refs     int    Returns # of matrix references - handled by _matrix
       pts      int    Returns # of matrix elements   - handled by _matrix    */
  
-MSVCDLL int matrix::cols( ) const;
-MSVCDLL int matrix::rows( ) const;
-MSVCDLL int matrix::refs( ) const;
-MSVCDLL int matrix::pts( )  const;
+MSVCDLL int cols( ) const;
+MSVCDLL int rows( ) const;
+MSVCDLL int refs( ) const;
+MSVCDLL int pts( )  const;
  
 /*   Function    Output                       Description
    ------------  ------  ------------------------------------------------------
@@ -293,15 +293,15 @@ lots of time....
                  z(i,j) = /    <i|mx|k><k|mx  |j> = del   +/- d
                           ---                          ij                   */
         
-MSVCDLL bool matrix::is_symmetric(const double d=GMxCut) const;
-MSVCDLL bool matrix::is_hermitian(const double d=GMxCut) const;
-MSVCDLL bool matrix::is_unitary(const   double d=GMxCut) const;
-MSVCDLL bool matrix::is_real(const      double d=GMxCut) const;
-MSVCDLL bool matrix::is_imaginary(const double d=GMxCut) const;
-MSVCDLL bool matrix::is_complex(const   double d=GMxCut) const;
-MSVCDLL bool matrix::is_zero(const      double d=GMxCut) const;
-MSVCDLL bool matrix::is_diagonal(const  double d=GMxCut) const;
-MSVCDLL bool matrix::is_square()                         const;
+MSVCDLL bool is_symmetric(const double d=GMxCut) const;
+MSVCDLL bool is_hermitian(const double d=GMxCut) const;
+MSVCDLL bool is_unitary(const   double d=GMxCut) const;
+MSVCDLL bool is_real(const      double d=GMxCut) const;
+MSVCDLL bool is_imaginary(const double d=GMxCut) const;
+MSVCDLL bool is_complex(const   double d=GMxCut) const;
+MSVCDLL bool is_zero(const      double d=GMxCut) const;
+MSVCDLL bool is_diagonal(const  double d=GMxCut) const;
+MSVCDLL bool is_square()                         const;
  
 // ____________________________________________________________________________
 // F                 CLASS MATRIX BINARY ARITHMETIC FUNCTIONS
@@ -319,14 +319,14 @@ MSVCDLL bool matrix::is_square()                         const;
       /      mx,z         (1/z)*mx          *       mx,d         (1/d)*mx
       /      z,mx         z*inv(mx)         *       d,mx         d*inv(mx)  */
 
-MSVCDLL matrix matrix::operator + (const matrix& mx) const;
-MSVCDLL matrix matrix::operator - (const matrix& mx) const;
-MSVCDLL matrix matrix::operator * (const matrix& mx) const;
-MSVCDLL matrix matrix::operator * (const complex& z) const;
-MSVCDLL matrix matrix::operator * (      double   d) const;
-MSVCDLL matrix matrix::operator / (const matrix& mx) const;
-MSVCDLL matrix matrix::operator / (const complex& z) const;
-MSVCDLL matrix matrix::operator / (      double   d) const;
+MSVCDLL matrix operator + (const matrix& mx) const;
+MSVCDLL matrix operator - (const matrix& mx) const;
+MSVCDLL matrix operator * (const matrix& mx) const;
+MSVCDLL matrix operator * (const complex& z) const;
+MSVCDLL matrix operator * (      double   d) const;
+MSVCDLL matrix operator / (const matrix& mx) const;
+MSVCDLL matrix operator / (const complex& z) const;
+MSVCDLL matrix operator / (      double   d) const;
 
 MSVCDLL friend matrix operator * (const complex& z,  const matrix& mx);
 MSVCDLL friend matrix operator * (      double d,    const matrix& mx);
@@ -350,14 +350,14 @@ MSVCDLL friend matrix operator * (      double d,    const matrix& mx);
       /      mx,z         (1/z)*mx          *       mx,d         (1/d)*mx
       /      z,mx         z*inv(mx1)        *       d,mx         d*inv(mx)  */
  
-MSVCDLL matrix& matrix::operator += (const matrix& mx1);
-MSVCDLL matrix& matrix::operator -= (const matrix& mx1);
-MSVCDLL matrix& matrix::operator *= (const matrix& mx);
-MSVCDLL matrix& matrix::operator *= (const complex& z);
-MSVCDLL matrix& matrix::operator *= (double d);
-MSVCDLL matrix& matrix::operator /= (const matrix& mx);
-MSVCDLL matrix& matrix::operator /= (const complex& z);
-MSVCDLL matrix& matrix::operator /= (double d);
+MSVCDLL matrix& operator += (const matrix& mx1);
+MSVCDLL matrix& operator -= (const matrix& mx1);
+MSVCDLL matrix& operator *= (const matrix& mx);
+MSVCDLL matrix& operator *= (const complex& z);
+MSVCDLL matrix& operator *= (double d);
+MSVCDLL matrix& operator /= (const matrix& mx);
+MSVCDLL matrix& operator /= (const complex& z);
+MSVCDLL matrix& operator /= (double d);
 
 // ____________________________________________________________________________
 // H                  CLASS MATRIX SIMPLE UNARY FUNCTIONS
@@ -385,14 +385,14 @@ MSVCDLL friend matrix  transpose(const matrix& mx);
 MSVCDLL friend matrix  adjoint(const matrix& mx);
 MSVCDLL friend complex trace(const matrix& mx);
 
-MSVCDLL matrix  matrix::operator- () const;
-MSVCDLL matrix  matrix::Re()         const;
-MSVCDLL matrix  matrix::Im()         const;
-MSVCDLL matrix  matrix::conj()       const;   
-MSVCDLL matrix  matrix::transpose()  const; 
-MSVCDLL matrix  matrix::adjoint()    const;
-MSVCDLL matrix  matrix::exp()        const;
-MSVCDLL complex matrix::trace()      const;    
+MSVCDLL matrix  operator- () const;
+MSVCDLL matrix  Re()         const;
+MSVCDLL matrix  Im()         const;
+MSVCDLL matrix  conj()       const;   
+MSVCDLL matrix  transpose()  const; 
+MSVCDLL matrix  adjoint()    const;
+MSVCDLL matrix  exp()        const;
+MSVCDLL complex trace()      const;    
 
 /*     Function    Output                       Description
      ------------  -------  ---------------------------------------------------
@@ -406,15 +406,15 @@ MSVCDLL complex matrix::trace()      const;
         minIm      double   Returns smallest imaginary value in the array
         minZ       complex  Returns smallest complex (norm) value in array   */
 
-MSVCDLL matrix  matrix::swaprows(int i, int j);
-MSVCDLL matrix  matrix::swapcols(int i, int j);
-MSVCDLL matrix  matrix::permute( int i, int j);
-MSVCDLL double  matrix::maxRe() const;
-MSVCDLL double  matrix::maxIm() const;
-MSVCDLL complex matrix::maxZ()  const;
-MSVCDLL double  matrix::minRe() const;
-MSVCDLL double  matrix::minIm() const;
-MSVCDLL complex matrix::minZ()  const;
+MSVCDLL matrix  swaprows(int i, int j);
+MSVCDLL matrix  swapcols(int i, int j);
+MSVCDLL matrix  permute( int i, int j);
+MSVCDLL double  maxRe() const;
+MSVCDLL double  maxIm() const;
+MSVCDLL complex maxZ()  const;
+MSVCDLL double  minRe() const;
+MSVCDLL double  minIm() const;
+MSVCDLL complex minZ()  const;
 
 // ____________________________________________________________________________
 // I                CLASS MATRIX SIMPLE BINARY FUNCTIONS
@@ -427,7 +427,7 @@ MSVCDLL complex matrix::minZ()  const;
     times_adjoint  matrix   Returns array times adjoint:     mx*adjoint(mx1) */
 
 MSVCDLL friend complex trace(const matrix& mx1, const matrix& mx2);
-MSVCDLL complex matrix::trace(const matrix& mx2) const;
+MSVCDLL complex trace(const matrix& mx2) const;
 MSVCDLL friend matrix adjoint_times(const matrix& mx, const matrix& mx1);
 MSVCDLL friend matrix times_adjoint(const matrix& mx, const matrix& mx1);
 
@@ -436,7 +436,7 @@ MSVCDLL friend matrix times_adjoint(const matrix& mx, const matrix& mx1);
 // ____________________________________________________________________________
 
 MSVCDLL friend  complex         det(const matrix& mx);
-MSVCDLL         complex matrix::det() const;
+MSVCDLL         complex det() const;
 MSVCDLL friend  int             rank(const matrix& mx);
 
 // ***************************      FFT      ****************************
@@ -453,8 +453,8 @@ MSVCDLL friend  int             rank(const matrix& mx);
 MSVCDLL friend matrix FFT(const  matrix& mx);
 MSVCDLL friend matrix IFFT(const matrix& mx);
 
-MSVCDLL matrix matrix::FFT()  const;
-MSVCDLL matrix matrix::IFFT() const;
+MSVCDLL matrix FFT()  const;
+MSVCDLL matrix IFFT() const;
 
 // ____________________________________________________________________________
 // K            CLASS MATRIX COMPLEX BINARY (&TRINARY) FUNCTIONS
@@ -495,14 +495,14 @@ MSVCDLL friend matrix tensor_product(const matrix& mx1, const matrix& mx2);
     PictDim     int        Dimension where output switches to pictorial rep.
    +PrintVal    bool      +Flags whether valuate elems. in pictorial output  */
 
-MSVCDLL static void    matrix::Header(bool   hf);
-MSVCDLL static void    matrix::PrintRI(bool  pi);
-MSVCDLL static void    matrix::PrintAll(bool pa);
-MSVCDLL static void    matrix::PictDim(int   pd);
-MSVCDLL static void    matrix::PrintVal(bool pv);
-MSVCDLL static void    matrix::PrintCols(int cl);
-MSVCDLL static void    matrix::PrintRows(int rl);
-MSVCDLL static MxPrint matrix::PrintFlags();
+MSVCDLL static void    Header(bool   hf);
+MSVCDLL static void    PrintRI(bool  pi);
+MSVCDLL static void    PrintAll(bool pa);
+MSVCDLL static void    PictDim(int   pd);
+MSVCDLL static void    PrintVal(bool pv);
+MSVCDLL static void    PrintCols(int cl);
+MSVCDLL static void    PrintRows(int rl);
+MSVCDLL static MxPrint PrintFlags();
 
 //-----------------------------------------------------------------------------
 //                          ASCII OUTPUT FUNCTIONS
@@ -518,9 +518,9 @@ MSVCDLL static MxPrint matrix::PrintFlags();
      print     ostream     Writes array elemnts in ASCII to output stream
     picture    ostream     Writes array pictorially to output stream         */
 
-MSVCDLL        std::ostream& matrix::printHdr(std::ostream& ostr) const;
-MSVCDLL        std::ostream& matrix::print(std::ostream&    ostr) const;
-MSVCDLL        std::ostream& matrix::picture(std::ostream&  ostr) const;
+MSVCDLL        std::ostream& printHdr(std::ostream& ostr) const;
+MSVCDLL        std::ostream& print(std::ostream&    ostr) const;
+MSVCDLL        std::ostream& picture(std::ostream&  ostr) const;
 MSVCDLL friend std::ostream&  operator << (std::ostream& ostr, const matrix& mx);
 
 //-----------------------------------------------------------------------------
@@ -544,9 +544,9 @@ MSVCDLL friend std::ostream&  operator << (std::ostream& ostr, const matrix& mx)
    Re(<i|hmx|j>, Im(<i|hmx|j> columns then rows (i.e. row by row.)  Note that
    binary read & write functions MUST exactly match in format!               */  
 
-MSVCDLL        std::ofstream& matrix::write(std::ofstream& fp, int form=0) const;
+MSVCDLL        std::ofstream& write(std::ofstream& fp, int form=0) const;
 MSVCDLL friend std::ofstream&         write(std::ofstream& F,  const matrix& mx);
-MSVCDLL        std::ifstream& matrix::read(std::ifstream&  F);
+MSVCDLL        std::ifstream& read(std::ifstream&  F);
 
 //-----------------------------------------------------------------------------
 //                            ASCII INPUT FUNCTIONS
@@ -560,7 +560,7 @@ MSVCDLL        std::ifstream& matrix::read(std::ifstream&  F);
    ask          ----      Interactively requests matrix from user            */
 
 MSVCDLL friend std::istream&  operator >> (std::istream& istr, matrix& mx);
-MSVCDLL        void           matrix::ask(const matrix_type t=n_matrix_type);
+MSVCDLL        void           ask(const matrix_type t=n_matrix_type);
 
 // ____________________________________________________________________________
 // M                   CLASS MATRIX MISCELLANEOUS FUNCTIONS
@@ -579,14 +579,14 @@ MSVCDLL        void           matrix::ask(const matrix_type t=n_matrix_type);
    There are no elements lost when using HMX or NMX.  The *MX functions
    will always allocate new memory for the converted matrix from hmx.      */
 
-MSVCDLL matrix matrix::resize(int i, int j);
-MSVCDLL matrix matrix::diagonal_form();
+MSVCDLL matrix resize(int i, int j);
+MSVCDLL matrix diagonal_form();
 
 	// Input        this : Matrix
 	// Output 	     : The matrix this is resized to be
 	//		       larger with its elements on the diagonal
 
-MSVCDLL bool matrix::same_reference_as(const matrix& mx) const;
+MSVCDLL bool same_reference_as(const matrix& mx) const;
 
 	// Input        this : Matrix
 	//		  mx : Matrix
@@ -594,7 +594,7 @@ MSVCDLL bool matrix::same_reference_as(const matrix& mx) const;
 	//		       reference to the identical storage
 	//		       location (& thus are identical arrays)
 
-MSVCDLL void matrix::status(int full=0) const;
+MSVCDLL void status(int full=0) const;
 
 	// Input		mx    : Matrix (this)
 	//			full  : Flag for amount of output
@@ -626,11 +626,11 @@ MSVCDLL void matrix::status(int full=0) const;
  routines will be used based on the matrix type and the return arrays will 
  be of the best suited form (e.g diagonal, block, unitary, etc....)          */
 
-MSVCDLL   std::vector<int> matrix::BlockDiag(matrix&    BD, matrix& U) const;
-MSVCDLL        void        matrix::SymTriDiag(matrix&  HTD, matrix& U) const;
-MSVCDLL        void        matrix::HermTriDiag(matrix& STD, matrix& U) const;
-MSVCDLL        void        matrix::SymDiag(matrix&      SD, matrix& U) const;
-MSVCDLL        void        matrix::Diagonalize(matrix&   D, matrix& U) const;
+MSVCDLL   std::vector<int> BlockDiag(matrix&    BD, matrix& U) const;
+MSVCDLL        void        SymTriDiag(matrix&  HTD, matrix& U) const;
+MSVCDLL        void        HermTriDiag(matrix& STD, matrix& U) const;
+MSVCDLL        void        SymDiag(matrix&      SD, matrix& U) const;
+MSVCDLL        void        Diagonalize(matrix&   D, matrix& U) const;
 
 MSVCDLL friend void diag(const matrix& mx,     matrix&   D, matrix& U);
  
@@ -724,12 +724,12 @@ MSVCDLL friend matrix LUinv(matrix& B, int *indx, matrix& LU);
    TestUniary        mx, mx    Constructs the product U*adjoint(U) & tests
    TestUTransform    mx,mx     Test unitary tranform U*T*adj(U)              */
 
-MSVCDLL void                matrix::TestEigenSystem(int pf=1) const;
-MSVCDLL void                matrix::TestTransform(const matrix& T, const matrix& S, int pf=1) const;
-MSVCDLL std::vector<double> matrix::ColumnNorms() const;
-MSVCDLL std::vector<double> matrix::TestIdentity(complex& TotalDev) const;
-MSVCDLL matrix              matrix::TestUnitary(std::ostream& ostr) const;
-MSVCDLL matrix              matrix::TestUTransform(const matrix& T, const matrix& U) const;
+MSVCDLL void                TestEigenSystem(int pf=1) const;
+MSVCDLL void                TestTransform(const matrix& T, const matrix& S, int pf=1) const;
+MSVCDLL std::vector<double> ColumnNorms() const;
+MSVCDLL std::vector<double> TestIdentity(complex& TotalDev) const;
+MSVCDLL matrix              TestUnitary(std::ostream& ostr) const;
+MSVCDLL matrix              TestUTransform(const matrix& T, const matrix& U) const;
 
 // ____________________________________________________________________________
 // Q                   MATRIX CONTAINER SUPPORT FUNCTIONS
@@ -739,10 +739,10 @@ MSVCDLL matrix              matrix::TestUTransform(const matrix& T, const matrix
    not, these operators are necessary in any STL container classes are to
    be used based on matrices (e.g. list<matrix> or vector<matrix>)           */
 
-MSVCDLL bool matrix::operator== (const matrix& mx) const;
-MSVCDLL bool matrix::operator!= (const matrix& mx) const;
-MSVCDLL bool matrix::operator<  (const matrix& mx) const;
-MSVCDLL bool matrix::operator>  (const matrix& mx) const;
+MSVCDLL bool operator== (const matrix& mx) const;
+MSVCDLL bool operator!= (const matrix& mx) const;
+MSVCDLL bool operator<  (const matrix& mx) const;
+MSVCDLL bool operator>  (const matrix& mx) const;
 
 // ____________________________________________________________________________
 //                                  PyGAMMA Code
@@ -789,10 +789,10 @@ matrix(int i, int j, const complex& z, std::string type, std::string htype);
 /* These add to the put function for Python because there is no automatic
    cast from double complex as is done in C++.                               */
 
-//MSVCDLL       void     matrix::put(        double   d, int i, int j);
-//MSVCDLL       void     matrix::put_h(      double   d, int i, int j);
-void matrix::putMX1(double d,   int i, int j);
-void matrix::putMX2(double d,   int i, int j);
+//MSVCDLL       void     put(        double   d, int i, int j);
+//MSVCDLL       void     put_h(      double   d, int i, int j);
+void putMX1(double d,   int i, int j);
+void putMX2(double d,   int i, int j);
 
 //-----------------------------------------------------------------------------
 //                           HERMITIAN TYPE HANDLING
@@ -801,10 +801,10 @@ void matrix::putMX2(double d,   int i, int j);
 /* These exist to go around the use of enumeration for hermitian_type.
    Instead these return string.                                              */
 
-std::string matrix::stored_hermitianMX() const;
-std::string matrix::check_hermitianMX(double d = GMxCut);
-void        matrix::set_hermitianMX(std::string htype);
-std::string matrix::test_hermitianMX(double d = GMxCut) const;
+std::string stored_hermitianMX() const;
+std::string check_hermitianMX(double d = GMxCut);
+void        set_hermitianMX(std::string htype);
+std::string test_hermitianMX(double d = GMxCut) const;
 
 //-----------------------------------------------------------------------------
 //                           MATRIX TYPE HANDLING
@@ -813,10 +813,10 @@ std::string matrix::test_hermitianMX(double d = GMxCut) const;
 /* These exist to go around the use of enumeration for matrix_type.
    Instead these return string.                                              */
 
-std::string matrix::stored_typeMX( ) const;
-std::string matrix::test_typeMX(std::string type, double d) const;
-void        matrix::set_typeMX(std::string);
-std::string matrix::check_typeMX(std::string type, double d);
+std::string stored_typeMX( ) const;
+std::string test_typeMX(std::string type, double d) const;
+void        set_typeMX(std::string);
+std::string check_typeMX(std::string type, double d);
 
 // -------------------------------------------------------------------------
 //                Bypass For In-Place Operators & Negation
@@ -842,8 +842,8 @@ friend matrix mxneg(const matrix& self);
 //                            ASCII OUTPUT FUNCTIONS
 //-----------------------------------------------------------------------------
 
-std::string matrix::PyPrint();
-std::string matrix::PyPicture();
+std::string PyPrint();
+std::string PyPicture();
 
 #endif						// End of PyGAMMA code block
 

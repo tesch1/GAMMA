@@ -88,10 +88,10 @@ class basis : private matrix
                (2)                     Problems With Output File Stream
                default                 Unknown Error                        */
 
-         void basis::BSerror(int eidx,                           int noret=0) const;
-         void basis::BSerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void basis::BSfatal(int eidx)                                        const;
-volatile void basis::BSfatal(int eidx, const std::string& pname)              const;
+         void BSerror(int eidx,                           int noret=0) const;
+         void BSerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void BSfatal(int eidx)                                        const;
+volatile void BSfatal(int eidx, const std::string& pname)              const;
 
  
 // ----------------------------------------------------------------------------
@@ -115,21 +115,21 @@ public:
 /* The produce default bases, essentially identity matrices either in an 
    single space or in a composite space.                                    */
 
-MSVCDLC basis::basis();
-MSVCDLC basis::basis(int dim);
-MSVCDLC basis::basis(const std::vector<int> dims);
+MSVCDLC basis();
+MSVCDLC basis(int dim);
+MSVCDLC basis(const std::vector<int> dims);
 
-MSVCDLC basis::basis(const matrix& mx, int nc=1, int* ncd=NULL);
-MSVCDLC basis::basis(const basis&  bs, const matrix& mx);
-MSVCDLC basis::basis(const basis&  bs);
+MSVCDLC basis(const matrix& mx, int nc=1, int* ncd=NULL);
+MSVCDLC basis(const basis&  bs, const matrix& mx);
+MSVCDLC basis(const basis&  bs);
 
 // ---------------------------------------------------------------------------
 //                         Destruction And Assignment
 // ---------------------------------------------------------------------------
 
-MSVCDLC        basis::~basis();
-MSVCDLL basis& basis::operator=(const basis& bs);
-MSVCDLL basis& basis::operator=(const matrix& mx);
+MSVCDLC        ~basis();
+MSVCDLL basis& operator=(const basis& bs);
+MSVCDLL basis& operator=(const matrix& mx);
 
 // ___________________________________________________________________________
 // B                       BASIC BASIS FUNCTIONS
@@ -141,44 +141,44 @@ MSVCDLL basis& basis::operator=(const matrix& mx);
 	// Output		: Dimension of the basis
 	/// F_list dim	 	- Basis dimension
 
-MSVCDLL int         basis::size() const;
-MSVCDLL int         basis::dim()  const;
-MSVCDLL std::string basis::name() const;
-MSVCDLL void        basis::name(const std::string& nm);
+MSVCDLL int         size() const;
+MSVCDLL int         dim()  const;
+MSVCDLL std::string name() const;
+MSVCDLL void        name(const std::string& nm);
 
 // ____________________________________________________________________________
 // C            BASIC BASIS FUNCTIONS SUPPORTING SUBSPACES
 // ____________________________________________________________________________
  
 
-MSVCDLL int basis::dim_LS() const;
+MSVCDLL int dim_LS() const;
 
 	// Input		: Basis (this)
 	// Output	   int  : Dimension of LS derived from this basis
 
-MSVCDLL int basis::sub_N() const;
+MSVCDLL int sub_N() const;
 
 	// Input		: Basis (this)
 	// Output		: Number of multi_sys components in rep
 
-MSVCDLL int basis::sub_dim(int ic) const;
+MSVCDLL int sub_dim(int ic) const;
 
 	// Input	       int  : Component of multi_sys
 	// Output	       int  : Dimension associated with ic
 
-MSVCDLL int basis::sub_anchor(int ic) const;
+MSVCDLL int sub_anchor(int ic) const;
 
 	// Input	       int  : Component of multi_sys
 	// Output	       int  : X,Y (X=Y) of the upper left corner of
 	//			    : corresponding block 
 
-MSVCDLL int basis::sub_anchor_LS (int ic) const;
+MSVCDLL int sub_anchor_LS (int ic) const;
 
 	// Input	       int  : Component of multi_sys
 	// Output	       int  : X,Y (X=Y) of the upper left corner of
 	//			    : corresponding block in LS
 
-MSVCDLL int basis::which_sub_LS(int i) const;
+MSVCDLL int which_sub_LS(int i) const;
 
         // Input                 int  : Number of basis state 
         // Output                int  : Number of multi_sys component to which
@@ -230,11 +230,11 @@ The two "convert" functions below are at the moment very poor. This is because
 GAMMA quickly looses track of whether an array (basis) is unitary... forcing
 us to to a time-consuming check to see if it is.                             */
  
-MSVCDLL matrix basis::U()                            const;
-MSVCDLL matrix basis::get_matrix()                   const;
-MSVCDLL matrix basis::get_mx()                       const;
-MSVCDLL matrix basis::convert(const      matrix& mx) const;
-MSVCDLL matrix basis::convert_back(const matrix& mx) const; 
+MSVCDLL matrix U()                            const;
+MSVCDLL matrix get_matrix()                   const;
+MSVCDLL matrix get_mx()                       const;
+MSVCDLL matrix convert(const      matrix& mx) const;
+MSVCDLL matrix convert_back(const matrix& mx) const; 
 
 // ___________________________________________________________________________
 // E                     MORE COMPLEX BASIS FUNCTIONS
@@ -274,19 +274,19 @@ MSVCDLL friend basis tensor_product(const basis& bs1, const basis& bs2);
 /// F_list isDefualtBasis - Default basis check
 /// F_list refs		  - Number of basis references
 
-MSVCDLL bool basis::operator==(const basis& bs2) const;
-MSVCDLL bool basis::operator!=(const basis& bs2) const;
-MSVCDLL bool basis::isDefaultBasis() const;
+MSVCDLL bool operator==(const basis& bs2) const;
+MSVCDLL bool operator!=(const basis& bs2) const;
+MSVCDLL bool isDefaultBasis() const;
 
 
-MSVCDLL int basis::refs() const;
+MSVCDLL int refs() const;
 
 	// Input		: Basis (this)
 	// Output	    int : Returns number of references to the
         //			  basis matrix
   
 
-MSVCDLL bool basis::check(const basis& bs1) const;
+MSVCDLL bool check(const basis& bs1) const;
 
         // Input                : Bases to be compared, (this) and bs1
         // Outptut              : True if matrix dimensions, number of
@@ -309,7 +309,7 @@ MSVCDLL bool basis::check(const basis& bs1) const;
                                 full : Flag for amount of output
                 Return          void : bs is sent to the output stream       */  
 
-MSVCDLL        std::ostream& basis::print(std::ostream& ostr, int full=1) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int full=1) const;
 MSVCDLL friend std::ostream& operator<<  (std::ostream& ostr, const basis& bs);
 
 // ------------------------ Binary Output Functions ---------------------------
@@ -322,8 +322,8 @@ MSVCDLL friend std::ostream& operator<<  (std::ostream& ostr, const basis& bs);
                 Note                 : Output format is partially set by
                                        class matrix (matrix typing)          */
   
-MSVCDLL void           basis::write(const std::string& fn) const;
-MSVCDLL std::ofstream& basis::write(std::ofstream& fp)     const;
+MSVCDLL void           write(const std::string& fn) const;
+MSVCDLL std::ofstream& write(std::ofstream& fp)     const;
 
 // ------------------------ Binary Input Functions ----------------------------
  
@@ -332,8 +332,8 @@ MSVCDLL std::ofstream& basis::write(std::ofstream& fp)     const;
                                 fp   : File stream (pointing at bs)
                 Return          void : bs is read in from either the
                                        specified file or filestream.         */  
-MSVCDLL void           basis::read(const std::string& fn);
-MSVCDLL std::ifstream& basis::read(std::ifstream&     fp);
+MSVCDLL void           read(const std::string& fn);
+MSVCDLL std::ifstream& read(std::ifstream&     fp);
 
     
 // ____________________________________________________________________________
@@ -349,7 +349,7 @@ MSVCDLL std::ifstream& basis::read(std::ifstream&     fp);
    not be so fortunate, such as when dealing with relaxation superoperator.
    A good test would then be U * inv(U) = 1. That will be proivded here.     */
 
-MSVCDLL double basis::TestBasis(int pf=0) const;
+MSVCDLL double TestBasis(int pf=0) const;
 
 // ____________________________________________________________________________
 // I				Basics Python Code

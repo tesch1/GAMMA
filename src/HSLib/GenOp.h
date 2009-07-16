@@ -69,10 +69,10 @@ private:
                                       Program execution stopped if fatal     */
 
  
-void gen_op::GenOperror(int eidx, int noret=0) const;
-void gen_op::GenOperror(int eidx, const std::string& pname, int noret=0) const;
-volatile void gen_op::GenOpfatality(int eidx) const;
-volatile void gen_op::GenOpfatality(int eidx, const std::string& pname) const;
+void GenOperror(int eidx, int noret=0) const;
+void GenOperror(int eidx, const std::string& pname, int noret=0) const;
+volatile void GenOpfatality(int eidx) const;
+volatile void GenOpfatality(int eidx, const std::string& pname) const;
 
 // ____________________________________________________________________________
 // ii               GENERAL OPERATOR COMMON INTERNAL FUNCTIONS
@@ -90,16 +90,16 @@ volatile void gen_op::GenOpfatality(int eidx, const std::string& pname) const;
   setNULL Nulls All Pointers                  OpReps Can Exist, But NO WBR!
   AddRep  Adds New OpRep, Sets WBR EBR etc.   Pre-Set WBR,DBR,EBR as needed  */ 
  
-      genoprep* gen_op::Obegin();
-const genoprep* gen_op::ObeginC() const;
-void gen_op::ZeroOp();
-void gen_op::setNULL() const;
-void gen_op::AddRep(const gen_op& Op1);
-void gen_op::AddRep(const  genoprep& OpRep);
-void gen_op::AddRepM(const genoprep& OpRep) const;
+      genoprep* Obegin();
+const genoprep* ObeginC() const;
+void ZeroOp();
+void setNULL() const;
+void AddRep(const gen_op& Op1);
+void AddRep(const  genoprep& OpRep);
+void AddRepM(const genoprep& OpRep) const;
 
-int gen_op::GetIndex(const genoprep* OpRep) const;
-//void gen_op::push_back(const genoprep& OpRep);
+int GetIndex(const genoprep* OpRep) const;
+//void push_back(const genoprep& OpRep);
 // ____________________________________________________________________________
 // iii           INTERNAL OPERATOR REPRESENTATION MANIPULATIONS
 // ____________________________________________________________________________
@@ -125,10 +125,10 @@ int gen_op::GetIndex(const genoprep* OpRep) const;
    Use caution! Mostly these are called after construction, assignment, or
    an operation that leaves the operator with only 1 OpRep, WBR.             */
 
-void gen_op::check_DBR(const gen_op &Op1)      const;
-void gen_op::check_EBR(const gen_op &Op1)      const;
-void gen_op::check_DBR( )                      const;
-void gen_op::check_EBR(double cutoff = 1.e-12) const;
+void check_DBR(const gen_op &Op1)      const;
+void check_EBR(const gen_op &Op1)      const;
+void check_DBR( )                      const;
+void check_EBR(double cutoff = 1.e-12) const;
 
 // ********************* Finding Specific Representations ********************
 
@@ -142,9 +142,9 @@ void gen_op::check_EBR(double cutoff = 1.e-12) const;
  that higher priority reps are stored at list top from IBR and lower priority
  reps at the bottom of the list. WBR is preferentially NOT chosen as LPR.    */
 
-const genoprep* gen_op::FindRep(const basis &bs) const;
-int             gen_op::SetRep(const basis &bs)  const;
-const genoprep* gen_op::LP_rep()                 const;
+const genoprep* FindRep(const basis &bs) const;
+int             SetRep(const basis &bs)  const;
+const genoprep* LP_rep()                 const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -178,17 +178,17 @@ const genoprep* gen_op::LP_rep()                 const;
    larger array/basis to result in a block-diagonal form.  This supports
    use of multi-system spin systems in GAMMA.                                */
 	
-MSVCDLC gen_op::gen_op();
-MSVCDLC gen_op::gen_op(const matrix&  mx);
-MSVCDLC gen_op::gen_op(const spin_op& SOp);
-MSVCDLC gen_op::gen_op(const matrix&  mx1,         const matrix& mx2);
-MSVCDLC gen_op::gen_op(const matrix&  mx,          const basis&  bs);
-MSVCDLC gen_op::gen_op(const gen_op&  Op1);
-MSVCDLC gen_op::gen_op(const std::vector<matrix>& mxc,  const std::vector<matrix>& bsc);
+MSVCDLC gen_op();
+MSVCDLC gen_op(const matrix&  mx);
+MSVCDLC gen_op(const spin_op& SOp);
+MSVCDLC gen_op(const matrix&  mx1,         const matrix& mx2);
+MSVCDLC gen_op(const matrix&  mx,          const basis&  bs);
+MSVCDLC gen_op(const gen_op&  Op1);
+MSVCDLC gen_op(const std::vector<matrix>& mxc,  const std::vector<matrix>& bsc);
 // sosi - the constructor below should be completely replaced by the above one
-MSVCDLC gen_op::gen_op(matrix* mxc,   int nc,      matrix* bsc=NULL);
-MSVCDLC gen_op::gen_op(int N,         matrix* mxs, matrix* bss);
-MSVCDLC virtual gen_op::~gen_op( );			// Floquet needs this virtual
+MSVCDLC gen_op(matrix* mxc,   int nc,      matrix* bsc=NULL);
+MSVCDLC gen_op(int N,         matrix* mxs, matrix* bss);
+MSVCDLC virtual ~gen_op( );			// Floquet needs this virtual
 
 // ____________________________________________________________________________
 // B               OPERATOR FUNCTIONS, OPERATOR WITH OPERATOR 
@@ -216,14 +216,14 @@ MSVCDLC virtual gen_op::~gen_op( );			// Floquet needs this virtual
           *=        Op1,Op2    Op1 = Op1*Op2 in WBR of Op1
           &=        Op1,Op2    Op1 = Op2*Op1 in WBR of Op1                   */
 
-MSVCDLL gen_op gen_op::operator+  (const gen_op& Op)  const;
-MSVCDLL void   gen_op::operator+= (const gen_op& Op);
-MSVCDLL gen_op gen_op::operator-  (const gen_op& Op)  const;
-MSVCDLL gen_op gen_op::operator-  ()                  const;
-MSVCDLL void   gen_op::operator-= (const gen_op& Op);
-MSVCDLL gen_op gen_op::operator*  (const gen_op& Op)  const;
-MSVCDLL void   gen_op::operator*= (const gen_op &Op);
-MSVCDLL void   gen_op::operator&= (const gen_op &Op);
+MSVCDLL gen_op operator+  (const gen_op& Op)  const;
+MSVCDLL void   operator+= (const gen_op& Op);
+MSVCDLL gen_op operator-  (const gen_op& Op)  const;
+MSVCDLL gen_op operator-  ()                  const;
+MSVCDLL void   operator-= (const gen_op& Op);
+MSVCDLL gen_op operator*  (const gen_op& Op)  const;
+MSVCDLL void   operator*= (const gen_op &Op);
+MSVCDLL void   operator&= (const gen_op &Op);
 
 //MSVCDLL friend gen_op operator- (const gen_op& Op);
 
@@ -241,11 +241,11 @@ MSVCDLL void operator = (const gen_op &Op1);
 
 // sosi - added for alpha until spin op --> tp_matrix
 
-MSVCDLL void   gen_op::operator = (const spin_op &SOp);
+MSVCDLL void   operator = (const spin_op &SOp);
 MSVCDLL friend gen_op operator + (const gen_op &Op1, const spin_op &SOp);
 MSVCDLL friend gen_op operator - (const gen_op &Op1, const spin_op &SOp);
-MSVCDLL void   gen_op::operator += (const spin_op &SOp);
-MSVCDLL void   gen_op::operator -= (const spin_op &SOp);
+MSVCDLL void   operator += (const spin_op &SOp);
+MSVCDLL void   operator -= (const spin_op &SOp);
 
 // ____________________________________________________________________________
 // C                 OPERATOR FUNCTIONS, OPERATOR WITH MATRIX
@@ -293,11 +293,11 @@ MSVCDLL friend gen_op operator - (const matrix& mx,  const gen_op& Op1);
 MSVCDLL friend gen_op operator * (const gen_op& Op1, const matrix& mx);
 MSVCDLL friend gen_op operator * (const matrix& mx,  const gen_op& Op1);
 
-MSVCDLL        void   gen_op::operator += (const matrix& mx);	
-MSVCDLL        void   gen_op::operator -= (const matrix &mx);
-MSVCDLL        void   gen_op::operator *= (const matrix& mx);
-MSVCDLL        void   gen_op::operator &= (const matrix& mx);
-MSVCDLL        void   gen_op::operator  = (const matrix& mx);
+MSVCDLL        void   operator += (const matrix& mx);	
+MSVCDLL        void   operator -= (const matrix &mx);
+MSVCDLL        void   operator *= (const matrix& mx);
+MSVCDLL        void   operator &= (const matrix& mx);
+MSVCDLL        void   operator  = (const matrix& mx);
 
 // ____________________________________________________________________________
 // D                  OPERATOR FUNCTIONS, OPERATOR WITH SCALAR
@@ -322,8 +322,8 @@ MSVCDLL friend gen_op operator * (double z,          const gen_op &Op1);
 	// Note			     : Result Op EXCLUSIVELY in WBR
 
 
-MSVCDLL void gen_op::operator *= (const complex &z);
-MSVCDLL void gen_op::operator *= (double r);
+MSVCDLL void operator *= (const complex &z);
+MSVCDLL void operator *= (double r);
 MSVCDLL friend gen_op operator / (const gen_op &Op1, const complex &z);
 
 
@@ -347,8 +347,8 @@ MSVCDLL friend gen_op operator / (const gen_op& Op1, double r);
 	// Note			     : Result EXCLUSIVELY in WBR of Op1
      
 
-MSVCDLL void gen_op::operator /= (const complex& z);
-MSVCDLL void gen_op::operator /= (double r);
+MSVCDLL void operator /= (const complex& z);
+MSVCDLL void operator /= (double r);
 
 // ____________________________________________________________________________
 // E                       COMPLEX OPERATOR FUNCTIONS
@@ -362,21 +362,21 @@ MSVCDLL void gen_op::operator /= (double r);
 /// F_list exp		     - Operator exponential 
 
 
-MSVCDLL complex gen_op::det() const;
+MSVCDLL complex det() const;
 
 	// Input		Op   : General operator (this)
         // Return		z    : Complex number, determinant of Op
 	// Note			     : Performed in WBR of Op
 
 
-MSVCDLL complex gen_op::trace() const;
+MSVCDLL complex trace() const;
 
 	// Input		Op   : General operator (this)
         // Return		z    : Complex number, trace of Op
 	// Note			     : Performed in WBR of Op
 
 
-MSVCDLL complex gen_op::trace(const gen_op& Op2) const;
+MSVCDLL complex trace(const gen_op& Op2) const;
 
 	// Input		Op1  : General operator (this)
 	// 			Op2  : General operator
@@ -384,7 +384,7 @@ MSVCDLL complex gen_op::trace(const gen_op& Op2) const;
 	// Note			     : Performed in WBR of Op1
 
 
-MSVCDLL complex gen_op::proj(const gen_op &Op2, int norm=0) const;
+MSVCDLL complex proj(const gen_op &Op2, int norm=0) const;
 
 	// Input		Op1  : General operator (this)
 	// 			Op2  : General operator
@@ -396,15 +396,15 @@ MSVCDLL complex gen_op::proj(const gen_op &Op2, int norm=0) const;
 	// Note			     : Performed in WBR of Op2
 
 
-MSVCDLL int gen_op::dim()    const;		// Hilbert space
-MSVCDLL int gen_op::HS()     const;		// Hilbert space
-MSVCDLL int gen_op::LS()     const;		// Liouville space
-MSVCDLL int gen_op::dim_LS() const;		// Liouville space
+MSVCDLL int dim()    const;		// Hilbert space
+MSVCDLL int HS()     const;		// Hilbert space
+MSVCDLL int LS()     const;		// Liouville space
+MSVCDLL int dim_LS() const;		// Liouville space
 
 	// Input		Op   : General operator (this)
         // Return		int  : Op Liouville space dimension
   
-MSVCDLL gen_op gen_op::exp() const;
+MSVCDLL gen_op exp() const;
 
 	// Input		Op1  : General operator (this)
         // Return		Op   : exponential of Op1
@@ -412,7 +412,7 @@ MSVCDLL gen_op gen_op::exp() const;
         // Note			     : Computed in EBR of Op1
 
 
-MSVCDLL gen_op gen_op::exp(const complex& t, double cutoff=1.e-12) const;
+MSVCDLL gen_op exp(const complex& t, double cutoff=1.e-12) const;
 
         // Input                Op    : Operator (this)
         //                      t     : Exponential factor
@@ -425,7 +425,7 @@ MSVCDLL gen_op gen_op::exp(const complex& t, double cutoff=1.e-12) const;
         //                              it's magnituded is less than cutoff
 
 
-MSVCDLL gen_op gen_op::Pow(int power) const;
+MSVCDLL gen_op Pow(int power) const;
 
         // Input                Op      : Operator (this)
         //                      power   : Exponential power
@@ -451,7 +451,7 @@ MSVCDLL friend gen_op log(const gen_op &Op1);
         // Note                      : Computed in EBR of Op1
 
 
-MSVCDLL gen_op gen_op::sim_trans(const gen_op &Op2) const;
+MSVCDLL gen_op sim_trans(const gen_op &Op2) const;
 
 	// Input		Op1  : General operator (this)
 	// 			Op2  : General operator
@@ -462,7 +462,7 @@ MSVCDLL gen_op gen_op::sim_trans(const gen_op &Op2) const;
 	// F_list sim_trans	     - Operator similarity transformation
 
   
-MSVCDLL void gen_op::sim_trans_ip(const gen_op &Op1);
+MSVCDLL void sim_trans_ip(const gen_op &Op1);
 
 	// Input		Op   : General operator (this)
 	// 			Op1  : General operator
@@ -483,8 +483,8 @@ MSVCDLL void gen_op::sim_trans_ip(const gen_op &Op1);
 	// F_list adjoint	     - Operator Hermitian adjoint
 
 
-MSVCDLL row_vector gen_op::eigvals() const;
-MSVCDLL void       gen_op::eigvals(double* vx, int sort=0) const;
+MSVCDLL row_vector eigvals() const;
+MSVCDLL void       eigvals(double* vx, int sort=0) const;
 
 	// Input		Op   : General operator (this)
         // 			vx   : Vector of doubles 
@@ -541,19 +541,19 @@ MSVCDLL friend gen_op adjoint(const gen_op &Op1);				//**
   Note that Op(i,j) returns a copy of the operator element, NOT the element.
   Thus, code such as "Op(i,j) = z;" will not work!                           */
 
-MSVCDLL matrix gen_op::get_mx( )     const;
-MSVCDLL matrix gen_op::get_matrix( ) const;
-MSVCDLL void   gen_op::put_mx(const matrix &mx);
-MSVCDLL void   gen_op::put_matrix(const matrix &mx);
+MSVCDLL matrix get_mx( )     const;
+MSVCDLL matrix get_matrix( ) const;
+MSVCDLL void   put_mx(const matrix &mx);
+MSVCDLL void   put_matrix(const matrix &mx);
 
-MSVCDLL basis gen_op::get_bs( )    const;
-MSVCDLL basis gen_op::get_basis( ) const;
-MSVCDLL void  gen_op::put_bs(const basis &bs);
-MSVCDLL void  gen_op::put_basis(const basis &bs);
+MSVCDLL basis get_bs( )    const;
+MSVCDLL basis get_basis( ) const;
+MSVCDLL void  put_bs(const basis &bs);
+MSVCDLL void  put_basis(const basis &bs);
 
-MSVCDLL complex gen_op::operator() (int row, int col) const;
-MSVCDLL complex gen_op::get(int row, int col)         const;
-MSVCDLL void    gen_op::put(const complex &z, int row, int col);
+MSVCDLL complex operator() (int row, int col) const;
+MSVCDLL complex get(int row, int col)         const;
+MSVCDLL void    put(const complex &z, int row, int col);
 
 // ____________________________________________________________________________
 // G                      OPERATOR AUXILIARY FUNCTIONS
@@ -563,31 +563,31 @@ MSVCDLL void    gen_op::put(const complex &z, int row, int col);
 // F_list name		      - Get/Set Operator Name
 // F_list bsname	      - Get Operator Basis Name (WBR)
 
-MSVCDLL std::string gen_op::name() const;
-MSVCDLL void gen_op::name(const   std::string& n);
-MSVCDLL void gen_op::bsname(const std::string& bn);
+MSVCDLL std::string name() const;
+MSVCDLL void name(const   std::string& n);
+MSVCDLL void bsname(const std::string& bn);
 
-MSVCDLL int gen_op::exists( ) const;
+MSVCDLL int exists( ) const;
 
 	// Input		Op    : General operator (this)
 	// Output		int   : TRUE if Op not NULL
 
 
-MSVCDLL col_vector gen_op::superket() const;
+MSVCDLL col_vector superket() const;
 
         // Input                Op    : General operator (this)
         // Output               vec   : Vector of alligned operator elements
 	// Note			      : This function supports MultiSys
 
 
-MSVCDLL void gen_op::desuperket(const col_vector& mS);
+MSVCDLL void desuperket(const col_vector& mS);
 
         // Input                vec   : Superket iniitally associated with Op
         // Output               Op    : General operator
 	// Note			      : This function supports MultiSys
 
 
-MSVCDLL gen_op gen_op::project_sub(int ic) const;
+MSVCDLL gen_op project_sub(int ic) const;
 
         // Input                Op    : General operator (this)
         //                      int   : Multi_sys component ic
@@ -611,28 +611,28 @@ MSVCDLL gen_op gen_op::project_sub(int ic) const;
    exists and/or whether the current represenation is the working OpRep.  The
    functions check for EBR & DBR, an eigenbasis and the default basis OpReps.*/
 
-MSVCDLL int gen_op::test_EBR() const;
-MSVCDLL int gen_op::test_DBR() const;
-MSVCDLL int gen_op::in_EBR()   const;
-MSVCDLL int gen_op::in_DBR()   const;
+MSVCDLL int test_EBR() const;
+MSVCDLL int test_DBR() const;
+MSVCDLL int in_EBR()   const;
+MSVCDLL int in_DBR()   const;
 
 /* These functions are will put an operator into a particular basis.  A new
    OpRep will be formed if the representation doesn't already exist.  The
    Op_base functions set "this" into the basis/Op.WBR input as an argument. 
    A cutoff can be specified that will "check" the validity of an EBR.       */
 	
-MSVCDLL void gen_op::set_DBR() const;
-MSVCDLL void gen_op::set_EBR() const;
-MSVCDLL void gen_op::Op_base(const gen_op &Op1, double cutoff=1.e-12) const; 
-MSVCDLL void gen_op::Op_base(const basis  &bs) const;
+MSVCDLL void set_DBR() const;
+MSVCDLL void set_EBR() const;
+MSVCDLL void Op_base(const gen_op &Op1, double cutoff=1.e-12) const; 
+MSVCDLL void Op_base(const basis  &bs) const;
 
-MSVCDLL void gen_op::status(int pf=0) const;
+MSVCDLL void status(int pf=0) const;
 
 	// Input		Op    : General operator (this)
 	// Output		void  : Outputs operator status
 
 
-MSVCDLL void gen_op::setOnlyWBR( );
+MSVCDLL void setOnlyWBR( );
 
 	// Input		Op   : General operator (this)
 	// Output		none : Deletes all reps but WBR of Op
@@ -691,17 +691,17 @@ MSVCDLL void SetLimits(int limit) const;
    will result.  If the flags is 1 a non-fatal error is output.  If the flag
    is >1 a fatal error is output and program execution stopped.              */
   
-MSVCDLL int  gen_op::OpCheck(const gen_op& Op1,                    int warn=2) const;
-MSVCDLL bool gen_op::OpCheck(const matrix& mx,                     int warn=2) const;
-MSVCDLL int  gen_op::OpCheck(const basis&  bs,                     int warn=2) const;
-MSVCDLL int  gen_op::OpCheck(const matrix& mx1, const matrix& mx2, int warn=2) const;
-MSVCDLL int  gen_op::OpCheck(const matrix& mx,  const basis&  bs,  int warn=2) const;
+MSVCDLL int  OpCheck(const gen_op& Op1,                    int warn=2) const;
+MSVCDLL bool OpCheck(const matrix& mx,                     int warn=2) const;
+MSVCDLL int  OpCheck(const basis&  bs,                     int warn=2) const;
+MSVCDLL int  OpCheck(const matrix& mx1, const matrix& mx2, int warn=2) const;
+MSVCDLL int  OpCheck(const matrix& mx,  const basis&  bs,  int warn=2) const;
 
 /* This set of functions insures that the Op limits are met, Op element
    access is within matrix representation bounds, etc.                       */
 
-MSVCDLL int gen_op::OpCheck(int row,    int col, int warn=2) const;
-MSVCDLL int gen_op::LimCheck(int limit,          int warn=1) const;
+MSVCDLL int OpCheck(int row,    int col, int warn=2) const;
+MSVCDLL int LimCheck(int limit,          int warn=1) const;
 
 
 // ____________________________________________________________________________
@@ -716,9 +716,9 @@ MSVCDLL int gen_op::LimCheck(int limit,          int warn=1) const;
 		Return		void : Op is sent to the output stream 
 		Note		     : Op WBR representation only	     */
 
-MSVCDLL        std::ostream& gen_op::print(std::ostream& out, int full=0) const;
+MSVCDLL        std::ostream& print(std::ostream& out, int full=0) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const gen_op &Op);
-MSVCDLL std::ostream& gen_op::eigenvalues(std::ostream& ostr, int rc=0, int ncol=4) const;
+MSVCDLL std::ostream& eigenvalues(std::ostream& ostr, int rc=0, int ncol=4) const;
 
 // ------------------------ Binary Output Functions ---------------------------
 
@@ -745,9 +745,9 @@ MSVCDLL std::ofstream& write(std::ofstream& fp) const;
 		Note		     : Read Op will reside in only 1 basis   */
 
 //void read(const std::string& fn, gen_op& Op1);		NOW DEPRECATED!
-MSVCDLL void gen_op::read(const std::string& fn, const basis& bs);
-MSVCDLL void gen_op::read(const std::string& fn);
-MSVCDLL std::ifstream& gen_op::read(std::ifstream &fp);
+MSVCDLL void read(const std::string& fn, const basis& bs);
+MSVCDLL void read(const std::string& fn);
+MSVCDLL std::ifstream& read(std::ifstream &fp);
 
 // ____________________________________________________________________________
 // L                     CLASS OPERATOR TESTING FUNCTIONS
@@ -764,7 +764,7 @@ MSVCDLL std::ifstream& gen_op::read(std::ifstream &fp);
  --------------- --------- ------------------------------------------------
  TestEigenSystem    int    Diagonalize the operator & check its eigensystem  */
 
-MSVCDLL double gen_op::TestEigenSystem(int pf=0);
+MSVCDLL double TestEigenSystem(int pf=0);
 
 // ----------------------------------------------------------------------------
 //                     Matrix Functionality For GenOp
@@ -784,15 +784,15 @@ MSVCDLL double gen_op::TestEigenSystem(int pf=0);
    is_diagonal    bool    TF if ||<i|mx|j>|| < d for all i!=j(TRUE,d GMxCut)
    is_square      bool    TF if rows_ == cols_                               */
 
-MSVCDLL bool gen_op::is_symmetric(const double d=GMxCut) const;
-MSVCDLL bool gen_op::is_hermitian(const double d=GMxCut) const;
-MSVCDLL bool gen_op::is_unitary(const   double d=GMxCut) const;
-MSVCDLL bool gen_op::is_real(const      double d=GMxCut) const;
-MSVCDLL bool gen_op::is_imaginary(const double d=GMxCut) const;
-MSVCDLL bool gen_op::is_complex(const   double d=GMxCut) const;
-MSVCDLL bool gen_op::is_zero(const      double d=GMxCut) const;
-MSVCDLL bool gen_op::is_diagonal(const  double d=GMxCut) const;
-MSVCDLL bool gen_op::is_square()                         const;
+MSVCDLL bool is_symmetric(const double d=GMxCut) const;
+MSVCDLL bool is_hermitian(const double d=GMxCut) const;
+MSVCDLL bool is_unitary(const   double d=GMxCut) const;
+MSVCDLL bool is_real(const      double d=GMxCut) const;
+MSVCDLL bool is_imaginary(const double d=GMxCut) const;
+MSVCDLL bool is_complex(const   double d=GMxCut) const;
+MSVCDLL bool is_zero(const      double d=GMxCut) const;
+MSVCDLL bool is_diagonal(const  double d=GMxCut) const;
+MSVCDLL bool is_square()                         const;
 
 // ____________________________________________________________________________
 // M                 CLASS OPERATOR CONTAINER SUPPORT FUNCTIONS
@@ -802,10 +802,10 @@ MSVCDLL bool gen_op::is_square()                         const;
    not, these operators are necessary if any STL container classes are to
    be used based on operators (e.g. list<gen_op> or vector<gen_op>)          */  
 
-MSVCDLL bool gen_op::operator== (const gen_op& Op) const;
-MSVCDLL bool gen_op::operator!= (const gen_op& Op) const;
-MSVCDLL bool gen_op::operator<  (const gen_op& Op) const;
-MSVCDLL bool gen_op::operator>  (const gen_op& Op) const;
+MSVCDLL bool operator== (const gen_op& Op) const;
+MSVCDLL bool operator!= (const gen_op& Op) const;
+MSVCDLL bool operator<  (const gen_op& Op) const;
+MSVCDLL bool operator>  (const gen_op& Op) const;
 
 // ____________________________________________________________________________
 // O                                PyGAMMA  Code
@@ -813,13 +813,13 @@ MSVCDLL bool gen_op::operator>  (const gen_op& Op) const;
 
 #ifdef PYGAMMA					// Begin PyGAMMA code block
 
-void gen_op::Op_baseOP(const gen_op &Op1) const;
+void Op_baseOP(const gen_op &Op1) const;
 
 //-----------------------------------------------------------------------------
 //                            ASCII OUTPUT FUNCTIONS
 //-----------------------------------------------------------------------------
 
-std::string gen_op::PyPrint();
+std::string PyPrint();
 
 #endif						// End of PyGAMMA code block
  

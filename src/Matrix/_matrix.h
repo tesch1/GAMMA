@@ -49,7 +49,7 @@ struct MxPrint 				// Matrix ASCII output info
   int  VxCols;				// Columns in row vector print
   int  VxRows;				// Rows in column vector print
 
-  MxPrint::MxPrint(bool A, bool B, bool C, int D, bool E, int F, int G)
+  MxPrint(bool A, bool B, bool C, int D, bool E, int F, int G)
     { MxHdr=A; MxRIPrnt=B; MxAll=C; MxPctDim=D; MxPctVal=E; VxCols=F; VxRows=G; } 
   };
 
@@ -109,16 +109,16 @@ friend class h_matrix;			// Allow Hermitian arrays full access
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
  
-         void _matrix::_MxError(                     int eidx, int nr=0) const;
-         void _matrix::_MxError(int eidx,const std::string& PN, int n=0) const;
-volatile void _matrix::_MxFatal(                  int eidx)              const;
-volatile void _matrix::_MxFatal(int eidx, const std::string& PN)         const;
+         void _MxError(                     int eidx, int nr=0) const;
+         void _MxError(int eidx,const std::string& PN, int n=0) const;
+volatile void _MxFatal(                  int eidx)              const;
+volatile void _MxFatal(int eidx, const std::string& PN)         const;
 
-         void _matrix::Mxerror(const std::string& CL, int eidx, int n=0) const;
-         void _matrix::Mxerror(const std::string& CL, int eidx,
+         void Mxerror(const std::string& CL, int eidx, int n=0) const;
+         void Mxerror(const std::string& CL, int eidx,
                                         const std::string& PN, int nr=0) const;
-volatile void _matrix::Mxfatality(const std::string& CL,  int eidx)      const;
-volatile void _matrix::Mxfatality(const std::string& CL,  int eidx,
+volatile void Mxfatality(const std::string& CL,  int eidx)      const;
+volatile void Mxfatality(const std::string& CL,  int eidx,
                                          const std::string& PN)          const;
 public:
  
@@ -130,10 +130,10 @@ public:
 // A               CLASS _MATRIX CONSTRUCTORS AND DESTRUCTOR
 // ____________________________________________________________________________
  
-        _matrix::_matrix( );
-        _matrix::_matrix(int i, int j);
-        _matrix::_matrix(const _matrix& m);
-virtual _matrix::~_matrix();
+        _matrix( );
+        _matrix(int i, int j);
+        _matrix(const _matrix& m);
+virtual ~_matrix();
 
 // ____________________________________________________________________________
 // B                   CLASS _MATRIX ACCESS AND ASSIGNMENT
@@ -160,10 +160,10 @@ void operator= (const _matrix& mx);
    structure with misuse of the access function won't we?  Note that the put
    functions will return T/F depending upon their success.                   */
 
-virtual complex& _matrix::operator() (int i, int j);
-virtual complex  _matrix::get(int i, int j) const;
-virtual bool     _matrix::put(const complex& z, int i, int j);
-virtual bool     _matrix::put_h(const complex& z, int i, int j);
+virtual complex& operator() (int i, int j);
+virtual complex  get(int i, int j) const;
+virtual bool     put(const complex& z, int i, int j);
+virtual bool     put_h(const complex& z, int i, int j);
 
 virtual _matrix* get_block(int row, int col, int nr, int nc);
 
@@ -186,11 +186,11 @@ virtual bool put_block(int row, int col, _matrix* mx);
 
 // ******************* _matrix details access functions ***********************
 
-const int  _matrix::rows();		     // Number of matrix rows
-const int  _matrix::cols();		     // Number of matrix columns
-const int  _matrix::refs();		     // Number of matrix references
-const int  _matrix::pts();		     // Number of matrix points
-      int& _matrix::references();	     // THE actual reference count
+const int  rows();		     // Number of matrix rows
+const int  cols();		     // Number of matrix columns
+const int  refs();		     // Number of matrix references
+const int  pts();		     // Number of matrix points
+      int& references();	     // THE actual reference count
 
  
 // ____________________________________________________________________________
@@ -355,24 +355,24 @@ virtual complex  trace();
         minIm      double  Returns smallest imaginary value in the array
         minZ       complex Returns smallest complex (norm) value in array    */
 
-virtual _matrix* _matrix::swaprows(int i, int j);
-virtual _matrix* _matrix::swapcols(int i, int j);
-virtual _matrix* _matrix::permute(int  i, int j);
-virtual double   _matrix::maxRe()   const;
-virtual double   _matrix::maxIm()   const;
-virtual complex  _matrix::maxZ()    const;
-virtual double   _matrix::minRe()   const;
-virtual double   _matrix::minIm()   const;
-virtual complex  _matrix::minZ()    const;
+virtual _matrix* swaprows(int i, int j);
+virtual _matrix* swapcols(int i, int j);
+virtual _matrix* permute(int  i, int j);
+virtual double   maxRe()   const;
+virtual double   maxIm()   const;
+virtual complex  maxZ()    const;
+virtual double   minRe()   const;
+virtual double   minIm()   const;
+virtual complex  minZ()    const;
 
 // ____________________________________________________________________________
 // I                  CLASS _MATRIX SIMPLE BINARY FUNCTIONS
 // ____________________________________________________________________________
 
 
-virtual complex  _matrix::trace( _matrix *mx );
-virtual _matrix* _matrix::adjoint_times(_matrix* mx);
-virtual _matrix* _matrix::times_adjoint(_matrix* mx);
+virtual complex  trace( _matrix *mx );
+virtual _matrix* adjoint_times(_matrix* mx);
+virtual _matrix* times_adjoint(_matrix* mx);
 
 // ____________________________________________________________________________
 // J                  CLASS _MATRIX COMPLEX UNARY FUNCTIONS
@@ -422,12 +422,12 @@ virtual _matrix* LUinv(int *indx, _matrix* LU);
                                   matrix of _mx eigenvectors respectively 
            Note                 : Just a placeholder, Disallowed             */
  
-virtual std::vector<int> _matrix::BlockDiag(_matrix*   (&BF),  _matrix* (&U)); 
-virtual void             _matrix::HermTriDiag(_matrix* (&HTD), _matrix* (&U)); 
-virtual void             _matrix::SymTriDiag(_matrix*  (&STD), _matrix* (&U)); 
-virtual void             _matrix::SymDiag(_matrix*     (&D),   _matrix* (&U));
+virtual std::vector<int> BlockDiag(_matrix*   (&BF),  _matrix* (&U)); 
+virtual void             HermTriDiag(_matrix* (&HTD), _matrix* (&U)); 
+virtual void             SymTriDiag(_matrix*  (&STD), _matrix* (&U)); 
+virtual void             SymDiag(_matrix*     (&D),   _matrix* (&U));
 
-virtual void _matrix::diag(_matrix* (&D),          _matrix* (&U));
+virtual void diag(_matrix* (&D),          _matrix* (&U));
 
 virtual complex det();
 
@@ -476,15 +476,15 @@ virtual _matrix* tensor_product ( _matrix* mx );
    The binary format of _matrix has no data, nor size information.  Thus, we
    should never output these things in binary format.                        */
 
-virtual std::vector<std::string> _matrix::printStrings(const   MxPrint& pf) const;
-virtual std::vector<std::string> _matrix::pictureStrings(const MxPrint& pf) const;
+virtual std::vector<std::string> printStrings(const   MxPrint& pf) const;
+virtual std::vector<std::string> pictureStrings(const MxPrint& pf) const;
 
-virtual void _matrix::print(std::ostream&   ostr, const MxPrint& PFlgs) const;
-virtual void _matrix::picture(std::ostream& ostr, const MxPrint& PFlgs) const;
-virtual void _matrix::write(std::ofstream &fp, int form=0) const;
-virtual void _matrix::read(std::ifstream& fp);
-virtual void _matrix::readASC(std::istream& istr);
-virtual void _matrix::ask( );
+virtual void print(std::ostream&   ostr, const MxPrint& PFlgs) const;
+virtual void picture(std::ostream& ostr, const MxPrint& PFlgs) const;
+virtual void write(std::ofstream &fp, int form=0) const;
+virtual void read(std::ifstream& fp);
+virtual void readASC(std::istream& istr);
+virtual void ask( );
  
 // ____________________________________________________________________________
 // M                   CLASS _MATRIX MISCELLANEOUS FUNCTIONS
@@ -522,10 +522,10 @@ virtual void convert ( _matrix* mx );
 // ------------------------ New Conversion Routines ---------------------------
 //                  (Been Having Troubles With The Old One)
 
-virtual i_matrix* _matrix::IMX();
-virtual d_matrix* _matrix::DMX();
-virtual h_matrix* _matrix::HMX();
-virtual n_matrix* _matrix::NMX();
+virtual i_matrix* IMX();
+virtual d_matrix* DMX();
+virtual h_matrix* HMX();
+virtual n_matrix* NMX();
 
         // Input                _mx     : A _matrix (this)
         // Output               imx     : A new i/d/h/n_matrix matrix whose
@@ -547,8 +547,8 @@ virtual _matrix* convert(matrix_type mxtype);
 
 #ifdef PYGAMMA				// Begin PyGAMMA code block
 
-virtual std::string _matrix::PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string _matrix::PyPicture(const MxPrint& PFlgs) const;
+virtual std::string PyPrint(const   MxPrint& PFlgs) const;
+virtual std::string PyPicture(const MxPrint& PFlgs) const;
 
 #endif					  // End PyGAMMA code block
 

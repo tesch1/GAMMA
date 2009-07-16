@@ -61,10 +61,10 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-void row_vector::RVerror(int eidx, int noret=0) const;
-void row_vector::RVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void row_vector::RVfatality(int eidx) const;
-volatile void row_vector::RVfatality(int eidx, const std::string& pname) const;
+void RVerror(int eidx, int noret=0) const;
+void RVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void RVfatality(int eidx) const;
+volatile void RVfatality(int eidx, const std::string& pname) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -89,13 +89,13 @@ public:
           mx            A row vector equivalent to input matrix mx
                         (in this case mx MUST be of dimension 1xn)           */
 
-MSVCDLC row_vector::row_vector( );
-MSVCDLC row_vector::row_vector(int i);
-MSVCDLC row_vector::row_vector(int i, const complex& z);
-MSVCDLC row_vector::row_vector(int i, double d);
-MSVCDLC row_vector::row_vector(const row_vector& rvec);
-MSVCDLC row_vector::row_vector(const matrix& mx);
-MSVCDLC row_vector::~row_vector();
+MSVCDLC row_vector( );
+MSVCDLC row_vector(int i);
+MSVCDLC row_vector(int i, const complex& z);
+MSVCDLC row_vector(int i, double d);
+MSVCDLC row_vector(const row_vector& rvec);
+MSVCDLC row_vector(const matrix& mx);
+MSVCDLC ~row_vector();
 
 // ____________________________________________________________________________
 // B                     ROW VECTOR ACCESS AND ASSIGNMENT
@@ -110,14 +110,14 @@ MSVCDLC row_vector::~row_vector();
       getIm(int)        Copy of imaginary part of element <rvec|i>
        put(int)         Assigns element <rvec|i>                            */
 
-MSVCDLL void     row_vector::operator = (const row_vector& rvec);
-MSVCDLL void     row_vector::operator = (const col_vector& cvec);
-MSVCDLL void     row_vector::operator = (const matrix& mx);
-MSVCDLL complex& row_vector::operator() (int i);
-MSVCDLL complex  row_vector::get(int i)   const;
-MSVCDLL double   row_vector::getRe(int i) const;
-MSVCDLL double   row_vector::getIm(int i) const;
-MSVCDLL void     row_vector::put(const complex& z, int i);
+MSVCDLL void     operator = (const row_vector& rvec);
+MSVCDLL void     operator = (const col_vector& cvec);
+MSVCDLL void     operator = (const matrix& mx);
+MSVCDLL complex& operator() (int i);
+MSVCDLL complex  get(int i)   const;
+MSVCDLL double   getRe(int i) const;
+MSVCDLL double   getIm(int i) const;
+MSVCDLL void     put(const complex& z, int i);
 
 // ____________________________________________________________________________
 // E             CLASS ROW VECTOR VARIOUS CHECKS & PARAMETERS
@@ -132,8 +132,8 @@ MSVCDLL void     row_vector::put(const complex& z, int i);
       refs     int    Returns # of vector references - handled by matrix
       pts      int    Returns # of vector elements   - handled by matrix     */
 
-MSVCDLL int row_vector::elements( ) const;
-MSVCDLL int row_vector::size( )     const;
+MSVCDLL int elements( ) const;
+MSVCDLL int size( )     const;
 /*
 int matrix::rows();		     // Number of matrix rows       INHERITED
 int matrix::cols();		     // Number of matrix columns    INHERITED
@@ -180,17 +180,17 @@ int matrix::pts();		     // Number of matrix points     INHERITED
 MSVCDLL friend row_vector operator * (const complex& z, const row_vector& rvec);
 MSVCDLL friend row_vector operator * (double         d, const row_vector& rvec);
 
-MSVCDLL row_vector row_vector::operator + (const row_vector& rvec) const;
-MSVCDLL row_vector row_vector::operator + (const matrix&     mx)   const;
-MSVCDLL row_vector row_vector::operator - (const row_vector& rvec) const;
-MSVCDLL row_vector row_vector::operator - (const matrix&     mx)   const;
-MSVCDLL complex    row_vector::operator * (const row_vector& rvec) const;
-MSVCDLL complex    row_vector::operator * (const col_vector& cvec) const;
-MSVCDLL row_vector row_vector::operator * (const matrix& mx)       const;
-MSVCDLL row_vector row_vector::operator * (const complex& z)       const;
-MSVCDLL row_vector row_vector::operator * (double d)               const;
-MSVCDLL row_vector row_vector::operator / (const complex& z)       const;
-MSVCDLL row_vector row_vector::operator / (double d)               const;
+MSVCDLL row_vector operator + (const row_vector& rvec) const;
+MSVCDLL row_vector operator + (const matrix&     mx)   const;
+MSVCDLL row_vector operator - (const row_vector& rvec) const;
+MSVCDLL row_vector operator - (const matrix&     mx)   const;
+MSVCDLL complex    operator * (const row_vector& rvec) const;
+MSVCDLL complex    operator * (const col_vector& cvec) const;
+MSVCDLL row_vector operator * (const matrix& mx)       const;
+MSVCDLL row_vector operator * (const complex& z)       const;
+MSVCDLL row_vector operator * (double d)               const;
+MSVCDLL row_vector operator / (const complex& z)       const;
+MSVCDLL row_vector operator / (double d)               const;
 
 // ____________________________________________________________________________
 // G                  ROW VECTOR UNARY ARITHMETIC FUNCTIONS
@@ -199,14 +199,14 @@ MSVCDLL row_vector row_vector::operator / (double d)               const;
 // Note: These operators, as they are unable to change the type of the
 //       result, can only be those which return row_vector.
 
-MSVCDLL void row_vector::operator += (const row_vector& rvec1);
-MSVCDLL void row_vector::operator += (const matrix& mx);
-MSVCDLL void row_vector::operator -= (const row_vector& rvec1);
-MSVCDLL void row_vector::operator -= (const matrix& mx);
-MSVCDLL void row_vector::operator *= (      double d);
-MSVCDLL void row_vector::operator *= (const complex& z);
-MSVCDLL void row_vector::operator /= (      double d);
-MSVCDLL void row_vector::operator /= (const complex& z);
+MSVCDLL void operator += (const row_vector& rvec1);
+MSVCDLL void operator += (const matrix& mx);
+MSVCDLL void operator -= (const row_vector& rvec1);
+MSVCDLL void operator -= (const matrix& mx);
+MSVCDLL void operator *= (      double d);
+MSVCDLL void operator *= (const complex& z);
+MSVCDLL void operator /= (      double d);
+MSVCDLL void operator /= (const complex& z);
 
 // ____________________________________________________________________________
 // J               ROW VECTOR SIMPLE UNARY FUNCTIONS
@@ -223,12 +223,12 @@ MSVCDLL void row_vector::operator /= (const complex& z);
    transpose  cvec    Returns col. vector where <i|cvec> = <rvec|i>
      trace    ----    This is disallowed for row vectors (but MUST exist)    */
 
-// row_vector row_vector::operator- () const;		// MATRIX INHERITED
+// row_vector operator- () const;		// MATRIX INHERITED
 //friend row_vector operator - (const row_vector& rvec);
 MSVCDLL friend col_vector adjoint(const     row_vector& rvec);
 MSVCDLL friend col_vector transpose(const   row_vector& rvec);
 MSVCDLL friend complex    trace(const       row_vector& rvec);
-MSVCDLL row_vector row_vector::differential() const;
+MSVCDLL row_vector differential() const;
 
 // ____________________________________________________________________________
 // I                    ROW VECTOR SIMPLE BINARY FUNCTIONS
@@ -266,20 +266,20 @@ MSVCDLL row_vector row_vector::differential() const;
                            <0         imaginary
                            >0           real                                 */
 
-MSVCDLL double           row_vector::norm()              const;
-MSVCDLL complex          row_vector::sum()               const;
-MSVCDLL double           row_vector::maxRe()             const;
-MSVCDLL double           row_vector::maxIm()             const;
-MSVCDLL complex          row_vector::maxZ()              const;
-MSVCDLL double           row_vector::minRe()             const;
-MSVCDLL double           row_vector::minIm()             const;
-MSVCDLL complex          row_vector::minZ()              const;
-MSVCDLL int              row_vector::max(int type=0)     const;
-MSVCDLL int              row_vector::min(int type=0)     const;
-MSVCDLL void             row_vector::flip();
-MSVCDLL complex          row_vector::sum(int st, int ne) const;
-MSVCDLL void             row_vector::zero();
-MSVCDLL std::vector<int> row_vector::sort(int type=0)    const;
+MSVCDLL double           norm()              const;
+MSVCDLL complex          sum()               const;
+MSVCDLL double           maxRe()             const;
+MSVCDLL double           maxIm()             const;
+MSVCDLL complex          maxZ()              const;
+MSVCDLL double           minRe()             const;
+MSVCDLL double           minIm()             const;
+MSVCDLL complex          minZ()              const;
+MSVCDLL int              max(int type=0)     const;
+MSVCDLL int              min(int type=0)     const;
+MSVCDLL void             flip();
+MSVCDLL complex          sum(int st, int ne) const;
+MSVCDLL void             zero();
+MSVCDLL std::vector<int> sort(int type=0)    const;
 
 // ____________________________________________________________________________
 // J                    ROW VECTOR COMPLEX UNARY FUNCTIONS
@@ -315,9 +315,9 @@ MSVCDLL friend int operator!=(const row_vector& rvec1, const row_vector& rvec2);
 MSVCDLL friend row_vector product(const row_vector& rvec1, const row_vector& rvec2);
 MSVCDLL friend row_vector product(const row_vector& rvec,        col_vector& cvec);
 
-MSVCDLL row_vector row_vector::product()                        const;
-MSVCDLL row_vector row_vector::product(const row_vector& cvec2) const;
-MSVCDLL row_vector row_vector::product(const col_vector& rvec)  const;
+MSVCDLL row_vector product()                        const;
+MSVCDLL row_vector product(const row_vector& cvec2) const;
+MSVCDLL row_vector product(const col_vector& rvec)  const;
 
         // Input              rvec1  : A row vector
         //               rvec2,cvec  : Second row vector, or column vector
@@ -334,9 +334,9 @@ MSVCDLL friend double  scalar_product(const row_vector& rvec);
 MSVCDLL friend complex scalar_product(const row_vector& rvec1, const row_vector& rvec2);
 MSVCDLL friend complex scalar_product(const row_vector& rvec,  const col_vector& cvec);
 
-MSVCDLL double  row_vector::scalar_product()                        const;
-MSVCDLL complex row_vector::scalar_product(const row_vector& cvec2) const;
-MSVCDLL complex row_vector::scalar_product(const col_vector& rvec)  const;
+MSVCDLL double  scalar_product()                        const;
+MSVCDLL complex scalar_product(const row_vector& cvec2) const;
+MSVCDLL complex scalar_product(const col_vector& rvec)  const;
 
         // Input              rvec1  : A row vector
         //               rvec2,cvec  : Second row vector, or column vector
@@ -357,11 +357,11 @@ MSVCDLL complex row_vector::scalar_product(const col_vector& rvec)  const;
                                 full    : Flag for amount of output
                 Return          void    : rvec is sent to the output stream  */
 
-MSVCDLL std::string              row_vector::hdrString() const;
-MSVCDLL std::vector<std::string> row_vector::printStrings(const MxPrint& PFlgs) const;
+MSVCDLL std::string              hdrString() const;
+MSVCDLL std::vector<std::string> printStrings(const MxPrint& PFlgs) const;
 
-MSVCDLL        std::ostream& row_vector::printcols(std::ostream& ost, int nc=4,int rc=1,int ne=0) const;
-MSVCDLL        std::ostream& row_vector::print(std::ostream& ostr, int full=0) const;
+MSVCDLL        std::ostream& printcols(std::ostream& ost, int nc=4,int rc=1,int ne=0) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const row_vector& rvec);
 MSVCDLL friend std::istream& operator >> (std::istream& istr, row_vector& rvec);
 
@@ -372,7 +372,7 @@ MSVCDLL friend std::istream& operator >> (std::istream& istr, row_vector& rvec);
         //                             specify the vector.  rvec is modified.
         // Note                      : Function is for INTERACTIVE programs
 
-MSVCDLL void row_vector::ask();
+MSVCDLL void ask();
 
 // _______________________________________________________________________
 // M                       PyGAMMA Code (Member)
@@ -384,7 +384,7 @@ MSVCDLL void row_vector::ask();
 //                            ASCII OUTPUT FUNCTIONS
 //-----------------------------------------------------------------------------
 
-std::string row_vector::PyPrint() const;
+std::string PyPrint() const;
 
 //-----------------------------------------------------------------------------
 //                            ACCESS FUNCTIONS
@@ -393,7 +393,7 @@ std::string row_vector::PyPrint() const;
 /* These add to the put function for Python because there is no automatic
    cast from double complex as is done in C++.                               */
 
-void row_vector::putRVEC(double d, int i);
+void putRVEC(double d, int i);
 
 //-----------------------------------------------------------------------------
 //                            VARIOUS FUNCTIONS

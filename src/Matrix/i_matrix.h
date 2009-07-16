@@ -54,10 +54,10 @@ class i_matrix : public _matrix
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void i_matrix::IMxerror(int idx,                       int nr=0) const; 
-         void i_matrix::IMxerror(int idx, const std::string& PN,int nr=0) const;
-volatile void i_matrix::IMxfatal(int idx)                                 const;
-volatile void i_matrix::IMxfatal(int idx, const std::string& PN)          const;
+         void IMxerror(int idx,                       int nr=0) const; 
+         void IMxerror(int idx, const std::string& PN,int nr=0) const;
+volatile void IMxfatal(int idx)                                 const;
+volatile void IMxfatal(int idx, const std::string& PN)          const;
 
 friend void volatile i_matrix_err(int error);
 
@@ -65,7 +65,7 @@ friend void volatile i_matrix_err(int error);
 // ii                      CLASS I_MATRIX CHECKING
 // ____________________________________________________________________________
 
-virtual bool i_matrix::CheckDims(_matrix* mx, int warn=1) const;
+virtual bool CheckDims(_matrix* mx, int warn=1) const;
 
  
 // ----------------------------------------------------------------------------
@@ -143,13 +143,13 @@ inline virtual ~i_matrix();
     the operation cannot be handled by a identity array so the array type
     is changed to be more generic.  The the operation is reattempted.       */
 
-inline void             i_matrix::operator= (const i_matrix& mx);
-virtual inline complex& i_matrix::operator() (int i, int j);
-virtual inline complex  i_matrix::get(int i, int j) const;
-virtual inline bool     i_matrix::put(const complex& z, int i, int j);
-virtual inline bool     i_matrix::put_h(const complex& z, int i, int j);
-virtual _matrix*        i_matrix::get_block(int r,int c, int nr, int nc);
-virtual inline bool     i_matrix::put_block(int row, int col, _matrix* mx);
+inline void             operator= (const i_matrix& mx);
+virtual inline complex& operator() (int i, int j);
+virtual inline complex  get(int i, int j) const;
+virtual inline bool     put(const complex& z, int i, int j);
+virtual inline bool     put_h(const complex& z, int i, int j);
+virtual _matrix*        get_block(int r,int c, int nr, int nc);
+virtual inline bool     put_block(int row, int col, _matrix* mx);
 
 // ____________________________________________________________________________
 // C                CLASS I_MATRIX HERMITIAN_TYPE HANDLING
@@ -219,17 +219,17 @@ virtual std::string mxtype(bool pf) const;
    These checks are consistent with other matrix classes.  The value d is
    not used and no real math is performed execpt in the "is_equal" function */
 
-virtual inline bool i_matrix::is_symmetric(double d = GMxCut) const;
-virtual inline bool i_matrix::is_hermitian(double d = GMxCut) const;
-virtual inline bool i_matrix::is_unitary(double   d = GMxCut) const;
-virtual inline bool i_matrix::is_real(double      d = GMxCut) const;
-virtual inline bool i_matrix::is_imaginary(double d = GMxCut) const;
-virtual inline bool i_matrix::is_complex(double   d = GMxCut) const;
-virtual inline bool i_matrix::is_zero(double      d = GMxCut) const;
-virtual inline bool i_matrix::is_diagonal(double  d = GMxCut) const;
-virtual        bool i_matrix::is_square( )                    const;
+virtual inline bool is_symmetric(double d = GMxCut) const;
+virtual inline bool is_hermitian(double d = GMxCut) const;
+virtual inline bool is_unitary(double   d = GMxCut) const;
+virtual inline bool is_real(double      d = GMxCut) const;
+virtual inline bool is_imaginary(double d = GMxCut) const;
+virtual inline bool is_complex(double   d = GMxCut) const;
+virtual inline bool is_zero(double      d = GMxCut) const;
+virtual inline bool is_diagonal(double  d = GMxCut) const;
+virtual        bool is_square( )                    const;
 
-virtual        bool i_matrix::is_equal(_matrix* mx, double d = GMxCut) const;
+virtual        bool is_equal(_matrix* mx, double d = GMxCut) const;
 
 // ____________________________________________________________________________
 // F                CLASS I_MATRIX BINARY ARITHMETIC FUNCTIONS
@@ -310,15 +310,15 @@ virtual inline complex  trace();		// Return is size
         minIm      double   Returns smallest imaginary value in the array
         minZ       complex  Returns smallest complex (norm) value in array   */
 
-virtual _matrix* i_matrix::swaprows(int i, int j);
-virtual _matrix* i_matrix::swapcols(int i, int j);
-virtual _matrix* i_matrix::permute( int i, int j);
-virtual double   i_matrix::maxRe()   const;
-virtual double   i_matrix::maxIm()   const;
-virtual complex  i_matrix::maxZ()    const;
-virtual double   i_matrix::minRe()   const;
-virtual double   i_matrix::minIm()   const;
-virtual complex  i_matrix::minZ()    const;
+virtual _matrix* swaprows(int i, int j);
+virtual _matrix* swapcols(int i, int j);
+virtual _matrix* permute( int i, int j);
+virtual double   maxRe()   const;
+virtual double   maxIm()   const;
+virtual complex  maxZ()    const;
+virtual double   minRe()   const;
+virtual double   minIm()   const;
+virtual complex  minZ()    const;
 
 // ____________________________________________________________________________
 // I                CLASS I_MATRIX SIMPLE BINARY FUNCTIONS
@@ -339,9 +339,9 @@ virtual complex  i_matrix::minZ()    const;
         // Note                 : imx.trace(mx) is faster than taking
 	//			  trace(imx*mx), but not much.
 
-virtual inline complex i_matrix::trace(_matrix *mx);
-virtual       _matrix* i_matrix::adjoint_times(_matrix* mx);
-virtual       _matrix* i_matrix::times_adjoint(_matrix* mx);
+virtual inline complex trace(_matrix *mx);
+virtual       _matrix* adjoint_times(_matrix* mx);
+virtual       _matrix* times_adjoint(_matrix* mx);
 
 // ____________________________________________________________________________
 // J              CLASS I_MATRIX COMPLEX UNARY FUNCTIONS
@@ -376,11 +376,11 @@ virtual       _matrix* i_matrix::times_adjoint(_matrix* mx);
  done upon return.  Since the return here is invariably the same matrix, all
  of this amounts to just incrementing the "this" imx reference count by 2.   */
 
-virtual std::vector<int> i_matrix::BlockDiag(_matrix*    (&BD), _matrix* (&U));
-virtual void             i_matrix::HermTriDiag(_matrix* (&HTD), _matrix* (&U));
-virtual void             i_matrix::SymTriDiag(_matrix*  (&STD), _matrix* (&U));
-virtual void             i_matrix::SymDiag(_matrix*       (&D), _matrix* (&U));
-virtual void             i_matrix::diag(_matrix*          (&D), _matrix* (&U));
+virtual std::vector<int> BlockDiag(_matrix*    (&BD), _matrix* (&U));
+virtual void             HermTriDiag(_matrix* (&HTD), _matrix* (&U));
+virtual void             SymTriDiag(_matrix*  (&STD), _matrix* (&U));
+virtual void             SymDiag(_matrix*       (&D), _matrix* (&U));
+virtual void             diag(_matrix*          (&D), _matrix* (&U));
  
 // ____________________________________________________________________________
 // O                    CLASS I_MATRIX INVERSION FUNCTIONS
@@ -398,17 +398,17 @@ virtual void             i_matrix::diag(_matrix*          (&D), _matrix* (&U));
   Note that the LU function takes the LU decomposition of any square array, 
   and that is not likely to be an identiy array.                             */
 
-virtual inline _matrix* i_matrix::inv();
-virtual inline _matrix* i_matrix::LU(int* indx);
-virtual        _matrix* i_matrix::LUinv(int *indx, _matrix* LU);
+virtual inline _matrix* inv();
+virtual inline _matrix* LU(int* indx);
+virtual        _matrix* LUinv(int *indx, _matrix* LU);
 
-virtual inline complex i_matrix::det();
+virtual inline complex det();
 
         // Input            imx : An i_matrix (this)
         // Output 	      z : Value the determinant; det{imx}
 	// Note			: For i_matrix, z=1
 
-virtual inline int i_matrix::rank();
+virtual inline int rank();
 
         // Input            imx : An i_matrix (this)
         // Output 	      i : Rank of matrix imx
@@ -420,7 +420,7 @@ virtual inline int i_matrix::rank();
 
 // ************************** tensor product ****************************
 
-virtual _matrix* i_matrix::tensor_product(_matrix* mx);
+virtual _matrix* tensor_product(_matrix* mx);
  
         // Input            imx : An i_matrix (this)
         //                   mx : A second matrix
@@ -454,35 +454,35 @@ virtual _matrix* i_matrix::tensor_product(_matrix* mx);
    these functions.  The data ordering is Re(<i|hmx|j>, Im(<i|hmx|j> columns
    then rows (i.e. row by row.)                                             */
 
-virtual std::vector<std::string> i_matrix::printStrings(const   MxPrint& pf) const;
-virtual std::vector<std::string> i_matrix::pictureStrings(const MxPrint& pf) const;
+virtual std::vector<std::string> printStrings(const   MxPrint& pf) const;
+virtual std::vector<std::string> pictureStrings(const MxPrint& pf) const;
 
-virtual void i_matrix::print(std::ostream&   ostr, const MxPrint& pf) const;
-virtual void i_matrix::picture(std::ostream& ostr, const MxPrint& pf) const;
+virtual void print(std::ostream&   ostr, const MxPrint& pf) const;
+virtual void picture(std::ostream& ostr, const MxPrint& pf) const;
 
-virtual inline void i_matrix::write(std::ofstream& fp, int form=0) const;
-virtual inline void i_matrix::read(std::ifstream& fp);
-virtual inline void i_matrix::readASC(std::istream& istr);
+virtual inline void write(std::ofstream& fp, int form=0) const;
+virtual inline void read(std::ifstream& fp);
+virtual inline void readASC(std::istream& istr);
 
 // ______________________________________________________________________
 // M              CLASS I_MATRIX MISCELLANEOUS FUNCTIONS
 // ______________________________________________________________________
 
 
-virtual inline void i_matrix::resize(int i, int j);
+virtual inline void resize(int i, int j);
 
 	// Input          *this : i_matrix
 	//		    i,j : rows and cols values
         // Output 	  *this : resized matrix with i rows & j cols
 
 
-virtual inline _matrix* i_matrix::copy();
+virtual inline _matrix* copy();
 
 	// Input          *this : i_matrix
         // Output 	     mx : A copy of the input i_matrix
 
 
-virtual void i_matrix::convert(_matrix* mx);
+virtual void convert(_matrix* mx);
 
 	// Input          *this : i_matrix
 	// 		     mx : pointer to a matrix
@@ -504,10 +504,10 @@ virtual void i_matrix::convert(_matrix* mx);
         //	                        : except in the case of returning imx
 	//                                which just returns itself
 
-virtual i_matrix* i_matrix::IMX();
-virtual d_matrix* i_matrix::DMX(); 
-virtual h_matrix* i_matrix::HMX();
-virtual n_matrix* i_matrix::NMX();
+virtual i_matrix* IMX();
+virtual d_matrix* DMX(); 
+virtual h_matrix* HMX();
+virtual n_matrix* NMX();
 
 // _________________________________________________________________
 //                            PyGAMMA Code
@@ -515,8 +515,8 @@ virtual n_matrix* i_matrix::NMX();
 
 #ifdef PYGAMMA				// Begin PyGAMMA code block
 
-virtual std::string i_matrix::PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string i_matrix::PyPicture(const MxPrint& PFlgs) const;
+virtual std::string PyPrint(const   MxPrint& PFlgs) const;
+virtual std::string PyPicture(const MxPrint& PFlgs) const;
 
 #endif					// End of PyGAMMA code block
 

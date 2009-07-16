@@ -65,15 +65,15 @@ class spin_op
         // Output               none    : Error message
         //                                Program execution stopped (fatal)
 
-         void spin_op::SOperror(int    eidx, int noret=0) const;
-volatile void spin_op::SOpfatality(int eidx)              const;
+         void SOperror(int    eidx, int noret=0) const;
+volatile void SOpfatality(int eidx)              const;
 
 // ____________________________________________________________________________ 
 // ii                CLASS SPIN PRIVATE AUXILIARY FUNCTIONS
 // ____________________________________________________________________________
 
 
-void spin_op::blow_up() const;
+void blow_up() const;
 
 	// Input		SOp  : Spin operator (this)
 	// Return		none : Spin operator SOp is produced and
@@ -81,7 +81,7 @@ void spin_op::blow_up() const;
 	// Note		             : Does nothing if full Hilbert space
 	//			       representation exists
 
-void spin_op::blow_up(matrix_type t) const;
+void blow_up(matrix_type t) const;
         // Input                SOp     : Spin operator (this)
         // Return               void    : The full Hilbert space matrix
         //                                representaion of SOp is produced
@@ -98,7 +98,7 @@ void spin_op::blow_up(matrix_type t) const;
 // ____________________________________________________________________________
  
  
-int spin_op::checkSpin(int i, int warn=2) const;
+int checkSpin(int i, int warn=2) const;
 
         // Input                SOp     : Spin operator (this)
         //                      warn    : Warning level
@@ -108,7 +108,7 @@ int spin_op::checkSpin(int i, int warn=2) const;
         // Output               TF      : True if the spin exists
 
 
-int spin_op::checkSys(const spin_op& SOp1, int warn=1) const;
+int checkSys(const spin_op& SOp1, int warn=1) const;
 
         // Input                SOp     : Spin operator (this)
         //                      SOp1    : Another spin operator
@@ -123,17 +123,17 @@ int spin_op::checkSys(const spin_op& SOp1, int warn=1) const;
 // iv             CLASS SPIN OPERATOR SETUP FUNCTIONS
 // ____________________________________________________________________________
 
-void spin_op::CopySubSpaces(matrix* prmxs);
-void spin_op::CopySubSpaces(const spin_op& SOp);
-void spin_op::CopySpinFlags(matrix* prmxs);
-void spin_op::CopySpinFlags(const spin_op& SOp);
-void spin_op::ZeroSpinFlags();
-void spin_op::BlendSpinFlags(const spin_op& SOp);
-void spin_op::CopySubArrays(matrix* prmxs);
-void spin_op::CopySubArrays(const spin_op& SOp);
-void spin_op::DelSubArrays();
+void CopySubSpaces(matrix* prmxs);
+void CopySubSpaces(const spin_op& SOp);
+void CopySpinFlags(matrix* prmxs);
+void CopySpinFlags(const spin_op& SOp);
+void ZeroSpinFlags();
+void BlendSpinFlags(const spin_op& SOp);
+void CopySubArrays(matrix* prmxs);
+void CopySubArrays(const spin_op& SOp);
+void DelSubArrays();
 
-int spin_op::CopyFullMx(const spin_op& SOp1, int warn=2) const;
+int CopyFullMx(const spin_op& SOp1, int warn=2) const;
  
         // Input                SOp     : Spin operator (this)
         //                      SOp1    : Another spin operator
@@ -166,11 +166,11 @@ public:
              spins, prmxs          SOp with N subspace & N subspace arrays
                   SOp              SOp that is a duplicate of the on input   */
 
-MSVCDLC spin_op::spin_op();
-MSVCDLC spin_op::spin_op(int spins, matrix* prmxs);
-MSVCDLC spin_op::spin_op(const spin_op& SOp);
-MSVCDLC spin_op::~spin_op();
-spin_op& spin_op::operator= (const spin_op& SOp);
+MSVCDLC spin_op();
+MSVCDLC spin_op(int spins, matrix* prmxs);
+MSVCDLC spin_op(const spin_op& SOp);
+MSVCDLC ~spin_op();
+spin_op& operator= (const spin_op& SOp);
  
 // ____________________________________________________________________________
 // B                 SPIN OPERATOR - SPIN OPERATOR FUNCTIONS
@@ -187,13 +187,13 @@ spin_op& spin_op::operator= (const spin_op& SOp);
      +=     SOp,SOp1  SOp1 added to SOp     *=    SOp,SOp1  SOp mult into SOp1
       -     SOp1,SOp2 Returns SOp1-SOp2                                      */
 
-MSVCDLL        spin_op spin_op::operator-  ()                    const;
-MSVCDLL        spin_op spin_op::operator+  (const spin_op& SOp1) const;
-MSVCDLL        void    spin_op::operator+= (const spin_op& SOp1);
+MSVCDLL        spin_op operator-  ()                    const;
+MSVCDLL        spin_op operator+  (const spin_op& SOp1) const;
+MSVCDLL        void    operator+= (const spin_op& SOp1);
 MSVCDLL friend spin_op          operator-  (const spin_op& SOp1, const spin_op& SOp2);
-MSVCDLL        void    spin_op::operator-= (const spin_op& SOp1);
+MSVCDLL        void    operator-= (const spin_op& SOp1);
 MSVCDLL friend spin_op          operator*  (const spin_op& SOp1, const spin_op& SOp2);
-MSVCDLL        void    spin_op::operator*= (const spin_op& SOp1);
+MSVCDLL        void    operator*= (const spin_op& SOp1);
  
 // ____________________________________________________________________________
 // C                   SPIN OPERATOR - SCALAR FUNCTIONS
@@ -214,18 +214,18 @@ MSVCDLL friend spin_op       operator*  (const spin_op& SOp, const complex& z);
 MSVCDLL friend spin_op       operator*  (const spin_op& SOp, double d);
 MSVCDLL friend spin_op       operator*  (const complex& z,   const spin_op& SOp);
 MSVCDLL friend spin_op       operator*  (double d,           const spin_op& SOp);
-MSVCDLL        void spin_op::operator*= (const complex& z);
-MSVCDLL        void spin_op::operator*= (double d);
+MSVCDLL        void operator*= (const complex& z);
+MSVCDLL        void operator*= (double d);
 MSVCDLL friend spin_op       operator/  (const spin_op& SOp, const complex& z);
 MSVCDLL friend spin_op       operator/  (const spin_op& SOp, double d);
-MSVCDLL        void spin_op::operator/= (const complex& z);
-MSVCDLL        void spin_op::operator/= (double d);
+MSVCDLL        void operator/= (const complex& z);
+MSVCDLL        void operator/= (double d);
 
 // ____________________________________________________________________________
 // D                  SPIN OPERATOR - MATRIX FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL matrix   spin_op::get_mx() const;
+MSVCDLL matrix   get_mx() const;
 MSVCDLL operator matrix() const;
 
 	// Input		SOp  : Spin operator (this)
@@ -238,9 +238,9 @@ MSVCDLL operator matrix() const;
 
 /* "useful" functions, probably unneeded when class spin_op is gone!         */
 
-MSVCDLL spin_op spin_op::exp()     const; 		// Exponentation
-MSVCDLL spin_op spin_op::adjoint() const; 		// Adjoint
-MSVCDLL complex spin_op::trace()   const; 		// Trace
+MSVCDLL spin_op exp()     const; 		// Exponentation
+MSVCDLL spin_op adjoint() const; 		// Adjoint
+MSVCDLL complex trace()   const; 		// Trace
 
 MSVCDLL friend spin_op exp(const spin_op& SOp); 		// Exponentation
 MSVCDLL friend spin_op adjoint(const spin_op &SOp); 		// Adjoint
@@ -248,10 +248,10 @@ MSVCDLL friend complex trace(const spin_op &SOp); 		// Trace
 
 /*                 These are common access functions                         */
 
-MSVCDLL int spin_op::spins( )    const;				// Number of spins
-MSVCDLL int spin_op::refs( )     const;				// Full space mx refs
-MSVCDLL int spin_op::refs(int i) const;				// Sub-space mx refs
-MSVCDLL int spin_op::HS( )       const;				// Full Hilbert space
+MSVCDLL int spins( )    const;				// Number of spins
+MSVCDLL int refs( )     const;				// Full space mx refs
+MSVCDLL int refs(int i) const;				// Sub-space mx refs
+MSVCDLL int HS( )       const;				// Full Hilbert space
 
 // ____________________________________________________________________________
 // F                       SPIN OPERATOR I/O FUNCTIONS
@@ -263,14 +263,14 @@ MSVCDLL int spin_op::HS( )       const;				// Full Hilbert space
 	// Return		void : SOp is placed into the output stream
 
 
-MSVCDLL        void       spin_op::print(std::ostream& ostr, int full=0) const;
+MSVCDLL        void       print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const spin_op& SOp);
    
         // Input                SOp     : Spin operator (this)
         //                      full    : Flag for amount of output
         // Output               void    : Outputs SOp status
 
-MSVCDLL void spin_op::status(int full=1) const;
+MSVCDLL void status(int full=1) const;
  
 // ____________________________________________________________________________
 // G                           SPIN OPERATOR KLUDGE
@@ -282,7 +282,7 @@ MSVCDLL void spin_op::status(int full=1) const;
 // is fixed in the matrix classes, remove this function and all places where
 // its used because it will be no longer necessary.
 
-MSVCDLL void spin_op::FaxisStruct(char axis) const;
+MSVCDLL void FaxisStruct(char axis) const;
 
 // ____________________________________________________________________________
 // H                             PyGAMMA Code
@@ -292,13 +292,13 @@ MSVCDLL void spin_op::FaxisStruct(char axis) const;
 
 //                        Code for (int, matrix*) constructor
 
-spin_op::spin_op(int spins, matrix prmxs);
+spin_op(int spins, matrix prmxs);
 
 //-----------------------------------------------------------------------------
 //                            ASCII OUTPUT FUNCTIONS
 //-----------------------------------------------------------------------------
 
-std::string spin_op::PyPrint();
+std::string PyPrint();
 
 #endif					// End of PyGAMMA code
 

@@ -54,10 +54,10 @@ class h_matrix : public _matrix
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
  
-         void h_matrix::HMxerror(int idx,                        int nr=0) const;
-         void h_matrix::HMxerror(int idx, const std::string& PN, int nr=0) const;
-volatile void h_matrix::HMxfatal(int idx)                                  const;
-volatile void h_matrix::HMxfatal(int idx, const std::string& PN)           const;
+         void HMxerror(int idx,                        int nr=0) const;
+         void HMxerror(int idx, const std::string& PN, int nr=0) const;
+volatile void HMxfatal(int idx)                                  const;
+volatile void HMxfatal(int idx, const std::string& PN)           const;
 
 friend void volatile h_matrix_err(int error);
 
@@ -137,13 +137,13 @@ virtual ~h_matrix();
     the operation cannot be handled by a Hermitian array so the array type
     is changed to be more generic.  The the operation is reattempted.       */
 
-void             h_matrix::operator= (const h_matrix& mx);
-virtual complex& h_matrix::operator() (int i, int j);
-virtual complex  h_matrix::get(int i, int j) const;
-virtual bool     h_matrix::put(const complex& z, int i, int j);
-virtual bool     h_matrix::put_h(const complex& z, int i, int j);
-virtual _matrix* h_matrix::get_block(int row, int col, int nrows, int ncols);
-virtual bool     h_matrix::put_block(int row, int col, _matrix* mx);
+void             operator= (const h_matrix& mx);
+virtual complex& operator() (int i, int j);
+virtual complex  get(int i, int j) const;
+virtual bool     put(const complex& z, int i, int j);
+virtual bool     put_h(const complex& z, int i, int j);
+virtual _matrix* get_block(int row, int col, int nrows, int ncols);
+virtual bool     put_block(int row, int col, _matrix* mx);
 
 // ____________________________________________________________________________
 // C                 CLASS H_MATRIX HERMITIAN_TYPE HANDLING
@@ -161,8 +161,8 @@ virtual bool     h_matrix::put_block(int row, int col, _matrix* mx);
    stored_hermitian  hermitian_type  Returns _hermitian=TRUE
    test_hermitian    hermitian_type  Returns _hermitian=TRUE (d is unused)   */
 
-virtual hermitian_type h_matrix::stored_hermitian( ) const; 
-virtual hermitian_type h_matrix::test_hermitian(double d = GMxCut) const;
+virtual hermitian_type stored_hermitian( ) const; 
+virtual hermitian_type test_hermitian(double d = GMxCut) const;
 
  
 // ____________________________________________________________________________
@@ -181,11 +181,11 @@ virtual hermitian_type h_matrix::test_hermitian(double d = GMxCut) const;
    test_hermitian    *_matrix_type   Type hmx could be within d
    mxtype            string          Returns the string "Hermitian"          */
 
-virtual matrix_type h_matrix::stored_type( ) const;
-virtual matrix_type h_matrix::test_type(matrix_type m=n_matrix_type,
+virtual matrix_type stored_type( ) const;
+virtual matrix_type test_type(matrix_type m=n_matrix_type,
                                                       double d=GMxCut) const;
-virtual std::string h_matrix::mxtype()        const;
-virtual std::string h_matrix::mxtype(bool pf) const;
+virtual std::string mxtype()        const;
+virtual std::string mxtype(bool pf) const;
 
 // ____________________________________________________________________________
 // E                  CLASS H_MATRIX VARIOUS MATRIX CHECKS
@@ -214,17 +214,17 @@ of time..
             ---                         ---                          ij
              k                           k                                  */
 
-virtual bool h_matrix::is_symmetric(double          d=GMxCut) const;
-virtual bool h_matrix::is_hermitian(double          d=GMxCut) const;
-virtual bool h_matrix::is_unitary(double            d=GMxCut) const;
-virtual bool h_matrix::is_real(double               d=GMxCut) const;
-virtual bool h_matrix::is_imaginary(double          d=GMxCut) const;
-virtual bool h_matrix::is_complex(double            d=GMxCut) const;
-virtual bool h_matrix::is_zero(double               d=GMxCut) const;
-virtual bool h_matrix::is_diagonal(double           d=GMxCut) const;
-virtual bool h_matrix::is_square()                            const;
-virtual bool h_matrix::is_equal(_matrix* mx, double d=GMxCut) const;
-bool h_matrix::is_tridiagonal(double d=GMxCut) const;
+virtual bool is_symmetric(double          d=GMxCut) const;
+virtual bool is_hermitian(double          d=GMxCut) const;
+virtual bool is_unitary(double            d=GMxCut) const;
+virtual bool is_real(double               d=GMxCut) const;
+virtual bool is_imaginary(double          d=GMxCut) const;
+virtual bool is_complex(double            d=GMxCut) const;
+virtual bool is_zero(double               d=GMxCut) const;
+virtual bool is_diagonal(double           d=GMxCut) const;
+virtual bool is_square()                            const;
+virtual bool is_equal(_matrix* mx, double d=GMxCut) const;
+bool is_tridiagonal(double d=GMxCut) const;
   
 // ____________________________________________________________________________
 // F                CLASS H_MATRIX BINARY ARITHMETIC FUNCTIONS
@@ -283,14 +283,14 @@ virtual _matrix* divide_two(const complex &z);
    conjugate  <i|hmx|j> -> <i|hmx*|j> 	    IM      <i|hmx|j>->Im(<i|hmx|j>)
    transpose  <i|hmx|j> -> <j|hmx|i>      adjoint   <i|hmx|j>-><j|hmx*|i>   */
 
-virtual _matrix* h_matrix::negate();
-virtual _matrix* h_matrix::RE();
-virtual _matrix* h_matrix::IM();
-virtual _matrix* h_matrix::conjugate();
-virtual _matrix* h_matrix::transpose();
-virtual _matrix* h_matrix::adjoint();
-virtual _matrix* h_matrix::mxexp();
-virtual complex  h_matrix::trace();
+virtual _matrix* negate();
+virtual _matrix* RE();
+virtual _matrix* IM();
+virtual _matrix* conjugate();
+virtual _matrix* transpose();
+virtual _matrix* adjoint();
+virtual _matrix* mxexp();
+virtual complex  trace();
 
 /*     Function    Output                       Description
      ------------  -------  ---------------------------------------------------
@@ -304,16 +304,16 @@ virtual complex  h_matrix::trace();
         minIm      double   Returns smallest imaginary value in the array
         minZ       complex  Returns smallest complex (norm) value in array   */
 
-virtual _matrix* h_matrix::swaprows(  int I, int J);
-virtual _matrix* h_matrix::swapcols(  int I, int J);
-virtual _matrix* h_matrix::permute(   int I, int J);
-        void     h_matrix::permute_ip(int I, int J);
-virtual double   h_matrix::maxRe()   const;
-virtual double   h_matrix::maxIm()   const;
-virtual complex  h_matrix::maxZ()    const;
-virtual double   h_matrix::minRe()   const;
-virtual double   h_matrix::minIm()   const;
-virtual complex  h_matrix::minZ()    const;
+virtual _matrix* swaprows(  int I, int J);
+virtual _matrix* swapcols(  int I, int J);
+virtual _matrix* permute(   int I, int J);
+        void     permute_ip(int I, int J);
+virtual double   maxRe()   const;
+virtual double   maxIm()   const;
+virtual complex  maxZ()    const;
+virtual double   minRe()   const;
+virtual double   minIm()   const;
+virtual complex  minZ()    const;
 
 // ____________________________________________________________________________
 // I                 CLASS H_MATRIX SIMPLE BINARY FUNCTIONS
@@ -393,15 +393,15 @@ virtual _matrix* tensor_product(_matrix* mx);
    these functions.  The data ordering is Re(<i|hmx|j>, Im(<i|hmx|j> columns
    then rows (i.e. row by row.)                                             */
 
-virtual std::vector<std::string> h_matrix::printStrings(const   MxPrint& pf) const;
-virtual std::vector<std::string> h_matrix::pictureStrings(const MxPrint& pf) const;
+virtual std::vector<std::string> printStrings(const   MxPrint& pf) const;
+virtual std::vector<std::string> pictureStrings(const MxPrint& pf) const;
 
-virtual void h_matrix::print(std::ostream&   ostr, const MxPrint& PF) const;
-virtual void h_matrix::picture(std::ostream& ostr, const MxPrint& PF) const;
-virtual        void h_matrix::write(std::ofstream &fp, int form=0);
-virtual        void h_matrix::read(std::ifstream &fp);
-virtual inline void h_matrix::readASC(std::istream& istr);
-virtual        void h_matrix::ask( );
+virtual void print(std::ostream&   ostr, const MxPrint& PF) const;
+virtual void picture(std::ostream& ostr, const MxPrint& PF) const;
+virtual        void write(std::ofstream &fp, int form=0);
+virtual        void read(std::ifstream &fp);
+virtual inline void readASC(std::istream& istr);
+virtual        void ask( );
    
 // ____________________________________________________________________________
 // M                CLASS H_MATRIX MISCELLANEOUS FUNCTIONS
@@ -424,13 +424,13 @@ virtual        void h_matrix::ask( );
    There are no elements lost when using HMX or NMX.  The *MX functions
    will always allocate new memory for the converted matrix from hmx.      */  
 
-virtual void      h_matrix::resize(int i, int j);
-virtual _matrix*  h_matrix::copy();
-virtual void      h_matrix::convert(_matrix* mx);
-virtual i_matrix* h_matrix::IMX();	// hmx -> imx (elements lost, m used)
-virtual d_matrix* h_matrix::DMX();	// hmx -> dmx (off-diags lost, m used)
-virtual h_matrix* h_matrix::HMX();	// hmx -> hmx (no loss, memory used)
-virtual n_matrix* h_matrix::NMX();	// hmx -> nmx (no loss, memory used)
+virtual void      resize(int i, int j);
+virtual _matrix*  copy();
+virtual void      convert(_matrix* mx);
+virtual i_matrix* IMX();	// hmx -> imx (elements lost, m used)
+virtual d_matrix* DMX();	// hmx -> dmx (off-diags lost, m used)
+virtual h_matrix* HMX();	// hmx -> hmx (no loss, memory used)
+virtual n_matrix* NMX();	// hmx -> nmx (no loss, memory used)
 
 // ____________________________________________________________________________
 // N                CLASS H_MATRIX DIAGONALIZATION FUNCTIONS
@@ -483,14 +483,14 @@ virtual n_matrix* h_matrix::NMX();	// hmx -> nmx (no loss, memory used)
   As Pointers Which Will Be Set To Point To the Newly Transformed Arrays,
   They Should NOT Point To Any Array (Use No Memory But The Pointer)         */
 
-        void             h_matrix::cred(_matrix* (&U));
-        void             h_matrix::rred(_matrix* (&U),                int newU=0);
-        void             h_matrix::tqli(_matrix* (&U), _matrix* (&D), int newU=0);
-virtual void             h_matrix::diag(_matrix* (&D), _matrix* (&U));
-virtual std::vector<int> h_matrix::BlockDiag(_matrix*    (&BD), _matrix* (&U));
-virtual void             h_matrix::HermTriDiag(_matrix* (&HTD), _matrix* (&U));
-virtual void             h_matrix::SymTriDiag(_matrix*  (&STD), _matrix* (&U));
-virtual void             h_matrix::SymDiag(_matrix*       (&D), _matrix* (&U));
+        void             cred(_matrix* (&U));
+        void             rred(_matrix* (&U),                int newU=0);
+        void             tqli(_matrix* (&U), _matrix* (&D), int newU=0);
+virtual void             diag(_matrix* (&D), _matrix* (&U));
+virtual std::vector<int> BlockDiag(_matrix*    (&BD), _matrix* (&U));
+virtual void             HermTriDiag(_matrix* (&HTD), _matrix* (&U));
+virtual void             SymTriDiag(_matrix*  (&STD), _matrix* (&U));
+virtual void             SymDiag(_matrix*       (&D), _matrix* (&U));
 
 
 // ____________________________________________________________________________
@@ -571,9 +571,9 @@ virtual void             h_matrix::SymDiag(_matrix*       (&D), _matrix* (&U));
 
         A [|xo> |x1> ... |xn>] = A A  =  [|bo> |b1> .... |bn>] = I          */
 
-virtual _matrix* h_matrix::inv();
-virtual _matrix* h_matrix::LU(int *indx);
-virtual _matrix* h_matrix::LUinv(int *indx, _matrix* LU);
+virtual _matrix* inv();
+virtual _matrix* LU(int *indx);
+virtual _matrix* LUinv(int *indx, _matrix* LU);
 
 // _________________________________________________________________
 //                            PyGAMMA Code
@@ -581,8 +581,8 @@ virtual _matrix* h_matrix::LUinv(int *indx, _matrix* LU);
 
 #ifdef PYGAMMA				// Begin PyGAMMA code block
 
-virtual std::string h_matrix::PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string h_matrix::PyPicture(const MxPrint& PFlgs) const;
+virtual std::string PyPrint(const   MxPrint& PFlgs) const;
+virtual std::string PyPicture(const MxPrint& PFlgs) const;
 
 #endif						// End of PyGAMMA code block
 
