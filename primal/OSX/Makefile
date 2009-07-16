@@ -880,7 +880,7 @@ install: force
 	@echo " * GAMMA Library Installation Directory Is ${LIBINSTALLDIR}"
 	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
-	@echo " * Setting Link For libgamma.so"
+	@echo " * Setting Link For ${SO_NAME}"
 	@echo " * Adding Link For GAMMA Base Library Name"
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
 	@echo " * Finished. Compile Command gamma Should Now Work"
