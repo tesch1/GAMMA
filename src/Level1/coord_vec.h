@@ -80,9 +80,9 @@ private:
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */ 
 
-void coord_vec::CVerror(int eidx, int noret=0) const;
-void coord_vec::CVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void coord_vec::CVfatality(int eidx) const;
+void CVerror(int eidx, int noret=0) const;
+void CVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void CVfatality(int eidx) const;
 
 // ____________________________________________________________________________
 // ii                  COORDINATE VECTOR SETUP FUNCTIONS
@@ -108,14 +108,14 @@ volatile void coord_vec::CVfatality(int eidx) const;
         // Output SetCoords	none	: Coordinate vector coordinates
         //                                set from parameters in pset
 
-int coord_vec::SetNPoints(const ParameterSet& pset, int warn=2);
-int coord_vec::SetCoords(const  ParameterSet& pset, int warn=-1);
+int SetNPoints(const ParameterSet& pset, int warn=2);
+int SetCoords(const  ParameterSet& pset, int warn=-1);
 
 // ____________________________________________________________________________
 // iii                 COORDINATE VECTOR CHECKING FUNCTIONS
 // ____________________________________________________________________________
  
-void coord_vec::check(int index) const;
+void check(int index) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -148,13 +148,13 @@ void coord_vec::check(int index) const;
    type 3 with value stored as a string "( #, #, # )". All I/O between GAMMA
    coordinates and single parameters must follow this format!              */
 
-MSVCDLC         coord_vec::coord_vec( );
-MSVCDLC         coord_vec::coord_vec(int pts);
-MSVCDLC         coord_vec::coord_vec (const coord_vec& cvec1);
-MSVCDLC         coord_vec::coord_vec(const ParameterSet& pset, int idx=-1, int warn=2);
-MSVCDLC         coord_vec::coord_vec(const row_vector& X, const row_vector& Y, const row_vector& Z);
-MSVCDLC virtual coord_vec::~coord_vec ();
-MSVCDLL void    coord_vec::operator= (const coord_vec& cvec1);
+MSVCDLC         coord_vec( );
+MSVCDLC         coord_vec(int pts);
+MSVCDLC         coord_vec (const coord_vec& cvec1);
+MSVCDLC         coord_vec(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLC         coord_vec(const row_vector& X, const row_vector& Y, const row_vector& Z);
+MSVCDLC virtual ~coord_vec ();
+MSVCDLL void    operator= (const coord_vec& cvec1);
 
 // ____________________________________________________________________________
 // B                  COORDINATE VECTOR ROTATION FUNCTIONS
@@ -178,9 +178,9 @@ MSVCDLL void    coord_vec::operator= (const coord_vec& cvec1);
         // Note                      : The reference axes are static!  Thus
         //                             multiple rotations should be cumulative
  
-MSVCDLL coord_vec coord_vec::xrotate(double theta, int rad=0) const;
-MSVCDLL coord_vec coord_vec::yrotate(double theta, int rad=0) const;
-MSVCDLL coord_vec coord_vec::zrotate(double phi,   int rad=0) const;
+MSVCDLL coord_vec xrotate(double theta, int rad=0) const;
+MSVCDLL coord_vec yrotate(double theta, int rad=0) const;
+MSVCDLL coord_vec zrotate(double phi,   int rad=0) const;
 
         // Input                cvec : Coordinate vector(this)
         //                      Rmx  : 3x3 Rotation matrix
@@ -193,9 +193,9 @@ MSVCDLL coord_vec coord_vec::zrotate(double phi,   int rad=0) const;
 	//			       or by input rotation matrix Rmx
 	// Note			     : Angles input in radians
 
-MSVCDLL coord_vec coord_vec::rotate(const matrix& Rmx) const;
-MSVCDLL coord_vec coord_vec::rotate(double alpha, double beta, double gamma) const;
-MSVCDLL coord_vec coord_vec::rotate(const coord& EA) const;
+MSVCDLL coord_vec rotate(const matrix& Rmx) const;
+MSVCDLL coord_vec rotate(double alpha, double beta, double gamma) const;
+MSVCDLL coord_vec rotate(const coord& EA) const;
 
 	// Input		cvec : Coordinate vector(this)
 	// 			alpha: Euler angle (radians)
@@ -207,8 +207,8 @@ MSVCDLL coord_vec coord_vec::rotate(const coord& EA) const;
 	//			       or by input Euler angles
 	// Note			     : Angles input in radians
 
-MSVCDLL void coord_vec::rotate_ip(double alpha, double beta, double gamma);
-MSVCDLL void coord_vec::rotate_ip(const coord &EA);
+MSVCDLL void rotate_ip(double alpha, double beta, double gamma);
+MSVCDLL void rotate_ip(const coord &EA);
 
 // ____________________________________________________________________________
 // C                  COORDINATE VECTOR TRANSLATION FUNCTIONS
@@ -236,10 +236,10 @@ MSVCDLL void coord_vec::rotate_ip(const coord &EA);
 	//				  translated by del or by
 	//				  delx,dely, & delz
 
-MSVCDLL coord_vec coord_vec::translate(double    delx, double dely=0, double delz=0) const;
-MSVCDLL void      coord_vec::translate_ip(double delx, double dely=0, double delz=0);
-MSVCDLL coord_vec coord_vec::translate(const     coord& delpt) const;
-MSVCDLL void      coord_vec::translate_ip(const  coord& delpt);
+MSVCDLL coord_vec translate(double    delx, double dely=0, double delz=0) const;
+MSVCDLL void      translate_ip(double delx, double dely=0, double delz=0);
+MSVCDLL coord_vec translate(const     coord& delpt) const;
+MSVCDLL void      translate_ip(const  coord& delpt);
 
 	// Input		cvec    : Coordinate vector (this)
 	// 			delx    : Change in x coordinate
@@ -252,13 +252,13 @@ MSVCDLL void      coord_vec::translate_ip(const  coord& delpt);
 	//				  translated along u axis by delu
 	//				  where u = {x,y,z} directly
 
-MSVCDLL coord_vec coord_vec::trans_x(double delx) const;
-MSVCDLL coord_vec coord_vec::trans_y(double dely) const;
-MSVCDLL coord_vec coord_vec::trans_z(double delz) const;
+MSVCDLL coord_vec trans_x(double delx) const;
+MSVCDLL coord_vec trans_y(double dely) const;
+MSVCDLL coord_vec trans_z(double delz) const;
 
-MSVCDLL void coord_vec::trans_x_ip(double delx);
-MSVCDLL void coord_vec::trans_y_ip(double dely);
-MSVCDLL void coord_vec::trans_z_ip(double delz);
+MSVCDLL void trans_x_ip(double delx);
+MSVCDLL void trans_y_ip(double dely);
+MSVCDLL void trans_z_ip(double delz);
 
 
 // ____________________________________________________________________________
@@ -267,7 +267,7 @@ MSVCDLL void coord_vec::trans_z_ip(double delz);
 
 ///Center Projection Functions
 
-MSVCDLL row_vector coord_vec::project(int projx, int projy) const;
+MSVCDLL row_vector project(int projx, int projy) const;
 
 	// Input		cvec    : Coordinate vector (this)
 	// 			projx   : Axis flag to project onto x
@@ -304,10 +304,10 @@ MSVCDLL row_vector coord_vec::project(int projx, int projy) const;
         cv/=r           Multiplies all coordinates in vector by 1/r          */
       
 MSVCDLL friend    coord_vec  operator *  (double r, const coord_vec& cvec1);
-MSVCDLL coord_vec coord_vec::operator *  (double r) const;
-MSVCDLL void      coord_vec::operator *= (double r);
-MSVCDLL coord_vec coord_vec::operator /  (double r) const;
-MSVCDLL void      coord_vec::operator /= (double r);
+MSVCDLL coord_vec operator *  (double r) const;
+MSVCDLL void      operator *= (double r);
+MSVCDLL coord_vec operator /  (double r) const;
+MSVCDLL void      operator /= (double r);
 
 // ----------------------------------------------------------------------------
 //                      COORDINATE VECTOR WITH COORDINATE
@@ -320,19 +320,19 @@ MSVCDLL void      coord_vec::operator /= (double r);
          cv-pt          Subtracts point p from all coordinates in vector
          cv-=pt         Subtracts point p from all coordinates in vector     */
 
-MSVCDLL coord_vec coord_vec::operator +  (const coord& pt) const;
-MSVCDLL void      coord_vec::operator += (const coord& pt);
-MSVCDLL coord_vec coord_vec::operator -  (const coord& pt) const;
-MSVCDLL void      coord_vec::operator -= (const coord& pt);
+MSVCDLL coord_vec operator +  (const coord& pt) const;
+MSVCDLL void      operator += (const coord& pt);
+MSVCDLL coord_vec operator -  (const coord& pt) const;
+MSVCDLL void      operator -= (const coord& pt);
 
 // ----------------------------------------------------------------------------
 //                  COORDINATE VECTOR WITH COORDINATE VECTOR
 // ----------------------------------------------------------------------------
 
-MSVCDLL coord_vec coord_vec::operator +  (const coord_vec& cv) const;
-MSVCDLL void      coord_vec::operator += (const coord_vec& cv);
-MSVCDLL coord_vec coord_vec::operator -  (const coord_vec& cv) const;
-MSVCDLL void      coord_vec::operator -= (const coord_vec& cv);
+MSVCDLL coord_vec operator +  (const coord_vec& cv) const;
+MSVCDLL void      operator += (const coord_vec& cv);
+MSVCDLL coord_vec operator -  (const coord_vec& cv) const;
+MSVCDLL void      operator -= (const coord_vec& cv);
 
 // ____________________________________________________________________________
 // F                COORDINATE VECTOR GENERAL FUNCTIONS
@@ -350,19 +350,19 @@ MSVCDLL void      coord_vec::operator -= (const coord_vec& cv);
 	// Input		cvec  : A coordinate vector(this)
 	// Return		Npts  : Number of points in cvec
 
-MSVCDLL int coord_vec::size() const;
+MSVCDLL int size() const;
 
 	// Input		cvec  : A coordinate vector(this)
 	// Return		maxx  : Maximum x value
 	// Return		mayy  : Maximum y value
 	// Return		mazz  : Maximum z value
 
-MSVCDLL double coord_vec::max_x() const;
-MSVCDLL double coord_vec::max_y() const;
-MSVCDLL double coord_vec::max_z() const;
+MSVCDLL double max_x() const;
+MSVCDLL double max_y() const;
+MSVCDLL double max_z() const;
 
 
-MSVCDLL coord coord_vec::maxima() const;
+MSVCDLL coord maxima() const;
 
 	// Input		cvec  : A coordinate vector(this)
 	// Return		pt    : Coordinate point whose x, y, & z
@@ -371,7 +371,7 @@ MSVCDLL coord coord_vec::maxima() const;
 
 
 
-MSVCDLL void coord_vec::maxima(double &x, double &y, double &z) const;
+MSVCDLL void maxima(double &x, double &y, double &z) const;
 
 	// Input		cvec  : A coordinate vector(this)
 	// 			x     : x coordinate
@@ -381,14 +381,14 @@ MSVCDLL void coord_vec::maxima(double &x, double &y, double &z) const;
 	//			        maximum values over the vector
 
 
-MSVCDLL double coord_vec::max_R() const;
+MSVCDLL double max_R() const;
 
 	// Input		cvec  : A coordinate vector(this)
 	// Return		maxR  : Maximum radius value
 	///F_list max_R	      	      - Maximum radius of coodinate in vector
 
 
-MSVCDLL void coord_vec::max_R(int &maxi, double &maxR) const;
+MSVCDLL void max_R(int &maxi, double &maxR) const;
 
 	// Input		cvec  : A coordinate vector(this)
 	// Return		void  : Maximum radius value
@@ -397,7 +397,7 @@ MSVCDLL void coord_vec::max_R(int &maxi, double &maxR) const;
 	//				is copied into maxi
 
 
-MSVCDLL coord_vec coord_vec::vectors() const;
+MSVCDLL coord_vec vectors() const;
 
 	// Input		cvec  : A coordinate vector(this)
 	// Return		cvect : Coordinates of the vectors
@@ -405,7 +405,7 @@ MSVCDLL coord_vec coord_vec::vectors() const;
 	///F_list vectors      	      - Vectors connecting vector points
 
 
-MSVCDLL coord_vec coord_vec::vectors_f() const;
+MSVCDLL coord_vec vectors_f() const;
 
 	// Input		cvec  : A coordinate vector(this)
 	// Return		cvect : Coordinates of the vectors
@@ -414,7 +414,7 @@ MSVCDLL coord_vec coord_vec::vectors_f() const;
 
 
 
-MSVCDLL double coord_vec::distance(int pt1, int pt2, int Angs=0) const;
+MSVCDLL double distance(int pt1, int pt2, int Angs=0) const;
 
 	// Input		cvec  : A coordinate vector(this)
 	//			pt1   : First coordinate point
@@ -433,9 +433,9 @@ MSVCDLL double coord_vec::distance(int pt1, int pt2, int Angs=0) const;
 	// Return		dmx   : A distance matrix between
 	//				the points of cvec
 
-MSVCDLL matrix coord_vec::distances(int Angs=0) const;
-MSVCDLL matrix coord_vec::thetas(int    deg=0)  const;
-MSVCDLL matrix coord_vec::phis(int      deg=0)  const;
+MSVCDLL matrix distances(int Angs=0) const;
+MSVCDLL matrix thetas(int    deg=0)  const;
+MSVCDLL matrix phis(int      deg=0)  const;
 
 // ____________________________________________________________________________
 // G                      INDIVIDUAL COORDINATE ACCESS
@@ -463,14 +463,14 @@ MSVCDLL matrix coord_vec::phis(int      deg=0)  const;
 ///F_list z      	      - z-component of individual coordinate
 
 MSVCDLL coord                operator() (int index)                    const;
-MSVCDLL void      coord_vec::put(const coord &pt1, int index);
-MSVCDLL void      coord_vec::put(double x, double y, double z, int index);
-MSVCDLL coord     coord_vec::get(int index)                            const;
-MSVCDLL double    coord_vec::x(int index)                              const;
-MSVCDLL double    coord_vec::y(int index)                              const;
-MSVCDLL double    coord_vec::z(int index)                              const;
-MSVCDLL coord_vec coord_vec::get_block(int index, int npts)            const;
-MSVCDLL void      coord_vec::put_block(int index, const coord_vec& cv) const;
+MSVCDLL void      put(const coord &pt1, int index);
+MSVCDLL void      put(double x, double y, double z, int index);
+MSVCDLL coord     get(int index)                            const;
+MSVCDLL double    x(int index)                              const;
+MSVCDLL double    y(int index)                              const;
+MSVCDLL double    z(int index)                              const;
+MSVCDLL coord_vec get_block(int index, int npts)            const;
+MSVCDLL void      put_block(int index, const coord_vec& cv) const;
 
 // ____________________________________________________________________________
 // H                         PARAMETER SET FUNCTIONS
@@ -500,7 +500,7 @@ MSVCDLL friend void operator+= (ParameterSet& pset, const coord_vec& cvec);
 	///F_list +=      	      - Unary addition to parameter set
 
 
-MSVCDLL void coord_vec::PSetAdd(ParameterSet& pset, int idx=-1) const;
+MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1) const;
 
         // Input                cvec    : Coordinate vector
         //                      pset    : Parameter set
@@ -548,14 +548,14 @@ MSVCDLL int operator= (const ParameterSet& pset);
         // Note                         : This depends on function PSetAdd!
 
 
-MSVCDLL int coord_vec::write(const std::string &filename, int idx=-1, int warn=2) const;
-MSVCDLL int coord_vec::write(std::ofstream& ofstr,        int idx=-1, int warn=2) const;
+MSVCDLL int write(const std::string &filename, int idx=-1, int warn=2) const;
+MSVCDLL int write(std::ofstream& ofstr,        int idx=-1, int warn=2) const;
  
 // ____________________________________________________________________________
 // I                COORDINATE VECTOR AUXILIARY FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL bool coord_vec::is_zero( ) const;
+MSVCDLL bool is_zero( ) const;
  
         // Input                cvec  : Coordinate vector (this)
         // Output               TF    : False if any coordinate in
@@ -567,7 +567,7 @@ MSVCDLL bool coord_vec::is_zero( ) const;
 
 ///Center Coordinate Vector I/O Functions
  
-MSVCDLL virtual std::string coord_vec::ask_read(int argc, char* argv[], int argn,
+MSVCDLL virtual std::string ask_read(int argc, char* argv[], int argn,
                                                        int idx=-1, int warn=2);
  
         // Input                cvec    : Dipolar interaction (this)
@@ -598,8 +598,8 @@ MSVCDLL virtual std::string coord_vec::ask_read(int argc, char* argv[], int argn
 	//				  Return is True if read properly.
 	///F_list read      	        - Input from disk file
 
-MSVCDLL virtual int coord_vec::read(const std::string& filename, int idx=-1, int warn=2);
-MSVCDLL virtual int coord_vec::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL virtual int read(const std::string& filename, int idx=-1, int warn=2);
+MSVCDLL virtual int read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 // ____________________________________________________________________________
 // K               CLASS COORDINATE VECTOR OUTPUT FUNCTIONS
@@ -613,22 +613,22 @@ MSVCDLL virtual int coord_vec::read(const ParameterSet& pset,    int idx=-1, int
 	//				to the output stream
 	///F_list print               - Formatted output to ostream
 
-MSVCDLL std::ostream& coord_vec::printf(std::ostream& out, int units = 0) const;
-MSVCDLL std::ostream& coord_vec::printCylindrical(std::ostream& ostr, double sf=1) const;
+MSVCDLL std::ostream& printf(std::ostream& out, int units = 0) const;
+MSVCDLL std::ostream& printCylindrical(std::ostream& ostr, double sf=1) const;
  
         // Input                cvec  : Coordinate vector (this)
         //                              assumed Cartesian {x,y,z}
         //                      ostr  : Output stream
  
  
-MSVCDLL std::ostream& coord_vec::printSpherical(std::ostream& ostr, double sf=1) const;
+MSVCDLL std::ostream& printSpherical(std::ostream& ostr, double sf=1) const;
  
         // Input                cvec  : Coordinate vector (this)
         //                              assumed Cartesian {x,y,z}
         //                      ostr  : Output stream
 
  
-MSVCDLL std::ostream& coord_vec::printCartesian(std::ostream& ostr, double sf=1) const;
+MSVCDLL std::ostream& printCartesian(std::ostream& ostr, double sf=1) const;
  
         // Input                cvec  : Coordinate vector (this)
         //                              assumed Cartesian {x,y,z} 
@@ -641,7 +641,7 @@ MSVCDLL std::ostream& coord_vec::printCartesian(std::ostream& ostr, double sf=1)
 	///F_list print               - Output to ostream
 	///F_list <<                  - Output to ostream
 
-MSVCDLL        std::ostream& coord_vec::print(std::ostream& ostr, int ncols=2, int N=-1) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int ncols=2, int N=-1) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const coord_vec &cvec);
 
 // ____________________________________________________________________________
@@ -658,8 +658,8 @@ MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const coord_vec &c
 	// Output               cvec1   : Equivalent vector in Spherical
         //                                coordinates { R, theta, phi }
  
-MSVCDLL coord_vec coord_vec::Cart2Sph(int rad=1) const;
-MSVCDLL coord_vec coord_vec::Sph2Cart(int rad=1) const;
+MSVCDLL coord_vec Cart2Sph(int rad=1) const;
+MSVCDLL coord_vec Sph2Cart(int rad=1) const;
 
 //-----------------------------------------------------------------------------
 //               Cartesian <---------> Cylindrical Conversion
@@ -671,8 +671,8 @@ MSVCDLL coord_vec coord_vec::Sph2Cart(int rad=1) const;
         // Output               pt1     : Equivalent vector in Cylindrical
         //                                coordinates { R, theta, z }
  
-MSVCDLL coord_vec coord_vec::Cart2Cyl(int rad=1) const;
-MSVCDLL coord_vec coord_vec::Cyl2Cart(int rad=1) const;
+MSVCDLL coord_vec Cart2Cyl(int rad=1) const;
+MSVCDLL coord_vec Cyl2Cart(int rad=1) const;
 
 //-----------------------------------------------------------------------------
 //               Spherical <---------> Cylindrical Conversion
@@ -684,8 +684,8 @@ MSVCDLL coord_vec coord_vec::Cyl2Cart(int rad=1) const;
         // Output               pt1     : Equivalent vector in Cylindrical
         //                                coordinates { R, theta, z }
 
-MSVCDLL coord_vec coord_vec::Sph2Cyl(int rad=1) const;
-MSVCDLL coord_vec coord_vec::Cyl2Sph(int rad=1) const;
+MSVCDLL coord_vec Sph2Cyl(int rad=1) const;
+MSVCDLL coord_vec Cyl2Sph(int rad=1) const;
 
 // ____________________________________________________________________________
 // M                        PyGAMMA Code (Member)
@@ -693,26 +693,26 @@ MSVCDLL coord_vec coord_vec::Cyl2Sph(int rad=1) const;
 
 #ifdef PYGAMMA					// Begin PyGAMMA code block
 
-coord_vec coord_vec::rotateA(const matrix& Rmx) const;
-coord_vec coord_vec::rotateB(double alpha, double beta, double gamma) const;
-coord_vec coord_vec::rotateC(const coord& EA) const;
+coord_vec rotateA(const matrix& Rmx) const;
+coord_vec rotateB(double alpha, double beta, double gamma) const;
+coord_vec rotateC(const coord& EA) const;
 
-void coord_vec::rotate_ipA(double alpha, double beta, double gamma);
-void coord_vec::rotate_ipB(const coord &EA);
+void rotate_ipA(double alpha, double beta, double gamma);
+void rotate_ipB(const coord &EA);
 
-coord coord_vec::maximaA() const;
-void  coord_vec::maximaB(double &x, double &y, double &z) const;
+coord maximaA() const;
+void  maximaB(double &x, double &y, double &z) const;
 
-double coord_vec::max_RA() const;
-void   coord_vec::max_RB(int &maxi, double &maxR) const;
+double max_RA() const;
+void   max_RB(int &maxi, double &maxR) const;
 
-void coord_vec::putA(const coord &pt1, int index);
-void coord_vec::putB(double x, double y, double z, int index);
+void putA(const coord &pt1, int index);
+void putB(double x, double y, double z, int index);
 
-std::string coord_vec::PyprintCylindrical(double sf) const;
-std::string coord_vec::PyprintSpherical(double sf) const;
-std::string coord_vec::PyprintCartesian(double sf) const;
-std::string coord_vec::PyPrint() const;
+std::string PyprintCylindrical(double sf) const;
+std::string PyprintSpherical(double sf) const;
+std::string PyprintCartesian(double sf) const;
+std::string PyPrint() const;
 
 #endif						// End of PyGAMMA code block
 
