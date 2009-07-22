@@ -31,6 +31,7 @@
 #  endif
 
 #include <Matrix/MxModBas.h>		// Include the implementation
+#include <stdlib.h>
 #include <string>			// Know about string class
 #ifndef MSC_VER				// If not using MS Visual C++
   #include <stdio.h>			// know about sprintf function

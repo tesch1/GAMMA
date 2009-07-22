@@ -36,6 +36,7 @@
 #include <Matrix/i_matrix.h>		// Know about identity arrays
 #include <Matrix/h_matrix.h>		// Know about hermitian arrays
 #include <Matrix/MxModBas.h>            // Include Matrix module errors 
+#include <stdlib.h>
 #include <fstream>                      // Include libstdc++ filestreams
 #include <vector>			// Include libstdc++ STL vectors
 #include <cmath>			// Inlcude HUGE_VAL_VAL
