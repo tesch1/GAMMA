@@ -130,7 +130,7 @@ MSVCDLL void operator = (const PulSupCycle& SCyc1);
         ///F_list = 		- Assignment
 
 
-MSVCDLL void PulSupCycle::operator = (const PulCycle& Cyc);
+MSVCDLL void operator = (const PulCycle& Cyc);
 
         // Input        SCyc    : Pulse Supercycle (this)
         //              Cyc     : Pulse Cycle
@@ -154,8 +154,8 @@ MSVCDLL row_vector values()  const;
 
 // ----------------- Functions For Specific Supercycle Step -------------------
  
-MSVCDLL complex PulSupCycle::value(int i)  const;
-MSVCDLL double  PulSupCycle::phase(int i)  const;
+MSVCDLL complex value(int i)  const;
+MSVCDLL double  phase(int i)  const;
 
 
 // ____________________________________________________________________________
@@ -168,7 +168,7 @@ MSVCDLL double  PulSupCycle::phase(int i)  const;
 // ____________________________________________________________________________
 
 
-//void PulSupCycle::GP(int split=0, int ends=0) const;
+//void GP(int split=0, int ends=0) const;
 
         // Input                SCyc    : Pulse Supercycle
         //                      split   : Flag to split steps
@@ -182,7 +182,7 @@ MSVCDLL double  PulSupCycle::phase(int i)  const;
         //                                Gnuplot.
 
 
-//void PulSupCycle::GP(const PulWaveform& PW, int split, int ends) const;
+//void GP(const PulWaveform& PW, int split, int ends) const;
 
         // Input                SCyc     : Pulse Supercycle
         //                      PWF     : Pulse Waveform 
@@ -201,7 +201,7 @@ MSVCDLL double  PulSupCycle::phase(int i)  const;
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& PulSupCycle::printBase(std::ostream &ostr, double SCyclen=0) const;
+MSVCDLL std::ostream& printBase(std::ostream &ostr, double SCyclen=0) const;
 
         // Input                SCyc     : Pulse Supercycle
         //                      ostr    : Output stream
@@ -211,7 +211,7 @@ MSVCDLL std::ostream& PulSupCycle::printBase(std::ostream &ostr, double SCyclen=
         //                                to the output stream
 
 
-MSVCDLL std::ostream& PulSupCycle::printSteps(std::ostream &ostr) const;
+MSVCDLL std::ostream& printSteps(std::ostream &ostr) const;
  
         // Input                SCyc     : Pulse Supercycle
         //                      ostr    : Output stream

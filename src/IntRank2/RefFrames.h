@@ -65,7 +65,7 @@ volatile void RFSfatal(int eidx, const std::string& pname)              const;
 // ii                REFERENCE FRAMES CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
-bool RefFrames::ChkIdx(int i, bool warn=true) const;	// Check index i OK
+bool ChkIdx(int i, bool warn=true) const;	// Check index i OK
 
 // ____________________________________________________________________________
 // iii         REFERENCE FRAMES PARAMETER SET SETUP FUNCTIONS
@@ -94,11 +94,11 @@ bool RefFrames::ChkIdx(int i, bool warn=true) const;	// Check index i OK
        Output           TF      : Reference Frame is set
                                   from parameters in pset		     */
 
-bool RefFrames::SetRefFrm(const  ParameterSet& pset,int pfx=-1,  int warn=2);
-bool RefFrames::SetNames(const   ParameterSet& pset,         bool warn=true);
-bool RefFrames::SetNAxes(const   ParameterSet& pset,         bool warn=true);
-bool RefFrames::SetEAngles(const ParameterSet& pset,         bool warn=true);
-bool RefFrames::SetEAngVec(const ParameterSet& pset,         bool warn=true);
+bool SetRefFrm(const  ParameterSet& pset,int pfx=-1,  int warn=2);
+bool SetNames(const   ParameterSet& pset,         bool warn=true);
+bool SetNAxes(const   ParameterSet& pset,         bool warn=true);
+bool SetEAngles(const ParameterSet& pset,         bool warn=true);
+bool SetEAngVec(const ParameterSet& pset,         bool warn=true);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -120,49 +120,49 @@ bool RefFrames::SetEAngVec(const ParameterSet& pset,         bool warn=true);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-RefFrames::RefFrames();
+RefFrames();
 
 // ----------------------------------------------------------------------------
 //                    Constructors Using The Same Rotation
 // ----------------------------------------------------------------------------
 
-RefFrames::RefFrames(const std::string& Fi, const std::string& Ff,
+RefFrames(const std::string& Fi, const std::string& Ff,
                                                      const EAngles& EA, int N);
 
 // ----------------------------------------------------------------------------
 //                    Constructors Using Multiple Rotations
 // ----------------------------------------------------------------------------
 
-RefFrames::RefFrames(const std::string& Fi, const std::string& Ff,
+RefFrames(const std::string& Fi, const std::string& Ff,
                                             const std::vector<EAngles>& EAvec);
 
 // ----------------------------------------------------------------------------
 //                    Construction Using Parameter Sets
 // ----------------------------------------------------------------------------
 
-RefFrames::RefFrames(const ParameterSet& pset, int idx=-1, int warn=2);
+RefFrames(const ParameterSet& pset, int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //                          Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-RefFrames& RefFrames::operator= (const RefFrames& RFrms);
-     RefFrames::~RefFrames();
+RefFrames& operator= (const RefFrames& RFrms);
+     ~RefFrames();
 
 // ____________________________________________________________________________
 // B                    REFERENCE FRAMES ACCESS FUNCTIONS
 // ____________________________________________________________________________
 
-std::string  RefFrames::InitialAxes() const;
-std::string  RefFrames::FinalAxes()   const;
+std::string  InitialAxes() const;
+std::string  FinalAxes()   const;
 
-void         RefFrames::InitialAxes(const std::string& Ai);
-void         RefFrames::FinalAxes(const   std::string& Af);
+void         InitialAxes(const std::string& Ai);
+void         FinalAxes(const   std::string& Af);
 
-EAngles      RefFrames::EA(int i=-1) const;
-void         RefFrames::EA(const EAngles& ea, int i);
+EAngles      EA(int i=-1) const;
+void         EA(const EAngles& ea, int i);
 
-int          RefFrames:: size() const;
+int           size() const;
 
 // ____________________________________________________________________________
 // C                         PARAMETER SET FUNCTIONS
@@ -178,7 +178,7 @@ int          RefFrames:: size() const;
 
             operator ParameterSet( ) const;
 friend void operator+= (ParameterSet& pset, const RefFrames& RFrms);
-       void RefFrames::PSetAdd(ParameterSet& pset,   int pfx=-1) const;
+       void PSetAdd(ParameterSet& pset,   int pfx=-1) const;
 
 // ----------------------------------------------------------------------------
 //      Functions To Make A ASCII Parameter File From A Reference Frame
@@ -188,7 +188,7 @@ friend void operator+= (ParameterSet& pset, const RefFrames& RFrms);
    frame. Individual rotations will be placed into the file parameters as
    Euler angle in degrees.                                                   */
 
-void RefFrames::write(const std::string &filename, int pfx=-1) const;
+void write(const std::string &filename, int pfx=-1) const;
 
 // ____________________________________________________________________________
 // D                      REFERENCE FRAMES INPUT FUNCTIONS
@@ -211,11 +211,11 @@ void RefFrames::write(const std::string &filename, int pfx=-1) const;
                                           from parameters in file filename
                                 file    : Name of file used to set frame    */
 
-bool RefFrames::read(const std::string& file,  int idx=-1, int warn=2);
-bool RefFrames::read(const ParameterSet& pset, int idx=-1, int warn=2);
-std::string RefFrames::ask_read(int argc, char* argv[], int argn,
+bool read(const std::string& file,  int idx=-1, int warn=2);
+bool read(const ParameterSet& pset, int idx=-1, int warn=2);
+std::string ask_read(int argc, char* argv[], int argn,
                                                                    int idx=-1);
-std::string RefFrames::ask_read(int argc, char* argv[], int argn,
+std::string ask_read(int argc, char* argv[], int argn,
                                                 const string& def, int idx=-1);
  
 // ____________________________________________________________________________
@@ -233,7 +233,7 @@ std::string RefFrames::ask_read(int argc, char* argv[], int argn,
            Output               none    : Reference Frame information
                                           placed into the output stream      */
 
-       std::ostream& RefFrames::print(std::ostream& out, int fflag=-1) const;
+       std::ostream& print(std::ostream& out, int fflag=-1) const;
 friend std::ostream& operator<<      (std::ostream& out, const RefFrames& RFrms);
 
   };

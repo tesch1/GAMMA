@@ -243,10 +243,10 @@ volatile void XWinAcqParfatality(int eidx, const std::string& pname) const;
 // ii                 XWinNMR AcqPar File Default Parmameters
 // ____________________________________________________________________________
 
-void XWinAcqPar::SetDefaults(const std::string& fname);
-void XWinAcqPar::SetDefaults1(const std::string& fname);
-void XWinAcqPar::SetDefaults2(const std::string& fname);
-void XWinAcqPar::Copy(const XWinAcqPar& XWP);
+void SetDefaults(const std::string& fname);
+void SetDefaults1(const std::string& fname);
+void SetDefaults2(const std::string& fname);
+void Copy(const XWinAcqPar& XWP);
  
 // ____________________________________________________________________________
 // iii          XWinNMR AcqPar Parmameter Setting Functions
@@ -265,15 +265,15 @@ void XWinAcqPar::Copy(const XWinAcqPar& XWP);
              the offset values the same.
 */ 
  
-void XWinAcqPar::CheckNuclei();
-void XWinAcqPar::SetField();
-void XWinAcqPar::FieldReset(double BoT);
-void XWinAcqPar::SetIN(int i, double inval);
-bool XWinAcqPar::SetDelay(int idx, double tsec, int warn=2);
-bool XWinAcqPar::SetNucleus(int channel, const std::string& I, double off, int w=2);
-void XWinAcqPar::SetO(int i, double offset);
-bool XWinAcqPar::SetPulse(int idx, double tusec, int warn=2);
-void XWinAcqPar::SetSW(double sw, int inHz=0);
+void CheckNuclei();
+void SetField();
+void FieldReset(double BoT);
+void SetIN(int i, double inval);
+bool SetDelay(int idx, double tsec, int warn=2);
+bool SetNucleus(int channel, const std::string& I, double off, int w=2);
+void SetO(int i, double offset);
+bool SetPulse(int idx, double tusec, int warn=2);
+void SetSW(double sw, int inHz=0);
 
 public:
 // ____________________________________________________________________________ 
@@ -286,11 +286,11 @@ public:
    constructor specified.  The reading and writing of the associated ASCII
    parameter file is done in one step, so we don't need anything complex.    */
 
-        XWinAcqPar::XWinAcqPar();
-        XWinAcqPar::XWinAcqPar(const std::string& fname, int type=1);
-        XWinAcqPar::XWinAcqPar(const XWinAcqPar& XWA2);
-virtual XWinAcqPar::~XWinAcqPar();
-void    XWinAcqPar::operator= (const XWinAcqPar& XWA2);
+        XWinAcqPar();
+        XWinAcqPar(const std::string& fname, int type=1);
+        XWinAcqPar(const XWinAcqPar& XWA2);
+virtual ~XWinAcqPar();
+void    operator= (const XWinAcqPar& XWA2);
 
 
 // ____________________________________________________________________________
@@ -301,70 +301,70 @@ void    XWinAcqPar::operator= (const XWinAcqPar& XWA2);
     The two primary values are the point size (TD) and the data byte order
     (BYTORDA).                                                               */
 
-std::string XWinAcqPar::acqname()  const;	// File name (short)
-double XWinAcqPar::field()    const;	// Field strength (T)
-double XWinAcqPar::AQ()       const;	// Acquisition length
-int    XWinAcqPar::AQ_mod()   const;	// Acquisition mode
-double XWinAcqPar::BF1()      const;	// Base Spectrometer freq.
-double XWinAcqPar::BF2()      const;	// Base Spectrometer freq.
-int    XWinAcqPar::BYTORDA()  const;	// Binary byte order
-int    XWinAcqPar::DS()       const;	// Number of dummy scans
-double XWinAcqPar::DW()       const;	// The dwell time (sec)
-std::string XWinAcqPar::EXP()      const;	// Experiment name
-double XWinAcqPar::FIDRES()   const;	// The FID resolution (Hz)
+std::string acqname()  const;	// File name (short)
+double field()    const;	// Field strength (T)
+double AQ()       const;	// Acquisition length
+int    AQ_mod()   const;	// Acquisition mode
+double BF1()      const;	// Base Spectrometer freq.
+double BF2()      const;	// Base Spectrometer freq.
+int    BYTORDA()  const;	// Binary byte order
+int    DS()       const;	// Number of dummy scans
+double DW()       const;	// The dwell time (sec)
+std::string EXP()      const;	// Experiment name
+double FIDRES()   const;	// The FID resolution (Hz)
 // sosi - IN must be some defined system value as this is trouble
 //        in GCC 3.2. Changed IN to XW_IN
-double XWinAcqPar::XW_IN(int i)  const;	// Dwell time
-std::string XWinAcqPar::NAME()     const;	// Full file name
-int    XWinAcqPar::NS()       const;	// Number of scans
-std::string XWinAcqPar::NUC(int i) const;	// Nucleus for a channel
-std::string XWinAcqPar::NUCLEUS()  const;	// Base nucleus
-double XWinAcqPar::O1()       const;	// Offset freq.
-double XWinAcqPar::O2()       const;	// Offset freq.
-int    XWinAcqPar::PARMODE()  const;	// Acquisition dimension
-std::string XWinAcqPar::PULPROG()  const;	// Pulse program
-double XWinAcqPar::SFO1()     const;	// Spectrometer freq.
-double XWinAcqPar::SFO2()     const;	// Spectrometer freq.
-double XWinAcqPar::SFO3()     const;	// Spectrometer freq.
-std::string XWinAcqPar::SOLVENT()  const;	// Solvent
-double XWinAcqPar::SW()       const;	// Spectral width (PPM)
-double XWinAcqPar::SW_h()     const;	// Spectral width (Hz)
-double XWinAcqPar::TE()       const;	// Sample temperature
-int    XWinAcqPar::TD()       const;	// Total points
+double XW_IN(int i)  const;	// Dwell time
+std::string NAME()     const;	// Full file name
+int    NS()       const;	// Number of scans
+std::string NUC(int i) const;	// Nucleus for a channel
+std::string NUCLEUS()  const;	// Base nucleus
+double O1()       const;	// Offset freq.
+double O2()       const;	// Offset freq.
+int    PARMODE()  const;	// Acquisition dimension
+std::string PULPROG()  const;	// Pulse program
+double SFO1()     const;	// Spectrometer freq.
+double SFO2()     const;	// Spectrometer freq.
+double SFO3()     const;	// Spectrometer freq.
+std::string SOLVENT()  const;	// Solvent
+double SW()       const;	// Spectral width (PPM)
+double SW_h()     const;	// Spectral width (Hz)
+double TE()       const;	// Sample temperature
+int    TD()       const;	// Total points
 
-void XWinAcqPar::field(double bo);
-void XWinAcqPar::AQ_mod(int aqmo);
-void XWinAcqPar::BF1(double bf);
-void XWinAcqPar::BF2(double bf);
-void XWinAcqPar::BYTORDA(int bo);
-int  XWinAcqPar::D(int idx, double tsec, int warn=2);
-void XWinAcqPar::DECBNUC(const std::string& I);
-void XWinAcqPar::DECNUC(const std::string& I);
-void XWinAcqPar::DS(int ds);
-void XWinAcqPar::EXP(const std::string& exp);
+void field(double bo);
+void AQ_mod(int aqmo);
+void BF1(double bf);
+void BF2(double bf);
+void BYTORDA(int bo);
+int  D(int idx, double tsec, int warn=2);
+void DECBNUC(const std::string& I);
+void DECNUC(const std::string& I);
+void DS(int ds);
+void EXP(const std::string& exp);
 // sosi GCC 3.2 has trouble with IN, must be system defined.
 // switched name to XW_IN
-void XWinAcqPar::XW_IN(int i, double in);
-void XWinAcqPar::O1(double of);
-void XWinAcqPar::O2(double of);
-void XWinAcqPar::O(int i, double of);
-void XWinAcqPar::NAME(const std::string& nam);
-void XWinAcqPar::NS(int ns);
-void XWinAcqPar::NUC(int i, const std::string& N);
-void XWinAcqPar::NUCLEI(int channel, const std::string& I, double O, int warn=2);
-void XWinAcqPar::NUCLEUS(const std::string& I);
-int  XWinAcqPar::P(int idx, double tp, int warn=2);
-void XWinAcqPar::PARMODE(int pm);
-void XWinAcqPar::PULPROG(const std::string& P);
-void XWinAcqPar::SFO1(double sf);
-void XWinAcqPar::SFO2(double sf);
-void XWinAcqPar::SFO3(double sf);
-void XWinAcqPar::SFO(double sf, int i);
-void XWinAcqPar::SOLVENT(const std::string& S);
-void XWinAcqPar::SW(double sw);
-void XWinAcqPar::SW_h(double sw);
-void XWinAcqPar::TE(double te);
-void XWinAcqPar::TD(int npts);
+void XW_IN(int i, double in);
+void O1(double of);
+void O2(double of);
+void O(int i, double of);
+void NAME(const std::string& nam);
+void NS(int ns);
+void NUC(int i, const std::string& N);
+void NUCLEI(int channel, const std::string& I, double O, int warn=2);
+void NUCLEUS(const std::string& I);
+int  P(int idx, double tp, int warn=2);
+void PARMODE(int pm);
+void PULPROG(const std::string& P);
+void SFO1(double sf);
+void SFO2(double sf);
+void SFO3(double sf);
+void SFO(double sf, int i);
+void SOLVENT(const std::string& S);
+void SW(double sw);
+void SW_h(double sw);
+void TE(double te);
+void TD(int npts);
 
 // ____________________________________________________________________________
 // C                       XWinAcqPar Input Functions
@@ -392,11 +392,11 @@ void XWinAcqPar::TD(int npts);
 
                        INHERITED FROM BASE CLASS XWinPSet
 
-        bool XWinAcqPar::readPSet(const std::string& filein, int warn=1);
-        bool XWinAcqPar::readPSet(int warn=1);                               */
-        bool XWinAcqPar::readAPar(const std::string& filein, int warn=2);
-	bool XWinAcqPar::readAPar(int warn=2);
-virtual bool XWinAcqPar::parsePSet(int defs=1, int warn=2);
+        bool readPSet(const std::string& filein, int warn=1);
+        bool readPSet(int warn=1);                               */
+        bool readAPar(const std::string& filein, int warn=2);
+	bool readAPar(int warn=2);
+virtual bool parsePSet(int defs=1, int warn=2);
 
 // ____________________________________________________________________________
 // D                       XWinAcqPar Output Functions
@@ -406,8 +406,8 @@ virtual bool XWinAcqPar::parsePSet(int defs=1, int warn=2);
    XWinNMR ASCII parameter file {acqu(s) & acqu2(s)}.  Note that the value
    of PARMODE will affect the output somewhat.                               */
 
-int XWinAcqPar::writeAPar(const std::string& name, int warn=2);
-int XWinAcqPar::writeAPar(int warn=2) const;
+int writeAPar(const std::string& name, int warn=2);
+int writeAPar(int warn=2) const;
 
 // ____________________________________________________________________________
 // E                 XWinAcqPar Parameter Access Functions
@@ -418,10 +418,10 @@ int XWinAcqPar::writeAPar(int warn=2) const;
 
                        INHERITED FROM BASE CLASS XWinPSet
 
-int XWinAcqPar::getPar(const std::string& pn,int& val,   int id=0,int wrn=0) const;
-int XWinAcqPar::getPar(const std::string& pn,double& val,int id=0,int wrn=0) const;
-int XWinAcqPar::getPar(const std::string& pn,std::string& val,int id=0,int wrn=0) const;
-ParameterSet XWinAcqPar::getPSet() const;                                    */
+int getPar(const std::string& pn,int& val,   int id=0,int wrn=0) const;
+int getPar(const std::string& pn,double& val,int id=0,int wrn=0) const;
+int getPar(const std::string& pn,std::string& val,int id=0,int wrn=0) const;
+ParameterSet getPSet() const;                                    */
  
 
 // ____________________________________________________________________________
@@ -432,18 +432,18 @@ ParameterSet XWinAcqPar::getPSet() const;                                    */
     the Bruker parameter values mean.  I just add things as I learn them here
     so that GAMMA output can remind me what all of these parameters are...   */
  
-std::string XWinAcqPar::AQ_modS()   const;
-std::string XWinAcqPar::BYTORDAS()  const;
-std::string XWinAcqPar::DECSTATS()  const;
-std::string XWinAcqPar::DIGTYPS()   const;
-std::string XWinAcqPar::DSS()       const;
-std::string XWinAcqPar::HPPRGNS()   const;
-std::string XWinAcqPar::PAPSS()     const;
-std::string XWinAcqPar::PARMODES()  const;
-std::string XWinAcqPar::POWMODS()   const;
-std::string XWinAcqPar::PRGAINS()   const;
-std::string XWinAcqPar::SEOUTS()    const;
-std::string XWinAcqPar::SWS()       const;
+std::string AQ_modS()   const;
+std::string BYTORDAS()  const;
+std::string DECSTATS()  const;
+std::string DIGTYPS()   const;
+std::string DSS()       const;
+std::string HPPRGNS()   const;
+std::string PAPSS()     const;
+std::string PARMODES()  const;
+std::string POWMODS()   const;
+std::string PRGAINS()   const;
+std::string SEOUTS()    const;
+std::string SWS()       const;
 };
 
 #endif 								// XWinAcqPar

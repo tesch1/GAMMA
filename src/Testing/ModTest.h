@@ -80,8 +80,8 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void ModTest::MTerror(int eidx, int noret=0) const;
-volatile void ModTest::MTfatal(int eidx)              const;
+         void MTerror(int eidx, int noret=0) const;
+volatile void MTfatal(int eidx)              const;
 
 // ____________________________________________________________________________
 // ii                   MODULE TEST INITIALIZATION FUNCTIONS
@@ -94,7 +94,7 @@ volatile void ModTest::MTfatal(int eidx)              const;
    indicates that additional tests have been added, potentially with a
    different ordering, since the test results were generated previously.    */
 
-void ModTest::SetResults(int force=0);                 
+void SetResults(int force=0);                 
 
 // ____________________________________________________________________________
 // iii               MODULE TEST SECTION TEST INDEXING FUNCTIONS
@@ -104,11 +104,11 @@ void ModTest::SetResults(int force=0);
    obtain the test Pix from either an interger or a string and they perform
    range checking to insure that the requested test exists in the section.   */
  
-bool                                 ModTest::CheckIndex(int k, int w=1) const;
-std::list<ClassTest>::iterator       ModTest::GetPixNC(int k);
-std::list<ClassTest>::const_iterator ModTest::GetPix(int k)              const;
-std::list<ClassTest>::const_iterator ModTest::GetPix(const std::string& N)    const;
-int                                  ModTest::GetIndex(const std::string& N)  const;
+bool                                 CheckIndex(int k, int w=1) const;
+std::list<ClassTest>::iterator       GetPixNC(int k);
+std::list<ClassTest>::const_iterator GetPix(int k)              const;
+std::list<ClassTest>::const_iterator GetPix(const std::string& N)    const;
+int                                  GetIndex(const std::string& N)  const;
 
 
 public:
@@ -134,9 +134,9 @@ ModTest(const ModTest& MT)              Class Test copy of MT
 ModTest assign(N)                       Assign N element
 ~ModTest()                              Destructor of Module Test           */
 
-MSVCDLC            ModTest::ModTest();                   // Empty Module Test
-MSVCDLC            ModTest::ModTest(const  ModTest& MT); // Module Test copy of MT
-MSVCDLL ModTest& ModTest::operator= (const ModTest& MT); // Assignment operator
+MSVCDLC            ModTest();                   // Empty Module Test
+MSVCDLC            ModTest(const  ModTest& MT); // Module Test copy of MT
+MSVCDLL ModTest& operator= (const ModTest& MT); // Assignment operator
  
 // ____________________________________________________________________________
 // B                   MODULE TEST ITERATORS & MEMBER ACCESS
@@ -146,10 +146,10 @@ MSVCDLL ModTest& ModTest::operator= (const ModTest& MT); // Assignment operator
    library libstdc++.  I am listing them here so that I & other users don't
    have to keep looking them up all the time.
 
-list<SectTest>::iterator ModTest::begin()      Pointer to 1st element
-list<SectTest>::iterator ModTest::end()        Pointer to last element
-SectTest                 ModTest::front()      First element
-SectTest                 ModTest::back()       Last element                  */
+list<SectTest>::iterator begin()      Pointer to 1st element
+list<SectTest>::iterator end()        Pointer to last element
+SectTest                 front()      First element
+SectTest                 back()       Last element                  */
 
 // ____________________________________________________________________________
 // C                     MODULE TEST LIST & QUEUE OPERATIONS
@@ -159,13 +159,13 @@ SectTest                 ModTest::back()       Last element                  */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-ModTest::push_back(const  SectTest& ST)         Add ST to list end
-ModTest::pop_back()                             Remove ST at list end
-ModTest::push_front(const SectTest& ST)         Add ST to list start
-ModTest::pop_front(const  SectTest& ST)         Remove ST at list start
-ModTest::insert(iterator p, SectTest& ST)       Add ST before p
-ModTest::erase(iterator p)                      Remove ST at p
-ModTest::clear()                                Remove all list entries      */
+push_back(const  SectTest& ST)         Add ST to list end
+pop_back()                             Remove ST at list end
+push_front(const SectTest& ST)         Add ST to list start
+pop_front(const  SectTest& ST)         Remove ST at list start
+insert(iterator p, SectTest& ST)       Add ST before p
+erase(iterator p)                      Remove ST at p
+clear()                                Remove all list entries      */
 
 // ____________________________________________________________________________
 // D                    MODULE TEST ADDITIONAL QUEUE OPERATIONS
@@ -175,10 +175,10 @@ ModTest::clear()                                Remove all list entries      */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-int  ModTest::size()                            Number of entries
-bool ModTest::empty()                           TRUE if pset empty
-bool ModTest::operator==(ModTest MT)          TRUE if psets equal
-bool ModTest::operator!=(ModTest MT)          TRUE if psets not equal        */
+int  size()                            Number of entries
+bool empty()                           TRUE if pset empty
+bool operator==(ModTest MT)          TRUE if psets equal
+bool operator!=(ModTest MT)          TRUE if psets not equal        */
 
 // ____________________________________________________________________________
 // E                     MODULE TEST LIST AUXILIARY FUNCTIONS
@@ -195,11 +195,11 @@ bool ModTest::operator!=(ModTest MT)          TRUE if psets not equal        */
      seek       string    Returns iterator in module tests for test with name
        "       ClassTest  Returns iterator in module tests for class test    */ 
  
-MSVCDLL int ModTest::contains(const std::string& N) const;
-MSVCDLL int ModTest::contains(const ClassTest& CT)  const;
+MSVCDLL int contains(const std::string& N) const;
+MSVCDLL int contains(const ClassTest& CT)  const;
 
-MSVCDLL std::list<ClassTest>::const_iterator ModTest::seek(const std::string& N) const;
-MSVCDLL std::list<ClassTest>::const_iterator ModTest::seek(const ClassTest& CT)  const;
+MSVCDLL std::list<ClassTest>::const_iterator seek(const std::string& N) const;
+MSVCDLL std::list<ClassTest>::const_iterator seek(const ClassTest& CT)  const;
  
 // ____________________________________________________________________________
 // F                       MODULE TEST ACCESS FUNCTIONS
@@ -224,24 +224,24 @@ MSVCDLL std::list<ClassTest>::const_iterator ModTest::seek(const ClassTest& CT) 
    GetRunLevels    Returns int vector for run level of all Class Tests
     GetResults     Returns int vector for all current Class Test Results     */
 
-MSVCDLL std::string    ModTest::GetName()                    const;
-MSVCDLL std::string    ModTest::GetName(int k)               const;
-//std::string    ModTest::GetName(int k, int j)        const;
-MSVCDLL std::vector<std::string> ModTest::GetNames()                   const;
-//vector<string> ModTest::GetNames(int k)              const;
-MSVCDLL std::string         ModTest::GetDescription()             const;
-MSVCDLL std::string         ModTest::GetDescription(int k)        const;
-//string         ModTest::GetDescription(int k, int j) const;
-MSVCDLL std::vector<std::string> ModTest::GetDescriptions()            const;
-//vector<string> ModTest::GetDescriptions(int k)       const;
-MSVCDLL int            ModTest::GetStatus()                  const;
-MSVCDLL int            ModTest::GetStatus(int k)             const;
-MSVCDLL std::vector<int>    ModTest::GetStatuses()                const;
-MSVCDLL int            ModTest::GetRunLevel()                const;
-MSVCDLL int            ModTest::GetRunLevel(int k)           const;
-MSVCDLL std::vector<int>    ModTest::GetRunLevels()               const;
-MSVCDLL std::vector<int>    ModTest::GetResults();
-MSVCDLL std::vector<int>    ModTest::GetResults(int k);
+MSVCDLL std::string    GetName()                    const;
+MSVCDLL std::string    GetName(int k)               const;
+//std::string    GetName(int k, int j)        const;
+MSVCDLL std::vector<std::string> GetNames()                   const;
+//vector<string> GetNames(int k)              const;
+MSVCDLL std::string         GetDescription()             const;
+MSVCDLL std::string         GetDescription(int k)        const;
+//string         GetDescription(int k, int j) const;
+MSVCDLL std::vector<std::string> GetDescriptions()            const;
+//vector<string> GetDescriptions(int k)       const;
+MSVCDLL int            GetStatus()                  const;
+MSVCDLL int            GetStatus(int k)             const;
+MSVCDLL std::vector<int>    GetStatuses()                const;
+MSVCDLL int            GetRunLevel()                const;
+MSVCDLL int            GetRunLevel(int k)           const;
+MSVCDLL std::vector<int>    GetRunLevels()               const;
+MSVCDLL std::vector<int>    GetResults();
+MSVCDLL std::vector<int>    GetResults(int k);
 
 /*         Input                MT : A module test (this)
                   (name)      name : The name of the test     (setting name)
@@ -254,14 +254,14 @@ MSVCDLL std::vector<int>    ModTest::GetResults(int k);
                   (runlev)  runlev : Current test run level   (getting runlev)
                               void : If setting interal value                */  
  
-MSVCDLL const std::string& ModTest::name()     const;                // Get name
-MSVCDLL       int          ModTest::status()   const;                // Get status
-MSVCDLL const std::string& ModTest::describe() const;                // Get descript
-MSVCDLL       int          ModTest::runlevel() const;                // Get runlev
-MSVCDLL       void         ModTest::name(const  std::string& Name);  // Set name
-MSVCDLL       void         ModTest::status(     int          Status);// Set status
-MSVCDLL       void         ModTest::describe(const std::string& D);  // Set decript
-MSVCDLL       void         ModTest::runlevel(   int          RLev);  // Set runlev
+MSVCDLL const std::string& name()     const;                // Get name
+MSVCDLL       int          status()   const;                // Get status
+MSVCDLL const std::string& describe() const;                // Get descript
+MSVCDLL       int          runlevel() const;                // Get runlev
+MSVCDLL       void         name(const  std::string& Name);  // Set name
+MSVCDLL       void         status(     int          Status);// Set status
+MSVCDLL       void         describe(const std::string& D);  // Set decript
+MSVCDLL       void         runlevel(   int          RLev);  // Set runlev
  
 // ____________________________________________________________________________
 // G                      MODULE TEST TESTING FUNCTIONS
@@ -284,15 +284,15 @@ MSVCDLL       void         ModTest::runlevel(   int          RLev);  // Set runl
 //                             Run All Class Tests
 //-----------------------------------------------------------------------------
 
-MSVCDLL int ModTest::TestClasses(std::ostream& ostr, int anew, int keepon=0);
+MSVCDLL int TestClasses(std::ostream& ostr, int anew, int keepon=0);
  
 //-----------------------------------------------------------------------------
 //                    Run Specific Class Test (By Index Or Name)
 //-----------------------------------------------------------------------------
 
-MSVCDLL int ModTest::TestClass(std::ostream& ostr, const int T, 
+MSVCDLL int TestClass(std::ostream& ostr, const int T, 
                                                      int anew=0, int keepon=0);
-MSVCDLL int ModTest::TestClass(std::ostream& ostr, const std::string& T,
+MSVCDLL int TestClass(std::ostream& ostr, const std::string& T,
                                                      int anew=0, int keepon=0);
 
 // ____________________________________________________________________________
@@ -321,10 +321,10 @@ MSVCDLL int ModTest::TestClass(std::ostream& ostr, const std::string& T,
             output results from single tests if the function recursion level
             (nlevels) is set greater than 1.                                */
 
-MSVCDLL std::ostream& ModTest::Header(std::ostream&  ostr)             const;
-MSVCDLL std::ostream& ModTest::Result(std::ostream&  ostr)             const;
-MSVCDLL std::ostream& ModTest::Results(std::ostream& ostr, int goon=1) const;
-MSVCDLL std::ostream& ModTest::ResRec(std::ostream&  ostr, int keepon, int nl=1);
+MSVCDLL std::ostream& Header(std::ostream&  ostr)             const;
+MSVCDLL std::ostream& Result(std::ostream&  ostr)             const;
+MSVCDLL std::ostream& Results(std::ostream& ostr, int goon=1) const;
+MSVCDLL std::ostream& ResRec(std::ostream&  ostr, int keepon, int nl=1);
 
 // ____________________________________________________________________________
 // I                      MODULE TEST INTERACTIVE FUNCTIONS
@@ -346,14 +346,14 @@ MSVCDLL std::ostream& ModTest::ResRec(std::ostream&  ostr, int keepon, int nl=1)
    These functions assume you want some output text from running the tests,
    otherwise you would just use the TestLevel function directly, right?      */  
 
-MSVCDLL int ModTest::AskRun(std::ostream& ostr);
+MSVCDLL int AskRun(std::ostream& ostr);
 
 // ____________________________________________________________________________
 // J                       SECTION TEST AUXILIARY FUNCTIONS
 // ____________________________________________________________________________
  
-MSVCDLL std::ostream& ModTest::ListTests(std::ostream& ostr) const;
-MSVCDLL std::ostream& ModTest::FinishTest(std::ostream& ostr) const;
+MSVCDLL std::ostream& ListTests(std::ostream& ostr) const;
+MSVCDLL std::ostream& FinishTest(std::ostream& ostr) const;
 
 
 };

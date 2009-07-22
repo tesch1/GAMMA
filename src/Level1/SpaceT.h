@@ -62,7 +62,7 @@ class space_T
 // ____________________________________________________________________________
 
 
-void space_T::SphTerror(int eidx, int noret=0) const;
+void SphTerror(int eidx, int noret=0) const;
 
         // Input                SphT    : Spatial tensor (this)
         //                      eidx    : Flag for error type
@@ -70,7 +70,7 @@ void space_T::SphTerror(int eidx, int noret=0) const;
         // Output               none    : Error message
  
 
-void space_T::SphTerror(int eidx, const std::string& pname, int noret=0) const;
+void SphTerror(int eidx, const std::string& pname, int noret=0) const;
 
         // Input                SphT    : Spatial tensor (this)         
         //                      eidx    : Error index
@@ -79,14 +79,14 @@ void space_T::SphTerror(int eidx, const std::string& pname, int noret=0) const;
         // Output               none    : Error message output
  
 
-volatile void space_T::SphTfatality(int eidx) const;
+volatile void SphTfatality(int eidx) const;
          
         // Input                SphT    : Spatial tensor (this)
         //                      eidx    : Flag for error type 
         // Output               none    : Error message output 
         //                                Program execution stopped 
 
-volatile void space_T::SphTfatality(int eidx, const std::string& pname) const;
+volatile void SphTfatality(int eidx, const std::string& pname) const;
          
         // Input                SphT    : Spatial tensor (this)
         //                      eidx    : Flag for error type 
@@ -111,7 +111,7 @@ friend void volatile space_T_fatality(int error);
 // ____________________________________________________________________________
 
 
-void space_T::updatePAS();
+void updatePAS();
 
 	// Input		SphT : Spatial tensor (this)
 	// Output		none : The interal PAS values are set
@@ -166,7 +166,7 @@ MSVCDLC virtual ~space_T();
 // ______________________________________________________________________
 
 
-MSVCDLL virtual void space_T::operator = (const space_T &SphT);
+MSVCDLL virtual void operator = (const space_T &SphT);
 	// Input		SphT : spatial tensor
 	// Return		SphT1: spatial tensor equivalent to the
         //	                       input spatial tensor
@@ -578,7 +578,7 @@ MSVCDLL int exists() const;
 	///F_list exists	     - Existence test
  
  
-MSVCDLL int space_T::exists(int l) const;
+MSVCDLL int exists(int l) const;
  
         // Input                SphT : Spatial tensor (this)
         //                      l    : Rank
@@ -609,7 +609,7 @@ MSVCDLL complex component(int L, int M) const;
 	///F_list component	     - Tensor component
  
 
-MSVCDLL double space_T::Ccomponent(int r, int c=0) const;
+MSVCDLL double Ccomponent(int r, int c=0) const;
 
         // Input                SphT : Spatial Tensor (this)
         //                      r    : row index

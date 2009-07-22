@@ -91,11 +91,11 @@ public:
    parameter files.  This doesn't do anything in particular, it is the write
    functions that perform the work.                                          */
 
-        XWinProc2s::XWinProc2s();
-        XWinProc2s::XWinProc2s(const std::string& name);
-        XWinProc2s::XWinProc2s(const XWinProc2s& XWP);
-virtual XWinProc2s::~XWinProc2s();
-void    XWinProc2s::operator= (const XWinProc2s& XWP);
+        XWinProc2s();
+        XWinProc2s(const std::string& name);
+        XWinProc2s(const XWinProc2s& XWP);
+virtual ~XWinProc2s();
+void    operator= (const XWinProc2s& XWP);
 
 // ____________________________________________________________________________
 // B                  XWinProc2s Parameter Access Functions
@@ -107,35 +107,35 @@ void    XWinProc2s::operator= (const XWinProc2s& XWP);
 
 		     INHERITED FROM CLASS XWinProcPar
 
-string XWinProc2s::parname() const;		// ASCII File name
-int    XWinProc2s::BYTORDP() const;		// Byte order
-int    XWinProc2s::FT_mod()  const;		// FFT mode
-double XWinProc2s::LB()      const;		// Line broadening
-int    XWinProc2s::MC2()     const;		// Sine bell?
-double XWinProc2s::OFFSET()  const;		// Spectrum offset
-double XWinProc2s::PHC0()    const;		// Zero order phase
-double XWinProc2s::PHC1()    const;		// 1st order phase
-string XWinProc2s::REVERSE() const;		// Spectrum reverse
-double XWinProc2s::SF()      const;		// Spectrometer freq.
-int    XWinProc2s::SI()      const;		// Data size (re+im)
-int    XWinProc2s::SSB()     const;		// Sine bell?
-int    XWinProc2s::STSI()    const;		// Sine bell?
-int    XWinProc2s::STSR()    const;		// Sine bell?
-double XWinProc2s::SW_p()    const;		// Spectral Width (ppm)
-double XWinProc2s::TDeff()   const;		// Effective FID size
-int    XWinProc2s::WDW()     const;		// Window function
+string parname() const;		// ASCII File name
+int    BYTORDP() const;		// Byte order
+int    FT_mod()  const;		// FFT mode
+double LB()      const;		// Line broadening
+int    MC2()     const;		// Sine bell?
+double OFFSET()  const;		// Spectrum offset
+double PHC0()    const;		// Zero order phase
+double PHC1()    const;		// 1st order phase
+string REVERSE() const;		// Spectrum reverse
+double SF()      const;		// Spectrometer freq.
+int    SI()      const;		// Data size (re+im)
+int    SSB()     const;		// Sine bell?
+int    STSI()    const;		// Sine bell?
+int    STSR()    const;		// Sine bell?
+double SW_p()    const;		// Spectral Width (ppm)
+double TDeff()   const;		// Effective FID size
+int    WDW()     const;		// Window function
 
-void XWinProc2s::BYTORDP(bo);
-void XWinProc2s::MC2(int mc);
-void XWinProc2s::REVERSE(int yn);
-void XWinProc2s::PPARMOD(int pm);
-void XWinProc2s::SI(int si);
-void XWinProc2s::SF(double SF);
-void XWinProc2s::SSB(int sb);
-void XWinProc2s::STSI(int sb);
-void XWinProc2s::STSR(int sr);
-void XWinProc2s::SW_p(double swp);
-void XWinProc2s::WDW(int wd);                                               */
+void BYTORDP(bo);
+void MC2(int mc);
+void REVERSE(int yn);
+void PPARMOD(int pm);
+void SI(int si);
+void SF(double SF);
+void SSB(int sb);
+void STSI(int sb);
+void STSR(int sr);
+void SW_p(double swp);
+void WDW(int wd);                                               */
 
 // ____________________________________________________________________________
 // C                       XWinProc2s Input Functions
@@ -157,9 +157,9 @@ void XWinProc2s::WDW(int wd);                                               */
      parsePSet          Parses a Bruker parameter set (XWinPSet) for parameters
                         of consequence to processing.
 
-        parse XWinProc2s::read(const string& filein, int warn=2);
-virtual parse XWinProc2s::read(int warn=1);
-virtual parse XWinProc2s::parsePSet(int warn=1);                             */
+        parse read(const string& filein, int warn=2);
+virtual parse read(int warn=1);
+virtual parse parsePSet(int warn=1);                             */
 
 
 // ____________________________________________________________________________
@@ -181,8 +181,8 @@ virtual int      write(int warn=2) const;                                    */
    users can just glance at procs parameters or store then in a small file.  */
 
 
-//ostream& XWinProc2s::printPset(ostream& O) const;		INHERITED
-//virtual ostream& XWinProc2s::print(ostream& ostr, int full=0, int hdr=1) const;
+//ostream& printPset(ostream& O) const;		INHERITED
+//virtual ostream& print(ostream& ostr, int full=0, int hdr=1) const;
 //friend ostream& operator<< (ostream& O, const XWinProc2s& P);
 
 
@@ -201,7 +201,7 @@ virtual int      write(int warn=2) const;                                    */
    couple of values are used directly from the class when parameters need to
    be calculated.                                                            */
 
-std::ostream& XWinProc2s::dpp(std::ostream& ostr, double BF0=0) const;
+std::ostream& dpp(std::ostream& ostr, double BF0=0) const;
 
 
 };

@@ -75,14 +75,14 @@ private:
 // I                 CLASS DECOMPOSITION ERROR HANDLING
 // ____________________________________________________________________________
 
-         void decomp::ODerror(int eidx, int noret=0) const;
-volatile void decomp::ODfatal(int eidx)              const;
+         void ODerror(int eidx, int noret=0) const;
+volatile void ODfatal(int eidx)              const;
 
 // ____________________________________________________________________________
 // II                     SPECIFIC DECOMPOSITIONS
 // ____________________________________________________________________________
 
-std::vector<int> decomp::sub_indices(int ils, int ssdim, int nss);
+std::vector<int> sub_indices(int ils, int ssdim, int nss);
 void sub_indices(int indices[], int ils, int ssdim, int nss);
 
         // Input                indices : Basis indices per subspace
@@ -103,7 +103,7 @@ void spin3halves(const spin_sys& sys);
         //                                containing a single spin I=3/2
 
 
-void decomp::product_operators(const spin_sys& sys);
+void product_operators(const spin_sys& sys);
 
         // Input                sys     : Spin system
         // Output               void    : Fills dec with product operator
@@ -125,8 +125,8 @@ void decomp::product_operators(const spin_sys& sys);
         //                                then the routine will die
         //                                rather than return FALSE
 
-bool decomp::ChkIndex(int  i, bool warn=true) const;
-bool decomp::ChkSize(int  ls, bool warn=true) const;
+bool ChkIndex(int  i, bool warn=true) const;
+bool ChkSize(int  ls, bool warn=true) const;
 
 
 // ----------------------------------------------------------------------------
@@ -143,11 +143,11 @@ bool decomp::ChkSize(int  ls, bool warn=true) const;
 ///F_list decomp		- Decomposition constructor
 ///F_list =			- Decomposition assignment
 	
-MSVCDLC      decomp::decomp( );
-MSVCDLC      decomp::decomp(const decomp &dec1);
-MSVCDLC      decomp::decomp(const spin_sys& sys);
-MSVCDLC      decomp::~decomp ( );
-MSVCDLL void decomp::operator= (const decomp &dec);
+MSVCDLC      decomp( );
+MSVCDLC      decomp(const decomp &dec1);
+MSVCDLC      decomp(const spin_sys& sys);
+MSVCDLC      ~decomp ( );
+MSVCDLL void operator= (const decomp &dec);
 
 	// Input		dec    : Decomposition(this)
 	// 			dec1   : Decomposition
@@ -160,7 +160,7 @@ MSVCDLL void decomp::operator= (const decomp &dec);
 
 ///Center Decomposition Functions
 
-MSVCDLL void decomp::decompose(const gen_op& Op);
+MSVCDLL void decompose(const gen_op& Op);
  
         // Input                dec     : Decomposition (this)
         //                      Op      : Operator to decompose 
@@ -175,9 +175,9 @@ MSVCDLL void decomp::decompose(const gen_op& Op);
 
 // ---------------------------- Dimension Access ------------------------------
  
-MSVCDLL int decomp::size() const;			// Base Liouville space
-MSVCDLL int decomp::LS()   const;			// Base Liouville space
-MSVCDLL int decomp::HS()   const;			// Base Hilbert   space
+MSVCDLL int size() const;			// Base Liouville space
+MSVCDLL int LS()   const;			// Base Liouville space
+MSVCDLL int HS()   const;			// Base Hilbert   space
 
 // ------------------------------- Name Access --------------------------------
 
@@ -198,19 +198,19 @@ MSVCDLL int decomp::HS()   const;			// Base Hilbert   space
 	//                                For function altname, the return
 	//				  is alternative base operator name
  
-MSVCDLL std::vector<std::string> decomp::Names()           const;
-MSVCDLL std::vector<std::string> decomp::Names(int     m)  const;
-MSVCDLL void                decomp::Name(const std::string& name);
-MSVCDLL std::string              decomp::Name(          )  const;
-MSVCDLL std::string              decomp::OpName(int    i)  const;
-MSVCDLL std::string              decomp::AltOpName(int i)  const;
-MSVCDLL int                 decomp::MaxOpNameLen()    const;
-MSVCDLL int                 decomp::MaxOpAltNameLen() const;
+MSVCDLL std::vector<std::string> Names()           const;
+MSVCDLL std::vector<std::string> Names(int     m)  const;
+MSVCDLL void                Name(const std::string& name);
+MSVCDLL std::string              Name(          )  const;
+MSVCDLL std::string              OpName(int    i)  const;
+MSVCDLL std::string              AltOpName(int i)  const;
+MSVCDLL int                 MaxOpNameLen()    const;
+MSVCDLL int                 MaxOpAltNameLen() const;
 
 // ---------------------------- Coherence Access ------------------------------
 
-MSVCDLL int decomp::Coherence(int i) const;
-MSVCDLL int decomp::MaxCoherence()   const;
+MSVCDLL int Coherence(int i) const;
+MSVCDLL int MaxCoherence()   const;
  
 // ----------------------------- Operator Access ------------------------------
  
@@ -222,8 +222,8 @@ MSVCDLL int decomp::MaxCoherence()   const;
         //                                the name Opname
 
 
-MSVCDLL gen_op decomp::Op(const std::string& Opname) const;
-MSVCDLL gen_op decomp::Op(int i) const;
+MSVCDLL gen_op Op(const std::string& Opname) const;
+MSVCDLL gen_op Op(int i) const;
  
         // Input                dec     : Decomposition (this)
         //                      i       : An index
@@ -243,14 +243,14 @@ MSVCDLL gen_op decomp::Op(int i) const;
         // Or                   z       : Current decomposition value
         //                                of the ith basis operator
 
-MSVCDLL row_vector decomp::values()      const;
-MSVCDLL row_vector decomp::values(int m) const;
-MSVCDLL complex    decomp::value(int  i) const;
+MSVCDLL row_vector values()      const;
+MSVCDLL row_vector values(int m) const;
+MSVCDLL complex    value(int  i) const;
 
 
 // ----------------------- Operator Coefficient Access ------------------------
 
-MSVCDLL double decomp::bcoefficient(int i) const;
+MSVCDLL double bcoefficient(int i) const;
  
         // Input                dec     : Decomposition (this)
         //                      i       : An index
@@ -264,7 +264,7 @@ MSVCDLL double decomp::bcoefficient(int i) const;
 // ------------------------------ Index Access --------------------------------
 
 
-MSVCDLL int decomp::index(const std::string& Opname) const;
+MSVCDLL int index(const std::string& Opname) const;
 
         // Input                dec     : Decomposition (this)
 	//			Opname  : Name of a basis operator
@@ -288,7 +288,7 @@ MSVCDLL int decomp::index(const std::string& Opname) const;
    spins involved, followed by the coherence order, followed by the operator
    name.                                                                     */
 
-MSVCDLL std::vector<int> decomp::SortBySpins() const;
+MSVCDLL std::vector<int> SortBySpins() const;
 
 // ____________________________________________________________________________
 // X                         FRIEND FUNCTIONS
@@ -312,7 +312,7 @@ MSVCDLL friend void PB_dec(const spin_sys &sys, const gen_op &Op);
 	//			dec  : Decomposition
 	// Output 		ostr : Returns the modified output stream
 
-MSVCDLL        std::ostream& decomp::print(std::ostream& ostr, int nc=3) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int nc=3) const;
 MSVCDLL friend std::ostream &operator <<  (std::ostream &ostr, const decomp &dec);
  
         // Input                dec     : Decomposition (this)
@@ -321,8 +321,8 @@ MSVCDLL friend std::ostream &operator <<  (std::ostream &ostr, const decomp &dec
         //                                contain the information about
         //                                the decomposition
  
-MSVCDLL std::ostream& decomp::printOps(std::ostream& ostr, bool bs=false) const;
-MSVCDLL std::ostream& decomp::print(std::ostream& ostr, const gen_op& Op);
+MSVCDLL std::ostream& printOps(std::ostream& ostr, bool bs=false) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, const gen_op& Op);
 };
 
 

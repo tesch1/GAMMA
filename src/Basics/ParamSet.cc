@@ -35,6 +35,9 @@
 #include <Basics/Gutils.h>		// Include GAMMA error handling
 #include <Basics/StringCut.h>		// Include Gdec function
 #include <Basics/SinglePar.h>		// Include single parameters
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include <string>			// Include libstdc++ strings
 #include <iostream>			// Include io streams (cout)
 #include <list>				// Include STL list class

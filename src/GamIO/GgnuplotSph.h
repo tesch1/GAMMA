@@ -65,27 +65,27 @@ class GPSphere: public GPControls	// Gnuplot info
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */
 
-         void GPSphere::GPSerror(int eidx,                            int noret=0);
-         void GPSphere::GPSerror(int eidx,  const std::string& pname, int noret=0);
-volatile void GPSphere::GPSfatal(int eidx);
-volatile void GPSphere::GPSfatal(int eidx,  const std::string& pname);
+         void GPSerror(int eidx,                            int noret=0);
+         void GPSerror(int eidx,  const std::string& pname, int noret=0);
+volatile void GPSfatal(int eidx);
+volatile void GPSfatal(int eidx,  const std::string& pname);
 
 //____________________________________________________________________________
 // ii                        Gnuplot Structure Functions
 //____________________________________________________________________________
 
-void GPSphere::defaults();
-void GPSphere::copy(const GPSphere& GPS);
+void defaults();
+void copy(const GPSphere& GPS);
 
 // ____________________________________________________________________________
 // iii             Gnuplot Spherical 3D Plot Loadfile Output
 // ____________________________________________________________________________
 
-void GPSphere::WriteTitle(std::ofstream&   ofstr);
-void GPSphere::WriteView(std::ofstream&    ofstr);
-void GPSphere::WriteAngles(std::ofstream&  ofstr);
-void GPSphere::WriteMapping(std::ofstream& ofstr);
-void GPSphere::WriteSplot(std::ofstream&   ofstr);
+void WriteTitle(std::ofstream&   ofstr);
+void WriteView(std::ofstream&    ofstr);
+void WriteAngles(std::ofstream&  ofstr);
+void WriteMapping(std::ofstream& ofstr);
+void WriteSplot(std::ofstream&   ofstr);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -101,26 +101,26 @@ void GPSphere::WriteSplot(std::ofstream&   ofstr);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC GPSphere::GPSphere();				// Default controls
-MSVCDLC GPSphere::GPSphere(const GPSphere& GPS);	// Duplicate controls
+MSVCDLC GPSphere();				// Default controls
+MSVCDLC GPSphere(const GPSphere& GPS);	// Duplicate controls
 
-MSVCDLC virtual   GPSphere::~GPSphere();
-MSVCDLL GPSphere& GPSphere::operator= (const GPSphere& GPS);
+MSVCDLC virtual   ~GPSphere();
+MSVCDLL GPSphere& operator= (const GPSphere& GPS);
 
 // ____________________________________________________________________________
 // B              Gnuplot Spherical 3D Control Access
 // ____________________________________________________________________________
 
-MSVCDLL void GPSphere::SetDegrees(bool       dg);
-MSVCDLL void GPSphere::SetSphereAxes(bool    ax);
-MSVCDLL void GPSphere::SetBaseSphere(bool    bs);
-MSVCDLL void GPSphere::SetNormalization(bool nm);
+MSVCDLL void SetDegrees(bool       dg);
+MSVCDLL void SetSphereAxes(bool    ax);
+MSVCDLL void SetBaseSphere(bool    bs);
+MSVCDLL void SetNormalization(bool nm);
 
 // ____________________________________________________________________________
 // C              Gnuplot Spherical 3D Loadfile Generation
 // ____________________________________________________________________________
 
-MSVCDLL void GPSphere::LoadFile();
+MSVCDLL void LoadFile();
 
 // ____________________________________________________________________________
 // D              Gnuplot Spherical 3D Datafile Generation
@@ -134,9 +134,9 @@ MSVCDLL void GPSphere::LoadFile();
    Lastly, we can output out data in either degrees or radians, the later
    being the default.                                                        */
 
-MSVCDLL bool GPSphere::DataAxisFile(char axis, bool warn=true);
-MSVCDLL void GPSphere::DataFile(const coord_vec& data, int idx = -1);
-MSVCDLL void GPSphere::DataFiles(const std::vector<coord_vec>& data);
+MSVCDLL bool DataAxisFile(char axis, bool warn=true);
+MSVCDLL void DataFile(const coord_vec& data, int idx = -1);
+MSVCDLL void DataFiles(const std::vector<coord_vec>& data);
 
 // ____________________________________________________________________________
 // E             Gnuplot Spherical 3D Plot Output Generation
@@ -146,15 +146,15 @@ MSVCDLL void GPSphere::DataFiles(const std::vector<coord_vec>& data);
    data files that will be plotted. Subsequently, the command is issued to
    run gnuplot using the produced load file which reads the data files.      */
 
-MSVCDLL void GPSphere::Plot();
-MSVCDLL void GPSphere::Plot(const coord_vec& data);
-MSVCDLL void GPSphere::Plot(const std::vector<coord_vec>& data);
+MSVCDLL void Plot();
+MSVCDLL void Plot(const coord_vec& data);
+MSVCDLL void Plot(const std::vector<coord_vec>& data);
 
 // ____________________________________________________________________________
 // F         Gnuplot Spherical 3D Controls Standard Output Functions
 // ____________________________________________________________________________
 
-MSVCDLL virtual std::ostream& GPSphere::print(std::ostream& ostr);
+MSVCDLL virtual std::ostream& print(std::ostream& ostr);
 MSVCDLL friend  std::ostream& operator<< (std::ostream&     ostr, GPSphere& GPS);
 
 // ____________________________________________________________________________

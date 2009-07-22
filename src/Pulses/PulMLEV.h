@@ -114,7 +114,7 @@ void SetChannel(const ParameterSet& pset, int idx=-1);
         //                                with index idx
  
 
-int MLEV::SetGamB1(const ParameterSet& pset, int idx=-1);
+int SetGamB1(const ParameterSet& pset, int idx=-1);
  
         // Intput               DT      : MLEV parameters
         //                      pset    : Parameter set
@@ -180,10 +180,10 @@ MSVCDLL void operator = (const MLEV& MLEV1);
 // ____________________________________________________________________________
  
 /*
-std::string MLEV::channel()  const;                 INHERITED
-double MLEV::strength() const;                 INHERITED
-double MLEV::phase()    const;                 INHERITED
-double MLEV::offset()   const;                 INHERITED                     */  
+std::string channel()  const;                 INHERITED
+double strength() const;                 INHERITED
+double phase()    const;                 INHERITED
+double offset()   const;                 INHERITED                     */  
 
         // Intput       MLEV1	: MLEV parameters                              
         // Output       channel : MLEV isotope channel
@@ -217,8 +217,8 @@ double MLEV::offset()   const;                 INHERITED                     */
  
 ******************************************************************************/
  
-MSVCDLL PulWaveform MLEV::WF( ) const;
-MSVCDLL PulWaveform MLEV::WF_C180( ) const;
+MSVCDLL PulWaveform WF( ) const;
+MSVCDLL PulWaveform WF_C180( ) const;
 
         // Input        MP      : MLEV parameters
         // Output       PWF     : Pulse waveform for MLEV composite 180
@@ -243,8 +243,8 @@ MSVCDLL PulWaveform MLEV::WF_C180( ) const;
  
 ******************************************************************************/
  
-MSVCDLL PulComposite MLEV::PCmp(const spin_system& sys) const;
-MSVCDLL PulComposite MLEV::PCmp_C180(const spin_system& sys) const;
+MSVCDLL PulComposite PCmp(const spin_system& sys) const;
+MSVCDLL PulComposite PCmp_C180(const spin_system& sys) const;
 
         // Input        MP      : MLEV parameters           
         //              sys     : A spin system
@@ -271,7 +271,7 @@ MSVCDLL PulComposite MLEV::PCmp_C180(const spin_system& sys) const;
 ******************************************************************************/
 
  
-MSVCDLL PulCycle MLEV::CycMLEV4(const spin_system& sys) const;
+MSVCDLL PulCycle CycMLEV4(const spin_system& sys) const;
  
         // Input        MP      : MLEV parameters           
         //              sys     : A spin system
@@ -293,7 +293,7 @@ MSVCDLL PulCycle MLEV::CycMLEV4(const spin_system& sys) const;
 ******************************************************************************/
  
  
-MSVCDLL PulCycle MLEV::CycMLEV8(const spin_system& sys) const;
+MSVCDLL PulCycle CycMLEV8(const spin_system& sys) const;
  
         // Input        MP      : MLEV parameters           
         //              sys     : A spin system
@@ -314,7 +314,7 @@ MSVCDLL PulCycle MLEV::CycMLEV8(const spin_system& sys) const;
 
 ******************************************************************************/
  
-MSVCDLL PulCycle MLEV::CycMLEV16(const spin_system& sys) const;
+MSVCDLL PulCycle CycMLEV16(const spin_system& sys) const;
  
         // Input        MP      : MLEV parameters           
         //              sys     : A spin system
@@ -334,7 +334,7 @@ MSVCDLL PulCycle MLEV::CycMLEV16(const spin_system& sys) const;
 // ____________________________________________________________________________
 
        
-MSVCDLL void MLEV::read(const std::string &filename, int idx=-1);
+MSVCDLL void read(const std::string &filename, int idx=-1);
 
         // Intput               MP      : MLEV parameters
         //                      idx     : MLEV index
@@ -343,7 +343,7 @@ MSVCDLL void MLEV::read(const std::string &filename, int idx=-1);
         //                                with index idx
 
                                                          
-MSVCDLL void MLEV::read(const ParameterSet& pset, int idx=-1);
+MSVCDLL void read(const ParameterSet& pset, int idx=-1);
 
         // Intput               MP      : MLEV parameters
         //                      pset    : Parameter set
@@ -359,7 +359,7 @@ MSVCDLL void MLEV::read(const ParameterSet& pset, int idx=-1);
 //       the angle is specified the length will be set to zero (ideal pulse)
 
  
-MSVCDLL void MLEV::ask_read(int argc, char* argv[], int argn);
+MSVCDLL void ask_read(int argc, char* argv[], int argn);
 
         // Intput               ML      : MLEV parameters
         //                      argc    : Number of arguments
@@ -381,7 +381,7 @@ MSVCDLL void MLEV::ask_read(int argc, char* argv[], int argn);
 // ____________________________________________________________________________
  
          
-MSVCDLL std::ostream& MLEV::printBase(std::ostream &ostr) const;
+MSVCDLL std::ostream& printBase(std::ostream &ostr) const;
  
         // Intput               ML      : MLEV parameters
         //                      ostr    : Output stream
@@ -389,7 +389,7 @@ MSVCDLL std::ostream& MLEV::printBase(std::ostream &ostr) const;
         //                                to the output stream
  
          
-MSVCDLL std::ostream& MLEV::print(std::ostream &ostr) const;
+MSVCDLL std::ostream& print(std::ostream &ostr) const;
  
         // Intput               GP      : MLEV parameters
         //                      ostr    : Output stream

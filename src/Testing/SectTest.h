@@ -79,8 +79,8 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void SectTest::STerror(int eidx, int noret=0) const;
-volatile void SectTest::STfatality(int eidx)           const;
+         void STerror(int eidx, int noret=0) const;
+volatile void STfatality(int eidx)           const;
 
 // ____________________________________________________________________________
 // ii                 SECTION TEST INITIALIZATION FUNCTIONS
@@ -93,7 +93,7 @@ volatile void SectTest::STfatality(int eidx)           const;
    indicates that additional tests have been added, potentially with a
    different ordering, since the test results were generated previously.    */
  
-void SectTest::SetResults(int force=0);
+void SetResults(int force=0);
 
 // ____________________________________________________________________________
 // iii               SECTION TEST SINGLE TEST INDEXING FUNCTIONS
@@ -103,11 +103,11 @@ void SectTest::SetResults(int force=0);
    obtain the test Pix from either an interger or a string and they perform
    range checking to insure that the requested test exists in the section.   */
 
-bool                                  SectTest::CheckIndex(int k, int w=1) const;
-std::list<SingleTest>::iterator       SectTest::GetPixNC(int k);
-std::list<SingleTest>::const_iterator SectTest::GetPix(int k)              const;
-std::list<SingleTest>::const_iterator SectTest::GetPix(const   std::string& N)  const;
-int                                   SectTest::GetIndex(const std::string& N)  const;
+bool                                  CheckIndex(int k, int w=1) const;
+std::list<SingleTest>::iterator       GetPixNC(int k);
+std::list<SingleTest>::const_iterator GetPix(int k)              const;
+std::list<SingleTest>::const_iterator GetPix(const   std::string& N)  const;
+int                                   GetIndex(const std::string& N)  const;
 
 public:
 
@@ -132,9 +132,9 @@ SectTest(const SectTest& PT)             Section Test copy of PT
 SectTest assign(N)                       Assign N element
 ~SectTest()                              Destructor of Section Test          */
 
-MSVCDLC            SectTest::SectTest();                    // Empty Section Test
-MSVCDLC            SectTest::SectTest(const SectTest& PT);  // Section Test copy of PT
-MSVCDLL SectTest& SectTest::operator= (const SectTest& PT); // Assignment operator
+MSVCDLC            SectTest();                    // Empty Section Test
+MSVCDLC            SectTest(const SectTest& PT);  // Section Test copy of PT
+MSVCDLL SectTest& operator= (const SectTest& PT); // Assignment operator
 
 // ____________________________________________________________________________
 // B                   SECTION TEST ITERATORS & MEMBER ACCESS
@@ -144,10 +144,10 @@ MSVCDLL SectTest& SectTest::operator= (const SectTest& PT); // Assignment operat
    library libstdc++.  I am listing them here so that I & other users don't
    have to keep looking them up all the time.
 
-list<SingleTest>::iterator SectTest::begin()      Pointer to 1st element
-list<SingleTest>::iterator SectTest::end()        Pointer to last element
-SingleTest                 SectTest::front()      First element
-SingleTest                 SectTest::back()       Last element               */
+list<SingleTest>::iterator begin()      Pointer to 1st element
+list<SingleTest>::iterator end()        Pointer to last element
+SingleTest                 front()      First element
+SingleTest                 back()       Last element               */
 
 // ____________________________________________________________________________
 // C                     SECTION TEST LIST & QUEUE OPERATIONS
@@ -157,14 +157,14 @@ SingleTest                 SectTest::back()       Last element               */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-SectTest::push_back(const  SingleTest& ST)       Add ST to list end
-SectTest::pop_back()                             Remove ST at list end
-SectTest::push_front(const SingleTest& ST)       Add ST to list start
-SectTest::pop_front(const  SingleTest& ST)       Remove ST at list start
+push_back(const  SingleTest& ST)       Add ST to list end
+pop_back()                             Remove ST at list end
+push_front(const SingleTest& ST)       Add ST to list start
+pop_front(const  SingleTest& ST)       Remove ST at list start
 
-SectTest::insert(iterator p, SingleTest& ST)     Add ST before p
-SectTest::erase(iterator p)                      Remove ST at p
-SectTest::clear()                                Remove all list entries     */
+insert(iterator p, SingleTest& ST)     Add ST before p
+erase(iterator p)                      Remove ST at p
+clear()                                Remove all list entries     */
 
 // ____________________________________________________________________________
 // D                    SECTION TEST ADDITIONAL QUEUE OPERATIONS
@@ -174,10 +174,10 @@ SectTest::clear()                                Remove all list entries     */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-int  SectTest::size()                            Number of entries
-bool SectTest::empty()                           TRUE if pset empty
-bool SectTest::operator==(SectTest PT)           TRUE if psets equal
-bool SectTest::operator!=(SectTest PT)           TRUE if psets not equal     */
+int  size()                            Number of entries
+bool empty()                           TRUE if pset empty
+bool operator==(SectTest PT)           TRUE if psets equal
+bool operator!=(SectTest PT)           TRUE if psets not equal     */
 
 // ____________________________________________________________________________
 // E                     SECTION TEST LIST AUXILIARY FUNCTIONS
@@ -194,11 +194,11 @@ bool SectTest::operator!=(SectTest PT)           TRUE if psets not equal     */
      seek       string    Returns iterator in class tests for test with name
        "      SingleTest  Returns iterator in class tests for single test    */ 
  
-MSVCDLL int SectTest::contains(const std::string& tname) const;
-MSVCDLL int SectTest::contains(const SingleTest& ST)     const;
+MSVCDLL int contains(const std::string& tname) const;
+MSVCDLL int contains(const SingleTest& ST)     const;
 
-MSVCDLL std::list<SingleTest>::const_iterator SectTest::seek(const std::string& tname) const;
-MSVCDLL std::list<SingleTest>::const_iterator SectTest::seek(const SingleTest& ST) const;
+MSVCDLL std::list<SingleTest>::const_iterator seek(const std::string& tname) const;
+MSVCDLL std::list<SingleTest>::const_iterator seek(const SingleTest& ST) const;
 
 // ____________________________________________________________________________
 // F                       SECTION TEST ACCESS FUNCTIONS
@@ -224,19 +224,19 @@ MSVCDLL std::list<SingleTest>::const_iterator SectTest::seek(const SingleTest& S
     GetResults     Returns int vector for all current Single Test Results   */
 
 
-MSVCDLL std::string              SectTest::GetName()             const;
-MSVCDLL std::string              SectTest::GetName(int k)        const;
-MSVCDLL std::vector<std::string> SectTest::GetNames()            const;
-MSVCDLL std::string              SectTest::GetDescription()      const;
-MSVCDLL std::string              SectTest::GetDescription(int k) const;
-MSVCDLL std::vector<std::string> SectTest::GetDescriptions()     const;
-MSVCDLL int                      SectTest::GetStatus()           const;
-MSVCDLL int                      SectTest::GetStatus(int k)      const;
-MSVCDLL std::vector<int>         SectTest::GetStatuses()         const;
-MSVCDLL int                      SectTest::GetRunLevel()         const;
-MSVCDLL int                      SectTest::GetRunLevel(int k)    const;
-MSVCDLL std::vector<int>         SectTest::GetRunLevels()        const;
-MSVCDLL std::vector<int>         SectTest::GetResults();
+MSVCDLL std::string              GetName()             const;
+MSVCDLL std::string              GetName(int k)        const;
+MSVCDLL std::vector<std::string> GetNames()            const;
+MSVCDLL std::string              GetDescription()      const;
+MSVCDLL std::string              GetDescription(int k) const;
+MSVCDLL std::vector<std::string> GetDescriptions()     const;
+MSVCDLL int                      GetStatus()           const;
+MSVCDLL int                      GetStatus(int k)      const;
+MSVCDLL std::vector<int>         GetStatuses()         const;
+MSVCDLL int                      GetRunLevel()         const;
+MSVCDLL int                      GetRunLevel(int k)    const;
+MSVCDLL std::vector<int>         GetRunLevels()        const;
+MSVCDLL std::vector<int>         GetResults();
 
 
 /*         Input                ST : A section test (this)
@@ -250,14 +250,14 @@ MSVCDLL std::vector<int>         SectTest::GetResults();
                   (runlev)  runlev : Current test run level   (getting runlev)
                               void : If setting interal value                */  
 
-MSVCDLL const std::string& SectTest::name()     const;                // Get name     
-MSVCDLL       int          SectTest::status()   const;                // Get status
-MSVCDLL const std::string& SectTest::describe() const;                // Get descript
-MSVCDLL       int          SectTest::runlevel() const;                // Get runlev
-MSVCDLL       void         SectTest::name(const  std::string& Name);  // Set name
-MSVCDLL       void         SectTest::status(     int          Status);// Set status
-MSVCDLL       void         SectTest::describe(const std::string& D);  // Set decript
-MSVCDLL       void         SectTest::runlevel(   int          RLev);  // Set runlev
+MSVCDLL const std::string& name()     const;                // Get name     
+MSVCDLL       int          status()   const;                // Get status
+MSVCDLL const std::string& describe() const;                // Get descript
+MSVCDLL       int          runlevel() const;                // Get runlev
+MSVCDLL       void         name(const  std::string& Name);  // Set name
+MSVCDLL       void         status(     int          Status);// Set status
+MSVCDLL       void         describe(const std::string& D);  // Set decript
+MSVCDLL       void         runlevel(   int          RLev);  // Set runlev
 
 // ____________________________________________________________________________
 // G                      SECTION TEST TESTING FUNCTIONS
@@ -280,14 +280,14 @@ MSVCDLL       void         SectTest::runlevel(   int          RLev);  // Set run
 //                             Run All Single Tests
 //-----------------------------------------------------------------------------
 
-MSVCDLL int SectTest::TestSingles(std::ostream& ostr, int anew=0, int keepon=0);
+MSVCDLL int TestSingles(std::ostream& ostr, int anew=0, int keepon=0);
 
 //-----------------------------------------------------------------------------
 //                  Run Specific Single Test (By Index Or Name)
 //-----------------------------------------------------------------------------
  
-MSVCDLL int SectTest::TestSingle(std::ostream& ostr, int tidx, int anew=0);
-MSVCDLL int SectTest::TestSingle(std::ostream& ostr, const std::string& tnam, int a=0);
+MSVCDLL int TestSingle(std::ostream& ostr, int tidx, int anew=0);
+MSVCDLL int TestSingle(std::ostream& ostr, const std::string& tnam, int a=0);
 
 // ____________________________________________________________________________
 // H                       SECTION TEST OUTPUT FUNCTIONS
@@ -313,11 +313,11 @@ MSVCDLL int SectTest::TestSingle(std::ostream& ostr, const std::string& tnam, in
             results. Typically this is done only on single tests that
             have failed.                                                    */
 
-MSVCDLL std::ostream& SectTest::Header(std::ostream&  ostr, const std::string& CN);
-MSVCDLL std::ostream& SectTest::Header(std::ostream&  ostr)             const;
-MSVCDLL std::ostream& SectTest::Result(std::ostream&  ostr)             const;
-MSVCDLL std::ostream& SectTest::Results(std::ostream& ostr, int goon=1) const;
-MSVCDLL std::ostream& SectTest::ResRec(std::ostream&  ostr, int keepon, int nl=1);
+MSVCDLL std::ostream& Header(std::ostream&  ostr, const std::string& CN);
+MSVCDLL std::ostream& Header(std::ostream&  ostr)             const;
+MSVCDLL std::ostream& Result(std::ostream&  ostr)             const;
+MSVCDLL std::ostream& Results(std::ostream& ostr, int goon=1) const;
+MSVCDLL std::ostream& ResRec(std::ostream&  ostr, int keepon, int nl=1);
 
 // ____________________________________________________________________________
 // I                   SECTION TEST INTERACTIVE FUNCTIONS
@@ -340,13 +340,13 @@ MSVCDLL std::ostream& SectTest::ResRec(std::ostream&  ostr, int keepon, int nl=1
    These functions assume you want some output text from running the tests,
    otherwise you would just use the TestLevel function directly, right?     */
 
-MSVCDLL int SectTest::AskRun(std::ostream& ostr);
+MSVCDLL int AskRun(std::ostream& ostr);
 
 // ____________________________________________________________________________
 // J                       SECTION TEST AUXILIARY FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL std::ostream& SectTest::ListTests(std::ostream& ostr) const;
+MSVCDLL std::ostream& ListTests(std::ostream& ostr) const;
 };
 
 #endif							// SectTest.h

@@ -69,10 +69,10 @@ class BlochMx : public matrix
         //                      nr	: Flag for linefeed (0=linefeed)
         //                      pn	: string in message
      
-         void BlochMx::BMxerror(int ei,                        int nr=0) const;
-         void BlochMx::BMxerror(int ei, const std::string& pn, int nr=0) const;
-volatile void BlochMx::BMxfatal(int ei)                                  const;
-volatile void BlochMx::BMxfatal(int ei, const std::string& pn)           const;
+         void BMxerror(int ei,                        int nr=0) const;
+         void BMxerror(int ei, const std::string& pn, int nr=0) const;
+volatile void BMxfatal(int ei)                                  const;
+volatile void BMxfatal(int ei, const std::string& pn)           const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -89,12 +89,12 @@ public:
 ///F_list ~			- Destructor
 ///F_list =			- Assignment	
 
-MSVCDLC          BlochMx::BlochMx();
-MSVCDLC          BlochMx::BlochMx(const BlochMx& G);
-MSVCDLC          BlochMx::BlochMx(const matrix&  G);
-MSVCDLC          BlochMx::~BlochMx();
-MSVCDLC BlochMx& BlochMx::operator=(const BlochMx& G);
-MSVCDLC BlochMx& BlochMx::operator=(const matrix& G );
+MSVCDLC          BlochMx();
+MSVCDLC          BlochMx(const BlochMx& G);
+MSVCDLC          BlochMx(const matrix&  G);
+MSVCDLC          ~BlochMx();
+MSVCDLC BlochMx& operator=(const BlochMx& G);
+MSVCDLC BlochMx& operator=(const matrix& G );
 
 // ____________________________________________________________________________
 // B               BLOCH MATRIX - BLOCH MATRIX INTERACTIONS
@@ -111,14 +111,14 @@ MSVCDLC BlochMx& BlochMx::operator=(const matrix& G );
      +=      G,G1     G1 added to G         *=      G,G1     G mult into G1
       -      G1,G2    Returns G1-G2                                          */
 
-MSVCDLL BlochMx BlochMx::operator-  ()                  const;
-MSVCDLL BlochMx BlochMx::operator+  (const BlochMx& G1) const;
-MSVCDLL BlochMx BlochMx::operator-  (const BlochMx &G1) const;
-MSVCDLL BlochMx BlochMx::operator*  (const BlochMx &G1) const;
-MSVCDLL void    BlochMx::operator+= (const BlochMx& G1);
-MSVCDLL void    BlochMx::operator-= (const BlochMx& G1);
-MSVCDLL void    BlochMx::operator*= (const BlochMx& G1);
-MSVCDLL void    BlochMx::operator&= (const BlochMx& G1);
+MSVCDLL BlochMx operator-  ()                  const;
+MSVCDLL BlochMx operator+  (const BlochMx& G1) const;
+MSVCDLL BlochMx operator-  (const BlochMx &G1) const;
+MSVCDLL BlochMx operator*  (const BlochMx &G1) const;
+MSVCDLL void    operator+= (const BlochMx& G1);
+MSVCDLL void    operator-= (const BlochMx& G1);
+MSVCDLL void    operator*= (const BlochMx& G1);
+MSVCDLL void    operator&= (const BlochMx& G1);
 
 // ____________________________________________________________________________
 // C                   BLOCH MATRIX - SCALAR INTERACTIONS
@@ -135,23 +135,23 @@ MSVCDLL void    BlochMx::operator&= (const BlochMx& G1);
     *        G,d    Returns G*d          /        G,d     Returns (1/d)*G
     /=       G,d    G mult. by (1/d)     /=       G,z     G mult. by (1/z) */
 
-MSVCDLL BlochMx BlochMx::operator*  (const complex& z) const;
-MSVCDLL BlochMx BlochMx::operator*  (double r)         const;
+MSVCDLL BlochMx operator*  (const complex& z) const;
+MSVCDLL BlochMx operator*  (double r)         const;
 MSVCDLL friend  BlochMx  operator*  (const complex& z,  const BlochMx &G1);
 MSVCDLL friend  BlochMx  operator*  (double r,          const BlochMx &G1);
-MSVCDLL void    BlochMx::operator*= (const complex& z);
-MSVCDLL void    BlochMx::operator*= (double r); 
+MSVCDLL void    operator*= (const complex& z);
+MSVCDLL void    operator*= (double r); 
 
-MSVCDLL BlochMx BlochMx::operator/  (const complex& z) const;
-MSVCDLL BlochMx BlochMx::operator/  (double r)         const;
-MSVCDLL void    BlochMx::operator/= (const complex& z);
-MSVCDLL void    BlochMx::operator/= (double r);
+MSVCDLL BlochMx operator/  (const complex& z) const;
+MSVCDLL BlochMx operator/  (double r)         const;
+MSVCDLL void    operator/= (const complex& z);
+MSVCDLL void    operator/= (double r);
 
 // ____________________________________________________________________________
 // I				Basics Python Code
 // ____________________________________________________________________________
 
-MSVCDLL int BlochMx::NComps() const;
+MSVCDLL int NComps() const;
 
 // ____________________________________________________________________________
 // I				Basics Python Code
@@ -162,7 +162,7 @@ MSVCDLL int BlochMx::NComps() const;
 
 #ifdef PYGAMMA						// If compiling PyGAMMA
 
-std::string BlochMx::PyPrint() const;
+std::string PyPrint() const;
 
 #endif							// End of PyGAMMA code
 };

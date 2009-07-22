@@ -91,17 +91,17 @@ friend class BlochSys;
         //                      nr	: Flag for linefeed (0=linefeed)
         //                      pn	: string in message
      
-         void DetVec::BDVerror(int ei,                        int nr=0) const;
-         void DetVec::BDVerror(int ei, const std::string& pn, int nr=0) const;
-volatile void DetVec::BDVfatal(int ei) const;
-volatile void DetVec::BDVfatal(int ei, const std::string& pn) const;
+         void BDVerror(int ei,                        int nr=0) const;
+         void BDVerror(int ei, const std::string& pn, int nr=0) const;
+volatile void BDVfatal(int ei) const;
+volatile void BDVfatal(int ei, const std::string& pn) const;
 
 // ____________________________________________________________________________
 // ii                   Bloch Detection Vector Checking Functions
 // ____________________________________________________________________________
 
-bool DetVec::CheckNorms(const std::vector<double>&  Ns, bool warn=true) const;
-bool DetVec::CheckRange(int cmp,                        bool warn=true) const;
+bool CheckNorms(const std::vector<double>&  Ns, bool warn=true) const;
+bool CheckRange(int cmp,                        bool warn=true) const;
 
 // ____________________________________________________________________________
 // iii                     Bloch Detection Vector Setup Functions
@@ -117,12 +117,12 @@ bool DetVec::CheckRange(int cmp,                        bool warn=true) const;
    Parameter NDetVecs is used indicate how many sub-vectors are defined.
    If that is NOT found, it is assumed that there is only 1 sub-vector.     */
 
-bool DetVec::SetVector(const   ParameterSet& P, int pfx=-1, bool W=true);
-bool DetVec::GetNVects(const   ParameterSet& P, int&     N, bool W=true) const;
-bool DetVec::SetSubVects(const ParameterSet& P, int      N, bool W=true);
-bool DetVec::GetCoord(const  ParameterSet& P, 
+bool SetVector(const   ParameterSet& P, int pfx=-1, bool W=true);
+bool GetNVects(const   ParameterSet& P, int&     N, bool W=true) const;
+bool SetSubVects(const ParameterSet& P, int      N, bool W=true);
+bool GetCoord(const  ParameterSet& P, 
                                      coord& pt, int idx=-1, bool W=true) const;
-bool DetVec::GetMxMyMz(const   ParameterSet& P, 
+bool GetMxMyMz(const   ParameterSet& P, 
             double& Mx, double& My, double& Mz, int idx=-1, bool W=true) const;
 
 // ----------------------------------------------------------------------------
@@ -130,7 +130,7 @@ bool DetVec::GetMxMyMz(const   ParameterSet& P,
 // ----------------------------------------------------------------------------
 
 
-//bool DetVec::GetVect(const ParameterSet& pset, int i, double& v, Isotope& I,
+//bool GetVect(const ParameterSet& pset, int i, double& v, Isotope& I,
 //             double& R1, double& R2, coord& Pt, int& Sp, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -156,68 +156,68 @@ public:
 //                          Simple Constructors
 // ----------------------------------------------------------------------------
 
-MSVCDLC DetVec::DetVec(int   N=0);
-MSVCDLC DetVec::DetVec(const DetVec&   BD);
-MSVCDLC DetVec::DetVec(const row_vector& RV);
+MSVCDLC DetVec(int   N=0);
+MSVCDLC DetVec(const DetVec&   BD);
+MSVCDLC DetVec(const row_vector& RV);
 
 // ----------------------------------------------------------------------------
 //              Constructors Using Individual Bloch Detection Vectors
 // ----------------------------------------------------------------------------
 
-MSVCDLC DetVec::DetVec(double x, double y, double z);
-MSVCDLC DetVec::DetVec(const coord& D);
-MSVCDLC DetVec::DetVec(double x1,double y1,double z1,double x2,double y2,double z2);
-MSVCDLC DetVec::DetVec(const coord& D1, const coord& D2);
-MSVCDLC DetVec::DetVec(const std::vector<coord>& Ds);
+MSVCDLC DetVec(double x, double y, double z);
+MSVCDLC DetVec(const coord& D);
+MSVCDLC DetVec(double x1,double y1,double z1,double x2,double y2,double z2);
+MSVCDLC DetVec(const coord& D1, const coord& D2);
+MSVCDLC DetVec(const std::vector<coord>& Ds);
 
 // ----------------------------------------------------------------------------
 //              Constructors Of Common Detection Vectors
 // ----------------------------------------------------------------------------
 
-MSVCDLC DetVec::DetVec(int N, char x);			// x = x,y,z,+,-
+MSVCDLC DetVec(int N, char x);			// x = x,y,z,+,-
 
 // ----------------------------------------------------------------------------
 //                       Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-//        DetVec::~DetVec();
-//DetVec& DetVec::operator= (const DetVec& BDV);
+//        ~DetVec();
+//DetVec& operator= (const DetVec& BDV);
 
 // ____________________________________________________________________________
 // B                    Bloch Detection Vector Access
 // ____________________________________________________________________________
 
-//int DetVec::size()   const;			// Inherited
-MSVCDLL int DetVec::NComps() const;
+//int size()   const;			// Inherited
+MSVCDLL int NComps() const;
 
 // ----------------------------------------------------------------------------
 //                     Detection (Sub)Vector Components
 // ----------------------------------------------------------------------------
 
-MSVCDLL double DetVec::Dx(int cmp) const;
-MSVCDLL double DetVec::Dy(int cmp) const;
-MSVCDLL double DetVec::Dz(int cmp) const;
+MSVCDLL double Dx(int cmp) const;
+MSVCDLL double Dy(int cmp) const;
+MSVCDLL double Dz(int cmp) const;
 
-MSVCDLL void   DetVec::Dx(int cmp, double mx);
-MSVCDLL void   DetVec::Dy(int cmp, double my);
-MSVCDLL void   DetVec::Dz(int cmp, double mz);
+MSVCDLL void   Dx(int cmp, double mx);
+MSVCDLL void   Dy(int cmp, double my);
+MSVCDLL void   Dz(int cmp, double mz);
 
-MSVCDLL double DetVec::x(int     cmp=0) const;
-MSVCDLL double DetVec::y(int     cmp=0) const;
-MSVCDLL double DetVec::z(int     cmp=0) const;
-MSVCDLL double DetVec::norm(int  cmp=0) const;
-MSVCDLL double DetVec::theta(int cmp=0) const;
-MSVCDLL double DetVec::phi(int   cmp=0) const;
+MSVCDLL double x(int     cmp=0) const;
+MSVCDLL double y(int     cmp=0) const;
+MSVCDLL double z(int     cmp=0) const;
+MSVCDLL double norm(int  cmp=0) const;
+MSVCDLL double theta(int cmp=0) const;
+MSVCDLL double phi(int   cmp=0) const;
 
 // ----------------------------------------------------------------------------
 //                     Detection (Sub)Vector Norms
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::vector<double> DetVec::Norms() const;
-MSVCDLL void                DetVec::Norms(const std::vector<double>& Ns);
+MSVCDLL std::vector<double> Norms() const;
+MSVCDLL void                Norms(const std::vector<double>& Ns);
 
-MSVCDLL double DetVec::Norm(int i) const;
-MSVCDLL void   DetVec::Norm(double nv, int i);
+MSVCDLL double Norm(int i) const;
+MSVCDLL void   Norm(double nv, int i);
 
 // ____________________________________________________________________________
 // C              Bloch Detection Vector Parameter Set Functions
@@ -240,7 +240,7 @@ virtual int write(std::ofstream& ofstr, int idx=-1, int warn=2) const;
 
 MSVCDLL             operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const DetVec& BDV);
-MSVCDLL bool DetVec::PSetAdd(ParameterSet& pset, int pfx=-1)   const;
+MSVCDLL bool PSetAdd(ParameterSet& pset, int pfx=-1)   const;
 
 //-----------------------------------------------------------------------------
 //            Parameter Set File From Bloch Detection Vector
@@ -254,8 +254,8 @@ MSVCDLL bool DetVec::PSetAdd(ParameterSet& pset, int pfx=-1)   const;
         // Output               none    : Vector is written as a parameter
         //                                to file or output file stream
 
-MSVCDLL bool DetVec::write(const std::string& filename, int pfx=-1, int warn=2) const;
-MSVCDLL bool DetVec::write(std::ofstream& ofstr,        int pfx=-1, int warn=2) const;
+MSVCDLL bool write(const std::string& filename, int pfx=-1, int warn=2) const;
+MSVCDLL bool write(std::ofstream& ofstr,        int pfx=-1, int warn=2) const;
 
 // ____________________________________________________________________________
 // D                  Bloch Detection Vector Input Functions
@@ -288,34 +288,34 @@ MSVCDLL bool DetVec::write(std::ofstream& ofstr,        int pfx=-1, int warn=2) 
 	// Note			 	 : The vector is modifed (filled)
 
 
-MSVCDLL bool DetVec::read(const std::string& fn,    int idx=-1, int warn=2);
-MSVCDLL bool DetVec::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string& fn,    int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset, int idx=-1, int warn=2);
 
-MSVCDLL std::string DetVec::ask_read(int argc, char* argv[], int argn);
-MSVCDLL std::string DetVec::ask_read(int argc, char* argv[], int argn,
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,
                                                        const std::string& def); 
 
 // ____________________________________________________________________________
 // E                Bloch Detection Vector Standard I/O Functions
 // ____________________________________________________________________________
 
-MSVCDLL std::vector<std::string> DetVec::printStrings() const;
-MSVCDLL std::ostream&            DetVec::print(std::ostream& out, int np=20) const;
+MSVCDLL std::vector<std::string> printStrings() const;
+MSVCDLL std::ostream&            print(std::ostream& out, int np=20) const;
 MSVCDLL friend std::ostream& operator<<(std::ostream& out, const DetVec& M);
 
 // ____________________________________________________________________________
 // F                  Specialized Bloch Detection Vectors
 // ____________________________________________________________________________
 
-MSVCDLL        DetVec DetVec::Dx()    const;
-MSVCDLL        DetVec DetVec::Dy()    const;
-MSVCDLL        DetVec DetVec::Dz()    const;
-MSVCDLL static DetVec DetVec::DxVec(int NC);
-MSVCDLL static DetVec DetVec::DyVec(int NC);
-MSVCDLL static DetVec DetVec::DzVec(int NC);
-MSVCDLL        DetVec DetVec::DxVec() const;
-MSVCDLL        DetVec DetVec::DyVec() const;
-MSVCDLL        DetVec DetVec::DzVec() const;
+MSVCDLL        DetVec Dx()    const;
+MSVCDLL        DetVec Dy()    const;
+MSVCDLL        DetVec Dz()    const;
+MSVCDLL static DetVec DxVec(int NC);
+MSVCDLL static DetVec DyVec(int NC);
+MSVCDLL static DetVec DzVec(int NC);
+MSVCDLL        DetVec DxVec() const;
+MSVCDLL        DetVec DyVec() const;
+MSVCDLL        DetVec DzVec() const;
 
 // ____________________________________________________________________________
 // G                Bloch Detection Vector Evolution Functions
@@ -328,7 +328,7 @@ MSVCDLL        DetVec DetVec::DzVec() const;
 
 #ifdef PYGAMMA					// Begin PyGAMMA code block
 
-std::string DetVec::PyPrint() const;
+std::string PyPrint() const;
 
 #endif						// End PyGAMMA include.	
 

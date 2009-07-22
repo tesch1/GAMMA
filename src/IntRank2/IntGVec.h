@@ -67,9 +67,9 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-void IntGVec::IGVerror(int eidx,                           int noret=0) const;
-void IntGVec::IGVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void IntGVec::IGVfatal(int eidx) const;
+void IGVerror(int eidx,                           int noret=0) const;
+void IGVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void IGVfatal(int eidx) const;
 
 // ____________________________________________________________________________
 // iii            ELECTRON G INTERACTIONS VECTOR SETUP FUNCTIONS
@@ -103,7 +103,7 @@ volatile void IntGVec::IGVfatal(int eidx) const;
    prefix from all parameter names prior to looking for the interactions.
    This is done before any calls to class IntG which doesn't use prefixes.  */
 
-bool IntGVec::setGIV(const ParameterSet& pset, int idx=-1, bool warn=true);
+bool setGIV(const ParameterSet& pset, int idx=-1, bool warn=true);
 
 // ____________________________________________________________________________
 // iii            ELECTRON G INTERACTIONS VECTOR CHECKING FUNCTIONS
@@ -118,7 +118,7 @@ bool IntGVec::setGIV(const ParameterSet& pset, int idx=-1, bool warn=true);
            Output               TF      : Returns TRUE if spin is a valid
                                           interaction index, FALSE if not    */
 
-bool IntGVec::check_spin(int spin, int warn=0) const;
+bool check_spin(int spin, int warn=0) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -166,8 +166,8 @@ MSVCDLC IntGVec();					// Empty Interaction Vector
 	//				  to read {[idx]Electron G(i)} from i=0 
 	//				  to i=ns-1 where ns is the number
 
-//IntGVec::IntGVec(const         ParameterSet& pset, int indx=-1, int warn=1);
-//IntGVec::IntGVec(int ns, const ParameterSet& pset, int indx=-1, int warn=1);
+//IntGVec(const         ParameterSet& pset, int indx=-1, int warn=1);
+//IntGVec(int ns, const ParameterSet& pset, int indx=-1, int warn=1);
 
 // ----------------------------------------------------------------------------
 //          This Constructor Supports Generation From A Spin System
@@ -193,22 +193,22 @@ MSVCDLC IntGVec();					// Empty Interaction Vector
                                           count through G(i) until there
                                           is none found starting with i=0     */
 
-MSVCDLC IntGVec::IntGVec(const ParameterSet& pset, int indx=-1, int warn=2);
-MSVCDLC IntGVec::IntGVec(const std::vector<Isotope>& Isos,
+MSVCDLC IntGVec(const ParameterSet& pset, int indx=-1, int warn=2);
+MSVCDLC IntGVec(const std::vector<Isotope>& Isos,
                                          const ParameterSet& pset, int warn=2);
 
 // ----------------------------------------------------------------------------
 //               Here Be The Assignment Operator & Destructor
 // ----------------------------------------------------------------------------
 
-//void IntGVec::operator= (const IntGVec &IGV);
+//void operator= (const IntGVec &IGV);
 
 	// Input		IGV	: Electron G interaction vector (this)
 	// Output		none	: Electron G interaction vector is
 	//				  constructed equivalent to sys
 
 
-//IntGVec::~IntGVec ();
+//~IntGVec ();
 
 	// Input		IGV	: Electron G interaction vector (this)
 	// Output		none	: System IGV is destructed
@@ -233,8 +233,8 @@ MSVCDLC IntGVec::IntGVec(const std::vector<Isotope>& Isos,
 	//				  for specified spin
  
 
-MSVCDLL void   IntGVec::CValue(int spin, double val, int type);
-MSVCDLL double IntGVec::CValue(int spin, int type) const;
+MSVCDLL void   CValue(int spin, double val, int type);
+MSVCDLL double CValue(int spin, int type) const;
 
 
 // ---------------------------------------------------------------------------- 
@@ -248,10 +248,10 @@ MSVCDLL double IntGVec::CValue(int spin, int type) const;
 	// Note				: Defined in class IntElectron G as 1.5 times
 	//			          the Electron G tensor delzz value
 
-//void   IntGVec::G(int  spin, double Electron G);
-//double IntGVec::G(int  spin) const;
-MSVCDLL void   IntGVec::delz(int spin, double dcc);
-MSVCDLL double IntGVec::delz(int spin) const;
+//void   G(int  spin, double Electron G);
+//double G(int  spin) const;
+MSVCDLL void   delz(int spin, double dcc);
+MSVCDLL double delz(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Electron G Asymmetry Values
@@ -263,8 +263,8 @@ MSVCDLL double IntGVec::delz(int spin) const;
 	// Output		none	: Get/Set Electron G spin asymmetry
 	// Note				: Defined in class IntElectron G between [0,1]
 
-MSVCDLL void   IntGVec::eta(int spin, double ceta);
-MSVCDLL double IntGVec::eta(int spin) const;
+MSVCDLL void   eta(int spin, double ceta);
+MSVCDLL double eta(int spin) const;
 
  
 // ---------------------------------------------------------------------------- 
@@ -277,8 +277,8 @@ MSVCDLL double IntGVec::eta(int spin) const;
 	// Output		none	: Get/Set Electron G spin theta angle
 	// Note				: Defined class IntElectron G between [0,180]
 
-MSVCDLL void   IntGVec::theta(int spin, double ctheta);
-MSVCDLL double IntGVec::theta(int spin) const;
+MSVCDLL void   theta(int spin, double ctheta);
+MSVCDLL double theta(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //               Electron G Phi Orientation (Over From +x Axis)
@@ -290,14 +290,14 @@ MSVCDLL double IntGVec::theta(int spin) const;
 	// Output		none	: Get/Set Electron G spin phi angle
 	// Note				: Defined in IntElectron G between [0,360]
 
-MSVCDLL void   IntGVec::phi(int spin, double phi);
-MSVCDLL double IntGVec::phi(int spin) const;
+MSVCDLL void   phi(int spin, double phi);
+MSVCDLL double phi(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Full Electron G Interaction
 // ---------------------------------------------------------------------------- 
 
-MSVCDLL IntG& IntGVec::operator() (int spins);                                          
+MSVCDLL IntG& operator() (int spins);                                          
 
         // Input                IGV	: Electron G interaction vector (this)
         //                      spins	: Interaction index
@@ -305,7 +305,7 @@ MSVCDLL IntG& IntGVec::operator() (int spins);
         // Note				: Returns a reference to the interaction
 
 
-MSVCDLL IntG IntGVec::get(int spins) const;
+MSVCDLL IntG get(int spins) const;
 
 	// Input		IGV	: Electron G interaction vector
 	// 			spins	: Electron G index
@@ -317,13 +317,13 @@ MSVCDLL IntG IntGVec::get(int spins) const;
 // ----------------------------------------------------------------------------
  
  
-//int IntGVec::size() const;
+//int size() const;
  
         // Input                IGV   : Electron G interaction vector
         // Output               ns    : Number of interactions in vector
  
  
-MSVCDLL int IntGVec::nonzero() const;
+MSVCDLL int nonzero() const;
  
         // Input                IGV   : Electron G interaction vector
         // Output               TF    : True if any interactions with a
@@ -388,8 +388,8 @@ MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1) const;
         //                                as a parameter set either to file
 	//				  filename or ourput stream ofstr
  
-MSVCDLL int IntGVec::write(const std::string &filename, int idx=-1, int warn=2) const;
-MSVCDLL int IntGVec::write(std::ofstream& ofstr,        int idx=-1, int warn=2) const;
+MSVCDLL int write(const std::string &filename, int idx=-1, int warn=2) const;
+MSVCDLL int write(std::ofstream& ofstr,        int idx=-1, int warn=2) const;
 
 
 // ____________________________________________________________________________ 
@@ -400,7 +400,7 @@ MSVCDLL int IntGVec::write(std::ofstream& ofstr,        int idx=-1, int warn=2) 
 //        Direct Read of Vector From An ASCII File Or A Parameter Set
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool IntGVec::read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string &filename, int idx=-1, int warn=2);
 
 	// Input		IGV	: Electron G interaction vector (this)
 	// 			filename: Input filename
@@ -409,7 +409,7 @@ MSVCDLL bool IntGVec::read(const std::string &filename, int idx=-1, int warn=2);
 	//				  parameters read from file
 
  
-MSVCDLL bool IntGVec::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset, int idx=-1, int warn=2);
  
         // Input                IGV     : Electron G interaction vector (this)
         //                      pset    : Parameter set
@@ -422,7 +422,7 @@ MSVCDLL bool IntGVec::read(const ParameterSet& pset, int idx=-1, int warn=2);
 //       Interactive Read of Electron G Interaction Vector From An ASCII File
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::string IntGVec::ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
 
 	// Input		IGV	: Electron G interaction vector (this)
         //                      argc    : Number of arguments
@@ -443,7 +443,7 @@ MSVCDLL std::string IntGVec::ask_read(int argc, char* argv[], int argn);
 // ____________________________________________________________________________ 
 
 
-MSVCDLL std::ostream& IntGVec::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 
 	// Input		IGV	: Electron G interaction vector (this)
 	// 			ostr	: Output stream

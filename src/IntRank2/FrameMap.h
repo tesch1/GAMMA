@@ -74,7 +74,7 @@ volatile void FMfatal(int eidx, const std::string& pname)              const;
 // ii                REFERENCE FRAME MAP CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
-bool FrameMap::ChkIdx(int i, bool warn=true) const;	// Check index i OK
+bool ChkIdx(int i, bool warn=true) const;	// Check index i OK
 
 // ____________________________________________________________________________
 // iii         REFERENCE FRAME MAP PARAMETER SET SETUP FUNCTIONS
@@ -103,12 +103,12 @@ bool FrameMap::ChkIdx(int i, bool warn=true) const;	// Check index i OK
        Output           TF      : Reference Frame is set
                                   from parameters in pset		     */
 
-bool FrameMap::SetFrmMap(const  ParameterSet& p,int i, int f,
+bool SetFrmMap(const  ParameterSet& p,int i, int f,
                                                    int pfx=-1, int  warn=2);
-bool FrameMap::SetNames(const   ParameterSet& p, int i, int f, bool warn=true);
-bool FrameMap::SetNAxes(const   ParameterSet& p, int i, int f, bool warn=true);
-bool FrameMap::SetEAngles(const ParameterSet& p, int i, int f, bool warn=true);
-bool FrameMap::SetEAngVec(const ParameterSet& p, int i, int f, bool warn=true);
+bool SetNames(const   ParameterSet& p, int i, int f, bool warn=true);
+bool SetNAxes(const   ParameterSet& p, int i, int f, bool warn=true);
+bool SetEAngles(const ParameterSet& p, int i, int f, bool warn=true);
+bool SetEAngVec(const ParameterSet& p, int i, int f, bool warn=true);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -130,49 +130,49 @@ bool FrameMap::SetEAngVec(const ParameterSet& p, int i, int f, bool warn=true);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC FrameMap::FrameMap();
+MSVCDLC FrameMap();
 
 // ----------------------------------------------------------------------------
 //                    Constructors Using The Same Rotation
 // ----------------------------------------------------------------------------
 
-MSVCDLC FrameMap::FrameMap(const std::string& Fi, const std::string& Ff,
+MSVCDLC FrameMap(const std::string& Fi, const std::string& Ff,
                                                      const EAngles& EA, int N);
 
 // ----------------------------------------------------------------------------
 //                    Constructors Using Multiple Rotations
 // ----------------------------------------------------------------------------
 
-MSVCDLC FrameMap::FrameMap(const std::string& Fi, const std::string& Ff,
+MSVCDLC FrameMap(const std::string& Fi, const std::string& Ff,
                                             const std::vector<EAngles>& EAvec);
 
 // ----------------------------------------------------------------------------
 //                    Construction Using Parameter Sets
 // ----------------------------------------------------------------------------
 
-MSVCDLC FrameMap::FrameMap(const ParameterSet& pset,int i,int f,int pfx=-1,int warn=2);
+MSVCDLC FrameMap(const ParameterSet& pset,int i,int f,int pfx=-1,int warn=2);
 
 // ----------------------------------------------------------------------------
 //                          Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-MSVCDLL FrameMap& FrameMap::operator= (const FrameMap& FrmMap);
-MSVCDLC      FrameMap::~FrameMap();
+MSVCDLL FrameMap& operator= (const FrameMap& FrmMap);
+MSVCDLC      ~FrameMap();
 
 // ____________________________________________________________________________
 // B                    REFERENCE FRAME MAP ACCESS FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL std::string  FrameMap::InitialFrame() const;
-MSVCDLL std::string  FrameMap::FinalFrame()   const;
+MSVCDLL std::string  InitialFrame() const;
+MSVCDLL std::string  FinalFrame()   const;
 
-MSVCDLL void         FrameMap::InitialFrame(const std::string& Ai);
-MSVCDLL void         FrameMap::FinalFrame(const   std::string& Af);
+MSVCDLL void         InitialFrame(const std::string& Ai);
+MSVCDLL void         FinalFrame(const   std::string& Af);
 
-MSVCDLL EAngles      FrameMap::EA(int i=-1) const;
-MSVCDLL void         FrameMap::EA(const EAngles& ea, int i);
+MSVCDLL EAngles      EA(int i=-1) const;
+MSVCDLL void         EA(const EAngles& ea, int i);
 
-MSVCDLL int          FrameMap:: size() const;
+MSVCDLL int           size() const;
 
 // ____________________________________________________________________________
 // C                         PARAMETER SET FUNCTIONS
@@ -188,7 +188,7 @@ MSVCDLL int          FrameMap:: size() const;
 
 MSVCDLL             operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const FrameMap& FrmMap);
-MSVCDLL        void FrameMap::PSetAdd(ParameterSet& pset,int i,int f,int pfx=-1) const;
+MSVCDLL        void PSetAdd(ParameterSet& pset,int i,int f,int pfx=-1) const;
 
 // ----------------------------------------------------------------------------
 //      Functions To Make A ASCII Parameter File From A Reference Frame
@@ -198,7 +198,7 @@ MSVCDLL        void FrameMap::PSetAdd(ParameterSet& pset,int i,int f,int pfx=-1)
    frame.  Individual rotations will be placed into the file parameters as
    Euler angle in degrees.                                                   */
 
-MSVCDLL void FrameMap::write(const std::string &filename, int i, int f) const;
+MSVCDLL void write(const std::string &filename, int i, int f) const;
 
 // ____________________________________________________________________________
 // D                      REFERENCE FRAME MAP INPUT FUNCTIONS
@@ -223,11 +223,11 @@ MSVCDLL void FrameMap::write(const std::string &filename, int i, int f) const;
                                           from parameters in file filename
                                 file    : Name of file used to set frame    */
 
-MSVCDLL bool FrameMap::read(const std::string&  file,int i=0,int f=1,int pfx=-1,int w=2);
-MSVCDLL bool FrameMap::read(const ParameterSet& pset,int i=0,int f=1,int pfx=-1,int w=2);
-MSVCDLL std::string FrameMap::ask_read(int argc, char* argv[], int argn,
+MSVCDLL bool read(const std::string&  file,int i=0,int f=1,int pfx=-1,int w=2);
+MSVCDLL bool read(const ParameterSet& pset,int i=0,int f=1,int pfx=-1,int w=2);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,
                                                  int i=0, int f=1, int idx=-1);
-MSVCDLL std::string FrameMap::ask_read(int argc, char* argv[], int argn,
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,
                          const std::string& def, int i=0, int f=1, int idx=-1);
  
 // ____________________________________________________________________________
@@ -245,7 +245,7 @@ MSVCDLL std::string FrameMap::ask_read(int argc, char* argv[], int argn,
            Output               none    : Reference Frame information
                                           placed into the output stream      */
 
-MSVCDLL        std::ostream& FrameMap::print(std::ostream& out, int fflag=-1) const;
+MSVCDLL        std::ostream& print(std::ostream& out, int fflag=-1) const;
 MSVCDLL friend std::ostream& operator<<  (std::ostream& out, const FrameMap& FrmMap);
 
   };

@@ -133,17 +133,17 @@ volatile void IDfatal(int eidx, const std::string& pname)              const;
                                                 TF = 1 read with iso & coord
                                                 TF = 2 read with iso & DCC   */
 
-bool IntDip::getDI(const ParameterSet& pset,
+bool getDI(const ParameterSet& pset,
          double& Iqn, double& Sqn, double& dcc, double& eta, EAngles& EA,
                                                  int idxI, int idxS, int warn);
-bool IntDip::getDI1(const ParameterSet& pset,
+bool getDI1(const ParameterSet& pset,
          double& Iqn, double& Sqn, double& dcc, double& eta, EAngles& EA,
                                                            int idxS, int warn);
-bool IntDip::getDI2(const ParameterSet& pset,
+bool getDI2(const ParameterSet& pset,
          double& Iqn, double& Sqn, double& dcc, double& eta, EAngles& EA,
                                                  int idxI, int idxS, int warn);
 
-bool IntDip::getDI2(const ParameterSet& pset,
+bool getDI2(const ParameterSet& pset,
          double& dcc, double& eta, EAngles& EA,
          const Isotope& ISI, const Isotope& ISS, int idxI, int idxS, int warn);
 
@@ -154,7 +154,7 @@ bool IntDip::getDI2(const ParameterSet& pset,
 // **********        Set Up/Read This Spin Pair Isotope Types        **********
  
 /*
-int IntDip::getIsos(const ParameterSet& pset, int idxI, int idxS,
+int getIsos(const ParameterSet& pset, int idxI, int idxS,
                              std::string& IsoI, std::string& IsoS, int warn=1);
 */
  
@@ -204,7 +204,7 @@ int IntDip::getIsos(const ParameterSet& pset, int idxI, int idxS,
           DCCKHz, DCCKHz(#), DCCKHz(#,#)   - Dipolar Coupling in kHz
           DCCHz,  DCCHz(#),  DCCHz(#,#)    - Dipolar Coupling in Hz          */  
 
-bool IntDip::getDCC(const ParameterSet& pset, double& dcc,
+bool getDCC(const ParameterSet& pset, double& dcc,
                                                  int idxI, int idxS, bool warn);
 
 
@@ -213,7 +213,7 @@ bool IntDip::getDCC(const ParameterSet& pset, double& dcc,
 // **********        Set Up/Read The Whole Dipolar Interaction       **********
 
 
-int IntDip::setDI(const ParameterSet& pset, int idxI, int idxS, int warn=2);
+int setDI(const ParameterSet& pset, int idxI, int idxS, int warn=2);
 
         // Input                D       : Dipolar interaction (this)
         //                      pset    : A parameter set
@@ -231,8 +231,8 @@ int IntDip::setDI(const ParameterSet& pset, int idxI, int idxS, int warn=2);
 //          Set Dipolar Interaction Spatial and Spin Tensor Components
 // ----------------------------------------------------------------------------
 
-// void IntDip::setAs();	INHERITED	 Set spatial tensor components
-// void IntDip::setTs();	INHERITED	 Done in IntRank2T base class
+// void setAs();	INHERITED	 Set spatial tensor components
+// void setTs();	INHERITED	 Done in IntRank2T base class
 //                                            +
 //                                         m  |
 //                              T    = (-1)  T
@@ -247,7 +247,7 @@ int IntDip::setDI(const ParameterSet& pset, int idxI, int idxS, int warn=2);
 //           2,0  [6]    z         2,1     2  +           2,2
 
 
-void IntDip::setT20wh();
+void setT20wh();
 
         // Input                D       : Dipolar interaction (this)
         // Output               none    : Dipolar interaction weak
@@ -281,8 +281,8 @@ void IntDip::setT20wh();
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC IntDip::IntDip();
-MSVCDLC IntDip::IntDip(const IntDip &D1);
+MSVCDLC IntDip();
+MSVCDLC IntDip(const IntDip &D1);
 
 // ----------------------------------------------------------------------------
 //              Direct Constructors Using Spherical Components
@@ -308,13 +308,13 @@ MSVCDLC IntDip::IntDip(const IntDip &D1);
         //                                sign of gamma(IsoI)*gamma(IsoS)
         // Note                         : For dipolar interactions DCC=delzz
  
-MSVCDLC IntDip::IntDip(const std::string& IsoI, const std::string& IsoS,
+MSVCDLC IntDip(const std::string& IsoI, const std::string& IsoS,
                          double DCC, double eta=0.0, const EAngles& EA=EAzero);
 
-MSVCDLC IntDip::IntDip(const Isotope&     IsoI, const Isotope&     IsoS,
+MSVCDLC IntDip(const Isotope&     IsoI, const Isotope&     IsoS,
                          double DCC, double eta=0.0, const EAngles& EA=EAzero);
 
-MSVCDLC IntDip::IntDip(double              Iqn, double              Sqn,
+MSVCDLC IntDip(double              Iqn, double              Sqn,
                          double DCC, double eta=0.0, const EAngles& EA=EAzero);
 
 // ----------------------------------------------------------------------------
@@ -339,9 +339,9 @@ MSVCDLC IntDip::IntDip(double              Iqn, double              Sqn,
                                           sign of gamma(II)*gamma(IS)
            Note                         : For dipolar interactions DCC=delzz */
  
-MSVCDLC IntDip::IntDip(const std::string& IsoI, const std::string& IsoS,
+MSVCDLC IntDip(const std::string& IsoI, const std::string& IsoS,
                                           const coord& pt1, const coord& pt2);
-MSVCDLC IntDip::IntDip(const Isotope&     IsoI, const Isotope&     IsoS,
+MSVCDLC IntDip(const Isotope&     IsoI, const Isotope&     IsoS,
                                           const coord& pt1, const coord& pt2);
 
 // ----------------------------------------------------------------------------
@@ -357,11 +357,11 @@ MSVCDLC IntDip::IntDip(const Isotope&     IsoI, const Isotope&     IsoS,
    asymmetry so that those arguments need not be input during construction.
    Their default values are 0.                                               */
 
-MSVCDLC IntDip::IntDip(const std::string& II, const std::string& IS,
+MSVCDLC IntDip(const std::string& II, const std::string& IS,
                                 const coord& DxDyDz, const EAngles& EA=EAzero);
-MSVCDLC IntDip::IntDip(const Isotope& II, const Isotope& IS,
+MSVCDLC IntDip(const Isotope& II, const Isotope& IS,
                                 const coord& DxDyDz, const EAngles& EA=EAzero);
-MSVCDLC IntDip::IntDip(double Iz, double Sz, 
+MSVCDLC IntDip(double Iz, double Sz, 
                                 const coord& DxDyDz, const EAngles& EA=EAzero);
 
 // ----------------------------------------------------------------------------
@@ -424,13 +424,13 @@ MSVCDLC IntDip::IntDip(double Iz, double Sz,
            Output               none    : Dipolar interaction constructed
                                           from parameters in pset            */
 
-MSVCDLC IntDip::IntDip(const ParameterSet& pset, int idxI, int idxS=-1, int warn=2);
-//IntDip::IntDip(const ParameterSet& pset, double Iz, double Is,
+MSVCDLC IntDip(const ParameterSet& pset, int idxI, int idxS=-1, int warn=2);
+//IntDip(const ParameterSet& pset, double Iz, double Is,
 //                                         int idxI, int idxS=-1, int warn=2);
 
 
 /*
-IntDip::IntDip(double Iqn, double Sqn, const ParameterSet& pset,
+IntDip(double Iqn, double Sqn, const ParameterSet& pset,
                                                        int idx=-1, int warn=2);
 */
  
@@ -439,8 +439,8 @@ IntDip::IntDip(double Iqn, double Sqn, const ParameterSet& pset,
 //               Here Be The Assignment Operator & Destructor
 // ----------------------------------------------------------------------------
 
-MSVCDLL void IntDip::operator= (const IntDip &D1);
-MSVCDLC IntDip::~IntDip();
+MSVCDLL void operator= (const IntDip &D1);
+MSVCDLC ~IntDip();
 
 // ____________________________________________________________________________
 // B                     SPATIAL TENSOR COMPONENT ACCESS
@@ -483,24 +483,24 @@ MSVCDLC IntDip::~IntDip();
            Note                         : 1T = 1 J-C  -sec-m                 */
 
 
-MSVCDLL double IntDip::CheckDCC(const Isotope& II, const Isotope& IS, double dcc);
-MSVCDLL double IntDip::CheckDCC(const Isotope& II, const Isotope& IS,
+MSVCDLL double CheckDCC(const Isotope& II, const Isotope& IS, double dcc);
+MSVCDLL double CheckDCC(const Isotope& II, const Isotope& IS,
                                            const coord& pt1, const coord& pt2);
 
-MSVCDLL static double IntDip::DCC(const std::string& I, const std::string& S, double R);
-MSVCDLL static double IntDip::DCC(const Isotope&     I, const Isotope&     S, double R);
-MSVCDLL static double IntDip::DCC(const std::string& I, const std::string& S,
+MSVCDLL static double DCC(const std::string& I, const std::string& S, double R);
+MSVCDLL static double DCC(const Isotope&     I, const Isotope&     S, double R);
+MSVCDLL static double DCC(const std::string& I, const std::string& S,
                                            const coord& ptI, const coord& ptS);
-MSVCDLL static double IntDip::DCC(const Isotope&     I, const Isotope&     S,
+MSVCDLL static double DCC(const Isotope&     I, const Isotope&     S,
                                            const coord& ptI, const coord& ptS);
  
-MSVCDLL double IntDip::DCC() const;
-MSVCDLL void   IntDip::DCC(double dz);
+MSVCDLL double DCC() const;
+MSVCDLL void   DCC(double dz);
                             
-MSVCDLL static double IntDip::W2DCC(const std::string& I, const std::string& S, double W);
-MSVCDLL static double IntDip::DCC2W(const std::string& I, const std::string& S, double D);
-MSVCDLL static double IntDip::W2DCC(const Isotope&     I, const Isotope&     S, double W);
-MSVCDLL static double IntDip::DCC2W(const Isotope&     I, const Isotope&     S, double D);
+MSVCDLL static double W2DCC(const std::string& I, const std::string& S, double W);
+MSVCDLL static double DCC2W(const std::string& I, const std::string& S, double D);
+MSVCDLL static double W2DCC(const Isotope&     I, const Isotope&     S, double W);
+MSVCDLL static double DCC2W(const Isotope&     I, const Isotope&     S, double D);
 
 /*  Note that the default base class IntRank2A also provides the GAMMA
     normalized anisotropy and delzz values. These are constants given by
@@ -516,10 +516,10 @@ MSVCDLL static double IntDip::DCC2W(const Isotope&     I, const Isotope&     S, 
 // static double IntRank2A::delzz();                            INHERITED
 // static double IntRank2A::delA();                             INHERITED
 
-MSVCDLL double IntDip::aniso() const;
-MSVCDLL void   IntDip::aniso(double aiso);
-MSVCDLL double IntDip::DA()    const;
-MSVCDLL void   IntDip::DA(double aiso);
+MSVCDLL double aniso() const;
+MSVCDLL void   aniso(double aiso);
+MSVCDLL double DA()    const;
+MSVCDLL void   DA(double aiso);
 
 //-----------------------------------------------------------------------------
 //			       Asymmetry Access
@@ -617,45 +617,45 @@ MSVCDLL void   IntDip::DA(double aiso);
 //            Cartesian Tensor Component Access - Not Normalized
 //-----------------------------------------------------------------------------
 
-MSVCDLL double IntDip::dxx() const;
-MSVCDLL double IntDip::dyy() const;
-MSVCDLL double IntDip::dzz() const;
-MSVCDLL double IntDip::dxy() const;
-MSVCDLL double IntDip::dyx() const;
-MSVCDLL double IntDip::dxz() const;
-MSVCDLL double IntDip::dzx() const;
-MSVCDLL double IntDip::dyz() const;
-MSVCDLL double IntDip::dzy() const;
+MSVCDLL double dxx() const;
+MSVCDLL double dyy() const;
+MSVCDLL double dzz() const;
+MSVCDLL double dxy() const;
+MSVCDLL double dyx() const;
+MSVCDLL double dxz() const;
+MSVCDLL double dzx() const;
+MSVCDLL double dyz() const;
+MSVCDLL double dzy() const;
 
-MSVCDLL double IntDip::dxx(double T, double P) const;
-MSVCDLL double IntDip::dyy(double T, double P) const;
-MSVCDLL double IntDip::dzz(double T, double P) const;
-MSVCDLL double IntDip::dyx(double T, double P) const;
-MSVCDLL double IntDip::dxy(double T, double P) const;
-MSVCDLL double IntDip::dzx(double T, double P) const;
-MSVCDLL double IntDip::dzy(double T, double P) const;
-MSVCDLL double IntDip::dxz(double T, double P) const;
-MSVCDLL double IntDip::dyz(double T, double P) const;
+MSVCDLL double dxx(double T, double P) const;
+MSVCDLL double dyy(double T, double P) const;
+MSVCDLL double dzz(double T, double P) const;
+MSVCDLL double dyx(double T, double P) const;
+MSVCDLL double dxy(double T, double P) const;
+MSVCDLL double dzx(double T, double P) const;
+MSVCDLL double dzy(double T, double P) const;
+MSVCDLL double dxz(double T, double P) const;
+MSVCDLL double dyz(double T, double P) const;
 
-MSVCDLL double IntDip::dxx(double A, double B, double G) const;
-MSVCDLL double IntDip::dyy(double A, double B, double G) const;
-MSVCDLL double IntDip::dzz(double A, double B, double G) const;
-MSVCDLL double IntDip::dyx(double A, double B, double G) const;
-MSVCDLL double IntDip::dxy(double A, double B, double G) const;
-MSVCDLL double IntDip::dzx(double A, double B, double G) const;
-MSVCDLL double IntDip::dzy(double A, double B, double G) const;
-MSVCDLL double IntDip::dxz(double A, double B, double G) const;
-MSVCDLL double IntDip::dyz(double A, double B, double G) const;
+MSVCDLL double dxx(double A, double B, double G) const;
+MSVCDLL double dyy(double A, double B, double G) const;
+MSVCDLL double dzz(double A, double B, double G) const;
+MSVCDLL double dyx(double A, double B, double G) const;
+MSVCDLL double dxy(double A, double B, double G) const;
+MSVCDLL double dzx(double A, double B, double G) const;
+MSVCDLL double dzy(double A, double B, double G) const;
+MSVCDLL double dxz(double A, double B, double G) const;
+MSVCDLL double dyz(double A, double B, double G) const;
 
-MSVCDLL double IntDip::dxx(const EAngles& EA) const;
-MSVCDLL double IntDip::dyy(const EAngles& EA) const;
-MSVCDLL double IntDip::dzz(const EAngles& EA) const;
-MSVCDLL double IntDip::dyx(const EAngles& EA) const;
-MSVCDLL double IntDip::dxy(const EAngles& EA) const;
-MSVCDLL double IntDip::dzx(const EAngles& EA) const;
-MSVCDLL double IntDip::dzy(const EAngles& EA) const;
-MSVCDLL double IntDip::dxz(const EAngles& EA) const;
-MSVCDLL double IntDip::dyz(const EAngles& EA) const;
+MSVCDLL double dxx(const EAngles& EA) const;
+MSVCDLL double dyy(const EAngles& EA) const;
+MSVCDLL double dzz(const EAngles& EA) const;
+MSVCDLL double dyx(const EAngles& EA) const;
+MSVCDLL double dxy(const EAngles& EA) const;
+MSVCDLL double dzx(const EAngles& EA) const;
+MSVCDLL double dzy(const EAngles& EA) const;
+MSVCDLL double dxz(const EAngles& EA) const;
+MSVCDLL double dyz(const EAngles& EA) const;
 
 //-----------------------------------------------------------------------------
 //                         Orientation Angle Access
@@ -722,8 +722,8 @@ MSVCDLL double IntDip::dyz(const EAngles& EA) const;
 /* This function also returns a scaled Cartesian spatial tensor. That tensor
    values may either be
 
-        1.) GAMMA normalized Auv - Done With IntDip::CartMx()
-        2.) Typical Duv values   - Done With IntDip::Smx(true);
+        1.) GAMMA normalized Auv - Done With CartMx()
+        2.) Typical Duv values   - Done With Smx(true);
         3.) Shown in lab frame   - Done With This Function
 
    For case 3.) the values are related to the GAMMA normalized (Auv) and
@@ -736,7 +736,7 @@ MSVCDLL double IntDip::dyz(const EAngles& EA) const;
 
    where Kdel is a Kronecker delta function.                                 */
 
-MSVCDLL matrix IntDip::Dmx() const;
+MSVCDLL matrix Dmx() const;
  
 // ____________________________________________________________________________
 // C                       SPIN TENSOR COMPONENT ACCESS
@@ -775,8 +775,8 @@ MSVCDLL matrix IntDip::Dmx() const;
   matrix IntRank2T::T2m2(     const vector<int>& HSs,int i,int j=-1) const;
   matrix IntRank2T::T2m(int m,const vector<int>& HSs,int i,int j=-1) const;  */
 
-MSVCDLL matrix IntDip::T20het() const;
-MSVCDLL matrix IntDip::T20het(const std::vector<int>& HSs, int i, int j) const;
+MSVCDLL matrix T20het() const;
+MSVCDLL matrix T20het(const std::vector<int>& HSs, int i, int j) const;
  
         // Input                D       : Dipolar interaction
         // Output               T       : Spherical spin tensor component
@@ -801,7 +801,7 @@ MSVCDLL matrix IntDip::T20het(const std::vector<int>& HSs, int i, int j) const;
                                   r                                          */
 
 
-MSVCDLL double IntDip::xi(bool Hz=false) const;
+MSVCDLL double xi(bool Hz=false) const;
  
         // Input                D	: Dipolar interaction
         // Return               xi      : D. interaction constant
@@ -815,7 +815,7 @@ MSVCDLL double IntDip::xi(bool Hz=false) const;
 //                     Internuclear Distance Functions
 // ----------------------------------------------------------------------------
 
-MSVCDLL double IntDip::R(const std::string& II, const std::string& SS, bool gchk=1) const;
+MSVCDLL double R(const std::string& II, const std::string& SS, bool gchk=1) const;
 
         // Input                D       : Dipolar interaction (this)
         //                      II      : Spin I isotope type (1H, 2H, ...)
@@ -885,7 +885,7 @@ MSVCDLL double IntDip::R(const std::string& II, const std::string& SS, bool gchk
    be done in higher level classes or via user input (like these functions).  */
  
 
-MSVCDLL double IntDip::W(const std::string& II, const std::string& SS, bool gchk=true) const;
+MSVCDLL double W(const std::string& II, const std::string& SS, bool gchk=true) const;
 
         // Input                D	: Dipolar interaction
 	//			II      : Spin I isotope type (1H, 2H, ...)
@@ -900,7 +900,7 @@ MSVCDLL double IntDip::W(const std::string& II, const std::string& SS, bool gchk
 	//				  the high field splitting frequency.
 
     
-MSVCDLL void IntDip::W(double w, const std::string& II, const std::string& SS, int gchk=1);
+MSVCDLL void W(double w, const std::string& II, const std::string& SS, int gchk=1);
  
         // Input                D       : Dipolar interaction
         //                      w       : Dipolar frequency (Hz)
@@ -916,9 +916,9 @@ MSVCDLL void IntDip::W(double w, const std::string& II, const std::string& SS, i
 //                 Spin & Interaction Index Checking Functions
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool IntDip::DCheck(const std::string& I, const std::string& S, int warn=2) const;
+MSVCDLL bool DCheck(const std::string& I, const std::string& S, int warn=2) const;
 
-MSVCDLL int IntDip::Dspincheck(double Iqn, double Sqn) const;
+MSVCDLL int Dspincheck(double Iqn, double Sqn) const;
 
 	// Input		D	: Dipolar interaction
 	//			Iqn,Sqn : Spin quantum values of I&S
@@ -927,7 +927,7 @@ MSVCDLL int IntDip::Dspincheck(double Iqn, double Sqn) const;
 	//				  positive multipes of 1/2
 
 
-MSVCDLL int IntDip::Dindexcheck(int Iidx, int Sidx) const;
+MSVCDLL int Dindexcheck(int Iidx, int Sidx) const;
 
         // Input                D       : Dipolar interaction
         //                      idxI       : Spin isotope type
@@ -965,7 +965,7 @@ MSVCDLL int IntDip::Dindexcheck(int Iidx, int Sidx) const;
 
 MSVCDLL              operator ParameterSet( ) const;
 MSVCDLL friend void  operator+= (ParameterSet& pset, const IntDip &D);
-MSVCDLL        void  IntDip::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
+MSVCDLL        void  PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
 
 // ----------------------------------------------------------------------------
 // Functions To Output Dipolar Interaction To An ASCII File (via Parameter Set)
@@ -989,8 +989,8 @@ MSVCDLL        void  IntDip::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1)
                                           written in parameter set format to
                                           file filename or ostream ofstr     */
 
-MSVCDLL int IntDip::write(const std::string &fn,int idx=-1,int pfx=-1,int wrn=2) const;
-MSVCDLL int IntDip::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2) const;
+MSVCDLL int write(const std::string &fn,int idx=-1,int pfx=-1,int wrn=2) const;
+MSVCDLL int write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2) const;
  
 // ____________________________________________________________________________
 // G                   DIPOLAR INTERACTION INPUT FUNCTIONS
@@ -1046,18 +1046,18 @@ MSVCDLL int IntDip::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2)
                                                 TF = 1 read with iso & coord
                                                 TF = 2 read with iso & DCC   */
 
-MSVCDLL bool IntDip::read(const std::string &filename,int iI=-1,int iS=-1,int warn=2);
-MSVCDLL bool IntDip::read(const ParameterSet& pset,   int iI=-1,int iS=-1,int warn=2);
+MSVCDLL bool read(const std::string &filename,int iI=-1,int iS=-1,int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,   int iI=-1,int iS=-1,int warn=2);
  
-MSVCDLL void IntDip::scan(const std::string &filename,int iI=-1,int iS=-1,int warn=2);
-MSVCDLL void IntDip::scan(const ParameterSet& pset,   int iI=-1,int iS=-1,int warn=2);
+MSVCDLL void scan(const std::string &filename,int iI=-1,int iS=-1,int warn=2);
+MSVCDLL void scan(const ParameterSet& pset,   int iI=-1,int iS=-1,int warn=2);
 
 // ----------------------------------------------------------------------------
 //       Functions To Read ASCII File Using One Interaction Index
 // ----------------------------------------------------------------------------
  
-//int IntDip::read(const std::string &filename, int idx=-1, int warn=2);
-//void IntDip::read(const std::string &filename, int idx=-1);
+//int read(const std::string &filename, int idx=-1, int warn=2);
+//void read(const std::string &filename, int idx=-1);
  
         // Input                D       : Dipolar interaction
         //                      filename: Output file name
@@ -1072,8 +1072,8 @@ MSVCDLL void IntDip::scan(const ParameterSet& pset,   int iI=-1,int iS=-1,int wa
         //                                a few parameters are acceptable
  
 
-//int IntDip::read(const ParameterSet& pset, int idx=-1, int warn=2);
-//void IntDip::read(const ParameterSet& pset, int idx=-1);
+//int read(const ParameterSet& pset, int idx=-1, int warn=2);
+//void read(const ParameterSet& pset, int idx=-1);
  
         // Input                D       : Dipolar interaction
         //                      pset    : Parameter set
@@ -1099,7 +1099,7 @@ MSVCDLL void IntDip::scan(const ParameterSet& pset,   int iI=-1,int iS=-1,int wa
    (and this is normally the case) then Deta is assumed to be zero.          */
 
  
-MSVCDLL void IntDip::read(const std::string &filename, double Iqn, double Sqn, int idx=-1);
+MSVCDLL void read(const std::string &filename, double Iqn, double Sqn, int idx=-1);
  
         // Input                D      : Dipolar interaction
         //                      filename: Output file name
@@ -1110,7 +1110,7 @@ MSVCDLL void IntDip::read(const std::string &filename, double Iqn, double Sqn, i
         //                                from parameters in file filename
 
 
-MSVCDLL void IntDip::read(const ParameterSet& pset, double Iqn, double Sqn, int idx=-1);
+MSVCDLL void read(const ParameterSet& pset, double Iqn, double Sqn, int idx=-1);
  
         // Input                D       : Dipolar interaction
         //                      pset    : Parameter set
@@ -1124,11 +1124,11 @@ MSVCDLL void IntDip::read(const ParameterSet& pset, double Iqn, double Sqn, int 
 //        Interactive Ask/Read ASCII File Using A Single Interaction Index
 // ----------------------------------------------------------------------------
  
-MSVCDLL std::string IntDip::ask_read(int argc, char* argv[], int argn,                    int idx=-1);
-MSVCDLL std::string IntDip::ask_read(int argc, char* argv[], int argn, const std::string& def, int idx=-1);
-MSVCDLL void IntDip::askI(int   argc, char* argv[], int qn, double& DI);
-MSVCDLL void IntDip::askS(int   argc, char* argv[], int qn, double& DS);
-MSVCDLL void IntDip::askDCC(int argc, char* argv[], int qn, double& Dcc);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,                    int idx=-1);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn, const std::string& def, int idx=-1);
+MSVCDLL void askI(int   argc, char* argv[], int qn, double& DI);
+MSVCDLL void askS(int   argc, char* argv[], int qn, double& DS);
+MSVCDLL void askDCC(int argc, char* argv[], int qn, double& Dcc);
  
         // Input                D       : Dipolar interaction (this)
         //                      argc    : Number of arguments
@@ -1143,7 +1143,7 @@ MSVCDLL void IntDip::askDCC(int argc, char* argv[], int qn, double& Dcc);
 //          Interactive Ask/Read ASCII File Using Two Spin Indicies
 // ----------------------------------------------------------------------------
  
-MSVCDLL std::string IntDip::ask_read(int argc, char* argv[], int argn, int iI,int iS);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn, int iI,int iS);
 
         // Input                D       : Dipolar interaction (this)
         //                      argc    : Number of arguments
@@ -1162,7 +1162,7 @@ MSVCDLL std::string IntDip::ask_read(int argc, char* argv[], int argn, int iI,in
         // Note                         : The interaction D is modifed (filled)
 
 
-MSVCDLL std::string IntDip::ask_read(int argc, char* argv[], int argn,
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,
                                         double Iqn, double Sqn, int idx=-1);
 
         // Input                D       : Dipolar interaction (this)
@@ -1187,7 +1187,7 @@ MSVCDLL std::string IntDip::ask_read(int argc, char* argv[], int argn,
 //               Interactive Ask For All Kinds Interaction Info
 // ----------------------------------------------------------------------------
  
-MSVCDLL void IntDip::ask(int argc, char* argv[], int& argq, double& Iqn, double& Sqn,
+MSVCDLL void ask(int argc, char* argv[], int& argq, double& Iqn, double& Sqn,
                                      double& Cnqcc, double& Ceta, int Cflag=0);
 
         // Input                D       : Dipolar interaction (this)
@@ -1206,7 +1206,7 @@ MSVCDLL void IntDip::ask(int argc, char* argv[], int& argq, double& Iqn, double&
         // Note                         : This is INTERACTIVE! 
 
  
-MSVCDLL void IntDip::askset(int argc, char* argv[], int& qn, int Cflag=0);
+MSVCDLL void askset(int argc, char* argv[], int& qn, int Cflag=0);
  
         // Input                D      : Dipolar interaction (this)
         //                      argc    : Number of arguments
@@ -1217,7 +1217,7 @@ MSVCDLL void IntDip::askset(int argc, char* argv[], int& qn, int Cflag=0);
         // Note                         : This is INTERACTIVE!
  
 
-MSVCDLL void IntDip::askset(int Cflag=0);
+MSVCDLL void askset(int Cflag=0);
 
         // Input                D      : Dipolar interaction (this)
         // Output               none    : Dis set interactively
@@ -1232,10 +1232,10 @@ MSVCDLL void IntDip::askset(int Cflag=0);
 //  Functions That Generate String Arrays to Simplify and Modularize Printing
 //-----------------------------------------------------------------------------
 
-MSVCDLL std::vector<std::string> IntDip::CartAStrings(const std::string& CSForm) const;
-MSVCDLL std::vector<std::string> IntDip::InfoStrings()                           const;
+MSVCDLL std::vector<std::string> CartAStrings(const std::string& CSForm) const;
+MSVCDLL std::vector<std::string> InfoStrings()                           const;
  
-MSVCDLL std::vector<std::string> IntDip::DipAStrings() const;
+MSVCDLL std::vector<std::string> DipAStrings() const;
  
         // Input                D       : Dipolar interaction (this)
         // Output               CSS     : Pointer to array of 5 strings
@@ -1249,7 +1249,7 @@ MSVCDLL std::vector<std::string> IntDip::DipAStrings() const;
                  Over From PAS x-Axis:    xxx.xx Degrees                     */  
 
 
-MSVCDLL std::string* IntDip::DipTStrings(int M) const;
+MSVCDLL std::string* DipTStrings(int M) const;
  
         // Input                D       : Dipolar interaction (this)
         //                      M       : Ang. momentum component [0,4]
@@ -1271,7 +1271,7 @@ MSVCDLL std::string* IntDip::DipTStrings(int M) const;
 //     Functions That Generate Ouput Of The Rank 2 Dipolar Interaction
 //-----------------------------------------------------------------------------
 
-MSVCDLL std::ostream& IntDip::print(std::ostream& out, bool fflag=false, bool hdr=true) const;
+MSVCDLL std::ostream& print(std::ostream& out, bool fflag=false, bool hdr=true) const;
 
         // Input                D      : Dipolar interaction (this)
         //                      ostr    : Output stream
@@ -1286,7 +1286,7 @@ MSVCDLL std::ostream& IntDip::print(std::ostream& out, bool fflag=false, bool hd
                  Over From PAS x-Axis:    xxx.xx Degrees                     */
 
  
-MSVCDLL std::ostream& IntDip::printAT(std::ostream& ostr) const;
+MSVCDLL std::ostream& printAT(std::ostream& ostr) const;
 
         // Input                D       : Dipolar spatial tensor (this)
         //                      ostr    : Output stream
@@ -1356,14 +1356,14 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& out, const IntDip& D);
                                           With HSs: return in composite spin
                                           Hilbert space                      */
 
-MSVCDLL matrix IntDip::H0(                              bool wh=false) const;
-MSVCDLL matrix IntDip::H0(double A, double B, double G, bool wh=false) const;
-MSVCDLL matrix IntDip::H0(const EAngles& EA,            bool wh=false) const;
+MSVCDLL matrix H0(                              bool wh=false) const;
+MSVCDLL matrix H0(double A, double B, double G, bool wh=false) const;
+MSVCDLL matrix H0(const EAngles& EA,            bool wh=false) const;
 
-MSVCDLL matrix IntDip::H0(const std::vector<int>& HSs, int i, int j, bool wh=false) const;
-MSVCDLL matrix IntDip::H0(const std::vector<int>& HSs, int i, int j,
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, int j, bool wh=false) const;
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, int j,
                           double A, double B, double G, bool wh=false) const;
-MSVCDLL matrix IntDip::H0(const std::vector<int>& HSs, int i, int j,
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, int j,
                                      const EAngles& EA, bool wh=false) const;
 
 // ----------------------------------------------------------------------------
@@ -1420,9 +1420,9 @@ MSVCDLL matrix IntDip::H0(const std::vector<int>& HSs, int i, int j,
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& IntDip::printSpherical(std::ostream& ostr);
-MSVCDLL std::ostream& IntDip::printCartesian(std::ostream& ostr);
-MSVCDLL std::ostream& IntDip::printCartesian(std::ostream& ostr, double theta, double phi=0);
+MSVCDLL std::ostream& printSpherical(std::ostream& ostr);
+MSVCDLL std::ostream& printCartesian(std::ostream& ostr);
+MSVCDLL std::ostream& printCartesian(std::ostream& ostr, double theta, double phi=0);
          
 // Axx = (A22+A2m2)/2 - A20/sqrt(6)      Axy = -i*(A22-A21)/2 = Ayx
 // Ayy = -(A22+A2m2)/2 - A20/sqrt(6)     Axz = -(A21-A2m1)/2  = Azx

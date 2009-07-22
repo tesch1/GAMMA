@@ -43,6 +43,7 @@
 #include <Testing/SectTest.h>           // Include section tests
 #include <Testing/SingleTest.h>         // Include single tests
 #include <Basics/Gutils.h>              // Need GAMMA error messages
+#include <stdlib.h>
 #include <fstream>			// Include file streams
 #include <string>                       // Include libstdc++ strings
 #include <iostream>                     // Include input output streams (cout)

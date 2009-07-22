@@ -36,6 +36,7 @@
 
 #include <BWRRelax/relaxNMR.h>		// Include the header file
 #include <Basics/Gconstants.h>		// Include GAMMA1H definition
+#include <stdlib.h>
 #include <string>			// Include libstdc++ strings
 
 using std::string;			// Using libstdc++ strings

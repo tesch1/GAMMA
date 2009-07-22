@@ -61,10 +61,10 @@ class SpinMap
         // Output               none    : Output process error message
         //                                Program execution stop (fatal)
 
-         void SpinMap::SMerror(int eidx,                        int nr=0) const;
-volatile void SpinMap::SMfatal(int eidx)                                  const;
-         void SpinMap::SMerror(int eidx, const std::string& pn, int nr=0) const;
-//volatile void SpinMap::SMfatal(int eidx, const std::string& pname)     const;
+         void SMerror(int eidx,                        int nr=0) const;
+volatile void SMfatal(int eidx)                                  const;
+         void SMerror(int eidx, const std::string& pn, int nr=0) const;
+//volatile void SMfatal(int eidx, const std::string& pname)     const;
 
 // ____________________________________________________________________________
 // ii                   CLASS SPIN MAP PARAMETER SET PARSING
@@ -81,20 +81,20 @@ volatile void SpinMap::SMfatal(int eidx)                                  const;
         // Output               TF      : Spin map is filled with
         //                                parameters read from file
 
-bool SpinMap::getSMStr(const ParameterSet& pset, int idx, int mdx,
+bool getSMStr(const ParameterSet& pset, int idx, int mdx,
                                          std::string& sm, bool warn=true) const;
 
-bool SpinMap::getSM(const ParameterSet& pset, int idx, int mdx,
+bool getSM(const ParameterSet& pset, int idx, int mdx,
          int& comp1, int& spin1, int& comp2, int& spin2, bool warn=true) const;
 
-bool SpinMap::setSM(const ParameterSet& pset,int idx,int mdx,bool warn=true);
+bool setSM(const ParameterSet& pset,int idx,int mdx,bool warn=true);
 
 //_________________________________________________________________________________
 // iii                   CLASS SPIN MAP CHECKING FUNCTIONS
 //_________________________________________________________________________________
 
-bool SpinMap::Check(bool warn=true) const;
-bool SpinMap::Check(int c1, int s1, int c2, int s2, bool warn=true) const;
+bool Check(bool warn=true) const;
+bool Check(int c1, int s1, int c2, int s2, bool warn=true) const;
 
 //_____________________________________________________________________________
 // A                           SPIN MAP CONSTRUCTORS
@@ -105,21 +105,21 @@ bool SpinMap::Check(int c1, int s1, int c2, int s2, bool warn=true) const;
 	//			c2,s2   : 2nd component, spin involved
         // Output               void	: A spin pairing is created
 
-MSVCDLC      SpinMap::SpinMap();
-MSVCDLC      SpinMap::SpinMap(int c1, int s1, int c2, int s2);
+MSVCDLC      SpinMap();
+MSVCDLC      SpinMap(int c1, int s1, int c2, int s2);
 MSVCDLC      SpinMap(const SpinMap& SM);
-MSVCDLC      SpinMap::SpinMap(const std::string& SM);   
-MSVCDLL void SpinMap::operator = (const SpinMap& SM);
-MSVCDLC      SpinMap::~SpinMap() {};
+MSVCDLC      SpinMap(const std::string& SM);   
+MSVCDLL void operator = (const SpinMap& SM);
+MSVCDLC      ~SpinMap() {};
 
 //_____________________________________________________________________________
 // B	                  SPIN MAP ACCESS FUNCTIONS
 //_____________________________________________________________________________
 
-MSVCDLL int SpinMap::Sub1()  const;			// Component 1 index
-MSVCDLL int SpinMap::Sub2()  const;			// Component 2 index
-MSVCDLL int SpinMap::Spin1() const;			// Spin 1 index
-MSVCDLL int SpinMap::Spin2() const;			// Spin 2 index
+MSVCDLL int Sub1()  const;			// Component 1 index
+MSVCDLL int Sub2()  const;			// Component 2 index
+MSVCDLL int Spin1() const;			// Spin 1 index
+MSVCDLL int Spin2() const;			// Spin 2 index
 
 // ____________________________________________________________________________
 // C                         SPIN MAP INPUT FUNCTIONS
@@ -140,8 +140,8 @@ MSVCDLL int SpinMap::Spin2() const;			// Spin 2 index
         // Note                         : The file should be an ASCII file
         //                                containing recognized parameters
 
-MSVCDLL bool SpinMap::read(const std::string&  filename,int idx,int mdx,int warn=2);
-MSVCDLL bool SpinMap::read(const ParameterSet& pset,    int idx,int mdx,int warn=2);
+MSVCDLL bool read(const std::string&  filename,int idx,int mdx,int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,    int idx,int mdx,int warn=2);
 
 //_____________________________________________________________________________
 // D		                  SPIN MAP OUTPUT
@@ -153,8 +153,8 @@ MSVCDLL bool SpinMap::read(const ParameterSet& pset,    int idx,int mdx,int warn
         ///F_list print			- Write system to output stream
         ///F_list <<			- Standard Output
 
-MSVCDLL        void          SpinMap::print() const;
-MSVCDLL        std::ostream& SpinMap::print(std::ostream& ostr) const;
+MSVCDLL        void          print() const;
+MSVCDLL        std::ostream& print(std::ostream& ostr) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const SpinMap& Sp);
 
 };

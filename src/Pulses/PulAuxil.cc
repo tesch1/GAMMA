@@ -30,6 +30,7 @@
 
 #include <Pulses/PulAuxil.h>		// Include our own header
 #include <Basics/StringCut.h>		// Include string cutting functions
+#include <stdlib.h>
 
 // ____________________________________________________________________________
 // A                  PULSE AUXILIARY WAVEFORM FUNCTIONS

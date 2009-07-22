@@ -55,6 +55,7 @@
 
 #include <string>			// Include libstdc++ strings
 #include <iostream>			// Include input output streams
+#include <stdlib.h>
 #include <GamIO/XWin1D.h>		// Include interface
 #include <GamIO/XWinAcqus.h>		// Include acqus file interface
 #include <GamIO/XWinFid.h>		// Include fid file interface

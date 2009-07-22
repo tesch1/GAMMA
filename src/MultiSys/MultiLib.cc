@@ -45,6 +45,7 @@
 #include <BWRRelax/relaxCSA.h>		// Include CSA relaxation
 #include <BWRRelax/relaxQuad.h>		// Include quadrupole relaxation
 #include <BWRRelax/relaxQCSA.h>		// Include CSA-Quad X-correlation
+#include <stdlib.h>
 
 using std::vector;			// Using libstdc++ STL vectors
 using std::string;			// Using libstdc++ strings

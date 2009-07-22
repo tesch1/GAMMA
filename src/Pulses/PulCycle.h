@@ -134,7 +134,7 @@ void deleteCGprops();
 // ____________________________________________________________________________
 
 
-void PulCycle::copyCIndxs(const PulCycle& CYC1);
+void copyCIndxs(const PulCycle& CYC1);
  
         // Input        CYC     : A pulse cycle (this)
         //              CYC1    : A second pulse cycle
@@ -143,7 +143,7 @@ void PulCycle::copyCIndxs(const PulCycle& CYC1);
         // Note                 : Assumed array Pindex is currently empty
 
 
-void PulCycle::copyCUprops(const PulCycle& CYC1);
+void copyCUprops(const PulCycle& CYC1);
  
         // Input        CYC     : A pulse cycle (this)
         //              CYC1    : A second pulse cycle
@@ -152,7 +152,7 @@ void PulCycle::copyCUprops(const PulCycle& CYC1);
         // Note                 : Assumed array Usteps is empty
  
  
-void PulCycle::copyCGprops(const PulCycle& CYC1);
+void copyCGprops(const PulCycle& CYC1);
  
         // Input        CYC     : A pulse cycle (this)
         //              CYC1    : A second pulse cycle
@@ -166,7 +166,7 @@ void PulCycle::copyCGprops(const PulCycle& CYC1);
 // ____________________________________________________________________________
 
 
-void PulCycle::SetCIndxs( );
+void SetCIndxs( );
 
         // Input        CYC     : A pulse cycle (this)
         // Output       none    : CYC1 propagator indices are
@@ -184,7 +184,7 @@ void PulCycle::SetCIndxs( );
    during construction of the pulse cycle, they are system dependent.  */
 
 
-void PulCycle::SetCUs();
+void SetCUs();
 
         // Input                CYC     : A pulse cycle (this)
         // Output               void    : Propagators for each step of the
@@ -201,7 +201,7 @@ void PulCycle::SetCUs();
    time using the combination of the composite pulse & pulse cycle.  Note that
    these are indeed system dependent.                                        */
 
-void PulCycle::SetCGs( );
+void SetCGs( );
  
         // Input                CYC     : A pulse cycle (this)
         //                      PW      : A pulse waveform
@@ -220,7 +220,7 @@ void PulCycle::SetCGs( );
 /* These functions are only active on propagators.  They will have no effect 
    if there have been no propagators generated.                              */
  
-void PulCycle::SetBasis(gen_op& Op);
+void SetBasis(gen_op& Op);
      
         // Input                CYC     : A pulse cycle (this)
         // Output               void    : Hilbert space propagators for all
@@ -292,7 +292,7 @@ MSVCDLL void operator = (const PulCycle& CYC1);
    cycle steps.  They are generated from an input pulse waveform.  It is the
    waveform which actually contains individual step Hamiltonians.           */
  
-//gen_op PulCycle::GetH(PulComposite& PC, int i=-1) const
+//gen_op GetH(PulComposite& PC, int i=-1) const
  
         // Input                CYC    : A pulse cycle (this)
         //                      i     : Step in pulse cycle
@@ -395,7 +395,7 @@ MSVCDLL LSprop GetCG(int i=-1);
         //                              the train to the end of step i
 
 
-MSVCDLL LSprop PulCycle::GetCGsum(int i=-1);
+MSVCDLL LSprop GetCGsum(int i=-1);
 
         // Input                CYC     : A pulse cycle (this)
         //                      i       : Steps in pulse cycle
@@ -409,7 +409,7 @@ MSVCDLL LSprop PulCycle::GetCGsum(int i=-1);
         //                                cycle (last in Gsums array)
 
 
-MSVCDLL LSprop PulCycle::GetCGsum(int i, int j);
+MSVCDLL LSprop GetCGsum(int i, int j);
 
         // Input                CYC     : A pulse cycle (this)
         //                      i       : Pulse cycle step index
@@ -419,7 +419,7 @@ MSVCDLL LSprop PulCycle::GetCGsum(int i, int j);
         //                                j WF steps of pulse cycle step i
  
  
-MSVCDLL LSprop PulCycle::GetCGmult(int N);
+MSVCDLL LSprop GetCGmult(int N);
  
         // Input                CYC     : A pulse cycle (this)
         //                      N       : Number of pulse cycles
@@ -450,8 +450,8 @@ MSVCDLL double       WF_length()	const;
 
 // ------------------ Functions For Specific Cycle Step -----------------------
 
-MSVCDLL complex PulCycle::value(int i)  const;
-MSVCDLL double  PulCycle::phase(int i)  const;
+MSVCDLL complex value(int i)  const;
+MSVCDLL double  phase(int i)  const;
  
         // Input        CYC     : A pulse cycle (this)
         // Output       phase   : Step phase value (degrees)
@@ -461,7 +461,7 @@ MSVCDLL double  PulCycle::phase(int i)  const;
 // ____________________________________________________________________________
  
 
-MSVCDLL double PulCycle::steps(double td) const;
+MSVCDLL double steps(double td) const;
  
         // Input        CYC     : A pulse cycle (this) 
         //              td      : An evolution time (sec) 
@@ -469,7 +469,7 @@ MSVCDLL double PulCycle::steps(double td) const;
         //                        to evolve for time td 
 
 
-//int PulCycle::fullsteps(double td) const;
+//int fullsteps(double td) const;
 
         // Input        CYC     : A pulse cycle (this)
         //              td      : An evolution time (sec)
@@ -479,7 +479,7 @@ MSVCDLL double PulCycle::steps(double td) const;
         //                        the total number of steps
 
  
-MSVCDLL double PulCycle::cycles(double td) const;
+MSVCDLL double cycles(double td) const;
  
         // Input        CYC     : A pulse cycle (this)
         //              td      : An evolution time (sec)
@@ -487,7 +487,7 @@ MSVCDLL double PulCycle::cycles(double td) const;
         //                        to evolve for time td
 
  
-MSVCDLL int PulCycle::fullcycles(double td=-1) const;
+MSVCDLL int fullcycles(double td=-1) const;
  
         // Input        CYC     : A pulse cycle (this)
         //              td      : An evolution time (sec)
@@ -497,7 +497,7 @@ MSVCDLL int PulCycle::fullcycles(double td=-1) const;
 
 
 
-MSVCDLL void PulCycle::scalegB1(double sf);
+MSVCDLL void scalegB1(double sf);
 
         // Input        CYC     : A pulse cycle (this)
         //              sf      : A scaling factor
@@ -511,7 +511,7 @@ MSVCDLL void PulCycle::scalegB1(double sf);
 // ____________________________________________________________________________
 
  
-MSVCDLL row_vector PulCycle::IvsT(int split, int ends, int N=1) const;
+MSVCDLL row_vector IvsT(int split, int ends, int N=1) const;
  
         // Input                CYC     : A pulse cycle (this)
         //                      split   : Flag to split steps
@@ -535,7 +535,7 @@ MSVCDLL row_vector PulCycle::IvsT(int split, int ends, int N=1) const;
         //                                ideal pulse angle.
  
  
-MSVCDLL row_vector PulCycle::PvsT(int split, int ends, int N=1, double ph=0) const;
+MSVCDLL row_vector PvsT(int split, int ends, int N=1, double ph=0) const;
  
         // Input                PWF     : Pulse Cycle Waveform
         //                      split   : Flag to split steps
@@ -552,7 +552,7 @@ MSVCDLL row_vector PulCycle::PvsT(int split, int ends, int N=1, double ph=0) con
 
 
 
-MSVCDLL void PulCycle::GP(int ty=1, int spl=0, int ed=0, int N=1, double p=0) const;
+MSVCDLL void GP(int ty=1, int spl=0, int ed=0, int N=1, double p=0) const;
 
         // Input                CYC	: A pulse cycle (this)
 	//                      ty	: Type of plot to create
@@ -571,7 +571,7 @@ MSVCDLL void PulCycle::GP(int ty=1, int spl=0, int ed=0, int N=1, double p=0) co
         //                                Gnuplot.
 
  
-MSVCDLL void PulCycle::FM(int ty=1, int spl=0, int ed=0, int N=1, double p=0) const;
+MSVCDLL void FM(int ty=1, int spl=0, int ed=0, int N=1, double p=0) const;
  
         // Input                CYC     : A pulse cycle (this)
 	//                      ty	: Type of plot to create
@@ -596,7 +596,7 @@ MSVCDLL void PulCycle::FM(int ty=1, int spl=0, int ed=0, int N=1, double p=0) co
 // ------------------------ Acquisiton Helper Functions 0----------------------
  
  
-MSVCDLL double PulCycle::FIDsync(double& SW) const;
+MSVCDLL double FIDsync(double& SW) const;
  
         // Input        CYC     : A pulse cycle (this)
         //              SW      : Desired spectral width
@@ -641,7 +641,7 @@ MSVCDLL row_vector FIDsynchCYC(int npts, int nCYs,
         //                        pulse CPul.
 
 
-MSVCDLL row_vector PulCycle::FIDWFsynch(int npts, int nWFs,
+MSVCDLL row_vector FIDWFsynch(int npts, int nWFs,
                                        gen_op &D, gen_op& sigmap, int track=0);
 
         // Input        CPul    : A composite pulse (this)
@@ -656,7 +656,7 @@ MSVCDLL row_vector PulCycle::FIDWFsynch(int npts, int nWFs,
         //                        composite pulse CPul.
 
  
-MSVCDLL row_vector PulCycle::FIDSTsynch(int npts, int nSTs,
+MSVCDLL row_vector FIDSTsynch(int npts, int nSTs,
                                        gen_op &D, gen_op& sigmap, int track=0);
  
         // Input        CPul    : A composite pulse (this)
@@ -671,7 +671,7 @@ MSVCDLL row_vector PulCycle::FIDSTsynch(int npts, int nSTs,
         //                        composite pulse CPul.
 
  
-MSVCDLL row_vector PulCycle::FID(int N, double td, gen_op &D, gen_op& sp, int F=0);
+MSVCDLL row_vector FID(int N, double td, gen_op &D, gen_op& sp, int F=0);
  
         // Input        CYC     : A pulse cycle (this)
         //              N       : Number of FID points
@@ -734,7 +734,7 @@ MSVCDLL virtual row_vector FIDRSTsynch(int npts, int nSTs,
         // Note                 : Assumes Relaxation Active!
 
  
-MSVCDLL row_vector PulCycle::FIDR(int N, double td, gen_op &D, gen_op& sp, int F=0);
+MSVCDLL row_vector FIDR(int N, double td, gen_op &D, gen_op& sp, int F=0);
 
         // Input        CYC     : A pulse cycle (this)                    
         //              N       : Number of FID points
@@ -754,7 +754,7 @@ MSVCDLL row_vector PulCycle::FIDR(int N, double td, gen_op &D, gen_op& sp, int F
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& PulCycle::printEvolve(std::ostream &ostr, double td) const;
+MSVCDLL std::ostream& printEvolve(std::ostream &ostr, double td) const;
  
         // Input                CYC     : A pulse cycle (this)           
         //                      td      : Evolution time
@@ -764,7 +764,7 @@ MSVCDLL std::ostream& PulCycle::printEvolve(std::ostream &ostr, double td) const
         //                                is sent to the output stream
 
 
-MSVCDLL virtual std::ostream& PulCycle::printFID(std::ostream &ostr, double td, int npts) const;
+MSVCDLL virtual std::ostream& printFID(std::ostream &ostr, double td, int npts) const;
 
         // Input        CYC     : A pulse cycle (this)
         //              ostr    : An output stream
@@ -774,7 +774,7 @@ MSVCDLL virtual std::ostream& PulCycle::printFID(std::ostream &ostr, double td, 
         //                        is set to the output stream ostr
 
 
-MSVCDLL std::ostream& PulCycle::printSteps(std::ostream &ostr) const;
+MSVCDLL std::ostream& printSteps(std::ostream &ostr) const;
 
         // Input                CYC     : Pulse Cycle
         //                      ostr    : Output stream
@@ -782,7 +782,7 @@ MSVCDLL std::ostream& PulCycle::printSteps(std::ostream &ostr) const;
         //                                to the output stream
 
 
-MSVCDLL std::ostream& PulCycle::printInfo(std::ostream &ostr) const;
+MSVCDLL std::ostream& printInfo(std::ostream &ostr) const;
 
         // Input                CYC     : Pulse Cycle
         //                      ostr    : Output stream
@@ -791,7 +791,7 @@ MSVCDLL std::ostream& PulCycle::printInfo(std::ostream &ostr) const;
         //                                to the output stream
 
 
-MSVCDLL std::ostream& PulCycle::printBase(std::ostream &ostr) const;
+MSVCDLL std::ostream& printBase(std::ostream &ostr) const;
 
         // Input                CYC     : Pulse Cycle
         //                      ostr    : Output stream

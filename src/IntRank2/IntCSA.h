@@ -115,11 +115,11 @@ volatile void ICfatal(int eidx, const std::string& pn, int noret=0) const;
    numbers, there is a separation between determining the spin quantum
    number and the rest of the interaction.                                   */
 
-bool IntCSA::getCI(const ParameterSet& pset,
+bool getCI(const ParameterSet& pset,
          double& Iqn, double& ppm, double& csa, double& eta, EAngles& EA,
                                     double& Om, int idx, bool warn=true) const;
 
-bool IntCSA::getCI(const ParameterSet& pset, const Isotope& ISI,
+bool getCI(const ParameterSet& pset, const Isotope& ISI,
                       double& ppm, double& csa, double& eta, EAngles& EA,
                                     double& Om, int idx, bool warn=true) const;
 
@@ -139,7 +139,7 @@ bool IntCSA::getCI(const ParameterSet& pset, const Isotope& ISI,
            Note                         : We only accepted PPM here unless
            				  the Larmor frequency (Om) is known */
 
-bool IntCSA::getPPM(const ParameterSet& pset, double& ppm,
+bool getPPM(const ParameterSet& pset, double& ppm,
                                 int idx=-1, double Om=0, bool warn=true) const;
  
 // ----------------------------------------------------------------------------
@@ -147,7 +147,7 @@ bool IntCSA::getPPM(const ParameterSet& pset, double& ppm,
 // ----------------------------------------------------------------------------
  
  
-bool IntCSA::getCSA(const ParameterSet& pset, double& csa,
+bool getCSA(const ParameterSet& pset, double& csa,
                                              int idx=-1, bool warn=true) const;
  
         // Input                SA      : CSA interaction (this)
@@ -195,7 +195,7 @@ bool IntCSA::getCSA(const ParameterSet& pset, double& csa,
            Note                         : This WILL NOT alter the interaction
            Note                         : Parameters are CSA, CSA(#)         */
 
-bool IntCSA::getOm(const ParameterSet& pset,
+bool getOm(const ParameterSet& pset,
                double& Om, const std::string& II, int idx=-1, bool warn=true) const;
 
 
@@ -213,17 +213,17 @@ bool IntCSA::getOm(const ParameterSet& pset,
    isotope types and their spin quantum numbers, there is a special function
    that takes a spin isotope for the spin quantum designation.               */
 
-bool IntCSA::setCI(                  const ParameterSet& p,int i=-1,int w=1);
-bool IntCSA::setCI(const Isotope& II,const ParameterSet& p,int i=-1,int w=1);
+bool setCI(                  const ParameterSet& p,int i=-1,int w=1);
+bool setCI(const Isotope& II,const ParameterSet& p,int i=-1,int w=1);
 
 // ----------------------------------------------------------------------------
 //      Set Shift Anisotropy Interaction Spatial and Spin Tensor Components
 // ----------------------------------------------------------------------------
 
-// void IntCSA::setTs();        INHERITED
-// void IntCSA::setAs();	INHERITED	 Set spatial tensor components
+// void setTs();        INHERITED
+// void setAs();	INHERITED	 Set spatial tensor components
 
-//void IntCSA::setTs(coord& B);
+//void setTs(coord& B);
  
         // Input                SA	: CSA interaction (this)
         //                      B       : Oriented, normalized field vector
@@ -260,8 +260,8 @@ bool IntCSA::setCI(const Isotope& II,const ParameterSet& p,int i=-1,int w=1);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
  
-MSVCDLC IntCSA::IntCSA();
-MSVCDLC IntCSA::IntCSA(const IntCSA &SA1);
+MSVCDLC IntCSA();
+MSVCDLC IntCSA(const IntCSA &SA1);
  
 // ----------------------------------------------------------------------------
 //            Direct Constructors That Use Spherical Parameters
@@ -277,11 +277,11 @@ MSVCDLC IntCSA::IntCSA(const IntCSA &SA1);
    frequency so that those arguments need not be input during construction.
    Their default values are all 0.                                           */
 
-MSVCDLC IntCSA::IntCSA(const std::string& IsoI, double Siso, double SdelA,
+MSVCDLC IntCSA(const std::string& IsoI, double Siso, double SdelA,
                       double eta=0.0, const EAngles& EA=EAzero, double Om=0.0);
-MSVCDLC IntCSA::IntCSA(const Isotope& IsoI,     double Siso, double SdelA,
+MSVCDLC IntCSA(const Isotope& IsoI,     double Siso, double SdelA,
                       double eta=0.0, const EAngles& EA=EAzero, double Om=0.0);
-MSVCDLC IntCSA::IntCSA(double qn,               double Siso, double SdelA,
+MSVCDLC IntCSA(double qn,               double Siso, double SdelA,
                       double eta=0.0, const EAngles& EA=EAzero, double Om=0.0);
 
 // ----------------------------------------------------------------------------
@@ -298,11 +298,11 @@ MSVCDLC IntCSA::IntCSA(double qn,               double Siso, double SdelA,
    orientation and Larmor frequency so that those arguments need not be input
    during construction.  Their default values are 0.                         */
 
-MSVCDLC IntCSA::IntCSA(const std::string& IsoI, const coord& SxSySz,
+MSVCDLC IntCSA(const std::string& IsoI, const coord& SxSySz,
                                       const EAngles& EA=EAzero, double Om=0.0);
-MSVCDLC IntCSA::IntCSA(const Isotope& IsoI,    const coord& SxSySz,
+MSVCDLC IntCSA(const Isotope& IsoI,    const coord& SxSySz,
                                       const EAngles& EA=EAzero, double Om=0.0);
-MSVCDLC IntCSA::IntCSA(double qn,              const coord& SxSySz,
+MSVCDLC IntCSA(double qn,              const coord& SxSySz,
                                       const EAngles& EA=EAzero, double Om=0.0);
 
 // ----------------------------------------------------------------------------
@@ -360,15 +360,15 @@ MSVCDLC IntCSA::IntCSA(double qn,              const coord& SxSySz,
         //                                use by spin systems
 
 
-MSVCDLC IntCSA::IntCSA(const                  ParameterSet& pset,int idx=-1,int wn=2);
-MSVCDLC IntCSA::IntCSA(const Isotope& I,const ParameterSet& pset,int idx=-1,int wn=2);
+MSVCDLC IntCSA(const                  ParameterSet& pset,int idx=-1,int wn=2);
+MSVCDLC IntCSA(const Isotope& I,const ParameterSet& pset,int idx=-1,int wn=2);
 
 // ----------------------------------------------------------------------------
 //               Here Are The Assignment Operator & Destructor
 // ----------------------------------------------------------------------------
  
-MSVCDLL void IntCSA::operator= (const IntCSA &SA1);
-MSVCDLC      IntCSA::~IntCSA();
+MSVCDLL void operator= (const IntCSA &SA1);
+MSVCDLC      ~IntCSA();
 
 // ____________________________________________________________________________
 // B                     SPATIAL TENSOR COMPONENT ACCESS
@@ -382,10 +382,10 @@ MSVCDLC      IntCSA::~IntCSA();
    made regarding the external field strength, gyromagnetic ratio, or spin
    Larmor frequency.                                                         */
 
-MSVCDLL double IntCSA::iso() const;
-MSVCDLL void   IntCSA::iso(double ppm);
-MSVCDLL double IntCSA::PPM() const;
-MSVCDLL void   IntCSA::PPM(double ppm);
+MSVCDLL double iso() const;
+MSVCDLL void   iso(double ppm);
+MSVCDLL double PPM() const;
+MSVCDLL void   PPM(double ppm);
 
 //-----------------------------------------------------------------------------
 //                             Anisotropy Access
@@ -412,10 +412,10 @@ MSVCDLL void   IntCSA::PPM(double ppm);
 // static double IntRank2A::delzz();                            INHERITED
 // static double IntRank2A::delA();                             INHERITED
 
-MSVCDLL double IntCSA::aniso() const;
-MSVCDLL void   IntCSA::aniso(double csa);
-MSVCDLL double IntCSA::CSA() const;
-MSVCDLL void   IntCSA::CSA(double csa);
+MSVCDLL double aniso() const;
+MSVCDLL void   aniso(double csa);
+MSVCDLL double CSA() const;
+MSVCDLL void   CSA(double csa);
 
 //-----------------------------------------------------------------------------
 //			       Asymmetry Access
@@ -524,35 +524,35 @@ IR2ASph IntRank2A::SphCmp(const EAngles& EA)           const;   INHERITED    */
                        uv   [  5   ]         zz    uv    iso                 */
 
 
-MSVCDLL double IntCSA::Sxx() const;
-MSVCDLL double IntCSA::Syy() const;
-MSVCDLL double IntCSA::Szz() const;
-MSVCDLL double IntCSA::Sxy() const;
-MSVCDLL double IntCSA::Syx() const;
-MSVCDLL double IntCSA::Sxz() const;
-MSVCDLL double IntCSA::Szx() const;
-MSVCDLL double IntCSA::Syz() const;
-MSVCDLL double IntCSA::Szy() const;
+MSVCDLL double Sxx() const;
+MSVCDLL double Syy() const;
+MSVCDLL double Szz() const;
+MSVCDLL double Sxy() const;
+MSVCDLL double Syx() const;
+MSVCDLL double Sxz() const;
+MSVCDLL double Szx() const;
+MSVCDLL double Syz() const;
+MSVCDLL double Szy() const;
 
-MSVCDLL double IntCSA::Sxx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Syy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Szz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Syx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Sxy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Szx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Szy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Sxz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntCSA::Syz(double alpha, double beta, double gamma) const;
+MSVCDLL double Sxx(double alpha, double beta, double gamma) const;
+MSVCDLL double Syy(double alpha, double beta, double gamma) const;
+MSVCDLL double Szz(double alpha, double beta, double gamma) const;
+MSVCDLL double Syx(double alpha, double beta, double gamma) const;
+MSVCDLL double Sxy(double alpha, double beta, double gamma) const;
+MSVCDLL double Szx(double alpha, double beta, double gamma) const;
+MSVCDLL double Szy(double alpha, double beta, double gamma) const;
+MSVCDLL double Sxz(double alpha, double beta, double gamma) const;
+MSVCDLL double Syz(double alpha, double beta, double gamma) const;
 
-MSVCDLL double IntCSA::Sxx(const EAngles& EA) const;
-MSVCDLL double IntCSA::Syy(const EAngles& EA) const;
-MSVCDLL double IntCSA::Szz(const EAngles& EA) const;
-MSVCDLL double IntCSA::Syx(const EAngles& EA) const;
-MSVCDLL double IntCSA::Sxy(const EAngles& EA) const;
-MSVCDLL double IntCSA::Szx(const EAngles& EA) const;
-MSVCDLL double IntCSA::Szy(const EAngles& EA) const;
-MSVCDLL double IntCSA::Sxz(const EAngles& EA) const;
-MSVCDLL double IntCSA::Syz(const EAngles& EA) const;
+MSVCDLL double Sxx(const EAngles& EA) const;
+MSVCDLL double Syy(const EAngles& EA) const;
+MSVCDLL double Szz(const EAngles& EA) const;
+MSVCDLL double Syx(const EAngles& EA) const;
+MSVCDLL double Sxy(const EAngles& EA) const;
+MSVCDLL double Szx(const EAngles& EA) const;
+MSVCDLL double Szy(const EAngles& EA) const;
+MSVCDLL double Sxz(const EAngles& EA) const;
+MSVCDLL double Syz(const EAngles& EA) const;
 
 //-----------------------------------------------------------------------------
 //                         Orientation Angle Access
@@ -620,8 +620,8 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
 /* This function also returns a scaled Cartesian spatial tensor. That tensor
    values may either be
 
-        1.) GAMMA normalized Auv - Done With IntCSA::CartMx()
-        2.) Typical Suv values   - Done With IntCSA::Smx(true);
+        1.) GAMMA normalized Auv - Done With CartMx()
+        2.) Typical Suv values   - Done With Smx(true);
         3.) Shown in lab frame   - Done With This Function
 
    For case 3.) the values are related to the GAMMA normalized (Auv) and
@@ -634,7 +634,7 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
 
    where Kdel is a Kronecker delta function.                                 */
 
-MSVCDLL matrix IntCSA::Smx() const;
+MSVCDLL matrix Smx() const;
  
 // ____________________________________________________________________________
 // C                       SPIN TENSOR COMPONENT ACCESS
@@ -701,11 +701,11 @@ MSVCDLL matrix IntCSA::Smx() const;
            Note                           Value is in radians/sec            */
 
 
-MSVCDLL double IntCSA::xiOm(const std::string& IsoI, double Om1H) const;
-MSVCDLL double IntCSA::xiOm(double Om) const;
+MSVCDLL double xiOm(const std::string& IsoI, double Om1H) const;
+MSVCDLL double xiOm(double Om) const;
 
-MSVCDLL double IntCSA::xi()          const;	// Overwrites inherited function
-MSVCDLL void   IntCSA::xi(double x)  const;	// Overwrites inherited function
+MSVCDLL double xi()          const;	// Overwrites inherited function
+MSVCDLL void   xi(double x)  const;	// Overwrites inherited function
 
 // ____________________________________________________________________________ 
 // F                        PARAMETER SET FUNCTIONS 
@@ -737,7 +737,7 @@ MSVCDLL void   IntCSA::xi(double x)  const;	// Overwrites inherited function
 
 MSVCDLL operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const IntCSA &SA);
-MSVCDLL        void IntCSA::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
+MSVCDLL        void PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
     
 // ----------------------------------------------------------------------------
 //    Functions To Output S.A. Interaction To ASCII From A Parameter Set
@@ -753,8 +753,8 @@ MSVCDLL        void IntCSA::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) 
         //                                written as a parameter set to
         //                                file filename or output stream ofstr
 
-MSVCDLL int IntCSA::write(const std::string &fn,int idx=-1,int pfx=-1,int wrn=2) const;
-MSVCDLL int IntCSA::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2) const;
+MSVCDLL int write(const std::string &fn,int idx=-1,int pfx=-1,int wrn=2) const;
+MSVCDLL int write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2) const;
  
 // ____________________________________________________________________________
 // G              SHIFT ANISOTROPY INTERACTION INPUT FUNCTIONS
@@ -790,14 +790,14 @@ MSVCDLL int IntCSA::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2)
         //                                parameters read from file
 	//				  or contained in pset
 
-MSVCDLL bool IntCSA::read(const std::string &filename, int idx=-1, int warn=2);
-MSVCDLL bool IntCSA::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //                    Interactive Ask/Read ASCII File
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::string IntCSA::ask_read(int argc, char* argv[], int argn, int idx=-1);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn, int idx=-1);
 
         // Input                SA      : CSA interaction (this)
         //                      argc    : Number of arguments
@@ -813,7 +813,7 @@ MSVCDLL std::string IntCSA::ask_read(int argc, char* argv[], int argn, int idx=-
 //               Interactive Ask For All Kinds Interaction Info
 // ----------------------------------------------------------------------------
 
-MSVCDLL void IntCSA::ask(int argc, char* argv[], int& qn, double& CI,
+MSVCDLL void ask(int argc, char* argv[], int& qn, double& CI,
          double& Csa, double& Ceta, double& Ctheta, double& Cphi, int Cflag=1);
 
         // Input                SA      : CSA interaction (this)
@@ -832,7 +832,7 @@ MSVCDLL void IntCSA::ask(int argc, char* argv[], int& qn, double& CI,
         // Note                         : This does NOT construct SA!
 
 
-MSVCDLL void IntCSA::askset(int argc, char* argv[], int& qn, int SAflag=0);
+MSVCDLL void askset(int argc, char* argv[], int& qn, int SAflag=0);
  
         // Input                SA      : CSA interaction (this)
         //                      argc    : Number of arguments
@@ -843,7 +843,7 @@ MSVCDLL void IntCSA::askset(int argc, char* argv[], int& qn, int SAflag=0);
         // Note                         : This is INTERACTIVE!
  
 
-MSVCDLL void IntCSA::askset(int SAflag=0);
+MSVCDLL void askset(int SAflag=0);
 
         // Input                SA      : CSA interaction (this)
         //                      SAflag  : Flag is delzz or CSA requested
@@ -858,9 +858,9 @@ MSVCDLL void IntCSA::askset(int SAflag=0);
 //   Functions That Generate Simple Strings To Simplify & Modularize Printing
 //-----------------------------------------------------------------------------
 
-MSVCDLL std::string IntCSA::ShiftString()  const;
-MSVCDLL std::string IntCSA::CSAString()    const;
-MSVCDLL std::string IntCSA::LarmorString() const;
+MSVCDLL std::string ShiftString()  const;
+MSVCDLL std::string CSAString()    const;
+MSVCDLL std::string LarmorString() const;
 
 //-----------------------------------------------------------------------------
 // Functions To Generate Information Strings To Simplify & Modularize Printing
@@ -879,7 +879,7 @@ MSVCDLL std::string IntCSA::LarmorString() const;
                        Euler Angle Beta:        xxx.xx Degrees
                        Euler Angle Gamma:       xxx.xx Degrees               */
 
-MSVCDLL std::vector<std::string> IntCSA::InfoStrings() const;
+MSVCDLL std::vector<std::string> InfoStrings() const;
 
 //-----------------------------------------------------------------------------
 //  Functions That Generate String Arrays to Simplify and Modularize Printing
@@ -918,7 +918,7 @@ MSVCDLL std::vector<std::string> IntCSA::InfoStrings() const;
         //                                virtual overload because we write 
         //                                out two spin quantum values here?
 
-MSVCDLL        std::ostream& IntCSA::print(std::ostream& ostr, int fflag=0) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int fflag=0) const;
 MSVCDLL friend std::ostream& operator<<   (std::ostream& osr,  const IntCSA& C);
 
 
@@ -947,11 +947,11 @@ MSVCDLL friend std::ostream& operator<<   (std::ostream& osr,  const IntCSA& C);
         // Output                        : Modifies output stream
 
 
-MSVCDLL std::ostream& IntCSA::printAT(std::ostream& ostr) const;
-MSVCDLL std::ostream& IntCSA::printSpherical(std::ostream& ostr);
-MSVCDLL std::ostream& IntCSA::printCartesian(std::ostream& ostr);
-MSVCDLL std::ostream& IntCSA::printCartesian(std::ostream& ostr, double theta, double phi=0);
-MSVCDLL static std::ostream& IntCSA::STList(std::ostream& ostr, int fflag=0);
+MSVCDLL std::ostream& printAT(std::ostream& ostr) const;
+MSVCDLL std::ostream& printSpherical(std::ostream& ostr);
+MSVCDLL std::ostream& printCartesian(std::ostream& ostr);
+MSVCDLL std::ostream& printCartesian(std::ostream& ostr, double theta, double phi=0);
+MSVCDLL static std::ostream& STList(std::ostream& ostr, int fflag=0);
 
 
 // ____________________________________________________________________________
@@ -985,13 +985,13 @@ MSVCDLL static std::ostream& IntCSA::STList(std::ostream& ostr, int fflag=0);
 // formula (unless you which the tensor aligned in the common axis system)
 
 
-MSVCDLL double IntCSA::wC( ) const;
+MSVCDLL double wC( ) const;
 
         // Input                SA	: Shift anisotropy interaction
         // Return               wC      : Shift anisotropy frequency (Hz)
 
 
-MSVCDLL void IntCSA::wC(double W);
+MSVCDLL void wC(double W);
 
         // Input                SA	: Shift anisotropy interaction
         //                      W       : Shift anisotropy frequency (Hz)
@@ -1057,13 +1057,13 @@ MSVCDLL void IntCSA::wC(double W);
                                           With HSs: return in composite
                                           spin space                         */
 
-MSVCDLL matrix IntCSA::H0()                             const;
-MSVCDLL matrix IntCSA::H0(double A, double B, double G) const;
-MSVCDLL matrix IntCSA::H0(const EAngles& EA)            const;
+MSVCDLL matrix H0()                             const;
+MSVCDLL matrix H0(double A, double B, double G) const;
+MSVCDLL matrix H0(const EAngles& EA)            const;
 
-MSVCDLL matrix IntCSA::H0(const std::vector<int>& HSs, int i)                               const;
-MSVCDLL matrix IntCSA::H0(const std::vector<int>& HSs, int i, double A, double B, double G) const;
-MSVCDLL matrix IntCSA::H0(const std::vector<int>& HSs, int i, const EAngles& EA)            const;
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i)                               const;
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, double A, double B, double G) const;
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, const EAngles& EA)            const;
 
 // ----------------------------------------------------------------------------
 //              Second Order Shift anisotropy Interaction Hamiltonians
@@ -1071,8 +1071,8 @@ MSVCDLL matrix IntCSA::H0(const std::vector<int>& HSs, int i, const EAngles& EA)
 // Applicable When The Shift anisotropy Interaction Is A Perturbation To Zeeman
 // ----------------------------------------------------------------------------
 
-//matrix IntCSA::H1(double Om) const;
-//matrix IntCSA::H1(double Om, double theta, double phi=0) const;
+//matrix H1(double Om) const;
+//matrix H1(double Om, double theta, double phi=0) const;
 
         // Input                Om      : Field Strength (Larmor in Hz)
         // Output               HC1     : The 2nd order secular part of the
@@ -1096,8 +1096,8 @@ MSVCDLL matrix IntCSA::H0(const std::vector<int>& HSs, int i, const EAngles& EA)
 //  These Are For When The Shift anisotropy Interaction Is A Perturbation To Zeeman
 // ----------------------------------------------------------------------------
 
-//matrix IntCSA::Hw(double Om) const;
-//matrix IntCSA::Hw(double Om, double theta, double phi) const;
+//matrix Hw(double Om) const;
+//matrix Hw(double Om, double theta, double phi) const;
 
         // Input                sys  : Spin system
         //                      wSA  : Shift anisotropy frequency (Hz)
@@ -1125,7 +1125,7 @@ MSVCDLL matrix IntCSA::H0(const std::vector<int>& HSs, int i, const EAngles& EA)
 // ----------------------------------------------------------------------------
  
 
-//matrix IntCSA::H( ) const;
+//matrix H( ) const;
  
         // Input                SA      : Shift anisotropy interaction
         // Note                         : This will return in the spin Hilbert

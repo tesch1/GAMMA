@@ -63,8 +63,8 @@ private:
         // Output               none	: Error Message Output
 	//				: Stops execution if fatal
 
-         void PulWaveform::PWFerror(int eidx, int noret=0) const;
-volatile void PulWaveform::PWFfatality(int eidx=0)         const;
+         void PWFerror(int eidx, int noret=0) const;
+volatile void PWFfatality(int eidx=0)         const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -87,16 +87,16 @@ volatile void PulWaveform::PWFfatality(int eidx=0)         const;
         //              wfrad   : Pulse waveform radians flag
         // Output       PWF	: A new Pulse waveform (this)
 
-MSVCDLC PulWaveform::PulWaveform();
-MSVCDLC PulWaveform::PulWaveform(const row_vector& wfsteps, const row_vector& wftimes,
+MSVCDLC PulWaveform();
+MSVCDLC PulWaveform(const row_vector& wfsteps, const row_vector& wftimes,
                          const std::string& wfname="", int wfrad=0);
-MSVCDLC PulWaveform::PulWaveform(const PulWaveform& PT1);
+MSVCDLC PulWaveform(const PulWaveform& PT1);
 
 
 // ------------------------ Destruction & Assignment --------------------------
 
-MSVCDLC virtual PulWaveform::~PulWaveform();
-MSVCDLL void    PulWaveform::operator = (const PulWaveform& PWF1);
+MSVCDLC virtual ~PulWaveform();
+MSVCDLL void    operator = (const PulWaveform& PWF1);
 
 // ____________________________________________________________________________
 // B               CLASS PULSE WAVEFORM ACCESS FUNCTIONS
@@ -104,11 +104,11 @@ MSVCDLL void    PulWaveform::operator = (const PulWaveform& PWF1);
  
 // --------------------- Functions Over Full Waveform -------------------------
 
-MSVCDLL virtual int         PulWaveform::steps()   const;
-MSVCDLL virtual std::string PulWaveform::name()    const;
-MSVCDLL virtual double      PulWaveform::length()  const;
-MSVCDLL virtual row_vector  PulWaveform::values()  const;
-MSVCDLL virtual row_vector  PulWaveform::lengths() const;
+MSVCDLL virtual int         steps()   const;
+MSVCDLL virtual std::string name()    const;
+MSVCDLL virtual double      length()  const;
+MSVCDLL virtual row_vector  values()  const;
+MSVCDLL virtual row_vector  lengths() const;
 
 	// Input	PWF	: A pulse waveform (this)
         // Output       steps   : PWF steps
@@ -119,10 +119,10 @@ MSVCDLL virtual row_vector  PulWaveform::lengths() const;
 
 // ----------------- Functions For Specific Waveform Step ---------------------
 
-MSVCDLL         double  PulWaveform::strength(int i) const;
-MSVCDLL virtual double  PulWaveform::phase(int    i) const;
-MSVCDLL         double  PulWaveform::length(int   i) const;
-MSVCDLL virtual complex PulWaveform::value(int    i) const;
+MSVCDLL         double  strength(int i) const;
+MSVCDLL virtual double  phase(int    i) const;
+MSVCDLL         double  length(int   i) const;
+MSVCDLL virtual complex value(int    i) const;
  
         // Input        PWF     : A pulse waveform (this)
         // Output       strength: Step rf-field strength (Hz)
@@ -137,13 +137,13 @@ MSVCDLL virtual complex PulWaveform::value(int    i) const;
  
 // ----------------------------- Step Lengths ---------------------------------
  
-MSVCDLL double PulWaveform::maxlength( ) const;
+MSVCDLL double maxlength( ) const;
  
         // Input        PWF     : A pulse waveform (this)
         // Output       tsum    : Length from longest waveform step
  
  
-MSVCDLL double PulWaveform::minlength(double cutoff=1.e-13) const;
+MSVCDLL double minlength(double cutoff=1.e-13) const;
  
         // Input        PWF     : A pulse waveform (this)
         //              cutoff  : Minimum length to consider
@@ -153,13 +153,13 @@ MSVCDLL double PulWaveform::minlength(double cutoff=1.e-13) const;
 // ---------------------------- Step Strengths --------------------------------
  
  
-MSVCDLL double PulWaveform::maxgamB1( ) const;
+MSVCDLL double maxgamB1( ) const;
  
         // Input        PWF     : A pulse waveform (this)
         // Output       gB1     : Strength of strongest waveform step
  
  
-MSVCDLL double PulWaveform::mingamB1( ) const;
+MSVCDLL double mingamB1( ) const;
  
         // Input        PWF     : A pulse waveform (this)
         // Output       gB1     : Strength of weakest waveform step
@@ -175,14 +175,14 @@ MSVCDLL double PulWaveform::mingamB1( ) const;
         // Output       T/F     : Returns true if the step time
         //                        is constant through out the waveform
 
-MSVCDLL bool PulWaveform::gamB1const() const;
-MSVCDLL bool PulWaveform::phaseconst() const;
-MSVCDLL bool PulWaveform::timeconst()  const;
+MSVCDLL bool gamB1const() const;
+MSVCDLL bool phaseconst() const;
+MSVCDLL bool timeconst()  const;
 
 // ---------------------------- Step Counting ---------------------------------
 
  
-MSVCDLL double PulWaveform::steps(double td) const;
+MSVCDLL double steps(double td) const;
   
         // Input        PWF     : A pulse waveform (this)
         //              td      : An evolution time (sec)
@@ -190,7 +190,7 @@ MSVCDLL double PulWaveform::steps(double td) const;
         //                        to evolve for time td
 
  
-MSVCDLL int PulWaveform::fullsteps(double td) const;
+MSVCDLL int fullsteps(double td) const;
  
         // Input        PWF     : A pulse waveform (this)
         //              td      : An evolution time (sec)
@@ -200,7 +200,7 @@ MSVCDLL int PulWaveform::fullsteps(double td) const;
 // -------------------------- Waveform Counting -------------------------------
 
  
-MSVCDLL double PulWaveform::WFs(double td) const;
+MSVCDLL double WFs(double td) const;
   
         // Input        PWF     : A pulse waveform (this)
         //              td      : An evolution time (sec)
@@ -208,7 +208,7 @@ MSVCDLL double PulWaveform::WFs(double td) const;
         //                        to evolve for time td
 
 
-MSVCDLL int PulWaveform::fullWFs(double td, double cut=1.e-13) const;
+MSVCDLL int fullWFs(double td, double cut=1.e-13) const;
 
         // Input        PWF     : Pulse Waveform
         //              td      : An evolution time (sec)
@@ -217,7 +217,7 @@ MSVCDLL int PulWaveform::fullWFs(double td, double cut=1.e-13) const;
         //                        are within time td
 
 
-MSVCDLL double PulWaveform::sumlength(int i) const;
+MSVCDLL double sumlength(int i) const;
   
         // Input        PWF     : A pulse waveform (this)
         //              i       : Step in waveform 
@@ -226,7 +226,7 @@ MSVCDLL double PulWaveform::sumlength(int i) const;
 
 // --------------------------- Waveform Scaling -------------------------------
 
-MSVCDLL virtual void PulWaveform::scalegB1(double sf);
+MSVCDLL virtual void scalegB1(double sf);
  
         // Input        PWF     : A pulse waveform (this)
         //              sf      : A scaling factor
@@ -242,7 +242,7 @@ MSVCDLL virtual void PulWaveform::scalegB1(double sf);
 //------------------------- Generic Plotting Functions ------------------------
  
 
-MSVCDLL void PulWaveform::getIdeal(double& gB1, double& ptt, int i) const;
+MSVCDLL void getIdeal(double& gB1, double& ptt, int i) const;
 
         // Input                PWF     : Pulse Waveform
         //                      gB1     : Step intensity
@@ -253,7 +253,7 @@ MSVCDLL void PulWaveform::getIdeal(double& gB1, double& ptt, int i) const;
         //                                be plotted for step i.
  
 
-MSVCDLL row_vector PulWaveform::IvsT(int split=0, int ends=0, int N=1) const;
+MSVCDLL row_vector IvsT(int split=0, int ends=0, int N=1) const;
 
         // Input                PWF     : Pulse Waveform
         //                      split   : Flag to split steps
@@ -268,7 +268,7 @@ MSVCDLL row_vector PulWaveform::IvsT(int split=0, int ends=0, int N=1) const;
         //                                RF-intensity vs time.
 
 
-MSVCDLL row_vector PulWaveform::PvsT(int spl=0, int ends=0, int N=1, double p=0) const;
+MSVCDLL row_vector PvsT(int spl=0, int ends=0, int N=1, double p=0) const;
 
         // Input                PWF     : Pulse Waveform
         //                      spl	: Flag to split steps
@@ -287,7 +287,7 @@ MSVCDLL row_vector PulWaveform::PvsT(int spl=0, int ends=0, int N=1, double p=0)
 //------------------------- Gnuplot Plotting Functions ------------------------
  
  
-MSVCDLL void PulWaveform::GP(int type=0, int split=0, int ends=0, int N=1) const;
+MSVCDLL void GP(int type=0, int split=0, int ends=0, int N=1) const;
 
         // Input                PWF	: Pulse Waveform
         //                      type    : Type of plot to create
@@ -308,7 +308,7 @@ MSVCDLL void PulWaveform::GP(int type=0, int split=0, int ends=0, int N=1) const
 //---------------------- FrameMaker Plotting Functions ------------------------
 
 
-MSVCDLL void PulWaveform::FM(int type=0, int split=0, int ends=0, int N=1 ) const;
+MSVCDLL void FM(int type=0, int split=0, int ends=0, int N=1 ) const;
 
         // Input                PWF     : Pulse Waveform
         //                      type    : Type of plot to create
@@ -330,7 +330,7 @@ MSVCDLL void PulWaveform::FM(int type=0, int split=0, int ends=0, int N=1 ) cons
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& PulWaveform::printBase(std::ostream& ostr) const;
+MSVCDLL std::ostream& printBase(std::ostream& ostr) const;
  
         // Input                PWF     : Pulse Waveform
         //                      ostr    : Output stream    
@@ -338,7 +338,7 @@ MSVCDLL std::ostream& PulWaveform::printBase(std::ostream& ostr) const;
         //                                sent into the output stream
  
 
-MSVCDLL std::ostream& PulWaveform::printSteps(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& printSteps(std::ostream& ostr, int full=0) const;
  
         // Input                PWF     : Pulse Waveform
         //                      ostr    : Output stream

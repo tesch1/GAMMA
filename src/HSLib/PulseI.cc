@@ -39,7 +39,10 @@
 #include <HSLib/HSprop.h>		// Knowledge of propagators
 #include <HSLib/SpinSys.h>
 #include <HSLib/GenOp.h>
+#include <HSLib/Evolve.h>
 #include <vector>			// Include libstdc++ stl vectors
+
+using namespace Evolve;
 
 // ____________________________________________________________________________
 // A               Pulses Acting Directly On Density Operators
@@ -53,7 +56,7 @@
    all spins of a specified isotope type, all spins in the system, or any
    combination of spins in the system as specified by spin flag settings.
 
-	   Input		sys   : A (base) spin system
+	   Input	`	sys   : A (base) spin system
 	   			sigma : Current density operator
 	   			SEL   : Pulse selectivity
 	   			beta  : Pulse rotation angle (degrees)
@@ -72,6 +75,9 @@
            E. Iupuls_sp  ---            Spins with sys flags TRUE affected   */
 
 // ************************* Pulse Along The X Axis ***************************
+
+// Added here as it is currently only defined in class of
+
 
 gen_op Ixpuls(const spin_sys& sys, const gen_op& sigma, int spin,  double beta)
   { return evolve(sigma, Rx(sys,spin,beta)); }
@@ -130,6 +136,7 @@ gen_op Ixypuls(const spin_sys& sys, const gen_op& sigma,
 gen_op Ixypuls_sp(const spin_sys& sys, const gen_op &sigma,
                                                        double phi, double beta)
   { return evolve(sigma, Rxy_sp(sys,phi,beta)); }
+
 
 // ____________________________________________________________________________
 // B                        Ideal Pulse Propagators 

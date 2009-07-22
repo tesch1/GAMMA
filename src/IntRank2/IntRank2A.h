@@ -154,13 +154,13 @@ volatile void IR2Afatal(int eidx)                                    const;
    the PAS. Also users may just neglect setting parameters such as eta,
    Ayz, or EAngles because they want them left at zero.                      */
 
-bool IntRank2A::getA(const ParameterSet& pset, const std::string& A,
+bool getA(const ParameterSet& pset, const std::string& A,
        double& Aeta, EAngles& EA, int idxI, int idxS=-1, bool warn=true) const;
 
-bool IntRank2A::getAX(const ParameterSet& pset, const std::string& A,
+bool getAX(const ParameterSet& pset, const std::string& A,
            double& Aeta, EAngles& EA, int idxI, int idxS=-1, int warn=2) const;
 
-bool IntRank2A::getACart(const ParameterSet& pset, const std::string& A,
+bool getACart(const ParameterSet& pset, const std::string& A,
         coord& Aize, EAngles& EA, int idxI, int idxS=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ bool IntRank2A::getACart(const ParameterSet& pset, const std::string& A,
                                           obtained from parameters in pset   */
 
 
-bool IntRank2A::getAeta(const ParameterSet& pset, const std::string& A,
+bool getAeta(const ParameterSet& pset, const std::string& A,
                     double& Aeta, int idxI, int idxS=-1, bool warn=true) const;
 
 
@@ -200,7 +200,7 @@ bool IntRank2A::getAeta(const ParameterSet& pset, const std::string& A,
    (molecular, diffusion, ......). However, GAMMA contains composite
    rotations well suited for employing any number of reference frames.       */
 
-bool IntRank2A::getOrientation(const ParameterSet& pset, const std::string& Pbase,
+bool getOrientation(const ParameterSet& pset, const std::string& Pbase,
                   EAngles& EA, int idxI=-1, int idxS=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -228,9 +228,9 @@ bool IntRank2A::getOrientation(const ParameterSet& pset, const std::string& Pbas
    care if Axx + Ayy + Azz = 0 or not, thus allowing for use in derived
    classes that may have an isotropic component.                             */
 
-int IntRank2A::getAxAyAz(const   ParameterSet& pset, const std::string& A,
+int getAxAyAz(const   ParameterSet& pset, const std::string& A,
                   coord& Axyz, int idxI=-1, int idxS=-1, bool warn=true) const;
-int IntRank2A::getAoffdiag(const ParameterSet& pset, const std::string& A,
+int getAoffdiag(const ParameterSet& pset, const std::string& A,
                   coord& Aod,  int idxI=-1, int idxS=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -242,7 +242,7 @@ int IntRank2A::getAoffdiag(const ParameterSet& pset, const std::string& A,
    coordinates. Here we read in two coordinates, one for each spin index and
    return them. Failure will occur if either spin coordinate is missing.     */
 
-bool IntRank2A::getCoords(const ParameterSet& pset,
+bool getCoords(const ParameterSet& pset,
              coord& ptI, coord& ptS, int idxI, int idxS, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -259,8 +259,8 @@ bool IntRank2A::getCoords(const ParameterSet& pset,
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC IntRank2A::IntRank2A();
-MSVCDLC IntRank2A::IntRank2A(const IntRank2A &IR2Ab);
+MSVCDLC IntRank2A();
+MSVCDLC IntRank2A(const IntRank2A &IR2Ab);
 
 // ----------------------------------------------------------------------------
 //         Direct Constructors Using Cartesian Spatial Tensor Components
@@ -283,7 +283,7 @@ MSVCDLC IntRank2A::IntRank2A(const IntRank2A &IR2Ab);
            Note                         : Theta PAS z down, phi PAS x over
            Note                         : Insist |Azz| >= |Ayy| >= |Axx|     */
 
-MSVCDLC IntRank2A::IntRank2A(const coord& AxAyAz, const EAngles& EA=EAzero);
+MSVCDLC IntRank2A(const coord& AxAyAz, const EAngles& EA=EAzero);
  
 // ----------------------------------------------------------------------------
 //         Direct Constructors Using Spherical Spatial Tensor Components
@@ -293,7 +293,7 @@ MSVCDLC IntRank2A::IntRank2A(const coord& AxAyAz, const EAngles& EA=EAzero);
    that defines it (in the PAS) will be the asymmetry, eta.  The delzz value
    is automatically set to the normalized value of sqrt[5/(6*PI)].           */
 
-MSVCDLC IntRank2A::IntRank2A(double eta, const EAngles& EA=EAzero);
+MSVCDLC IntRank2A(double eta, const EAngles& EA=EAzero);
 
 // ----------------------------------------------------------------------------
 //                       Constructors Using Parameter Sets
@@ -309,7 +309,7 @@ MSVCDLC IntRank2A::IntRank2A(double eta, const EAngles& EA=EAzero);
            Output               none    : Rank 2 spatial tensor constructed
                                           from parameters in pset             */
 
-MSVCDLC IntRank2A::IntRank2A(ParameterSet& pset, int idxI=-1, int idxS=-1, int warn=2);
+MSVCDLC IntRank2A(ParameterSet& pset, int idxI=-1, int idxS=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //                         Assignment and Destruction
@@ -318,8 +318,8 @@ MSVCDLC IntRank2A::IntRank2A(ParameterSet& pset, int idxI=-1, int idxS=-1, int w
 /* These must be virtual because our plan is to derive a class for generic
    rank 2 interactions (IntRank2) using this as its base class.               */
 
-MSVCDLL virtual void IntRank2A::operator= (const IntRank2A &IR2Ab);
-MSVCDLC virtual      IntRank2A::~IntRank2A();
+MSVCDLL virtual void operator= (const IntRank2A &IR2Ab);
+MSVCDLC virtual      ~IntRank2A();
 
 // ____________________________________________________________________________
 // B                RANK 2 ANISOTROPY & ASYMMETRY FUNCTIONS
@@ -339,8 +339,8 @@ MSVCDLC virtual      IntRank2A::~IntRank2A();
           del   = |---]  = 0.51503      /_\ A = - del   = 0.77255
              zz   [6PI]                         2    zz                      */
 
-MSVCDLL static double IntRank2A::delzz();
-MSVCDLL static double IntRank2A::delA();
+MSVCDLL static double delzz();
+MSVCDLL static double delA();
 
 //-----------------------------------------------------------------------------
 //                             Asymmetry Access
@@ -357,8 +357,8 @@ MSVCDLL static double IntRank2A::delA();
 	   Output		eta 	: Return asymmetry of spatial tensor
 	   			void    : Asymmetry value is set to Eta      */
 
-MSVCDLL double IntRank2A::eta( ) const;
-MSVCDLL void   IntRank2A::eta(double Eta);
+MSVCDLL double eta( ) const;
+MSVCDLL void   eta(double Eta);
 
 // ____________________________________________________________________________
 // C            RANK 2 TENSOR SPHERICAL COMPONENT ACCESS FUNCTIONS
@@ -380,45 +380,45 @@ MSVCDLL void   IntRank2A::eta(double Eta);
                                           or {alpha, beta, gamma} from 
 	  				  the tensor PAS                     */
 
-MSVCDLL static complex IntRank2A::A20PAS();
-MSVCDLL static complex IntRank2A::A21PAS();
-MSVCDLL static complex IntRank2A::A2m1PAS();
-MSVCDLL static complex IntRank2A::A22PAS();
-MSVCDLL static complex IntRank2A::A2m2PAS();
+MSVCDLL static complex A20PAS();
+MSVCDLL static complex A21PAS();
+MSVCDLL static complex A2m1PAS();
+MSVCDLL static complex A22PAS();
+MSVCDLL static complex A2m2PAS();
 
-MSVCDLL complex IntRank2A::A20()  const;
-MSVCDLL complex IntRank2A::A21()  const;
-MSVCDLL complex IntRank2A::A2m1() const;
-MSVCDLL complex IntRank2A::A22()  const;
-MSVCDLL complex IntRank2A::A2m2() const;
+MSVCDLL complex A20()  const;
+MSVCDLL complex A21()  const;
+MSVCDLL complex A2m1() const;
+MSVCDLL complex A22()  const;
+MSVCDLL complex A2m2() const;
 
-MSVCDLL complex IntRank2A::A20(double  alpha, double beta, double gamma) const;
-MSVCDLL complex IntRank2A::A21(double  alpha, double beta, double gamma) const;
-MSVCDLL complex IntRank2A::A2m1(double alpha, double beta, double gamma) const;
-MSVCDLL complex IntRank2A::A22(double  alpha, double beta, double gamma) const;
-MSVCDLL complex IntRank2A::A2m2(double alpha, double beta, double gamma) const;
+MSVCDLL complex A20(double  alpha, double beta, double gamma) const;
+MSVCDLL complex A21(double  alpha, double beta, double gamma) const;
+MSVCDLL complex A2m1(double alpha, double beta, double gamma) const;
+MSVCDLL complex A22(double  alpha, double beta, double gamma) const;
+MSVCDLL complex A2m2(double alpha, double beta, double gamma) const;
 
-MSVCDLL complex IntRank2A::A20(const  EAngles& EA) const;
-MSVCDLL complex IntRank2A::A21(const  EAngles& EA) const;
-MSVCDLL complex IntRank2A::A2m1(const EAngles& EA) const;
-MSVCDLL complex IntRank2A::A22(const  EAngles& EA) const;
-MSVCDLL complex IntRank2A::A2m2(const EAngles& EA) const;
+MSVCDLL complex A20(const  EAngles& EA) const;
+MSVCDLL complex A21(const  EAngles& EA) const;
+MSVCDLL complex A2m1(const EAngles& EA) const;
+MSVCDLL complex A22(const  EAngles& EA) const;
+MSVCDLL complex A2m2(const EAngles& EA) const;
 
-MSVCDLL complex IntRank2A::A2m(int m)                                          const;
-MSVCDLL complex IntRank2A::A2m(int m, double alpha, double beta, double gamma) const;
-MSVCDLL complex IntRank2A::A2m(int m, const EAngles& EA)                       const;
+MSVCDLL complex A2m(int m)                                          const;
+MSVCDLL complex A2m(int m, double alpha, double beta, double gamma) const;
+MSVCDLL complex A2m(int m, const EAngles& EA)                       const;
  
 
-MSVCDLL IR2ASph IntRank2A::SphCmpPAS()                                     const;
-MSVCDLL IR2ASph IntRank2A::SphCmp()                                        const;
-MSVCDLL IR2ASph IntRank2A::SphCmp(double alpha, double beta, double gamma) const;
-MSVCDLL IR2ASph IntRank2A::SphCmp(const EAngles& EA)                       const;
+MSVCDLL IR2ASph SphCmpPAS()                                     const;
+MSVCDLL IR2ASph SphCmp()                                        const;
+MSVCDLL IR2ASph SphCmp(double alpha, double beta, double gamma) const;
+MSVCDLL IR2ASph SphCmp(const EAngles& EA)                       const;
 
 /* This function returns all 5 spherical PAS components but it uses
    the angular momentum indexing scheme m = {-2,-1,0,1,2}.                   */
 
-MSVCDLL complex IntRank2A::AcompPAS(int comp) const;
-MSVCDLL complex IntRank2A::Acomp(int    comp) const;
+MSVCDLL complex AcompPAS(int comp) const;
+MSVCDLL complex Acomp(int    comp) const;
 
 /*                         1/2
                     [  5  ]          2                     2
@@ -497,55 +497,55 @@ MSVCDLL complex IntRank2A::Acomp(int    comp) const;
         //                                or {alpha, beta, gamma} from 
 	//				  the tensor PAS                     */
 
-MSVCDLL double IntRank2A::AxxPAS() const;
-MSVCDLL double IntRank2A::AxyPAS() const;
-MSVCDLL double IntRank2A::AxzPAS() const;
-MSVCDLL double IntRank2A::AyxPAS() const;
-MSVCDLL double IntRank2A::AyyPAS() const;
-MSVCDLL double IntRank2A::AyzPAS() const;
-MSVCDLL double IntRank2A::AzxPAS() const;
-MSVCDLL double IntRank2A::AzyPAS() const;
-MSVCDLL double IntRank2A::AzzPAS() const;
+MSVCDLL double AxxPAS() const;
+MSVCDLL double AxyPAS() const;
+MSVCDLL double AxzPAS() const;
+MSVCDLL double AyxPAS() const;
+MSVCDLL double AyyPAS() const;
+MSVCDLL double AyzPAS() const;
+MSVCDLL double AzxPAS() const;
+MSVCDLL double AzyPAS() const;
+MSVCDLL double AzzPAS() const;
 
-MSVCDLL double IntRank2A::Axx() const;
-MSVCDLL double IntRank2A::Axy() const;
-MSVCDLL double IntRank2A::Axz() const;
-MSVCDLL double IntRank2A::Ayx() const;
-MSVCDLL double IntRank2A::Ayy() const;
-MSVCDLL double IntRank2A::Ayz() const;
-MSVCDLL double IntRank2A::Azx() const;
-MSVCDLL double IntRank2A::Azy() const;
-MSVCDLL double IntRank2A::Azz() const;
+MSVCDLL double Axx() const;
+MSVCDLL double Axy() const;
+MSVCDLL double Axz() const;
+MSVCDLL double Ayx() const;
+MSVCDLL double Ayy() const;
+MSVCDLL double Ayz() const;
+MSVCDLL double Azx() const;
+MSVCDLL double Azy() const;
+MSVCDLL double Azz() const;
 
-MSVCDLL double IntRank2A::Axx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Axy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Axz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Ayx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Ayy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Ayz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Azx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Azy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntRank2A::Azz(double alpha, double beta, double gamma) const;
+MSVCDLL double Axx(double alpha, double beta, double gamma) const;
+MSVCDLL double Axy(double alpha, double beta, double gamma) const;
+MSVCDLL double Axz(double alpha, double beta, double gamma) const;
+MSVCDLL double Ayx(double alpha, double beta, double gamma) const;
+MSVCDLL double Ayy(double alpha, double beta, double gamma) const;
+MSVCDLL double Ayz(double alpha, double beta, double gamma) const;
+MSVCDLL double Azx(double alpha, double beta, double gamma) const;
+MSVCDLL double Azy(double alpha, double beta, double gamma) const;
+MSVCDLL double Azz(double alpha, double beta, double gamma) const;
 
-MSVCDLL double IntRank2A::Axx(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Axy(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Axz(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Ayx(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Ayy(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Ayz(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Azx(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Azy(const EAngles& EA) const;
-MSVCDLL double IntRank2A::Azz(const EAngles& EA) const;
+MSVCDLL double Axx(const EAngles& EA) const;
+MSVCDLL double Axy(const EAngles& EA) const;
+MSVCDLL double Axz(const EAngles& EA) const;
+MSVCDLL double Ayx(const EAngles& EA) const;
+MSVCDLL double Ayy(const EAngles& EA) const;
+MSVCDLL double Ayz(const EAngles& EA) const;
+MSVCDLL double Azx(const EAngles& EA) const;
+MSVCDLL double Azy(const EAngles& EA) const;
+MSVCDLL double Azz(const EAngles& EA) const;
 
-MSVCDLL row_vector IntRank2A::CartCompsPAS()                          const;
-MSVCDLL row_vector IntRank2A::CartComps()                             const;
-MSVCDLL row_vector IntRank2A::CartComps(double A, double B, double G) const;
-MSVCDLL row_vector IntRank2A::CartComps(const EAngles& EA)            const;
+MSVCDLL row_vector CartCompsPAS()                          const;
+MSVCDLL row_vector CartComps()                             const;
+MSVCDLL row_vector CartComps(double A, double B, double G) const;
+MSVCDLL row_vector CartComps(const EAngles& EA)            const;
 
-MSVCDLL IR2ACart IntRank2A::CartCmpPAS()                          const;
-MSVCDLL IR2ACart IntRank2A::CartCmp()                             const;
-MSVCDLL IR2ACart IntRank2A::CartCmp(double A, double B, double G) const;
-MSVCDLL IR2ACart IntRank2A::CartCmp(const EAngles& EA)            const;
+MSVCDLL IR2ACart CartCmpPAS()                          const;
+MSVCDLL IR2ACart CartCmp()                             const;
+MSVCDLL IR2ACart CartCmp(double A, double B, double G) const;
+MSVCDLL IR2ACart CartCmp(const EAngles& EA)            const;
  
 /* ----------------------------------------------------------------------------          
 
@@ -639,24 +639,24 @@ MSVCDLL IR2ACart IntRank2A::CartCmp(const EAngles& EA)            const;
    users to both obtain and set these angles. Setting any of the angles will
    effictively reorient the spatial tensor.                                  */
 
-MSVCDLL double  IntRank2A::alpha()       const;
-MSVCDLL double  IntRank2A::beta()        const;
-MSVCDLL double  IntRank2A::gamma()       const;
-MSVCDLL double  IntRank2A::phi()         const;
-MSVCDLL double  IntRank2A::theta()       const;
-MSVCDLL double  IntRank2A::chi()         const;
-MSVCDLL EAngles IntRank2A::orientation() const;
+MSVCDLL double  alpha()       const;
+MSVCDLL double  beta()        const;
+MSVCDLL double  gamma()       const;
+MSVCDLL double  phi()         const;
+MSVCDLL double  theta()       const;
+MSVCDLL double  chi()         const;
+MSVCDLL EAngles orientation() const;
 
-MSVCDLL void IntRank2A::alpha(double A);
-MSVCDLL void IntRank2A::beta(double  B);
-MSVCDLL void IntRank2A::gamma(double G);
-MSVCDLL void IntRank2A::phi(double   P);
-MSVCDLL void IntRank2A::theta(double T);
-MSVCDLL void IntRank2A::chi(double   C);
-MSVCDLL void IntRank2A::orientation(const EAngles& EA);
-MSVCDLL void IntRank2A::orientation(double A, double B, double G, bool deg=false);
+MSVCDLL void alpha(double A);
+MSVCDLL void beta(double  B);
+MSVCDLL void gamma(double G);
+MSVCDLL void phi(double   P);
+MSVCDLL void theta(double T);
+MSVCDLL void chi(double   C);
+MSVCDLL void orientation(const EAngles& EA);
+MSVCDLL void orientation(double A, double B, double G, bool deg=false);
 
-MSVCDLL void IntRank2A::rotate(const EAngles& EA);
+MSVCDLL void rotate(const EAngles& EA);
 
 // ____________________________________________________________________________
 // E                RANK 2 SPATIAL TENSOR FROM CARTESIAN ARRAY
@@ -692,12 +692,12 @@ MSVCDLL friend bool GetEAngles(const matrix& A, const EAngles& EA);
    Symmetric     True if tensor is symmetric (eta is zero), false if not
    CartMx        Returns a 3x3 matrix representing the Cartesian tensor      */
 
-MSVCDLL static coord  IntRank2A::AisoDelzEta(const coord& AxAyAz);
-MSVCDLL static void   IntRank2A::SortAxAyAz(double& Ax, double& Ay, double& Az);
-MSVCDLL        bool   IntRank2A::CheckEta(double eta, bool warn=true) const;
-MSVCDLL        bool   IntRank2A::PAS()                                const;
-MSVCDLL        bool   IntRank2A::Symmetric()                          const;
-MSVCDLL        matrix IntRank2A::CartMx(double scale=1.0)             const;
+MSVCDLL static coord  AisoDelzEta(const coord& AxAyAz);
+MSVCDLL static void   SortAxAyAz(double& Ax, double& Ay, double& Az);
+MSVCDLL        bool   CheckEta(double eta, bool warn=true) const;
+MSVCDLL        bool   PAS()                                const;
+MSVCDLL        bool   Symmetric()                          const;
+MSVCDLL        matrix CartMx(double scale=1.0)             const;
 
 // ____________________________________________________________________________
 // H                        PARAMETER SET FUNCTIONS
@@ -739,7 +739,7 @@ MSVCDLL        matrix IntRank2A::CartMx(double scale=1.0)             const;
 
 MSVCDLL virtual      operator    ParameterSet( ) const;
 MSVCDLL friend  void operator+= (ParameterSet& pset, const IntRank2A &IR2A);
-MSVCDLL virtual void IntRank2A::PSetAdd(ParameterSet& pset, 
+MSVCDLL virtual void PSetAdd(ParameterSet& pset, 
                                        int iI=-1, int iS=-1, int warn=2) const;
 
 // ----------------------------------------------------------------------------
@@ -756,9 +756,9 @@ MSVCDLL virtual void IntRank2A::PSetAdd(ParameterSet& pset,
         //                                parameter set to file filename
         //                                or output file stream ofstr
 
-MSVCDLL bool IntRank2A::write(const std::string& filename,
+MSVCDLL bool write(const std::string& filename,
                                        int iI=-1, int iS=-1, int warn=2) const;
-MSVCDLL bool IntRank2A::write(std::ofstream& ofstr,
+MSVCDLL bool write(std::ofstream& ofstr,
                                        int iI=-1, int iS=-1, int warn=2) const;
 
 // ----------------------------------------------------------------------------
@@ -785,19 +785,19 @@ MSVCDLL bool IntRank2A::write(std::ofstream& ofstr,
 	Note                        : Classes derived from IntRank2(A) will
 	   			      usually have their own read function   */
 
-MSVCDLL virtual bool IntRank2A::read(const std::string &filename,
+MSVCDLL virtual bool read(const std::string &filename,
                                          int idxI=-1, int idxS=-1, int warn=2);
-MSVCDLL virtual bool IntRank2A::read(ParameterSet& pset,
+MSVCDLL virtual bool read(ParameterSet& pset,
                                          int idxI=-1, int idxS=-1, int warn=2);
  
 // ____________________________________________________________________________
 // I                          STANDARD I/O FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL std::string IntRank2A::ask_read(int argc, char* argv[], int& argq, int na=0);
+MSVCDLL std::string ask_read(int argc, char* argv[], int& argq, int na=0);
  
 /*
-virtual void IntRank2A::ask(int argc, char* argv[], int& argq,
+virtual void ask(int argc, char* argv[], int& argq,
                                      double& eta, double& theta, double& phi);
  
         // Input                IR2A	: Rank 2 spatial tensor (this)
@@ -812,7 +812,7 @@ virtual void IntRank2A::ask(int argc, char* argv[], int& argq,
         // Note                         : This is INTERACTIVE! 
 
  
-virtual void IntRank2A::askset(int argc, char* argv[], int& argq);
+virtual void askset(int argc, char* argv[], int& argq);
  
         // Input                IR2A	: Rank 2 spatial tensor (this)
         //                      argc    : Number of arguments
@@ -822,7 +822,7 @@ virtual void IntRank2A::askset(int argc, char* argv[], int& argq);
         // Note                         : This is INTERACTIVE!
  
 
-virtual void IntRank2A::askset();
+virtual void askset();
 
         // Input                IR2A	: Rank 2 spatial tensor (this)
         // Output               none    : IR2A is set interactively
@@ -844,20 +844,20 @@ virtual void IntRank2A::askset();
           ThetaString              Down From PAS z-Axis:    xxx.xx Degrees
           PhiString                Over From PAS x-Axis:    xxx.xx Degrees   */
 
-MSVCDLL std::string IntRank2A::AsymmetryString()          const;
-MSVCDLL std::string IntRank2A::PASString()                const;
-MSVCDLL std::string IntRank2A::AngleString(double angdeg) const;
-MSVCDLL std::string IntRank2A::ThetaString()              const;
-MSVCDLL std::string IntRank2A::ThetaString(double thedeg) const;
-MSVCDLL std::string IntRank2A::PhiString()                const;
-MSVCDLL std::string IntRank2A::PhiString(double   phideg) const;
-MSVCDLL std::string IntRank2A::AlphaString()              const;
-MSVCDLL std::string IntRank2A::AlphaString(double alpha)  const;
-MSVCDLL std::string IntRank2A::BetaString()               const;
-MSVCDLL std::string IntRank2A::BetaString(double  beta)   const;
-MSVCDLL std::string IntRank2A::GammaString()              const;
-MSVCDLL std::string IntRank2A::GammaString(double gamma)  const;
-MSVCDLL std::string IntRank2A::AuvString(double Aux, double Auy, double Auz,
+MSVCDLL std::string AsymmetryString()          const;
+MSVCDLL std::string PASString()                const;
+MSVCDLL std::string AngleString(double angdeg) const;
+MSVCDLL std::string ThetaString()              const;
+MSVCDLL std::string ThetaString(double thedeg) const;
+MSVCDLL std::string PhiString()                const;
+MSVCDLL std::string PhiString(double   phideg) const;
+MSVCDLL std::string AlphaString()              const;
+MSVCDLL std::string AlphaString(double alpha)  const;
+MSVCDLL std::string BetaString()               const;
+MSVCDLL std::string BetaString(double  beta)   const;
+MSVCDLL std::string GammaString()              const;
+MSVCDLL std::string GammaString(double gamma)  const;
+MSVCDLL std::string AuvString(double Aux, double Auy, double Auz,
                                                  const std::string& CSF) const;
 
 //-----------------------------------------------------------------------------
@@ -879,12 +879,12 @@ MSVCDLL std::string IntRank2A::AuvString(double Aux, double Auy, double Auz,
           [ zx   zy   zz]           [ zx   zy   zz]                          */
 
 
-MSVCDLL std::vector<std::string> IntRank2A::CAStrings(const std::string& A="A")  const;
-MSVCDLL std::vector<std::string> IntRank2A::CartAStrings(const 
+MSVCDLL std::vector<std::string> CAStrings(const std::string& A="A")  const;
+MSVCDLL std::vector<std::string> CartAStrings(const 
                                                std::string& CSF="%6.3f") const;
-MSVCDLL std::vector<std::string> IntRank2A::CartAStrings(
+MSVCDLL std::vector<std::string> CartAStrings(
                   const EAngles& EA,     const std::string& CSF="%6.3f") const;
-MSVCDLL std::vector<std::string> IntRank2A::CartAStrings(
+MSVCDLL std::vector<std::string> CartAStrings(
                   const IR2ACart& CCmps, const std::string& CSF="%6.3f") const;
 
 
@@ -897,8 +897,8 @@ MSVCDLL std::vector<std::string> IntRank2A::CartAStrings(
    within rank 2 interactions.  In this case we make a list of information
    thats usually displayed to the left of a 3x3 Cartesian matrix rep. of A.  */
 
-MSVCDLL std::vector<std::string> IntRank2A::InfoAStrings() const;
-MSVCDLL std::vector<std::string> IntRank2A::InfoAStrings(const EAngles& EA) const;
+MSVCDLL std::vector<std::string> InfoAStrings() const;
+MSVCDLL std::vector<std::string> InfoAStrings(const EAngles& EA) const;
 
 //-----------------------------------------------------------------------------
 // Functions That Generate Spherical Strings to Simplify & Modularize Printing
@@ -920,8 +920,8 @@ MSVCDLL std::vector<std::string> IntRank2A::InfoAStrings(const EAngles& EA) cons
                                 A    = xx.xxx
                                  2,-2                                        */
 
-//virtual std::vector<std::string> IntRank2A::SphAStrings()                const;
-MSVCDLL         std::vector<std::string> IntRank2A::SphA2Strings()               const;
+//virtual std::vector<std::string> SphAStrings()                const;
+MSVCDLL         std::vector<std::string> SphA2Strings()               const;
 
 //-----------------------------------------------------------------------------
 //          Functions To Print The Tensor In Cartesian Format
@@ -946,11 +946,11 @@ MSVCDLL         std::vector<std::string> IntRank2A::SphA2Strings()              
                        [A  , A  , A  ]
                        [ zx   zy   zz]                                 */
 
-MSVCDLL virtual std::ostream& IntRank2A::printCartesian(std::ostream& ostr,
+MSVCDLL virtual std::ostream& printCartesian(std::ostream& ostr,
                                     const std::string& CSF="%6.3f", int tpf=2);
-MSVCDLL virtual std::ostream& IntRank2A::printCartesian(std::ostream& ostr, 
+MSVCDLL virtual std::ostream& printCartesian(std::ostream& ostr, 
                  const EAngles& EA, const std::string& CSF="%6.3f", int tpf=2);
-MSVCDLL virtual std::ostream& IntRank2A::printCartesian(std::ostream& ostr, 
+MSVCDLL virtual std::ostream& printCartesian(std::ostream& ostr, 
                                const std::vector<std::string>& CAS, int tpf=2);
 
 //-----------------------------------------------------------------------------
@@ -969,9 +969,9 @@ MSVCDLL virtual std::ostream& IntRank2A::printCartesian(std::ostream& ostr,
         //                      IR2A	: Rank 2 tensor to write
         // Output			: Modifies output stream
 
-MSVCDLL std::ostream& IntRank2A::print(std::ostream& ostr, 
+MSVCDLL std::ostream& print(std::ostream& ostr, 
            std::vector<std::string>& CAS, std::vector<std::string>& IAS) const;
-MSVCDLL virtual std::ostream& IntRank2A::print(std::ostream& out,
+MSVCDLL virtual std::ostream& print(std::ostream& out,
                                                       int fflag=-1, int tpf=1);
 MSVCDLL friend std::ostream& operator<< (std::ostream& out, IntRank2A& IR2A);
 
@@ -992,9 +992,9 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& out, IntRank2A& IR2A);
         // Note                         : For pretty output all the strings in
         //                                SAS should have the same length
 
-MSVCDLL virtual std::ostream& IntRank2A::print(std::ostream& ostr, 
+MSVCDLL virtual std::ostream& print(std::ostream& ostr, 
              const std::string& hdr, const std::vector<std::string>& SS) const;
-MSVCDLL virtual std::ostream& IntRank2A::printSpherical(std::ostream& ostr, int tpf=1);
+MSVCDLL virtual std::ostream& printSpherical(std::ostream& ostr, int tpf=1);
          
 // ____________________________________________________________________________
 // K         SPATIAL TENSOR SPHERICAL COMPONENTS FOR POWDER AVERAGES
@@ -1017,10 +1017,10 @@ MSVCDLL virtual std::ostream& IntRank2A::printSpherical(std::ostream& ostr, int 
    
 // ----------------- Parts Which Are Not ETA & Phi Dependent ------------------
 
-MSVCDLL row_vector IntRank2A::Asp20(int Ntheta)  const;
-MSVCDLL row_vector IntRank2A::Asp21(int Ntheta)  const;
-MSVCDLL row_vector IntRank2A::Asp22(int Ntheta ) const;
-MSVCDLL matrix     IntRank2A::Asp2s(int Ntheta)  const;
+MSVCDLL row_vector Asp20(int Ntheta)  const;
+MSVCDLL row_vector Asp21(int Ntheta)  const;
+MSVCDLL row_vector Asp22(int Ntheta ) const;
+MSVCDLL matrix     Asp2s(int Ntheta)  const;
  
 /*                       1/2
                   [  5  ]          2 		   Values MUST be added to

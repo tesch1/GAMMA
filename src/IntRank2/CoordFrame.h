@@ -69,7 +69,7 @@ volatile void CFRfatal(int eidx, const std::string& pname)              const;
 // ii                COORDINATE FRAME CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
-bool CoordFrame::ChkIdx(int i, bool warn=true) const;	// Check index i OK
+bool ChkIdx(int i, bool warn=true) const;	// Check index i OK
 
 // ____________________________________________________________________________
 // iii         COORDINATE FRAME PARAMETER SET SETUP FUNCTIONS
@@ -98,9 +98,9 @@ bool CoordFrame::ChkIdx(int i, bool warn=true) const;	// Check index i OK
        Output           TF      : Coordinate Frame is set
                                   from parameters in pset		     */
 
-bool CoordFrame::SetCoordFrm(const    ParameterSet& pset,int pfx=-1,  int warn=2);
-bool CoordFrame::SetRotation(const    ParameterSet& pset,             int idx=-1);
-bool CoordFrame::GetEulerAngles(const ParameterSet& pset,EAngles& EA, int idx=-1);
+bool SetCoordFrm(const    ParameterSet& pset,int pfx=-1,  int warn=2);
+bool SetRotation(const    ParameterSet& pset,             int idx=-1);
+bool GetEulerAngles(const ParameterSet& pset,EAngles& EA, int idx=-1);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -122,50 +122,50 @@ bool CoordFrame::GetEulerAngles(const ParameterSet& pset,EAngles& EA, int idx=-1
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-CoordFrame::CoordFrame();
+CoordFrame();
 
 // ----------------------------------------------------------------------------
 //                   Constructors Using Single Rotations
 // ----------------------------------------------------------------------------
 
-CoordFrame::CoordFrame(double alpha, double beta=0, double gamma=0);
-CoordFrame::CoordFrame(const  EAngles& EA);
-CoordFrame::CoordFrame(const  quatern& Q);
+CoordFrame(double alpha, double beta=0, double gamma=0);
+CoordFrame(const  EAngles& EA);
+CoordFrame(const  quatern& Q);
  
 // ----------------------------------------------------------------------------
 //                  Constructors Using Multiple Rotations
 // ----------------------------------------------------------------------------
 
-CoordFrame::CoordFrame(const std::vector<EAngles>& EAvec);
-CoordFrame::CoordFrame(const std::vector<quatern>& Qvec);
+CoordFrame(const std::vector<EAngles>& EAvec);
+CoordFrame(const std::vector<quatern>& Qvec);
 
 // ----------------------------------------------------------------------------
 //                    Construction Using Parameter Sets
 // ----------------------------------------------------------------------------
 
-CoordFrame::CoordFrame(const ParameterSet& pset, int idx=-1, int warn=2);
+CoordFrame(const ParameterSet& pset, int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //                          Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-CoordFrame& CoordFrame::operator= (const CoordFrame& CFrm);
-     CoordFrame::~CoordFrame();
+CoordFrame& operator= (const CoordFrame& CFrm);
+     ~CoordFrame();
 
 // ____________________________________________________________________________
 // B                    COORDINATE FRAME ACCESS FUNCTIONS
 // ____________________________________________________________________________
 
-EAngles CoordFrame::EA(int i) const;
-void    CoordFrame::EA(const EAngles& ea, int i);
+EAngles EA(int i) const;
+void    EA(const EAngles& ea, int i);
 
-std::string  CoordFrame::InitialAxes() const;
-std::string  CoordFrame::FinalAxes()   const;
+std::string  InitialAxes() const;
+std::string  FinalAxes()   const;
 
-std::string  CoordFrame::InitialAxes(const std::string& Ai);
-std::string  CoordFrame::FinalAxes(const   std::string& Af);
+std::string  InitialAxes(const std::string& Ai);
+std::string  FinalAxes(const   std::string& Af);
 
-int     CoordFrame:: size() const;
+int      size() const;
 
 // ____________________________________________________________________________
 // C                         PARAMETER SET FUNCTIONS
@@ -181,7 +181,7 @@ int     CoordFrame:: size() const;
 
             operator ParameterSet( ) const;
 friend void operator+= (ParameterSet& pset, const CoordFrame& CFrm);
-       void CoordFrame::PSetAdd(ParameterSet& pset,   int pfx=-1) const;
+       void PSetAdd(ParameterSet& pset,   int pfx=-1) const;
 
 // ----------------------------------------------------------------------------
 //      Functions To Make A ASCII Parameter File From A Coordinate Frame
@@ -191,7 +191,7 @@ friend void operator+= (ParameterSet& pset, const CoordFrame& CFrm);
    frame.  Individual rotations will be placed into the file parameters as
    Euler angle in degrees.                                                   */
 
-void CoordFrame::write(const std::string &filename, int pfx=-1) const;
+void write(const std::string &filename, int pfx=-1) const;
 
 // ____________________________________________________________________________
 // D                      COORDINATE FRAME INPUT FUNCTIONS
@@ -214,11 +214,11 @@ void CoordFrame::write(const std::string &filename, int pfx=-1) const;
                                           from parameters in file filename
                                 file    : Name of file used to set frame    */
 
-bool CoordFrame::read(const std::string& file,  int idx=-1, int warn=2);
-bool CoordFrame::read(const ParameterSet& pset, int idx=-1, int warn=2);
-std::string CoordFrame::ask_read(int argc, char* argv[], int argn,
+bool read(const std::string& file,  int idx=-1, int warn=2);
+bool read(const ParameterSet& pset, int idx=-1, int warn=2);
+std::string ask_read(int argc, char* argv[], int argn,
                                                                    int idx=-1);
-std::string CoordFrame::ask_read(int argc, char* argv[], int argn,
+std::string ask_read(int argc, char* argv[], int argn,
                                                 const std::string& def, int idx=-1);
  
 // ____________________________________________________________________________
@@ -236,7 +236,7 @@ std::string CoordFrame::ask_read(int argc, char* argv[], int argn,
            Output               none    : Coordinate Frame information
                                           placed into the output stream      */
 
-       std::ostream& CoordFrame::print(std::ostream& out, int fflag=-1) const;
+       std::ostream& print(std::ostream& out, int fflag=-1) const;
 friend std::ostream& operator<<  (std::ostream& out, const CoordFrame& CFrm);
 
   };

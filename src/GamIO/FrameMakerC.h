@@ -61,7 +61,7 @@ class FMPL : public row_vector
 // ____________________________________________________________________________
  
 
-void FMPL::PLerror(int eidx, int noret=0) const;
+void PLerror(int eidx, int noret=0) const;
 
         // Input                FMPL	: FrameMaker PolyLine (this)
         //                      eidx    : Flag for error type
@@ -69,7 +69,7 @@ void FMPL::PLerror(int eidx, int noret=0) const;
         // Output               none    : Error message
  
  
-volatile void FMPL::PLfatality(int eidx) const;
+volatile void PLfatality(int eidx) const;
 
         // Input                FMSTK   : FrameMaker stack parameters (this)
         //                      eidx    : Flag for error type
@@ -124,14 +124,14 @@ MSVCDLL void operator=(const FMPL& FMSTK1);
  
 // ----------------------------- Pen Width Access -----------------------------
  
-MSVCDLL void FMPL::SetWidth(double pw);
+MSVCDLL void SetWidth(double pw);
  
         // Input        PL      : FM PolyLine (this)
         //              pw      : Input pen width
         // Output       void    : The PL pen width is set to pw
  
          
-MSVCDLL double FMPL::GetWidth();
+MSVCDLL double GetWidth();
  
         // Input        PL      : FM PolyLine (this)
         // Output       pw      : The current pen width
@@ -140,28 +140,28 @@ MSVCDLL double FMPL::GetWidth();
 // ----------------------------- Pen Color Access -----------------------------
  
  
-MSVCDLL void FMPL::SetColor(int pc);
+MSVCDLL void SetColor(int pc);
  
         // Input        PL      : FM PolyLine (this)
         //              pc      : Input pen color
         // Output       void    : The PL pen color is set to pc
  
  
-MSVCDLL int FMPL::GetPen();
+MSVCDLL int GetPen();
  
         // Input        PL      : FM PolyLine (this)
         // Output       pc      : The current pen color
 
 // --------------------------- PolyLine Fill Access ---------------------------
  
-MSVCDLL void FMPL::SetFill(int pf);
+MSVCDLL void SetFill(int pf);
  
         // Input        PL      : FM PolyLine (this)
         //              pf      : Input pen fill
         // Output       void    : The PL pen fill is set to pf
  
  
-MSVCDLL int FMPL::GetFill();
+MSVCDLL int GetFill();
  
         // Input        PL      : FM PolyLine (this)
         // Output       pf      : The current pen fill
@@ -170,14 +170,14 @@ MSVCDLL int FMPL::GetFill();
 // ---------------------------- PolyLine ID Access ----------------------------
  
  
-MSVCDLL void FMPL::SetID(int pid);
+MSVCDLL void SetID(int pid);
  
         // Input        PL      : FM PolyLine (this)
         //              pid     : Input ID
         // Output       void    : The PL ID is set to pid
  
  
-MSVCDLL int FMPL::GetID();
+MSVCDLL int GetID();
  
         // Input        PL      : FM PolyLine (this)
         // Output       PID     : The current PL ID
@@ -186,7 +186,7 @@ MSVCDLL int FMPL::GetID();
 // -------------------------- PolyLine Point Access ---------------------------
  
  
-MSVCDLL int FMPL::GetPoints();
+MSVCDLL int GetPoints();
  
         // Input        PL      : FM PolyLine (this)
         // Output       Ppts    : The current # points
@@ -195,13 +195,13 @@ MSVCDLL int FMPL::GetPoints();
 // ----------------------- PolyLine Debug Flag Access -------------------------
  
  
-MSVCDLL int FMPL::GetDebug();
+MSVCDLL int GetDebug();
  
         // Input        PL      : FM PolyLine (this)
         // Output       PLdebug	: The current debugging level
  
  
-MSVCDLL void FMPL::SetDebug(int db);
+MSVCDLL void SetDebug(int db);
  
         // Input        PL      : FM PolyLine (this)
 	//		db	: A debugging level
@@ -212,13 +212,13 @@ MSVCDLL void FMPL::SetDebug(int db);
 // ------------------------- PolyLine Data Reduction --------------------------
  
   
-MSVCDLL int FMPL::GetReduce();
+MSVCDLL int GetReduce();
  
         // Input        PL      : FM PolyLine (this) 
         // Output       Preducd : The current reductoin level
  
  
-MSVCDLL void FMPL::SetReduce(int rf);
+MSVCDLL void SetReduce(int rf);
  
         // Input        PL      : FM PolyLine (this) 
         //              rf      : Data reduction flag
@@ -230,27 +230,27 @@ MSVCDLL void FMPL::SetReduce(int rf);
 // ____________________________________________________________________________
 
  
-MSVCDLL std::string FMPL::Colors(int pc) const;
+MSVCDLL std::string Colors(int pc) const;
  
         // Input        PL      : FM PolyLine (this)
         //              pc      : Pen color 
         //              SPC     : string for Pen color
  
  
-MSVCDLL std::string FMPL::Filling(int pf) const;
+MSVCDLL std::string Filling(int pf) const;
  
         // Input        PL      : FM PolyLine (this)
         //              pf      : PolyLine fill
         //              SPC     : string for PL fill
 
 
-MSVCDLL std::string FMPL::Reduction() const;
+MSVCDLL std::string Reduction() const;
 
         // Input        PL      : FM PolyLine (this)
         //              SRed    : string for point reduction
 
 
-MSVCDLL void FMPL::Set(double pw, int pc, int pf, int id);
+MSVCDLL void Set(double pw, int pc, int pf, int id);
  
         // Input        PL      : FM PolyLine (this)
         //              pw      : Pen width (pts)
@@ -266,21 +266,21 @@ MSVCDLL void FMPL::Set(double pw, int pc, int pf, int id);
 // ____________________________________________________________________________
 
 
-MSVCDLL void FMPL::Zero();
+MSVCDLL void Zero();
 
         // Input        PL      : FM PolyLine (this)
         //              z       : PolyLine point
         // Return       void    : The point z is added to PL
  
 
-MSVCDLL void FMPL::AddPt(const complex& z);
+MSVCDLL void AddPt(const complex& z);
 
         // Input        PL      : FM PolyLine (this)
         // 		z	: PolyLine point
         // Return	void    : The point z is added to PL
 
 
-MSVCDLL void FMPL::WriteMIF(std::ostream& ostr);
+MSVCDLL void WriteMIF(std::ostream& ostr);
 
         // Input        PL      : FM PolyLine (this)
 	//		ostr	: An output stream
@@ -292,7 +292,7 @@ MSVCDLL void FMPL::WriteMIF(std::ostream& ostr);
 // ____________________________________________________________________________
  
  
-MSVCDLL std::ostream& FMPL::print(std::ostream& ostr) const;
+MSVCDLL std::ostream& print(std::ostream& ostr) const;
  
         // Input                PL      : FM PolyLine (this)
         //                      ostr    : An output stream

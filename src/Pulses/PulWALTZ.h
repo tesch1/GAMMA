@@ -107,7 +107,7 @@ void SetChannel(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
                                                          
-int WALTZ::SetGamB1(const ParameterSet& pset, int idx=-1);
+int SetGamB1(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : WALTZ parameters
         //                      pset    : Parameter set
@@ -174,10 +174,10 @@ MSVCDLL void operator = (const WALTZ& WALTZ1);
 // ____________________________________________________________________________
  
 /*
-std::string WALTZ::channel()  const;			INHERITED
-double WALTZ::strength() const;			INHERITED
-double WALTZ::phase()    const;			INHERITED
-double WALTZ::offset()   const;			INHERITED                    */
+std::string channel()  const;			INHERITED
+double strength() const;			INHERITED
+double phase()    const;			INHERITED
+double offset()   const;			INHERITED                    */
  
         // Intput       WALTZ1  : WALTZ parameters
         // Output       channel : WALTZ isotope channel
@@ -210,8 +210,8 @@ double WALTZ::offset()   const;			INHERITED                    */
 
 ******************************************************************************/
 
-MSVCDLL PulWaveform WALTZ::WF(int even=0) const;
-MSVCDLL PulWaveform WALTZ::WF_WALTZR(int even=0) const;
+MSVCDLL PulWaveform WF(int even=0) const;
+MSVCDLL PulWaveform WF_WALTZR(int even=0) const;
  
         // Input        WP      : WALTZ parameters
 	//		even	: Flag if even step sizes
@@ -231,7 +231,7 @@ MSVCDLL PulWaveform WALTZ::WF_WALTZR(int even=0) const;
  
 ******************************************************************************/
 
-MSVCDLL PulWaveform WALTZ::WF_WALTZK(int even=0) const;
+MSVCDLL PulWaveform WF_WALTZK(int even=0) const;
 
         // Input        gamB1   : RF field strength (Hz)
 	//		even	: Flag if even step sizes
@@ -250,7 +250,7 @@ MSVCDLL PulWaveform WALTZ::WF_WALTZK(int even=0) const;
 
 ******************************************************************************/
  
-MSVCDLL PulWaveform WALTZ::WF_WALTZQ(int even=0) const;
+MSVCDLL PulWaveform WF_WALTZQ(int even=0) const;
 
         // Input        tp      : Single Pi Pulse length (sec)
 	//		even	: Flag if even step sizes
@@ -276,8 +276,8 @@ MSVCDLL PulWaveform WALTZ::WF_WALTZQ(int even=0) const;
 ******************************************************************************/
  
  
-MSVCDLL PulComposite WALTZ::PCmp(const spin_system& sys, int even=0) const;
-MSVCDLL PulComposite WALTZ::PCmpWALTZR(const spin_system& sys, int even=0) const;
+MSVCDLL PulComposite PCmp(const spin_system& sys, int even=0) const;
+MSVCDLL PulComposite PCmpWALTZR(const spin_system& sys, int even=0) const;
  
         // Input        WP      : WALTZ parameters
         //              sys     : A spin system
@@ -297,7 +297,7 @@ MSVCDLL PulComposite WALTZ::PCmpWALTZR(const spin_system& sys, int even=0) const
 ******************************************************************************/
  
 
-MSVCDLL PulComposite WALTZ::PCmpWALTZK(const spin_system& sys, int even=0) const;
+MSVCDLL PulComposite PCmpWALTZK(const spin_system& sys, int even=0) const;
  
         // Input        WP      : WALTZ parameters
         //              sys     : A spin system
@@ -318,7 +318,7 @@ MSVCDLL PulComposite WALTZ::PCmpWALTZK(const spin_system& sys, int even=0) const
  
 ******************************************************************************/
  
-MSVCDLL PulComposite WALTZ::PCmpWALTZQ(const spin_system& sys, int even=0) const;
+MSVCDLL PulComposite PCmpWALTZQ(const spin_system& sys, int even=0) const;
  
         // Input        WP      : WALTZ parameters
         //              sys     : A spin system
@@ -345,7 +345,7 @@ MSVCDLL PulComposite WALTZ::PCmpWALTZQ(const spin_system& sys, int even=0) const
 ******************************************************************************/
 
 
-MSVCDLL PulCycle WALTZ::CycWALTZ4(const spin_system& sys, int even=0) const;
+MSVCDLL PulCycle CycWALTZ4(const spin_system& sys, int even=0) const;
 
         // Input        void    : None
         //              phi     : Phase angle (degrees)
@@ -366,7 +366,7 @@ MSVCDLL PulCycle WALTZ::CycWALTZ4(const spin_system& sys, int even=0) const;
 ******************************************************************************/
 
 
-MSVCDLL PulCycle WALTZ::CycWALTZ8(const spin_system& sys, int even=0) const;
+MSVCDLL PulCycle CycWALTZ8(const spin_system& sys, int even=0) const;
 
         // Input        void    : None
         //              phi     : Phase angle (degrees)
@@ -388,7 +388,7 @@ MSVCDLL PulCycle WALTZ::CycWALTZ8(const spin_system& sys, int even=0) const;
 ******************************************************************************/
 
 
-MSVCDLL PulCycle WALTZ::CycWALTZ16(const spin_system& sys, int even=0) const;
+MSVCDLL PulCycle CycWALTZ16(const spin_system& sys, int even=0) const;
 
         // Input        void    : None
         //              phi     : Phase angle (degrees)
@@ -409,7 +409,7 @@ MSVCDLL PulCycle WALTZ::CycWALTZ16(const spin_system& sys, int even=0) const;
 // ____________________________________________________________________________
  
  
-MSVCDLL void WALTZ::read(const std::string &filename, int idx=-1);
+MSVCDLL void read(const std::string &filename, int idx=-1);
  
         // Intput               GP      : WALTZ parameters
         //                      idx     : WALTZ index
@@ -418,7 +418,7 @@ MSVCDLL void WALTZ::read(const std::string &filename, int idx=-1);
         //                                with index idx
  
  
-MSVCDLL void WALTZ::read(const ParameterSet& pset, int idx=-1);
+MSVCDLL void read(const ParameterSet& pset, int idx=-1);
  
         // Intput               GP      : WALTZ parameters
         //                      pset    : Parameter set
@@ -435,7 +435,7 @@ MSVCDLL void WALTZ::read(const ParameterSet& pset, int idx=-1);
  
  
 
-MSVCDLL void WALTZ::ask_read(int argc, char* argv[], int argn);
+MSVCDLL void ask_read(int argc, char* argv[], int argn);
  
         // Intput               GP      : WALTZ parameters
         //                      argc    : Number of arguments
@@ -457,7 +457,7 @@ MSVCDLL void WALTZ::ask_read(int argc, char* argv[], int argn);
 // ____________________________________________________________________________
 
                                                                                 
-//std::ostream& WALTZ::printBase(std::ostream &ostr) const;
+//std::ostream& printBase(std::ostream &ostr) const;
 
         // Intput               GP      : WALTZ parameters
         //                      ostr    : Output stream
@@ -465,7 +465,7 @@ MSVCDLL void WALTZ::ask_read(int argc, char* argv[], int argn);
         //                                to the output stream
 
                                                                
-MSVCDLL std::ostream& WALTZ::print(std::ostream &ostr) const;
+MSVCDLL std::ostream& print(std::ostream &ostr) const;
 
         // Intput               GP      : WALTZ parameters
         //                      ostr    : Output stream

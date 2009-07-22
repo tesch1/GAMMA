@@ -78,37 +78,37 @@ class IR2ASph
 
 // ------------------------- Generic Constructors -----------------------------
  
-MSVCDLC IR2ASph::IR2ASph();
-MSVCDLC IR2ASph::IR2ASph(const IR2ASph& SC);
+MSVCDLC IR2ASph();
+MSVCDLC IR2ASph(const IR2ASph& SC);
 
 // ------------------------- Assignment and Destruction -----------------------
 
-MSVCDLL void IR2ASph::operator= (const IR2ASph &IR2Ab);
-MSVCDLC      IR2ASph::~IR2ASph();
+MSVCDLL void operator= (const IR2ASph &IR2Ab);
+MSVCDLC      ~IR2ASph();
 
 // ____________________________________________________________________________
 // B      RANK 2 SPATIAL TENSOR SPHERICAL COMPONENTS ACCESS FUNCTIONS
 // ____________________________________________________________________________
  
-MSVCDLL complex IR2ASph::A20()  const;
-MSVCDLL complex IR2ASph::A21()  const;
-MSVCDLL complex IR2ASph::A2m1() const;
-MSVCDLL complex IR2ASph::A22()  const;
-MSVCDLL complex IR2ASph::A2m2() const;
+MSVCDLL complex A20()  const;
+MSVCDLL complex A21()  const;
+MSVCDLL complex A2m1() const;
+MSVCDLL complex A22()  const;
+MSVCDLL complex A2m2() const;
 
 // ____________________________________________________________________________
 // C   RANK 2 SPATIAL TENSOR SPHERICAL COMPONENTS CARTESIAN ACCESS FUNCTIONS
 // ____________________________________________________________________________
  
-MSVCDLL double IR2ASph::Axx() const;
-MSVCDLL double IR2ASph::Axy() const;
-MSVCDLL double IR2ASph::Axz() const;
-MSVCDLL double IR2ASph::Ayx() const;
-MSVCDLL double IR2ASph::Ayy() const;
-MSVCDLL double IR2ASph::Ayz() const;
-MSVCDLL double IR2ASph::Azx() const;
-MSVCDLL double IR2ASph::Azy() const;
-MSVCDLL double IR2ASph::Azz() const;
+MSVCDLL double Axx() const;
+MSVCDLL double Axy() const;
+MSVCDLL double Axz() const;
+MSVCDLL double Ayx() const;
+MSVCDLL double Ayy() const;
+MSVCDLL double Ayz() const;
+MSVCDLL double Azx() const;
+MSVCDLL double Azy() const;
+MSVCDLL double Azz() const;
             
 /*                            1 [             ]    -1/2
                     A  (EA) = - | A   + A     | - 6     * A 
@@ -143,7 +143,7 @@ MSVCDLL double IR2ASph::Azz() const;
 // D       RANK 2 SPATIAL TENSOR SPHERICAL COMPONENTS I/O FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL std::ostream& IR2ASph::print(std::ostream& ostr, bool hdr=true) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, bool hdr=true) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const IR2ASph& SC);
 
   };							// End Class IR2ASph
@@ -175,37 +175,37 @@ class IR2ACart
 
 // ------------------------- Generic Constructors -----------------------------
  
-MSVCDLC IR2ACart::IR2ACart();
-MSVCDLC IR2ACart::IR2ACart(const IR2ACart& SC);
+MSVCDLC IR2ACart();
+MSVCDLC IR2ACart(const IR2ACart& SC);
 
 // ------------------------- Assignment and Destruction -----------------------
 
-MSVCDLL void IR2ACart::operator= (const IR2ACart &IR2Ab);
-MSVCDLC IR2ACart::~IR2ACart();
+MSVCDLL void operator= (const IR2ACart &IR2Ab);
+MSVCDLC ~IR2ACart();
 
 // ____________________________________________________________________________
 // B      RANK 2 SPATIAL TENSOR CARTESIAN COMPONENTS ACCESS FUNCTIONS
 // ____________________________________________________________________________
  
-MSVCDLL double IR2ACart::Axx() const;
-MSVCDLL double IR2ACart::Axy() const;
-MSVCDLL double IR2ACart::Axz() const;
-MSVCDLL double IR2ACart::Ayx() const;
-MSVCDLL double IR2ACart::Ayy() const;
-MSVCDLL double IR2ACart::Ayz() const;
-MSVCDLL double IR2ACart::Azx() const;
-MSVCDLL double IR2ACart::Azy() const;
-MSVCDLL double IR2ACart::Azz() const;
+MSVCDLL double Axx() const;
+MSVCDLL double Axy() const;
+MSVCDLL double Axz() const;
+MSVCDLL double Ayx() const;
+MSVCDLL double Ayy() const;
+MSVCDLL double Ayz() const;
+MSVCDLL double Azx() const;
+MSVCDLL double Azy() const;
+MSVCDLL double Azz() const;
 
 // ____________________________________________________________________________
 // C   RANK 2 SPATIAL TENSOR CARTESIAN COMPONENTS SPHERICAL ACCESS FUNCTIONS
 // ____________________________________________________________________________
             
-MSVCDLL complex IR2ACart::A20()  const;
-MSVCDLL complex IR2ACart::A21()  const;
-MSVCDLL complex IR2ACart::A2m1() const;
-MSVCDLL complex IR2ACart::A22()  const;
-MSVCDLL complex IR2ACart::A2m2() const;
+MSVCDLL complex A20()  const;
+MSVCDLL complex A21()  const;
+MSVCDLL complex A2m1() const;
+MSVCDLL complex A22()  const;
+MSVCDLL complex A2m2() const;
 
 /*                                           1/2
                                         [ 3 ] 
@@ -225,7 +225,7 @@ MSVCDLL complex IR2ACart::A2m2() const;
 // D       RANK 2 SPATIAL TENSOR CARTESIAN COMPONENTS I/O FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL std::ostream& IR2ACart::print(std::ostream& ostr, bool hdr=true) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, bool hdr=true) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const IR2ACart& CC);
 
 

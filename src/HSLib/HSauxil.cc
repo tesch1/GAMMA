@@ -40,6 +40,7 @@
 #include <HSLib/SpinOpCmp.h>		// Include composite spin ops
 #include <Basics/Gutils.h>		// Include error handling
 #include <Basics/StringCut.h>		// Include string parsing
+#include <stdlib.h>
 #include <iostream>
 #include <cmath>			// Inlcude HUGE_VAL_VAL
 

@@ -69,10 +69,10 @@ class super_op
         //                      noret   : Flag for linefeed (0=linefeed)
         //                      pname   : string in message
 
-         void super_op::LOperror(int eidx, int noret=0) const;
-         void super_op::LOperror(int eidx, const std::string& pname, int noret=0) const;
-volatile void super_op::LOpfatal(int eidx) const;
-volatile void super_op::LOpfatal(int eidx, const std::string& pname) const;
+         void LOperror(int eidx, int noret=0) const;
+         void LOperror(int eidx, const std::string& pname, int noret=0) const;
+volatile void LOpfatal(int eidx) const;
+volatile void LOpfatal(int eidx, const std::string& pname) const;
 
 // ____________________________________________________________________________
 // ii           USEFUL INTERNAL FUNCTIONS FOR SUPER OPERATORS
@@ -92,12 +92,12 @@ volatile void super_op::LOpfatal(int eidx, const std::string& pname) const;
 ///Center Basic Functions
 // F_list super_op	     - Constructor
 
-MSVCDLC super_op::super_op();
-MSVCDLC super_op::super_op(const matrix& mx);
-MSVCDLC super_op::super_op(const matrix& mx,  const matrix& bs);
-MSVCDLC super_op::super_op(const matrix& mx,  const basis& bs);
-MSVCDLC super_op::super_op(const std::vector<matrix>& mxc, const std::vector<matrix>& bsc);
-MSVCDLC super_op::super_op(matrix* mxc, int nc, matrix* bsc=NULL);
+MSVCDLC super_op();
+MSVCDLC super_op(const matrix& mx);
+MSVCDLC super_op(const matrix& mx,  const matrix& bs);
+MSVCDLC super_op(const matrix& mx,  const basis& bs);
+MSVCDLC super_op(const std::vector<matrix>& mxc, const std::vector<matrix>& bsc);
+MSVCDLC super_op(matrix* mxc, int nc, matrix* bsc=NULL);
 
         // Input                nc  : Number of components in multi-sys
         //                      mxc : SOp submatrices associated with comps
@@ -108,9 +108,9 @@ MSVCDLC super_op::super_op(matrix* mxc, int nc, matrix* bsc=NULL);
 	// Note			    : Added in support of multi_sys!
 
 
-MSVCDLC super_op::super_op(const super_op& LOp1);
-MSVCDLC super_op::super_op(const gen_op& Op1, const gen_op& Op2);
-MSVCDLC super_op::~super_op( );
+MSVCDLC super_op(const super_op& LOp1);
+MSVCDLC super_op(const gen_op& Op1, const gen_op& Op2);
+MSVCDLC ~super_op( );
 
 // ____________________________________________________________________________
 // B      SUPER OPERATOR FUNCTIONS: SUPER OPERATOR WITH SUPER OPERATOR
@@ -148,11 +148,11 @@ MSVCDLC super_op::~super_op( );
 	//			                 LOp = LOp - LOp1
 	//			       Result in basis of LOp
 
-MSVCDLL super_op super_op::operator +  (const super_op& LOp1) const;
-MSVCDLL void     super_op::operator += (const super_op& LOp1);
-MSVCDLL super_op super_op::operator -  (const super_op& LOp1) const;
-MSVCDLL super_op super_op::operator -  () const;
-MSVCDLL void     super_op::operator -= (const super_op& LOp1);
+MSVCDLL super_op operator +  (const super_op& LOp1) const;
+MSVCDLL void     operator += (const super_op& LOp1);
+MSVCDLL super_op operator -  (const super_op& LOp1) const;
+MSVCDLL super_op operator -  () const;
+MSVCDLL void     operator -= (const super_op& LOp1);
 
         // Input                LOp  : A super operator (this)
         //                      LOp1 : A super operator
@@ -171,10 +171,10 @@ MSVCDLL void     super_op::operator -= (const super_op& LOp1);
 	// Return (=)		LOp1 : Superoperator which is a copy of
 	//			       the input superoperator.
 
-MSVCDLL super_op super_op::operator *  (const super_op& LOp1) const;
-MSVCDLL void     super_op::operator *= (const super_op& LOp1);
-MSVCDLL void     super_op::operator &= (const super_op& LOp1);
-MSVCDLL void     super_op::operator  = (const super_op& LOp1);
+MSVCDLL super_op operator *  (const super_op& LOp1) const;
+MSVCDLL void     operator *= (const super_op& LOp1);
+MSVCDLL void     operator &= (const super_op& LOp1);
+MSVCDLL void     operator  = (const super_op& LOp1);
 
 // ____________________________________________________________________________
 // C        SUPER OPERATOR FUNCTIONS: SUPER OPERATOR WITH OPERATOR 
@@ -220,12 +220,12 @@ MSVCDLL friend super_op  operator *  (const super_op& LOp1, const complex& z);
 MSVCDLL friend super_op  operator *  (const complex& z,     const super_op& LOp1);
 MSVCDLL friend super_op  operator *  (const super_op& LOp1, double d);
 MSVCDLL friend super_op  operator *  (double d,             const super_op& LOp1);
-MSVCDLL void   super_op::operator *= (const complex& z);
-MSVCDLL void   super_op::operator *= (double d);
+MSVCDLL void   operator *= (const complex& z);
+MSVCDLL void   operator *= (double d);
 MSVCDLL friend super_op  operator /  (const super_op& LOp1, const complex& z);
 MSVCDLL friend super_op  operator /  (const super_op& LOp1, double d);
-MSVCDLL void   super_op::operator /= (const complex& z);
-MSVCDLL void   super_op::operator /= (double d);
+MSVCDLL void   operator /= (const complex& z);
+MSVCDLL void   operator /= (double d);
 
 // ____________________________________________________________________________
 // E                    SUPER OPERATOR COMPLEX FUNCTIONS
@@ -332,7 +332,7 @@ MSVCDLL friend super_op project(const matrix& mx);
 //                          Exponential Superoperators
 // ----------------------------------------------------------------------------
 
-MSVCDLL super_op super_op::exp() const;
+MSVCDLL super_op exp() const;
 
         // Input                LOp   : Superoperator (this)
         // Return               ExpLOp: Exponential of LOp
@@ -341,7 +341,7 @@ MSVCDLL super_op super_op::exp() const;
         // Note                       : L0p's EBR is generated herein
 
 
-MSVCDLL super_op super_op::exp(const complex& t, double cutoff=1.e-12) const;
+MSVCDLL super_op exp(const complex& t, double cutoff=1.e-12) const;
 
         // Input                LOp   : Superoperator (this)
 	//			t     : Exponential factor
@@ -436,8 +436,8 @@ MSVCDLL void LOp_Hbase(const super_op& LOp1, int warn=0) const;
 	//			       into the Hilbert space basis
 	//			       of superoperator LOp
 
-MSVCDLL void super_op::LOp_base(const    gen_op& Op) const;
-MSVCDLL void super_op::SetHSBaseOf(const gen_op& Op) const;
+MSVCDLL void LOp_base(const    gen_op& Op) const;
+MSVCDLL void SetHSBaseOf(const gen_op& Op) const;
 
 // ____________________________________________________________________________
 // G                   SUPER OPERATOR AUXILIARY FUNCTIONS
@@ -446,17 +446,17 @@ MSVCDLL void super_op::SetHSBaseOf(const gen_op& Op) const;
 ///Center Superoperator Auxiliary Functions
 
 
-MSVCDLL int super_op::HS()   const;			// Operator Hilbert space
-MSVCDLL int super_op::size() const;			// Operator Liouville space
-MSVCDLL int super_op::dim()  const;			// Operator Liouville space
-MSVCDLL int super_op::LS()   const;			// Operator Liouville space
+MSVCDLL int HS()   const;			// Operator Hilbert space
+MSVCDLL int size() const;			// Operator Liouville space
+MSVCDLL int dim()  const;			// Operator Liouville space
+MSVCDLL int LS()   const;			// Operator Liouville space
 
 	// Input		LOp  : Superoperator (this).
 	// Return		LSp  : Liouville space dimension of LOp
 	// F_list size	  	     - Get superoperator Liouville dimension
 
   
-MSVCDLL void super_op::eigenvalues(int nc = 4, int ri=0) const;
+MSVCDLL void eigenvalues(int nc = 4, int ri=0) const;
 
 	// Input		LOp   : Superoperator (this)
 	//			nc    : Number of columns to print in
@@ -475,8 +475,8 @@ MSVCDLL void super_op::eigenvalues(int nc = 4, int ri=0) const;
 
 // -------------------------- Matrix Manipulations ----------------------------
 
-MSVCDLL matrix super_op::Mx()     const;
-MSVCDLL matrix super_op::get_mx() const;
+MSVCDLL matrix Mx()     const;
+MSVCDLL matrix get_mx() const;
 
         // Output               mx    : Matrix rep of LOp in Liouville space
 
@@ -490,8 +490,8 @@ MSVCDLL void put_mx(const matrix& mx1);
 
 // -------------------------- Basis Manipulations -----------------------------
 
-MSVCDLL basis super_op::Bs()       const;
-MSVCDLL basis super_op::get_basis() const;
+MSVCDLL basis Bs()       const;
+MSVCDLL basis get_basis() const;
 
 	// Input		LOp   : Superoperator (this)
         // Output               Hbs   : Hilbert space basis of LOp
@@ -513,11 +513,11 @@ MSVCDLL void put_basis(const basis& Hbs);
 	// Note			      : LOp static, basis is copied
 	// F_list get_Lbasis          - Get LOp Liouville space basis
 
-MSVCDLL basis super_op::LBs()        const;
-MSVCDLL basis super_op::get_Lbasis() const;
+MSVCDLL basis LBs()        const;
+MSVCDLL basis get_Lbasis() const;
 
 
-MSVCDLL void super_op::put_Lbasis(const basis& Lbs);
+MSVCDLL void put_Lbasis(const basis& Lbs);
 
 	// Input		LOp   : Superoperator (this)
         // 			Lbs   : Basis in Liouville space
@@ -571,12 +571,12 @@ MSVCDLL complex get(int row, int col) const;
    will result.  If the flags is 1 a non-fatal error is output.  If the flag
    is >1 a fatal error is output and program execution stopped.              */  
 
-MSVCDLL bool super_op::checkLOp(const super_op& LOp1,                 int warn=2) const;
-MSVCDLL bool super_op::checkLOp(const gen_op& Op,                     int warn=2) const;
-MSVCDLL bool super_op::checkLOp(const matrix& mx,                     int warn=2) const;
-MSVCDLL bool super_op::checkLOp(const matrix& mx1, const matrix& mx2, int warn=2) const;
-MSVCDLL bool super_op::checkLOp(const matrix& mx,  const basis& bs,   int warn=2) const;
-MSVCDLL bool super_op::checkLOp(int row,           int col,           int warn=2) const;
+MSVCDLL bool checkLOp(const super_op& LOp1,                 int warn=2) const;
+MSVCDLL bool checkLOp(const gen_op& Op,                     int warn=2) const;
+MSVCDLL bool checkLOp(const matrix& mx,                     int warn=2) const;
+MSVCDLL bool checkLOp(const matrix& mx1, const matrix& mx2, int warn=2) const;
+MSVCDLL bool checkLOp(const matrix& mx,  const basis& bs,   int warn=2) const;
+MSVCDLL bool checkLOp(int row,           int col,           int warn=2) const;
 
 // ____________________________________________________________________________
 // J                       CLASS SUPER OPERATOR TESTS
@@ -584,20 +584,20 @@ MSVCDLL bool super_op::checkLOp(int row,           int col,           int warn=2
 
 ///Center Test Functions
 
-MSVCDLL void super_op::status() const;
+MSVCDLL void status() const;
 
 	// Input		LOp   : Superoperator (this)
 	// Output		void  : Outputs superoperator status
 
 
-MSVCDLL int super_op::operator == (const super_op& LOp1);
+MSVCDLL int operator == (const super_op& LOp1);
 
 	// Input		LOp   : Superoperator (this)
         //                      LOp   : Superoperator
         // Output               T_F   : TRUE if LOp = LOp1
 
 
-MSVCDLL int super_op::below(double d) const;
+MSVCDLL int below(double d) const;
 
 	// Input		LOp   : Superoperator (this)
         //                      d     : Number
@@ -619,7 +619,7 @@ MSVCDLL int super_op::below(double d) const;
                                 flag : Flag for amount of output
            Return               ostr : LOp is set to the output stream       */
 
-MSVCDLL std::ostream& super_op::print(std::ostream& ostr, int flag=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int flag=0) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const super_op& LOp);
 
 // -------------------------- Binary Output Functions -------------------------
@@ -630,8 +630,8 @@ MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const super_op& LO
            Return               void : LOp is written in binary format to
 				       the file or filestream.               */
 
-MSVCDLL void           super_op::write(const std::string& fn)  const;
-MSVCDLL std::ofstream& super_op::write(std::ofstream& fp) const;
+MSVCDLL void           write(const std::string& fn)  const;
+MSVCDLL std::ofstream& write(std::ofstream& fp) const;
 
 // --------------------------- Binary Input Functions -------------------------
  
@@ -647,10 +647,10 @@ MSVCDLL std::ofstream& super_op::write(std::ofstream& fp) const;
 				       did so when written.  This must be done
                                        explicitly if desired.                */
 
-MSVCDLL void           super_op::read(const std::string& fn);
-MSVCDLL void           super_op::read(const std::string& fn, const gen_op&   Op);
-MSVCDLL void           super_op::read(const std::string& fn, const super_op& LOp1);
-MSVCDLL std::ifstream& super_op::read(std::ifstream& fp);
+MSVCDLL void           read(const std::string& fn);
+MSVCDLL void           read(const std::string& fn, const gen_op&   Op);
+MSVCDLL void           read(const std::string& fn, const super_op& LOp1);
+MSVCDLL std::ifstream& read(std::ifstream& fp);
 
 // ____________________________________________________________________________
 // L                 CLASS SUPEROPERATOR LEFTOVER FUNCTIONS

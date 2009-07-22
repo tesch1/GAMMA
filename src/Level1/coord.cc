@@ -46,6 +46,8 @@
 #include <Basics/Gutils.h>		// Include GAMMA errors
 #include <Matrix/complex.h>		// Include GAMMA complex numbers
 #include <Matrix/matrix.h>		// Include GAMMA matrices
+#include <stdlib.h>
+#include <math.h>
 #include <list>				// Include libstdc++ STL lists
 #include <string>			// Include libstdc++ strings
 #include <iostream>			// Include form output function

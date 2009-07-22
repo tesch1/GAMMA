@@ -83,8 +83,8 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void ClassTest::CTerror(int eidx, int noret=0) const;
-volatile void ClassTest::CTfatality(int eidx)           const;
+         void CTerror(int eidx, int noret=0) const;
+volatile void CTfatality(int eidx)           const;
 
 // ____________________________________________________________________________
 // ii                   CLASS TEST INITIALIZATION FUNCTIONS
@@ -97,7 +97,7 @@ volatile void ClassTest::CTfatality(int eidx)           const;
    indicates that additional tests have been added, potentially with a
    different ordering, since the test results were generated previously.    */
 
-void ClassTest::SetResults(int force=0);                 
+void SetResults(int force=0);                 
 
 // ____________________________________________________________________________
 // iii               CLASS TEST SECTION TEST INDEXING FUNCTIONS
@@ -107,11 +107,11 @@ void ClassTest::SetResults(int force=0);
    obtain the test Pix from either an interger or a string and they perform
    range checking to insure that the requested test exists in the section.   */
  
-bool                                ClassTest::CheckIndex(int k, int w=1) const;
-std::list<SectTest>::iterator       ClassTest::GetPixNC(int k);
-std::list<SectTest>::const_iterator ClassTest::GetPix(int k)              const;
-std::list<SectTest>::const_iterator ClassTest::GetPix(const   std::string& N)    const;
-int                                 ClassTest::GetIndex(const std::string& N)  const;
+bool                                CheckIndex(int k, int w=1) const;
+std::list<SectTest>::iterator       GetPixNC(int k);
+std::list<SectTest>::const_iterator GetPix(int k)              const;
+std::list<SectTest>::const_iterator GetPix(const   std::string& N)    const;
+int                                 GetIndex(const std::string& N)  const;
 
 
 public:
@@ -137,9 +137,9 @@ ClassTest(const ClassTest& CT)            Class Test copy of CT
 ClassTest assign(N)                       Assign N element
 ~ClassTest()                              Destructor of Class Test           */
 
-MSVCDLC            ClassTest::ClassTest();                     // Empty Class Test
-MSVCDLC            ClassTest::ClassTest(const  ClassTest& CT); // Class Test copy of CT
-MSVCDLL ClassTest& ClassTest::operator= (const ClassTest& CT); // Assignment operator
+MSVCDLC            ClassTest();                     // Empty Class Test
+MSVCDLC            ClassTest(const  ClassTest& CT); // Class Test copy of CT
+MSVCDLL ClassTest& operator= (const ClassTest& CT); // Assignment operator
  
 // ____________________________________________________________________________
 // B                   CLASS TEST ITERATORS & MEMBER ACCESS
@@ -149,10 +149,10 @@ MSVCDLL ClassTest& ClassTest::operator= (const ClassTest& CT); // Assignment ope
    library libstdc++.  I am listing them here so that I & other users don't
    have to keep looking them up all the time.
 
-list<SectTest>::iterator ClassTest::begin()      Pointer to 1st element
-list<SectTest>::iterator ClassTest::end()        Pointer to last element
-SectTest                 ClassTest::front()      First element
-SectTest                 ClassTest::back()       Last element                */
+list<SectTest>::iterator begin()      Pointer to 1st element
+list<SectTest>::iterator end()        Pointer to last element
+SectTest                 front()      First element
+SectTest                 back()       Last element                */
 
 // ____________________________________________________________________________
 // C                     CLASS TEST LIST & QUEUE OPERATIONS
@@ -162,13 +162,13 @@ SectTest                 ClassTest::back()       Last element                */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-ClassTest::push_back(const  SectTest& ST)         Add ST to list end
-ClassTest::pop_back()                             Remove ST at list end
-ClassTest::push_front(const SectTest& ST)         Add ST to list start
-ClassTest::pop_front(const  SectTest& ST)         Remove ST at list start
-ClassTest::insert(iterator p, SectTest& ST)       Add ST before p
-ClassTest::erase(iterator p)                      Remove ST at p
-ClassTest::clear()                                Remove all list entries    */
+push_back(const  SectTest& ST)         Add ST to list end
+pop_back()                             Remove ST at list end
+push_front(const SectTest& ST)         Add ST to list start
+pop_front(const  SectTest& ST)         Remove ST at list start
+insert(iterator p, SectTest& ST)       Add ST before p
+erase(iterator p)                      Remove ST at p
+clear()                                Remove all list entries    */
 
 // ____________________________________________________________________________
 // D                    CLASS TEST ADDITIONAL QUEUE OPERATIONS
@@ -178,10 +178,10 @@ ClassTest::clear()                                Remove all list entries    */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-int  ClassTest::size()                            Number of entries
-bool ClassTest::empty()                           TRUE if pset empty
-bool ClassTest::operator==(ClassTest CT)          TRUE if psets equal
-bool ClassTest::operator!=(ClassTest CT)          TRUE if psets not equal    */
+int  size()                            Number of entries
+bool empty()                           TRUE if pset empty
+bool operator==(ClassTest CT)          TRUE if psets equal
+bool operator!=(ClassTest CT)          TRUE if psets not equal    */
 
 // ____________________________________________________________________________
 // E                     CLASS TEST LIST AUXILIARY FUNCTIONS
@@ -198,11 +198,11 @@ bool ClassTest::operator!=(ClassTest CT)          TRUE if psets not equal    */
      seek       string    Returns iterator in class tests for test with name
        "       SectTest   Returns iterator in class tests for section test   */ 
  
-MSVCDLL int ClassTest::contains(const std::string& tname) const;
-MSVCDLL int ClassTest::contains(const SectTest& ST)       const;
+MSVCDLL int contains(const std::string& tname) const;
+MSVCDLL int contains(const SectTest& ST)       const;
 
-MSVCDLL std::list<SectTest>::const_iterator ClassTest::seek(const std::string& tname) const;
-MSVCDLL std::list<SectTest>::const_iterator ClassTest::seek(const SectTest& ST) const;
+MSVCDLL std::list<SectTest>::const_iterator seek(const std::string& tname) const;
+MSVCDLL std::list<SectTest>::const_iterator seek(const SectTest& ST) const;
  
 // ____________________________________________________________________________
 // F                       CLASS TEST ACCESS FUNCTIONS
@@ -227,24 +227,24 @@ MSVCDLL std::list<SectTest>::const_iterator ClassTest::seek(const SectTest& ST) 
    GetRunLevels    Returns int vector for run level of all Section Tests
     GetResults     Returns int vector for all current Section Test Results   */
 
-MSVCDLL std::string    ClassTest::GetName()                    const;
-MSVCDLL std::string    ClassTest::GetName(int k)               const;
-//std::string    ClassTest::GetName(int k, int j)        const;
-MSVCDLL std::vector<std::string> ClassTest::GetNames()                   const;
-//vector<string> ClassTest::GetNames(int k)              const;
-MSVCDLL std::string         ClassTest::GetDescription()             const;
-MSVCDLL std::string         ClassTest::GetDescription(int k)        const;
-//string         ClassTest::GetDescription(int k, int j) const;
-MSVCDLL std::vector<std::string> ClassTest::GetDescriptions()            const;
-//vector<string> ClassTest::GetDescriptions(int k)       const;
-MSVCDLL int            ClassTest::GetStatus()                  const;
-MSVCDLL int            ClassTest::GetStatus(int k)             const;
-MSVCDLL std::vector<int>    ClassTest::GetStatuses()                const;
-MSVCDLL int            ClassTest::GetRunLevel()                const;
-MSVCDLL int            ClassTest::GetRunLevel(int k)           const;
-MSVCDLL std::vector<int>    ClassTest::GetRunLevels()               const;
-MSVCDLL std::vector<int>    ClassTest::GetResults();
-MSVCDLL std::vector<int>    ClassTest::GetResults(int k);
+MSVCDLL std::string    GetName()                    const;
+MSVCDLL std::string    GetName(int k)               const;
+//std::string    GetName(int k, int j)        const;
+MSVCDLL std::vector<std::string> GetNames()                   const;
+//vector<string> GetNames(int k)              const;
+MSVCDLL std::string         GetDescription()             const;
+MSVCDLL std::string         GetDescription(int k)        const;
+//string         GetDescription(int k, int j) const;
+MSVCDLL std::vector<std::string> GetDescriptions()            const;
+//vector<string> GetDescriptions(int k)       const;
+MSVCDLL int            GetStatus()                  const;
+MSVCDLL int            GetStatus(int k)             const;
+MSVCDLL std::vector<int>    GetStatuses()                const;
+MSVCDLL int            GetRunLevel()                const;
+MSVCDLL int            GetRunLevel(int k)           const;
+MSVCDLL std::vector<int>    GetRunLevels()               const;
+MSVCDLL std::vector<int>    GetResults();
+MSVCDLL std::vector<int>    GetResults(int k);
 
 /*         Input                CT : A class test (this)
                   (name)      name : The name of the test     (setting name)
@@ -259,16 +259,16 @@ MSVCDLL std::vector<int>    ClassTest::GetResults(int k);
                   (T/F)       type : Current test type        (getting type)
                               void : If setting interal value                */  
  
-MSVCDLL const std::string& ClassTest::name()     const;                // Get name
-MSVCDLL       int          ClassTest::status()   const;                // Get status
-MSVCDLL const std::string& ClassTest::describe() const;                // Get descript
-MSVCDLL       int          ClassTest::runlevel() const;                // Get runlev
-MSVCDLL       bool         ClassTest::type()     const;                // Get type
-MSVCDLL       void         ClassTest::name(const  std::string& Name);  // Set name
-MSVCDLL       void         ClassTest::status(     int          Status);// Set status
-MSVCDLL       void         ClassTest::describe(const std::string& D);  // Set decript
-MSVCDLL       void         ClassTest::runlevel(   int          RLev);  // Set runlev
-MSVCDLL       void         ClassTest::type(       bool            T);  // Set type
+MSVCDLL const std::string& name()     const;                // Get name
+MSVCDLL       int          status()   const;                // Get status
+MSVCDLL const std::string& describe() const;                // Get descript
+MSVCDLL       int          runlevel() const;                // Get runlev
+MSVCDLL       bool         type()     const;                // Get type
+MSVCDLL       void         name(const  std::string& Name);  // Set name
+MSVCDLL       void         status(     int          Status);// Set status
+MSVCDLL       void         describe(const std::string& D);  // Set decript
+MSVCDLL       void         runlevel(   int          RLev);  // Set runlev
+MSVCDLL       void         type(       bool            T);  // Set type
  
 // ____________________________________________________________________________
 // G                      CLASS TEST TESTING FUNCTIONS
@@ -291,14 +291,14 @@ MSVCDLL       void         ClassTest::type(       bool            T);  // Set ty
 //                             Tests All Sections
 //-----------------------------------------------------------------------------
 
-MSVCDLL int ClassTest::TestSects(std::ostream& ostr, int force=0, int keepon=0);
+MSVCDLL int TestSects(std::ostream& ostr, int force=0, int keepon=0);
  
 //-----------------------------------------------------------------------------
 //                  Test Specific Section (By Index Or Name)
 //-----------------------------------------------------------------------------
  
-MSVCDLL int ClassTest::TestSect(std::ostream& ostr, int tidx, int frc=0, int keepon=0);
-MSVCDLL int ClassTest::TestSect(std::ostream& ostr, const std::string& tnam, int frc=0, int k=0); 
+MSVCDLL int TestSect(std::ostream& ostr, int tidx, int frc=0, int keepon=0);
+MSVCDLL int TestSect(std::ostream& ostr, const std::string& tnam, int frc=0, int k=0); 
 
 // ____________________________________________________________________________
 // H                       CLASS TEST OUTPUT FUNCTIONS
@@ -326,23 +326,23 @@ MSVCDLL int ClassTest::TestSect(std::ostream& ostr, const std::string& tnam, int
             output results detailed if the funciton recursion level
             (nlevels) is set greater than 1.                                */
 
-MSVCDLL std::ostream& ClassTest::Header(std::ostream& ostr, const std::string& MN);
-MSVCDLL std::ostream& ClassTest::Header(std::ostream& ostr)              const;
-MSVCDLL std::ostream& ClassTest::Result(std::ostream& ostr)              const;
-MSVCDLL std::ostream& ClassTest::Results(std::ostream& ostr, int goon=1) const;
-MSVCDLL std::ostream& ClassTest::ResRec(std::ostream&  ostr, int keepon, int nl=1);
+MSVCDLL std::ostream& Header(std::ostream& ostr, const std::string& MN);
+MSVCDLL std::ostream& Header(std::ostream& ostr)              const;
+MSVCDLL std::ostream& Result(std::ostream& ostr)              const;
+MSVCDLL std::ostream& Results(std::ostream& ostr, int goon=1) const;
+MSVCDLL std::ostream& ResRec(std::ostream&  ostr, int keepon, int nl=1);
  
 // ____________________________________________________________________________
 // I                       CLASS TEST INTERACTIVE FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL int ClassTest::AskRun(std::ostream& ostr);
+MSVCDLL int AskRun(std::ostream& ostr);
  
 // ____________________________________________________________________________
 // J                       SECTION TEST AUXILIARY FUNCTIONS
 // ____________________________________________________________________________
  
-MSVCDLL std::ostream& ClassTest::ListTests(std::ostream& ostr) const;
+MSVCDLL std::ostream& ListTests(std::ostream& ostr) const;
 
 };
 

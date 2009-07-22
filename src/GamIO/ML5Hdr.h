@@ -98,10 +98,10 @@ volatile void MLH5fatality(int eidx) const;
                                           which indicate the "endianness" of
                                           stored data in MAT Ver. 5 files.   */
 
-void MatLab5Hdr::SetEndian();			// Set endian flags in ML5H
-void MatLab5Hdr::SetLittleEnd();		// Set little endian in ML5H
-void MatLab5Hdr::SetBigEnd();			// Set big endian in ML5H
-int  MatLab5Hdr::BigEndian();			// See if big endian input
+void SetEndian();			// Set endian flags in ML5H
+void SetLittleEnd();		// Set little endian in ML5H
+void SetBigEnd();			// Set big endian in ML5H
+int  BigEndian();			// See if big endian input
 
 // public:	/* Keep Everything Private Except for Friend Classes Above!! */
  
@@ -121,7 +121,7 @@ MatLab5Hdr(const MatLab5Hdr& MLH1);
 // B                    MATLAB MAT 5 Header Access Functions
 // ____________________________________________________________________________
  
-void MatLab5Hdr::skip(std::fstream& fp);
+void skip(std::fstream& fp);
    
 // ____________________________________________________________________________
 // C                MATLAB MAT 5 Header Binary Output Functions
@@ -143,7 +143,7 @@ void MatLab5Hdr::skip(std::fstream& fp);
                                           header is written tothe top of the
                                           file (as it should be in MATLAB)   */
 
-int MatLab5Hdr::write(std::fstream& fp, int warn=1) const;
+int write(std::fstream& fp, int warn=1) const;
 
 // ____________________________________________________________________________
 // D                MATLAB MAT 5 Header Binary Input Functions
@@ -169,7 +169,7 @@ int MatLab5Hdr::write(std::fstream& fp, int warn=1) const;
                                           header is read from the top of the
                                           file (as it should be in MATLAB)   */
 
-int MatLab5Hdr::read(std::fstream& fp, int warn=1);
+int read(std::fstream& fp, int warn=1);
 
                                                                                
 // ____________________________________________________________________________
@@ -179,7 +179,7 @@ int MatLab5Hdr::read(std::fstream& fp, int warn=1);
 /* These functions
 */
                                                                                 
-void MatLab5Hdr::print(std::ostream& ostr, int hpf=1) const;
+void print(std::ostream& ostr, int hpf=1) const;
  
         // Input                ML5H    : MAT version 5 header (this)
         //                      ostr    : An output stream

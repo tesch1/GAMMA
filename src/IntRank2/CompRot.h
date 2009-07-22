@@ -71,14 +71,14 @@ volatile void ROTfatal(int eidx, const std::string& pname)              const;
 // ii                COMPOSITE ROTATION CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
-bool CompRot::ChkIdx(int   i,         int warn=2) const;// Check index i OK
-bool CompRot::ChkRange(int i, int nr, int warn=2) const;// Check range [i,i+nr)
+bool ChkIdx(int   i,         int warn=2) const;// Check index i OK
+bool ChkRange(int i, int nr, int warn=2) const;// Check range [i,i+nr)
 
 // ____________________________________________________________________________
 // iii              COMPOSITE ROTATION AUXILIARY FUNCTIONS
 // ____________________________________________________________________________
 
-void CompRot::SetSum();				// Calculate summed rotation
+void SetSum();				// Calculate summed rotation
 
 // ____________________________________________________________________________
 // iv          COMPOSITE ROTATION PARAMETER SET SETUP FUNCTIONS
@@ -96,10 +96,10 @@ void CompRot::SetSum();				// Calculate summed rotation
        Output           TF      : Composite Rotation is set
                                   from parameters in pset		     */
 
-bool CompRot::SetCmpRot(const      ParameterSet& pset,int pfx=-1,  int warn=2);
-bool CompRot::SetRotation(const    ParameterSet& pset,             int idx=-1);
-bool CompRot::GetEulerAngles(const ParameterSet& pset,EAngles& EA, int idx=-1);
-bool CompRot::GetQuaternion(const  ParameterSet& pset,quatern&  Q, int idx=-1);
+bool SetCmpRot(const      ParameterSet& pset,int pfx=-1,  int warn=2);
+bool SetRotation(const    ParameterSet& pset,             int idx=-1);
+bool GetEulerAngles(const ParameterSet& pset,EAngles& EA, int idx=-1);
+bool GetQuaternion(const  ParameterSet& pset,quatern&  Q, int idx=-1);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -121,51 +121,51 @@ bool CompRot::GetQuaternion(const  ParameterSet& pset,quatern&  Q, int idx=-1);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC CompRot::CompRot();
+MSVCDLC CompRot();
 
 // ----------------------------------------------------------------------------
 //                   Constructors Using Single Rotations
 // ----------------------------------------------------------------------------
 
-MSVCDLC CompRot::CompRot(double alpha, double beta=0, double gamma=0);
-MSVCDLC CompRot::CompRot(const  EAngles& EA);
-MSVCDLC CompRot::CompRot(const  quatern& Q);
+MSVCDLC CompRot(double alpha, double beta=0, double gamma=0);
+MSVCDLC CompRot(const  EAngles& EA);
+MSVCDLC CompRot(const  quatern& Q);
  
 // ----------------------------------------------------------------------------
 //                  Constructors Using Multiple Rotations
 // ----------------------------------------------------------------------------
 
-MSVCDLC CompRot::CompRot(const std::vector<EAngles>& EAvec);
-MSVCDLC CompRot::CompRot(const std::vector<quatern>& Qvec);
+MSVCDLC CompRot(const std::vector<EAngles>& EAvec);
+MSVCDLC CompRot(const std::vector<quatern>& Qvec);
 
 // ----------------------------------------------------------------------------
 //                    Construction Using Parameter Sets
 // ----------------------------------------------------------------------------
 
-MSVCDLC CompRot::CompRot(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLC CompRot(const ParameterSet& pset, int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //                          Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-MSVCDLL void CompRot::operator= (const CompRot& ROT);
-MSVCDLC      CompRot::~CompRot();
+MSVCDLL void operator= (const CompRot& ROT);
+MSVCDLC      ~CompRot();
 
 // ____________________________________________________________________________
 // B                  INDIVIDUAL COMPOSITE ROTATION ACCESS FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL EAngles CompRot::EA(int    i) const;
-MSVCDLL quatern CompRot::Q(int     i) const;
-MSVCDLL double  CompRot::alpha(int i) const;
-MSVCDLL double  CompRot::beta(int  i) const;
-MSVCDLL double  CompRot::gamma(int i) const;
+MSVCDLL EAngles EA(int    i) const;
+MSVCDLL quatern Q(int     i) const;
+MSVCDLL double  alpha(int i) const;
+MSVCDLL double  beta(int  i) const;
+MSVCDLL double  gamma(int i) const;
 
-MSVCDLL void CompRot::EA(const  EAngles& ea, int i);
-MSVCDLL void CompRot::Q(const   quatern&  q, int i);
-MSVCDLL void CompRot::alpha(double        A, int i);
-MSVCDLL void CompRot::beta(double         B, int i);
-MSVCDLL void CompRot::gamma(double        G, int i);
+MSVCDLL void EA(const  EAngles& ea, int i);
+MSVCDLL void Q(const   quatern&  q, int i);
+MSVCDLL void alpha(double        A, int i);
+MSVCDLL void beta(double         B, int i);
+MSVCDLL void gamma(double        G, int i);
 
 // ____________________________________________________________________________
 // C                    SUMMED COMPOSITE ROTATION ACCESS FUNCTIONS
@@ -175,18 +175,18 @@ MSVCDLL void CompRot::gamma(double        G, int i);
    vector or any sub-vector. Since composite rotations may depend upon 
    multiple single rotations they may not be set, only obtained.             */
 
-MSVCDLL EAngles CompRot::EA()    const;
-MSVCDLL quatern CompRot::Q()     const;
-MSVCDLL double  CompRot::alpha() const;
-MSVCDLL double  CompRot::beta()  const;
-MSVCDLL double  CompRot::gamma() const;
+MSVCDLL EAngles EA()    const;
+MSVCDLL quatern Q()     const;
+MSVCDLL double  alpha() const;
+MSVCDLL double  beta()  const;
+MSVCDLL double  gamma() const;
 
-MSVCDLL EAngles CompRot::EA(int    i, int j);
-MSVCDLL coord   CompRot::ABG(int   i, int j);
-MSVCDLL quatern CompRot::Q(int     i, int j);
-MSVCDLL double  CompRot::alpha(int i, int j);
-MSVCDLL double  CompRot::beta(int  i, int j);
-MSVCDLL double  CompRot::gamma(int i, int j);
+MSVCDLL EAngles EA(int    i, int j);
+MSVCDLL coord   ABG(int   i, int j);
+MSVCDLL quatern Q(int     i, int j);
+MSVCDLL double  alpha(int i, int j);
+MSVCDLL double  beta(int  i, int j);
+MSVCDLL double  gamma(int i, int j);
 
 // ____________________________________________________________________________
 // D                  COMPOSITE ROTATION PARSING FUNCTIONS
@@ -194,9 +194,9 @@ MSVCDLL double  CompRot::gamma(int i, int j);
 
 /* These function allow users to obtain any part of the composite rotation   */
 
-MSVCDLL CompRot CompRot::operator() (int i, int nr) const;
-MSVCDLL void    CompRot::operator+= (const EAngles& EA);
-MSVCDLL void    CompRot::operator+= (const quatern& Q);
+MSVCDLL CompRot operator() (int i, int nr) const;
+MSVCDLL void    operator+= (const EAngles& EA);
+MSVCDLL void    operator+= (const quatern& Q);
 
 // ____________________________________________________________________________
 // E                         PARAMETER SET FUNCTIONS
@@ -232,8 +232,8 @@ MSVCDLL void    CompRot::operator+= (const quatern& Q);
 
 MSVCDLL             operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const CompRot &ROT);
-MSVCDLL        void CompRot::PSetAdd(ParameterSet& pset,   int pfx=-1) const;
-MSVCDLL        void CompRot::write(const std::string &filename, int pfx=-1) const;
+MSVCDLL        void PSetAdd(ParameterSet& pset,   int pfx=-1) const;
+MSVCDLL        void write(const std::string &filename, int pfx=-1) const;
 
 // ____________________________________________________________________________
 // H                      COMPOSITE ROTATION INPUT FUNCTIONS
@@ -256,9 +256,9 @@ MSVCDLL        void CompRot::write(const std::string &filename, int pfx=-1) cons
                                           from parameters in file filename
                                 file    : Name of file used to set rotation  */
 
-MSVCDLL bool   CompRot::read(const std::string& file,    int idx=-1, int warn=2);
-MSVCDLL bool   CompRot::read(const ParameterSet& pset,   int idx=-1, int warn=2);
-MSVCDLL std::string CompRot::ask_read(int argc, char* argv[], int argn,   int idx=-1);
+MSVCDLL bool   read(const std::string& file,    int idx=-1, int warn=2);
+MSVCDLL bool   read(const ParameterSet& pset,   int idx=-1, int warn=2);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,   int idx=-1);
  
 // ____________________________________________________________________________
 // J                       COMPOSITE ROTATION OUTPUT FUNCTIONS
@@ -275,7 +275,7 @@ MSVCDLL std::string CompRot::ask_read(int argc, char* argv[], int argn,   int id
            Output               none    : Composite Rotation information
                                           placed into the output stream      */
 
-MSVCDLL        std::ostream& CompRot::print(std::ostream& out, int fflag=-1) const;
+MSVCDLL        std::ostream& print(std::ostream& out, int fflag=-1) const;
 MSVCDLL friend std::ostream& operator<<  (std::ostream& out, const CompRot& ROT);
 
   };

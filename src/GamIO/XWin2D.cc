@@ -54,6 +54,7 @@
 #  endif
 
 #include <string>			// Include libstdc++ strings
+#include <stdlib.h>
 #include <GamIO/XWin2D.h>		// Include interface
 #include <GamIO/XWinAcqus.h>		// Include acqus file interface
 #include <GamIO/XWinAcqu2s.h>		// Include acqu2s file interface

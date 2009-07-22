@@ -78,9 +78,9 @@ class sys_gradz: public spin_system
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void sys_gradz::SysGZerr (int  eidx,                        int nr=0) const;
-         void sys_gradz::SysGZerr(int   eidx, const std::string& st, int nr=0) const;
-volatile void sys_gradz::SysGZfatal(int eidx) const;
+         void SysGZerr (int  eidx,                        int nr=0) const;
+         void SysGZerr(int   eidx, const std::string& st, int nr=0) const;
+volatile void SysGZfatal(int eidx) const;
 
 // ____________________________________________________________________________
 // ii                     SYS Z-GRADIENT SETUP FUNCTIONS
@@ -89,7 +89,7 @@ volatile void sys_gradz::SysGZfatal(int eidx) const;
 /* These are protected functions because they allow specific aspects of the
    spin system to be set up without worrying about system consistency!       */
 
-virtual int sys_gradz::setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
+virtual int setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
 
         // Input                sysg    : System in z-gradient (this)
         //                      pset     : A parameter set
@@ -134,10 +134,10 @@ public:
    things in them. Rather, spin systems are usually read in from an external
    file where all their parameters are clearly written out.                  */
 
-MSVCDLC      sys_gradz::sys_gradz(int spins=0);
-MSVCDLC      sys_gradz::sys_gradz(const sys_gradz& sys);
-MSVCDLC      sys_gradz::~sys_gradz();
-MSVCDLL void sys_gradz::operator= (const sys_gradz& sys);
+MSVCDLC      sys_gradz(int spins=0);
+MSVCDLC      sys_gradz(const sys_gradz& sys);
+MSVCDLC      ~sys_gradz();
+MSVCDLL void operator= (const sys_gradz& sys);
 
 // ____________________________________________________________________________
 // B                       CHEMICAL SHIFT MANIPULATIONS
@@ -176,8 +176,8 @@ MSVCDLL void sys_gradz::operator= (const sys_gradz& sys);
                   NSS          int           Sets the number of sub-systems
                   NSS          ---           Returns the # of sub-systems    */
 
-MSVCDLL void sys_gradz::NSS(int nss);
-MSVCDLL int  sys_gradz::NSS() const;
+MSVCDLL void NSS(int nss);
+MSVCDLL int  NSS() const;
 
 // ----------------------------------------------------------------------------
 //                 Functions To Access The Bo Field Gradient
@@ -189,9 +189,9 @@ MSVCDLL int  sys_gradz::NSS() const;
                  BoGrad         ---          Gradient is returned in T/m
                  GradVal   double (m)        Gradient at specfified distance */
 
-MSVCDLL void   sys_gradz::BoGrad(double bgrad);
-MSVCDLL double sys_gradz::BoGrad()             const;
-MSVCDLL double sys_gradz::GradVal(double dist) const;
+MSVCDLL void   BoGrad(double bgrad);
+MSVCDLL double BoGrad()             const;
+MSVCDLL double GradVal(double dist) const;
 
 
 // ----------------------------------------------------------------------------
@@ -207,9 +207,9 @@ MSVCDLL double sys_gradz::GradVal(double dist) const;
   Note that in GAMMA the 1st sub-system (index 0) resides at -efflen/2
   whereas the last sub-system (index _NSS-1) resides at efflen/2             */
 
-MSVCDLL void   sys_gradz::SysLen(double len);
-MSVCDLL double sys_gradz::SysLen()         const;
-MSVCDLL double sys_gradz::SysDist(int nss) const;
+MSVCDLL void   SysLen(double len);
+MSVCDLL double SysLen()         const;
+MSVCDLL double SysDist(int nss) const;
 
 // ----------------------------------------------------------------------------
 //                Functions To Access Particular Spin Sub-Systems
@@ -228,11 +228,11 @@ MSVCDLL double sys_gradz::SysDist(int nss) const;
   all sub-system referenced to the same rotating frame, namely the base
   Larmor frequency of each isotope type.                                    */
 
-MSVCDLL spin_system sys_gradz::SubSys(int nss)                    const;
-MSVCDLL double      sys_gradz::SubSysShift(int nss, int spin)     const;
-MSVCDLL double      sys_gradz::SubSysShift(double dist, int spin) const;
-MSVCDLL double      sys_gradz::SubSysPPM(int nss, int spin)       const;
-MSVCDLL double      sys_gradz::SubSysPPM(double dist, int spin)   const;
+MSVCDLL spin_system SubSys(int nss)                    const;
+MSVCDLL double      SubSysShift(int nss, int spin)     const;
+MSVCDLL double      SubSysShift(double dist, int spin) const;
+MSVCDLL double      SubSysPPM(int nss, int spin)       const;
+MSVCDLL double      SubSysPPM(double dist, int spin)   const;
 
 // ____________________________________________________________________________
 // G			  Nyquist Frequency Functions
@@ -269,7 +269,7 @@ MSVCDLL friend void operator+= (ParameterSet& pset, const sys_gradz &sysg);
         ///F_list +=  - Unary Addition
 
 
-MSVCDLL void sys_gradz::PSetAdd(ParameterSet& pset, int idx=-1) const;
+MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1) const;
 
         // Input                sysg    : System in z-gradient (this)
         //                      pset    : Parameter set
@@ -291,13 +291,13 @@ MSVCDLL void sys_gradz::PSetAdd(ParameterSet& pset, int idx=-1) const;
 
 //          Many of these handled by the base class spin_system
 
-// int sys_gradz::setOm(const ParameterSet& pset);
-// void sys_gradz::setJs(const ParameterSet& pset);
-// void sys_gradz::setAs(const ParameterSet& pset);
-// void sys_gradz::setShifts(const ParameterSet& pset);
+// int setOm(const ParameterSet& pset);
+// void setJs(const ParameterSet& pset);
+// void setAs(const ParameterSet& pset);
+// void setShifts(const ParameterSet& pset);
 
 
-MSVCDLL void sys_gradz::setSubSys(const ParameterSet& pset);
+MSVCDLL void setSubSys(const ParameterSet& pset);
 
         // Input                sysg    : System in z-gradient (this)
         //                      pset    : A parameter set
@@ -305,7 +305,7 @@ MSVCDLL void sys_gradz::setSubSys(const ParameterSet& pset);
         //                                is set from parameter in pset
 
 
-MSVCDLL void sys_gradz::setBoGrad(const ParameterSet& pset);
+MSVCDLL void setBoGrad(const ParameterSet& pset);
 
         // Input                sysg    : System in z-gradient (this)
         //                      pset    : A parameter set
@@ -314,7 +314,7 @@ MSVCDLL void sys_gradz::setBoGrad(const ParameterSet& pset);
         // Note                         : Input units expected T/m
 
 
-MSVCDLL void sys_gradz::setLength(const ParameterSet& pset);
+MSVCDLL void setLength(const ParameterSet& pset);
 
         // Input                sysg    : System in z-gradient (this)
         //                      pset    : A parameter set
@@ -359,7 +359,7 @@ MSVCDLL virtual int write(std::ofstream& ofstr,        int idx=-1, int warn=2) c
 ///F_list read          - Read spin system from disk file
 ///F_list ask_read      - Ask for file, read spin system from file
 
-MSVCDLL virtual int sys_gradz::read(const std::string& filename, int idx=-1, int warn=2);
+MSVCDLL virtual int read(const std::string& filename, int idx=-1, int warn=2);
 
         // Input                sysg    : System in z-gradient (this)
         //                      filename : Input filename
@@ -375,7 +375,7 @@ MSVCDLL virtual int sys_gradz::read(const std::string& filename, int idx=-1, int
         //                                 containing recognized sys parameters
 
 
-MSVCDLL virtual int sys_gradz::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL virtual int read(const ParameterSet& pset, int idx=-1, int warn=2);
 
         // Input                sysg    : System in z-gradient (this)
         //                      pset     : A parameter set
@@ -390,8 +390,8 @@ MSVCDLL virtual int sys_gradz::read(const ParameterSet& pset, int idx=-1, int wa
         //                                 TRUE if system filled properly
 
 
-MSVCDLL std::string sys_gradz::ask_read(int argc, char* argv[], int argn);
-MSVCDLL std::string sys_gradz::ask_read(int argc, char* argv[], int argn,
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,
                                                      const std::string& def);
 
         // Input                sysg    : System in z-gradient (this)

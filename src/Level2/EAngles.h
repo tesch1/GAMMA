@@ -68,9 +68,9 @@ class EAngles
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void EAngles::EAerror(int eidx,                        int n=0) const;
-         void EAngles::EAerror(int eidx, const std::string& pn, int n=0) const;
-volatile void EAngles::EAfatal(int eidx=0)                               const;
+         void EAerror(int eidx,                        int n=0) const;
+         void EAerror(int eidx, const std::string& pn, int n=0) const;
+volatile void EAfatal(int eidx=0)                               const;
 
 // ____________________________________________________________________________
 // ii            Class Euler Angles Private Facilitator Functions 
@@ -81,10 +81,10 @@ volatile void EAngles::EAfatal(int eidx=0)                               const;
 
                alpha = gamma = [0,360]       beta = [0,180]		     */
 
-void EAngles::SetAngles(double alpha, double beta, double gamma, bool d=false);
-void EAngles::SetAlpha(double  alpha, bool deg=false);	// Input in radians/deg
-void EAngles::SetBeta(double   beta,  bool deg=false);	// Input in radians/deg
-void EAngles::SetGamma(double  gamma, bool deg=false);	// Input in radians/deg
+void SetAngles(double alpha, double beta, double gamma, bool d=false);
+void SetAlpha(double  alpha, bool deg=false);	// Input in radians/deg
+void SetBeta(double   beta,  bool deg=false);	// Input in radians/deg
+void SetGamma(double  gamma, bool deg=false);	// Input in radians/deg
 
 // ____________________________________________________________________________
 // iii          Class Euler Angles Private Parameter Set Functions
@@ -105,9 +105,9 @@ void EAngles::SetGamma(double  gamma, bool deg=false);	// Input in radians/deg
    strictly enforce the angle ranges of alpha = gamma = [0,360]  and
    beta = [0,180].                                                           */
 
-bool EAngles::SetEAngles(const ParameterSet& pset, int idx=-1, bool warn=true);
-bool EAngles::SetEASet(const   ParameterSet& pset, int idx=-1, bool warn=true);
-bool EAngles::Set3Angles(const ParameterSet& pset, int idx=-1, bool warn=true);
+bool SetEAngles(const ParameterSet& pset, int idx=-1, bool warn=true);
+bool SetEASet(const   ParameterSet& pset, int idx=-1, bool warn=true);
+bool Set3Angles(const ParameterSet& pset, int idx=-1, bool warn=true);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- Public Functions ------------------------------
@@ -131,14 +131,14 @@ bool EAngles::Set3Angles(const ParameterSet& pset, int idx=-1, bool warn=true);
        alpha,beta,gamma       Euler Angles with these 3 angles
                               (Angle ranges are strictly maintained)        */
 
-MSVCDLC EAngles::EAngles();
-MSVCDLC EAngles::EAngles(double alpha, double beta=0, double gamma=0, bool deg=false);
-MSVCDLC EAngles::EAngles(const coord&   EA, bool deg=true);
-MSVCDLC EAngles::EAngles(const EAngles& EA);
-MSVCDLC EAngles::~EAngles();
+MSVCDLC EAngles();
+MSVCDLC EAngles(double alpha, double beta=0, double gamma=0, bool deg=false);
+MSVCDLC EAngles(const coord&   EA, bool deg=true);
+MSVCDLC EAngles(const EAngles& EA);
+MSVCDLC ~EAngles();
 
-MSVCDLL EAngles& EAngles::operator= (const EAngles& EA);
-//EAngles& EAngles::operator= (const coord&   ABG);
+MSVCDLL EAngles& operator= (const EAngles& EA);
+//EAngles& operator= (const coord&   ABG);
 
 // ____________________________________________________________________________
 // B                     Euler Angles ACCESS Functions
@@ -149,13 +149,13 @@ MSVCDLL EAngles& EAngles::operator= (const EAngles& EA);
 ///F_list beta			- Access to Euler angle beta
 ///F_list gamma			- Access to Euler angle gamma
 
-MSVCDLL double EAngles::alpha() const;			// Get alpha (radians)
-MSVCDLL double EAngles::beta( ) const;			// Get beta  (radians)
-MSVCDLL double EAngles::gamma() const;			// Get gamma (radians)
+MSVCDLL double alpha() const;			// Get alpha (radians)
+MSVCDLL double beta( ) const;			// Get beta  (radians)
+MSVCDLL double gamma() const;			// Get gamma (radians)
 
-MSVCDLL void EAngles::alpha(double A);			// Set alpha (radians)
-MSVCDLL void EAngles::beta(double  B);			// Set beta  (radians)
-MSVCDLL void EAngles::gamma(double G);			// Set gamma (radians)
+MSVCDLL void alpha(double A);			// Set alpha (radians)
+MSVCDLL void beta(double  B);			// Set beta  (radians)
+MSVCDLL void gamma(double G);			// Set gamma (radians)
 
 // ____________________________________________________________________________
 // C            Class Euler Angles Composite Rotation Functions
@@ -165,10 +165,10 @@ MSVCDLL void EAngles::gamma(double G);			// Set gamma (radians)
    Euler angles that represents two successive Euler angle rotations.
    Generation of summed rotation angles is done through use of Quaterions.   */
 
-MSVCDLL EAngles EAngles::operator*  (const EAngles& EA) const;
-MSVCDLL void    EAngles::operator*= (const EAngles& EA);
-MSVCDLL void    EAngles::operator&= (const EAngles& EA);
-MSVCDLL EAngles EAngles::composite  (const EAngles& EA) const;
+MSVCDLL EAngles operator*  (const EAngles& EA) const;
+MSVCDLL void    operator*= (const EAngles& EA);
+MSVCDLL void    operator&= (const EAngles& EA);
+MSVCDLL EAngles composite  (const EAngles& EA) const;
 
 // ____________________________________________________________________________
 // D             Class Euler Angles Parameter & Parameter Set Functions
@@ -183,8 +183,8 @@ MSVCDLL EAngles EAngles::composite  (const EAngles& EA) const;
         // Return              par   : A GAMMA parameter of type coordinate
         //                             with the name pname
 
-MSVCDLL SinglePar EAngles::param(const std::string& pn,                      bool deg=true) const;
-MSVCDLL SinglePar EAngles::param(const std::string& pn,const std::string& ps,bool deg=true) const;
+MSVCDLL SinglePar param(const std::string& pn,                      bool deg=true) const;
+MSVCDLL SinglePar param(const std::string& pn,const std::string& ps,bool deg=true) const;
 
 // ----------------------------------------------------------------------------
 /* These will 1.) construct a parameter set containing an Euler angle set.
@@ -193,8 +193,8 @@ MSVCDLL SinglePar EAngles::param(const std::string& pn,const std::string& ps,boo
 
 MSVCDLL               operator ParameterSet( ) const;
 MSVCDLL friend void   operator+= (ParameterSet& pset, const EAngles& EA);
-MSVCDLL void EAngles::PSetAdd(ParameterSet& pset,        int idx=-1, bool deg=true) const;
-MSVCDLL void EAngles::write(const std::string &filename, int idx=-1, bool deg=true) const;
+MSVCDLL void PSetAdd(ParameterSet& pset,        int idx=-1, bool deg=true) const;
+MSVCDLL void write(const std::string &filename, int idx=-1, bool deg=true) const;
 
 // ----------------------------------------------------------------------------
 //           Functions To Make Euler Angles From A Parameter Set
@@ -203,8 +203,8 @@ MSVCDLL void EAngles::write(const std::string &filename, int idx=-1, bool deg=tr
 /* These will 1.) set Euler angles from values in a parameter set.
               2.) set Euler angles from parameters in an ASCII file.         */
 
-MSVCDLL bool EAngles::read(const std::string &filename, int idx=-1, int warn=2);
-MSVCDLL bool EAngles::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 // ____________________________________________________________________________
 // E                    Class Euler Angles I/O Functions
@@ -215,7 +215,7 @@ MSVCDLL bool EAngles::read(const ParameterSet& pset,    int idx=-1, int warn=2);
 ///F_list <<                  - Standard output
 
 
-MSVCDLL std::ostream& EAngles::print(std::ostream& ostr, bool deg=true, bool hdr=true) const; 
+MSVCDLL std::ostream& print(std::ostream& ostr, bool deg=true, bool hdr=true) const; 
 MSVCDLL friend std::ostream& operator <<    (std::ostream& ostr, const EAngles& EA);
 
 	// Input		EA    : Euler angles 
@@ -230,11 +230,11 @@ MSVCDLL friend std::ostream& operator <<    (std::ostream& ostr, const EAngles& 
 /* These allow the user to make STL lists and vectors from Euler Angles. If
    not present some compilers complain about code such as list<EAngles>      */
 
-MSVCDLL static void EAngles::SetCutoff(double co=-1);
-MSVCDLL        bool EAngles::operator== (const EAngles& EA) const;
-MSVCDLL        bool EAngles::operator!= (const EAngles& EA) const;
-MSVCDLL        bool EAngles::operator<  (const EAngles& EA) const;
-MSVCDLL        bool EAngles::operator>  (const EAngles& EA) const;
+MSVCDLL static void SetCutoff(double co=-1);
+MSVCDLL        bool operator== (const EAngles& EA) const;
+MSVCDLL        bool operator!= (const EAngles& EA) const;
+MSVCDLL        bool operator<  (const EAngles& EA) const;
+MSVCDLL        bool operator>  (const EAngles& EA) const;
 
 // ____________________________________________________________________________
 // F                Class Euler Angle Auxiliary Functions
@@ -254,12 +254,12 @@ MSVCDLL        bool EAngles::operator>  (const EAngles& EA) const;
                     flag inv allows for generation of the inverse rotation
                     matrix.                                                  */
 
-MSVCDLL bool    EAngles::equal(const EAngles& EA, double CUTOFF=1.e-10) const;
-MSVCDLL EAngles EAngles::inverse()                                      const;
-MSVCDLL matrix  EAngles::RMx(bool inv=false)                            const;
+MSVCDLL bool    equal(const EAngles& EA, double CUTOFF=1.e-10) const;
+MSVCDLL EAngles inverse()                                      const;
+MSVCDLL matrix  RMx(bool inv=false)                            const;
 
-MSVCDLL matrix EAngles::Rmx()    const;				// DEPRECATED
-MSVCDLL matrix EAngles::invRmx() const;				// DEPRECATED
+MSVCDLL matrix Rmx()    const;				// DEPRECATED
+MSVCDLL matrix invRmx() const;				// DEPRECATED
 
   };
 

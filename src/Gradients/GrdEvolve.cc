@@ -33,10 +33,12 @@
 #include <Gradients/GrdEvolve.h>	// Include the interface
 #include <Gradients/sys_gradz.h>	// Include z-gradient spin systems
 #include <HSLib/HSLibIF.h>		// Include Hilbert space stuff
+#include <HSLib/Evolve.h>
 #include <vector>			// Include libstdc++ STL vectors
 #include <Level2/RelaxBas.h>		// Include phenomenological relaxation
 
 using std::vector;			// Using libstdc++ STL vectors
+using namespace Evolve;
 
 // ____________________________________________________________________________
 // A            Evolve A Single State Into An Array of States

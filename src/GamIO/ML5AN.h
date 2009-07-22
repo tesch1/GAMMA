@@ -56,9 +56,9 @@ class MatLab5AN : MatLab5SE
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLab5AN::MLAN5error(int eidx, int noret=1);
-void MatLab5AN::MLAN5error(int eidx, const std::string& pname, int noret=1);
-volatile void MatLab5AN::MLAN5fatality(int eidx);
+void MLAN5error(int eidx, int noret=1);
+void MLAN5error(int eidx, const std::string& pname, int noret=1);
+volatile void MLAN5fatality(int eidx);
 
 
 public:
@@ -73,15 +73,15 @@ public:
 // ____________________________________________________________________________
  
 
-MatLab5AN::MatLab5AN();
-MatLab5AN::MatLab5AN(const std::string& name);
-virtual MatLab5AN::~MatLab5AN();
+MatLab5AN();
+MatLab5AN(const std::string& name);
+virtual ~MatLab5AN();
 
 // ____________________________________________________________________________
 // B            MATLAB MAT 5 Array Name Sub-Element Access Functions
 // ____________________________________________________________________________
 
-std::string MatLab5AN::Name();
+std::string Name();
  
 // ____________________________________________________________________________
 // C        MATLAB MAT 5 Array Name Sub-Element Binary Output Functions
@@ -110,13 +110,13 @@ std::string MatLab5AN::Name();
                                           tag is written.                    */  
  
    
-int MatLab5AN::write(std::fstream& fp) const;
-int MatLab5AN::write(std::fstream& fp, const std::string& aname) const;
+int write(std::fstream& fp) const;
+int write(std::fstream& fp, const std::string& aname) const;
 
 /* These are the functions which will return the number of bytes that are
    written upon output this sub-element in MATLAB ".mat" binary format, V5   */
 
-int MatLab5AN::Size(const std::string& name) const;
+int Size(const std::string& name) const;
 
 
 
@@ -142,7 +142,7 @@ int MatLab5AN::Size(const std::string& name) const;
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-int MatLab5AN::read(std::fstream& fp, int bigend, int warn=1);
+int read(std::fstream& fp, int bigend, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -150,7 +150,7 @@ int MatLab5AN::read(std::fstream& fp, int bigend, int warn=1);
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab5AN::print(std::ostream& ostr) const;
+void print(std::ostream& ostr) const;
  
         // Input                ML5AN	: MAT version 5 array name (this)
         //                      ostr    : An output stream

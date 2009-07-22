@@ -435,17 +435,17 @@ coord_vec coord_vec::yrotate(double theta, int rad) const
 coord_vec coord_vec::zrotate(double phi, int rad) const
   { return rotate(UnitZ.Rz(phi,rad)); }
 
-coord_vec coord_vec::rotate(const matrix& Rmx) const
+coord_vec coord_vec::rotate(const matrix& aRmx) const
 
 	// Input		cvec : Coordinate vector(this)
-        //                      Rmx  : 3x3 Rotation matrix
+        //                    aRmx  : 3x3 Rotation matrix
         //                      rad  : Flag for angle in degrees or radians
-        // Return               rotcv: The vector multiplied by Rmx
+        // Return               rotcv: The vector multiplied by aRmx
 
   {
   coord_vec rotcv(Npts);
   for(int i=0; i<Npts; i++)			// Rotate all the coords.
-    rotcv.Pts[i] = Rmx * Pts[i];
+    rotcv.Pts[i] = aRmx * Pts[i];
   return rotcv;					// Return rotcv
   }
 

@@ -37,6 +37,7 @@
 #include <Basics/StringCut.h>		// Include GAMMA Gdec function
 #include <Basics/Gconstants.h>		// Include definition of RAD2DEG
 #include <Basics/Gutils.h>		// Include GAMMA errors
+#include <stdlib.h>
 #include <iostream>			// Include libstdc++ file streams
 #include <fstream>
 #include <string>			// Include libstdc++ ANSI strings

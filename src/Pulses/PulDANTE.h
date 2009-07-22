@@ -98,7 +98,7 @@ void DANTEerror(int eidx, const std::string& pname, int noret=0) const;
 // ____________________________________________________________________________
 
 
-void DANTE::SetSteps(const ParameterSet& pset, int idx=-1);
+void SetSteps(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -108,7 +108,7 @@ void DANTE::SetSteps(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
  
-void DANTE::SetPhase(const ParameterSet& pset, int idx=-1);
+void SetPhase(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -118,7 +118,7 @@ void DANTE::SetPhase(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
 
-void DANTE::SetChannel(const ParameterSet& pset, int idx=-1);
+void SetChannel(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -128,7 +128,7 @@ void DANTE::SetChannel(const ParameterSet& pset, int idx=-1);
         //                                with index idx
  
  
-int DANTE::SetAngle(const ParameterSet& pset, int idx=-1);
+int SetAngle(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -138,7 +138,7 @@ int DANTE::SetAngle(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
 
-int DANTE::SetPulLen(const ParameterSet& pset, int idx=-1);
+int SetPulLen(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -148,7 +148,7 @@ int DANTE::SetPulLen(const ParameterSet& pset, int idx=-1);
         //                                with index idx
  
  
-int DANTE::SetGamB1(const ParameterSet& pset, int idx=-1);
+int SetGamB1(const ParameterSet& pset, int idx=-1);
  
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -158,7 +158,7 @@ int DANTE::SetGamB1(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
 
-int DANTE::SetEvLen(const ParameterSet& pset, int idx=-1);
+int SetEvLen(const ParameterSet& pset, int idx=-1);
  
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -168,7 +168,7 @@ int DANTE::SetEvLen(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
 
-int DANTE::SetFreq(const ParameterSet& pset, int idx=-1);
+int SetFreq(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -225,15 +225,15 @@ MSVCDLL void operator = (const DANTE& DANTE1);
 // B                     CLASS DANTE ACCESS FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL int        DANTE::steps()    const;
-MSVCDLL std::string     DANTE::channel()  const;
-MSVCDLL double     DANTE::dlength()  const;
-MSVCDLL double     DANTE::strength() const;
-MSVCDLL double     DANTE::plength()  const;
-MSVCDLL double     DANTE::angle()    const;
-MSVCDLL double     DANTE::phase()    const;
-MSVCDLL double     DANTE::offset()   const;
-MSVCDLL double     DANTE::length()   const;
+MSVCDLL int        steps()    const;
+MSVCDLL std::string     channel()  const;
+MSVCDLL double     dlength()  const;
+MSVCDLL double     strength() const;
+MSVCDLL double     plength()  const;
+MSVCDLL double     angle()    const;
+MSVCDLL double     phase()    const;
+MSVCDLL double     offset()   const;
+MSVCDLL double     length()   const;
  
         // Intput       DANTE1  : DANTE parameters
         // Output       steps   : DANTE steps
@@ -252,7 +252,7 @@ MSVCDLL double     DANTE::length()   const;
 
 
 /*
-HSprop DANTE::GetU(const spin_system& sys, gen_op& H);
+HSprop GetU(const spin_system& sys, gen_op& H);
 
         // Input             sys   : Spin system
         //                   H     : Static Hamlitonian without the field
@@ -273,7 +273,7 @@ HSprop DANTE::GetU(const spin_system& sys, gen_op& H);
 
  
 MSVCDLL friend PulWaveform WF_DANTE(const DANTE& D);
-MSVCDLL PulWaveform DANTE::WF( ) const;
+MSVCDLL PulWaveform WF( ) const;
  
         // Input        D       : DANTE specifications
         // Output       WF      : A pulse waveform for DANTE pulse-delay
@@ -285,7 +285,7 @@ MSVCDLL PulWaveform DANTE::WF( ) const;
 
 
 MSVCDLL friend PulComposite CP_DANTE(const spin_system& sys, const DANTE& D);
-MSVCDLL PulComposite DANTE::CP(const spin_system& sys) const;
+MSVCDLL PulComposite CP(const spin_system& sys) const;
 
         // Input        sys     : Spin system
         //              D       : DANTE specifications
@@ -305,7 +305,7 @@ MSVCDLL friend PulTrain PT_DANTE(const spin_system& sys, const DANTE& D);
  
 
 
-MSVCDLL PulTrain DANTE::PT(const spin_system& sys) const;
+MSVCDLL PulTrain PT(const spin_system& sys) const;
 
         // Input        sys     : Spin system
         //              D       : DANTE specifications
@@ -317,7 +317,7 @@ MSVCDLL PulTrain DANTE::PT(const spin_system& sys) const;
 // ____________________________________________________________________________
 
  
-MSVCDLL void DANTE::read(const std::string &filename, int idx=-1);
+MSVCDLL void read(const std::string &filename, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      idx     : DANTE index
@@ -326,7 +326,7 @@ MSVCDLL void DANTE::read(const std::string &filename, int idx=-1);
         //                                with index idx
 
     
-MSVCDLL void DANTE::read(const ParameterSet& pset, int idx=-1);
+MSVCDLL void read(const ParameterSet& pset, int idx=-1);
 
         // Intput               DT      : DANTE parameters
         //                      pset    : Parameter set
@@ -342,7 +342,7 @@ MSVCDLL void DANTE::read(const ParameterSet& pset, int idx=-1);
 //       the angle is specified the length will be set to zero (ideal pulse)
  
  
-MSVCDLL void DANTE::ask_read(int argc, char* argv[], int argn);
+MSVCDLL void ask_read(int argc, char* argv[], int argn);
  
         // Intput               DT      : DANTE parameters
         //                      argc    : Number of arguments
@@ -364,7 +364,7 @@ MSVCDLL void DANTE::ask_read(int argc, char* argv[], int argn);
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& DANTE::printBase(std::ostream &ostr) const;
+MSVCDLL std::ostream& printBase(std::ostream &ostr) const;
  
         // Intput               DT      : DANTE parameters
         //                      ostr    : Output stream
@@ -372,7 +372,7 @@ MSVCDLL std::ostream& DANTE::printBase(std::ostream &ostr) const;
         //                                to the output stream
 
 
-MSVCDLL std::ostream& DANTE::printInfo(std::ostream &ostr) const;
+MSVCDLL std::ostream& printInfo(std::ostream &ostr) const;
 
         // Intput               DT      : DANTE parameters
         //                      ostr    : Output stream
@@ -381,7 +381,7 @@ MSVCDLL std::ostream& DANTE::printInfo(std::ostream &ostr) const;
  
 
                                                                                 
-MSVCDLL std::ostream& DANTE::print(std::ostream &ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream &ostr, int full=0) const;
 
         // Intput               DT      : DANTE parameters
         //                      ostr    : Output stream

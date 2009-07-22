@@ -86,22 +86,22 @@ class BlochSys
         //                      nr	: Flag for linefeed (0=linefeed)
         //                      pn	: string in message
      
-         void BlochSys::BSerror(int ei,                        int nr=0) const;
-         void BlochSys::BSerror(int ei, const std::string& pn, int nr=0) const;
-volatile void BlochSys::BSfatal(int ei) const;
-volatile void BlochSys::BSfatal(int ei, const std::string& pn) const;
+         void BSerror(int ei,                        int nr=0) const;
+         void BSerror(int ei, const std::string& pn, int nr=0) const;
+volatile void BSfatal(int ei) const;
+volatile void BSfatal(int ei, const std::string& pn) const;
 
 // ____________________________________________________________________________
 // ii                   Bloch System Checking Functions
 // ____________________________________________________________________________
 
-bool BlochSys::CheckR1s(const    std::vector<double>& R1s, bool warn=true) const;
-bool BlochSys::CheckR2s(const    std::vector<double>& R2s, bool warn=true) const;
-bool BlochSys::CheckIsos(const   std::vector<Isotope>& Is, bool warn=true) const;
-bool BlochSys::CheckKs(const     std::vector<double>&  Ks, bool warn=true) const;
-bool BlochSys::CheckSpins(int    ns1, int ns2,        bool warn=true) const;
-bool BlochSys::CheckNorms(const  std::vector<double>&  Ns, bool warn=true) const;
-bool BlochSys::CheckCoords(const coord_vec&       Ms, bool warn=true) const;
+bool CheckR1s(const    std::vector<double>& R1s, bool warn=true) const;
+bool CheckR2s(const    std::vector<double>& R2s, bool warn=true) const;
+bool CheckIsos(const   std::vector<Isotope>& Is, bool warn=true) const;
+bool CheckKs(const     std::vector<double>&  Ks, bool warn=true) const;
+bool CheckSpins(int    ns1, int ns2,        bool warn=true) const;
+bool CheckNorms(const  std::vector<double>&  Ns, bool warn=true) const;
+bool CheckCoords(const coord_vec&       Ms, bool warn=true) const;
 
 // ____________________________________________________________________________
 // iii                     Bloch System Setup Functions
@@ -110,36 +110,36 @@ bool BlochSys::CheckCoords(const coord_vec&       Ms, bool warn=true) const;
 /* These are protected functions because they allow specific aspects of the
    spin system to be set up without worrying about system consistency!       */
 
-bool BlochSys::SetSystem(const ParameterSet& pset, int idx=-1, bool warn=true);
+bool SetSystem(const ParameterSet& pset, int idx=-1, bool warn=true);
 
-bool BlochSys::GetNSpins(const ParameterSet& pset,int& ns,bool wn=true) const;
-bool BlochSys::GetNVects(const ParameterSet& pset,int& nm,bool wn=true) const;
-bool BlochSys::SetVects(const  ParameterSet& pset,int   N,bool wn=true);
+bool GetNSpins(const ParameterSet& pset,int& ns,bool wn=true) const;
+bool GetNVects(const ParameterSet& pset,int& nm,bool wn=true) const;
+bool SetVects(const  ParameterSet& pset,int   N,bool wn=true);
 
 // ----------------------------------------------------------------------------
 //         These Read All Single Magnetization Vector Parameters
 // ----------------------------------------------------------------------------
 
 
-bool BlochSys::GetVect(const ParameterSet& pset, int i, double& v, Isotope& I,
+bool GetVect(const ParameterSet& pset, int i, double& v, Isotope& I,
                         double& R1, double& R2, int& Sp, bool warn=true) const;
 
-bool BlochSys::GetW(const   ParameterSet& pset, int i, 
+bool GetW(const   ParameterSet& pset, int i, 
                                               double& v, bool warn=true) const;
-bool BlochSys::GetIso(const ParameterSet& pset, int i,
+bool GetIso(const ParameterSet& pset, int i,
                                              Isotope& I, bool warn=true) const;
-bool BlochSys::GetR1(const  ParameterSet& pset, int i, 
+bool GetR1(const  ParameterSet& pset, int i, 
                                              double& R1, bool warn=true) const;
-bool BlochSys::GetR2(const  ParameterSet& pset, int i, 
+bool GetR2(const  ParameterSet& pset, int i, 
                                              double& R2, bool warn=true) const;
-bool BlochSys::GetSp(const  ParameterSet& pset, int i,
+bool GetSp(const  ParameterSet& pset, int i,
                                                 int& Sp, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
 //         These Read All Magnetization Vector Pair Parameters
 // ----------------------------------------------------------------------------
 
-bool BlochSys::SetExchange(const ParameterSet& pset, int nm, bool warn=true);
+bool SetExchange(const ParameterSet& pset, int nm, bool warn=true);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -160,30 +160,30 @@ public:
 //                          Simple Constructors
 // ----------------------------------------------------------------------------
 
-MSVCDLC BlochSys::BlochSys(int spins=0);
-MSVCDLC BlochSys::BlochSys(const BlochSys& sys);
+MSVCDLC BlochSys(int spins=0);
+MSVCDLC BlochSys(const BlochSys& sys);
 
 // ----------------------------------------------------------------------------
 //                   Constructors Using Single Vector Arguments
 // ----------------------------------------------------------------------------
 
-MSVCDLC BlochSys::BlochSys(double w, double R1, double R2);
+MSVCDLC BlochSys(double w, double R1, double R2);
 
 // ----------------------------------------------------------------------------
 //                  Constructors Using Multiple Vector Arguments
 // ----------------------------------------------------------------------------
 
-MSVCDLC BlochSys::BlochSys(const std::vector<double>& SH, 
+MSVCDLC BlochSys(const std::vector<double>& SH, 
                const std::vector<double>& R1s, const std::vector<double>& R2s);
 
-MSVCDLC BlochSys::BlochSys(const std::vector<double>& SH, const std::vector<Isotope>& Is,
+MSVCDLC BlochSys(const std::vector<double>& SH, const std::vector<Isotope>& Is,
                const std::vector<double>& R1s, const std::vector<double>& R2s);
 
-MSVCDLC BlochSys::BlochSys(const std::vector<double>& SH, 
+MSVCDLC BlochSys(const std::vector<double>& SH, 
                const std::vector<double>& R1s, const std::vector<double>& R2s,
                                                 const std::vector<double>& Ks);
 
-MSVCDLC BlochSys::BlochSys(const std::vector<double>& SH, const std::vector<Isotope>& Is,
+MSVCDLC BlochSys(const std::vector<double>& SH, const std::vector<Isotope>& Is,
                const std::vector<double>& R1s, const std::vector<double>& R2s,
                                                 const std::vector<double>& Ks);
 
@@ -191,22 +191,22 @@ MSVCDLC BlochSys::BlochSys(const std::vector<double>& SH, const std::vector<Isot
 //                     Constructors Using Spin Systems
 // ----------------------------------------------------------------------------
 
-MSVCDLC BlochSys::BlochSys(const spin_system& sys, const RBasic& Rs);
-MSVCDLC BlochSys::BlochSys(const spin_system& sys, const matrix& Ks);
-MSVCDLC BlochSys::BlochSys(const spin_system& sys, const RBasic& Rs, const matrix& Ks);
+MSVCDLC BlochSys(const spin_system& sys, const RBasic& Rs);
+MSVCDLC BlochSys(const spin_system& sys, const matrix& Ks);
+MSVCDLC BlochSys(const spin_system& sys, const RBasic& Rs, const matrix& Ks);
 
 // ----------------------------------------------------------------------------
 //                     Constructors Using Other Objects
 // ----------------------------------------------------------------------------
 
-MSVCDLC BlochSys::BlochSys(const TTable1D& TT, const std::string& Iso=DEFISO);
+MSVCDLC BlochSys(const TTable1D& TT, const std::string& Iso=DEFISO);
 
 // ----------------------------------------------------------------------------
 //                       Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-MSVCDLC BlochSys::~BlochSys();
-MSVCDLL BlochSys& BlochSys::operator= (const BlochSys& sys);
+MSVCDLC ~BlochSys();
+MSVCDLL BlochSys& operator= (const BlochSys& sys);
 
 // ____________________________________________________________________________
 // B                 Magnetization Vector Offset Access
@@ -216,32 +216,32 @@ MSVCDLL BlochSys& BlochSys::operator= (const BlochSys& sys);
 // C                Magnetization Vector Isotope Access
 // ____________________________________________________________________________
 
-MSVCDLL int BlochSys::NIso()         const;
-MSVCDLL int BlochSys::IsoMaxLength() const;
+MSVCDLL int NIso()         const;
+MSVCDLL int IsoMaxLength() const;
 
-MSVCDLL int BlochSys::NSpins()       const;
+MSVCDLL int NSpins()       const;
 
 // ____________________________________________________________________________
 // D                Magnetization Vector Exchange Rate Access
 // ____________________________________________________________________________
 
-MSVCDLL double BlochSys::R1(int i) const;
-MSVCDLL double BlochSys::T1(int i) const;
-MSVCDLL double BlochSys::R2(int i) const;
-MSVCDLL double BlochSys::T2(int i) const;
-MSVCDLL double BlochSys::LW(int i) const;
+MSVCDLL double R1(int i) const;
+MSVCDLL double T1(int i) const;
+MSVCDLL double R2(int i) const;
+MSVCDLL double T2(int i) const;
+MSVCDLL double LW(int i) const;
 
-MSVCDLL double BlochSys::MaxExchange() const;
+MSVCDLL double MaxExchange() const;
 
 // ____________________________________________________________________________
 // F                Magnetization Vector Component Access
 // ____________________________________________________________________________
 
-MSVCDLL std::vector<double> BlochSys::Norms() const;
-MSVCDLL void                BlochSys::Norms(const std::vector<double>& Ns);
+MSVCDLL std::vector<double> Norms() const;
+MSVCDLL void                Norms(const std::vector<double>& Ns);
 
-MSVCDLL double BlochSys::Norm(int i) const;
-MSVCDLL void   BlochSys::Norm(double nv, int i);
+MSVCDLL double Norm(int i) const;
+MSVCDLL void   Norm(double nv, int i);
 
 // ____________________________________________________________________________
 // G                         Bloch Equation Arrays
@@ -265,52 +265,52 @@ MSVCDLL void   BlochSys::Norm(double nv, int i);
    gB1 = gamma*B1. The field offset is wrf and the field phase is phi. The
    vector offset is w0 and the relaxation times are R1 = 1/T1, R2=1/T2.      */
 
-MSVCDLL matrix BlochSys::H()                                       const;
-MSVCDLL matrix BlochSys::H(double gamB1, double w=0, double phi=0) const;
+MSVCDLL matrix H()                                       const;
+MSVCDLL matrix H(double gamB1, double w=0, double phi=0) const;
 
-MSVCDLL matrix BlochSys::B()                                       const;
-MSVCDLL matrix BlochSys::B(double gamB1, double w=0, double phi=0) const;
-MSVCDLL matrix BlochSys::R()                                       const;
-MSVCDLL matrix BlochSys::K()                                       const;
+MSVCDLL matrix B()                                       const;
+MSVCDLL matrix B(double gamB1, double w=0, double phi=0) const;
+MSVCDLL matrix R()                                       const;
+MSVCDLL matrix K()                                       const;
 
 // ____________________________________________________________________________
 // H                     Bloch Equation Column Vectors
 // ____________________________________________________________________________
 
-MSVCDLL       MagVec  BlochSys::Meq() const;
-MSVCDLL const MagVec& BlochSys::Mo() const;
-MSVCDLL       MagVec  BlochSys::Mx() const;
-MSVCDLL       MagVec  BlochSys::My() const;
-MSVCDLL       MagVec  BlochSys::Mz() const;
-MSVCDLL       MagVec  BlochSys::Mss(const matrix& L, const matrix& R) const;
-MSVCDLL       MagVec  BlochSys::Mss(const matrix& L, const matrix& R,
+MSVCDLL       MagVec  Meq() const;
+MSVCDLL const MagVec& Mo() const;
+MSVCDLL       MagVec  Mx() const;
+MSVCDLL       MagVec  My() const;
+MSVCDLL       MagVec  Mz() const;
+MSVCDLL       MagVec  Mss(const matrix& L, const matrix& R) const;
+MSVCDLL       MagVec  Mss(const matrix& L, const matrix& R,
                                                   const col_vector& Meq) const;
 
 // ____________________________________________________________________________
 // I                       Bloch Equation Row Vectors
 // ____________________________________________________________________________
 
-MSVCDLL row_vector BlochSys::DetectMu(                 int u) const;
-MSVCDLL row_vector BlochSys::DetectMu(int k,           int u) const;
-MSVCDLL row_vector BlochSys::DetectMu(const std::string& I, int u) const;
+MSVCDLL row_vector DetectMu(                 int u) const;
+MSVCDLL row_vector DetectMu(int k,           int u) const;
+MSVCDLL row_vector DetectMu(const std::string& I, int u) const;
 
-MSVCDLL row_vector BlochSys::DetectMx() const;
-MSVCDLL row_vector BlochSys::DetectMy() const;
-MSVCDLL row_vector BlochSys::DetectMz() const;
+MSVCDLL row_vector DetectMx() const;
+MSVCDLL row_vector DetectMy() const;
+MSVCDLL row_vector DetectMz() const;
 
-MSVCDLL row_vector BlochSys::DetectMx(int i) const;
-MSVCDLL row_vector BlochSys::DetectMy(int i) const;
-MSVCDLL row_vector BlochSys::DetectMz(int i) const;
+MSVCDLL row_vector DetectMx(int i) const;
+MSVCDLL row_vector DetectMy(int i) const;
+MSVCDLL row_vector DetectMz(int i) const;
 
-MSVCDLL row_vector BlochSys::DetectMx(const std::string& I) const;
-MSVCDLL row_vector BlochSys::DetectMy(const std::string& I) const;
-MSVCDLL row_vector BlochSys::DetectMz(const std::string& I) const;
+MSVCDLL row_vector DetectMx(const std::string& I) const;
+MSVCDLL row_vector DetectMy(const std::string& I) const;
+MSVCDLL row_vector DetectMz(const std::string& I) const;
 
 // ____________________________________________________________________________
 // J                    Bloch System Auxiliary Functions
 // ____________________________________________________________________________
 
-MSVCDLL int BlochSys::size() const;
+MSVCDLL int size() const;
 
 // ____________________________________________________________________________
 // K                  Bloch System Parameter Set Functions
@@ -360,11 +360,11 @@ virtual int write(std::ofstream& ofstr, int idx=-1, int warn=2) const;
 	// Note			 	: The spin system is modifed (filled)
 
 
-MSVCDLL bool BlochSys::read(const std::string& fn,    int idx=-1, int warn=2);
-MSVCDLL bool BlochSys::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string& fn,    int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset, int idx=-1, int warn=2);
 
-MSVCDLL std::string BlochSys::ask_read(int argc, char* argv[], int argn);
-MSVCDLL std::string BlochSys::ask_read(int argc, char* argv[], int argn,
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,
                                                        const std::string& def); 
 
 // ____________________________________________________________________________

@@ -45,6 +45,7 @@
 #include <Basics/Isotope.h>		// Include GAMMA spin isotopes
 #include <GamIO/BinIOBase.h>		// Include binary IO functions
 #include <string>			// Include libstdc++ strings
+#include <stdlib.h>
 #ifndef _MSC_VER                        // If not using MSVC++ then we
  #include <sys/time.h>			// Include time and date access
  #include <unistd.h>			// Include POSIX getcwd function

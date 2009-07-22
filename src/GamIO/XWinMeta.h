@@ -161,14 +161,14 @@ volatile void XWinMetafatality(int eidx, const std::string& pname) const;
 // ii                    XWinNMR Meta File Setup Functions
 // ____________________________________________________________________________
 
-void XWinMeta::SetBase(int old);
-void XWinMeta::SetAxis(int axis, int old);
-void XWinMeta::SetLine(int axis, int old);
-void XWinMeta::SetPic(int axis,  int old);
-void XWinMeta::SetSpec(int axis, int old);
-void XWinMeta::SetText(int axis, int old);
-void XWinMeta::SetPeak(int pk,   int old);
-void XWinMeta::SetImag(int pk,   int old);
+void SetBase(int old);
+void SetAxis(int axis, int old);
+void SetLine(int axis, int old);
+void SetPic(int axis,  int old);
+void SetSpec(int axis, int old);
+void SetText(int axis, int old);
+void SetPeak(int pk,   int old);
+void SetImag(int pk,   int old);
 
 public:
 // ____________________________________________________________________________ 
@@ -179,9 +179,9 @@ public:
    parameter files.  This doesn't do anything in particular, it is the write
    functions that perform the work.                                          */
 
-XWinMeta::XWinMeta();
-XWinMeta::XWinMeta(const std::string& name);
-virtual XWinMeta::~XWinMeta();                                                             
+XWinMeta();
+XWinMeta(const std::string& name);
+virtual ~XWinMeta();                                                             
 
 // ____________________________________________________________________________
 // B                  XWinMeta Parameter Access Functions
@@ -190,7 +190,7 @@ virtual XWinMeta::~XWinMeta();
 /* These functions allow users to set any more important parameters that 
    these files contain.                                                      */
 
-void XWinMeta::OldFlag(int of);
+void OldFlag(int of);
  
 //             WE DONT CARE ABOUT ANY OF THESE (at least not yet)
 
@@ -214,10 +214,10 @@ void XWinMeta::OldFlag(int of);
      getPar            Returns parameter found in the parameter set herein
                        This function is inherited from base class XWinPSet. */
 
-//virtual int XWinMeta::read(const string& filein, int warn=1);
-//virtual int XWinMeta::read(int warn=1);
-//        int XWinMeta::parsePSet(int warn=1);
-//int XWinMeta::getPar(const string& n,string& v,int i=-1, int w=0) const;
+//virtual int read(const string& filein, int warn=1);
+//virtual int read(int warn=1);
+//        int parsePSet(int warn=1);
+//int getPar(const string& n,string& v,int i=-1, int w=0) const;
 
 //        WE DONT WANT TO INPUT ANY OF THIS STUFF (at least not yet)
 
@@ -228,21 +228,21 @@ void XWinMeta::OldFlag(int of);
 /* These function allow for output of NMR parameters directly into a Bruker
    XWinNMR ASCII parameter file (meta).                                      */
  
-int XWinMeta::write(const std::string& name, int warn=2, int of=-1);
-int XWinMeta::write(int warn=2);
-void XWinMeta::writeBase(std::ofstream& ofstr) const;
-void XWinMeta::writeInit(std::ofstream& ofstr,  int ef=1) const;
-void XWinMeta::writeLutab(std::ofstream& ofstr, int ef=1) const;
-void XWinMeta::writeLine(std::ofstream& ofstr,  int ef=1) const;
-void XWinMeta::writeAxis(std::ofstream& ofstr,  int ef=1) const;
-void XWinMeta::writePic(std::ofstream& ofstr,   int ef=1) const;
-void XWinMeta::writeSpec(std::ofstream& ofstr,  int ef=1) const;
-void XWinMeta::writeText(std::ofstream& ofstr,  int ef=1) const;
-void XWinMeta::writePeak(std::ofstream& ofstr,  int ef=1) const;
-void XWinMeta::writeImag(std::ofstream& ofstr,  int ef=1) const;
-void XWinMeta::writeFirst(std::ofstream& ofstr)           const;
-void XWinMeta::writeDraw(std::ofstream& ofstr)            const;
-void XWinMeta::writeXYZ(std::ofstream& ofstr)             const;
+int write(const std::string& name, int warn=2, int of=-1);
+int write(int warn=2);
+void writeBase(std::ofstream& ofstr) const;
+void writeInit(std::ofstream& ofstr,  int ef=1) const;
+void writeLutab(std::ofstream& ofstr, int ef=1) const;
+void writeLine(std::ofstream& ofstr,  int ef=1) const;
+void writeAxis(std::ofstream& ofstr,  int ef=1) const;
+void writePic(std::ofstream& ofstr,   int ef=1) const;
+void writeSpec(std::ofstream& ofstr,  int ef=1) const;
+void writeText(std::ofstream& ofstr,  int ef=1) const;
+void writePeak(std::ofstream& ofstr,  int ef=1) const;
+void writeImag(std::ofstream& ofstr,  int ef=1) const;
+void writeFirst(std::ofstream& ofstr)           const;
+void writeDraw(std::ofstream& ofstr)            const;
+void writeXYZ(std::ofstream& ofstr)             const;
 
 
 
@@ -254,8 +254,8 @@ void XWinMeta::writeXYZ(std::ofstream& ofstr)             const;
    They don't have anything to do with output while running XWinNMR, rather
    users can just glance at meta parameters or store then in a small file.   */
 
-//ostream& XWinMeta::printPset(ostream& O) const;              INHERITED
-//virtual ostream& XWinMeta::print(ostream& ostr, int full=0, int hdr=1) const;
+//ostream& printPset(ostream& O) const;              INHERITED
+//virtual ostream& print(ostream& ostr, int full=0, int hdr=1) const;
 //friend ostream& operator<< (ostream& O, const XWinMeta& P);
 };
 

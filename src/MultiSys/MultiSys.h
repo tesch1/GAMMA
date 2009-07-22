@@ -102,8 +102,8 @@ volatile void MSYSfatal(int eidx, const std::string& pname)              const;
    of spin systems within the multiple spin system. This is usually critical
    and warning should be on if it is called.                                 */
 
-bool multi_sys::getNComps(const ParameterSet& pset,int& ncmps,bool warn=true);
-bool multi_sys::getMSName(const ParameterSet& pset, 
+bool getNComps(const ParameterSet& pset,int& ncmps,bool warn=true);
+bool getMSName(const ParameterSet& pset, 
                                             std::string& name,bool warn=true);
 
 // ----------------------------------------------------------------------------
@@ -119,54 +119,54 @@ bool multi_sys::getMSName(const ParameterSet& pset,
    are immediately read into GAMMA parameter sets, so a file is equivalent
    to a parameter set.                                                        */
 
-bool multi_sys::getFName(const  ParameterSet& pset,
+bool getFName(const  ParameterSet& pset,
                                    std::string& name, int idx, bool warn=true);
 
-bool multi_sys::getFNames(const ParameterSet& pset,
+bool getFNames(const ParameterSet& pset,
                               std::vector<std::string>& names, bool warn=true);
 
-bool multi_sys::getComp(const ParameterSet& pset, int idx,
+bool getComp(const ParameterSet& pset, int idx,
                                              sys_dynamic& cmp, bool warn=true);
 
-bool multi_sys::getComps(const ParameterSet& pset, int ncmps,
+bool getComps(const ParameterSet& pset, int ncmps,
                                std::vector<sys_dynamic>& cmps, bool warn=true);
 
 // ----------------------------------------------------------------------------
 //           Reading Of Component Populations And Exchange Processes
 // ----------------------------------------------------------------------------
 
-bool multi_sys::getPop(const ParameterSet& pset, int idx,
+bool getPop(const ParameterSet& pset, int idx,
                                             double& pop, bool warn=true) const;
 
-bool multi_sys::getPops(const ParameterSet& pset, int ncmps,
+bool getPops(const ParameterSet& pset, int ncmps,
                               std::vector<double>& pops, bool warn=true) const;
 
-int  multi_sys::getNex(const ParameterSet& pset) const;
+int  getNex(const ParameterSet& pset) const;
 
-bool multi_sys::getProcesses(const ParameterSet& pset, 
+bool getProcesses(const ParameterSet& pset, 
                             std::vector<ExchProc>& procs, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
 //                    Reading Of Enire Multipule Spin System
 // ----------------------------------------------------------------------------
 
-bool multi_sys::getMsys(const ParameterSet& pset,
+bool getMsys(const ParameterSet& pset,
             std::string& name, std::vector<sys_dynamic>& cmps,
        std::vector<double>& pops, std::vector<ExchProc>& procs, bool warn=true);
 
-bool multi_sys::setMsys(const ParameterSet& pset,              bool warn=true);
+bool setMsys(const ParameterSet& pset,              bool warn=true);
 
 
 // ____________________________________________________________________________
 // iii                  MULTISYSTEM CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
-bool multi_sys::CheckNComps(int                nc, bool warn=true) const;
-bool multi_sys::CheckRange(unsigned             n, bool warn=true) const;
-bool multi_sys::CheckProc(int                  ip, bool warn=true) const;
-bool multi_sys::CheckProcs(                        bool warn=true) const;
-bool multi_sys::CheckProc(const ExchProc& XP,      bool warn=true) const;
-bool multi_sys::CheckField(const spin_system& sys, bool warn=true) const;
+bool CheckNComps(int                nc, bool warn=true) const;
+bool CheckRange(unsigned             n, bool warn=true) const;
+bool CheckProc(int                  ip, bool warn=true) const;
+bool CheckProcs(                        bool warn=true) const;
+bool CheckProc(const ExchProc& XP,      bool warn=true) const;
+bool CheckField(const spin_system& sys, bool warn=true) const;
  
 // ---------------------------------------------------------------------------- 
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------ 
@@ -184,16 +184,16 @@ public:
 //                           Simple Constructors
 // ---------------------------------------------------------------------------- 
 
-MSVCDLC multi_sys::multi_sys();
-//multi_sys::multi_sys(int Ncomp);
-MSVCDLC multi_sys::multi_sys(const multi_sys& msys);
+MSVCDLC multi_sys();
+//multi_sys(int Ncomp);
+MSVCDLC multi_sys(const multi_sys& msys);
 
 
 // ---------------------------------------------------------------------------- 
 //        Construction From Systems, Populations, And Exchange Rates
 // ---------------------------------------------------------------------------- 
 
-MSVCDLC multi_sys::multi_sys(double pop1, sys_dynamic &sys1, 
+MSVCDLC multi_sys(double pop1, sys_dynamic &sys1, 
                                double pop2, sys_dynamic &sys2, double krate=0);
  
         // Input                pop1  : Population system 1
@@ -208,9 +208,9 @@ MSVCDLC multi_sys::multi_sys(double pop1, sys_dynamic &sys1,
 //                       Destruction, Assignment
 // ---------------------------------------------------------------------------- 
 
-MSVCDLL multi_sys& multi_sys::operator= (const multi_sys& msys);
-//MSVCDLL void multi_sys::operator= (const multi_sys &msys);
-MSVCDLC      multi_sys::~multi_sys();
+MSVCDLL multi_sys& operator= (const multi_sys& msys);
+//MSVCDLL void operator= (const multi_sys &msys);
+MSVCDLC      ~multi_sys();
 
 // ____________________________________________________________________________
 // B                       MULTI-SPIN SYSTEM NAME
@@ -220,8 +220,8 @@ MSVCDLC      multi_sys::~multi_sys();
         // Output               string  : Multi-spin system name
         ///F_list name                  - Set or retrieve spin system name.
 
-MSVCDLL void               multi_sys::name(const std::string& sysname);
-MSVCDLL const std::string& multi_sys::name() const;
+MSVCDLL void               name(const std::string& sysname);
+MSVCDLL const std::string& name() const;
 
 // ____________________________________________________________________________
 // C                     MULTI-SPIN POPULATION ACCESS
@@ -233,33 +233,33 @@ MSVCDLL const std::string& multi_sys::name() const;
         // Output               none  : Popullation of component i set
 	//                   or double: Component i population returned
 
-MSVCDLL void   multi_sys::pop(int icomp, double npop);
-MSVCDLL double multi_sys::pop(int icomp) const;
-MSVCDLL double multi_sys::popmin() const;
-MSVCDLL double multi_sys::popmax() const;
+MSVCDLL void   pop(int icomp, double npop);
+MSVCDLL double pop(int icomp) const;
+MSVCDLL double popmin() const;
+MSVCDLL double popmax() const;
   
 // ____________________________________________________________________________
 // D                       MULTI-SPIN COMPONENT ACCESS
 // ____________________________________________________________________________
  
-MSVCDLL int                multi_sys::NComps() const;
-MSVCDLL void               multi_sys::Comp(int icomp, const sys_dynamic& sys);
-MSVCDLL const sys_dynamic& multi_sys::Comp(int icomp) const;
-MSVCDLL void               multi_sys::AddComp(const sys_dynamic& sys, double pop=0);
+MSVCDLL int                NComps() const;
+MSVCDLL void               Comp(int icomp, const sys_dynamic& sys);
+MSVCDLL const sys_dynamic& Comp(int icomp) const;
+MSVCDLL void               AddComp(const sys_dynamic& sys, double pop=0);
 
-MSVCDLL void multi_sys::CheckComp(unsigned n) const;
+MSVCDLL void CheckComp(unsigned n) const;
 
 // ____________________________________________________________________________
 // E                    MULTI-SPIN EXCHANGE PROCESS ACCESS
 // ____________________________________________________________________________
 
-MSVCDLL       int       multi_sys::NExProcs() const;
-MSVCDLL const ExchProc& multi_sys::ExProc(int iex) const;
-MSVCDLL       void      multi_sys::ExProc(const ExchProc& pr, int iex);
-MSVCDLL       double    multi_sys::Kex(int iex) const;
-MSVCDLL       void      multi_sys::Kex(double K, int iex);
-MSVCDLL       int       multi_sys::NCompsLHS(int iex) const;
-MSVCDLL       int       multi_sys::NCompsRHS(int iex) const;
+MSVCDLL       int       NExProcs() const;
+MSVCDLL const ExchProc& ExProc(int iex) const;
+MSVCDLL       void      ExProc(const ExchProc& pr, int iex);
+MSVCDLL       double    Kex(int iex) const;
+MSVCDLL       void      Kex(double K, int iex);
+MSVCDLL       int       NCompsLHS(int iex) const;
+MSVCDLL       int       NCompsRHS(int iex) const;
 
 // ____________________________________________________________________________
 // F            GLOBAL & INDIVIDUAL COMPONENT SPIN SYSTEM FUNCTIONS
@@ -287,15 +287,15 @@ MSVCDLL       int       multi_sys::NCompsRHS(int iex) const;
 //                      Homonuclear Versus. Heteronuclear
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool multi_sys::homonuclear(int   cmp=-1) const;
-MSVCDLL bool multi_sys::heteronuclear(int cmp=-1) const;
+MSVCDLL bool homonuclear(int   cmp=-1) const;
+MSVCDLL bool heteronuclear(int cmp=-1) const;
 
-MSVCDLL int multi_sys::HS(int comp=-1) const;
-MSVCDLL int multi_sys::LS(int comp=-1) const;
-MSVCDLL std::vector<int> multi_sys::HSs()   const;
-MSVCDLL std::vector<int> multi_sys::LSs()   const;
+MSVCDLL int HS(int comp=-1) const;
+MSVCDLL int LS(int comp=-1) const;
+MSVCDLL std::vector<int> HSs()   const;
+MSVCDLL std::vector<int> LSs()   const;
 
-MSVCDLL const std::string multi_sys::symbol(int comp, int spin) const;
+MSVCDLL const std::string symbol(int comp, int spin) const;
  
 // ----------------------------------------------------------------------------
 //                      SPECTROMETER FREQUENCY MANIPULATIONS
@@ -316,13 +316,13 @@ MSVCDLL const std::string multi_sys::symbol(int comp, int spin) const;
  
 //------------------------------ Set Omega ------------------------------------
 
-MSVCDLL void multi_sys::Omega(double freq);
-MSVCDLL void multi_sys::Omega(double freq, const std::string& iso);
+MSVCDLL void Omega(double freq);
+MSVCDLL void Omega(double freq, const std::string& iso);
 
 //------------------------------ Get Omega ------------------------------------
  
-MSVCDLL double multi_sys::Omega( ) const;
-MSVCDLL double multi_sys::Omega(const std::string& iso) const;                                 
+MSVCDLL double Omega( ) const;
+MSVCDLL double Omega(const std::string& iso) const;                                 
 
 // ____________________________________________________________________________
 // G                        PARAMETER SET FUNCTIONS
@@ -374,7 +374,7 @@ MSVCDLL friend void operator+= (ParameterSet& pset, const multi_sys &msys);
 	//				  basename+i.dsys - basename is given
 	//				  as an arguemnt and i is an integer */
 
-MSVCDLL void multi_sys::write(std::string& filename, std::string basename = "comp");
+MSVCDLL void write(std::string& filename, std::string basename = "comp");
 
 // ____________________________________________________________________________
 // H                        SPIN SYSTEM INPUT FUNCTIONS
@@ -393,11 +393,11 @@ MSVCDLL void multi_sys::write(std::string& filename, std::string basename = "com
         // Note				: The file should be an ASCII file
         //                                containing recognized sys parameters
 
-MSVCDLL bool multi_sys::read(const std::string&  filename, int warn=2);
-MSVCDLL bool multi_sys::read(const ParameterSet& pset,     int warn=2);
+MSVCDLL bool read(const std::string&  filename, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,     int warn=2);
 
-MSVCDLL std::string multi_sys::ask_read(int argc, char* argv[], int argn);
-MSVCDLL std::string multi_sys::ask_read(int argc, char* argv[], int argn, const std::string& def);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn, const std::string& def);
  
         // Input                msys    : Multi_sys spin system (this)
         //                      argc    : Number of arguments
@@ -435,15 +435,15 @@ MSVCDLL std::string multi_sys::ask_read(int argc, char* argv[], int argn, const 
 
    Each string will be of length 22 (we use 1 column before the header too.) */
 
-MSVCDLL std::vector<std::string> multi_sys::SpinMapStrs(int exp) const;
+MSVCDLL std::vector<std::string> SpinMapStrs(int exp) const;
 
-//vector<string> multi_sys::ExchMapStrs(int exp) const;
-//vector<string> multi_sys::ExchProcStrs(int exp) const
+//vector<string> ExchMapStrs(int exp) const;
+//vector<string> ExchProcStrs(int exp) const
 
 // sosik
-MSVCDLL std::vector<std::string> multi_sys::LHSStrs() const;
-MSVCDLL std::vector<std::string> multi_sys::RHSStrs() const;
-MSVCDLL std::vector<std::string> multi_sys::EXPStrs() const;
+MSVCDLL std::vector<std::string> LHSStrs() const;
+MSVCDLL std::vector<std::string> RHSStrs() const;
+MSVCDLL std::vector<std::string> EXPStrs() const;
 
 //-----------------------------------------------------------------------------
 //              Functions To Modularize Exchange Process Output
@@ -470,7 +470,7 @@ MSVCDLL std::vector<std::string> multi_sys::EXPStrs() const;
         ///F_list <<                     - Send spin system to an output stream
  
 
-MSVCDLL        std::ostream& multi_sys::print(std::ostream& ostr, int full=1) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int full=1) const;
 MSVCDLL friend std::ostream& operator<<(std::ostream& out, const multi_sys& sys);
 
 };

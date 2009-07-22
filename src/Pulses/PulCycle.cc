@@ -45,6 +45,7 @@
 # include <LSLib/LSprop.h>		// Know Liouville space props
 # include <GamIO/Ggnuplot.h>		// Include gnuplot output
 # include <GamIO/FrameMaker.h>		// Include FrameMaker output
+#include <stdlib.h>
 # include <string>			// Must know stdlibc++ strings
 # include <Basics/StringCut.h>
 

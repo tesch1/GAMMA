@@ -73,10 +73,10 @@ private:
         // Output               none	: Error message
 
      
-void IntDipVec::IDVerror(int eidx,                           int noret=0) const;
-void IntDipVec::IDVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void IntDipVec::IDVfatal(int eidx) const;
-volatile void IntDipVec::IDVfatal(int eidx, const std::string& pn) const;
+void IDVerror(int eidx,                           int noret=0) const;
+void IDVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void IDVfatal(int eidx) const;
+volatile void IDVfatal(int eidx, const std::string& pn) const;
 
 // ____________________________________________________________________________
 // ii               DIPOLE INTERACTION VECTOR SETUP FUNCTIONS
@@ -125,22 +125,22 @@ volatile void IntDipVec::IDVfatal(int eidx, const std::string& pn) const;
    indices for dipolar designations.                                        */
 
 
-bool IntDipVec::getNS(const ParameterSet& pset, int indx,
+bool getNS(const ParameterSet& pset, int indx,
                                                 int& ns, bool warn=true) const;
 
-bool IntDipVec::getNSpins(const ParameterSet& pset, int indx,
+bool getNSpins(const ParameterSet& pset, int indx,
                                                 int& ns, bool warn=true) const;
 
-bool IntDipVec::getNIsos(const  ParameterSet& pset, int indx,
+bool getNIsos(const  ParameterSet& pset, int indx,
                                                 int& ni, bool warn=true) const;
 
-bool IntDipVec::getNqns(const ParameterSet& pset,int indx,
+bool getNqns(const ParameterSet& pset,int indx,
                                                 int& nq, bool warn=true) const;
 
-bool IntDipVec::getNdccs(const ParameterSet& pset,int indx,
+bool getNdccs(const ParameterSet& pset,int indx,
                                                 int& nd, bool warn=true) const;
 
-bool IntDipVec::getNdxxs(const ParameterSet& pset,int indx,
+bool getNdxxs(const ParameterSet& pset,int indx,
                                                 int& nd, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -169,7 +169,7 @@ bool IntDipVec::getNdxxs(const ParameterSet& pset,int indx,
    prefix from all parameter names prior to looking for the interactions.
    This is done before any calls to class IntDip which doesn't use prefixes. */
 
-bool IntDipVec::setDIV(const ParameterSet& pset,int idx=-1,bool wn=true);
+bool setDIV(const ParameterSet& pset,int idx=-1,bool wn=true);
 
 // ____________________________________________________________________________
 // iii          DIPOLE INTERACTIONS VECTOR CHECKING FUNCTIONS
@@ -184,7 +184,7 @@ bool IntDipVec::setDIV(const ParameterSet& pset,int idx=-1,bool wn=true);
            Output               TF      : Returns TRUE if dip is a valid
                                           dipole index, FALSE if not         */
 
-bool IntDipVec::CheckDI(int dip, int warn=0) const;
+bool CheckDI(int dip, int warn=0) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -207,8 +207,8 @@ public:
    don't have to keep looking them up all the time and because the 
    inheritance doesn't work.                                                 */
 
-MSVCDLC IntDipVec::IntDipVec(int N=0);
-MSVCDLC IntDipVec::IntDipVec(const IntDipVec& IDV1);
+MSVCDLC IntDipVec(int N=0);
+MSVCDLC IntDipVec(const IntDipVec& IDV1);
 
 // ----------------------------------------------------------------------------
 //             Constructors Using Isotopes And Spin Coordinates
@@ -241,7 +241,7 @@ MSVCDLC IntDipVec::IntDipVec(const IntDipVec& IDV1);
         //                                the vector & issue cause warnings if
         //                                warn is set nonzero
 
-MSVCDLC IntDipVec::IntDipVec(const std::vector<Isotope>& Isos, 
+MSVCDLC IntDipVec(const std::vector<Isotope>& Isos, 
                                             const coord_vec& cvec, int warn=2);
 
 // ----------------------------------------------------------------------------
@@ -263,8 +263,8 @@ MSVCDLC IntDipVec::IntDipVec(const std::vector<Isotope>& Isos,
         // Note                         : If idx is negative then no
         //                                parameter prefix will be used     */
 
-MSVCDLC IntDipVec::IntDipVec(const ParameterSet& pset,        int indx=-1, int warn=1);
-MSVCDLC IntDipVec::IntDipVec(const ParameterSet& pset, 
+MSVCDLC IntDipVec(const ParameterSet& pset,        int indx=-1, int warn=1);
+MSVCDLC IntDipVec(const ParameterSet& pset, 
                     const std::vector<Isotope>& Isos, int indx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
@@ -273,8 +273,8 @@ MSVCDLC IntDipVec::IntDipVec(const ParameterSet& pset,
 
 /* Both assignment and destruction are handled by the base vector class.     */
 
-MSVCDLL void IntDipVec::operator= (const IntDipVec &IDV);
-MSVCDLC      IntDipVec::~IntDipVec ();
+MSVCDLL void operator= (const IntDipVec &IDV);
+MSVCDLC      ~IntDipVec ();
 
 // ____________________________________________________________________________ 
 // B                DIPOLAR INTERACTION ACCESS & MANIPULATIONS
@@ -295,8 +295,8 @@ MSVCDLC      IntDipVec::~IntDipVec ();
 	//				  for spicified dipole dip
  
 
-MSVCDLL void   IntDipVec::DValue(int dip, double val, int type);
-MSVCDLL double IntDipVec::DValue(int dip, int type) const;
+MSVCDLL void   DValue(int dip, double val, int type);
+MSVCDLL double DValue(int dip, int type) const;
 
 
 // ---------------------------------------------------------------------------- 
@@ -310,10 +310,10 @@ MSVCDLL double IntDipVec::DValue(int dip, int type) const;
 	// Note				: Defined in class IntDip as equal to
 	//			          the dipolar tensor delzz value
 
-MSVCDLL void   IntDipVec::DCC(int dip, double dcc);
-MSVCDLL double IntDipVec::DCC(int dip) const;
-MSVCDLL void   IntDipVec::Ddelz(int dip, double dcc);
-MSVCDLL double IntDipVec::Ddelz(int dip) const;
+MSVCDLL void   DCC(int dip, double dcc);
+MSVCDLL double DCC(int dip) const;
+MSVCDLL void   Ddelz(int dip, double dcc);
+MSVCDLL double Ddelz(int dip) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Dipolar Asymmetry Values
@@ -326,8 +326,8 @@ MSVCDLL double IntDipVec::Ddelz(int dip) const;
 	// Note				: Defined in class IntDip between [0,1]
 	// Note				: Very unusual if nonzero!
 
-MSVCDLL void   IntDipVec::Deta(int dip, double deta);
-MSVCDLL double IntDipVec::Deta(int dip) const;
+MSVCDLL void   Deta(int dip, double deta);
+MSVCDLL double Deta(int dip) const;
 
  
 // ---------------------------------------------------------------------------- 
@@ -340,8 +340,8 @@ MSVCDLL double IntDipVec::Deta(int dip) const;
 	// Output		none	: Get/Set dipole dip theta angle
 	// Note				: Defined class IntDip between [0,180]
 
-MSVCDLL void   IntDipVec::Dtheta(int dip, double dtheta);
-MSVCDLL double IntDipVec::Dtheta(int dip) const;
+MSVCDLL void   Dtheta(int dip, double dtheta);
+MSVCDLL double Dtheta(int dip) const;
 
 // ---------------------------------------------------------------------------- 
 //               Dipolar Phi Orientation (Over From +x Axis)
@@ -353,8 +353,8 @@ MSVCDLL double IntDipVec::Dtheta(int dip) const;
 	// Output		none	: Get/Set dipole dip phi angle
 	// Note				: Defined in IntDip between [0,360]
 
-MSVCDLL void   IntDipVec::Dphi(int dip, double dphi);
-MSVCDLL double IntDipVec::Dphi(int dip) const;
+MSVCDLL void   Dphi(int dip, double dphi);
+MSVCDLL double Dphi(int dip) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Full Dipolar Interaction
@@ -367,23 +367,23 @@ MSVCDLL double IntDipVec::Dphi(int dip) const;
                                           either a reference, constant ref,
                                           or copy of the dipolar interaction */
 
-MSVCDLL       IntDip& IntDipVec::operator() (int dip);
-MSVCDLL const IntDip& IntDipVec::getcref(    int dip) const;
-MSVCDLL       IntDip  IntDipVec::get(        int dip) const;
+MSVCDLL       IntDip& operator() (int dip);
+MSVCDLL const IntDip& getcref(    int dip) const;
+MSVCDLL       IntDip  get(        int dip) const;
 
 
 // ----------------------------------------------------------------------------
 //                 Other Dipolar Interaction Vector Info
 // ----------------------------------------------------------------------------
  
-MSVCDLL double IntDipVec::Izval(int dip) const;
-MSVCDLL double IntDipVec::Szval(int dip) const;
+MSVCDLL double Izval(int dip) const;
+MSVCDLL double Szval(int dip) const;
  
         // Input                IDV   : Dipole interaction vector
         // Output               qn    : Quantum number of I or S (0.5, 1.5,..)
  
-//int IntDipVec::size() const;				INHERITED
-MSVCDLL bool IntDipVec::nonzero() const;
+//int size() const;				INHERITED
+MSVCDLL bool nonzero() const;
  
         // Input                IDV   : Dipole interaction vector
         // Output               TF    : True if any interactions with a
@@ -418,13 +418,13 @@ MSVCDLL bool IntDipVec::nonzero() const;
 
 MSVCDLL             operator ParameterSet() const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const IntDipVec &IDV);
-MSVCDLL        void IntDipVec::PSetAdd(ParameterSet& pset, int idx=-1) const;
+MSVCDLL        void PSetAdd(ParameterSet& pset, int idx=-1) const;
 
 // ---------------------------------------------------------------------------- 
 //     Functions To Make A Dipolar Interaction Vector From A Parameter Set
 // ---------------------------------------------------------------------------- 
 
-MSVCDLL void IntDipVec::operator= (const ParameterSet& pset);
+MSVCDLL void operator= (const ParameterSet& pset);
 
         // Input                IDV     : Dipole interaction vector (this)
         //                      pset    : A parameter set
@@ -447,8 +447,8 @@ MSVCDLL void IntDipVec::operator= (const ParameterSet& pset);
 	//				  as a parameter set to file filename
         //                                or to output filestream ofstr
 
-MSVCDLL int IntDipVec::write(const std::string& filename, int idx=-1, int wrn=2) const;
-MSVCDLL int IntDipVec::write(std::ofstream&        ofstr, int idx=-1, int wrn=2) const;
+MSVCDLL int write(const std::string& filename, int idx=-1, int wrn=2) const;
+MSVCDLL int write(std::ofstream&        ofstr, int idx=-1, int wrn=2) const;
 
 // ____________________________________________________________________________ 
 // D                             INPUT FUNCTIONS
@@ -472,14 +472,14 @@ MSVCDLL int IntDipVec::write(std::ofstream&        ofstr, int idx=-1, int wrn=2)
         //                                or with parameters read from pset
         //                                Return is true if interaction read
 
-MSVCDLL bool IntDipVec::read(const std::string &filename, int idx=-1, int warn=2);
-MSVCDLL bool IntDipVec::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //       Interactive Read of Dipole Interaction Vector From An ASCII File
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::string IntDipVec::ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
 
 	// Input		IDV    : Dipole interaction vector (this)
         //                      argc    : Number of arguments
@@ -509,7 +509,7 @@ MSVCDLL std::string IntDipVec::ask_read(int argc, char* argv[], int argn);
 	// Output		none	: Dipole interaction vector
 	//				  parameters sent to output stream
 
-MSVCDLL std::ostream& IntDipVec::print(std::ostream& ostr, bool full=false) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, bool full=false) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& out, const IntDipVec& IDV);
 
 };

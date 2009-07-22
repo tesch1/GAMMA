@@ -72,6 +72,7 @@
 #include <GamIO/FrameMakerP.h>			// Include FM parameters
 #include <Basics/Gconstants.h>			// Include PI
 #include <Level2/EAngles.h>			// Inlcude Euler angles
+#include <stdlib.h>
 #include <string>				// Inlcude stdlibc++ strings
 #include <iostream>				// Include iostreams (cout)
 #include <fstream>				// Include filestreams

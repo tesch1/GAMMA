@@ -117,7 +117,7 @@ volatile void Qfatal(int eidx) const;
 /* These functions will try and get all the parameters required to define a
    quadrupolar interaction: { Iqn, QCC, eta, alpha, beta, gamma }.           */
 
-bool IntQuad::getQI(const ParameterSet& pset,
+bool getQI(const ParameterSet& pset,
          double& Iqn, double& qcc, double& eta, EAngles& EA,
                                               int idx=-1, bool warn=true) const;
 
@@ -141,7 +141,7 @@ bool IntQuad::getQI(const ParameterSet& pset,
                                           from parameters in pset
            Note                         : Interaction is NOT altered         */
 
-bool IntQuad::getQCC(const ParameterSet& pset, double& qcc,
+bool getQCC(const ParameterSet& pset, double& qcc,
                                              int idx=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -153,15 +153,15 @@ bool IntQuad::getQCC(const ParameterSet& pset, double& qcc,
    quadrupolar interaction, namely { Iqn,QCC,eta,alpha,beta,gamma }. If the
    interaction definition is found, we set the interaction or return false.  */
 
-bool IntQuad::setQI(const ParameterSet& pset, int idx=-1, bool warn=true);
+bool setQI(const ParameterSet& pset, int idx=-1, bool warn=true);
 
 // ____________________________________________________________________________
 // iii            QUADRUPOLAR INTERACTION CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
 
-bool IntQuad::checkIHS(int eidx=0, int warn=0);
-bool IntQuad::checkI(int   eidx=0, int warn=0);
+bool checkIHS(int eidx=0, int warn=0);
+bool checkI(int   eidx=0, int warn=0);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -177,8 +177,8 @@ bool IntQuad::checkI(int   eidx=0, int warn=0);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC IntQuad::IntQuad();
-MSVCDLC IntQuad::IntQuad(const IntQuad &Q1);
+MSVCDLC IntQuad();
+MSVCDLC IntQuad(const IntQuad &Q1);
 
 // ----------------------------------------------------------------------------
 //              Direct Constructors Using Spherical Components
@@ -198,11 +198,11 @@ MSVCDLC IntQuad::IntQuad(const IntQuad &Q1);
                                           the spin quantum number isn't > 1/2
            Note                         : Here QCC=delzz                     */
 
-MSVCDLC IntQuad::IntQuad(const std::string& II, double qcc,
+MSVCDLC IntQuad(const std::string& II, double qcc,
                                        double eta=0, const EAngles& EA=EAzero);
-MSVCDLC IntQuad::IntQuad(const     Isotope& II, double qcc,
+MSVCDLC IntQuad(const     Isotope& II, double qcc,
                                        double eta=0, const EAngles& EA=EAzero);
-MSVCDLC IntQuad::IntQuad(          double   qn, double qcc,
+MSVCDLC IntQuad(          double   qn, double qcc,
                                        double eta=0, const EAngles& EA=EAzero);
 
 // ----------------------------------------------------------------------------
@@ -229,9 +229,9 @@ MSVCDLC IntQuad::IntQuad(          double   qn, double qcc,
                                           the spin quantum number isn't > 1/2
            Note                         : Here QCC=delzz                     */
 
-MSVCDLC IntQuad::IntQuad(const std::string& IsoI,const coord& Qxyz,const EAngles& EA=EAzero);
-MSVCDLC IntQuad::IntQuad(const Isotope&  II,const coord& Qxyz,const EAngles& EA=EAzero);
-MSVCDLC IntQuad::IntQuad(double          Iz,const coord& Qxyz,const EAngles& EA=EAzero);
+MSVCDLC IntQuad(const std::string& IsoI,const coord& Qxyz,const EAngles& EA=EAzero);
+MSVCDLC IntQuad(const Isotope&  II,const coord& Qxyz,const EAngles& EA=EAzero);
+MSVCDLC IntQuad(double          Iz,const coord& Qxyz,const EAngles& EA=EAzero);
 
 // ----------------------------------------------------------------------------
 //                     Construction Using Parameter Sets
@@ -258,20 +258,20 @@ MSVCDLC IntQuad::IntQuad(double          Iz,const coord& Qxyz,const EAngles& EA=
                                        and parameters in pset                */
 
 
-MSVCDLC IntQuad::IntQuad(const ParameterSet& pset, int idx=-1, int warn=2);
-//IntQuad::IntQuad(const std::string& II,  const ParameterSet& pset,
+MSVCDLC IntQuad(const ParameterSet& pset, int idx=-1, int warn=2);
+//IntQuad(const std::string& II,  const ParameterSet& pset,
 //                                                       int idx=-1, int warn=2);
-//IntQuad::IntQuad(const Isotope& II, const ParameterSet& pset,
+//IntQuad(const Isotope& II, const ParameterSet& pset,
 //                                                       int idx=-1, int warn=2);
-//IntQuad::IntQuad(int idxI,         const ParameterSet& pset,             int warn=2);
-//IntQuad::IntQuad(double qn,        const ParameterSet& pset, int idx=-1, int warn=2);
+//IntQuad(int idxI,         const ParameterSet& pset,             int warn=2);
+//IntQuad(double qn,        const ParameterSet& pset, int idx=-1, int warn=2);
  
 // ----------------------------------------------------------------------------
 //                          Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-MSVCDLL void IntQuad::operator= (const IntQuad &Q1);
-MSVCDLC      IntQuad::~IntQuad();
+MSVCDLL void operator= (const IntQuad &Q1);
+MSVCDLC      ~IntQuad();
 
 // ____________________________________________________________________________
 // B                   SPATIAL TENSOR COMPONENT ACCESS
@@ -338,12 +338,12 @@ MSVCDLC      IntQuad::~IntQuad();
 // static double IntRank2A::delzz();                            INHERITED
 // static double IntRank2A::delA();                             INHERITED
 
-MSVCDLL double IntQuad::QCC()   const;			// Set quadrupolar coupling
-MSVCDLL double IntQuad::NQCC()  const;			// Set quadrupolar coupling
-MSVCDLL double IntQuad::wQ()    const;			// Set quadrupolar frequency
-MSVCDLL void   IntQuad::QCC(double  dz);		// Set quadrupolar coupling
-MSVCDLL void   IntQuad::NQCC(double dz);		// Set quadrupolar coupling
-MSVCDLL void   IntQuad::wQ(double    W);		// Set quadrupolar frequency
+MSVCDLL double QCC()   const;			// Set quadrupolar coupling
+MSVCDLL double NQCC()  const;			// Set quadrupolar coupling
+MSVCDLL double wQ()    const;			// Set quadrupolar frequency
+MSVCDLL void   QCC(double  dz);		// Set quadrupolar coupling
+MSVCDLL void   NQCC(double dz);		// Set quadrupolar coupling
+MSVCDLL void   wQ(double    W);		// Set quadrupolar frequency
 
 //-----------------------------------------------------------------------------
 //                             Asymmetry Access
@@ -458,35 +458,35 @@ IR2ASph IntRank2A::SphCmp(const EAngles& EA)           const;   INHERITED    */
               q   = | ---- |   * del   * A   =  | ---- |   * QCC * A
                uv   [  5   ]        zz    uv    [  5   ]            uv       */
 
-MSVCDLL double IntQuad::qxx() const;
-MSVCDLL double IntQuad::qyy() const;
-MSVCDLL double IntQuad::qzz() const;
-MSVCDLL double IntQuad::qyx() const;
-MSVCDLL double IntQuad::qxy() const;
-MSVCDLL double IntQuad::qzx() const;
-MSVCDLL double IntQuad::qxz() const;
-MSVCDLL double IntQuad::qzy() const;
-MSVCDLL double IntQuad::qyz() const;
+MSVCDLL double qxx() const;
+MSVCDLL double qyy() const;
+MSVCDLL double qzz() const;
+MSVCDLL double qyx() const;
+MSVCDLL double qxy() const;
+MSVCDLL double qzx() const;
+MSVCDLL double qxz() const;
+MSVCDLL double qzy() const;
+MSVCDLL double qyz() const;
 
-MSVCDLL double IntQuad::qxx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qyy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qzz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qyx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qxy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qzx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qxz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qzy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntQuad::qyz(double alpha, double beta, double gamma) const;
+MSVCDLL double qxx(double alpha, double beta, double gamma) const;
+MSVCDLL double qyy(double alpha, double beta, double gamma) const;
+MSVCDLL double qzz(double alpha, double beta, double gamma) const;
+MSVCDLL double qyx(double alpha, double beta, double gamma) const;
+MSVCDLL double qxy(double alpha, double beta, double gamma) const;
+MSVCDLL double qzx(double alpha, double beta, double gamma) const;
+MSVCDLL double qxz(double alpha, double beta, double gamma) const;
+MSVCDLL double qzy(double alpha, double beta, double gamma) const;
+MSVCDLL double qyz(double alpha, double beta, double gamma) const;
 
-MSVCDLL double IntQuad::qxx(const EAngles& EA) const;
-MSVCDLL double IntQuad::qyy(const EAngles& EA) const;
-MSVCDLL double IntQuad::qzz(const EAngles& EA) const;
-MSVCDLL double IntQuad::qyx(const EAngles& EA) const;
-MSVCDLL double IntQuad::qxy(const EAngles& EA) const;
-MSVCDLL double IntQuad::qzx(const EAngles& EA) const;
-MSVCDLL double IntQuad::qxz(const EAngles& EA) const;
-MSVCDLL double IntQuad::qzy(const EAngles& EA) const;
-MSVCDLL double IntQuad::qyz(const EAngles& EA) const;
+MSVCDLL double qxx(const EAngles& EA) const;
+MSVCDLL double qyy(const EAngles& EA) const;
+MSVCDLL double qzz(const EAngles& EA) const;
+MSVCDLL double qyx(const EAngles& EA) const;
+MSVCDLL double qxy(const EAngles& EA) const;
+MSVCDLL double qzx(const EAngles& EA) const;
+MSVCDLL double qxz(const EAngles& EA) const;
+MSVCDLL double qzy(const EAngles& EA) const;
+MSVCDLL double qyz(const EAngles& EA) const;
 
 //-----------------------------------------------------------------------------
 //                         Orientation Angle Access
@@ -624,11 +624,11 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
      T T   = I * [ 4 * I - 8I  - 1 ]       T T   = I * [ 2 * I  - 2I  - 1 ]
       1 -1    z         z                   2 -2    z         z              */
 
-MSVCDLL matrix IntQuad::T21m1() const;
-MSVCDLL matrix IntQuad::T22m2() const;
+MSVCDLL matrix T21m1() const;
+MSVCDLL matrix T22m2() const;
 
-MSVCDLL matrix IntQuad::T21m1(const std::vector<int>& HSs, int i) const;
-MSVCDLL matrix IntQuad::T22m2(const std::vector<int>& HSs, int i) const;
+MSVCDLL matrix T21m1(const std::vector<int>& HSs, int i) const;
+MSVCDLL matrix T22m2(const std::vector<int>& HSs, int i) const;
 
 // ____________________________________________________________________________
 // D           QUADRUPOLAR INTERACTION CONSTANT ACCESS FUNCTIONS
@@ -653,7 +653,7 @@ MSVCDLL matrix IntQuad::T22m2(const std::vector<int>& HSs, int i) const;
              Q              ---               2,m             2,-m
                              m                                               */
 
-MSVCDLL double IntQuad::xi( ) const;
+MSVCDLL double xi( ) const;
  
 // ____________________________________________________________________________
 // E               QUADRUPOLAR INTERACTION AUXILIARY FUNCTIONS
@@ -696,8 +696,8 @@ MSVCDLL double IntQuad::xi( ) const;
 /* These are just some handy friend functions that allow quick conversion
    between the quadurupolar frequency and quadrupolar coupling.              */
 
-MSVCDLL static double IntQuad::wQ2QCC(double QwQ, double I);
-MSVCDLL static double IntQuad::QCC2wQ(double QCC, double I);
+MSVCDLL static double wQ2QCC(double QwQ, double I);
+MSVCDLL static double QCC2wQ(double QCC, double I);
 
 // ----------------------------------------------------------------------------
 //                       1st Order Quadrupolar Frequency 
@@ -726,12 +726,12 @@ MSVCDLL static double IntQuad::QCC2wQ(double QCC, double I);
 	   Note				: If no angles input the result is
 	  				  for the current tensor orientation */
  
-MSVCDLL double IntQuad::wQoriented()                           const;
-MSVCDLL double IntQuad::wQ0()                                  const;
-MSVCDLL double IntQuad::wQoriented(double theta, double phi=0) const;
-MSVCDLL double IntQuad::wQ0(double        theta, double phi=0) const;
-MSVCDLL matrix IntQuad::wQoriented(int   Ntheta, int   Nphi)   const;
-MSVCDLL matrix IntQuad::wQ0(int          Ntheta, int   Nphi)   const;
+MSVCDLL double wQoriented()                           const;
+MSVCDLL double wQ0()                                  const;
+MSVCDLL double wQoriented(double theta, double phi=0) const;
+MSVCDLL double wQ0(double        theta, double phi=0) const;
+MSVCDLL matrix wQoriented(int   Ntheta, int   Nphi)   const;
+MSVCDLL matrix wQ0(int          Ntheta, int   Nphi)   const;
 
 // ----------------------------------------------------------------------------
 //                       2nd Order Quadrupolar Frequency 
@@ -769,9 +769,9 @@ MSVCDLL matrix IntQuad::wQ0(int          Ntheta, int   Nphi)   const;
            Note                         : Phi spans [0, 360)                 */
  
  
-MSVCDLL double IntQuad::wQ1(double Om, double m, double theta, double phi=0) const;
-MSVCDLL double IntQuad::wQ1(double Om, double m) const;
-MSVCDLL matrix IntQuad::wQ1(int Ntheta, int Nphi);
+MSVCDLL double wQ1(double Om, double m, double theta, double phi=0) const;
+MSVCDLL double wQ1(double Om, double m) const;
+MSVCDLL matrix wQ1(int Ntheta, int Nphi);
  
 // ----------------------------------------------------------------------------
 //                       2nd Order Central Transition Shifts
@@ -823,8 +823,8 @@ MSVCDLL matrix IntQuad::wQ1(int Ntheta, int Nphi);
            Note                         : The return is zero if I not proper
            Note                         : Theta spans [0, 180]               */
 
-MSVCDLL double IntQuad::wQcentral(double Om) const;
-MSVCDLL matrix IntQuad::wQcentral(int Ntheta, int Nphi);
+MSVCDLL double wQcentral(double Om) const;
+MSVCDLL matrix wQcentral(int Ntheta, int Nphi);
 
 
 
@@ -860,7 +860,7 @@ MSVCDLL matrix IntQuad::wQcentral(int Ntheta, int Nphi);
 
 MSVCDLL             operator    ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const IntQuad &Q);
-MSVCDLL        void IntQuad::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
+MSVCDLL        void PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
 
 
 // ----------------------------------------------------------------------------
@@ -877,8 +877,8 @@ MSVCDLL        void IntQuad::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1)
         //                                written as a parameter set to
         //                                file filename or output stream ofstr
 
-MSVCDLL int IntQuad::write(const std::string &fn,int idx=-1,int pfx=-1,int wn=2) const;
-MSVCDLL int IntQuad::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wn=2) const;
+MSVCDLL int write(const std::string &fn,int idx=-1,int pfx=-1,int wn=2) const;
+MSVCDLL int write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wn=2) const;
 
 // ____________________________________________________________________________
 // G                 QUADRUPOLAR INTERACTION INPUT FUNCTIONS
@@ -911,8 +911,8 @@ MSVCDLL int IntQuad::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wn=2)
 					  read in from parameters in file
 					  filename or those in parameter set */
 
-MSVCDLL bool IntQuad::read(const std::string &filename, int idx=-1, int warn=2);
-MSVCDLL bool IntQuad::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 // ____________________________________________________________________________
 // H                    QUADRUPOLAR HAMILTONIAN FUNCTIONS
@@ -968,14 +968,14 @@ MSVCDLL bool IntQuad::read(const ParameterSet& pset,    int idx=-1, int warn=2);
                                           With HSs: return in composite
                                           spin space                         */
 
-MSVCDLL matrix IntQuad::H0( ) const;
-MSVCDLL matrix IntQuad::H0(double alpha, double phi, double gamma) const;
-MSVCDLL matrix IntQuad::H0(const EAngles& EA) const;
+MSVCDLL matrix H0( ) const;
+MSVCDLL matrix H0(double alpha, double phi, double gamma) const;
+MSVCDLL matrix H0(const EAngles& EA) const;
 
-MSVCDLL matrix IntQuad::H0(const std::vector<int>& HSs, int i) const;
-MSVCDLL matrix IntQuad::H0(const std::vector<int>& HSs, int i,
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i) const;
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i,
                                double alpha, double beta, double gamma) const;
-MSVCDLL matrix IntQuad::H0(const std::vector<int>& HSs, int i, const EAngles& EA) const;
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, const EAngles& EA) const;
  
 
 // ----------------------------------------------------------------------------
@@ -1008,14 +1008,14 @@ MSVCDLL matrix IntQuad::H0(const std::vector<int>& HSs, int i, const EAngles& EA
            Note                         : This will be zero in PAS if no eta 
                                           and small if Om >> QCC              */
 
-MSVCDLL matrix IntQuad::H1(double Om)                                          const;
-MSVCDLL matrix IntQuad::H1(double Om, double alpha, double beta, double gamma) const;
-MSVCDLL matrix IntQuad::H1(double Om, const EAngles& EA)                       const;
+MSVCDLL matrix H1(double Om)                                          const;
+MSVCDLL matrix H1(double Om, double alpha, double beta, double gamma) const;
+MSVCDLL matrix H1(double Om, const EAngles& EA)                       const;
 
-MSVCDLL matrix IntQuad::H1(std::vector<int>HSs, int i, double Om)              const;
-MSVCDLL matrix IntQuad::H1(std::vector<int>HSs, int i, double Om,
+MSVCDLL matrix H1(std::vector<int>HSs, int i, double Om)              const;
+MSVCDLL matrix H1(std::vector<int>HSs, int i, double Om,
                               double alpha, double beta, double gamma) const;
-MSVCDLL matrix IntQuad::H1(std::vector<int>HSs, int i, double Om,
+MSVCDLL matrix H1(std::vector<int>HSs, int i, double Om,
                               const EAngles& EA)                       const;
 
  
@@ -1048,10 +1048,10 @@ MSVCDLL matrix IntQuad::H1(std::vector<int>HSs, int i, double Om,
         //                                space of dimension 2I+1 unless the
         //                                composite Hilbert space is given    */
 
-MSVCDLL matrix IntQuad::Hw(double Om) const;
-MSVCDLL matrix IntQuad::Hw(double Om, double theta, double phi=0) const;
-MSVCDLL matrix IntQuad::Hw(std::vector<int>HSs, int i, double Om) const;
-MSVCDLL matrix IntQuad::Hw(std::vector<int>HSs, int i, double Om, double theta, double phi=0) const;
+MSVCDLL matrix Hw(double Om) const;
+MSVCDLL matrix Hw(double Om, double theta, double phi=0) const;
+MSVCDLL matrix Hw(std::vector<int>HSs, int i, double Om) const;
+MSVCDLL matrix Hw(std::vector<int>HSs, int i, double Om, double theta, double phi=0) const;
 
 // ----------------------------------------------------------------------------
 //                 Full Quadrupolar Interaction Hamiltonians
@@ -1078,10 +1078,10 @@ MSVCDLL matrix IntQuad::Hw(std::vector<int>HSs, int i, double Om, double theta, 
            Note                         : This will return in the spin Hilbert
                                           space of dimension (2I+1)          */
 
-MSVCDLL matrix IntQuad::H( ) const;
-MSVCDLL matrix IntQuad::H(double theta, double phi=0) const;
-MSVCDLL matrix IntQuad::H(const std::vector<int>& HSs, int i) const;
-MSVCDLL matrix IntQuad::H(const std::vector<int>& HSs, int i, double T, double P=0) const;
+MSVCDLL matrix H( ) const;
+MSVCDLL matrix H(double theta, double phi=0) const;
+MSVCDLL matrix H(const std::vector<int>& HSs, int i) const;
+MSVCDLL matrix H(const std::vector<int>& HSs, int i, double T, double P=0) const;
  
 // ____________________________________________________________________________
 // N                 QUADRUPOLAR HAMILTONIAN FRIEND FUNCTIONS
@@ -1155,7 +1155,7 @@ MSVCDLL matrix IntQuad::H(const std::vector<int>& HSs, int i, double T, double P
 // ----------------------------------------------------------------------------
 
 
-MSVCDLL int IntQuad::set(const ParameterSet& pset, double I, int idx=-1);
+MSVCDLL int set(const ParameterSet& pset, double I, int idx=-1);
 
         // Input                Q       : Quadrupolar interaction
 	//  			pset	: Parameter set
@@ -1177,7 +1177,7 @@ MSVCDLL int IntQuad::set(const ParameterSet& pset, double I, int idx=-1);
 // ----------------------------------------------------------------------------
 
  
-MSVCDLL int IntQuad::setAsph(const ParameterSet& pset, int idx=-1);
+MSVCDLL int setAsph(const ParameterSet& pset, int idx=-1);
 
         // Input                Q       : Quadrupolar interaction (this)
         //                      pset    : A parameter set
@@ -1219,7 +1219,7 @@ MSVCDLL int IntQuad::setAsph(const ParameterSet& pset, int idx=-1);
 // I'll issue a warning AND (ugh!) I'll have redefine the parameter parse.
 
  
-MSVCDLL int IntQuad::setAsphGen(const ParameterSet& pset, int idx=-1);
+MSVCDLL int setAsphGen(const ParameterSet& pset, int idx=-1);
  
         // Input                Q       : Quadrupolar interaction (this)
         //                      pset    : A parameter set
@@ -1269,8 +1269,8 @@ MSVCDLL int IntQuad::setAsphGen(const ParameterSet& pset, int idx=-1);
 */
 
  
-MSVCDLL std::string IntQuad::ask_read(int argc, char* argv[], int argn, int idx=-1);
-MSVCDLL void IntQuad::ask(int argc, char* argv[], int& qn, double& QI,
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn, int idx=-1);
+MSVCDLL void ask(int argc, char* argv[], int& qn, double& QI,
         double& Qnqcc, double& Qeta, double& theta, double& Qphi, int Qflag=0);
  
         //                      QI	: Spin quantum number
@@ -1284,8 +1284,8 @@ MSVCDLL void IntQuad::ask(int argc, char* argv[], int& qn, double& QI,
         // Note                         : This is INTERACTIVE! 
 
  
-MSVCDLL void IntQuad::askset(int argc, char* argv[], int& qn, int Qflag=0);
-MSVCDLL void IntQuad::askset(int Qflag=0);
+MSVCDLL void askset(int argc, char* argv[], int& qn, int Qflag=0);
+MSVCDLL void askset(int Qflag=0);
  
         // Input                Q       : Quadrupolar interaction (this)
         //                      argc    : Number of arguments
@@ -1320,8 +1320,8 @@ MSVCDLL void IntQuad::askset(int Qflag=0);
                                               m = [0,4] => {0,1,-1,2,-2}     */
 
 // string* IntRank2T::TStrings(int M) const;                     INHERITED
-MSVCDLL std::vector<std::string> IntQuad::CartAStrings(const std::string& CSForm) const;
-MSVCDLL std::vector<std::string> IntQuad::SphAStrings()                           const;
+MSVCDLL std::vector<std::string> CartAStrings(const std::string& CSForm) const;
+MSVCDLL std::vector<std::string> SphAStrings()                           const;
 
 
 //-----------------------------------------------------------------------------
@@ -1340,16 +1340,16 @@ MSVCDLL std::vector<std::string> IntQuad::SphAStrings()                         
            Output               none    : Quad interaction parameters
                                           placed into the output stream      */
 
-MSVCDLL        std::ostream& IntQuad::print(std::ostream& out, int fflag=-1) const;
+MSVCDLL        std::ostream& print(std::ostream& out, int fflag=-1) const;
 MSVCDLL friend std::ostream& operator<<    (std::ostream& out, const IntQuad& Q);
 
 //-----------------------------------------------------------------------------
 //  Functions That Generate Ouput Of Cartesian and Spherical & Cartesian A
 //-----------------------------------------------------------------------------
 
-//std::ostream& IntQuad::printSpherical(std::ostream& ostr);
-//std::ostream& IntQuad::printCartesian(std::ostream& ostr);
-//std::ostream& IntQuad::printCartesian(std::ostream& ostr, double theta, double phi=0);
+//std::ostream& printSpherical(std::ostream& ostr);
+//std::ostream& printCartesian(std::ostream& ostr);
+//std::ostream& printCartesian(std::ostream& ostr, double theta, double phi=0);
   };
 
 #endif								// IntQuad.h

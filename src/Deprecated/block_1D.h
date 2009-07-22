@@ -55,7 +55,7 @@ class block_1D : public row_vector, public ParameterSet
 // ____________________________________________________________________________
 
 
-void block_1D::Blk1DError(int eidx, int noret=0) const;
+void Blk1DError(int eidx, int noret=0) const;
 
 	// Input                BLK	: A 1D data block
         //                      eidx    : Error index
@@ -64,7 +64,7 @@ void block_1D::Blk1DError(int eidx, int noret=0) const;
 
  
 
-void block_1D::Blk1DError(int eidx, int i, int j, int noret=0) const;
+void Blk1DError(int eidx, int i, int j, int noret=0) const;
 
         // Input                BLK     : A 1D data block
         //                      eidx    : Error index   
@@ -73,7 +73,7 @@ void block_1D::Blk1DError(int eidx, int i, int j, int noret=0) const;
 	// Output               none    : Error message output
 
 
-volatile void block_1D::Blk1DFatal(int eidx);
+volatile void Blk1DFatal(int eidx);
 
         // Input                BLK     : A 1D data block
         //                      eidx    : Error index   

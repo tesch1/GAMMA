@@ -63,9 +63,9 @@ class IntCSAVec : public std::vector<IntCSA>
         // Output               none	: Error message
 	//				  Program execution stopped
 
-void IntCSAVec::ICVerror(int eidx, int noret=0) const;
-void IntCSAVec::ICVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void IntCSAVec::ICVfatal(int eidx) const;
+void ICVerror(int eidx, int noret=0) const;
+void ICVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void ICVfatal(int eidx) const;
 // ____________________________________________________________________________
 // ii               CSA INTERACTIONS VECTOR SETUP FUNCTIONS
 // ____________________________________________________________________________
@@ -98,7 +98,7 @@ volatile void IntCSAVec::ICVfatal(int eidx) const;
    prefix from all parameter names prior to looking for the interactions.
    This is done before any calls to class IntCSA which doesn't use prefixes. */
      
-bool IntCSAVec::setCIV(const ParameterSet& pset,int idx=-1,bool warn=true);
+bool setCIV(const ParameterSet& pset,int idx=-1,bool warn=true);
 
 // ____________________________________________________________________________
 // iii         SHIFT ANISOTROPY INTERACTIONS VECTOR CHECKING FUNCTIONS
@@ -113,7 +113,7 @@ bool IntCSAVec::setCIV(const ParameterSet& pset,int idx=-1,bool warn=true);
            Output               TF      : Returns TRUE if spin is a valid
                                           interaction index, FALSE if not    */
 
-bool IntCSAVec::CheckCI(int spin, int warn=0) const;
+bool CheckCI(int spin, int warn=0) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -134,11 +134,11 @@ public:
    C++ library libstdc++.  I am listing them here so that I & other users
    don't have to keep looking them up all the time.                          */
 
-MSVCDLC IntCSAVec::IntCSAVec();
-//IntCSAVec::IntCSAVec(int N)                     Vector w/ N Interactions
-//IntCSAVec::IntCSAVec(int N, const IntCSA& CI)   Vector w/ N pars
-//IntCSAVec::IntCSAVec(const IntCSAVec& CSVec)    Vector copy of CSVec
-//IntCSAVec::IntCSAVec assign(N)                  Assign N element
+MSVCDLC IntCSAVec();
+//IntCSAVec(int N)                     Vector w/ N Interactions
+//IntCSAVec(int N, const IntCSA& CI)   Vector w/ N pars
+//IntCSAVec(const IntCSAVec& CSVec)    Vector copy of CSVec
+//IntCSAVec assign(N)                  Assign N element
 
 // ----------------------------------------------------------------------------
 //                      Constructors Using Parameter Sets 
@@ -166,16 +166,16 @@ MSVCDLC IntCSAVec::IntCSAVec();
 	//				  to read {[idx]CSA(i)} from i=0 
 	//				  to i=ns-1 where ns is the number
 
-MSVCDLC IntCSAVec::IntCSAVec(const ParameterSet& pset, int idx=-1, int warn=1);
-MSVCDLC IntCSAVec::IntCSAVec(const std::vector<Isotope>& Isos,
+MSVCDLC IntCSAVec(const ParameterSet& pset, int idx=-1, int warn=1);
+MSVCDLC IntCSAVec(const std::vector<Isotope>& Isos,
                                          const ParameterSet& pset, int warn=2);
 
 // ----------------------------------------------------------------------------
 //               Here Be The Assignment Operator & Destructor
 // ----------------------------------------------------------------------------
 
-MSVCDLL void IntCSAVec::operator= (const IntCSAVec &ICV);
-MSVCDLC      IntCSAVec::~IntCSAVec ();
+MSVCDLL void operator= (const IntCSAVec &ICV);
+MSVCDLC      ~IntCSAVec ();
 
 // ____________________________________________________________________________ 
 // B                CSA INTERACTION ACCESS & MANIPULATIONS
@@ -196,8 +196,8 @@ MSVCDLC      IntCSAVec::~IntCSAVec ();
 	//				  for specified spin
  
 
-MSVCDLL void   IntCSAVec::CValue(int spin, double val, int type);
-MSVCDLL double IntCSAVec::CValue(int spin, int type) const;
+MSVCDLL void   CValue(int spin, double val, int type);
+MSVCDLL double CValue(int spin, int type) const;
 
 
 // ---------------------------------------------------------------------------- 
@@ -211,10 +211,10 @@ MSVCDLL double IntCSAVec::CValue(int spin, int type) const;
 	// Note				: Defined in class IntCSA as 1.5 times
 	//			          the CSA tensor delzz value
 
-MSVCDLL void   IntCSAVec::CSA(int  spin, double CSA);
-MSVCDLL void   IntCSAVec::delz(int spin, double dcc);
-MSVCDLL double IntCSAVec::CSA(int  spin) const;
-MSVCDLL double IntCSAVec::delz(int spin) const;
+MSVCDLL void   CSA(int  spin, double CSA);
+MSVCDLL void   delz(int spin, double dcc);
+MSVCDLL double CSA(int  spin) const;
+MSVCDLL double delz(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //                        CSA Asymmetry Values
@@ -226,8 +226,8 @@ MSVCDLL double IntCSAVec::delz(int spin) const;
 	// Output		none	: Get/Set CSA spin asymmetry
 	// Note				: Defined in class IntCSA between [0,1]
 
-MSVCDLL void   IntCSAVec::eta(int spin, double ceta);
-MSVCDLL double IntCSAVec::eta(int spin) const;
+MSVCDLL void   eta(int spin, double ceta);
+MSVCDLL double eta(int spin) const;
 
  
 // ---------------------------------------------------------------------------- 
@@ -240,8 +240,8 @@ MSVCDLL double IntCSAVec::eta(int spin) const;
 	// Output		none	: Get/Set CSA spin theta angle
 	// Note				: Defined class IntCSA between [0,180]
 
-MSVCDLL void   IntCSAVec::theta(int spin, double ctheta);
-MSVCDLL double IntCSAVec::theta(int spin) const;
+MSVCDLL void   theta(int spin, double ctheta);
+MSVCDLL double theta(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //               CSA Phi Orientation (Over From +x Axis)
@@ -253,14 +253,14 @@ MSVCDLL double IntCSAVec::theta(int spin) const;
 	// Output		none	: Get/Set CSA spin phi angle
 	// Note				: Defined in IntCSA between [0,360]
 
-MSVCDLL void   IntCSAVec::phi(int spin, double phi);
-MSVCDLL double IntCSAVec::phi(int spin) const;
+MSVCDLL void   phi(int spin, double phi);
+MSVCDLL double phi(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Full CSA Interaction
 // ---------------------------------------------------------------------------- 
 
-MSVCDLL IntCSA& IntCSAVec::operator() (int spins);                                          
+MSVCDLL IntCSA& operator() (int spins);                                          
 
         // Input                ICV	: CSA interaction vector (this)
         //                      spins	: Interaction index
@@ -268,7 +268,7 @@ MSVCDLL IntCSA& IntCSAVec::operator() (int spins);
         // Note				: Returns a reference to the interaction
 
 
-MSVCDLL IntCSA IntCSAVec::get(int spins) const;
+MSVCDLL IntCSA get(int spins) const;
 
 	// Input		ICV	: CSA interaction vector
 	// 			spins	: CSA index
@@ -280,8 +280,8 @@ MSVCDLL IntCSA IntCSAVec::get(int spins) const;
 // ----------------------------------------------------------------------------
  
  
-// int  IntCSAVec::size() const;		INHERITED
-MSVCDLL bool IntCSAVec::nonzero() const;
+// int  size() const;		INHERITED
+MSVCDLL bool nonzero() const;
  
 // ____________________________________________________________________________
 // C                         PARAMETER SET FUNCTIONS
@@ -324,7 +324,7 @@ MSVCDLL bool IntCSAVec::nonzero() const;
 
 MSVCDLL operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const IntCSAVec &ICV);
-MSVCDLL void IntCSAVec::PSetAdd(ParameterSet& pset, int idx=-1) const;
+MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1) const;
 
 
 
@@ -342,8 +342,8 @@ MSVCDLL void IntCSAVec::PSetAdd(ParameterSet& pset, int idx=-1) const;
         //                                a parameter set to file filename
         //                                or to output filestream ofstr
 
-MSVCDLL bool IntCSAVec::write(const std::string& filename,int idx=-1,int warn=2) const;
-MSVCDLL bool IntCSAVec::write(std::ofstream&     ofstr,   int idx=-1,int warn=2) const;
+MSVCDLL bool write(const std::string& filename,int idx=-1,int warn=2) const;
+MSVCDLL bool write(std::ofstream&     ofstr,   int idx=-1,int warn=2) const;
 
 // ____________________________________________________________________________ 
 // D                             INPUT FUNCTIONS
@@ -361,14 +361,14 @@ MSVCDLL bool IntCSAVec::write(std::ofstream&     ofstr,   int idx=-1,int warn=2)
 	//				  parameters read from file
         //                                or with parameters read from pset
  
-MSVCDLL bool IntCSAVec::read(const std::string&  filename, int idx=-1, int warn=true);
-MSVCDLL bool IntCSAVec::read(const ParameterSet& pset,     int idx=-1, int warn=true);
+MSVCDLL bool read(const std::string&  filename, int idx=-1, int warn=true);
+MSVCDLL bool read(const ParameterSet& pset,     int idx=-1, int warn=true);
 
 // ----------------------------------------------------------------------------
 //       Interactive Read of CSA Interaction Vector From An ASCII File
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::string IntCSAVec::ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
 
 	// Input		ICV    : CSA interaction vector (this)
         //                      argc    : Number of arguments
@@ -389,7 +389,7 @@ MSVCDLL std::string IntCSAVec::ask_read(int argc, char* argv[], int argn);
 // ____________________________________________________________________________ 
 
 
-MSVCDLL std::ostream& IntCSAVec::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 
 	// Input		ICV	: CSA interaction vector (this)
 	// 			ostr	: Output stream

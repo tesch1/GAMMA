@@ -35,6 +35,7 @@
 #include <BWRRelax/relaxNMR.h>		// Generic relaxation  routines
 #include <Level1/nmr_tensor.h>		// Include common spin tensors
 #include <LSLib/sys_dynamic.h>		// Include aniostropic systems
+#include <stdlib.h>
 
 
 // ______________________________________________________________________

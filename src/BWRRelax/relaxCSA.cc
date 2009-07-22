@@ -38,6 +38,7 @@
 #include <BWRRelax/relaxCSA.h>		// Include header file
 #include <Level1/nmr_tensor.h>		// Include common spin tensors
 #include <LSLib/sys_dynamic.h>		// Include anisotropic systems
+#include <stdlib.h>
 
 const double K = 1.941625913;		// sqrt[6*pi/5]
 const double pi2 = 6.283185307;		// 2 * pi

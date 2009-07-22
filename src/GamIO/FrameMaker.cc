@@ -47,6 +47,7 @@
 #include <GamIO/FrameMakerP.h>			// Include FM parameters
 #include <Basics/Gconstants.h>			// Include PI
 #include <Basics/Gutils.h>			// Include GAMMA errors
+#include <stdlib.h>
 #include <string>				// Inlcude stdlibc++ strings
 #include <iostream>				// Include ostreams (cout)
 #include <fstream>				// Include filestreams

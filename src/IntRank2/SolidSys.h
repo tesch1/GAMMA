@@ -80,10 +80,10 @@ class solid_sys: public spin_system
          Output               none    : Error message
                                         Program execution stopped if fatal   */
 
-void solid_sys::ssys_error(int eidx, int noret=0) const;
-void solid_sys::ssys_error(int eidx, const std::string& pname, int noret=0) const;
-volatile void solid_sys::ssys_fatal(int eidx) const;
-volatile void solid_sys::ssys_fatal(int eidx, const std::string& pname) const;
+void ssys_error(int eidx, int noret=0) const;
+void ssys_error(int eidx, const std::string& pname, int noret=0) const;
+volatile void ssys_fatal(int eidx) const;
+volatile void ssys_fatal(int eidx, const std::string& pname) const;
 
 // ____________________________________________________________________________
 // ii                      SOLID SYSTEM SETUP FUNCTIONS
@@ -93,7 +93,7 @@ volatile void solid_sys::ssys_fatal(int eidx, const std::string& pname) const;
 //            Functions To Set Coordinates and Their Existence Flags
 // ----------------------------------------------------------------------------
  
-void solid_sys::zero_cindx();
+void zero_cindx();
  
         // Input                ssys    : Solid spin system (this)
         // Output               none    : If there are spins in the system
@@ -103,7 +103,7 @@ void solid_sys::zero_cindx();
         //                                no spins, the array is set to NULL.
 
      
-int solid_sys::setCoords(const ParameterSet& pset);
+int setCoords(const ParameterSet& pset);
  
         // Input                ssys    : Solid spin system (this)
         //                      pset    : A parameter set
@@ -128,7 +128,7 @@ int solid_sys::setCoords(const ParameterSet& pset);
    of coordinates, but using { Isotopes, spin indices, + other info }        */  
  
 
-void solid_sys::setDs(const ParameterSet& pset, int ccount);
+void setDs(const ParameterSet& pset, int ccount);
 
         // Input                ssys    : Solid spin system (this)
         //                      pset    : A parameter set
@@ -139,7 +139,7 @@ void solid_sys::setDs(const ParameterSet& pset, int ccount);
 //                Functions To Set Shift Anisotropy Interactions
 // ----------------------------------------------------------------------------
 
-void solid_sys::setCs(const ParameterSet& pset);
+void setCs(const ParameterSet& pset);
 
         // Input                ssys    : Solid spin system (this)
         //                      pset    : A parameter set
@@ -154,7 +154,7 @@ void solid_sys::setCs(const ParameterSet& pset);
 // ----------------------------------------------------------------------------
 
 
-void solid_sys::setQs(const ParameterSet& pset);
+void setQs(const ParameterSet& pset);
  
         // Input                ssys    : Solid spin system (this)
         //                      pset    : A parameter set
@@ -181,7 +181,7 @@ void solid_sys::setQs(const ParameterSet& pset);
                                           Isotopes used to avoid confusion in
                                           IntG over possible nuclear spins   */
 
-void solid_sys::setGs(const ParameterSet& pset);
+void setGs(const ParameterSet& pset);
 
 
 // ----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ void solid_sys::setGs(const ParameterSet& pset);
                                           Isotopes used to avoid confusion
                                           over electron vs nuclear spins     */
 
-void solid_sys::setHFs(const ParameterSet& pset);
+void setHFs(const ParameterSet& pset);
 
 
 // ----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void solid_sys::setHFs(const ParameterSet& pset);
 // ----------------------------------------------------------------------------
 
 
-int solid_sys::setSsys(const ParameterSet& pset, int indx=-1, int warn=2);
+int setSsys(const ParameterSet& pset, int indx=-1, int warn=2);
 
         // Input                ssys    : Solid spin system (this)
         //                      pset    : A parameter set
@@ -232,7 +232,7 @@ int solid_sys::setSsys(const ParameterSet& pset, int indx=-1, int warn=2);
 // ____________________________________________________________________________
 
 
-void solid_sys::ResetSOps(int spin);
+void ResetSOps(int spin);
  
         // Input                ssys    : Solid spin system (this)
         // Output               none    : Resets any spin operators for
@@ -253,10 +253,10 @@ public:
 ///F_list =		      - Assignment
 
 
-MSVCDLC      solid_sys::solid_sys(int spins=0);
-MSVCDLC      solid_sys::solid_sys(const solid_sys &ssys1);
-MSVCDLL void solid_sys::operator= (const solid_sys &ssys);
-MSVCDLC      solid_sys::~solid_sys ();
+MSVCDLC      solid_sys(int spins=0);
+MSVCDLC      solid_sys(const solid_sys &ssys1);
+MSVCDLL void operator= (const solid_sys &ssys);
+MSVCDLC      ~solid_sys ();
 
 // ____________________________________________________________________________
 // B             SPIN COORDINATES VECTOR ACCESS & MANIPULATIONS
@@ -279,10 +279,10 @@ MSVCDLC      solid_sys::~solid_sys ();
         // Note                         : The size of cvec must be at least as
         //                                big as the number of system spins
  
-MSVCDLL coord     solid_sys::getCoord(int i) const;
-MSVCDLL coord_vec solid_sys::getCoords()     const;
-MSVCDLL void      solid_sys::setCoord(int i, coord& pt);
-MSVCDLL void      solid_sys::setCoords(const coord_vec& cvec);
+MSVCDLL coord     getCoord(int i) const;
+MSVCDLL coord_vec getCoords()     const;
+MSVCDLL void      setCoord(int i, coord& pt);
+MSVCDLL void      setCoords(const coord_vec& cvec);
  
 
 // ____________________________________________________________________________
@@ -331,40 +331,40 @@ MSVCDLL void      solid_sys::setCoords(const coord_vec& cvec);
 //                   Generic Dipolar Value Access Functions
 // ----------------------------------------------------------------------------
 
-MSVCDLL void   solid_sys::DValue(int sI, int sS, double val, int type);
-MSVCDLL double solid_sys::DValue(int sI, int sS,             int type) const;
+MSVCDLL void   DValue(int sI, int sS, double val, int type);
+MSVCDLL double DValue(int sI, int sS,             int type) const;
 
 //                         Dipolar Coupling Constants
 
-MSVCDLL void   solid_sys::DCC(int   spinI, int spinS, double dcc);
-MSVCDLL double solid_sys::DCC(int   spinI, int spinS) const;
-MSVCDLL double solid_sys::Ddelz(int spinI, int spinS) const;
-MSVCDLL void   solid_sys::Ddelz(int spinI, int spinS, double delzz);
+MSVCDLL void   DCC(int   spinI, int spinS, double dcc);
+MSVCDLL double DCC(int   spinI, int spinS) const;
+MSVCDLL double Ddelz(int spinI, int spinS) const;
+MSVCDLL void   Ddelz(int spinI, int spinS, double delzz);
    
 //                        Dipolar Asymmetry Values
 
-MSVCDLL double solid_sys::Deta(int spinI, int spinS) const;
-MSVCDLL void   solid_sys::Deta(int spinI, int spinS, double ETA);
+MSVCDLL double Deta(int spinI, int spinS) const;
+MSVCDLL void   Deta(int spinI, int spinS, double ETA);
 
 //               Dipolar Theta Orientation (Down From +z Axis)
 
-MSVCDLL double solid_sys::Dtheta(int spinI, int spinS) const;
-MSVCDLL void   solid_sys::Dtheta(int spinI, int spinS, double dtheta);
+MSVCDLL double Dtheta(int spinI, int spinS) const;
+MSVCDLL void   Dtheta(int spinI, int spinS, double dtheta);
 
 //               Dipolar Phi Orientation (Over From +x Axis)
  
-MSVCDLL double solid_sys::Dphi(int spinI, int spinS) const;
-MSVCDLL void   solid_sys::Dphi(int spinI, int spinS, double dphi);
+MSVCDLL double Dphi(int spinI, int spinS) const;
+MSVCDLL void   Dphi(int spinI, int spinS, double dphi);
 
 //                    Dipolar Spin Tensor Component
          
-matrix solid_sys::DTcomp(int spinI, int spinS, int m) const;
+matrix DTcomp(int spinI, int spinS, int m) const;
 
 //                        Full Dipolar Interaction
          
-MSVCDLL const IntDip&    solid_sys::getDipInt(int spinI, int spinS) const;
-MSVCDLL const IntDip&    solid_sys::getDipInt(int dip)              const;
-MSVCDLL const IntDipVec& solid_sys::getDipVec()                     const;
+MSVCDLL const IntDip&    getDipInt(int spinI, int spinS) const;
+MSVCDLL const IntDip&    getDipInt(int dip)              const;
+MSVCDLL const IntDipVec& getDipVec()                     const;
  
 // ____________________________________________________________________________
 // D                CSA INTERACTION ACCESS & MANIPULATIONS
@@ -407,34 +407,34 @@ MSVCDLL const IntDipVec& solid_sys::getDipVec()                     const;
 
 //                   Generic CSA Value Access Functions
 
-MSVCDLL void   solid_sys::CValue(int spin, double val, int type);
-MSVCDLL double solid_sys::CValue(int spin,             int type) const;
+MSVCDLL void   CValue(int spin, double val, int type);
+MSVCDLL double CValue(int spin,             int type) const;
 
 //                            CSA & delzz Values
  
-MSVCDLL void   solid_sys::CSA(int   sI, double cs);
-MSVCDLL double solid_sys::CSA(int   sI) const;
-MSVCDLL void   solid_sys::Cdelz(int sI, double dz);
-MSVCDLL double solid_sys::Cdelz(int sI) const;
+MSVCDLL void   CSA(int   sI, double cs);
+MSVCDLL double CSA(int   sI) const;
+MSVCDLL void   Cdelz(int sI, double dz);
+MSVCDLL double Cdelz(int sI) const;
  
 //                            CSA Asymmetry Values
 
-MSVCDLL void   solid_sys::Ceta(int sI, double CE);
-MSVCDLL double solid_sys::Ceta(int sI) const;
+MSVCDLL void   Ceta(int sI, double CE);
+MSVCDLL double Ceta(int sI) const;
      
 //                   CSA Theta Orientation (Down From +z Axis)
 
-MSVCDLL void   solid_sys::Ctheta(int sI, double ctheta);
-MSVCDLL double solid_sys::Ctheta(int sI) const;
+MSVCDLL void   Ctheta(int sI, double ctheta);
+MSVCDLL double Ctheta(int sI) const;
 
 //                    CSA Phi Orientation (Over From +x Axis)
  
-MSVCDLL void   solid_sys::Cphi(int sI, double cphi);
-MSVCDLL double solid_sys::Cphi(int sI) const;
+MSVCDLL void   Cphi(int sI, double cphi);
+MSVCDLL double Cphi(int sI) const;
 
 //                             Full CSA Interaction
  
-MSVCDLL IntCSA solid_sys::getCSAInt(int sI) const;
+MSVCDLL IntCSA getCSAInt(int sI) const;
 
 // ____________________________________________________________________________
 // E             QUADRUPOLAR INTERACTION ACCESS & MANIPULATIONS
@@ -477,42 +477,42 @@ MSVCDLL IntCSA solid_sys::getCSAInt(int sI) const;
 
 //                   Generic Quadrupolar Value Access Functions
 
-MSVCDLL void   solid_sys::QValue(int spin, double val, int type);
-MSVCDLL double solid_sys::QValue(int spin,             int type) const;
+MSVCDLL void   QValue(int spin, double val, int type);
+MSVCDLL double QValue(int spin,             int type) const;
 
 //                            QCC & delzz Values
 
-MSVCDLL void   solid_sys::QCC(int   spin, double qcc);
-MSVCDLL double solid_sys::QCC(int   spin) const;
-MSVCDLL double solid_sys::Qdelz(int spin) const;
-MSVCDLL void   solid_sys::Qdelz(int spin, double delzz);
+MSVCDLL void   QCC(int   spin, double qcc);
+MSVCDLL double QCC(int   spin) const;
+MSVCDLL double Qdelz(int spin) const;
+MSVCDLL void   Qdelz(int spin, double delzz);
 
 //                        Quadrupolar Asymmetry Values
 
-MSVCDLL double  solid_sys::Qeta(int   spin) const;
-MSVCDLL void    solid_sys::Qeta(int   spin, double Qeta);
+MSVCDLL double  Qeta(int   spin) const;
+MSVCDLL void    Qeta(int   spin, double Qeta);
 
 //               Quadrupolar Theta Orientation (Down From +z Axis)
 
-MSVCDLL double  solid_sys::Qtheta(int spin) const;
-MSVCDLL void    solid_sys::Qtheta(int spin, double Qtheta);
+MSVCDLL double  Qtheta(int spin) const;
+MSVCDLL void    Qtheta(int spin, double Qtheta);
 
 //               Quadrupolar Phi Orientation (Over From +x Axis)
 
-MSVCDLL double  solid_sys::Qphi(int   spin) const;
-MSVCDLL void    solid_sys::Qphi(int   spin, double Qphi);
+MSVCDLL double  Qphi(int   spin) const;
+MSVCDLL void    Qphi(int   spin, double Qphi);
 
 //                    Quadrupolar Spin Tensor Component
          
-MSVCDLL matrix solid_sys::QTcomp(int spin, int m) const;
+MSVCDLL matrix QTcomp(int spin, int m) const;
 
 //                        Full Quadrupolar Interaction
          
-MSVCDLL const IntQuad&    solid_sys::getQuadInt(int spin) const;
-MSVCDLL const IntQuadVec& solid_sys::getQuadVec()         const;
+MSVCDLL const IntQuad&    getQuadInt(int spin) const;
+MSVCDLL const IntQuadVec& getQuadVec()         const;
  
 // sosi?
-MSVCDLL IntQuad solid_sys::Qint(int   spin);
+MSVCDLL IntQuad Qint(int   spin);
  
 // ____________________________________________________________________________
 // F              ELECTRON G INTERACTION ACCESS & MANIPULATIONS
@@ -555,40 +555,40 @@ MSVCDLL IntQuad solid_sys::Qint(int   spin);
    coordinates. 
 	*/
 
-MSVCDLL void   solid_sys::GValue(int sI, double val, int type);
-MSVCDLL double solid_sys::GValue(int sI,             int type) const;
+MSVCDLL void   GValue(int sI, double val, int type);
+MSVCDLL double GValue(int sI,             int type) const;
 
 //                         Electron G Coupling Constants
 
 
-MSVCDLL void   solid_sys::DCC(int   spinI, double dcc);
-MSVCDLL double solid_sys::DCC(int   spinI) const;
-MSVCDLL double solid_sys::Gdelz(int spinI) const;
-MSVCDLL void   solid_sys::Gdelz(int spinI, double delzz);
+MSVCDLL void   DCC(int   spinI, double dcc);
+MSVCDLL double DCC(int   spinI) const;
+MSVCDLL double Gdelz(int spinI) const;
+MSVCDLL void   Gdelz(int spinI, double delzz);
 
 //                        Electron G Asymmetry Values
 
-MSVCDLL double solid_sys::Geta(int spinI) const;
-MSVCDLL void   solid_sys::Geta(int spinI, double ETA);
+MSVCDLL double Geta(int spinI) const;
+MSVCDLL void   Geta(int spinI, double ETA);
 
 //               Electron G Theta Orientation (Down From +z Axis)
 
-MSVCDLL double solid_sys::Gtheta(int spinI) const;
-MSVCDLL void   solid_sys::Gtheta(int spinI, double gtheta);
+MSVCDLL double Gtheta(int spinI) const;
+MSVCDLL void   Gtheta(int spinI, double gtheta);
 
 //               Electron G Phi Orientation (Over From +x Axis)
 
-MSVCDLL double solid_sys::Gphi(int spinI) const;
-MSVCDLL void   solid_sys::Gphi(int spinI, double gphi);
+MSVCDLL double Gphi(int spinI) const;
+MSVCDLL void   Gphi(int spinI, double gphi);
 
 //                    Electron G Spin Tensor Component
 
-MSVCDLL matrix solid_sys::GTcomp(int spinI, int m) const;
+MSVCDLL matrix GTcomp(int spinI, int m) const;
 
 //                        Full Electron G Interaction
 
-MSVCDLL IntG    solid_sys::getGInt(int spinI) const;
-MSVCDLL IntGVec solid_sys::getGVec()          const;
+MSVCDLL IntG    getGInt(int spinI) const;
+MSVCDLL IntGVec getGVec()          const;
 
 // ____________________________________________________________________________
 // G               HYPERFINE INTERACTION ACCESS & MANIPULATIONS
@@ -630,36 +630,36 @@ SolidSys.cc" [dos] 2159L, 91494C written
 
 //                   Generic Hyperfine Value Access Functions
 
-MSVCDLL void   solid_sys::HFValue(int sI, int sS, double val, int type);
-MSVCDLL double solid_sys::HFValue(int sI, int sS,             int type) const;
+MSVCDLL void   HFValue(int sI, int sS, double val, int type);
+MSVCDLL double HFValue(int sI, int sS,             int type) const;
 
 //                         Hyperfine Anisotropy Values
 
-MSVCDLL void   solid_sys::HFdelz(int   spinI, int spinS, double hdelz);
-MSVCDLL double solid_sys::HFdelz(int   spinI, int spinS) const;
+MSVCDLL void   HFdelz(int   spinI, int spinS, double hdelz);
+MSVCDLL double HFdelz(int   spinI, int spinS) const;
    
 //                        Hyperfine Asymmetry Values
 
-MSVCDLL double solid_sys::HFeta(int spinI, int spinS) const;
-MSVCDLL void   solid_sys::HFeta(int spinI, int spinS, double ETA);
+MSVCDLL double HFeta(int spinI, int spinS) const;
+MSVCDLL void   HFeta(int spinI, int spinS, double ETA);
 
 //               Hyperfine Theta Orientation (Down From +z Axis)
 
-MSVCDLL double solid_sys::HFtheta(int spinI, int spinS) const;
-MSVCDLL void   solid_sys::HFtheta(int spinI, int spinS, double dtheta);
+MSVCDLL double HFtheta(int spinI, int spinS) const;
+MSVCDLL void   HFtheta(int spinI, int spinS, double dtheta);
 
 //               Hyperfine Phi Orientation (Over From +x Axis)
  
-MSVCDLL double solid_sys::HFphi(int spinI, int spinS) const;
-MSVCDLL void   solid_sys::HFphi(int spinI, int spinS, double dphi);
+MSVCDLL double HFphi(int spinI, int spinS) const;
+MSVCDLL void   HFphi(int spinI, int spinS, double dphi);
 
 //                    Hyperfine Spin Tensor Component
          
-MSVCDLL matrix solid_sys::HFTcomp(int spinI, int spinS, int m) const;
+MSVCDLL matrix HFTcomp(int spinI, int spinS, int m) const;
 
 //                        Full Hyperfine Interaction
          
-MSVCDLL IntHF    solid_sys::getHFInt(int spinI, int spinS) const;
+MSVCDLL IntHF    getHFInt(int spinI, int spinS) const;
 
 
 // ____________________________________________________________________________
@@ -691,7 +691,7 @@ MSVCDLL friend void operator+= (ParameterSet& pset, const solid_sys &ssys);
 
 
 
-MSVCDLL void solid_sys::PSetAdd(ParameterSet& pset, int idx=-1) const;
+MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1) const;
 
 	// Input		ssys	: Solid spin system
         //                      pset	: Parameter set
@@ -723,7 +723,7 @@ MSVCDLL void operator= (const ParameterSet& pset);
 //    Functions To Output Solid State System To ASCII From A Parameter Set
 // ----------------------------------------------------------------------------
 
-MSVCDLL int solid_sys::write(const std::string &filename, int idx=-1, int warn=2) const;
+MSVCDLL int write(const std::string &filename, int idx=-1, int warn=2) const;
  
         // Input                ssys    : Solid spin system (this)
         //                      filename: Output file name
@@ -734,7 +734,7 @@ MSVCDLL int solid_sys::write(const std::string &filename, int idx=-1, int warn=2
         //                                as a parameter set to file filename
 
 
-MSVCDLL int solid_sys::write(std::ofstream& ofstr, int idx=-1, int warn=2) const;
+MSVCDLL int write(std::ofstream& ofstr, int idx=-1, int warn=2) const;
 
         // Input                ssys    : Solid spin system (this)
         //                      ofstr   : Output file stream
@@ -773,8 +773,8 @@ MSVCDLL int solid_sys::write(std::ofstream& ofstr, int idx=-1, int warn=2) const
                                           Returns true if read properly      */
 
 
-MSVCDLL int solid_sys::read(const std::string &filename,   int idx=-1, int warn=2);
-MSVCDLL int solid_sys::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL int read(const std::string &filename,   int idx=-1, int warn=2);
+MSVCDLL int read(const ParameterSet& pset, int idx=-1, int warn=2);
  
 // ----------------------------------------------------------------------------
 //          Interactive Read of Solid State System From An ASCII File
@@ -797,8 +797,8 @@ MSVCDLL int solid_sys::read(const ParameterSet& pset, int idx=-1, int warn=2);
 					  recognized sys parameters
            Note                         : Spin system is modifed (filled)    */
 
-MSVCDLL std::string solid_sys::ask_read(int argc, char* argv[], int argn);
-MSVCDLL std::string solid_sys::ask_read(int argc, char* argv[], int argn, const std::string& def);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn, const std::string& def);
 
 // ____________________________________________________________________________
 //                           STANDARD I/O FUNCTIONS
@@ -826,12 +826,12 @@ MSVCDLL std::string solid_sys::ask_read(int argc, char* argv[], int argn, const 
      <<      Standard output of entire spin system 
 */
 
-MSVCDLL std::ostream& solid_sys::printPs(std::ostream&  ostr, int units=1) const;
-MSVCDLL std::ostream& solid_sys::printDs(std::ostream&  ostr) const;
-MSVCDLL std::ostream& solid_sys::printCs(std::ostream&  ostr) const;
-MSVCDLL std::ostream& solid_sys::printQs(std::ostream&  ostr) const;
-MSVCDLL std::ostream& solid_sys::printGs(std::ostream&  ostr, int pf=0)    const;
-MSVCDLL std::ostream& solid_sys::printHFs(std::ostream& ostr, int pf=0)    const;
+MSVCDLL std::ostream& printPs(std::ostream&  ostr, int units=1) const;
+MSVCDLL std::ostream& printDs(std::ostream&  ostr) const;
+MSVCDLL std::ostream& printCs(std::ostream&  ostr) const;
+MSVCDLL std::ostream& printQs(std::ostream&  ostr) const;
+MSVCDLL std::ostream& printGs(std::ostream&  ostr, int pf=0)    const;
+MSVCDLL std::ostream& printHFs(std::ostream& ostr, int pf=0)    const;
 MSVCDLL std::ostream& print(std::ostream& out) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& out, const solid_sys& ssys);
 
@@ -924,9 +924,9 @@ virtual ostream& print(ostream& out) const;	Print spin system           */
            Output               none    : Solid spin system spin isotope
                                           type is switched to Iso            */
 
-MSVCDLL void solid_sys::isotope(int spin, const std::string&  symbol);
-MSVCDLL void solid_sys::isotope(int spin, const Isotope& Iso);
-MSVCDLL const Isotope& solid_sys::isotope(int spin) const;
+MSVCDLL void isotope(int spin, const std::string&  symbol);
+MSVCDLL void isotope(int spin, const Isotope& Iso);
+MSVCDLL const Isotope& isotope(int spin) const;
 
 };
 

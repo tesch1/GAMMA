@@ -90,41 +90,41 @@ friend class MatLab5DE;				// Data Element Full Access
 
  
 MatLab5Tag();
-MatLab5Tag::MatLab5Tag(int TY, int NB, int CMP=0);
-MatLab5Tag::MatLab5Tag(const MatLab5Tag& T);
-void MatLab5Tag::operator=(const MatLab5Tag& T);
+MatLab5Tag(int TY, int NB, int CMP=0);
+MatLab5Tag(const MatLab5Tag& T);
+void operator=(const MatLab5Tag& T);
  
 // ____________________________________________________________________________
 // B                    MATLAB MAT 5 Tag Access Functions
 // ____________________________________________________________________________
 
 
-int MatLab5Tag::Type(int LE=0) const;
+int Type(int LE=0) const;
 
         // Input                ML5T    : MAT version 5 tag (this)
         //                      LE      : Little Endian flag (default = big)
         // Output               type    : An integer for the data type
  
  
-std::string MatLab5Tag::DataType() const;
+std::string DataType() const;
  
         // Input                ML5T    : MAT version 5 tag (this)
         // Output               string  : String labeling the type
 
 
-std::string MatLab5Tag::DataSymbol() const;
+std::string DataSymbol() const;
 
         // Input                ML5T    : MAT version 5 tag (this)
         // Output               string  : String labeling the type
         //                                according to MATLAB symbol 
  
-int MatLab5Tag::Bytes() const;
+int Bytes() const;
 
         // Input                ML5T    : MAT version 5 tag (this)
         // Output               NBytes  : Number of bytes
 
 
-void MatLab5Tag::SetCompressed(int bigend);
+void SetCompressed(int bigend);
 
         // Input                ML5T    : MAT version 5 tag (this)
 	//			bigend  : Data storage endian type
@@ -150,13 +150,13 @@ void MatLab5Tag::SetCompressed(int bigend);
                                           tag is written tothe top of the
                                           file (as it should be in MATLAB)   */
  
-int MatLab5Tag::write(std::fstream& fp) const;
+int write(std::fstream& fp) const;
  
 /* These are the functions which will return the number of bytes that are
    written upon output a Tag in MATLAB ".mat" binary format, Ver. 5. Note
    that all Tags are 8 bytes long (even those of compressed data elements)   */
 
-int MatLab5Tag::Size() const;
+int Size() const;
        
 
 // ____________________________________________________________________________
@@ -180,7 +180,7 @@ int MatLab5Tag::Size() const;
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-int MatLab5Tag::read(std::fstream& fp, int bigend, int warn=1);
+int read(std::fstream& fp, int bigend, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -188,7 +188,7 @@ int MatLab5Tag::read(std::fstream& fp, int bigend, int warn=1);
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab5Tag::print(std::ostream& ostr, int hf=1, int bg=0) const;
+void print(std::ostream& ostr, int hf=1, int bg=0) const;
  
         // Input                ML5T    : MAT version 5 tag (this)
         //                      ostr    : An output stream

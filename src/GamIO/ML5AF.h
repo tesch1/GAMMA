@@ -57,9 +57,9 @@ class MatLab5AF : MatLab5SE
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLab5AF::MLAF5error(int eidx, int noret=1);
-void MatLab5AF::MLAF5error(int eidx, const std::string& pname, int noret=1);
-volatile void MatLab5AF::MLAF5fatality(int eidx);
+void MLAF5error(int eidx, int noret=1);
+void MLAF5error(int eidx, const std::string& pname, int noret=1);
+volatile void MLAF5fatality(int eidx);
 
 
 public:
@@ -74,9 +74,9 @@ public:
 // ____________________________________________________________________________
  
 
-MatLab5AF::MatLab5AF();
-MatLab5AF::MatLab5AF(int cmplx, int C, int global=0,int logical=0);
-MatLab5AF::MatLab5AF(const matrix& mx, int cmplx);
+MatLab5AF();
+MatLab5AF(int cmplx, int C, int global=0,int logical=0);
+MatLab5AF(const matrix& mx, int cmplx);
  
         // Input                ML5T    : MAT version 5 tag (this)
         //                      mx      : A GAMMA matrix
@@ -97,18 +97,18 @@ MatLab5AF::MatLab5AF(const matrix& mx, int cmplx);
 // ____________________________________________________________________________
 
  
-std::string MatLab5AF::SClass() const;
+std::string SClass() const;
  
         // Input                ML5T    : MAT version 5 tag (this) 
         // Output               string  : String labeling the type 
 
-std::string MatLab5AF::Symbol() const;
+std::string Symbol() const;
 
         // Input                ML5T    : MAT version 5 tag (this)
         // Output               string  : String labeling the type
 
 
-int MatLab5AF::IsComplex() const;
+int IsComplex() const;
  
         // Input                ML5AF   : MAT version 5 array flags SE (this)
         // Output               TF      : True if complex flag set
@@ -118,7 +118,7 @@ int MatLab5AF::IsComplex() const;
          or perhaps just get rid of it entirely!
 ***********************************************************************/
  
-int MatLab5AF::IsFlag(int flg) const;
+int IsFlag(int flg) const;
 
    
 // ____________________________________________________________________________
@@ -136,13 +136,13 @@ int MatLab5AF::IsFlag(int flg) const;
                 Note                    : No care is taken to insure where
 					  the tag is written in the file.    */
  
-int MatLab5AF::write(std::fstream& fp) const;
+int write(std::fstream& fp) const;
 
  
 /* These are the functions which will return the number of bytes that are 
    written upon output this sub-element in MATLAB ".mat" binary format, V5   */ 
  
-int MatLab5AF::Size() const;
+int Size() const;
 
 // ____________________________________________________________________________
 // D          MATLAB MAT 5 Array Flags Sub-Element Binary Input Functions
@@ -166,7 +166,7 @@ int MatLab5AF::Size() const;
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-virtual int MatLab5AF::read(std::fstream& fp, int bigend, int warn=1);
+virtual int read(std::fstream& fp, int bigend, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -174,7 +174,7 @@ virtual int MatLab5AF::read(std::fstream& fp, int bigend, int warn=1);
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab5AF::print(std::ostream& ostr) const;
+void print(std::ostream& ostr) const;
  
         // Input                ML5AF	: MAT version 5 array flags (this)
         //                      ostr    : An output stream

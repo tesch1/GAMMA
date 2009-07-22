@@ -57,9 +57,9 @@ class MatLab4DE
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLab4DE::MLDE4error(int eidx, int noret=1);
-void MatLab4DE::MLDE4error(int eidx, const std::string& pname, int noret=1);
-volatile void MatLab4DE::MLDE4fatality(int eidx);
+void MLDE4error(int eidx, int noret=1);
+void MLDE4error(int eidx, const std::string& pname, int noret=1);
+volatile void MLDE4fatality(int eidx);
 
 
 // ____________________________________________________________________________
@@ -80,10 +80,10 @@ volatile void MatLab4DE::MLDE4fatality(int eidx);
                                            are written/read to/from the file
 	  				   stream in MATLAB MAT V4 format    */
 
-int MatLab4DE::WriteMx(std::fstream& fp) const;
-int MatLab4DE::ReadMx(std::fstream& fp, int warn=1);
-int MatLab4DE::WriteName(std::fstream& fp) const;
-int MatLab4DE::ReadName(std::fstream& fp, int warn=1);
+int WriteMx(std::fstream& fp) const;
+int ReadMx(std::fstream& fp, int warn=1);
+int WriteName(std::fstream& fp) const;
+int ReadName(std::fstream& fp, int warn=1);
 
 
 //public:	/* Keeping Everything Private, Allow MatLabFile Use!!! */
@@ -98,15 +98,15 @@ int MatLab4DE::ReadName(std::fstream& fp, int warn=1);
 // ____________________________________________________________________________
  
 
-MatLab4DE::MatLab4DE();
-MatLab4DE::MatLab4DE(const std::string& Name, const matrix& mx, int cmplx=1);
-virtual MatLab4DE::~MatLab4DE();
+MatLab4DE();
+MatLab4DE(const std::string& Name, const matrix& mx, int cmplx=1);
+virtual ~MatLab4DE();
 
 // ____________________________________________________________________________
 // B            MATLAB MAT 4 Data Element Access Functions
 // ____________________________________________________________________________
  
-void MatLab4DE::whos(std::ostream& ostr, std::fstream& fp);
+void whos(std::ostream& ostr, std::fstream& fp);
  
         // Input                ML4DE   : MAT version 4 data element (this)
         //                      ostr    : An output stream
@@ -120,8 +120,8 @@ void MatLab4DE::whos(std::ostream& ostr, std::fstream& fp);
         // Note                         : The file stream position will be
         //                                advanced to the end of the element
  
-int  MatLab4DE::Size(std::fstream& fp);
-void MatLab4DE::skip(std::fstream& fp);
+int  Size(std::fstream& fp);
+void skip(std::fstream& fp);
 
 
 // ____________________________________________________________________________
@@ -152,13 +152,13 @@ void MatLab4DE::skip(std::fstream& fp);
                                           data element is written &
                                           written at data element start.      */ 
  
-int MatLab4DE::write(std::fstream& fp) const;
+int write(std::fstream& fp) const;
  
  
 /* These are the functions which will return the number of bytes that are
    written upon output a data element in MATLAB ".mat" binary format, Ver. 4 */
  
-int MatLab4DE::Size(const matrix& mx, const std::string& name, int cmplx=0) const;
+int Size(const matrix& mx, const std::string& name, int cmplx=0) const;
 
 // ____________________________________________________________________________
 // D          MATLAB MAT 4 Data Element Binary Input Functions
@@ -181,7 +181,7 @@ int MatLab4DE::Size(const matrix& mx, const std::string& name, int cmplx=0) cons
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-int MatLab4DE::read(std::fstream& fp, int warn=1);
+int read(std::fstream& fp, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -189,7 +189,7 @@ int MatLab4DE::read(std::fstream& fp, int warn=1);
 // ____________________________________________________________________________
 
 
-void MatLab4DE::print(std::ostream& ostr) const;
+void print(std::ostream& ostr) const;
  
         // Input                ML4DE	: MAT version 4 data element (this)
         //                      ostr    : An output stream

@@ -66,14 +66,14 @@ class BlochAcq
 // i                     CLASS BLOCH ACQUISITION ERROR HANDLING
 // ____________________________________________________________________________
 
-void BlochAcq::ACQerror(int eidx, int noret=0) const;
+void ACQerror(int eidx, int noret=0) const;
 
         // Input        ACQ1D : An BlochAcq (this)
 	//		eidx  : An error index
 	//		noret : Flag for carriage return
         // Output       void  : Error Message Output
 
-volatile void BlochAcq::ACQfatality(int eidx=0) const;
+volatile void ACQfatality(int eidx=0) const;
 
         // Input        ACQ1D : An BlochAcq (this)
 	//		eidx  : An error index
@@ -93,7 +93,7 @@ volatile void BlochAcq::ACQfatality(int eidx=0) const;
    the user has specified the state of the system (prepared density operator)
    at the acqusition start.                                                  */
 
-void BlochAcq::create( );
+void create( );
 
 	// Input	ACQ1D : An BlochAcq (this)
 	// Output	void  : Major components of ACQ1D are set
@@ -109,7 +109,7 @@ void BlochAcq::create( );
 	//			  ACUTOFF - An intensity cut level
 
 
-void BlochAcq::make_table(const col_vector& Sp);
+void make_table(const col_vector& Sp);
 
         // Input	ACQ1D	: An BlochAcq (this)
         //		Sp	: Density matrix (operator propagated)
@@ -133,18 +133,18 @@ void BlochAcq::make_table(const col_vector& Sp);
 // --------------------------- Simple Constructors ----------------------------
 // ----------------------------------------------------------------------------
 
-MSVCDLC BlochAcq::BlochAcq();
-MSVCDLC BlochAcq::BlochAcq(const row_vector& det, const matrix& L, 
+MSVCDLC BlochAcq();
+MSVCDLC BlochAcq(const row_vector& det, const matrix& L, 
                                    const col_vector& Minf, double cut=1.e-12);
-MSVCDLC BlochAcq::BlochAcq(const row_vector& det, const matrix& L, double cut=1.e-12);
+MSVCDLC BlochAcq(const row_vector& det, const matrix& L, double cut=1.e-12);
 
 // ----------------------------------------------------------------------------
 // ---------------- Self Construction, Destruction, Assignment ----------------
 // ----------------------------------------------------------------------------
 
-MSVCDLC      BlochAcq::BlochAcq(const BlochAcq& ACQ1);
-MSVCDLC      BlochAcq::~BlochAcq();
-MSVCDLL void BlochAcq::operator = (const BlochAcq& ACQ1);
+MSVCDLC      BlochAcq(const BlochAcq& ACQ1);
+MSVCDLC      ~BlochAcq();
+MSVCDLL void operator = (const BlochAcq& ACQ1);
 
 // ____________________________________________________________________________
 // B                    ALTERATION AND ACCESS FUNCTIONS
@@ -161,11 +161,11 @@ MSVCDLL void BlochAcq::operator = (const BlochAcq& ACQ1);
       TTable TTable1D   Transitions table                                    */
 
 /*
-const super_op& BlochAcq::L2()     const;
-const gen_op&   BlochAcq::D()      const;
-const matrix    BlochAcq::S()      const;
-const matrix&   BlochAcq::Sinv()   const;
-const TTable1D& BlochAcq::TTable() const;
+const super_op& L2()     const;
+const gen_op&   D()      const;
+const matrix    S()      const;
+const matrix&   Sinv()   const;
+const TTable1D& TTable() const;
 
 void Detector(const gen_op& detect);
 */
@@ -210,8 +210,8 @@ void Detector(const gen_op& detect);
 	//			ICUT between the points [0-ifi]. Only
 	//			those points used in generating the spectrum
 
-MSVCDLL row_vector BlochAcq::T(const col_vector& M0, int npts,         double tinc);
-MSVCDLL void       BlochAcq::T(const col_vector& M0, row_vector& data, double tinc);
+MSVCDLL row_vector T(const col_vector& M0, int npts,         double tinc);
+MSVCDLL void       T(const col_vector& M0, row_vector& data, double tinc);
 
 // ____________________________________________________________________________ 
 // D                        Frequency Domain Spectra
@@ -255,8 +255,8 @@ MSVCDLL void       BlochAcq::T(const col_vector& M0, row_vector& data, double ti
         //                        integrated Lorentzian intensities are used
         //                        rather than the point value.
 
-row_vector BlochAcq::F(const MagVec& M0, int npts,         double Fst, double Ffi);
-void       BlochAcq::F(const MagVec& M0, row_vector& data, double Fst, double Ffi);
+row_vector F(const MagVec& M0, int npts,         double Fst, double Ffi);
+void       F(const MagVec& M0, row_vector& data, double Fst, double Ffi);
 
 // ____________________________________________________________________________ 
 // E             Frequency Domain Spectra In Derivative Mode
@@ -291,8 +291,8 @@ void       BlochAcq::F(const MagVec& M0, row_vector& data, double Fst, double Ff
 	//			  intensity above ICUT*Imax between the points
  
 /*
-row_vector BlochAcq::FD(const gen_op& sigma,int npts,double Fst,double Ffi);
-void BlochAcq::FD(const gen_op& sigma,row_vector& data,double Fst,double Ffi);
+row_vector FD(const gen_op& sigma,int npts,double Fst,double Ffi);
+void FD(const gen_op& sigma,row_vector& data,double Fst,double Ffi);
 */
 
 
@@ -310,8 +310,8 @@ void BlochAcq::FD(const gen_op& sigma,row_vector& data,double Fst,double Ffi);
   		returned table.
 */
 
-MSVCDLL const TTable1D& BlochAcq::table(const col_vector& M0);
-MSVCDLL const TTable1D& BlochAcq::table() const;
+MSVCDLL const TTable1D& table(const col_vector& M0);
+MSVCDLL const TTable1D& table() const;
 
 	// Input	ACQ1D : An BlochAcq (this)
 	// 		sigma : Density matrix (operator propagated)
@@ -340,17 +340,17 @@ MSVCDLL const TTable1D& BlochAcq::table() const;
    pcorrect   void/z    Transitions are phase corrected as specified         */
 
 /*
-void BlochAcq::offset(double     F,            int inHz=1);
-void BlochAcq::offset(double     F,    int tr, int inHz);
-void BlochAcq::FRscale(double    Fscf);
-void BlochAcq::FRscale(double    Fscf, int tr);
-void BlochAcq::Iscale(double     Iscf);
-void BlochAcq::Iscale(double     Iscf, int tr);
-void BlochAcq::broaden(double    LWR,          int inHz=1);
-void BlochAcq::broaden(double    LWR,  int tr, int inHz);
-void BlochAcq::resolution(double res);
-void BlochAcq::pcorrect(double   Wpivot, complex& P);
-complex BlochAcq::pcorrect(double& w0, double w1, int order=5);
+void offset(double     F,            int inHz=1);
+void offset(double     F,    int tr, int inHz);
+void FRscale(double    Fscf);
+void FRscale(double    Fscf, int tr);
+void Iscale(double     Iscf);
+void Iscale(double     Iscf, int tr);
+void broaden(double    LWR,          int inHz=1);
+void broaden(double    LWR,  int tr, int inHz);
+void resolution(double res);
+void pcorrect(double   Wpivot, complex& P);
+complex pcorrect(double& w0, double w1, int order=5);
 */
 
 /* These functions either return values regarding the transitions table or
@@ -366,10 +366,10 @@ complex BlochAcq::pcorrect(double& w0, double w1, int order=5);
    setConv    void      Sets a conversion factor for out frequencies         */
 
 /*
-double BlochAcq::Wmax()  const;
-double BlochAcq::LWmax() const;
-void   BlochAcq::setSort(int sf);
-void   BlochAcq::setConv(int cf);
+double Wmax()  const;
+double LWmax() const;
+void   setSort(int sf);
+void   setConv(int cf);
 */
 
 /* The above function setConv sets the internal value of FRQCONV in class
@@ -379,7 +379,7 @@ void   BlochAcq::setConv(int cf);
    frequency in MHz as this value will be used for Hz -> PPM. For the latter
    set FRQCONV to be the electron g value                                    */
 
-//void BlochAcq::table(const gen_op& sigma, ostream& ostr);
+//void table(const gen_op& sigma, ostream& ostr);
 
         // Input        ACQ1D : An BlochAcq (this)
         //              sigma : Density matrix (operator propagated)
@@ -399,7 +399,7 @@ void   BlochAcq::setConv(int cf);
         //                      internal to the class
 
 
-//void BlochAcq::table(ostream& ostr) const;
+//void table(ostream& ostr) const;
 
         // Input        ostr  : An output stream
         //              type  : Flag for printout type 
@@ -495,8 +495,8 @@ MSVCDLL int full_size() const;
     <<			Same as print(ostr) function
                                                                              */
 
-MSVCDLL        std::ostream& BlochAcq::print(std::ostream& ostr,                         bool pf=false) const;
-MSVCDLL        std::ostream& BlochAcq::print(std::ostream& ostr, const col_vector& sigp, bool pf=false) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr,                         bool pf=false) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, const col_vector& sigp, bool pf=false) const;
 MSVCDLL friend std::ostream& operator << (std::ostream&    ostr, const BlochAcq &ACQ);
 };
 

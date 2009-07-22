@@ -86,7 +86,7 @@ class RowBlk : public row_vector
 // ----------------------------------------------------------------------------
 
 
-void RowBlk::RBerror(int eidx, int noret=0) const;
+void RBerror(int eidx, int noret=0) const;
 
         // Input                Blk     : Stack plot row block (this)
         //                      eidx    : Flag for error type
@@ -94,7 +94,7 @@ void RowBlk::RBerror(int eidx, int noret=0) const;
         // Output               none    : Error message
  
         
-volatile void RowBlk::RBfatality(int eidx) const;
+volatile void RBfatality(int eidx) const;
  
         // Input                Blk     : Stack plot row block (this)
         //                      eidx    : Flag for error type
@@ -113,20 +113,20 @@ public:
 // ____________________________________________________________________________
 
 
-MSVCDLC RowBlk::RowBlk( );
+MSVCDLC RowBlk( );
 
         // Input                none    : No arguments required
         // Output               none    : FrameMaker parameters
 
     
-MSVCDLC RowBlk::RowBlk(int npts);
+MSVCDLC RowBlk(int npts);
  
         // Input                none    : No arguments required
         // Output               none    : FrameMaker parameters
  
  
 
-MSVCDLL void RowBlk::operator=(const RowBlk& Blk);
+MSVCDLL void operator=(const RowBlk& Blk);
  
         // Input                Blk     : Stack plot row block (this)
         //                      Blk1	: Stack plot row
@@ -135,7 +135,7 @@ MSVCDLL void RowBlk::operator=(const RowBlk& Blk);
         ///F_list =                     - Assignment
     
 
-MSVCDLC RowBlk::~RowBlk();
+MSVCDLC ~RowBlk();
  
         // Input                Blk     : Stack plot row block (this)
         // Output               none    : Blk is destructed
@@ -148,14 +148,14 @@ MSVCDLC RowBlk::~RowBlk();
 // ---------------------------- Row Index Access ------------------------------
 
 
-MSVCDLL void RowBlk::SetRow(int row);
+MSVCDLL void SetRow(int row);
  
         // Input                Blk     : Stack plot row block (this)
         //                      row     : Row index
         // Output               void    : Block row index set to row
  
 
-MSVCDLL int RowBlk::GetRow() const;
+MSVCDLL int GetRow() const;
  
         // Input                Blk     : Stack plot row block (this)
         // Output               Brow    : Block row index
@@ -165,7 +165,7 @@ MSVCDLL int RowBlk::GetRow() const;
 // ----------------------------- Row ID Access -------------------------------
 
 
-MSVCDLL void RowBlk::SetIDs();
+MSVCDLL void SetIDs();
 
         // Input                Blk     : Stack plot row block (this)
         // Return               void    : Possible block ID values are set
@@ -173,7 +173,7 @@ MSVCDLL void RowBlk::SetIDs();
  
 // --------------------------- Row Levels Access -----------------------------
  
-MSVCDLL void RowBlk::SetLevels(double* Levels);
+MSVCDLL void SetLevels(double* Levels);
  
         // Input                Blk     : Stack plot row block (this)
         // Return               void    : Possible block ID values are set
@@ -183,7 +183,7 @@ MSVCDLL void RowBlk::SetLevels(double* Levels);
 // -------------------------- Row Offsets Access -----------------------------
 
 
-MSVCDLL void RowBlk::SetOffsets(double ho, double vo);
+MSVCDLL void SetOffsets(double ho, double vo);
  
         // Input                Blk     : Stack plot row block (this)
         //                      ho      : Horizontal offset (cm) 
@@ -191,13 +191,13 @@ MSVCDLL void RowBlk::SetOffsets(double ho, double vo);
         // Output               void    : Block offsets set (cm)
  
 
-MSVCDLL double RowBlk::VOffset() const;
+MSVCDLL double VOffset() const;
 
         // Input                Blk     : Stack plot row block (this)
         // Output               Bvoff   : Block row vertical offset (cm)
 
 
-MSVCDLL double RowBlk::HOffset() const;
+MSVCDLL double HOffset() const;
  
         // Input                Blk     : Stack plot row block (this)
         // Output               Bhoff   : Block row horizontal offset (cm)
@@ -206,7 +206,7 @@ MSVCDLL double RowBlk::HOffset() const;
 // ---------------------- Row Scaling Factor Access --------------------------
  
  
-MSVCDLL void RowBlk::SetScaling(double HSF, double VSF);
+MSVCDLL void SetScaling(double HSF, double VSF);
 
         // Input                Blk     : Stack plot row block (this)
         //                      ho      : Horizontal offset (cm)
@@ -214,13 +214,13 @@ MSVCDLL void RowBlk::SetScaling(double HSF, double VSF);
         // Output               void    : Block offsets set (cm)
 
  
-MSVCDLL double RowBlk::VScale() const;
+MSVCDLL double VScale() const;
  
         // Input                Blk     : Stack plot row block (this)
         // Output               Bvsf    : Block vertical scaling (cm/asbunits)
  
  
-MSVCDLL double RowBlk::HScale() const;
+MSVCDLL double HScale() const;
  
         // Input                Blk     : Stack plot row block (this)
         // Output               Bhsf    : Block horiz. scaling (cm/asbunits)
@@ -229,13 +229,13 @@ MSVCDLL double RowBlk::HScale() const;
 // ------------------------ RowBlk Debug Flag Access --------------------------
  
  
-MSVCDLL int RowBlk::GetDebug();  
+MSVCDLL int GetDebug();  
  
         // Input                Blk     : Stack plot row block (this)
         // Output               Bdebug : The current debugging level
  
  
-MSVCDLL void RowBlk::SetDebug(int db);
+MSVCDLL void SetDebug(int db);
  
         // Input                Blk     : Stack plot row block (this)
         //                      db      : A debugging level 
@@ -246,13 +246,13 @@ MSVCDLL void RowBlk::SetDebug(int db);
 // ____________________________________________________________________________
 
  
-void RowBlk::Zero();
+void Zero();
  
         // Input                Blk     : Stack plot row block (this)
         // Return               void    : The point count is set to zero
  
 
-void RowBlk::AddPt(int col, const matrix& mx);
+void AddPt(int col, const matrix& mx);
 
         // Input                Blk     : Stack plot row block (this)
         //                      col     : Column index
@@ -261,7 +261,7 @@ void RowBlk::AddPt(int col, const matrix& mx);
         //                                the block Blk in plot coordinates
 
 
-MSVCDLL void RowBlk::AddPt(complex& pt);
+MSVCDLL void AddPt(complex& pt);
  
         // Input                Blk     : Stack plot row block (this)
         //                      pt      : Point (FM units cm)
@@ -269,7 +269,7 @@ MSVCDLL void RowBlk::AddPt(complex& pt);
         //                                the block Blk in plot coordinates
  
 
-MSVCDLL void RowBlk::AddPt(complex& pt, int area);
+MSVCDLL void AddPt(complex& pt, int area);
  
         // Input                Blk     : Stack plot row block (this)
         //                      pt      : Point (FM units cm)
@@ -279,7 +279,7 @@ MSVCDLL void RowBlk::AddPt(complex& pt, int area);
         //                                in the area specified
  
  
-MSVCDLL complex RowBlk::GetPt(int col, const matrix& mx) const;
+MSVCDLL complex GetPt(int col, const matrix& mx) const;
  
         // Input                Blk     : Stack plot row block (this)
         //                      col     : Column index 
@@ -289,7 +289,7 @@ MSVCDLL complex RowBlk::GetPt(int col, const matrix& mx) const;
         // Note                         : The block is unaffected              
  
  
-MSVCDLL int RowBlk::GetArea(complex& z) const;
+MSVCDLL int GetArea(complex& z) const;
 
         // Input                Blk     : Stack plot row block (this)
         //                      z       : Block point
@@ -298,7 +298,7 @@ MSVCDLL int RowBlk::GetArea(complex& z) const;
         // Note                         : The block is unaffected
  
 
-MSVCDLL PtTrend RowBlk::Trend(int area) const;
+MSVCDLL PtTrend Trend(int area) const;
 
         // Input                Blk     : Stack plot row block (this)
         //                      area    : Area flag
@@ -308,7 +308,7 @@ MSVCDLL PtTrend RowBlk::Trend(int area) const;
 
  
 
-MSVCDLL complex RowBlk::ExtraPt(complex& pt1, double y);
+MSVCDLL complex ExtraPt(complex& pt1, double y);
 
         // Input        Blk     : Stack plot row block (this)
         //              pt1     : A point (FM units, cm)
@@ -322,7 +322,7 @@ MSVCDLL complex RowBlk::ExtraPt(complex& pt1, double y);
 //                         x1-x2                y1-y2
 
 
-MSVCDLL void RowBlk::SetPL(FMPL& PL, int area);
+MSVCDLL void SetPL(FMPL& PL, int area);
  
         // Input                Blk     : Stack plot row block (this)
         //                      area    : Area flag
@@ -330,7 +330,7 @@ MSVCDLL void RowBlk::SetPL(FMPL& PL, int area);
 
 
  
-MSVCDLL void RowBlk::Fill(int cols, const matrix& mx);
+MSVCDLL void Fill(int cols, const matrix& mx);
 
         // Input                Blk     : Stack plot row block (this)
 	//			cols	: Number of matrix columns
@@ -338,7 +338,7 @@ MSVCDLL void RowBlk::Fill(int cols, const matrix& mx);
 	// Output               void    : Block is filled for mx row
 
 
-MSVCDLL void RowBlk::Plot(const std::string& filename);
+MSVCDLL void Plot(const std::string& filename);
 
         // Input        Blk     : Stack plot row block (this)
         //              filename: Output MIF filename
@@ -352,7 +352,7 @@ MSVCDLL void RowBlk::Plot(const std::string& filename);
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& RowBlk::print(std::ostream& ostr) const;
+MSVCDLL std::ostream& print(std::ostream& ostr) const;
  
         // Input                Blk     : Stack plot row block (this)
         //                      ostr    : An output stream
@@ -425,7 +425,7 @@ double Levels[4];			// Array of row levels
 // ____________________________________________________________________________
  
 
-void FMStack::FMSTKerror(int eidx, int noret=0) const;
+void FMSTKerror(int eidx, int noret=0) const;
 
         // Input                FMSTK   : FrameMaker stack parameters (this)
         //                      eidx    : Flag for error type
@@ -433,7 +433,7 @@ void FMStack::FMSTKerror(int eidx, int noret=0) const;
         // Output               none    : Error message
  
  
-volatile void FMStack::FMSTKfatality(int eidx) const;
+volatile void FMSTKfatality(int eidx) const;
 
         // Input                FMSTK   : FrameMaker stack parameters (this)
         //                      eidx    : Flag for error type
@@ -481,26 +481,26 @@ MSVCDLL void operator=(const FMStack& FMSTK1);
 // ---------------------------- Stack Plot Offsets ----------------------------
 
  
-MSVCDLL double FMStack::VInc() const;
+MSVCDLL double VInc() const;
  
         // Input                FMSTK   : FM stack parameters (this)
         // Output               vinc    : Vertical increment (cm/row)
  
  
-MSVCDLL void FMStack::VInc(double vi);
+MSVCDLL void VInc(double vi);
  
         // Input                FMSTK   : FM stack parameters (this)
         //                      vi      : Vertical increment (cm/row)
         // Output               vinc    : Vertical increment set to vi
  
  
-MSVCDLL double FMStack::HInc() const;
+MSVCDLL double HInc() const;
  
         // Input                FMSTK   : FM stack parameters (this)
         // Output               hinc    : Horizontal increment (cm/row)
  
  
-MSVCDLL void FMStack::HInc(double hi);
+MSVCDLL void HInc(double hi);
                
         // Input                FMSTK   : FM stack parameters (this)
         //                      hi      : Horizontal increment (cm/row)
@@ -509,13 +509,13 @@ MSVCDLL void FMStack::HInc(double hi);
  
 // ----------------------- Stack Plot Row Increment ---------------------------
  
-MSVCDLL int FMStack::RInc() const;
+MSVCDLL int RInc() const;
  
         // Input                FMSTK   : FM stack parameters (this)
         // Output               rowinc  : The stack plot row increment
  
  
-MSVCDLL void FMStack::RInc(int ri);
+MSVCDLL void RInc(int ri);
  
         // Input                FMSTK   : FM stack parameters (this)
         //                      ri      : Row increment
@@ -525,13 +525,13 @@ MSVCDLL void FMStack::RInc(int ri);
 // ---------------------- Stack Plot Column Increment -------------------------
  
  
-MSVCDLL int FMStack::CInc() const;
+MSVCDLL int CInc() const;
  
         // Input                FMSTK   : FM stack parameters (this)
         // Output               colinc  : The stack plot column increment
  
  
-MSVCDLL void FMStack::CInc(int ci);
+MSVCDLL void CInc(int ci);
  
         // Input                FMSTK   : FM stack parameters (this)
         //                      ci      : Column increment
@@ -541,13 +541,13 @@ MSVCDLL void FMStack::CInc(int ci);
 // -------------------------- Stack Plot HLA Usage ----------------------------
  
  
-MSVCDLL int FMStack::HLAF() const;
+MSVCDLL int HLAF() const;
  
         // Input                FMSTK   : FM stack parameters (this)
         // Output               HLF	: The hidden line use flag
  
  
-MSVCDLL void FMStack::HLAF(int hf);
+MSVCDLL void HLAF(int hf);
  
         // Input                FMSTK   : FM stack parameters (this)
         //                      hf      : Hidden line use flag
@@ -557,13 +557,13 @@ MSVCDLL void FMStack::HLAF(int hf);
 // ------------------------ Stack Plot Gridding Flag --------------------------
  
          
-MSVCDLL int FMStack::Gridding() const;
+MSVCDLL int Gridding() const;
 
         // Input                FMSTK   : FM stack parameters (this)
         // Output               gridding: The stack plot gridding flag
 
                                                                        
-MSVCDLL void FMStack::Gridding(int gr);
+MSVCDLL void Gridding(int gr);
 
         // Input                FMSTK   : FM stack parameters (this)
         //                      gr      : Gridding flag
@@ -576,7 +576,7 @@ MSVCDLL void FMStack::Gridding(int gr);
 
 // ------------------------- Stack Plot Data Matrix ---------------------------
 
-MSVCDLL void FMStack::SetArray(const matrix& mx);
+MSVCDLL void SetArray(const matrix& mx);
 
         // Input        FMSTK   : FM stack parameters (this)
         //              mx      : Input data matrix to plot
@@ -589,7 +589,7 @@ MSVCDLL void FMStack::SetArray(const matrix& mx);
 
 // ------------------------- Stack Plot Row Offsets ---------------------------
 
-MSVCDLL void FMStack::SetOffsets();
+MSVCDLL void SetOffsets();
 
         // Input        FMSTK   : FrameMaker stack plot parameters
         // Return       void    : The vector of row offsets
@@ -600,7 +600,7 @@ MSVCDLL void FMStack::SetOffsets();
         //                        part is the vertical offset
 
 
-MSVCDLL row_vector FMStack::GetOffsets();
+MSVCDLL row_vector GetOffsets();
 
         // Input        FMSTK   : FrameMaker stack plot parameters
         // Return       OffSets	: The vector of row offsets
@@ -613,7 +613,7 @@ MSVCDLL row_vector FMStack::GetOffsets();
 // ------------------------- Stack Plot Row Maxima ---------------------------
 
 
-MSVCDLL void FMStack::SetMaxima();
+MSVCDLL void SetMaxima();
 
         // Input        FMSTK   : FrameMaker stack plot parameters
         // Return       void    : The vector of row max & min values
@@ -626,7 +626,7 @@ MSVCDLL void FMStack::SetMaxima();
         //                        Their maxima are still determined!
 
 
-MSVCDLL row_vector FMStack::GetMaxima();
+MSVCDLL row_vector GetMaxima();
 
         // Input        FMSTK   : FrameMaker stack plot parameters
         // Return       MaxMins: The vector of row maxima
@@ -636,7 +636,7 @@ MSVCDLL row_vector FMStack::GetMaxima();
 // -------------------------- Stack Plot Scaling -----------------------------
 
 
-MSVCDLL void FMStack::SetScale();
+MSVCDLL void SetScale();
 
         // Input        FMSTK   : FrameMaker stack plot parameters
         // Return       void    : Scaling parameters in FMSTK are set
@@ -650,7 +650,7 @@ MSVCDLL void FMStack::SetScale();
 // ____________________________________________________________________________
 
  
-MSVCDLL void FMStack::SetBasePlane();
+MSVCDLL void SetBasePlane();
  
         // Input        FMSTK   : FrameMaker stack plot parameters
         // Return       void    : Scaling parameters in FMSTK are set
@@ -661,7 +661,7 @@ MSVCDLL void FMStack::SetBasePlane();
         //                        difference between the front base & back base
  
 
-MSVCDLL void FMStack::BaseStart(std::ostream& ostr) const;
+MSVCDLL void BaseStart(std::ostream& ostr) const;
 
  
         // Input        FMSTK   : FM stack plot parameters (this)
@@ -676,7 +676,7 @@ MSVCDLL void FMStack::BaseStart(std::ostream& ostr) const;
         //                        will be depends upon the plot skew.
 
 
-MSVCDLL void FMStack::BaseEnd(std::ostream& ostr) const;
+MSVCDLL void BaseEnd(std::ostream& ostr) const;
 
         // Input        FMSTK   : FM stack plot parameters (this)
         //              ostr    : Open output stream
@@ -690,13 +690,13 @@ MSVCDLL void FMStack::BaseEnd(std::ostream& ostr) const;
         //                        will be depends upon the plot skew.
 
 
-MSVCDLL int FMStack::BasePlaneID() const;
+MSVCDLL int BasePlaneID() const;
  
         // Input        FMSTK   : FM stack plot paramters (this)
         // Return       BPID    : The base plane ID number is returned
 
 
-MSVCDLL void FMStack::BasePlaneID(int bid);
+MSVCDLL void BasePlaneID(int bid);
 
         // Input        FMSTK   : FM stack plot paramters (this)
         //              bid     : FM group ID number
@@ -708,7 +708,7 @@ MSVCDLL void FMStack::BasePlaneID(int bid);
 // ____________________________________________________________________________
 
 
-MSVCDLL void FMStack::maxima(double& max, double& min, int& imax, int& imin);
+MSVCDLL void maxima(double& max, double& min, int& imax, int& imin);
  
         // Input        FMSTK	: FM stack parameters (this)
         //              max	: Maximum vertical value (cm)
@@ -721,7 +721,7 @@ MSVCDLL void FMStack::maxima(double& max, double& min, int& imax, int& imin);
         //                          I = Im<MaxMins|i>*VSF + Im<OffSets|i>
  
 
-MSVCDLL void FMStack::CheckRI();
+MSVCDLL void CheckRI();
 
         // Input        FMSTK   : FM stack parameters (this)
         // Output       void    : The current row increment
@@ -729,13 +729,13 @@ MSVCDLL void FMStack::CheckRI();
         //                        two rows are plotted
 
 
-MSVCDLL void FMStack::StkBegin(const matrix& mx);
+MSVCDLL void StkBegin(const matrix& mx);
 
         // Input        FMSTK   : FM stack parameters (this)
         //              mx      : Input data matrix to plot
 
 
-MSVCDLL void FMStack::Initialize(const matrix& mx);
+MSVCDLL void Initialize(const matrix& mx);
 
         // Input        FMSTK   : FM stack plot parameters (this)
         //              mx      : Data matrix
@@ -744,7 +744,7 @@ MSVCDLL void FMStack::Initialize(const matrix& mx);
         //                        are set and/or checked
 
 
-MSVCDLL void FMStack::StartOutput(const std::string& filename, std::ostream& ostr);
+MSVCDLL void StartOutput(const std::string& filename, std::ostream& ostr);
  
         // Input        FMSTK   : FM stack plot parameters (this)
         //              filename: Output filename
@@ -760,13 +760,13 @@ MSVCDLL void FMStack::StartOutput(const std::string& filename, std::ostream& ost
 // ____________________________________________________________________________
 
 
-MSVCDLL void FMStack::StkInfo() const;
+MSVCDLL void StkInfo() const;
 
         // Input        FMSTK   : FM stack plot parameters (this)
         // Output       void    : Some information output to screen
 
 
-MSVCDLL void FMStack::ScaleInfo(int iter, double max, double min, int imax, int imin);
+MSVCDLL void ScaleInfo(int iter, double max, double min, int imax, int imin);
  
         // Input        FMSTK   : FrameMaker stack plot parameters
         // Return       void    : Vertical scaling information output
@@ -777,7 +777,7 @@ MSVCDLL void FMStack::ScaleInfo(int iter, double max, double min, int imax, int 
 // ____________________________________________________________________________
  
 
-MSVCDLL void FMStack::FillBlock(int row);
+MSVCDLL void FillBlock(int row);
 
         // Input        FMSTK   : FM stack plot paramters (this)
         //              row     : Matrix row index
@@ -786,7 +786,7 @@ MSVCDLL void FMStack::FillBlock(int row);
         //                        in order to define the row for HLA
 
 
-MSVCDLL void FMStack::PlotRow(int row, std::ostream& out);
+MSVCDLL void PlotRow(int row, std::ostream& out);
 
         // Input        FMP     : FrameMaker plot parameters (this)
         //              row     : Matrix row index
@@ -800,8 +800,8 @@ MSVCDLL void FMStack::PlotRow(int row, std::ostream& out);
 // ____________________________________________________________________________
 
 
-MSVCDLL void FMStack::FM_stack(const std::string& filename, const matrix &mx);
-MSVCDLL void FMStack::Plot(const std::string& filename, const matrix &mx);
+MSVCDLL void FM_stack(const std::string& filename, const matrix &mx);
+MSVCDLL void Plot(const std::string& filename, const matrix &mx);
 
         // Input        FMSTK   : FM stack plot parameters (this)
         //              filename: Output filename
@@ -845,7 +845,7 @@ MSVCDLL friend void FM_stack(const std::string& filename, const matrix &mx, doub
 // ____________________________________________________________________________
 
 
-MSVCDLL complex FMStack::xings(complex& z1, complex& z2, const complex &z3, const complex &z4,
+MSVCDLL complex xings(complex& z1, complex& z2, const complex &z3, const complex &z4,
                          int row, double xoff, double yoff, int k, int& cross);
 
         // Input        z1      : First point, on line 1
@@ -869,7 +869,7 @@ MSVCDLL complex FMStack::xings(complex& z1, complex& z2, const complex &z3, cons
  
 
 
-MSVCDLL void FMStack::set_hidden(int &pts, int row, int *hidden, row_vector& crossing);
+MSVCDLL void set_hidden(int &pts, int row, int *hidden, row_vector& crossing);
 
         // Input        FMSTK   : FM stack parameters (this)
         //              pts     : Number of points in PolyLine
@@ -886,7 +886,7 @@ MSVCDLL void FMStack::set_hidden(int &pts, int row, int *hidden, row_vector& cro
 
 
 
-MSVCDLL int FMStack::continuous(int row, double xoff, double yoff);
+MSVCDLL int continuous(int row, double xoff, double yoff);
 
         // Input        FMSTK   : FM stack plot parameters (this)
         //              row     : Row index
@@ -899,7 +899,7 @@ MSVCDLL int FMStack::continuous(int row, double xoff, double yoff);
 
 
 
-MSVCDLL void FMStack::HLA(std::ostream& ostr);
+MSVCDLL void HLA(std::ostream& ostr);
 
         // Input        FMSTK   : FM stack plot parameters
         //              ostr    : Output stream
@@ -918,7 +918,7 @@ MSVCDLL void FMStack::HLA(std::ostream& ostr);
 
 
  
-MSVCDLL void FMStack::HLA(int &pts, int row, std::ostream & out);
+MSVCDLL void HLA(int &pts, int row, std::ostream & out);
  
         // Input        FMSTK   : FM stack plot parameters
         //              pts     : Number of points in PolyLine

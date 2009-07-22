@@ -93,10 +93,10 @@ private:
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */ 
 
-         void coord::PTerror(int eidx,                        int nr=0) const;
-         void coord::PTerror(int eidx, const std::string& pn, int nr=0) const;
-volatile void coord::PTfatal(int eidx)                                  const;
-volatile void coord::PTfatal(int eidx, const std::string& pn)           const;
+         void PTerror(int eidx,                        int nr=0) const;
+         void PTerror(int eidx, const std::string& pn, int nr=0) const;
+volatile void PTfatal(int eidx)                                  const;
+volatile void PTfatal(int eidx, const std::string& pn)           const;
 
 // ____________________________________________________________________________
 // ii                    CLASS COORDINATE SETUP FUNCTIONS
@@ -124,9 +124,9 @@ volatile void coord::PTfatal(int eidx, const std::string& pn)           const;
         //                                Cartesian space. Conversion is done
         //                                as needed.
 
-bool coord::SetPtCartesian(const   ParameterSet& pset, int indx, int warn=1);
-bool coord::SetPtSpherical(const   ParameterSet& pset, int indx, int warn=1);
-bool coord::SetPtCylindrical(const ParameterSet& pset, int indx, int warn=1);
+bool SetPtCartesian(const   ParameterSet& pset, int indx, int warn=1);
+bool SetPtSpherical(const   ParameterSet& pset, int indx, int warn=1);
+bool SetPtCylindrical(const ParameterSet& pset, int indx, int warn=1);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -160,13 +160,13 @@ bool coord::SetPtCylindrical(const ParameterSet& pset, int indx, int warn=1);
    3 with value stored as a string "( #, #, # )". All I/O between GAMMA
    coordinates and single parameters must follow this format!              */
 
-MSVCDLC        coord::coord( );
-MSVCDLC        coord::coord(double xx, double yy=0, double zz=0);
-MSVCDLC        coord::coord(const coord& pt1);
-MSVCDLC        coord::coord(const ParameterSet& pset, int idx=-1, int warn=2);
-MSVCDLC        coord::coord(const SinglePar& par);
-MSVCDLC        coord::~coord( );
-MSVCDLL coord& coord::operator= (const coord& pt);
+MSVCDLC        coord( );
+MSVCDLC        coord(double xx, double yy=0, double zz=0);
+MSVCDLC        coord(const coord& pt1);
+MSVCDLC        coord(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLC        coord(const SinglePar& par);
+MSVCDLC        ~coord( );
+MSVCDLL coord& operator= (const coord& pt);
 
 // ____________________________________________________________________________
 // B                CARTESIAN BASED COORDINATE ACCESS FUNCTIONS
@@ -187,16 +187,16 @@ MSVCDLL coord& coord::operator= (const coord& pt);
        z,z(double)                Get/Set third ordinate
        xyz(...)                   Set all ordinates                          */
 
-MSVCDLL double coord::get(int i)    const;
-MSVCDLL double coord::x()           const;
-MSVCDLL void   coord::x(double xx);
-MSVCDLL double coord::y()           const;
-MSVCDLL void   coord::y(double yy);
-MSVCDLL double coord::z()           const;
-MSVCDLL void   coord::z(double zz);
-MSVCDLL void   coord::xyz(double xx, double yy, double zz);
-MSVCDLL void   coord::xyz(const coord& pt1);
-MSVCDLL double coord::norm() const;
+MSVCDLL double get(int i)    const;
+MSVCDLL double x()           const;
+MSVCDLL void   x(double xx);
+MSVCDLL double y()           const;
+MSVCDLL void   y(double yy);
+MSVCDLL double z()           const;
+MSVCDLL void   z(double zz);
+MSVCDLL void   xyz(double xx, double yy, double zz);
+MSVCDLL void   xyz(const coord& pt1);
+MSVCDLL double norm() const;
 
 // ____________________________________________________________________________
 // C                SPHERICAL BASED COORDINATE ACCESS FUNCTIONS
@@ -222,8 +222,8 @@ MSVCDLL double coord::norm() const;
 	// Input		x,y,z: Coordinate
 	// Return		Rad  : Radius or length from (0,0,0)
  
-MSVCDLL double coord::Rad() const;
-MSVCDLL double coord::Rad(const coord& pt2) const;
+MSVCDLL double Rad() const;
+MSVCDLL double Rad(const coord& pt2) const;
 MSVCDLL friend double Rad(double x, double y, double z);
 
 // ----------------------------------------------------------------------------
@@ -239,8 +239,8 @@ MSVCDLL friend double Rad(double x, double y, double z);
         //                              the principal values returned by the
         //                              arcosine function
 
-MSVCDLL double coord::theta() const;
-MSVCDLL double coord::theta(const coord& pt2) const;
+MSVCDLL double theta() const;
+MSVCDLL double theta(const coord& pt2) const;
  
         // Input                pt    : Coordinate (this)
         //                      pt2   : A second coordinate
@@ -262,8 +262,8 @@ MSVCDLL friend double theta(double x, double y, double z);
 //               Phi is The Angle Over From The Positive X Axis
 // ----------------------------------------------------------------------------
 
-MSVCDLL double coord::phi()                 const;
-MSVCDLL double coord::phi(const coord& pt2) const;
+MSVCDLL double phi()                 const;
+MSVCDLL double phi(const coord& pt2) const;
  
 	// Input		pt   : Coordinate (this)
 	// Return		phi  : Spherical longitudinal angle
@@ -297,7 +297,7 @@ MSVCDLL friend double phi(double x, double y, double z);
 	//			       [-90, 90]
 
 
-MSVCDLL void coord::invert();
+MSVCDLL void invert();
 
 	// Input		pt   : Coordinate (this)
 	// Return		none : All three coordinate points are
@@ -316,7 +316,7 @@ MSVCDLL void coord::invert();
 //            Typical Rotations Active On Cartesian Coordinates
 // ----------------------------------------------------------------------------
 
-MSVCDLL static matrix coord::Rz(double phi, int rad=0);
+MSVCDLL static matrix Rz(double phi, int rad=0);
  
         // Input                pt   : Coordinate (this)
         //                      phi  : Spherical angle (degrees over from +x)
@@ -328,7 +328,7 @@ MSVCDLL static matrix coord::Rz(double phi, int rad=0);
 	// Note			     : The reference axes are static!
 
 
-MSVCDLL static matrix coord::Rx(double theta, int rad=0);
+MSVCDLL static matrix Rx(double theta, int rad=0);
 
         // Input                pt   : Coordinate (this)
         //                      theta: Spherical angle (degrees down from +z)
@@ -340,7 +340,7 @@ MSVCDLL static matrix coord::Rx(double theta, int rad=0);
 	// Note			     : The reference axes are static!
 
  
-MSVCDLL static matrix coord::Ry(double theta, int rad=0);
+MSVCDLL static matrix Ry(double theta, int rad=0);
  
         // Input                pt   : Coordinate (this)
         //                      theta: Spherical angle (degrees down from +z)
@@ -349,7 +349,7 @@ MSVCDLL static matrix coord::Ry(double theta, int rad=0);
         //                             by angle theta about the y-axis
  
  
-MSVCDLL coord coord::xrotate(double theta, int rad=0) const;
+MSVCDLL coord xrotate(double theta, int rad=0) const;
 
         // Input                pt   : Coordinate (this)
         //                      theta: Spherical angle (degrees down from +z)
@@ -360,7 +360,7 @@ MSVCDLL coord coord::xrotate(double theta, int rad=0) const;
         //                             multiple rotations should be cumulative
  
  
-MSVCDLL coord coord::yrotate(double theta, int rad=0) const;
+MSVCDLL coord yrotate(double theta, int rad=0) const;
 
         // Input                pt   : Coordinate (this)
         //                      theta: Spherical angle (degrees down from +z)
@@ -371,7 +371,7 @@ MSVCDLL coord coord::yrotate(double theta, int rad=0) const;
         //                             multiple rotations should be cumulative
  
  
-MSVCDLL coord coord::zrotate(double phi, int rad=0) const;
+MSVCDLL coord zrotate(double phi, int rad=0) const;
 
         // Input                pt   : Coordinate (this)
         //                      phi  : Spherical angle (over from +x)
@@ -460,7 +460,7 @@ MSVCDLL friend matrix Rmx(double alpha, double beta, double gamma);
 // ********************** Rotation of a Coordinate ****************************
 
 
-MSVCDLL coord coord::rotate(double alpha, double beta, double gamma);
+MSVCDLL coord rotate(double alpha, double beta, double gamma);
 
 	// Input		pt   : Coordinate (this)
 	// 			alpha: Euler angles (radians)
@@ -470,7 +470,7 @@ MSVCDLL coord coord::rotate(double alpha, double beta, double gamma);
         ///F_list rotate	     - Rotate a coordinate point
 
 
-MSVCDLL coord coord::rotate(coord& EA);
+MSVCDLL coord rotate(coord& EA);
 
 	// Input		pt   : Coordinate (this)
 	// 			EA   : Euler angles (radians)
@@ -502,27 +502,27 @@ MSVCDLL coord coord::rotate(coord& EA);
 	//				  delx, dely, delz
 
 
-MSVCDLL coord coord::trans_x(double    delx);
-MSVCDLL void  coord::trans_x_ip(double delx);
-MSVCDLL coord coord::trans_y(double    dely);
-MSVCDLL void  coord::trans_y_ip(double dely);
-MSVCDLL coord coord::trans_z(double    delz);
-MSVCDLL void  coord::trans_z_ip(double delz);
+MSVCDLL coord trans_x(double    delx);
+MSVCDLL void  trans_x_ip(double delx);
+MSVCDLL coord trans_y(double    dely);
+MSVCDLL void  trans_y_ip(double dely);
+MSVCDLL coord trans_z(double    delz);
+MSVCDLL void  trans_z_ip(double delz);
 
-MSVCDLL coord coord::translate(double    delx, double dely=0, double delz=0);
-MSVCDLL void  coord::translate_ip(double delx, double dely=0, double delz=0);
+MSVCDLL coord translate(double    delx, double dely=0, double delz=0);
+MSVCDLL void  translate_ip(double delx, double dely=0, double delz=0);
 
-MSVCDLL coord coord::translate(const    coord& del) const;
-MSVCDLL void  coord::translate_ip(const coord& del);
+MSVCDLL coord translate(const    coord& del) const;
+MSVCDLL void  translate_ip(const coord& del);
 
 // ----------------------------------------------------------------------------
 //             These Member Functions Also Perform A Translation
 // ----------------------------------------------------------------------------
 
-MSVCDLL coord coord::operator +  (const coord& del) const;
-MSVCDLL coord coord::operator -  (const coord& del) const;
-MSVCDLL void  coord::operator += (const coord& del);
-MSVCDLL void  coord::operator -= (const coord& del);
+MSVCDLL coord operator +  (const coord& del) const;
+MSVCDLL coord operator -  (const coord& del) const;
+MSVCDLL void  operator += (const coord& del);
+MSVCDLL void  operator -= (const coord& del);
 
 // ____________________________________________________________________________
 // F                  COORDINATE WITH COORDINATE
@@ -618,10 +618,10 @@ MSVCDLL friend coord cdvect(const coord& pt1, const coord& pt2);
         ///F_list /=		    - Coordinate unary division by scalar
 	
 MSVCDLL friend coord  operator *  (double r, const coord& pt1);
-MSVCDLL coord  coord::operator *  (double r) const;
-MSVCDLL void   coord::operator *= (double r);
-MSVCDLL coord  coord::operator /  (double r) const;
-MSVCDLL void   coord::operator /= (double r);
+MSVCDLL coord  operator *  (double r) const;
+MSVCDLL void   operator *= (double r);
+MSVCDLL coord  operator /  (double r) const;
+MSVCDLL void   operator /= (double r);
 
 // ____________________________________________________________________________
 // H                       COORDINATE WITH MATRIX
@@ -663,8 +663,8 @@ MSVCDLL friend coord operator * (const matrix& mx, const coord& pt);
         //                             with the name pname and statment ps
 	//			       if one is supplied.                   */
  
-MSVCDLL SinglePar coord::param(const std::string& pname) const;
-MSVCDLL SinglePar coord::param(const std::string& pname, const std::string& ps) const;
+MSVCDLL SinglePar param(const std::string& pname) const;
+MSVCDLL SinglePar param(const std::string& pname, const std::string& ps) const;
 
 //-----------------------------------------------------------------------------
 //                          Parameter Set Functions
@@ -682,8 +682,8 @@ MSVCDLL SinglePar coord::param(const std::string& pname, const std::string& ps) 
         //                                coordinate specified in filein
 
 
-MSVCDLL int coord::read(const std::string& filein, int indx, int warn=1);
-MSVCDLL int coord::read(const ParameterSet&  pset, int indx, int warn=1);
+MSVCDLL int read(const std::string& filein, int indx, int warn=1);
+MSVCDLL int read(const ParameterSet&  pset, int indx, int warn=1);
 
         // Input                pt      : A coordinate point (this)
         //                      pset    : A parameter set
@@ -707,7 +707,7 @@ MSVCDLL int coord::read(const ParameterSet&  pset, int indx, int warn=1);
 //           Functions To Get & Set The Coordinate Output Format
 //-----------------------------------------------------------------------------
 
-MSVCDLL static int coord::length();
+MSVCDLL static int length();
 
 MSVCDLL friend void coord_setf (int otype, int science, int digits, int precise);
 
@@ -743,7 +743,7 @@ MSVCDLL friend void coord_getf (int& otype, int& science, int& digits, int& prec
 	// Output 		ostr	: Returns the modified output stream
         ///F_list <<			- Standard output
 
-MSVCDLL        std::ostream& coord::print(std::ostream& ostr) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const coord& pt);
 
 MSVCDLL friend std::istream& operator >> (std::istream& istr, coord& pt);
@@ -773,12 +773,12 @@ MSVCDLL friend std::istream& operator >> (std::istream& istr, coord& pt);
         // Note (Cyl2*)			: Input coordinate pt assumed
         //                                to be cylindrical { R, theta, z }
 
-MSVCDLL coord coord::Cart2Sph(int rad=1) const;
-MSVCDLL coord coord::Sph2Cart(int rad=1) const;
-MSVCDLL coord coord::Cart2Cyl(int rad=1) const;
-MSVCDLL coord coord::Cyl2Cart(int rad=1) const;
-MSVCDLL coord coord::Sph2Cyl(int  rad=1) const;
-MSVCDLL coord coord::Cyl2Sph(int  rad=1) const;
+MSVCDLL coord Cart2Sph(int rad=1) const;
+MSVCDLL coord Sph2Cart(int rad=1) const;
+MSVCDLL coord Cart2Cyl(int rad=1) const;
+MSVCDLL coord Cyl2Cart(int rad=1) const;
+MSVCDLL coord Sph2Cyl(int  rad=1) const;
+MSVCDLL coord Cyl2Sph(int  rad=1) const;
 
 // ____________________________________________________________________________
 // L                  CLASS COORDINATE AUXILIARY FUNCTIONS
@@ -793,8 +793,8 @@ MSVCDLL coord coord::Cyl2Sph(int  rad=1) const;
 	//				  It is part of the class structure and
 	//				  initialized in the implementation
  
-MSVCDLL static coord coord::getDefCoord();
-MSVCDLL static void  coord::setDefCoord(const coord& dpt);
+MSVCDLL static coord getDefCoord();
+MSVCDLL static void  setDefCoord(const coord& dpt);
  
 // ____________________________________________________________________________
 // M                  CLASS COORDINATE COMPARISON FUNCTIONS
@@ -807,11 +807,11 @@ MSVCDLL static void  coord::setDefCoord(const coord& dpt);
         ///F_list ==                    - Equality 
         ///F_list !=                    - Inequality 
  
-MSVCDLL static void coord::SetCutoff(double co=-1);
-MSVCDLL        bool coord::operator==(const coord& pt) const;
-MSVCDLL        bool coord::operator!=(const coord& pt) const;
-MSVCDLL        bool coord::operator>(const  coord& pt) const;
-MSVCDLL        bool coord::operator<(const  coord& pt) const;
+MSVCDLL static void SetCutoff(double co=-1);
+MSVCDLL        bool operator==(const coord& pt) const;
+MSVCDLL        bool operator!=(const coord& pt) const;
+MSVCDLL        bool operator>(const  coord& pt) const;
+MSVCDLL        bool operator<(const  coord& pt) const;
 
 // ____________________________________________________________________________
 // N                                PyGAMMA Code

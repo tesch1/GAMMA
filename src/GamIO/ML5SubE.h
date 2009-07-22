@@ -78,7 +78,7 @@ friend class MatLab5Im;				// Imags Array Full Access
 
 
 MatLab5SE();
-virtual MatLab5SE::~MatLab5SE();
+virtual ~MatLab5SE();
 
  
 // ____________________________________________________________________________
@@ -86,7 +86,7 @@ virtual MatLab5SE::~MatLab5SE();
 // ____________________________________________________________________________
 
  
-//string MatLab5SE::Class() const;
+//string Class() const;
  
         // Input                ML5T    : MAT version 5 tag (this) 
         // Output               string  : String labeling the type 
@@ -108,7 +108,7 @@ virtual MatLab5SE::~MatLab5SE();
                 Note                    : No care is taken to insure the
                                           tag is written.                    */
  
-virtual int MatLab5SE::write(std::fstream& fp) const;
+virtual int write(std::fstream& fp) const;
 
 
 // ____________________________________________________________________________
@@ -132,7 +132,7 @@ virtual int MatLab5SE::write(std::fstream& fp) const;
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-virtual int MatLab5SE::read(std::fstream& fp, int bigend, int warn=1);
+virtual int read(std::fstream& fp, int bigend, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -140,7 +140,7 @@ virtual int MatLab5SE::read(std::fstream& fp, int bigend, int warn=1);
 // ____________________________________________________________________________
 
                                                                                 
-//virtual void MatLab5SE::print(ostream& ostr) const;
+//virtual void print(ostream& ostr) const;
  
         // Input                ML5SE	: MAT version 5 data sub-element (this)
         //                      ostr    : An output stream

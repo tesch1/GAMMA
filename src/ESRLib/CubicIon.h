@@ -60,9 +60,9 @@ class CubicIon : public Isotope
         Output              none    : Error message output
                                       Program execution stopped if fatal     */
 
-void          CubicIon::CIError(int eidx,                           int noret=0) const;
-void          CubicIon::CIError(int eidx, const std::string& pname, int noret=0) const;
-volatile void CubicIon::CIFatal(int eidx, const std::string& pname) const;
+void          CIError(int eidx,                           int noret=0) const;
+void          CIError(int eidx, const std::string& pname, int noret=0) const;
+volatile void CIFatal(int eidx, const std::string& pname) const;
 
 // ____________________________________________________________________________
 // ii           CLASS CUBIC ION DEALINGS WITH CUBIC ION LISTS
@@ -76,7 +76,7 @@ volatile void CubicIon::CIFatal(int eidx, const std::string& pname) const;
    we loop over the available ions and fill up CubicIons with appropriate
    values.                                                                   */
 
-void CubicIon::AddCubicIons();
+void AddCubicIons();
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -101,11 +101,11 @@ public:
     all Cubic Systems in a  program are deleted.  This will not be done
     until program completion.                                                */
 
-MSVCDLC      CubicIon::CubicIon();
-MSVCDLC      CubicIon::CubicIon(const       CubicIon& CI);
-MSVCDLC      CubicIon::CubicIon(const  std::string&   CI);
-MSVCDLL void CubicIon::operator=(const      CubicIon& CI);
-MSVCDLC      virtual CubicIon::~CubicIon();
+MSVCDLC      CubicIon();
+MSVCDLC      CubicIon(const       CubicIon& CI);
+MSVCDLC      CubicIon(const  std::string&   CI);
+MSVCDLL void operator=(const      CubicIon& CI);
+MSVCDLC      virtual ~CubicIon();
 
 // ____________________________________________________________________________
 // B                       CUBIC ION ACCESS FUNCTIONS
@@ -126,22 +126,22 @@ MSVCDLC      virtual CubicIon::~CubicIon();
 	   Input                CuSys   : CubicIon (this)
 	   Note			  		  		: All functions use CubicIons (ion data)  */
 
-//       double       CubicIon::qn()       const;		// INHERITED
-//       int          CubicIon::HS()       const;		// INHERITED
-//       std::string  CubicIon::momentum() const;		// INHERITED
-// const std::string& CubicIon::symbol()   const;		// INHERITED
-// const std::string& CubicIon::name()     const;		// INHERITED
-// const std::string& CubicIon::element()  const;		// INHERITED
-//       int          CubicIon::number()   const;		// INHERITED
-//       int          CubicIon::mass()     const;		// INHERITED
-//       double       CubicIon::weight()   const;		// INHERITED
+//       double       qn()       const;		// INHERITED
+//       int          HS()       const;		// INHERITED
+//       std::string  momentum() const;		// INHERITED
+// const std::string& symbol()   const;		// INHERITED
+// const std::string& name()     const;		// INHERITED
+// const std::string& element()  const;		// INHERITED
+//       int          number()   const;		// INHERITED
+//       int          mass()     const;		// INHERITED
+//       double       weight()   const;		// INHERITED
 
-MSVCDLL int    CubicIon::charge() const;
-MSVCDLL double CubicIon::gJ()     const;
-MSVCDLL double CubicIon::beta()   const;
-MSVCDLL double CubicIon::gamma()  const;
-MSVCDLL double CubicIon::F4()     const;
-MSVCDLL double CubicIon::F6()     const;
+MSVCDLL int    charge() const;
+MSVCDLL double gJ()     const;
+MSVCDLL double beta()   const;
+MSVCDLL double gamma()  const;
+MSVCDLL double F4()     const;
+MSVCDLL double F6()     const;
 
 // ____________________________________________________________________________
 // C                        CUBIC ION I/O FUNCTIONS
@@ -155,7 +155,7 @@ MSVCDLL double CubicIon::F6()     const;
      print     ostream     Writes cubic system in ASCII to output stream
       <<       ostream     Writes cubic system in ASCII to output stream     */
 
-MSVCDLL        std::ostream& CubicIon::print(std::ostream& ostr) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr) const;
 MSVCDLL friend std::ostream& operator<<     (std::ostream& ostr, const CubicIon& CS);
 
 // ____________________________________________________________________________
@@ -175,12 +175,12 @@ MSVCDLL friend std::ostream& operator<<     (std::ostream& ostr, const CubicIon&
 
    The seek function will return -1 if the ion is not found in the list.     */
 
-MSVCDLL        int  CubicIon::seek(const   CubicIonData& CI);
-MSVCDLL        bool CubicIon::exists(const std::string&  symbol);
-MSVCDLL static bool CubicIon::known(const  std::string&  symbol);
-MSVCDLL static void CubicIon::initialize();
-MSVCDLL static int  CubicIon::size();
-MSVCDLL static void CubicIon::PrintList(std::ostream& ostr, bool hdr=true);
+MSVCDLL        int  seek(const   CubicIonData& CI);
+MSVCDLL        bool exists(const std::string&  symbol);
+MSVCDLL static bool known(const  std::string&  symbol);
+MSVCDLL static void initialize();
+MSVCDLL static int  size();
+MSVCDLL static void PrintList(std::ostream& ostr, bool hdr=true);
 
 // ____________________________________________________________________________
 // E                     CubicIon Container Support Functions
@@ -190,10 +190,10 @@ MSVCDLL static void CubicIon::PrintList(std::ostream& ostr, bool hdr=true);
    not, these operators are necessary if any STL container classes are to
    be used based on cubic systems (e.g. list<CubicIon> or vector<CubicIon>)  */
 
-MSVCDLL bool CubicIon::operator==(const CubicIon& CuSys) const;
-MSVCDLL bool CubicIon::operator!=(const CubicIon& CuSys) const;
-MSVCDLL bool CubicIon::operator<(const  CubicIon& CuSys) const;
-MSVCDLL bool CubicIon::operator>(const  CubicIon& CuSys) const;
+MSVCDLL bool operator==(const CubicIon& CuSys) const;
+MSVCDLL bool operator!=(const CubicIon& CuSys) const;
+MSVCDLL bool operator<(const  CubicIon& CuSys) const;
+MSVCDLL bool operator>(const  CubicIon& CuSys) const;
 
 };
 

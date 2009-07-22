@@ -55,10 +55,10 @@ public:
         // Output		none    : Output process error message
         //				  Program execution stop (fatal)
  
-void ExchProc::XPerror(int eidx,                           int noret=0) const;
-void ExchProc::XPerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void ExchProc::XPfatal(int eidx)                               const;
-volatile void ExchProc::XPfatal(int eidx, const std::string& pname)     const;
+void XPerror(int eidx,                           int noret=0) const;
+void XPerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void XPfatal(int eidx)                               const;
+volatile void XPfatal(int eidx, const std::string& pname)     const;
 
 //_________________________________________________________________________________
 // ii                CLASS EXCHANGE PROCESS PARAMETER SET PARSING
@@ -85,11 +85,11 @@ volatile void ExchProc::XPfatal(int eidx, const std::string& pname)     const;
    Also we must keep track of which are on the left and which are on the right
    and how many of these there are (separated by + signs).                      */
 
-bool ExchProc::getExch(const ParameterSet& pset, int idx,
+bool getExch(const ParameterSet& pset, int idx,
                                           std::string& exch, bool warn=true) const;
-bool ExchProc::parseExch(std::string& Exval,
+bool parseExch(std::string& Exval,
                std::vector<int>& lhs, std::vector<int>& rhs, bool warn=true) const;
-bool ExchProc::getComps(const ParameterSet& pset, int idx,
+bool getComps(const ParameterSet& pset, int idx,
                std::vector<int>& lhs, std::vector<int>& rhs, bool warn=true) const;
 
 //---------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ bool ExchProc::getComps(const ParameterSet& pset, int idx,
 
 // This will read a parameter such as    Kex_nm(0)  (1) : 600.0 - rate
 
-bool ExchProc::getRate(const ParameterSet& pset, int idx,
+bool getRate(const ParameterSet& pset, int idx,
                                                double& rate, bool warn=true) const;
 
 
@@ -108,17 +108,17 @@ bool ExchProc::getRate(const ParameterSet& pset, int idx,
 
 // This will be a parameter such as    Smap(0,0)  (2) : (0)0(1)0 - Mapping
 
-bool ExchProc::getMappings(const ParameterSet& pset, int idx,
+bool getMappings(const ParameterSet& pset, int idx,
                                 std::vector<SpinMap>& smaps, bool warn=true) const;
 
 //---------------------------------------------------------------------------------
 //---------------------- Read/Set The Entire Exchange Process ---------------------
 //---------------------------------------------------------------------------------
 
-bool ExchProc::getXP(const ParameterSet& pset, double& rate,
+bool getXP(const ParameterSet& pset, double& rate,
   std::vector<int>& lhsc, std::vector<int>& rhsc, std::vector<SpinMap>& smaps,
                                                int idx, bool warn=true) const;
-bool ExchProc::setXP(const ParameterSet& pset, int idx, bool warn=true);
+bool setXP(const ParameterSet& pset, int idx, bool warn=true);
 
 //_________________________________________________________________________________
 // iii             CLASS EXCHANGE PROCESS CHECKING FUNCTIONS
@@ -127,8 +127,8 @@ bool ExchProc::setXP(const ParameterSet& pset, int idx, bool warn=true);
 /* These functions check the boundaries of the exchange components and insure
    process integrity.                                                            */
 
-bool ExchProc::CheckLHS(int comp, bool warn=true) const;
-bool ExchProc::CheckRHS(int comp, bool warn=true) const;
+bool CheckLHS(int comp, bool warn=true) const;
+bool CheckRHS(int comp, bool warn=true) const;
 
 //_________________________________________________________________________________
 // A		      CLASS PROCESS CONSTRUCTORS AND DESTRUCTORS
@@ -138,8 +138,8 @@ bool ExchProc::CheckRHS(int comp, bool warn=true) const;
 //                           Simple Constructors
 //---------------------------------------------------------------------------------
 
-MSVCDLC ExchProc::ExchProc();
-MSVCDLC ExchProc::ExchProc(const ExchProc& proc);
+MSVCDLC ExchProc();
+MSVCDLC ExchProc(const ExchProc& proc);
 
 //---------------------------------------------------------------------------------
 //              Explicitly Defined Exchange Process Constructors
@@ -164,14 +164,14 @@ MSVCDLC ExchProc(const ParameterSet& pset, int ip=-1, int warn=2);
 //                         Assignment and Destruction
 //---------------------------------------------------------------------------------
 
-MSVCDLL void ExchProc::operator=(const ExchProc& pr);
-MSVCDLC      ExchProc::~ExchProc();
+MSVCDLL void operator=(const ExchProc& pr);
+MSVCDLC      ~ExchProc();
 
         // Input                pro     : Process (this) 
         // Output               void	: The process is destructed
 
 // sosi - not sure what these are for now....
-MSVCDLC ExchProc::ExchProc(int N_lhs, int N_rhs);
+MSVCDLC ExchProc(int N_lhs, int N_rhs);
 
 MSVCDLL void intra_default(int ic1, int ic2, int nspins, double k);
 
@@ -192,8 +192,8 @@ MSVCDLL void intra_default(int ic1, int ic2, int nspins, double k);
         // Output               void	: Exchange rate is set to k
  	//		     or double  : Exchange rate is returned
 
-MSVCDLL double ExchProc::Kex() const;
-MSVCDLL void   ExchProc::Kex(double k);
+MSVCDLL double Kex() const;
+MSVCDLL void   Kex(double k);
 
 //--------------------------------------------------------------------------------
 //                    Class Process Component Index Access
@@ -203,11 +203,11 @@ MSVCDLL void   ExchProc::Kex(double k);
         //                      comp    : A L.H.S. or R.H.S. component
         // Output               ic      : Index of component
 
-MSVCDLL int ExchProc::LHSComp(int comp) const;
-MSVCDLL int ExchProc::RHSComp(int comp) const;
+MSVCDLL int LHSComp(int comp) const;
+MSVCDLL int RHSComp(int comp) const;
 
-MSVCDLL int ExchProc::NCompsLHS() const;
-MSVCDLL int ExchProc::NCompsRHS() const;
+MSVCDLL int NCompsLHS() const;
+MSVCDLL int NCompsRHS() const;
 
 //____________________________________________________________________________ 
 // D                       CLASS PROCESS SPIN QUERIES
@@ -225,10 +225,10 @@ MSVCDLL int ExchProc::NCompsRHS() const;
         //                      	: True if comp in RHS of exchange
         //                      	: True if comp involved in exchange
 
-MSVCDLL bool ExchProc::mixes(int     comp, int comp1) const;
-MSVCDLL bool ExchProc::CompInLHS(int comp)            const;
-MSVCDLL bool ExchProc::CompInRHS(int comp)            const;
-MSVCDLL bool ExchProc::involves(int  comp, int lr=0)  const;
+MSVCDLL bool mixes(int     comp, int comp1) const;
+MSVCDLL bool CompInLHS(int comp)            const;
+MSVCDLL bool CompInRHS(int comp)            const;
+MSVCDLL bool involves(int  comp, int lr=0)  const;
 
 //________________________________________________________________________________
 // E		         CLASS PROCESS SPIN PAIR ACCESS
@@ -242,12 +242,12 @@ MSVCDLL bool ExchProc::involves(int  comp, int lr=0)  const;
         // Output               TF  	: True if spins are mapped
 	//				  false if not
 
-MSVCDLL       int      ExchProc::NSpinMaps() const;
-MSVCDLL const SpinMap& ExchProc::SMap(int i) const;
-MSVCDLL       bool     ExchProc::SMap(int comp1, int sp1, int& comp2, int& sp2) const;
-MSVCDLL       void     ExchProc::add_pair(SpinMap);
-MSVCDLL       bool     ExchProc::mapped(int comp1, int s1, int comp2, int s2) const;
-MSVCDLL       bool     ExchProc::mapped(int comp1,         int comp2) const;
+MSVCDLL       int      NSpinMaps() const;
+MSVCDLL const SpinMap& SMap(int i) const;
+MSVCDLL       bool     SMap(int comp1, int sp1, int& comp2, int& sp2) const;
+MSVCDLL       void     add_pair(SpinMap);
+MSVCDLL       bool     mapped(int comp1, int s1, int comp2, int s2) const;
+MSVCDLL       bool     mapped(int comp1,         int comp2) const;
 
 //______________________________________________________________________________
 // F                          CLASS PROCESS CONNECTIONS
@@ -286,8 +286,8 @@ MSVCDLL void mapping(const std::string& spair);
         // Note                         : The file should be an ASCII file
         //                                containing recognized parameters
 
-MSVCDLL bool ExchProc::read(const std::string&  filename, int idx=-1, int warn=2);
-MSVCDLL bool ExchProc::read(const ParameterSet& pset,     int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string&  filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,     int idx=-1, int warn=2);
 
 //_____________________________________________________________________________
 // G                        EXCHANGE PROCESS OUTPUT
@@ -304,9 +304,9 @@ MSVCDLL bool ExchProc::read(const ParameterSet& pset,     int idx=-1, int warn=2
 
    where the first component has label A, the second label B, etc.           */
 
-MSVCDLL static char ExchProc::Label(int i);
-MSVCDLL std::string ExchProc::LHSStr()     const;
-MSVCDLL std::string ExchProc::RHSStr()     const;
+MSVCDLL static char Label(int i);
+MSVCDLL std::string LHSStr()     const;
+MSVCDLL std::string RHSStr()     const;
 
 /* The next function returns a vector of strings that indicate the spin mappings
    that are active in the exchange process. Each string will involve one spin
@@ -318,7 +318,7 @@ MSVCDLL std::string ExchProc::RHSStr()     const;
    where here A is the LHS component and 0 its spin, while B is a RHS component
    with 1 being its spin.                                                         */
 
-MSVCDLL std::vector<std::string> ExchProc::SpinMapStrs() const;
+MSVCDLL std::vector<std::string> SpinMapStrs() const;
 
 
 
@@ -331,7 +331,7 @@ MSVCDLL std::vector<std::string> ExchProc::SpinMapStrs() const;
         // Output               ostr  : The output stream  is returned
         //                              with the process added
 
-MSVCDLL std::ostream& ExchProc::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const ExchProc& pro);
 
 };

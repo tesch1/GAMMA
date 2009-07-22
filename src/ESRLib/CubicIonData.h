@@ -81,11 +81,11 @@ public:
     which demands only a symbol value exists for convenience in other
     applications but may later cause troubles if other values left zero.,   */
 
-MSVCDLC      CubicIonData::CubicIonData();
-MSVCDLC      CubicIonData::CubicIonData(const CubicIonData& CID);
-MSVCDLC      CubicIonData::CubicIonData(const std::string&  CID);
-MSVCDLL void CubicIonData::operator= (  const CubicIonData& CID);
-MSVCDLC      CubicIonData::~CubicIonData();
+MSVCDLC      CubicIonData();
+MSVCDLC      CubicIonData(const CubicIonData& CID);
+MSVCDLC      CubicIonData(const std::string&  CID);
+MSVCDLL void operator= (  const CubicIonData& CID);
+MSVCDLC      ~CubicIonData();
 
 // ____________________________________________________________________________
 // B                        Cubic Ion Access Functions
@@ -98,11 +98,11 @@ MSVCDLC      CubicIonData::~CubicIonData();
         beta         (double)     none    
        gamma         (double)     none                                       */
 
-MSVCDLL std::string CubicIonData::symbol() const;			// Stored
-MSVCDLL      int    CubicIonData::charge() const;			// Stored
-MSVCDLL      double CubicIonData::gJ()     const;			// Stored
-MSVCDLL      double CubicIonData::beta()   const;			// Stored
-MSVCDLL      double CubicIonData::gamma()  const;			// Stored
+MSVCDLL std::string symbol() const;			// Stored
+MSVCDLL      int    charge() const;			// Stored
+MSVCDLL      double gJ()     const;			// Stored
+MSVCDLL      double beta()   const;			// Stored
+MSVCDLL      double gamma()  const;			// Stored
 
 // ____________________________________________________________________________
 // C                         Cubic Ion I/O Functions
@@ -116,7 +116,7 @@ MSVCDLL      double CubicIonData::gamma()  const;			// Stored
      print     ostream     Writes cubic system in ASCII to output stream
       <<       ostream     Writes cubic system in ASCII to output stream     */
 
-MSVCDLL std::ostream& CubicIonData::print(std::ostream& ostr, int lf=1) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int lf=1) const;
 MSVCDLL friend  std::ostream& operator<< (std::ostream& ostr, const CubicIonData& CID);
 };
 

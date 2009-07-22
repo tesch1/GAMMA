@@ -40,6 +40,7 @@
 #include <HSLib/GenOp.h>                // Know about general operators
 #include <Matrix/matrix.h>              // Know about matrices
 #include <Basics/StringCut.h>
+#include <stdlib.h>
 
 // ____________________________________________________________________________
 // *************** General Relaxation Auxiliary Functions ***************

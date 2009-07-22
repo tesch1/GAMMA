@@ -139,9 +139,9 @@ Quad:   T   = |-| * [3I - I(I+1)]    T   = - -(I I + I I )      T    = - I
 HF,Dip:  T   = |-| * [3I S - I.S]    T   = - -(I S + I S )    T    = - I S
           2,0  [6]      z z           2,1    2  + z   z +      2,2   2  + +  */
 
-virtual void IntRank2T::setSPF();		// Set for spin-field
-virtual void IntRank2T::setSPQ();		// Set for spin with itself
-virtual void IntRank2T::setSPSP();		// Set for spin-spin
+virtual void setSPF();		// Set for spin-field
+virtual void setSPQ();		// Set for spin with itself
+virtual void setSPSP();		// Set for spin-spin
 
 // ____________________________________________________________________________
 // iii           RANK 2 SPIN TENSOR FROM PARAMETER SET FUNCTIONS
@@ -187,19 +187,19 @@ virtual void IntRank2T::setSPSP();		// Set for spin-spin
       SpinCheck      Insures spin for epr is electron or for nmr is nucleus
       SpinCheck      Insures that double signifies a valid quantum number
 */
-bool IntRank2T::getIso(const ParameterSet& pset, std::string& IS,
+bool getIso(const ParameterSet& pset, std::string& IS,
                                              int idx=-1, bool warn=true) const;
-bool IntRank2T::scanIso(const ParameterSet& pset, std::string& IS,
+bool scanIso(const ParameterSet& pset, std::string& IS,
                                              int idx=-1, bool warn=true) const;
 
-bool IntRank2T::getIqn(const ParameterSet& pset, const std::string& Pbase,
+bool getIqn(const ParameterSet& pset, const std::string& Pbase,
                                  double& qn, int idx=-1, bool warn=true) const;
-bool IntRank2T::scanIqn(const ParameterSet& pset, const std::string& Pbase,
+bool scanIqn(const ParameterSet& pset, const std::string& Pbase,
                                  double& qn, int idx=-1, bool warn=true) const;
 
-bool IntRank2T::SpinCheck(const std::string&  II,          bool warn=true) const;
-bool IntRank2T::SpinCheck(const Isotope& II,bool epr=false,bool warn=true) const;
-bool IntRank2T::SpinCheck(      double   qn,bool qud=false,bool warn=true) const;
+bool SpinCheck(const std::string&  II,          bool warn=true) const;
+bool SpinCheck(const Isotope& II,bool epr=false,bool warn=true) const;
+bool SpinCheck(      double   qn,bool qud=false,bool warn=true) const;
 
 // ----------------------------------------------------------------------------
 //                          Spin Pair Spin Tensors
@@ -221,21 +221,21 @@ bool IntRank2T::SpinCheck(      double   qn,bool qud=false,bool warn=true) const
       SpinCheck      Insures indicies a proper spin pair
 
 */
-bool IntRank2T::getIsos(const ParameterSet& pset, int idxI, int idxS,
+bool getIsos(const ParameterSet& pset, int idxI, int idxS,
                        std::string& II, std::string& IS, bool warn=true) const;
-bool IntRank2T::scanIsos(const ParameterSet& pset, int idxI, int idxS,
+bool scanIsos(const ParameterSet& pset, int idxI, int idxS,
                          std::string& II, std::string& IS, bool warn=true) const;
-bool IntRank2T::getIqns(const ParameterSet& pset, const std::string& Pbase,
+bool getIqns(const ParameterSet& pset, const std::string& Pbase,
                        double& Iqn, double& Sqn, int i=-1, bool warn=true) const;
-bool IntRank2T::getIqns(const ParameterSet& pset, const std::string& Pbase,
+bool getIqns(const ParameterSet& pset, const std::string& Pbase,
              double& Iqn, double& Sqn, int idxI, int idxS, bool warn=true) const;
-bool IntRank2T::scanIqns(const ParameterSet& pset, const std::string& Pbase,
+bool scanIqns(const ParameterSet& pset, const std::string& Pbase,
                        double& Iqn, double& Sqn, int i=-1, bool warn=true) const;
 
-bool IntRank2T::SpinCheck(const std::string&  II, const std::string&  IS, bool warn=true) const;
-bool IntRank2T::SpinCheck(const Isotope& II, const Isotope& IS, bool epr, bool warn=true) const;
-bool IntRank2T::SpinCheck(      double   Iq,       double   Sq,           bool warn=true) const;
-bool IntRank2T::SpinCheck(      int      Ii,       int      Si,           bool warn=true) const;
+bool SpinCheck(const std::string&  II, const std::string&  IS, bool warn=true) const;
+bool SpinCheck(const Isotope& II, const Isotope& IS, bool epr, bool warn=true) const;
+bool SpinCheck(      double   Iq,       double   Sq,           bool warn=true) const;
+bool SpinCheck(      int      Ii,       int      Si,           bool warn=true) const;
 
 
 //sosik
@@ -243,29 +243,29 @@ bool IntRank2T::SpinCheck(      int      Ii,       int      Si,           bool w
 
 
 
-bool IntRank2T::setTIso(const ParameterSet& pset,
+bool setTIso(const ParameterSet& pset,
                                     int ttype=0, int idx=-1, int warn=1);
 
-bool IntRank2T::setTqn(const ParameterSet& pset, const std::string& PBase,
+bool setTqn(const ParameterSet& pset, const std::string& PBase,
                                           int ttype=0, int idx=-1, int warn=1);
 
 
-bool IntRank2T::setT(const ParameterSet& pset, const std::string& PBase,
+bool setT(const ParameterSet& pset, const std::string& PBase,
                                           int ttype=0, int idx=-1, int warn=1);
 
-bool IntRank2T::setTIsos(const ParameterSet& pset,
+bool setTIsos(const ParameterSet& pset,
                                     int ttype, int idxI, int idxS, int warn=1);
 
-bool IntRank2T::setTqns(const  ParameterSet& pset, const std::string& PBase,
+bool setTqns(const  ParameterSet& pset, const std::string& PBase,
                                                            int idxS, int warn);
 
-bool IntRank2T::setTqns(const  ParameterSet& pset, const std::string& PBase,
+bool setTqns(const  ParameterSet& pset, const std::string& PBase,
                                                  int idxI, int idxS, int warn);
 
-bool IntRank2T::setTs(const    ParameterSet& pset, const std::string& PBase,
+bool setTs(const    ParameterSet& pset, const std::string& PBase,
                                                 int ttype, int idxI, int warn);
 
-bool IntRank2T::setTs(const    ParameterSet& pset, const std::string& PBase,
+bool setTs(const    ParameterSet& pset, const std::string& PBase,
                                       int ttype, int idxI, int idxS, int warn);
 
 // ____________________________________________________________________________
@@ -277,8 +277,8 @@ bool IntRank2T::setTs(const    ParameterSet& pset, const std::string& PBase,
    in any specified composite Hilbert space. Individual Hilbert spaces in the
    specified composite must match those of the spins involved in the tensor. */
 
-static std::vector<int> IntRank2T::HSorder(const  std::vector<int>& HSs, int i);
-MSVCDLL matrix IntRank2T::blow_up(const matrix& mx, const std::vector<int>& HSs,
+static std::vector<int> HSorder(const  std::vector<int>& HSs, int i);
+MSVCDLL matrix blow_up(const matrix& mx, const std::vector<int>& HSs,
                                                         int i, int j=-1) const;
 
 // ----------------------------------------------------------------------------
@@ -295,8 +295,8 @@ MSVCDLL matrix IntRank2T::blow_up(const matrix& mx, const std::vector<int>& HSs,
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC IntRank2T::IntRank2T();
-MSVCDLC IntRank2T::IntRank2T(const IntRank2T &IST1);
+MSVCDLC IntRank2T();
+MSVCDLC IntRank2T(const IntRank2T &IST1);
 
 // ----------------------------------------------------------------------------
 //         Direct Constructors For Interactions Involving A Single Spin
@@ -316,9 +316,9 @@ MSVCDLC IntRank2T::IntRank2T(const IntRank2T &IST1);
         //                                >1 = warnings & exit
         // Output               none    : Interaction Spin Tensor constructed
 
-MSVCDLC IntRank2T::IntRank2T(const std::string&  IsoI, bool ttype=true, int warn=2);
-MSVCDLC IntRank2T::IntRank2T(const      Isotope& IsoI, bool ttype=true, int warn=2);
-MSVCDLC IntRank2T::IntRank2T(double Iqn,               bool ttype=true, int warn=2);
+MSVCDLC IntRank2T(const std::string&  IsoI, bool ttype=true, int warn=2);
+MSVCDLC IntRank2T(const      Isotope& IsoI, bool ttype=true, int warn=2);
+MSVCDLC IntRank2T(double Iqn,               bool ttype=true, int warn=2);
 
 // ----------------------------------------------------------------------------
 //         Direct Constructors For Interactions Involving A Spin Pair
@@ -333,17 +333,17 @@ MSVCDLC IntRank2T::IntRank2T(double Iqn,               bool ttype=true, int warn
         // Output               none    : Interaction Spin Tensor constructed
 
 
-MSVCDLC IntRank2T::IntRank2T(const std::string& IsoI, const std::string& IsoS);
-MSVCDLC IntRank2T::IntRank2T(const Isotope&     IsoI, const Isotope&     IsoS);
-MSVCDLC IntRank2T::IntRank2T(double             Iqn,  double             Sqn );
+MSVCDLC IntRank2T(const std::string& IsoI, const std::string& IsoS);
+MSVCDLC IntRank2T(const Isotope&     IsoI, const Isotope&     IsoS);
+MSVCDLC IntRank2T(double             Iqn,  double             Sqn );
 
 
 // ----------------------------------------------------------------------------
 //                Now For The Assignment Operator & Destructor
 // ----------------------------------------------------------------------------
 
-MSVCDLL void    IntRank2T::operator= (const IntRank2T &IST1);
-MSVCDLC virtual IntRank2T::~IntRank2T();
+MSVCDLL void    operator= (const IntRank2T &IST1);
+MSVCDLC virtual ~IntRank2T();
 
 // ____________________________________________________________________________
 // B       INTERACTION SPIN TENSOR SPIN TENSOR I & S VALUE ACCESS
@@ -354,12 +354,12 @@ MSVCDLC virtual IntRank2T::~IntRank2T();
 				IV,SV   : Hilbert space of I/S (e.g. 2, 6)
 				HS      : Spin Hilbert space of IST          */
 
-MSVCDLL double IntRank2T::Izval()           const;	// Iz: 0.5, 1.0, 1.5, ...
-MSVCDLL double IntRank2T::Szval()           const;	// Sz: 0.5, 1.0, 1.5, ...
-MSVCDLL int    IntRank2T::IV()              const;	// 2I+1: 2, 3, 4, ...
-MSVCDLL int    IntRank2T::SV()              const;	// 2S+1: 2, 3, 4, ...
-MSVCDLL int    IntRank2T::HS()              const;	// 2I+1 or (2I+1)*(2S+1)
-MSVCDLL double IntRank2T::qn(bool TF=false) const;	// Iz or Sz value
+MSVCDLL double Izval()           const;	// Iz: 0.5, 1.0, 1.5, ...
+MSVCDLL double Szval()           const;	// Sz: 0.5, 1.0, 1.5, ...
+MSVCDLL int    IV()              const;	// 2I+1: 2, 3, 4, ...
+MSVCDLL int    SV()              const;	// 2S+1: 2, 3, 4, ...
+MSVCDLL int    HS()              const;	// 2I+1 or (2I+1)*(2S+1)
+MSVCDLL double qn(bool TF=false) const;	// Iz or Sz value
 
 // ____________________________________________________________________________
 // C       INTERACTION SPIN TENSOR SPIN TENSOR COMPONENT ACCESS
@@ -375,25 +375,25 @@ MSVCDLL double IntRank2T::qn(bool TF=false) const;	// Iz or Sz value
 //        Single Spin Or Spin Pair Hilbert Space Spin Tensor Components
 // ----------------------------------------------------------------------------
 
-MSVCDLL matrix IntRank2T::T20()           const;		// Return T2,0 
-MSVCDLL matrix IntRank2T::T21()           const;		// Return T2,1
-MSVCDLL matrix IntRank2T::T2m1()          const;		// Return T2,-1
-MSVCDLL matrix IntRank2T::T22()           const;		// Return T2,2
-MSVCDLL matrix IntRank2T::T2m2()          const;		// Return T2,-2
-MSVCDLL matrix IntRank2T::T2m(int m)      const;		// Return T2,m
-MSVCDLL matrix IntRank2T::Tcomp(int comp) const;		// Return T2,m
+MSVCDLL matrix T20()           const;		// Return T2,0 
+MSVCDLL matrix T21()           const;		// Return T2,1
+MSVCDLL matrix T2m1()          const;		// Return T2,-1
+MSVCDLL matrix T22()           const;		// Return T2,2
+MSVCDLL matrix T2m2()          const;		// Return T2,-2
+MSVCDLL matrix T2m(int m)      const;		// Return T2,m
+MSVCDLL matrix Tcomp(int comp) const;		// Return T2,m
 
 // ----------------------------------------------------------------------------
 //               Composite Hilbert Space Spin Tensor Components
 // ----------------------------------------------------------------------------
 
-MSVCDLL matrix IntRank2T::T20(       const std::vector<int>& HSs,int i,int j=-1) const;
-MSVCDLL matrix IntRank2T::T21(       const std::vector<int>& HSs,int i,int j=-1) const;
-MSVCDLL matrix IntRank2T::T2m1(      const std::vector<int>& HSs,int i,int j=-1) const;
-MSVCDLL matrix IntRank2T::T22(       const std::vector<int>& HSs,int i,int j=-1) const;
-MSVCDLL matrix IntRank2T::T2m2(      const std::vector<int>& HSs,int i,int j=-1) const;
-MSVCDLL matrix IntRank2T::T2m(int m, const std::vector<int>& HSs,int i,int j=-1) const;
-MSVCDLL matrix IntRank2T::CompSpace(const matrix& mx,
+MSVCDLL matrix T20(       const std::vector<int>& HSs,int i,int j=-1) const;
+MSVCDLL matrix T21(       const std::vector<int>& HSs,int i,int j=-1) const;
+MSVCDLL matrix T2m1(      const std::vector<int>& HSs,int i,int j=-1) const;
+MSVCDLL matrix T22(       const std::vector<int>& HSs,int i,int j=-1) const;
+MSVCDLL matrix T2m2(      const std::vector<int>& HSs,int i,int j=-1) const;
+MSVCDLL matrix T2m(int m, const std::vector<int>& HSs,int i,int j=-1) const;
+MSVCDLL matrix CompSpace(const matrix& mx,
                              const std::vector<int>& HSs,int i,int j=-1) const;
 
 // ____________________________________________________________________________
@@ -427,9 +427,9 @@ MSVCDLL matrix IntRank2T::CompSpace(const matrix& mx,
 //     Functions That Generate Strings to Simplify and Modularize Printing
 //-----------------------------------------------------------------------------
 
-MSVCDLL std::string IntRank2T::StringI()  const;
-MSVCDLL std::string IntRank2T::StringS()  const;
-MSVCDLL std::string IntRank2T::StringIS() const;
+MSVCDLL std::string StringI()  const;
+MSVCDLL std::string StringS()  const;
+MSVCDLL std::string StringIS() const;
 
 //-----------------------------------------------------------------------------
 //  Functions That Generate string Arrays to Simplify and Modularize Printing
@@ -454,8 +454,8 @@ MSVCDLL std::string IntRank2T::StringIS() const;
               M = { 0, 1, ..., 4 } <===> m = { 0, 1, -1, 2, -2 }             */
 
 
-MSVCDLL std::vector<std::string> IntRank2T::T2Strings(int m) const;
-MSVCDLL std::vector<std::string> IntRank2T::TStrings(int  M) const;
+MSVCDLL std::vector<std::string> T2Strings(int m) const;
+MSVCDLL std::vector<std::string> TStrings(int  M) const;
 
 //-----------------------------------------------------------------------------
 //     Functions That Generate Ouput Of The Rank 2 Interaction Spin Tensor
@@ -469,7 +469,7 @@ MSVCDLL std::vector<std::string> IntRank2T::TStrings(int  M) const;
            Output               none    : Spin tensor components
                                           placed into the output stream      */
 
-MSVCDLL virtual std::ostream& IntRank2T::print(std::ostream& os, int fflag=-1) const;
+MSVCDLL virtual std::ostream& print(std::ostream& os, int fflag=-1) const;
 MSVCDLL friend  std::ostream& operator<< (std::ostream&      os, const IntRank2T& IST);
 
 // ____________________________________________________________________________
@@ -491,13 +491,13 @@ MSVCDLL friend  std::ostream& operator<< (std::ostream&      os, const IntRank2T
              morethan	True if I.qn() >  Iqn && S.qn() >  Sqn
              equalto         True if I.qn() =  Iqn && S.qn() =  Sqn          */
 
-MSVCDLL virtual bool IntRank2T::operator==(const IntRank2T &IST1)   const;
-MSVCDLL virtual bool IntRank2T::operator!=(const IntRank2T &IST1)   const;
-MSVCDLL virtual bool IntRank2T::operator<(const  IntRank2T &IST1)   const;
-MSVCDLL virtual bool IntRank2T::operator>(const  IntRank2T &IST1)   const;
-MSVCDLL         int  IntRank2T::lessthan(double  Iqn, double Sqn=0) const;
-MSVCDLL         int  IntRank2T::morethan(double  Iqn, double Sqn=0) const;
-MSVCDLL         int  IntRank2T::equalto(double   Iqn, double Sqn=0) const;
+MSVCDLL virtual bool operator==(const IntRank2T &IST1)   const;
+MSVCDLL virtual bool operator!=(const IntRank2T &IST1)   const;
+MSVCDLL virtual bool operator<(const  IntRank2T &IST1)   const;
+MSVCDLL virtual bool operator>(const  IntRank2T &IST1)   const;
+MSVCDLL         int  lessthan(double  Iqn, double Sqn=0) const;
+MSVCDLL         int  morethan(double  Iqn, double Sqn=0) const;
+MSVCDLL         int  equalto(double   Iqn, double Sqn=0) const;
   };
 
 #endif						// IntRank2T.h

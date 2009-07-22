@@ -113,7 +113,7 @@ void deleteGprops();
 // ____________________________________________________________________________
 
 
-void PulTrainSCyc::copyHams(const PulTrainSCyc& PTSC1);
+void copyHams(const PulTrainSCyc& PTSC1);
 
         // Input        PTSC	: A pulse train cycle (this)
         //              PTSC1	: A second pulse train cycle
@@ -123,7 +123,7 @@ void PulTrainSCyc::copyHams(const PulTrainSCyc& PTSC1);
         //                        are currently empty
 
 
-void PulTrainSCyc::copyUprops(const PulTrainSCyc& PTSC1);
+void copyUprops(const PulTrainSCyc& PTSC1);
  
         // Input        PTSC	: A pulse train cycle (this)
         //              PTSC1	: A second pulse train cycle
@@ -132,7 +132,7 @@ void PulTrainSCyc::copyUprops(const PulTrainSCyc& PTSC1);
         // Note                 : Assumed array Usteps is empty
  
  
-void PulTrainSCyc::copyGprops(const PulTrainSCyc& PTSC1);
+void copyGprops(const PulTrainSCyc& PTSC1);
  
         // Input        PTSC	: A pulse train cycle (this)
         //              PTSC1	: A second pulse train cycle
@@ -149,7 +149,7 @@ void PulTrainSCyc::copyGprops(const PulTrainSCyc& PTSC1);
    step in the waveform (Usteps and Usums).  These will usually be generated
    during construction of the pulse train cycle, they are system dependent.  */
 
-void PulTrainSCyc::SetUs(PulCycle& PTC);
+void SetUs(PulCycle& PTC);
 
         // Input                PTSC	: A pulse train cycle (this)
         //                      PTC	: A pulse train cycle
@@ -229,7 +229,7 @@ MSVCDLL void operator = (const PulTrainSCyc& PTSC1);
    cycle steps.  They are generated from an input pulse waveform.  It is the
    waveform which actually contains individual step Hamiltonians.           */
  
-//gen_op PulTrainSCyc::GetH(PulCycle& PTC, int i=-1) const
+//gen_op GetH(PulCycle& PTC, int i=-1) const
  
         // Input                PTSC    : A pulse train supercycle (this)
         //                      i     : Step in pulse train supercycle
@@ -288,7 +288,7 @@ MSVCDLL HSprop GetUmult(int N) const;
 // ____________________________________________________________________________
 
 
-MSVCDLL void PulTrainSCyc::SetGs(PulCycle& PTC);
+MSVCDLL void SetGs(PulCycle& PTC);
 
         // Input                PTSC	: A pulse train supercycle (this)
         //                      PTC	: A pulse waveform
@@ -336,7 +336,7 @@ MSVCDLL int        steps()   const;
         // Output       phase   : Step phase value (degrees)
 
  
-MSVCDLL double PulTrainSCyc::steps(double td) const;
+MSVCDLL double steps(double td) const;
  
         // Input        PTSC    : A pulse train supercycle (this)
         //              td      : An evolution time (sec)
@@ -345,8 +345,8 @@ MSVCDLL double PulTrainSCyc::steps(double td) const;
  
 
 
-MSVCDLL int PulTrainSCyc::fullSCYCs(double td=-1) const;
-MSVCDLL int PulTrainSCyc::fullsteps(double td=-1) const;
+MSVCDLL int fullSCYCs(double td=-1) const;
+MSVCDLL int fullsteps(double td=-1) const;
 
         // Input        PTSC    : A pulse train supercycle (this)
         //              td      : An evolution time (sec)
@@ -371,7 +371,7 @@ MSVCDLL int PulTrainSCyc::fullsteps(double td=-1) const;
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& PulTrainSCyc::printInfo(std::ostream &ostr) const;
+MSVCDLL std::ostream& printInfo(std::ostream &ostr) const;
 
         // Input                PTSC     : Pulse Train Cycle
         //                      ostr    : Output stream
@@ -381,7 +381,7 @@ MSVCDLL std::ostream& PulTrainSCyc::printInfo(std::ostream &ostr) const;
 
 
 
-MSVCDLL std::ostream& PulTrainSCyc::printBase(std::ostream &ostr) const;
+MSVCDLL std::ostream& printBase(std::ostream &ostr) const;
 
         // Input                PTSC     : Pulse Train Cycle
         //                      ostr    : Output stream

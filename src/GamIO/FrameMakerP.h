@@ -75,7 +75,7 @@ friend class FMStack;			// Allow FMStack full access
 // ____________________________________________________________________________
 
          
-void FMPar::FMPerror(int eidx, int noret=0) const;
+void FMPerror(int eidx, int noret=0) const;
  
         // Input                FMP     : FrameMaker Parameters (this)
         //                      eidx    : Flag for error type
@@ -83,7 +83,7 @@ void FMPar::FMPerror(int eidx, int noret=0) const;
         // Output               none    : Error message
 
 
-volatile void FMPar::FMPfatality(int eidx) const;
+volatile void FMPfatality(int eidx) const;
  
         // Input                FMP     : FrameMaker Parameters (this)
         //                      eidx    : Flag for error type
@@ -131,26 +131,26 @@ MSVCDLL void operator=(const FMPar &FMP1);
 // ------------------------- Overall Plot Dimensions --------------------------
 
 
-MSVCDLL double FMPar::HPlotSize() const;
+MSVCDLL double HPlotSize() const;
  
         // Input                FMP     : FrameMaker parameters (this)
         // Output               hsize   : Horizontal plot size (cm)
  
  
-MSVCDLL void FMPar::HPlotSize(double hps);
+MSVCDLL void HPlotSize(double hps);
 
         // Input                FMP     : FrameMaker parameters (this)
         //                      hps     : Plotting dimension (cm)
         // Output               void    : Horizontal plot size set to hps
  
 
-MSVCDLL double FMPar::VPlotSize() const;
+MSVCDLL double VPlotSize() const;
 
         // Input                FMP     : FrameMaker parameters (this)
         // Output               vsize   : Vertical plot size (cm)
 
  
-MSVCDLL void FMPar::VPlotSize(double vps);
+MSVCDLL void VPlotSize(double vps);
 
         // Input                FMP     : FrameMaker parameters (this)
         //                      vps     : Plotting dimension (cm)
@@ -160,26 +160,26 @@ MSVCDLL void FMPar::VPlotSize(double vps);
 // ------------------------------ Axis Labeling -------------------------------
 
 
-MSVCDLL double FMPar::HAxMin() const;
+MSVCDLL double HAxMin() const;
 
         // Input                FMP     : FrameMaker parameters (this)
         // Output               haxmin  : Horizontal axis left label
  
 
-MSVCDLL void FMPar::HAxMin(double hmval);
+MSVCDLL void HAxMin(double hmval);
 
         // Input                FMP     : FrameMaker parameters (this)
         // 			hmval   : Horizontal axis left value
         // Output               void 	: Horizontal axis left value set
  
  
-MSVCDLL double FMPar::HAxMax() const;
+MSVCDLL double HAxMax() const;
  
         // Input                FMP     : FrameMaker parameters (this)
         // Output               haxmax  : Horizontal axis right label
  
 
-MSVCDLL void FMPar::HAxMax(double hmval);
+MSVCDLL void HAxMax(double hmval);
 
         // Input                FMP     : FrameMaker parameters (this)
         // 			hmval   : Horizontal axis right value
@@ -189,13 +189,13 @@ MSVCDLL void FMPar::HAxMax(double hmval);
 // ------------------------------ PolyLine Size -------------------------------
  
  
-MSVCDLL int FMPar::PLsize() const;
+MSVCDLL int PLsize() const;
  
         // Input                FMP     : FrameMaker parameters (this)
         // Output               PLmax   : Maximum allowed PolyLine size
  
  
-MSVCDLL void FMPar::PLsize(int PLS);
+MSVCDLL void PLsize(int PLS);
 
         // Input                FMP     : FrameMaker parameters (this)
         //                      PLS     : Polyline size
@@ -206,13 +206,13 @@ MSVCDLL void FMPar::PLsize(int PLS);
 // ----------------------------- Plot Resolution ------------------------------
  
 
-MSVCDLL double FMPar::PVRes() const;
+MSVCDLL double PVRes() const;
  
         // Input                FMP     : FrameMaker parameters (this)
         // Output               VRES    : Vertical plot resolution (cm)
  
  
-MSVCDLL void FMPar::PVRes(double vcm);
+MSVCDLL void PVRes(double vcm);
  
         // Input                FMP     : FrameMaker parameters (this)
         //                      vcm     : Vertical plot resolution (cm)
@@ -220,13 +220,13 @@ MSVCDLL void FMPar::PVRes(double vcm);
         //                                is set to vcm in FMP
  
  
-MSVCDLL double FMPar::PHRes() const;
+MSVCDLL double PHRes() const;
  
         // Input                FMP     : FrameMaker parameters (this)
         // Output               HRES    : Horizontal plot resolution (cm)
  
  
-MSVCDLL void FMPar::PHRes(double hcm);
+MSVCDLL void PHRes(double hcm);
  
         // Input                FMP     : FrameMaker parameters (this)
         //                      hcm     : Horizontal plot resolution (cm)
@@ -237,14 +237,14 @@ MSVCDLL void FMPar::PHRes(double hcm);
 // ------------------------------- Data Usage ---------------------------------
  
  
-MSVCDLL datause FMPar::DataUse() const;
+MSVCDLL datause DataUse() const;
 
         // Input                FMP     : FrameMaker parameters (this)
         // Output               duse    : The type of data used is returned
  
  
  
-MSVCDLL void FMPar::DataUse(datause du);
+MSVCDLL void DataUse(datause du);
  
         // Input                FMP     : FrameMaker parameters (this)
         //                      du      : Type of data useage
@@ -254,13 +254,13 @@ MSVCDLL void FMPar::DataUse(datause du);
 // -------------------------------- Debugging ---------------------------------
 
  
-MSVCDLL int FMPar::DebugLev() const;
+MSVCDLL int DebugLev() const;
  
         // Input                FMP     : FrameMaker parameters (this)
         // Output               FMdebug : The debugging level is returned
  
  
-MSVCDLL void FMPar::DebugLev(int dl);
+MSVCDLL void DebugLev(int dl);
  
         // Input                FMP     : FrameMaker parameters (this)
         //                      dl      : Debugging level
@@ -272,7 +272,7 @@ MSVCDLL void FMPar::DebugLev(int dl);
 // ____________________________________________________________________________
 
                                                                                 
-MSVCDLL void FMPar::maxima(const row_vector& vx, double &min, double& max);
+MSVCDLL void maxima(const row_vector& vx, double &min, double& max);
    
         // Input                FMP     : FrameMaker parameters (this)
         //                      vx      : Data vector
@@ -281,7 +281,7 @@ MSVCDLL void FMPar::maxima(const row_vector& vx, double &min, double& max);
         // Return               void    : Values of min & max are altered
  
 
-MSVCDLL void FMPar::borders(double &top, double &bottom, double &right, double &left);
+MSVCDLL void borders(double &top, double &bottom, double &right, double &left);
 
         // Input        FMP     : FrameMaker parameters (this)
         //              top     : Actual plot top in cm
@@ -295,7 +295,7 @@ MSVCDLL void FMPar::borders(double &top, double &bottom, double &right, double &
 // ____________________________________________________________________________
  
  
-MSVCDLL void FMPar::plotsize();
+MSVCDLL void plotsize();
  
         // Input                FMP     : FrameMaker parameters (this)
         // Output               void    : The overall plotsize is checked

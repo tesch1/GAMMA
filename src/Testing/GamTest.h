@@ -81,8 +81,8 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void GamTest::GTerror(int eidx, int noret=0) const;
-volatile void GamTest::GTfatal(int eidx)              const;
+         void GTerror(int eidx, int noret=0) const;
+volatile void GTfatal(int eidx)              const;
 
 // ____________________________________________________________________________
 // ii                   GAMMA TEST INITIALIZATION FUNCTIONS
@@ -95,7 +95,7 @@ volatile void GamTest::GTfatal(int eidx)              const;
    indicates that additional tests have been added, potentially with a
    different ordering, since the test results were generated previously.    */
 
-void GamTest::SetResults(int force=0);                 
+void SetResults(int force=0);                 
 
 // ____________________________________________________________________________
 // iii                 GAMMA TEST MODULE TEST INDEXING FUNCTIONS
@@ -105,11 +105,11 @@ void GamTest::SetResults(int force=0);
    obtain the test Pix from either an interger or a string and they perform
    range checking to insure that the requested test exists in the section.   */
  
-bool                          GamTest::CheckIndex(int k, int w=1) const;
-std::list<ModTest>::iterator       GamTest::GetPixNC(int k);
-std::list<ModTest>::const_iterator GamTest::GetPix(int k)              const;
-std::list<ModTest>::const_iterator GamTest::GetPix(const std::string& N)    const;
-int                           GamTest::GetIndex(const std::string& N)  const;
+bool                          CheckIndex(int k, int w=1) const;
+std::list<ModTest>::iterator       GetPixNC(int k);
+std::list<ModTest>::const_iterator GetPix(int k)              const;
+std::list<ModTest>::const_iterator GetPix(const std::string& N)    const;
+int                           GetIndex(const std::string& N)  const;
 
 public:
 
@@ -134,9 +134,9 @@ GamTest(const GamTest& GT)              GAMMA Test copy of GT
 GamTest assign(N)                       Assign N element
 ~GamTest()                              Destructor of Module Test           */
 
-MSVCDLC            GamTest::GamTest();                   // Empty Module Test
-MSVCDLC            GamTest::GamTest(const  GamTest& GT); // Module Test copy of GT
-MSVCDLL GamTest& GamTest::operator= (const GamTest& GT); // Assignment operator
+MSVCDLC            GamTest();                   // Empty Module Test
+MSVCDLC            GamTest(const  GamTest& GT); // Module Test copy of GT
+MSVCDLL GamTest& operator= (const GamTest& GT); // Assignment operator
  
 // ____________________________________________________________________________
 // B                   GAMMA TEST ITERATORS & MEMBER ACCESS
@@ -146,10 +146,10 @@ MSVCDLL GamTest& GamTest::operator= (const GamTest& GT); // Assignment operator
    library libstdc++.  I am listing them here so that I & other users don't
    have to keep looking them up all the time.
 
-list<SectTest>::iterator GamTest::begin()      Pointer to 1st element
-list<SectTest>::iterator GamTest::end()        Pointer to last element
-SectTest                 GamTest::front()      First element
-SectTest                 GamTest::back()       Last element                  */
+list<SectTest>::iterator begin()      Pointer to 1st element
+list<SectTest>::iterator end()        Pointer to last element
+SectTest                 front()      First element
+SectTest                 back()       Last element                  */
 
 // ____________________________________________________________________________
 // C                     GAMMA TEST LIST & QUEUE OPERATIONS
@@ -159,13 +159,13 @@ SectTest                 GamTest::back()       Last element                  */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-GamTest::push_back(const  SectTest& MT)         Add MT to list end
-GamTest::pop_back()                             Remove MT at list end
-GamTest::push_front(const SectTest& MT)         Add MT to list start
-GamTest::pop_front(const  SectTest& MT)         Remove MT at list start
-GamTest::insert(iterator p, SectTest& MT)       Add MT before p
-GamTest::erase(iterator p)                      Remove MT at p
-GamTest::clear()                                Remove all list entries      */
+push_back(const  SectTest& MT)         Add MT to list end
+pop_back()                             Remove MT at list end
+push_front(const SectTest& MT)         Add MT to list start
+pop_front(const  SectTest& MT)         Remove MT at list start
+insert(iterator p, SectTest& MT)       Add MT before p
+erase(iterator p)                      Remove MT at p
+clear()                                Remove all list entries      */
 
 // ____________________________________________________________________________
 // D                    GAMMA TEST ADDITIONAL QUEUE OPERATIONS
@@ -175,10 +175,10 @@ GamTest::clear()                                Remove all list entries      */
    library libstdc++.  I am listing them here so that I & other users don't 
    have to keep looking them up all the time.
 
-int  GamTest::size()                          Number of entries
-bool GamTest::empty()                         TRUE if pset empty
-bool GamTest::operator==(GamTest GT)          TRUE if psets equal
-bool GamTest::operator!=(GamTest GT)          TRUE if psets not equal        */
+int  size()                          Number of entries
+bool empty()                         TRUE if pset empty
+bool operator==(GamTest GT)          TRUE if psets equal
+bool operator!=(GamTest GT)          TRUE if psets not equal        */
 
 // ____________________________________________________________________________
 // E                     GAMMA TEST LIST AUXILIARY FUNCTIONS
@@ -195,11 +195,11 @@ bool GamTest::operator!=(GamTest GT)          TRUE if psets not equal        */
      seek       string    Returns iterator in GAMMA tests for test with name
        "       ModTest    Returns iterator in GAMMA tests for module test    */ 
  
-MSVCDLL int GamTest::contains(const std::string& N) const;
-MSVCDLL int GamTest::contains(const ModTest& MT)  const;
+MSVCDLL int contains(const std::string& N) const;
+MSVCDLL int contains(const ModTest& MT)  const;
 
-MSVCDLL std::list<ModTest>::const_iterator GamTest::seek(const std::string& N) const;
-MSVCDLL std::list<ModTest>::const_iterator GamTest::seek(const ModTest& MT) const;
+MSVCDLL std::list<ModTest>::const_iterator seek(const std::string& N) const;
+MSVCDLL std::list<ModTest>::const_iterator seek(const ModTest& MT) const;
  
 // ____________________________________________________________________________
 // F                       GAMMA TEST ACCESS FUNCTIONS
@@ -224,24 +224,24 @@ MSVCDLL std::list<ModTest>::const_iterator GamTest::seek(const ModTest& MT) cons
    GetRunLevels    Returns int vector for run level of all Module Tests
     GetResults     Returns int vector for all current Module Test Results     */
 
-MSVCDLL std::string    GamTest::GetName()                    const;
-MSVCDLL std::string    GamTest::GetName(int k)               const;
-//std::string    GamTest::GetName(int k, int j)        const;
-MSVCDLL std::vector<std::string> GamTest::GetNames()                   const;
-//vector<string> GamTest::GetNames(int k)              const;
-MSVCDLL std::string         GamTest::GetDescription()             const;
-MSVCDLL std::string         GamTest::GetDescription(int k)        const;
-//string         GamTest::GetDescription(int k, int j) const;
-MSVCDLL std::vector<std::string> GamTest::GetDescriptions()            const;
-//vector<string> GamTest::GetDescriptions(int k)       const;
-MSVCDLL int            GamTest::GetStatus()                  const;
-MSVCDLL int            GamTest::GetStatus(int k)             const;
-MSVCDLL std::vector<int>    GamTest::GetStatuses()                const;
-MSVCDLL int            GamTest::GetRunLevel()                const;
-MSVCDLL int            GamTest::GetRunLevel(int k)           const;
-MSVCDLL std::vector<int>    GamTest::GetRunLevels()               const;
-MSVCDLL std::vector<int>    GamTest::GetResults();
-MSVCDLL std::vector<int>    GamTest::GetResults(int k);
+MSVCDLL std::string    GetName()                    const;
+MSVCDLL std::string    GetName(int k)               const;
+//std::string    GetName(int k, int j)        const;
+MSVCDLL std::vector<std::string> GetNames()                   const;
+//vector<string> GetNames(int k)              const;
+MSVCDLL std::string         GetDescription()             const;
+MSVCDLL std::string         GetDescription(int k)        const;
+//string         GetDescription(int k, int j) const;
+MSVCDLL std::vector<std::string> GetDescriptions()            const;
+//vector<string> GetDescriptions(int k)       const;
+MSVCDLL int            GetStatus()                  const;
+MSVCDLL int            GetStatus(int k)             const;
+MSVCDLL std::vector<int>    GetStatuses()                const;
+MSVCDLL int            GetRunLevel()                const;
+MSVCDLL int            GetRunLevel(int k)           const;
+MSVCDLL std::vector<int>    GetRunLevels()               const;
+MSVCDLL std::vector<int>    GetResults();
+MSVCDLL std::vector<int>    GetResults(int k);
 
 /*         Input                GT : A GAMMA test (this)
                   (name)      name : The name of the test     (setting name)
@@ -254,14 +254,14 @@ MSVCDLL std::vector<int>    GamTest::GetResults(int k);
                   (runlev)  runlev : Current test run level   (getting runlev)
                               void : If setting interal value                */  
  
-MSVCDLL const std::string& GamTest::name()     const;                // Get name
-MSVCDLL       int          GamTest::status()   const;                // Get status
-MSVCDLL const std::string& GamTest::describe() const;                // Get descript
-MSVCDLL       int          GamTest::runlevel() const;                // Get runlev
-MSVCDLL       void         GamTest::name(const  std::string& Name);  // Set name
-MSVCDLL       void         GamTest::status(     int          Status);// Set status
-MSVCDLL       void         GamTest::describe(const std::string& D);  // Set decript
-MSVCDLL       void         GamTest::runlevel(   int          RLev);  // Set runlev
+MSVCDLL const std::string& name()     const;                // Get name
+MSVCDLL       int          status()   const;                // Get status
+MSVCDLL const std::string& describe() const;                // Get descript
+MSVCDLL       int          runlevel() const;                // Get runlev
+MSVCDLL       void         name(const  std::string& Name);  // Set name
+MSVCDLL       void         status(     int          Status);// Set status
+MSVCDLL       void         describe(const std::string& D);  // Set decript
+MSVCDLL       void         runlevel(   int          RLev);  // Set runlev
  
 // ____________________________________________________________________________
 // G                      GAMMA TEST TESTING FUNCTIONS
@@ -284,15 +284,15 @@ MSVCDLL       void         GamTest::runlevel(   int          RLev);  // Set runl
 //                             Test All Modules
 //-----------------------------------------------------------------------------
 
-MSVCDLL int GamTest::TestMods(std::ostream& ostr, int anew=0, int keepon=0);
+MSVCDLL int TestMods(std::ostream& ostr, int anew=0, int keepon=0);
  
 //-----------------------------------------------------------------------------
 //                           Test Specific Module
 //-----------------------------------------------------------------------------
  
-MSVCDLL int GamTest::TestMod(std::ostream& ostr, const int tidx,     
+MSVCDLL int TestMod(std::ostream& ostr, const int tidx,     
                                                  int anew = 0, int keepon = 0);
-MSVCDLL int GamTest::TestMod(std::ostream& ostr, const std::string& tnam,
+MSVCDLL int TestMod(std::ostream& ostr, const std::string& tnam,
                                                  int anew = 0, int keepon = 0);
 
 // ____________________________________________________________________________
@@ -317,9 +317,9 @@ MSVCDLL int GamTest::TestMod(std::ostream& ostr, const std::string& tnam,
             results from individual section tests if the function resursion
             level (nlevels) is set greater than 1.                           */
 
-MSVCDLL std::ostream& GamTest::Header(std::ostream& ostr)              const;
-MSVCDLL std::ostream& GamTest::Results(std::ostream& ostr, int goon=1) const;
-MSVCDLL std::ostream& GamTest::ResRec(std::ostream& ostr,  int goon=1, int nlevels=1);
+MSVCDLL std::ostream& Header(std::ostream& ostr)              const;
+MSVCDLL std::ostream& Results(std::ostream& ostr, int goon=1) const;
+MSVCDLL std::ostream& ResRec(std::ostream& ostr,  int goon=1, int nlevels=1);
 
 
 // ____________________________________________________________________________
@@ -342,15 +342,15 @@ MSVCDLL std::ostream& GamTest::ResRec(std::ostream& ostr,  int goon=1, int nleve
    These functions assume you want some output text from running the tests,
    otherwise you would just use the TestLevel function directly, right?      */  
 
-MSVCDLL int GamTest::AskRun(std::ostream& ostr);
+MSVCDLL int AskRun(std::ostream& ostr);
 
 
 // ____________________________________________________________________________
 // I                       SECTION TEST AUXILIARY FUNCTIONS
 // ____________________________________________________________________________
  
-MSVCDLL std::ostream& GamTest::ListTests(std::ostream& ostr)  const;
-MSVCDLL std::ostream& GamTest::FinishTest(std::ostream& ostr) const;
+MSVCDLL std::ostream& ListTests(std::ostream& ostr)  const;
+MSVCDLL std::ostream& FinishTest(std::ostream& ostr) const;
 
 
 };

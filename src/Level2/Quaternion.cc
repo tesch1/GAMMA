@@ -49,6 +49,7 @@
 #include <Basics/StringCut.h>           // Additional string manipulations
 #include <Basics/SinglePar.h>           // Include GAMMA single parameters
 #include <Basics/ParamSet.h>		// Include GAMMA parameter sets
+#include <stdlib.h>
 #include <cmath>			// Include HUGE_VAL_VAL
 
 using std::string;			// Using libstdc++ strings

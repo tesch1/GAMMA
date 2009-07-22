@@ -41,6 +41,7 @@
 #include <Basics/ParamSet.h>		// Include parameter sets
 #include <Basics/Isotope.h>		// Include spin isotopes
 #include <Basics/StringCut.h>		// Include Gform and Gdec
+#include <stdlib.h>
 
 using std::string;			// Using libstdc++ strings
 using std::list;			// Using libstdc++ STL lists

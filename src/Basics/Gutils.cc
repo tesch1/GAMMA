@@ -34,6 +34,8 @@
 #include <GamGen.h>			// Include OS specifics
 #include <string>			// Know about string class
 #include <iostream>			// Know about endl
+#include <stdlib.h>
+#include <math.h>
 
 using std::string;			// Using libstdc++ strings
 using std::cout;			// Using libstdc++ standard output

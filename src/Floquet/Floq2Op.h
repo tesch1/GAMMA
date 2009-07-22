@@ -67,8 +67,8 @@ private:
         // Output               none    : Error message
         //                                Program execution stopped (fatal)
 
-//         void floq2_op::FOperror(int eidx, int noret=0) const;
-//volatile void floq2_op::FOpfatal(int eidx) const;
+//         void FOperror(int eidx, int noret=0) const;
+//volatile void FOpfatal(int eidx) const;
 
 friend void floq2_op_error (int error);
 friend void volatile floq2_op_fatality (int error);
@@ -83,8 +83,8 @@ public:
 // A             CLASS FLOQUET OPERATOR CONSTRUCTORS/DETRUCTOR
 // ______________________________________________________________________
 
-MSVCDLC floq2_op::floq2_op();
-MSVCDLC floq2_op::floq2_op(const floq2_op& FOp);
+MSVCDLC floq2_op();
+MSVCDLC floq2_op(const floq2_op& FOp);
 
         // Input                N_   : 2*N+1: Dimension of Floquet space
         //                      hs_  : 2*hs+1: Dimension of spin space
@@ -119,8 +119,8 @@ MSVCDLC floq2_op (int N1_,int N2_,int hs_,double omega1_,double omega2_)
 MSVCDLC floq2_op(int N,int M,int HS,double Om1,double Om2,matrix& mx);
 MSVCDLC floq2_op(int N,int M,int HS,double Om1,double Om2,matrix& mx, basis &bs);
 
-MSVCDLC floq2_op& floq2_op::operator = (const floq2_op& FOp1);
-MSVCDLC           floq2_op::~floq2_op ();
+MSVCDLC floq2_op& operator = (const floq2_op& FOp1);
+MSVCDLC           ~floq2_op ();
 
 // ____________________________________________________________________________
 // B                   FLOQUET OPERATOR ACCESS FUNCTIONS
@@ -137,13 +137,13 @@ MSVCDLC           floq2_op::~floq2_op ();
    dim     - returns full dimension of FloqOp
    size    - returns full dimension of FloqOp	                      */
 
-MSVCDLL int    floq2_op::dim()     const;
-MSVCDLL int    floq2_op::size()    const;
-MSVCDLL int    floq2_op::hsdim()   const;
-MSVCDLL int    floq2_op::phodim1() const;
-MSVCDLL int    floq2_op::phodim2() const;
-MSVCDLL double floq2_op::omega1()  const;
-MSVCDLL double floq2_op::omega2()  const;
+MSVCDLL int    dim()     const;
+MSVCDLL int    size()    const;
+MSVCDLL int    hsdim()   const;
+MSVCDLL int    phodim1() const;
+MSVCDLL int    phodim2() const;
+MSVCDLL double omega1()  const;
+MSVCDLL double omega2()  const;
 
 // ______________________________________________________________________
 // C FLOQUET OPERATOR FUNCTIONS, FLOQUET OPERATOR WITH FLOQUET OPERATOR 
@@ -346,8 +346,8 @@ MSVCDLL void put_sdiag (gen_op &Op1, int sdn_1, int sdn_2);
 
 // *************  Set Operator to a Specific Representation *************
 	
-MSVCDLL void floq2_op::set_DBR();
-MSVCDLL void floq2_op::set_EBR();
+MSVCDLL void set_DBR();
+MSVCDLL void set_EBR();
 
 // ______________________________________________________________________
 //                   CLASS FLOQUET OPERATOR I/O FUNCTION
@@ -369,8 +369,8 @@ MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const floq2_op &Op
         // Output sub_omegas F_op    : Floquet operator with omegas subtracted
         //                           : on main diagonal   
             
-MSVCDLL void floq2_op::add_omegas();
-MSVCDLL void floq2_op::sub_omegas();
+MSVCDLL void add_omegas();
+MSVCDLL void sub_omegas();
 
 };  
 

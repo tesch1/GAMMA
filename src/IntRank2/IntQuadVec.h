@@ -71,16 +71,16 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-void IntQuadVec::IQVerror(int eidx,                           int noret=0) const;
-void IntQuadVec::IQVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void IntQuadVec::IQVfatality(int eidx) const;
+void IQVerror(int eidx,                           int noret=0) const;
+void IQVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void IQVfatality(int eidx) const;
 
 // ____________________________________________________________________________
 // ii             QUADRUPOLAR INTERACTION VECTOR SETUP FUNCTIONS
 // ____________________________________________________________________________
  
 
-bool IntQuadVec::check_spin(int spin, int warn=0) const;
+bool check_spin(int spin, int warn=0) const;
  
         // Input                IQV     : Quadrupolar interaction vector (this)
         //                      spin	: A spin index
@@ -93,7 +93,7 @@ bool IntQuadVec::check_spin(int spin, int warn=0) const;
 //      Functions To Set Quadrupolar Interactions From Single Index Parameters
 // ----------------------------------------------------------------------------
 
-int IntQuadVec::getNInts(const ParameterSet& pset, int idx=-1) const;
+int getNInts(const ParameterSet& pset, int idx=-1) const;
  
         // Input                IQV     : Quadrupolar interaction vector (this)
         //                      pset    : A parameter set
@@ -103,7 +103,7 @@ int IntQuadVec::getNInts(const ParameterSet& pset, int idx=-1) const;
         //                                # = { 0, 1, ...., ns-1 }.
 
 
-int IntQuadVec::setGs(const ParameterSet& pset, int idx=-1, int warn=0);
+int setGs(const ParameterSet& pset, int idx=-1, int warn=0);
 
         // Input                IQV     : Quadrupolar interaction vector (this)
         //                      pset    : A parameter set
@@ -181,8 +181,8 @@ MSVCDLC    IntQuadVec();				// Empty Interaction Vector
 	//				  to read {[idx]Quadrupolar(i)} from i=0 
 	//				  to i=ns-1 where ns is the number
 
-//IntQuadVec::IntQuadVec(const         ParameterSet& pset, int indx=-1, int warn=1);
-//IntQuadVec::IntQuadVec(int ns, const ParameterSet& pset, int indx=-1, int warn=1);
+//IntQuadVec(const         ParameterSet& pset, int indx=-1, int warn=1);
+//IntQuadVec(int ns, const ParameterSet& pset, int indx=-1, int warn=1);
 
 // ----------------------------------------------------------------------------
 //          This Constructor Supports Generation From A Spin System
@@ -208,7 +208,7 @@ MSVCDLC    IntQuadVec();				// Empty Interaction Vector
 
 
 
-MSVCDLC IntQuadVec::IntQuadVec(const std::vector<Isotope>& Isos,
+MSVCDLC IntQuadVec(const std::vector<Isotope>& Isos,
                                          const ParameterSet& pset, int warn=2);
 
 
@@ -218,8 +218,8 @@ MSVCDLC IntQuadVec::IntQuadVec(const std::vector<Isotope>& Isos,
 
 //  These should be completely handled by the base class STL vector<IntQuad>
 
-//void IntQuadVec::operator= (const IntQuadVec &IQV);
-//     IntQuadVec::~IntQuadVec ();
+//void operator= (const IntQuadVec &IQV);
+//     ~IntQuadVec ();
 
 
 // ____________________________________________________________________________ 
@@ -240,8 +240,8 @@ MSVCDLC IntQuadVec::IntQuadVec(const std::vector<Isotope>& Isos,
 	// Output		none	: Get/Set Quadrupolar interaction value
 	//				  for specified spin
 
-MSVCDLL void   IntQuadVec::QValue(int spin, double val, int type);
-MSVCDLL double IntQuadVec::QValue(int spin, int type) const;
+MSVCDLL void   QValue(int spin, double val, int type);
+MSVCDLL double QValue(int spin, int type) const;
 
 // ---------------------------------------------------------------------------- 
 //                         Quadrupolar Coupling Constants
@@ -255,15 +255,15 @@ MSVCDLL double IntQuadVec::QValue(int spin, int type) const;
 	//				  interaction and the anisotropy is
 	//				  1.5 times the Quadrupolar coupling
 
-MSVCDLL void   IntQuadVec::QCC(int  spin, double qcc);
-MSVCDLL void   IntQuadVec::NQCC(int spin, double qcc);
-MSVCDLL void   IntQuadVec::delz(int spin, double qcc);
-MSVCDLL void   IntQuadVec::QA(int   spin, double qa);
+MSVCDLL void   QCC(int  spin, double qcc);
+MSVCDLL void   NQCC(int spin, double qcc);
+MSVCDLL void   delz(int spin, double qcc);
+MSVCDLL void   QA(int   spin, double qa);
 
-MSVCDLL double IntQuadVec::QCC(int  spin) const;
-MSVCDLL double IntQuadVec::NQCC(int spin) const;
-MSVCDLL double IntQuadVec::delz(int spin) const;
-MSVCDLL double IntQuadVec::QA(int   spin) const;
+MSVCDLL double QCC(int  spin) const;
+MSVCDLL double NQCC(int spin) const;
+MSVCDLL double delz(int spin) const;
+MSVCDLL double QA(int   spin) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Quadrupolar Asymmetry Values
@@ -275,8 +275,8 @@ MSVCDLL double IntQuadVec::QA(int   spin) const;
         // Output               none    : Get/Set Quadrupolar asymmetry
         // Note                         : Defined to be between [0,1]
 
-MSVCDLL void   IntQuadVec::eta(int spin, double ceta);
-MSVCDLL double IntQuadVec::eta(int spin) const;
+MSVCDLL void   eta(int spin, double ceta);
+MSVCDLL double eta(int spin) const;
  
 
 //-----------------------------------------------------------------------------
@@ -299,21 +299,21 @@ MSVCDLL double IntQuadVec::eta(int spin) const;
    intraction. Setting any of the angles will effectively reorient the 
    spatial tensor (interaction).                                             */
 
-MSVCDLL double  IntQuadVec::alpha(int spin)       const;
-MSVCDLL double  IntQuadVec::beta(int spin)        const;
-MSVCDLL double  IntQuadVec::gamma(int spin)       const;
-MSVCDLL double  IntQuadVec::phi(int spin)         const;
-MSVCDLL double  IntQuadVec::theta(int spin)       const;
-//EAngles IntQuadVec::orientation(int spin) const;
+MSVCDLL double  alpha(int spin)       const;
+MSVCDLL double  beta(int spin)        const;
+MSVCDLL double  gamma(int spin)       const;
+MSVCDLL double  phi(int spin)         const;
+MSVCDLL double  theta(int spin)       const;
+//EAngles orientation(int spin) const;
 
-MSVCDLL void IntQuadVec::alpha(int spin,double A);
-MSVCDLL void IntQuadVec::beta(int  spin,double B);
-MSVCDLL void IntQuadVec::gamma(int spin,double G);
-MSVCDLL void IntQuadVec::phi(int   spin,double P);
-MSVCDLL void IntQuadVec::theta(int spin,double T);
+MSVCDLL void alpha(int spin,double A);
+MSVCDLL void beta(int  spin,double B);
+MSVCDLL void gamma(int spin,double G);
+MSVCDLL void phi(int   spin,double P);
+MSVCDLL void theta(int spin,double T);
 
-//void IntQuadVec::orientation(int spin, const EAngles& EA);
-//void IntQuadVec::orientation(int spin,
+//void orientation(int spin, const EAngles& EA);
+//void orientation(int spin,
 //                            double A, double B, double G, bool deg=false); 
 
 // ---------------------------------------------------------------------------- 
@@ -324,17 +324,17 @@ MSVCDLL void IntQuadVec::theta(int spin,double T);
         // Ouput                CI	: The i'th Quadrupolar interaction in IQV
         // Note				: Returns a reference to the interaction
 
-MSVCDLL       IntQuad& IntQuadVec::operator() (int i);
-MSVCDLL const IntQuad& IntQuadVec::getcref(int     i) const;
-MSVCDLL       IntQuad  IntQuadVec::get(int         i) const;
+MSVCDLL       IntQuad& operator() (int i);
+MSVCDLL const IntQuad& getcref(int     i) const;
+MSVCDLL       IntQuad  get(int         i) const;
 
 // ----------------------------------------------------------------------------
 //                 Other Quadrupolar Interaction Vector Info
 // ----------------------------------------------------------------------------
  
  
-//int IntQuadVec::size() const;				// INHERITED
-MSVCDLL int IntQuadVec::nonzero() const;
+//int size() const;				// INHERITED
+MSVCDLL int nonzero() const;
 
 // ____________________________________________________________________________
 // C                         PARAMETER SET FUNCTIONS
@@ -389,8 +389,8 @@ MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1) const;
 	// Note				: This uses the assignment from pset
 	//				  & exists to support prefix indices */
 
-MSVCDLL void IntQuadVec::operator= (const ParameterSet& pset);
-MSVCDLL bool IntQuadVec::setIQVec(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL void operator= (const ParameterSet& pset);
+MSVCDLL bool setIQVec(const ParameterSet& pset, int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //      Output Quadrupolar Interaction Vector To ASCII From A Parameter Set
@@ -406,8 +406,8 @@ MSVCDLL bool IntQuadVec::setIQVec(const ParameterSet& pset, int idx=-1, int warn
         //                                as a parameter set either to file
 	//				  fname or ourput stream ofstr
  
-MSVCDLL int IntQuadVec::write(const std::string &fname, int idx=-1, int warn=2) const;
-MSVCDLL int IntQuadVec::write(std::ofstream& ofstr,     int idx=-1, int warn=2) const;
+MSVCDLL int write(const std::string &fname, int idx=-1, int warn=2) const;
+MSVCDLL int write(std::ofstream& ofstr,     int idx=-1, int warn=2) const;
 
 // ____________________________________________________________________________ 
 // D                             INPUT FUNCTIONS
@@ -426,14 +426,14 @@ MSVCDLL int IntQuadVec::write(std::ofstream& ofstr,     int idx=-1, int warn=2) 
 	// Output		none	: Quadrupolar interaction vector filled
 	//				  with values read from file or pset
 
-MSVCDLL bool IntQuadVec::read(const std::string &filename, int idx=-1, int warn=2);
-MSVCDLL bool IntQuadVec::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //       Interactive Read of Quadrupolar Interaction Vector From An ASCII File
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::string IntQuadVec::ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
 
 	// Input		IQV	: Quadrupolar interaction vector (this)
         //                      argc    : Number of arguments
@@ -463,7 +463,7 @@ MSVCDLL std::string IntQuadVec::ask_read(int argc, char* argv[], int argn);
 	   Output		ostr    : Quadrupolar interaction vector
 	  			          parameters sent to output stream   */
 
-MSVCDLL        std::ostream& IntQuadVec::print(std::ostream& ostr, int full=0) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const IntQuadVec& IQV);
 
 };

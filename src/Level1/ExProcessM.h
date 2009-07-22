@@ -62,10 +62,10 @@ public:
         // Output		none    : Output process error message
         //				  Program execution stop (fatal)
  
-void ExchProcM::XPerror(int eidx,                           int noret=0) const;
-void ExchProcM::XPerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void ExchProcM::XPfatal(int eidx)                               const;
-volatile void ExchProcM::XPfatal(int eidx, const std::string& pname)     const;
+void XPerror(int eidx,                           int noret=0) const;
+void XPerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void XPfatal(int eidx)                               const;
+volatile void XPfatal(int eidx, const std::string& pname)     const;
 
 //_________________________________________________________________________________
 // ii                MUTUAL EXCHANGE PROCESS PARAMETER SET PARSING
@@ -92,11 +92,11 @@ volatile void ExchProcM::XPfatal(int eidx, const std::string& pname)     const;
    Also we must keep track of which are on the left and which are on the right
    and how many of these there are (separated by + signs).                      */
 
-bool ExchProcM::getExch(const ParameterSet& pset, int idx,
+bool getExch(const ParameterSet& pset, int idx,
                                           std::string& exch, bool warn=true) const;
-bool ExchProcM::parseExch(std::string& Exval,
+bool parseExch(std::string& Exval,
                                       std::vector<int>& sps, bool warn=true) const;
-bool ExchProcM::getComps(const ParameterSet& pset, int idx,
+bool getComps(const ParameterSet& pset, int idx,
                                       std::vector<int>& sps, bool warn=true) const;
 
 //---------------------------------------------------------------------------------
@@ -105,16 +105,16 @@ bool ExchProcM::getComps(const ParameterSet& pset, int idx,
 
 // This will read a parameter such as    Kex_nm(0)  (1) : 600.0 - rate
 
-bool ExchProcM::getRate(const ParameterSet& pset, int idx,
+bool getRate(const ParameterSet& pset, int idx,
                                                double& rate, bool warn=true) const;
 
 //---------------------------------------------------------------------------------
 //---------------------- Read/Set The Entire Exchange Process ---------------------
 //---------------------------------------------------------------------------------
 
-bool ExchProcM::getXP(const ParameterSet& pset, double& rate,
+bool getXP(const ParameterSet& pset, double& rate,
                              std::vector<int>& sps, int idx, bool warn=true) const;
-bool ExchProcM::setXP(const ParameterSet& pset, int idx, bool warn=true);
+bool setXP(const ParameterSet& pset, int idx, bool warn=true);
 
 //_________________________________________________________________________________
 // iii             MUTUAL EXCHANGE PROCESS CHECKING FUNCTIONS
@@ -123,8 +123,8 @@ bool ExchProcM::setXP(const ParameterSet& pset, int idx, bool warn=true);
 // The first function just checks the boundaries of the exchange components
 // The 2nd function insures the exchange process integrity
 
-bool ExchProcM::CCheck(int comp, bool warn=true) const;
-bool ExchProcM::FCheck(          bool warn=true) const;
+bool CCheck(int comp, bool warn=true) const;
+bool FCheck(          bool warn=true) const;
 
 //_________________________________________________________________________________
 // A		UTUAL EXCHANGE PROCESS CONSTRUCTORS AND DESTRUCTORS
@@ -134,8 +134,8 @@ bool ExchProcM::FCheck(          bool warn=true) const;
 //                           Simple Constructors
 //---------------------------------------------------------------------------------
 
-MSVCDLC ExchProcM::ExchProcM();
-MSVCDLC ExchProcM::ExchProcM(const ExchProcM& proc);
+MSVCDLC ExchProcM();
+MSVCDLC ExchProcM(const ExchProcM& proc);
 
 //---------------------------------------------------------------------------------
 //                      Construction From Parameter Set
@@ -147,8 +147,8 @@ MSVCDLC ExchProcM(const ParameterSet& pset, int ip=-1, int warn=2);
 //                         Assignment and Destruction
 //---------------------------------------------------------------------------------
 
-MSVCDLL void ExchProcM::operator=(const ExchProcM& pr);
-MSVCDLC      ExchProcM::~ExchProcM();
+MSVCDLL void operator=(const ExchProcM& pr);
+MSVCDLC      ~ExchProcM();
 
 //________________________________________________________________________________
 // B	               Class Exchange Process Access Functions
@@ -163,8 +163,8 @@ MSVCDLC      ExchProcM::~ExchProcM();
         // Output               void	: Exchange rate is set to k
  	//		     or double  : Exchange rate is returned
 
-MSVCDLL double ExchProcM::Kex() const;
-MSVCDLL void   ExchProcM::Kex(double k);
+MSVCDLL double Kex() const;
+MSVCDLL void   Kex(double k);
 
 //--------------------------------------------------------------------------------
 //                    Class Process Component Index Access
@@ -174,9 +174,9 @@ MSVCDLL void   ExchProcM::Kex(double k);
         //                      comp    : A component index
         // Output               ic      : Spin index of component
 
-MSVCDLL int ExchProcM::NComps()       const;
-MSVCDLL int ExchProcM::NSpins()       const;
-MSVCDLL int ExchProcM::Comp(int comp) const;
+MSVCDLL int NComps()       const;
+MSVCDLL int NSpins()       const;
+MSVCDLL int Comp(int comp) const;
 
 //____________________________________________________________________________ 
 // C                       MUTUAL EXCHANGE PROCESS SPIN QUERIES
@@ -192,8 +192,8 @@ MSVCDLL int ExchProcM::Comp(int comp) const;
         // Note                         : For direct exchange the two
         //                                spin must be adjacent Spins
 
-MSVCDLL bool ExchProcM::mixes(int    i, int j) const;
-MSVCDLL bool ExchProcM::involves(int i)        const;
+MSVCDLL bool mixes(int    i, int j) const;
+MSVCDLL bool involves(int i)        const;
 
 // ____________________________________________________________________________
 // D                  MUTUAL EXCHANGE PROCESS INPUT FUNCTIONS
@@ -213,8 +213,8 @@ MSVCDLL bool ExchProcM::involves(int i)        const;
         // Note                         : The file should be an ASCII file
         //                                containing recognized parameters
 
-MSVCDLL bool ExchProcM::read(const std::string&  filename, int idx=-1, int warn=2);
-MSVCDLL bool ExchProcM::read(const ParameterSet& pset,     int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string&  filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,     int idx=-1, int warn=2);
 
 //_____________________________________________________________________________
 // G                        EXCHANGE PROCESS OUTPUT
@@ -228,8 +228,8 @@ MSVCDLL bool ExchProcM::read(const ParameterSet& pset,     int idx=-1, int warn=
         // Output               ostr  : The output stream  is returned
         //                              with the process added
 
-MSVCDLL std::string ExchProcM::ExchStr() const;
-MSVCDLL std::ostream& ExchProcM::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::string ExchStr() const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const ExchProcM& pro);
 
 // ____________________________________________________________________________
@@ -238,10 +238,10 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const ExchProcM& pr
 
 #ifdef PYGAMMA					// If we are compiling PyGAMMA
 
-std::string ExchProcM::PyPrint();
+std::string PyPrint();
 
-double ExchProcM::KexA() const;
-void   ExchProcM::KexB(double k);
+double KexA() const;
+void   KexB(double k);
 
 #endif						// End PyGAMMA code
 };

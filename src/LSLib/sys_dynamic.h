@@ -70,17 +70,17 @@ class sys_dynamic: public spin_system, public coord_vec
         // Output               none    : Error message output 
         //                                Program execution stopped if fatal
 
-         void sys_dynamic::DSerror(int eidx,                           int noret=0) const;
-         void sys_dynamic::DSerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void sys_dynamic::DSfatal(int eidx)                                        const;
-volatile void sys_dynamic::DSfatal(int eidx, const std::string& pname)              const;
+         void DSerror(int eidx,                           int noret=0) const;
+         void DSerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void DSfatal(int eidx)                                        const;
+volatile void DSfatal(int eidx, const std::string& pname)              const;
 
 // ____________________________________________________________________________
 // ii              CLASS DYNAMIC SPIN SYSTEM SETUP FUNCTIONS
 // ____________________________________________________________________________
 
 
-virtual int sys_dynamic::setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
+virtual int setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
 
         // Input                dsys    : Dynamic spin system (this)
 	// 			pset     : A parameter set
@@ -111,8 +111,8 @@ virtual int sys_dynamic::setSsys(const ParameterSet& pset,int idx=-1,int wrn=2);
 // iii             CLASS DYNAMIC SPIN SYSTEM CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
-bool sys_dynamic::CheckExch(int p,         bool warn=true) const;
-bool sys_dynamic::CheckExch(ExchProcM& XP, bool warn=true) const;
+bool CheckExch(int p,         bool warn=true) const;
+bool CheckExch(ExchProcM& XP, bool warn=true) const;
      
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -127,11 +127,11 @@ bool sys_dynamic::CheckExch(ExchProcM& XP, bool warn=true) const;
 ///Center Basic Functions
 ///F_list =		      - Assignment
 
-MSVCDLC              sys_dynamic::sys_dynamic();
-MSVCDLC              sys_dynamic::sys_dynamic(int spins);
-MSVCDLC              sys_dynamic::sys_dynamic(const sys_dynamic &dsys);
-MSVCDLL sys_dynamic& sys_dynamic::operator= (const  sys_dynamic &dsys);
-MSVCDLC virtual      sys_dynamic::~sys_dynamic ();
+MSVCDLC              sys_dynamic();
+MSVCDLC              sys_dynamic(int spins);
+MSVCDLC              sys_dynamic(const sys_dynamic &dsys);
+MSVCDLL sys_dynamic& operator= (const  sys_dynamic &dsys);
+MSVCDLC virtual      ~sys_dynamic ();
 
 // ______________________________________________________________________
 // B                   CHEMICAL SHIFT MANIPULATIONS
@@ -157,12 +157,12 @@ MSVCDLC virtual      sys_dynamic::~sys_dynamic ();
 	// Output (offsetShifts)none	: All spins of same isotope type as iso
 	//				  have their shifts modified by offset
 
-MSVCDLL void   sys_dynamic::shifts(double shift=0);
-MSVCDLL void   sys_dynamic::shift(double shift, int spin);
-MSVCDLL void   sys_dynamic::shift(int spin, double shift);
-MSVCDLL double sys_dynamic::shift (int spin) const;
-MSVCDLL void   sys_dynamic::offsetShifts(double offset, int spin); 
-MSVCDLL void   sys_dynamic::offsetShifts(double offset, const std::string& iso); 
+MSVCDLL void   shifts(double shift=0);
+MSVCDLL void   shift(double shift, int spin);
+MSVCDLL void   shift(int spin, double shift);
+MSVCDLL double shift (int spin) const;
+MSVCDLL void   offsetShifts(double offset, int spin); 
+MSVCDLL void   offsetShifts(double offset, const std::string& iso); 
 
 // *************** Chemical Shift Manipulations in PPM ****************
 
@@ -170,7 +170,7 @@ MSVCDLL void   sys_dynamic::offsetShifts(double offset, const std::string& iso);
 	// 			double : chemical shift of spin (PPM)
 	// Output		none   : default chemical shift of spin (PPM)
 
-MSVCDLL void sys_dynamic::PPM (int, double);
+MSVCDLL void PPM (int, double);
 
 // ***************** Chemical Shift Tensor Functions ******************
 
@@ -204,15 +204,15 @@ MSVCDLL void sys_dynamic::PPM (int, double);
 	// xi    = |----| * gamma * B * del  (i) = K * Omega  * del  (i)
 	//   i     [ 5  ]        i   0     zz               i      zz
 
-MSVCDLL double     sys_dynamic::delz(int spin) const;
-MSVCDLL void       sys_dynamic::delz(int spin, double delzz);
-MSVCDLL double     sys_dynamic::Ceta(int spin) const; 
-MSVCDLL void       sys_dynamic::Ceta(int spin, double ceta); 
-MSVCDLL space_T    sys_dynamic::TC(int   spin) const;
-MSVCDLL void       sys_dynamic::TC(const space_T& A, int spin);
-MSVCDLL row_vector sys_dynamic::xiC_vector()   const; 
-MSVCDLL double     sys_dynamic::xiC(int spin)  const;
-MSVCDLL bool       sys_dynamic::CSA()          const;
+MSVCDLL double     delz(int spin) const;
+MSVCDLL void       delz(int spin, double delzz);
+MSVCDLL double     Ceta(int spin) const; 
+MSVCDLL void       Ceta(int spin, double ceta); 
+MSVCDLL space_T    TC(int   spin) const;
+MSVCDLL void       TC(const space_T& A, int spin);
+MSVCDLL row_vector xiC_vector()   const; 
+MSVCDLL double     xiC(int spin)  const;
+MSVCDLL bool       CSA()          const;
 
 // ______________________________________________________________________
 //                         DIPOLAR MANIPULATIONS
@@ -231,12 +231,12 @@ MSVCDLL bool       sys_dynamic::CSA()          const;
         //                               spins is > cutoff then the dipolar
         //                               tensor is left zero.
 
-MSVCDLL void sys_dynamic::coords(const coord_vec& cvec, double cutoff=5.e-10);
+MSVCDLL void coords(const coord_vec& cvec, double cutoff=5.e-10);
 
         // Output (Coord)	TF	: Return true if any spin coordinates
         //				  are present in the system
 
-MSVCDLL bool sys_dynamic::Coord( ) const;
+MSVCDLL bool Coord( ) const;
  
 // ------------------ Dipolar Tensor Access Functions -------------------
 
@@ -289,18 +289,18 @@ MSVCDLL bool sys_dynamic::Coord( ) const;
 	//			           ij
 
 
-MSVCDLL double  sys_dynamic::DCC(int   spin1, int spin2) const;
-MSVCDLL void    sys_dynamic::DCC(int   spin1, int spin2, double nu);
-MSVCDLL double  sys_dynamic::Ddelz(int spin1, int spin2) const;
-MSVCDLL void    sys_dynamic::Ddelz(int spin1, int spin2, double delzz);
-MSVCDLL double  sys_dynamic::Deta(int  spin1, int spin2) const;
-MSVCDLL void    sys_dynamic::Deta(int  spin1, int spin2, double Deta);
-MSVCDLL space_T sys_dynamic::AD(int    spin1, int spin2) const;
-MSVCDLL space_T sys_dynamic::AD(int dip) const;
-MSVCDLL int     sys_dynamic::dipoles() const;
-MSVCDLL int     sys_dynamic::dipole(int spin1, int spin2) const;
-MSVCDLL matrix  sys_dynamic::xiD_matrix() const;
-MSVCDLL bool    sys_dynamic::Dip( ) const;
+MSVCDLL double  DCC(int   spin1, int spin2) const;
+MSVCDLL void    DCC(int   spin1, int spin2, double nu);
+MSVCDLL double  Ddelz(int spin1, int spin2) const;
+MSVCDLL void    Ddelz(int spin1, int spin2, double delzz);
+MSVCDLL double  Deta(int  spin1, int spin2) const;
+MSVCDLL void    Deta(int  spin1, int spin2, double Deta);
+MSVCDLL space_T AD(int    spin1, int spin2) const;
+MSVCDLL space_T AD(int dip) const;
+MSVCDLL int     dipoles() const;
+MSVCDLL int     dipole(int spin1, int spin2) const;
+MSVCDLL matrix  xiD_matrix() const;
+MSVCDLL bool    Dip( ) const;
 
 // ____________________________________________________________________________
 //                         QUADRUPOLAR MANIPULATIONS
@@ -340,17 +340,17 @@ MSVCDLL bool    sys_dynamic::Dip( ) const;
 	//   i     [ 5  ]   2I (2I -1)    [ 5  ]    2I (2I -1)
 	//                    i   i                   i   i
 
-MSVCDLL double     sys_dynamic::QCC(int   spin) const;
-MSVCDLL void       sys_dynamic::QCC(int   spin, double nu);
-MSVCDLL double     sys_dynamic::Qdelz(int spin) const;
-MSVCDLL void       sys_dynamic::Qdelz(int spin, double delzz);
-MSVCDLL double     sys_dynamic::Qeta(int  spin) const;
-MSVCDLL void       sys_dynamic::Qeta(int  spin, double Qeta);
-MSVCDLL space_T    sys_dynamic::TQ(int    spin) const;
-MSVCDLL void       sys_dynamic::TQ(const space_T& A, int spin);
-MSVCDLL row_vector sys_dynamic::xiQ_vector( );
-MSVCDLL double     sys_dynamic::xiQ(int spin);
-MSVCDLL bool       sys_dynamic::Quad() const;
+MSVCDLL double     QCC(int   spin) const;
+MSVCDLL void       QCC(int   spin, double nu);
+MSVCDLL double     Qdelz(int spin) const;
+MSVCDLL void       Qdelz(int spin, double delzz);
+MSVCDLL double     Qeta(int  spin) const;
+MSVCDLL void       Qeta(int  spin, double Qeta);
+MSVCDLL space_T    TQ(int    spin) const;
+MSVCDLL void       TQ(const space_T& A, int spin);
+MSVCDLL row_vector xiQ_vector( );
+MSVCDLL double     xiQ(int spin);
+MSVCDLL bool       Quad() const;
 
 // ____________________________________________________________________________
 //                       RANDOM FIELD MANIPULATIONS
@@ -373,10 +373,10 @@ MSVCDLL bool       sys_dynamic::Quad() const;
 	// xi    = 2 * pi * |LWhh / J(w )| 
 	//   i              [    i     i ]
 
-MSVCDLL double     sys_dynamic::TR(int spin)  const;
-MSVCDLL double     sys_dynamic::tauR()        const;
-MSVCDLL row_vector sys_dynamic::xiR_vector( ) const;
-MSVCDLL double     sys_dynamic::xiR(int spin) const;
+MSVCDLL double     TR(int spin)  const;
+MSVCDLL double     tauR()        const;
+MSVCDLL row_vector xiR_vector( ) const;
+MSVCDLL double     xiR(int spin) const;
 
 // ____________________________________________________________________________
 //                 SCALAR COUPLING CONSTANT MANIPULATIONS
@@ -424,7 +424,7 @@ MSVCDLL int setCoords(const ParameterSet& pset, int mand=0);
         // Note                         : These be mandatory if mand!=0
 
 
-MSVCDLL void sys_dynamic::setDip( );
+MSVCDLL void setDip( );
 
         // Input                dsys    : Dynamic spin system (this)
         // Output               none    : Spin system dipolar
@@ -432,7 +432,7 @@ MSVCDLL void sys_dynamic::setDip( );
         //                                coordinates in dsys
 
  
-MSVCDLL void sys_dynamic::SetCSA(const ParameterSet& pset);
+MSVCDLL void SetCSA(const ParameterSet& pset);
 
         // Input                dsys    : Dynamic spin system (this)
         //                      pset    : A parameter set
@@ -441,7 +441,7 @@ MSVCDLL void sys_dynamic::SetCSA(const ParameterSet& pset);
         //                                parameters in pset
 
  
-MSVCDLL void sys_dynamic::setQuad(const ParameterSet& pset);
+MSVCDLL void setQuad(const ParameterSet& pset);
 
         // Input                dsys    : Dynamic spin system (this)
         //                      pset    : A parameter set
@@ -451,7 +451,7 @@ MSVCDLL void sys_dynamic::setQuad(const ParameterSet& pset);
 
 
  
-MSVCDLL void sys_dynamic::setRand(const ParameterSet& pset);
+MSVCDLL void setRand(const ParameterSet& pset);
 
         // Input                dsys    : Dynamic spin system (this)
         //                      pset    : A parameter set
@@ -524,11 +524,11 @@ MSVCDLL virtual void write(const std::string &filename);
 	// Note				 : File filename should be an ASCII
 	//				   file with known sys parameters
 
-MSVCDLL virtual int sys_dynamic::read(const std::string &filename, int idx=-1, int warn=2);
-MSVCDLL virtual int sys_dynamic::read(const ParameterSet& pset,    int idx=-1, int warn=2);
+MSVCDLL virtual int read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL virtual int read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
-MSVCDLL virtual std::string sys_dynamic::ask_read(int argc, char* argv[], int argn);
-MSVCDLL virtual std::string sys_dynamic::ask_read(int argc, char* argv[], int argn, const std::string& def);
+MSVCDLL virtual std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL virtual std::string ask_read(int argc, char* argv[], int argn, const std::string& def);
 
         // Input                dsys    : Dynamic spin system (this)
         //                      argc    : Number of arguments
@@ -563,14 +563,14 @@ MSVCDLL virtual std::string sys_dynamic::ask_read(int argc, char* argv[], int ar
 	// Output			: Y-axis correlation time set
 	// Output			: Z-axis correlation time set
 
-MSVCDLL coord  sys_dynamic::taus() const;
-MSVCDLL double sys_dynamic::taux() const;
-MSVCDLL double sys_dynamic::tauy() const;
-MSVCDLL double sys_dynamic::tauz() const;
+MSVCDLL coord  taus() const;
+MSVCDLL double taux() const;
+MSVCDLL double tauy() const;
+MSVCDLL double tauz() const;
 
-MSVCDLL void sys_dynamic::taux(double tau);
-MSVCDLL void sys_dynamic::tauy(double tau);
-MSVCDLL void sys_dynamic::tauz(double tau);
+MSVCDLL void taux(double tau);
+MSVCDLL void tauy(double tau);
+MSVCDLL void tauz(double tau);
 
 // ____________________________________________________________________________
 //                          EXCHANGE RATE MANIPULATIONS
@@ -603,14 +603,14 @@ MSVCDLL void sys_dynamic::tauz(double tau);
         // Note                          : All spins must be same isotopes
         // Note                          : K must be non-negative
 
-MSVCDLL double sys_dynamic::Kex(int p) const;
-MSVCDLL void   sys_dynamic::Kex(double K, int p);
-MSVCDLL matrix sys_dynamic::Kex() const;
-MSVCDLL void   sys_dynamic::Kex_zero();
-MSVCDLL void   sys_dynamic::Kex(int i, int j, double K);
-MSVCDLL void   sys_dynamic::Kex(int N, int* Is, double K);
+MSVCDLL double Kex(int p) const;
+MSVCDLL void   Kex(double K, int p);
+MSVCDLL matrix Kex() const;
+MSVCDLL void   Kex_zero();
+MSVCDLL void   Kex(int i, int j, double K);
+MSVCDLL void   Kex(int N, int* Is, double K);
 
-MSVCDLL const std::vector<ExchProcM>& sys_dynamic::MExProcs() const;
+MSVCDLL const std::vector<ExchProcM>& MExProcs() const;
 
 
 // ____________________________________________________________________________
@@ -619,10 +619,10 @@ MSVCDLL const std::vector<ExchProcM>& sys_dynamic::MExProcs() const;
 
 ///Center Dynamic Spin System I/O Functions
 
-MSVCDLL std::vector<std::string> sys_dynamic::PtStrings(int w1=10, int w2=12, int digs=2) const;
-MSVCDLL std::vector<std::string> sys_dynamic::AQStrings(int w1=10, int w2=12, int digs=2) const;
+MSVCDLL std::vector<std::string> PtStrings(int w1=10, int w2=12, int digs=2) const;
+MSVCDLL std::vector<std::string> AQStrings(int w1=10, int w2=12, int digs=2) const;
 
-MSVCDLL std::ostream& sys_dynamic::printAC(std::ostream& ostr) const;
+MSVCDLL std::ostream& printAC(std::ostream& ostr) const;
 
         // Input                dsys     : Dynamic spin system (this)
         //                      ostr     : Output stream
@@ -631,7 +631,7 @@ MSVCDLL std::ostream& sys_dynamic::printAC(std::ostream& ostr) const;
         //                                 sent to the output stream
 
 
-MSVCDLL std::ostream& sys_dynamic::printAD(std::ostream& ostr) const;
+MSVCDLL std::ostream& printAD(std::ostream& ostr) const;
  
         // Input                dsys     : Dynamic spin system (this)
         //                      ostr     : Output stream
@@ -640,7 +640,7 @@ MSVCDLL std::ostream& sys_dynamic::printAD(std::ostream& ostr) const;
         //                                 sent to the output stream
 
 
-MSVCDLL std::ostream& sys_dynamic::printAQ(std::ostream& ostr) const;
+MSVCDLL std::ostream& printAQ(std::ostream& ostr) const;
 
         // Input                dsys     : Dynamic spin system (this)
         //                      ostr     : Output stream
@@ -649,7 +649,7 @@ MSVCDLL std::ostream& sys_dynamic::printAQ(std::ostream& ostr) const;
         //                                 sent to the output stream
 
 
-MSVCDLL std::ostream& sys_dynamic::printARDM(std::ostream& ostr) const;
+MSVCDLL std::ostream& printARDM(std::ostream& ostr) const;
 
         // Input                dsys     : Dynamic spin system (this)
         //                      ostr     : Output stream
@@ -658,7 +658,7 @@ MSVCDLL std::ostream& sys_dynamic::printARDM(std::ostream& ostr) const;
         //                                 sent to the output stream
 
 
-MSVCDLL std::ostream& sys_dynamic::printTaus(std::ostream& ostr) const;
+MSVCDLL std::ostream& printTaus(std::ostream& ostr) const;
 
         // Input                dsys     : Dynamic spin system (this)
         //                      ostr     : Output stream
@@ -666,7 +666,7 @@ MSVCDLL std::ostream& sys_dynamic::printTaus(std::ostream& ostr) const;
         //                                 rotational correlation times
 
 
-MSVCDLL std::ostream& sys_dynamic::printEX(std::ostream& ostr) const;
+MSVCDLL std::ostream& printEX(std::ostream& ostr) const;
 
         // Input                dsys     : Dynamic spin system (this)
         //                      ostr     : Output stream

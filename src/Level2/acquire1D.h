@@ -80,8 +80,8 @@ class acquire1D
 	//		noret : Flag for carriage return
         // Output       void  : Error Message Output
 
-         void acquire1D::ACQerror(int eidx, int noret=0) const;
-volatile void acquire1D::ACQfatal(int eidx=0)            const;
+         void ACQerror(int eidx, int noret=0) const;
+volatile void ACQfatal(int eidx=0)            const;
 
         // Input        ACQ1D : An acquire1D (this)
 	//		eidx  : An error index
@@ -116,8 +116,8 @@ volatile void acquire1D::ACQfatal(int eidx=0)            const;
         //                        trinf  - The infinte time trace
         //                        cutoff - An intensity cutoff level         */
 
-void acquire1D::create();
-void acquire1D::createU();
+void create();
+void createU();
 
 // ____________________________________________________________________________
 // iii                CLASS ACQUIRE1D PRIVATE CONSTRUCTORS
@@ -148,7 +148,7 @@ void acquire1D::createU();
 	//			  ACUTOFF - An intensity cutoff level
 
 
-void acquire1D::make_table(const gen_op& Sp);
+void make_table(const gen_op& Sp);
 
         // Input	ACQ1D	: An acquire1D (this)
         //		Sp	: Density matrix (operator propagated)
@@ -172,8 +172,8 @@ void acquire1D::make_table(const gen_op& Sp);
 // --------------------------- Simple Constructors ----------------------------
 // ----------------------------------------------------------------------------
 
-MSVCDLC acquire1D::acquire1D();				// Null constructor
-MSVCDLC acquire1D::acquire1D(const acquire1D& ACQ1);	// Self constructor
+MSVCDLC acquire1D();				// Null constructor
+MSVCDLC acquire1D(const acquire1D& ACQ1);	// Self constructor
 
 // ----------------------------------------------------------------------------
 // ------------------ Hilbert Space Treatment Constructors --------------------
@@ -191,10 +191,10 @@ MSVCDLC acquire1D::acquire1D(const acquire1D& ACQ1);	// Self constructor
                         cutoff: Intensity cutoff level
            Output       ACQ1D : Acquire1D (this) is constructed              */
 
-MSVCDLC acquire1D::acquire1D(gen_op& det, gen_op& H);
-MSVCDLC acquire1D::acquire1D(gen_op& det, gen_op& H, double cutoff);
-MSVCDLC acquire1D::acquire1D(gen_op& det, HSprop& U);
-MSVCDLC acquire1D::acquire1D(gen_op& det, HSprop& U, double cutoff);
+MSVCDLC acquire1D(gen_op& det, gen_op& H);
+MSVCDLC acquire1D(gen_op& det, gen_op& H, double cutoff);
+MSVCDLC acquire1D(gen_op& det, HSprop& U);
+MSVCDLC acquire1D(gen_op& det, HSprop& U, double cutoff);
 
 // ----------------------------------------------------------------------------
 // ----------------- Liouville Space Treatment Constructors -------------------
@@ -213,18 +213,18 @@ MSVCDLC acquire1D::acquire1D(gen_op& det, HSprop& U, double cutoff);
         // Output       ACQ1D : Acquire1D (this) is constructed              */
 
 
-MSVCDLC acquire1D::acquire1D(gen_op& D, super_op& L, gen_op& sigi, double cut=1.e-12);
-MSVCDLC acquire1D::acquire1D(matrix& D, super_op& L, gen_op& sigi, double cut=1.e-12);
-MSVCDLC acquire1D::acquire1D(gen_op& D, super_op& L,               double cut=1.e-12);
-MSVCDLC acquire1D::acquire1D(matrix& D, super_op& L,               double cut=1.e-12);
-MSVCDLC acquire1D::acquire1D(gen_op& D, LSprop&   G,               double cut=1.e-12);
+MSVCDLC acquire1D(gen_op& D, super_op& L, gen_op& sigi, double cut=1.e-12);
+MSVCDLC acquire1D(matrix& D, super_op& L, gen_op& sigi, double cut=1.e-12);
+MSVCDLC acquire1D(gen_op& D, super_op& L,               double cut=1.e-12);
+MSVCDLC acquire1D(matrix& D, super_op& L,               double cut=1.e-12);
+MSVCDLC acquire1D(gen_op& D, LSprop&   G,               double cut=1.e-12);
 
 // ----------------------------------------------------------------------------
 // ------------------------- Destruction, Assignment --------------------------
 // ----------------------------------------------------------------------------
 
-MSVCDLC            acquire1D::~acquire1D();
-MSVCDLL acquire1D& acquire1D::operator= (const acquire1D& ACQ1);
+MSVCDLC            ~acquire1D();
+MSVCDLL acquire1D& operator= (const acquire1D& ACQ1);
 
 // ____________________________________________________________________________
 // B                    ALTERATION AND ACCESS FUNCTIONS
@@ -240,12 +240,12 @@ MSVCDLL acquire1D& acquire1D::operator= (const acquire1D& ACQ1);
       Sinv   matrix     Eigenvector inverse array in Liouville space
       TTable TTable1D   Transitions table                                    */
 
-MSVCDLL const super_op& acquire1D::L()	    const;
-MSVCDLL const gen_op&   acquire1D::D()      const;
-MSVCDLL const matrix    acquire1D::S()      const;
-MSVCDLL const matrix&   acquire1D::Sinv()   const;
-MSVCDLL const TTable1D& acquire1D::TTable() const;
-MSVCDLL       void      acquire1D::Detector(const gen_op& detect);
+MSVCDLL const super_op& L()	    const;
+MSVCDLL const gen_op&   D()      const;
+MSVCDLL const matrix    S()      const;
+MSVCDLL const matrix&   Sinv()   const;
+MSVCDLL const TTable1D& TTable() const;
+MSVCDLL       void      Detector(const gen_op& detect);
 
         // Input        ACQ1D : An acquire1D (this)
         // Input        det   : Detection operator
@@ -287,9 +287,9 @@ MSVCDLL       void      acquire1D::Detector(const gen_op& detect);
 	//			ICUT between the points [0-ifi]. Only
 	//			those points used in generating the spectrum
 
-MSVCDLL row_vector acquire1D::T(const gen_op& sigmap, double tinc,      int npts);
-MSVCDLL row_vector acquire1D::T(const gen_op& sigmap, int npts,         double tinc);
-MSVCDLL void       acquire1D::T(const gen_op& sigmap, row_vector& data, double tinc);
+MSVCDLL row_vector T(const gen_op& sigmap, double tinc,      int npts);
+MSVCDLL row_vector T(const gen_op& sigmap, int npts,         double tinc);
+MSVCDLL void       T(const gen_op& sigmap, row_vector& data, double tinc);
 
 // ____________________________________________________________________________ 
 // D                        Frequency Domain Spectra
@@ -329,8 +329,8 @@ MSVCDLL void       acquire1D::T(const gen_op& sigmap, row_vector& data, double t
 	//			  integrated Lorentzian intensities are used
 	//		          rather than the point value.
 
-MSVCDLL row_vector acquire1D::F(const gen_op& sigmap,int npts,double Fst,double Ffi);
-MSVCDLL void acquire1D::F(const gen_op& sigmap,row_vector& data,double Fst,double Ffi);
+MSVCDLL row_vector F(const gen_op& sigmap,int npts,double Fst,double Ffi);
+MSVCDLL void F(const gen_op& sigmap,row_vector& data,double Fst,double Ffi);
 
 // ____________________________________________________________________________ 
 // E             Frequency Domain Spectra In Derivative Mode
@@ -364,8 +364,8 @@ MSVCDLL void acquire1D::F(const gen_op& sigmap,row_vector& data,double Fst,doubl
 	// Note		      	: Each Lorentzian (transition) will have an
 	//			  intensity above ICUT*Imax between the points
  
-MSVCDLL row_vector acquire1D::FD(const gen_op& sigma,int npts,double Fst,double Ffi);
-MSVCDLL void       acquire1D::FD(const gen_op& sigma,row_vector& data,double Fst,double Ffi);
+MSVCDLL row_vector FD(const gen_op& sigma,int npts,double Fst,double Ffi);
+MSVCDLL void       FD(const gen_op& sigma,row_vector& data,double Fst,double Ffi);
 
 
 // ____________________________________________________________________________
@@ -382,8 +382,8 @@ MSVCDLL void       acquire1D::FD(const gen_op& sigma,row_vector& data,double Fst
   		returned table.
 */
 
-MSVCDLL const TTable1D& acquire1D::table(const gen_op& sigmap);
-MSVCDLL const TTable1D& acquire1D::table() const;
+MSVCDLL const TTable1D& table(const gen_op& sigmap);
+MSVCDLL const TTable1D& table() const;
 
 	// Input	ACQ1D : An acquire1D (this)
 	// 		sigma : Density matrix (operator propagated)
@@ -411,17 +411,17 @@ MSVCDLL const TTable1D& acquire1D::table() const;
    resolution  void     Transitions blended if specified as unresolved
    pcorrect   void/z    Transitions are phase corrected as specified         */
 
-MSVCDLL void acquire1D::offset(double     F,            int inHz=1);
-MSVCDLL void acquire1D::offset(double     F,    int tr, int inHz);
-MSVCDLL void acquire1D::FRscale(double    Fscf);
-MSVCDLL void acquire1D::FRscale(double    Fscf, int tr);
-MSVCDLL void acquire1D::Iscale(double     Iscf);
-MSVCDLL void acquire1D::Iscale(double     Iscf, int tr);
-MSVCDLL void acquire1D::broaden(double    LWR,          int inHz=1);
-MSVCDLL void acquire1D::broaden(double    LWR,  int tr, int inHz);
-MSVCDLL void acquire1D::resolution(double res);
-MSVCDLL void acquire1D::pcorrect(double   Wpivot, complex& P);
-MSVCDLL complex acquire1D::pcorrect(double& w0, double w1, int order=5);
+MSVCDLL void offset(double     F,            int inHz=1);
+MSVCDLL void offset(double     F,    int tr, int inHz);
+MSVCDLL void FRscale(double    Fscf);
+MSVCDLL void FRscale(double    Fscf, int tr);
+MSVCDLL void Iscale(double     Iscf);
+MSVCDLL void Iscale(double     Iscf, int tr);
+MSVCDLL void broaden(double    LWR,          int inHz=1);
+MSVCDLL void broaden(double    LWR,  int tr, int inHz);
+MSVCDLL void resolution(double res);
+MSVCDLL void pcorrect(double   Wpivot, complex& P);
+MSVCDLL complex pcorrect(double& w0, double w1, int order=5);
 
 /* These functions either return values regarding the transitions table or
    allow the user to affect the transitions table output format.  Again, these
@@ -435,10 +435,10 @@ MSVCDLL complex acquire1D::pcorrect(double& w0, double w1, int order=5);
    setSort    void      Sets a flag for output sorting by frequency
    setConv    void      Sets a conversion factor for out frequencies         */
 
-MSVCDLL double acquire1D::Wmax()  const;
-MSVCDLL double acquire1D::LWmax() const;
-MSVCDLL void   acquire1D::setSort(int sf);
-MSVCDLL void   acquire1D::setConv(int cf);
+MSVCDLL double Wmax()  const;
+MSVCDLL double LWmax() const;
+MSVCDLL void   setSort(int sf);
+MSVCDLL void   setConv(int cf);
 
 /* The above function setConv sets the internal value of FRQCONV in class
    TrnsTable1D.  It is only active when printing the transitions table and then
@@ -447,7 +447,7 @@ MSVCDLL void   acquire1D::setConv(int cf);
    frequency in MHz as this value will be used for Hz -> PPM. For the latter
    set FRQCONV to be the electron g value                                    */
 
-MSVCDLL void acquire1D::table(const gen_op& sigma, std::ostream& ostr);
+MSVCDLL void table(const gen_op& sigma, std::ostream& ostr);
 
         // Input        ACQ1D : An acquire1D (this)
         //              sigma : Density matrix (operator propagated)
@@ -467,7 +467,7 @@ MSVCDLL void acquire1D::table(const gen_op& sigma, std::ostream& ostr);
         //                      internal to the class
 
 
-MSVCDLL void acquire1D::table(std::ostream& ostr) const;
+MSVCDLL void table(std::ostream& ostr) const;
 
         // Input        ostr  : An output stream
         //              type  : Flag for printout type 
@@ -500,10 +500,10 @@ MSVCDLL void acquire1D::table(std::ostream& ostr) const;
 ///F_list size        - Reduced space size
 ///F_list full_size   - Full space size
 
-MSVCDLL int acquire1D::ls()          const;		// Liouville space size
-MSVCDLL int acquire1D::size()        const;		// Acquisition size
-MSVCDLL int acquire1D::full_size()   const;		// Full acquisition size
-MSVCDLL int acquire1D::transitions() const;		// Number of transitions
+MSVCDLL int ls()          const;		// Liouville space size
+MSVCDLL int size()        const;		// Acquisition size
+MSVCDLL int full_size()   const;		// Full acquisition size
+MSVCDLL int transitions() const;		// Number of transitions
 
 MSVCDLL void parameters(matrix& mx, double& SW, double& LW,
                                      double& dt, int N, int pf=0) const;
@@ -545,9 +545,9 @@ MSVCDLL void parameters(matrix& mx, double& SW, double& LW,
     <<			Same as print(ostr) function
                                                                              */
 
-MSVCDLL std::ostream& acquire1D::print(std::ostream&  ostr) const;
-MSVCDLL std::ostream& acquire1D::print(std::ostream&  ostr, gen_op& sigmap);
-MSVCDLL std::ostream& acquire1D::printT(std::ostream& ostr, gen_op& sigmap,
+MSVCDLL std::ostream& print(std::ostream&  ostr) const;
+MSVCDLL std::ostream& print(std::ostream&  ostr, gen_op& sigmap);
+MSVCDLL std::ostream& printT(std::ostream& ostr, gen_op& sigmap,
                                          double tinc, int npts=10, int P2P=0);
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, acquire1D& ACQ);
 
@@ -568,8 +568,8 @@ MSVCDLL friend std::ostream& operator << (std::ostream& ostr, acquire1D& ACQ);
 	//				location.
         // Note                       : The file format is BINARY
 
-MSVCDLL void           acquire1D::write(const std::string& fn) const;
-MSVCDLL std::ofstream& acquire1D::write(std::ofstream&     fp) const;
+MSVCDLL void           write(const std::string& fn) const;
+MSVCDLL std::ofstream& write(std::ofstream&     fp) const;
  
 
 // ------------------- Binary Read Functions (For Storage) --------------------
@@ -609,8 +609,8 @@ MSVCDLL std::ofstream& acquire1D::write(std::ofstream&     fp) const;
         // Note                       : Only WBR is read
         // Note                       : No basis sharing is assumed!
  
-MSVCDLL void           acquire1D::read(const std::string& fn);
-MSVCDLL std::ifstream& acquire1D::read(std::ifstream&     fp);
+MSVCDLL void           read(const std::string& fn);
+MSVCDLL std::ifstream& read(std::ifstream&     fp);
 
 // ____________________________________________________________________________
 //                                  PyGAMMA Code

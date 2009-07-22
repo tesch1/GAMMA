@@ -91,11 +91,11 @@ public:
    parameter files.  This doesn't do anything in particular, it is the write
    functions that perform the work.                                          */
 
-        XWinProcs::XWinProcs();
-        XWinProcs::XWinProcs(const std::string& name);
-        XWinProcs::XWinProcs(const XWinProcs& XWP);
-virtual XWinProcs::~XWinProcs();
-void    XWinProcs::operator= (const XWinProcs& XWP);
+        XWinProcs();
+        XWinProcs(const std::string& name);
+        XWinProcs(const XWinProcs& XWP);
+virtual ~XWinProcs();
+void    operator= (const XWinProcs& XWP);
 
 // ____________________________________________________________________________
 // B                  XWinProcs Parameter Access Functions
@@ -107,35 +107,35 @@ void    XWinProcs::operator= (const XWinProcs& XWP);
  
                      INHERITED FROM CLASS XWinProcPar
 
-string XWinProcs::parname()   const;  // ASCII File name
-int    XWinProcs::BYTORDP()   const;  // Binary byte order
-int    XWinProcs::FT_mod()    const;  // How FFT is performed
-double XWinProcs::LB()        const;  // Line Broadening
-int    XWinProcs::MC2()       const;  // FT type on t1
-double XWinProcs::OFFSET()    const;  // Spectrum offset
-double XWinProcs::PHC0()      const;  // Zero order phase
-double XWinProcs::PHC1()      const;  // 1st order phase
-string XWinProcs::REVERSE()   const;  // Plot spectrum reverse
-double XWinProcs::SF()        const;  // Spectrometer frequency
-int    XWinProcs::SI()        const;  // Data size (re+im)
-int    XWinProcs::SSB()       const;  // Sine bell
-int    XWinProcs::STSI()      const;  // Strip size
-int    XWinProcs::STSR()      const;  // Strip start
-double XWinProcs::SW_p()      const;  // Spectral width (PPM)
-double XWinProcs::TDeff()     const;  // Effective FFT size
-int    XWinProcs::WDW()       const;  // Window function
+string parname()   const;  // ASCII File name
+int    BYTORDP()   const;  // Binary byte order
+int    FT_mod()    const;  // How FFT is performed
+double LB()        const;  // Line Broadening
+int    MC2()       const;  // FT type on t1
+double OFFSET()    const;  // Spectrum offset
+double PHC0()      const;  // Zero order phase
+double PHC1()      const;  // 1st order phase
+string REVERSE()   const;  // Plot spectrum reverse
+double SF()        const;  // Spectrometer frequency
+int    SI()        const;  // Data size (re+im)
+int    SSB()       const;  // Sine bell
+int    STSI()      const;  // Strip size
+int    STSR()      const;  // Strip start
+double SW_p()      const;  // Spectral width (PPM)
+double TDeff()     const;  // Effective FFT size
+int    WDW()       const;  // Window function
 
-void XWinProcs::BYTORDP(int bo);      // Set binary byte order
-void XWinProcs::MC2(int mc);          // Set transform type on t1
-void XWinProcs::REVERSE(int yn);      // Set spectrum reverse
-void XWinProcs::PPARMOD(int pm);      // Data set dimension
-void XWinProcs::SI(int si);	      // Data size (re + im)
-void XWinProcs::SF(double SF);        // Spectrometer freq. (MHz)
-void XWinProcs::SSB(int sb);          // Sine offset (pi/sb)
-void XWinProcs::STSI(int sb);         // Strip size
-void XWinProcs::STSR(int sr);         // Strip start
-void XWinProcs::SW_p(double swp);     // Sweep width (ppm)
-void XWinProcs::WDW(int wd);          // Window function                     */
+void BYTORDP(int bo);      // Set binary byte order
+void MC2(int mc);          // Set transform type on t1
+void REVERSE(int yn);      // Set spectrum reverse
+void PPARMOD(int pm);      // Data set dimension
+void SI(int si);	      // Data size (re + im)
+void SF(double SF);        // Spectrometer freq. (MHz)
+void SSB(int sb);          // Sine offset (pi/sb)
+void STSI(int sb);         // Strip size
+void STSR(int sr);         // Strip start
+void SW_p(double swp);     // Sweep width (ppm)
+void WDW(int wd);          // Window function                     */
 
 // ____________________________________________________________________________
 // C                       XWinProcs Input Functions
@@ -159,8 +159,8 @@ void XWinProcs::WDW(int wd);          // Window function                     */
 
                      INHERITED FROM CLASS XWinProcPar
 
-	bool XWinProcs::readPPar(const string& filein, int warn=2);
-	bool XWinProcs::readPPar(int warn=2);
+	bool readPPar(const string& filein, int warn=2);
+	bool readPPar(int warn=2);
 virtual bool XWinProcPar::parsePSet(int warn=2);                              */
 
 
@@ -182,8 +182,8 @@ int      writePPar(int warn=2) const;                                        */
    They don't have anything to do with output while running XWinNMR, rather
    users can just glance at procs parameters or store then in a small file.  */
 
-//ostream& XWinProcs::printPset(ostream& O) const;		INHERITED
-//virtual ostream& XWinProcs::print(ostream& ostr, int full=0, int hdr=1) const;
+//ostream& printPset(ostream& O) const;		INHERITED
+//virtual ostream& print(ostream& ostr, int full=0, int hdr=1) const;
 //friend ostream& operator<< (ostream& O, const XWinProcs& P);
 
 // ____________________________________________________________________________
@@ -201,7 +201,7 @@ int      writePPar(int warn=2) const;                                        */
    couple of values are used directly from the class when parameters need to
    be calculated.                                                            */
 
-std::ostream& XWinProcs::dpp(std::ostream& ostr, double BF0=0) const;
+std::ostream& dpp(std::ostream& ostr, double BF0=0) const;
 };
 
 #endif 								// XWinProcs.h

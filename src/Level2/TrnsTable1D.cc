@@ -50,6 +50,7 @@
 #include <Matrix/row_vector.h>		// Need to know vectors 
 #include <vector>			// Include libstdc++ STL vectors
 #include <Basics/StringCut.h>		// Include GAMMA string manipulations
+#include <stdlib.h>
 #include <cmath>			// Include HUGE_VAL_VAL
 
 using std::string;			// Using libstdc++ strings

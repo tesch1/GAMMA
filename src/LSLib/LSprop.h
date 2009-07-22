@@ -65,8 +65,8 @@ private:
         // Output               none    : Error Message Output
  
  
-void          LSprop::LSPerror(int eidx, int noret=0) const;
-void volatile LSprop::LSPfatal(int error) const;
+void          LSPerror(int eidx, int noret=0) const;
+void volatile LSPfatal(int error) const;
                                                                 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -85,16 +85,16 @@ public:
    matrix is the identity matrix. Again, one must NOT use Ut to determine
    that. This has ramifications in other areas of this class!                */
   
-MSVCDLC LSprop::LSprop();				// Null constructor
-MSVCDLC LSprop::LSprop(int LS);				// Identity constructor
+MSVCDLC LSprop();				// Null constructor
+MSVCDLC LSprop(int LS);				// Identity constructor
 
 
-MSVCDLC LSprop::LSprop(const gen_op& H, double tevol);
-MSVCDLC LSprop::LSprop(const gen_op& H, double tevol, bool prop);
-MSVCDLC LSprop::LSprop(const HSprop& U);
+MSVCDLC LSprop(const gen_op& H, double tevol);
+MSVCDLC LSprop(const gen_op& H, double tevol, bool prop);
+MSVCDLC LSprop(const HSprop& U);
 
-MSVCDLC LSprop::LSprop(const super_op& L, double tevol);
-MSVCDLC LSprop::LSprop(const super_op& L, const densop& sigma_ss, double tevol);
+MSVCDLC LSprop(const super_op& L, double tevol);
+MSVCDLC LSprop(const super_op& L, const densop& sigma_ss, double tevol);
  
         //                      L       : Active Liouvillian (1/sec)
         //                      sigma_ss: Steady state density operator 
@@ -112,11 +112,11 @@ MSVCDLC LSprop::LSprop(const super_op& L, const densop& sigma_ss, double tevol);
    necessary to use the constructor below, make sure you specify the 
    propagator evolution time after construction or it will be left as zero.  */
 
-MSVCDLC LSprop::LSprop(const super_op& G);
+MSVCDLC LSprop(const super_op& G);
   
-MSVCDLC         LSprop::LSprop(const LSprop& G);	// Self-construction
-MSVCDLC         LSprop::~LSprop();			// Destruction
-LSprop& LSprop::operator= (const LSprop& G1);		// Assignment
+MSVCDLC         LSprop(const LSprop& G);	// Self-construction
+MSVCDLC         ~LSprop();			// Destruction
+LSprop& operator= (const LSprop& G1);		// Assignment
  
 // ____________________________________________________________________________
 // B               LIOUVILLE SPACE PROPAGATOR ACCESS FUNCTIONS
@@ -130,22 +130,22 @@ LSprop& LSprop::operator= (const LSprop& G1);		// Assignment
                   HS       int    The Hilbert space dimension of G.
                   LS       int    The Liouville space dimension of G.        */
 
-MSVCDLL double   LSprop::time()   const; 				// Evolve time
-MSVCDLL double   LSprop::length() const;				// Evolve time
-MSVCDLL int      LSprop::dim()    const; 				// LS dimension
-MSVCDLL int      LSprop::HS()     const; 				// HS dimension
-MSVCDLL int      LSprop::LS()     const;				// LS dimension
-MSVCDLL super_op LSprop::LOp()    const;				// Superoperator
+MSVCDLL double   time()   const; 				// Evolve time
+MSVCDLL double   length() const;				// Evolve time
+MSVCDLL int      dim()    const; 				// LS dimension
+MSVCDLL int      HS()     const; 				// HS dimension
+MSVCDLL int      LS()     const;				// LS dimension
+MSVCDLL super_op LOp()    const;				// Superoperator
 
-MSVCDLL void     LSprop::L(const super_op& LOp);
-MSVCDLL void     LSprop::length(double t);
+MSVCDLL void     L(const super_op& LOp);
+MSVCDLL void     length(double t);
 
 // ____________________________________________________________________________
 // C                        PROPAGATOR BASIS FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL void LSprop::SetEBR() const;
-MSVCDLL void LSprop::SetBasis(const super_op& LOp);
+MSVCDLL void SetEBR() const;
+MSVCDLL void SetBasis(const super_op& LOp);
 
         // Input                G	: A LS propagator (this)
         //                      LOp     : A superoperator
@@ -159,7 +159,7 @@ MSVCDLL void LSprop::SetBasis(const super_op& LOp);
  
 /************** Evolution Under This Superoperator Propagator ****************/
 
-MSVCDLL gen_op LSprop::evolve(const gen_op& Op);
+MSVCDLL gen_op evolve(const gen_op& Op);
 
         // Input                G       : A LS propagator (this)
         //                      Op      : An operator
@@ -223,9 +223,9 @@ MSVCDLL friend void evolve_ip(gen_op &sigma, super_op &GOp);
         // Note				: Order matters - G1*G2 != G2*G1
         // F_list *			- Prop-Prop Reverse Unary Multiply
  
-MSVCDLL LSprop LSprop::operator *  (const LSprop& G) const;
-MSVCDLL void   LSprop::operator *= (const LSprop& G);
-MSVCDLL void   LSprop::operator &= (const LSprop& G);
+MSVCDLL LSprop operator *  (const LSprop& G) const;
+MSVCDLL void   operator *= (const LSprop& G);
+MSVCDLL void   operator &= (const LSprop& G);
  
 // ____________________________________________________________________________
 // D           PROPAGATOR FUNCTIONS, PROPAGATOR WITH SUPEROPERATOR
@@ -287,7 +287,7 @@ MSVCDLL friend super_op R_prop(super_op& L, gen_op& sigmaeq, double t);
         // Output               ostr    : Output stream that has had
         //                                G written into it 
 
-MSVCDLL std::ostream& LSprop::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream &operator << (std::ostream &ostr, const LSprop& G);
 
 };

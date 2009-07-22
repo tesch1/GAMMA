@@ -39,6 +39,7 @@
 #include <HSLib/HSauxil.h>		// Include propagators
 #include <HSLib/GenOp.h>		// Include operators
 #include <HSLib/HSprop.h>		// Include operators
+#include <HSLib/Evolve.h>
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <HSLib/HSham.h>		// Knowledge of isotropic Hamiltonians
 #include <Level2/acquire1D.h>		// Include knowledge of "acquisitions"
@@ -47,9 +48,12 @@
 #include <HSLib/SpinOpRot.h>		// Include spin rotation operators
 #include <string>			// Include libstdc++ strings
 #include <Basics/StringCut.h>		// Include Gform and Gdec
+#include <stdlib.h>
 
 using std::cout;
 using std::cin;
+
+using namespace Evolve;
 
 // ____________________________________________________________________________
 // A                        Sinc Pulse Hamiltonians

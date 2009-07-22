@@ -42,6 +42,7 @@
 
 # include <BWRRelax/relaxanalyze.h>
 # include <Basics/StringCut.h>
+#include <stdlib.h>
 
 // ______________________________________________________________________
 // ********* RELAXATION SUPEROPERATOR ELEMENT OUTPUT FUNCTIONS **********

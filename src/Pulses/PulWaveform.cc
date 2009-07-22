@@ -36,6 +36,7 @@
 #include <Basics/StringCut.h>		// Include Gform and Gdec functions
 #include <GamIO/Ggnuplot.h>		// Know aobout Gnuplot functions
 #include <GamIO/FrameMaker.h>		// Know aobout FrameMaker functions
+#include <stdlib.h>
 #include <string>			// Must know about strings
 #include <iostream>                     // Include input output streams
 

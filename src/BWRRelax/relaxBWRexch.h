@@ -126,7 +126,7 @@ volatile void WBRfatality(int eidx, const std::string& pname) const;
 // ____________________________________________________________________________
 
 
- void WBRExch::assign(const ParameterSet& pset, int DF=1, int CF=1, int QF=1);
+ void assign(const ParameterSet& pset, int DF=1, int CF=1, int QF=1);
  
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      pset     : A parameter set
@@ -183,7 +183,7 @@ MSVCDLC WBRExch(const WBRExch& WBRE);
         //                              which is identical to WBRE
 
 
-MSVCDLC WBRExch::~WBRExch();
+MSVCDLC ~WBRExch();
  
         // Input                WBRE  : Relaxation/exchange controls (this)
         // Output               none  : WBRExch is deleted
@@ -206,14 +206,14 @@ MSVCDLL void operator= (const WBRExch &WBRE);
 // --------------------------------------------------------------------------------
 
  
-MSVCDLL void WBRExch::Level(int i);
+MSVCDLL void Level(int i);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for relaxation computation level
         // Output               none  : WBRE level set
  
 
-MSVCDLL int WBRExch::Level() const;
+MSVCDLL int Level() const;
  
         // Input                WBRE  : Relaxation/exchange controls (this)
         // Output               level : Relaxation computation level
@@ -223,14 +223,14 @@ MSVCDLL int WBRExch::Level() const;
 // --------------------------------------------------------------------------------
  
  
-MSVCDLL void WBRExch::Type(int i);
+MSVCDLL void Type(int i);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for relaxation computation type
         // Output               none  : WBRE type set
 
  
-MSVCDLL int WBRExch::Type() const;
+MSVCDLL int Type() const;
  
         // Input                WBRE  : Relaxation/exchange controls (this)
         // Output               type  : Relaxation computation type
@@ -241,14 +241,14 @@ MSVCDLL int WBRExch::Type() const;
 // --------------------------------------------------------------------------------
  
 
-MSVCDLL void WBRExch::Dip(int i=1);
+MSVCDLL void Dip(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar relaxation
         // Output               none  : WBRE set to include/neglect
 	//				dipole-dipole relaxation effects
 
-MSVCDLL void WBRExch::DipDFS(int i=1);
+MSVCDLL void DipDFS(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar DFS
@@ -257,7 +257,7 @@ MSVCDLL void WBRExch::DipDFS(int i=1);
 	//				shift relaxation effects
 
 
-MSVCDLL void WBRExch::DipCSA(int i=1);
+MSVCDLL void DipCSA(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-CSA cross correlation 
@@ -265,7 +265,7 @@ MSVCDLL void WBRExch::DipCSA(int i=1);
 	//				dipole-CSA cross correlation effects
 
 
-MSVCDLL void WBRExch::DipCSADFS(int i=1);
+MSVCDLL void DipCSADFS(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-CSA cross correlation 
@@ -274,7 +274,7 @@ MSVCDLL void WBRExch::DipCSADFS(int i=1);
 	//				dipole-CSA cross correlation DFS effects
 
 
-MSVCDLL void WBRExch::DipQuad(int i=1);
+MSVCDLL void DipQuad(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-Quad cross correlation 
@@ -282,7 +282,7 @@ MSVCDLL void WBRExch::DipQuad(int i=1);
 	//				dipole-Quad cross correlation effects
 
 
-MSVCDLL void WBRExch::DipQuadDFS(int i=1);
+MSVCDLL void DipQuadDFS(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-Quad cross correlation 
@@ -296,7 +296,7 @@ MSVCDLL void WBRExch::DipQuadDFS(int i=1);
 // --------------------------------------------------------------------------------
  
 
-MSVCDLL void WBRExch::CSA(int i=1);
+MSVCDLL void CSA(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for CSA relaxation
@@ -304,7 +304,7 @@ MSVCDLL void WBRExch::CSA(int i=1);
 	//				CSA-CSA relaxation effects
 
 
-MSVCDLL void WBRExch::CSADFS(int i=1);
+MSVCDLL void CSADFS(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for CSA DFS
@@ -313,7 +313,7 @@ MSVCDLL void WBRExch::CSADFS(int i=1);
 	//				shift relaxation effects
 
 
-MSVCDLL void WBRExch::CSADip(int i=1);
+MSVCDLL void CSADip(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-CSA cross correlation 
@@ -321,7 +321,7 @@ MSVCDLL void WBRExch::CSADip(int i=1);
 	//				dipole-CSA cross correlation effects
 
 
-MSVCDLL void WBRExch::CSADipDFS(int i=1);
+MSVCDLL void CSADipDFS(int i=1);
 
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-CSA cross correlation 
@@ -331,7 +331,7 @@ MSVCDLL void WBRExch::CSADipDFS(int i=1);
 
 
 
-MSVCDLL void WBRExch::CSAQuad(int i=1);
+MSVCDLL void CSAQuad(int i=1);
 
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for CSA-Quad cross correlation 
@@ -339,7 +339,7 @@ MSVCDLL void WBRExch::CSAQuad(int i=1);
 	//				CSA-Quad cross correlation effects
 
 
-MSVCDLL void WBRExch::CSAQuadDFS(int i=1);
+MSVCDLL void CSAQuadDFS(int i=1);
 
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for CSA-Quad cross correlation 
@@ -353,7 +353,7 @@ MSVCDLL void WBRExch::CSAQuadDFS(int i=1);
 // --------------------------------------------------------------------------------
  
 
-MSVCDLL void WBRExch::Quad(int i=1);
+MSVCDLL void Quad(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for quadrupolar relaxation
@@ -361,7 +361,7 @@ MSVCDLL void WBRExch::Quad(int i=1);
 	//				quadrupole-quadrupole relaxation effects
 
 
-MSVCDLL void WBRExch::QuadDFS(int i=1);
+MSVCDLL void QuadDFS(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for quadrupolar DFS
@@ -370,7 +370,7 @@ MSVCDLL void WBRExch::QuadDFS(int i=1);
 	//				shift relaxation effects
 
 
-MSVCDLL void WBRExch::QuadDip(int i=1);
+MSVCDLL void QuadDip(int i=1);
 
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-Quad cross correlation 
@@ -378,7 +378,7 @@ MSVCDLL void WBRExch::QuadDip(int i=1);
 	//				dipole-Quad cross correlation effects
 
 
-MSVCDLL void WBRExch::QuadDipDFSQuad(int i=1);
+MSVCDLL void QuadDipDFSQuad(int i=1);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for dipolar-Quad cross correlation 
@@ -387,7 +387,7 @@ MSVCDLL void WBRExch::QuadDipDFSQuad(int i=1);
 	//				dipole-Quad cross correlation DFS effects
 
 
-MSVCDLL void WBRExch::QuadCSA(int i=1);
+MSVCDLL void QuadCSA(int i=1);
 
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for CSA-Quad cross correlation 
@@ -395,7 +395,7 @@ MSVCDLL void WBRExch::QuadCSA(int i=1);
 	//				CSA-Quad cross correlation effects
 
 
-MSVCDLL void WBRExch::QuadCSADFS(int i=1);
+MSVCDLL void QuadCSADFS(int i=1);
 
         // Input                WBRE  : Relaxation/exchange controls (this)
 	//			i     : Flag for CSA-Quad cross correlation 
@@ -418,7 +418,7 @@ MSVCDLL void WBRExch::QuadCSADFS(int i=1);
 // ________________________________________________________________________________
 
 
-MSVCDLL double WBRExch::LWhh(const sys_dynamic& sys, const std::string& Iso);
+MSVCDLL double LWhh(const sys_dynamic& sys, const std::string& Iso);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
         //                      sys   : Dynamic spin system
@@ -456,13 +456,13 @@ MSVCDLL double WBRExch::LWhh(const sys_dynamic& sys, const std::string& Iso);
 MSVCDLL             operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const WBRExch& WBRE);
 
-MSVCDLL void WBRExch::SetZero();
-MSVCDLL void WBRExch::SetLevel(const ParameterSet& pset);
-MSVCDLL void WBRExch::SetType(const  ParameterSet& pset);
-MSVCDLL void WBRExch::SetDip(const   ParameterSet& pset);
-MSVCDLL void WBRExch::SetSA(const    ParameterSet& pset);
-MSVCDLL void WBRExch::SetQuad(const  ParameterSet& pset);
-MSVCDLL void WBRExch::SetDCX(const   ParameterSet& pset);
+MSVCDLL void SetZero();
+MSVCDLL void SetLevel(const ParameterSet& pset);
+MSVCDLL void SetType(const  ParameterSet& pset);
+MSVCDLL void SetDip(const   ParameterSet& pset);
+MSVCDLL void SetSA(const    ParameterSet& pset);
+MSVCDLL void SetQuad(const  ParameterSet& pset);
+MSVCDLL void SetDCX(const   ParameterSet& pset);
 
         // Input                WBRE    : Relaxation/exchange controls (this)
         //                      pset    : A parameter set
@@ -473,7 +473,7 @@ MSVCDLL void WBRExch::SetDCX(const   ParameterSet& pset);
         //                                RDCdfs - dipolar-SA cross correlation  DFS flag
 
 
-MSVCDLL void WBRExch::SetDQX(const ParameterSet& pset);
+MSVCDLL void SetDQX(const ParameterSet& pset);
 
         // Input                WBRE    : Relaxation/exchange controls (this)
         //                      pset    : A parameter set
@@ -486,7 +486,7 @@ MSVCDLL void WBRExch::SetDQX(const ParameterSet& pset);
         //                                set before this is called
 
 
-MSVCDLL void WBRExch::SetQCX(const ParameterSet& pset);
+MSVCDLL void SetQCX(const ParameterSet& pset);
 
         // Input                WBRE    : Relaxation/exchange controls (this)
         //                      pset    : A parameter set
@@ -499,7 +499,7 @@ MSVCDLL void WBRExch::SetQCX(const ParameterSet& pset);
         //                                set before this is called
  
  
-MSVCDLL void WBRExch::operator= (const ParameterSet& pset);
+MSVCDLL void operator= (const ParameterSet& pset);
  
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      pset     : A parameter set
@@ -521,7 +521,7 @@ MSVCDLL void WBRExch::operator= (const ParameterSet& pset);
 //                   (Only If Quadrupolar Effects Are Included)
 // --------------------------------------------------------------------------------
 
-//void WBRExch::prepCSA(const sys_dynamic& sys, matrix& Xis, spin_T* Ts, space_T* As)
+//void prepCSA(const sys_dynamic& sys, matrix& Xis, spin_T* Ts, space_T* As)
 
         // Input                WBRE  : Relaxation/exchange controls (this)
         //                      sys   : Dynamic spin system
@@ -531,7 +531,7 @@ MSVCDLL void WBRExch::operator= (const ParameterSet& pset);
         // Output               void  : WBR Relaxation and Exchange
         //                              superoperator
 
-MSVCDLL void WBRExch::prepQuad(const sys_dynamic& sys, matrix& Xis, spin_T* Ts, space_T* As) const;
+MSVCDLL void prepQuad(const sys_dynamic& sys, matrix& Xis, spin_T* Ts, space_T* As) const;
 
         // Input                WBRE  : Relaxation/exchange controls (this)
         //                      sys   : Dynamic spin system
@@ -546,7 +546,7 @@ MSVCDLL void WBRExch::prepQuad(const sys_dynamic& sys, matrix& Xis, spin_T* Ts, 
 // ________________________________________________________________________________
 
  
-MSVCDLL std::ostream& WBRExch::printDip(std::ostream& ostr) const;
+MSVCDLL std::ostream& printDip(std::ostream& ostr) const;
  
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      ostr     : An output stream
@@ -554,7 +554,7 @@ MSVCDLL std::ostream& WBRExch::printDip(std::ostream& ostr) const;
         //                                 the WBRE Dipolar parameters
 
 
-MSVCDLL std::ostream& WBRExch::printSA(std::ostream& ostr) const;
+MSVCDLL std::ostream& printSA(std::ostream& ostr) const;
  
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      ostr     : An output stream
@@ -562,7 +562,7 @@ MSVCDLL std::ostream& WBRExch::printSA(std::ostream& ostr) const;
         //                                 the WBRE Shift Anisotropy parameters
  
 
-MSVCDLL std::ostream& WBRExch::print(std::ostream& ostr) const;
+MSVCDLL std::ostream& print(std::ostream& ostr) const;
 
         // Input                WBRE  : Relaxation/exchange controls (this)
         //                      ostr     : An output stream
@@ -570,7 +570,7 @@ MSVCDLL std::ostream& WBRExch::print(std::ostream& ostr) const;
         //                                 the information in WBRE
  
 
-MSVCDLL std::ostream& WBRExch::printQ(std::ostream& ostr) const;
+MSVCDLL std::ostream& printQ(std::ostream& ostr) const;
 
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      ostr     : An output stream
@@ -590,7 +590,7 @@ MSVCDLL friend std::ostream &operator << (std::ostream &ostr, const WBRExch& WBR
 // ________________________________________________________________________________
 
 
-MSVCDLL void WBRExch::read(const std::string& filename);
+MSVCDLL void read(const std::string& filename);
 
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      filename : Input filename
@@ -600,7 +600,7 @@ MSVCDLL void WBRExch::read(const std::string& filename);
         //                                 containing recognized WBR parameters
  
  
-MSVCDLL void WBRExch::read(const std::string& filename, const sys_dynamic& sys);
+MSVCDLL void read(const std::string& filename, const sys_dynamic& sys);
 
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      filename : Input filename
@@ -613,7 +613,7 @@ MSVCDLL void WBRExch::read(const std::string& filename, const sys_dynamic& sys);
         //                                 containing recognized WBR parameters
 
 
-MSVCDLL void WBRExch::ask_read(int argc, char* argv[], int argn);
+MSVCDLL void ask_read(int argc, char* argv[], int argn);
 
         // Input                WBRE    : Relaxation/exchange controls (this)
         //                      argc    : Number of arguments
@@ -629,7 +629,7 @@ MSVCDLL void WBRExch::ask_read(int argc, char* argv[], int argn);
         // Note                         : The WBRE is modifed (filled)
 
 
-MSVCDLL void WBRExch::ask_read(int argc, char* argv[], int argn, const sys_dynamic& sys);
+MSVCDLL void ask_read(int argc, char* argv[], int argn, const sys_dynamic& sys);
  
         // Input                WBRE    : Relaxation/exchange controls (this)
         //                      argc    : Number of arguments
@@ -653,7 +653,7 @@ MSVCDLL void WBRExch::ask_read(int argc, char* argv[], int argn, const sys_dynam
 // ________________________________________________________________________________
 
 
-MSVCDLL void WBRExch::ask(int argc, char* argv[], int& argn);
+MSVCDLL void ask(int argc, char* argv[], int& argn);
 
         // Input                sys      : Spin system (this)
         //                      ostr     : An output stream
@@ -665,7 +665,7 @@ MSVCDLL void WBRExch::ask(int argc, char* argv[], int& argn);
 // ________________________________________________________________________________
 
 
-MSVCDLL super_op WBRExch::REX(const sys_dynamic& sys, gen_op& Ho, int fext=0);
+MSVCDLL super_op REX(const sys_dynamic& sys, gen_op& Ho, int fext=0);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
         //                      sys   : Dynamic spin system
@@ -676,7 +676,7 @@ MSVCDLL super_op WBRExch::REX(const sys_dynamic& sys, gen_op& Ho, int fext=0);
         // Note                         Computed in the eigenbasis of Ho
  
  
-MSVCDLL super_op WBRExch::REXrf(const sys_dynamic& sys, gen_op& Heff, double Wrf, int fext=0);
+MSVCDLL super_op REXrf(const sys_dynamic& sys, gen_op& Heff, double Wrf, int fext=0);
  
         // Input                WBRE  : Relaxation/exchange controls (this)
         //                      sys   : Dynamic spin system

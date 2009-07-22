@@ -170,10 +170,10 @@ volatile void XWPPfatal(int eidx, const std::string& pname) const;
 // ii                 XWinNMR Procs File Default Parmameters
 // ____________________________________________________________________________
  
- void XWinProcPar::SetDefaults(const  std::string& fname);
- void XWinProcPar::SetDefaults1(const std::string& fname);
- void XWinProcPar::SetDefaults2(const std::string& fname);
- void XWinProcPar::Copy(const XWinProcPar& XWPP);
+ void SetDefaults(const  std::string& fname);
+ void SetDefaults1(const std::string& fname);
+ void SetDefaults2(const std::string& fname);
+ void Copy(const XWinProcPar& XWPP);
 
 // ____________________________________________________________________________ 
 // iii                  XWinNMR ProcPar Inter-Related Parameters
@@ -184,7 +184,7 @@ volatile void XWPPfatal(int eidx, const std::string& pname) const;
    other parameters must be adjusted too.  These functions are meant to take 
    care of such details.                                                     */ 
   
-void XWinProcPar::SetOffset();            // Sets OFFSET, 1st point shift (Hz) 
+void SetOffset();            // Sets OFFSET, 1st point shift (Hz) 
 
 
 public:
@@ -196,11 +196,11 @@ public:
    parameter files.  This doesn't do anything in particular, it is the write
    functions that perform the work.                                          */
 
-        XWinProcPar::XWinProcPar();
-        XWinProcPar::XWinProcPar(const std::string& name, int type=1);
-        XWinProcPar::XWinProcPar(const XWinProcPar& XWP);
-virtual XWinProcPar::~XWinProcPar();
-void    XWinProcPar::operator= (const XWinProcPar& XWAP);
+        XWinProcPar();
+        XWinProcPar(const std::string& name, int type=1);
+        XWinProcPar(const XWinProcPar& XWP);
+virtual ~XWinProcPar();
+void    operator= (const XWinProcPar& XWAP);
 
 // ____________________________________________________________________________
 // B                  XWinProcPar Parameter Access Functions
@@ -210,47 +210,47 @@ void    XWinProcPar::operator= (const XWinProcPar& XWAP);
    these files contain.  The two primary values are the spectrum point size
    (SI) and the data byte order (BYTORDP).                                   */
 
-std::string XWinProcPar::parname()   const;	// ASCII file name
-int    XWinProcPar::BYTORDP()   const;	// Binary byte order
-int    XWinProcPar::FT_mod()    const;	// How FFT is performed
-double XWinProcPar::LB()        const;	// Line Broadening
-int    XWinProcPar::MC2()       const;	// FT type on t1
-double XWinProcPar::OFFSET()    const;	// Spectrum offset
-double XWinProcPar::PHC0()      const;	// Zero order phase
-double XWinProcPar::PHC1()      const;	// 1st order phase
-int    XWinProcPar::PH_mod()    const;  // Set phase type
-int    XWinProcPar::REVERSE()   const;	// Plot spectrum reverse
-double XWinProcPar::SF()        const;	// Spectrometer frequency
-int    XWinProcPar::SI()        const;	// Data size (re+im)
-int    XWinProcPar::SSB()       const;	// Sine bell
-int    XWinProcPar::STSI()      const;	// Strip size
-int    XWinProcPar::STSR()      const;	// Strip start
-double XWinProcPar::SW_p()      const;	// Spectral width (PPM)
-double XWinProcPar::TDeff()     const;	// Effective FFT size
-int    XWinProcPar::WDW()       const;	// Window function
+std::string parname()   const;	// ASCII file name
+int    BYTORDP()   const;	// Binary byte order
+int    FT_mod()    const;	// How FFT is performed
+double LB()        const;	// Line Broadening
+int    MC2()       const;	// FT type on t1
+double OFFSET()    const;	// Spectrum offset
+double PHC0()      const;	// Zero order phase
+double PHC1()      const;	// 1st order phase
+int    PH_mod()    const;  // Set phase type
+int    REVERSE()   const;	// Plot spectrum reverse
+double SF()        const;	// Spectrometer frequency
+int    SI()        const;	// Data size (re+im)
+int    SSB()       const;	// Sine bell
+int    STSI()      const;	// Strip size
+int    STSR()      const;	// Strip start
+double SW_p()      const;	// Spectral width (PPM)
+double TDeff()     const;	// Effective FFT size
+int    WDW()       const;	// Window function
 
-void XWinProcPar::BYTORDP(int bo);	   // Set binary byte order
-void XWinProcPar::GB(int gb);		   // Set gaussian broadening
-void XWinProcPar::LB(double lb);	   // Set line broadening
-void XWinProcPar::FT_mod(int ft);	   // Set transform type
-void XWinProcPar::FT_mod(const std::string& ft);// Set transform type
-void XWinProcPar::MC2(int mc);		   // Set acquisiiton type on t1
-void XWinProcPar::MC2(const std::string& mc);   // Set acquisiiton type on t1
-void XWinProcPar::OFFSET(double off);	   // Spectrum offset
-void XWinProcPar::PHC0(double ph0);	   // Set 0th phase correction
-void XWinProcPar::PHC1(double ph1);	   // Set 1st phase correction
-void XWinProcPar::PH_mod(int phm);	   // Set phase type
-void XWinProcPar::PH_mod(const std::string& p); // Set phase type
-void XWinProcPar::REVERSE(int yn);	   // Set spectrum reverse
-void XWinProcPar::PPARMOD(int pm);	   // Set data dimension
-void XWinProcPar::SI(int si);		   // Set data size (re+im)
-void XWinProcPar::SF(double SF);	   // Set spectrometer freq.
-void XWinProcPar::SSB(int sb);		   // Sine offset (pi/sb)
-void XWinProcPar::STSI(int sb);		   // Strip size
-void XWinProcPar::STSR(int sr);		   // Strip start
-void XWinProcPar::SW_p(double swp);	   // Set spectral width (ppm)
-void XWinProcPar::WDW(int wd);		   // Set window function
-void XWinProcPar::WDW(const std::string& wd);   // Set window function
+void BYTORDP(int bo);	   // Set binary byte order
+void GB(int gb);		   // Set gaussian broadening
+void LB(double lb);	   // Set line broadening
+void FT_mod(int ft);	   // Set transform type
+void FT_mod(const std::string& ft);// Set transform type
+void MC2(int mc);		   // Set acquisiiton type on t1
+void MC2(const std::string& mc);   // Set acquisiiton type on t1
+void OFFSET(double off);	   // Spectrum offset
+void PHC0(double ph0);	   // Set 0th phase correction
+void PHC1(double ph1);	   // Set 1st phase correction
+void PH_mod(int phm);	   // Set phase type
+void PH_mod(const std::string& p); // Set phase type
+void REVERSE(int yn);	   // Set spectrum reverse
+void PPARMOD(int pm);	   // Set data dimension
+void SI(int si);		   // Set data size (re+im)
+void SF(double SF);	   // Set spectrometer freq.
+void SSB(int sb);		   // Sine offset (pi/sb)
+void STSI(int sb);		   // Strip size
+void STSR(int sr);		   // Strip start
+void SW_p(double swp);	   // Set spectral width (ppm)
+void WDW(int wd);		   // Set window function
+void WDW(const std::string& wd);   // Set window function
 
 // ____________________________________________________________________________
 // C                       XWinProcPar Input Functions
@@ -278,11 +278,11 @@ void XWinProcPar::WDW(const std::string& wd);   // Set window function
 
                        INHERITED FROM BASE CLASS XWinPSet
 
-        bool XWinProcPar::readPSet(const string& filein, int warn=1);
-        bool XWinProcPar::readPSet(int warn=1);                              */
-	bool XWinProcPar::readPPar(const std::string& filein, int warn=2);
-	bool XWinProcPar::readPPar(int warn=2);
-virtual bool XWinProcPar::parsePSet(int warn=2);
+        bool readPSet(const string& filein, int warn=1);
+        bool readPSet(int warn=1);                              */
+	bool readPPar(const std::string& filein, int warn=2);
+	bool readPPar(int warn=2);
+virtual bool parsePSet(int warn=2);
 
 // ____________________________________________________________________________
 // D                       XWinProcPar Output Functions
@@ -291,8 +291,8 @@ virtual bool XWinProcPar::parsePSet(int warn=2);
 /* These function allow for output of NMR parameters directly into a Bruker
    XWinNMR ASCII parameter file {proc(s) & proc2(s)}.                        */
  
-int XWinProcPar::writePPar(const std::string& name, int warn=2);
-int XWinProcPar::writePPar(int warn=2) const;
+int writePPar(const std::string& name, int warn=2);
+int writePPar(int warn=2) const;
  
 // ____________________________________________________________________________
 // E                 XWinProcPar Parameter Access Functions
@@ -303,10 +303,10 @@ int XWinProcPar::writePPar(int warn=2) const;
  
                        INHERITED FROM BASE CLASS XWinPSet
  
-int XWinProcPar::getPar(const string& pn,int& val,   int id=0,int wrn=0) const;
-int XWinProcPar::getPar(const string& pn,double& val,int id=0,int wrn=0) const;
-int XWinProcPar::getPar(const string& pn,string& val,int id=0,int wrn=0) const;
-ParameterSet XWinProcPar::getPSet() const;                                   */
+int getPar(const string& pn,int& val,   int id=0,int wrn=0) const;
+int getPar(const string& pn,double& val,int id=0,int wrn=0) const;
+int getPar(const string& pn,string& val,int id=0,int wrn=0) const;
+ParameterSet getPSet() const;                                   */
 
 // ____________________________________________________________________________
 // F                   XWinProcPar Standard Output Functions
@@ -316,8 +316,8 @@ ParameterSet XWinProcPar::getPSet() const;                                   */
    They don't have anything to do with output while running XWinNMR, rather
    users can just glance at procs parameters or store then in a small file.
 
-ostream& XWinProcPar::printPset(ostream& ostr) const            INHERITED    */
-std::ostream& XWinProcPar::print(std::ostream& ostr, int full=0, int hdr=1) const;
+ostream& printPset(ostream& ostr) const            INHERITED    */
+std::ostream& print(std::ostream& ostr, int full=0, int hdr=1) const;
 friend std::ostream& operator<< (std::ostream& ostr, const XWinProcPar& P);
 
 
@@ -329,22 +329,22 @@ friend std::ostream& operator<< (std::ostream& ostr, const XWinProcPar& P);
     the Bruker parameter values mean.  I just add things as I learn them here
     so that GAMMA output can remind me what all of these parameters are...   */
 
-std::string XWinProcPar::AQORDERS()  const;
-std::string XWinProcPar::BC_modS()   const;
-std::string XWinProcPar::BYTORDPS()  const;
-std::string XWinProcPar::DATMODS()   const;
-std::string XWinProcPar::FT_modS()   const;
-std::string XWinProcPar::INTBCS()    const;
-std::string XWinProcPar::MC2S()      const;
-std::string XWinProcPar::ME_modS()   const;
-std::string XWinProcPar::PH_modS()   const;
-std::string XWinProcPar::PKNLS()     const;
-std::string XWinProcPar::PPARMODS()  const;
-std::string XWinProcPar::PSCALS()    const;
-std::string XWinProcPar::PSIGNS()    const;
-std::string XWinProcPar::REVERSES()  const;
-std::string XWinProcPar::SYMMS()     const;
-std::string XWinProcPar::WDWS()      const;
+std::string AQORDERS()  const;
+std::string BC_modS()   const;
+std::string BYTORDPS()  const;
+std::string DATMODS()   const;
+std::string FT_modS()   const;
+std::string INTBCS()    const;
+std::string MC2S()      const;
+std::string ME_modS()   const;
+std::string PH_modS()   const;
+std::string PKNLS()     const;
+std::string PPARMODS()  const;
+std::string PSCALS()    const;
+std::string PSIGNS()    const;
+std::string REVERSES()  const;
+std::string SYMMS()     const;
+std::string WDWS()      const;
 };	
 
 #endif 							// XWinProcPar.h

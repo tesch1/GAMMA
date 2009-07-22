@@ -39,12 +39,14 @@
 #include <HSLib/HSauxil.h>		// Include propagators
 #include <HSLib/GenOp.h>		// Include operators
 #include <HSLib/HSprop.h>		// Include operators
+#include <HSLib/Evolve.h>
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <HSLib/HSham.h>		// Knowledge of isotropic Hamiltonians
 #include <Level2/acquire1D.h>		// Include knowledge of "acquisitions"
 //#include <WBR/relaxAux.h>		// Include knowledge of Hsuper function
 #include <HSLib/SpinOpCmp.h>		// Include composite spin ops
 #include <HSLib/SpinOpRot.h>		// Include spin rotation operators
+#include <stdlib.h>
 #include <string>			// Include libstd++ strings
 #include <Basics/StringCut.h>		// Include Gdec and Gform functions
 #include <iostream>                     // Include input output streams
@@ -55,6 +57,8 @@ using std::list;			// Using libstdc++ lists
 using std::ostream;			// Using libstdc++ output streams
 using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
+
+using namespace Evolve;
 
 // ______________________________________________________________________
 //                         Gaussian Pulse Propagators 

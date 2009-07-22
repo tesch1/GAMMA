@@ -31,6 +31,7 @@
 
 #include <Level1/Wigner.h>			// Include the interface
 #include <Basics/Gconstants.h>			// Include DEG2RAD constant
+#include <stdlib.h>
 
 using std::cout;				// Using libstdc++ standard output
 // ____________________________________________________________________________

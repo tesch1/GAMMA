@@ -57,9 +57,9 @@ class MatLab5Re : MatLab5SE
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLab5Re::MLRE5error(int eidx, int noret=1);
-void MatLab5Re::MLRE5error(int eidx, const std::string& pname, int noret=1);
-volatile void MatLab5Re::MLRE5fatality(int eidx);
+void MLRE5error(int eidx, int noret=1);
+void MLRE5error(int eidx, const std::string& pname, int noret=1);
+volatile void MLRE5fatality(int eidx);
 
 
 public:
@@ -74,9 +74,9 @@ public:
 // ____________________________________________________________________________
  
 
-MatLab5Re::MatLab5Re();
-MatLab5Re::MatLab5Re(const matrix& mx);
-virtual MatLab5Re::~MatLab5Re();
+MatLab5Re();
+MatLab5Re(const matrix& mx);
+virtual ~MatLab5Re();
 
 // ____________________________________________________________________________
 // B            MATLAB MAT 5 Reals Array Sub-Element Access Functions
@@ -109,14 +109,14 @@ virtual MatLab5Re::~MatLab5Re();
                 Note                    : No care taken herein to insure the
                                           sub-element is properly written.   */
  
-int MatLab5Re::write(std::fstream& fp, const matrix& mx)     const;                       
-int MatLab5Re::write(std::fstream& fp, const row_vector& rv) const;
-int MatLab5Re::write(std::fstream& fp, const col_vector& cv) const;
+int write(std::fstream& fp, const matrix& mx)     const;                       
+int write(std::fstream& fp, const row_vector& rv) const;
+int write(std::fstream& fp, const col_vector& cv) const;
 
 /* These are the functions which will return the number of bytes that are
    written upon output the sub-element in MATLAB ".mat" binary format, V.5   */
  
-int MatLab5Re::Size(const matrix& mx) const;
+int Size(const matrix& mx) const;
 
    
 
@@ -142,8 +142,8 @@ int MatLab5Re::Size(const matrix& mx) const;
 					  a data element (as it should be
                                           in MATLAB)                         */
 
-int    MatLab5Re::fread(std::fstream& fp,int bigend,                    int warn=1);
-matrix MatLab5Re::read (std::fstream& fp,int bigend,const MatLab5DA& DA,int warn=1);
+int    fread(std::fstream& fp,int bigend,                    int warn=1);
+matrix read (std::fstream& fp,int bigend,const MatLab5DA& DA,int warn=1);
 
  
 // ____________________________________________________________________________
@@ -151,7 +151,7 @@ matrix MatLab5Re::read (std::fstream& fp,int bigend,const MatLab5DA& DA,int warn
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab5Re::print(std::ostream& ostr) const;
+void print(std::ostream& ostr) const;
  
         // Input                ML5Re	: MAT version 5 reals array (this)
         //                      ostr    : An output stream

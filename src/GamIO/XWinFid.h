@@ -115,8 +115,8 @@ volatile void XWinFidfatality(int eidx, const std::string& pname) const;
 
    Use of noreplace & nocreate maybe didn't make it to ANSI standard...      */  
 
-void XWinFid::CheckMode(int mode);
-int  XWinFid::CheckSize(int warn=2);
+void CheckMode(int mode);
+int  CheckSize(int warn=2);
 
 // ----------------------------------------------------------------------------
 // iii                 File Padding & Boundary Functions
@@ -128,10 +128,10 @@ int  XWinFid::CheckSize(int warn=2);
    boundary is reached. Similarly, we will check that all FIDs are all written
    written into the file beginning at such a boundary.                       */  
  
-void XWinFid::SetPadding();
-bool XWinFid::CheckBoundary();
-void XWinFid::SkipPadding();
-void XWinFid::AddPadding();
+void SetPadding();
+bool CheckBoundary();
+void SkipPadding();
+void AddPadding();
 
 public:
 // ____________________________________________________________________________ 
@@ -147,12 +147,12 @@ public:
 	//			TD	: Total points (real + imag)
 	//			byteord : Input byte order                   */
  
-        XWinFid::XWinFid();
-        XWinFid::XWinFid(const std::string& name, const row_vector& vx);
-        XWinFid::XWinFid(const std::string& name, int TD, bool byteord);
-        XWinFid::XWinFid(const XWinFid& XWF);
-virtual XWinFid::~XWinFid();
-void    XWinFid::operator= (const XWinFid& XWF);
+        XWinFid();
+        XWinFid(const std::string& name, const row_vector& vx);
+        XWinFid(const std::string& name, int TD, bool byteord);
+        XWinFid(const XWinFid& XWF);
+virtual ~XWinFid();
+void    operator= (const XWinFid& XWF);
 
 // ____________________________________________________________________________
 // B                   XWinNMR Fid File Access Functions
@@ -161,14 +161,14 @@ void    XWinFid::operator= (const XWinFid& XWF);
 /* These functions allow users to get some simple intformation regarding the
    contents of the Bruker data acquisition file.                             */
  
-        std::string     XWinFid::fidname()   const;		// File name
-virtual int        XWinFid::size()      const;		// No. complex points
-        int        XWinFid::TDF()       const;		// No. total points
-virtual bool       XWinFid::order()     const;		// Data byte order
-virtual int        XWinFid::bytes()     const;		// File size in bytes
-virtual int        XWinFid::blocks()    const;		// No. FIDs
-virtual int        XWinFid::pad()       const;		// No. padding bytes
-virtual row_vector XWinFid::data()      const;		// Data points
+        std::string     fidname()   const;		// File name
+virtual int        size()      const;		// No. complex points
+        int        TDF()       const;		// No. total points
+virtual bool       order()     const;		// Data byte order
+virtual int        bytes()     const;		// File size in bytes
+virtual int        blocks()    const;		// No. FIDs
+virtual int        pad()       const;		// No. padding bytes
+virtual row_vector data()      const;		// Data points
 
 // ____________________________________________________________________________
 // C                       XWinFid Input Functions
@@ -186,7 +186,7 @@ virtual row_vector XWinFid::data()      const;		// Data points
    in corresponding ASCII parameter file, typically named acqu and acqus. Such
    details should be attended to in higher classes utilizing these functions.*/ 
  
-virtual bool XWinFid::read(const std::string& name, bool bord, 
+virtual bool read(const std::string& name, bool bord, 
                                                          int TD=0, int warn=2);
 
 // ____________________________________________________________________________
@@ -200,7 +200,7 @@ virtual bool XWinFid::read(const std::string& name, bool bord,
    acqus in the case of a single FID file or called acqu2s for a serial file  
    file of multiple FIDs.the                                                 */
 
-virtual int XWinFid::write(const std::string& F, const row_vector& data, int wrn=2);
+virtual int write(const std::string& F, const row_vector& data, int wrn=2);
 
 // ____________________________________________________________________________
 // E                    XWinFid Standard Output Functions
@@ -210,7 +210,7 @@ virtual int XWinFid::write(const std::string& F, const row_vector& data, int wrn
     They do not do any manipulations to the file whatsoever, they will only
     report on what in known about the data values and file sizes.             */ 
 
-virtual std::ostream& XWinFid::print(std::ostream& ostr, int full=0, int hdr=1) const;
+virtual std::ostream& print(std::ostream& ostr, int full=0, int hdr=1) const;
 friend  std::ostream& operator<< (std::ostream& O, const XWinFid& F);
 };
 

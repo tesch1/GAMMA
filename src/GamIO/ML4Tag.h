@@ -96,8 +96,8 @@ volatile void MLT4fatality(int eidx);
 // ii              MATLAB MAT 4 Tag Binary/Byte Functions
 // ____________________________________________________________________________
 
-void MatLab4Tag::MOPT2Type();
-void MatLab4Tag::Type2MOPT();
+void MOPT2Type();
+void Type2MOPT();
 
 public:
 
@@ -114,42 +114,42 @@ public:
 
  
 MatLab4Tag();
-MatLab4Tag::MatLab4Tag(const std::string& N, const matrix& mx, int cf=1);
-MatLab4Tag::MatLab4Tag(const MatLab4Tag& T);
-void MatLab4Tag::operator=(const MatLab4Tag& T);
+MatLab4Tag(const std::string& N, const matrix& mx, int cf=1);
+MatLab4Tag(const MatLab4Tag& T);
+void operator=(const MatLab4Tag& T);
 
 // ____________________________________________________________________________
 // B                    MATLAB MAT 4 Tag Access Functions
 // ____________________________________________________________________________
 
  
-std::string MatLab4Tag::MType() const;
+std::string MType() const;
  
         // Input                ML4T    : MAT version 4 tag (this)
         // Output               string  : String labeling the byte
         //                                ordering of stored data
  
-std::string MatLab4Tag::PType() const;
+std::string PType() const;
  
         // Input                ML4T    : MAT version 4 tag (this)
         // Output               string  : String labeling the type
         //                                of data that is stored
 
 
-std::string MatLab4Tag::TType() const;
+std::string TType() const;
  
         // Input                ML4T    : MAT version 4 tag (this)
         // Output               string  : String labeling the type
         //                                of matrix that is stored
 
  
-int MatLab4Tag::ElemBytes() const;
+int ElemBytes() const;
  
         // Input                ML4T    : MAT version 4 tag (this)
         // Output               int     : Number of bytes in an array element
 
 
-int MatLab4Tag::Bytes() const;
+int Bytes() const;
 
         // Input                ML4T    : MAT version 4 tag (this)
         // Output               NBytes  : Number of bytes
@@ -172,13 +172,13 @@ int MatLab4Tag::Bytes() const;
                                           tag is written before data in the
                                           file (as it should be in MATLAB)   */
  
-int MatLab4Tag::write(std::fstream& fp) const;
+int write(std::fstream& fp) const;
  
 /* These are the functions which will return the number of bytes that are
    written upon output a Tag in MATLAB ".mat" binary format, Ver. 5. Note
    that all Tags are 8 bytes long (even those of compressed data elements)   */
 
-int MatLab4Tag::Size() const;
+int Size() const;
        
 
 // ____________________________________________________________________________
@@ -201,7 +201,7 @@ int MatLab4Tag::Size() const;
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-int MatLab4Tag::read(std::fstream& fp, int warn=1);
+int read(std::fstream& fp, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -209,7 +209,7 @@ int MatLab4Tag::read(std::fstream& fp, int warn=1);
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab4Tag::print(std::ostream& ostr, int hf=1) const;
+void print(std::ostream& ostr, int hf=1) const;
  
         // Input                ML4T    : MAT version 4 tag (this)
         //                      ostr    : An output stream

@@ -51,6 +51,7 @@
 #include <Level2/Quaternion.h>		// Include Quaternions
 #include <Level1/coord.h>		// Include coordiantes 
 #include <Basics/StringCut.h>		// Include Gdec, Gform (dec & form)
+#include <stdlib.h>
 
 using std::string;			// Using libstdc++ strings
 using std::cout;			// Using libstdc++ standard output

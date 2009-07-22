@@ -98,7 +98,7 @@ volatile void XWinOutdfatality(int eidx, const std::string& pname) const;
 // ii                XWinNMR Outd Parameter File Defaults
 // ____________________________________________________________________________
 
-void XWinOutd::SetDefaults();
+void SetDefaults();
 
 public:
 // ____________________________________________________________________________ 
@@ -109,9 +109,9 @@ public:
    parameter files.  This doesn't do anything in particular, it is the write
    functions that perform the work.                                          */
 
-XWinOutd::XWinOutd();
-XWinOutd::XWinOutd(const std::string& name);
-virtual XWinOutd::~XWinOutd();                                                             
+XWinOutd();
+XWinOutd(const std::string& name);
+virtual ~XWinOutd();                                                             
 
 // ____________________________________________________________________________
 // B                  XWinOutd Parameter Access Functions
@@ -120,8 +120,8 @@ virtual XWinOutd::~XWinOutd();
 /* These functions allow users to set some of the important parameters that 
    these files contain.                                                      */
  
-void XWinOutd::Printer(std::string pname);
-void XWinOutd::Plotter(std::string pname);
+void Printer(std::string pname);
+void Plotter(std::string pname);
 
 // ____________________________________________________________________________
 // C                       XWinOutd Input Functions
@@ -143,10 +143,10 @@ void XWinOutd::Plotter(std::string pname);
      getPar            Returns parameter found in the parameter set herein
                        This function is inherited from base class XWinPSet. */
 
-virtual bool XWinOutd::read(const std::string& filein, int warn=1);
-virtual bool XWinOutd::read(int warn=1);
-        bool XWinOutd::parsePSet(int warn=1);
-//bool XWinOutd::getPar(const string& n,string& v,int i=-1, int w=0) const;
+virtual bool read(const std::string& filein, int warn=1);
+virtual bool read(int warn=1);
+        bool parsePSet(int warn=1);
+//bool getPar(const string& n,string& v,int i=-1, int w=0) const;
 
 
 // ____________________________________________________________________________
@@ -168,8 +168,8 @@ virtual int      write(int warn=2) const;
    They don't have anything to do with output while running XWinNMR, rather
    users can just glance at outd parameters or store then in a small file.   */
 
-//ostream& XWinOutd::printPset(ostream& O) const;              INHERITED
-virtual std::ostream& XWinOutd::print(std::ostream& ostr, int full=0, int hdr=1) const;
+//ostream& printPset(ostream& O) const;              INHERITED
+virtual std::ostream& print(std::ostream& ostr, int full=0, int hdr=1) const;
 friend std::ostream& operator<< (std::ostream& O, const XWinOutd& P);
 
 };

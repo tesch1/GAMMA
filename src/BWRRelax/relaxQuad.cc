@@ -39,6 +39,7 @@
 #include <BWRRelax/relaxNMR.h>		// Include generic relaxation
 #include <Level1/nmr_tensor.h>		// Include common spin tensors
 #include <LSLib/sys_dynamic.h>		// Include aniostropic systems
+#include <stdlib.h>
 
 const double K = 1.941625913;			// sqrt[6*pi/5]
 

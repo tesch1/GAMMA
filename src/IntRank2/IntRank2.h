@@ -122,7 +122,7 @@ volatile void IR2fatal(int eidx)                                     const;
                                   constructed & stored, or copied from
                                   the spin tensor in the linked list.        */
 
-void IntRank2::setSPF();
+void setSPF();
 
 // ----------------------------------------------------------------------------
 //            Set Up Single Spin Interaction Spin Tensor Components
@@ -157,7 +157,7 @@ void IntRank2::setSPF();
           Note                         : For QUAD interactions Ival is always
                                          greater than 2 (Ival=2*I+1, I>=1)   */
 
-void IntRank2::setSPQ();
+void setSPQ();
  
 // ----------------------------------------------------------------------------
 //            Set Up Spin Pair Interaction Spin Tensor Components
@@ -192,7 +192,7 @@ void IntRank2::setSPQ();
                                          have either Ival and/or Sval of 2
                                          (Ival = 2*0.5 + 1, where I = 1/2 e-)*/
 
-void IntRank2::setSPSP();
+void setSPSP();
 
 // ____________________________________________________________________________
 // iii            INTERACTION PARAMETER SET PARSING FUNCTIONS
@@ -237,14 +237,14 @@ void IntRank2::setSPSP();
    larger than the delzz value by 	       Aeta,   Aeta(#),   Aeta(#,#)
    a factor of 1.5.                                                          */
 
-bool IntRank2::getAiAzAe(const ParameterSet& pset, const std::string& A,
+bool getAiAzAe(const ParameterSet& pset, const std::string& A,
                     coord& Aize,  int idxI, int idxS=-1, 
                      bool warni=true, bool warnz=true, bool warne=false) const;
 
-bool IntRank2::getAiso(const ParameterSet& pset, const std::string& A,
+bool getAiso(const ParameterSet& pset, const std::string& A,
                     double& Aiso, int idxI, int idxS=-1, bool warn=true) const;
 
-bool IntRank2::getAaniso(const ParameterSet& pset, const std::string& A,
+bool getAaniso(const ParameterSet& pset, const std::string& A,
                   double& Aaniso, int idxI, int idxS=-1, bool warn=true) const;
 
 
@@ -258,11 +258,11 @@ bool IntRank2::getAaniso(const ParameterSet& pset, const std::string& A,
    a single index, but normally they should not have one.                    */
 
 
-bool IntRank2::getField(const  ParameterSet& pset, const std::string& A, double& Bo,
+bool getField(const  ParameterSet& pset, const std::string& A, double& Bo,
                                              int idx=-1, bool warn=true) const;
-bool IntRank2::getOmega(const  ParameterSet& pset, const std::string& A, double& Om,
+bool getOmega(const  ParameterSet& pset, const std::string& A, double& Om,
                                              int idx=-1, bool warn=true) const;
-bool IntRank2::getGOmega(const ParameterSet& pset, const std::string& A, double& Om,
+bool getGOmega(const ParameterSet& pset, const std::string& A, double& Om,
                                              int idx=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -279,8 +279,8 @@ public:
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC IntRank2::IntRank2();
-MSVCDLC IntRank2::IntRank2(const IntRank2 &R2I);
+MSVCDLC IntRank2();
+MSVCDLC IntRank2(const IntRank2 &R2I);
 
 // ----------------------------------------------------------------------------
 //   Direct Single Spin & Spin - Field Constructors Taking Lots 'O Parameters
@@ -312,18 +312,18 @@ MSVCDLC IntRank2::IntRank2(const IntRank2 &R2I);
         Output               none    : Interaction constructed               */
 
 
-MSVCDLC IntRank2::IntRank2(const std::string& IsI, double chi,
+MSVCDLC IntRank2(const std::string& IsI, double chi,
                           double eta=0, const EAngles& EA=EAzero, bool T=true);
-MSVCDLC IntRank2::IntRank2(const Isotope&     IsI, double chi,
+MSVCDLC IntRank2(const Isotope&     IsI, double chi,
                           double eta=0, const EAngles& EA=EAzero, bool T=true);
-MSVCDLC IntRank2::IntRank2(const double       Isi, double chi,
+MSVCDLC IntRank2(const double       Isi, double chi,
                           double eta=0, const EAngles& EA=EAzero, bool T=true);
 
-MSVCDLC IntRank2::IntRank2(const std::string& IsI, double chi,
+MSVCDLC IntRank2(const std::string& IsI, double chi,
                    const coord& AxAyAz, const EAngles& EA=EAzero, bool T=true);
-MSVCDLC IntRank2::IntRank2(const Isotope&     IsI, double chi,
+MSVCDLC IntRank2(const Isotope&     IsI, double chi,
                    const coord& AxAyAz, const EAngles& EA=EAzero, bool T=true);
-MSVCDLC IntRank2::IntRank2(double             IsI, double chi,
+MSVCDLC IntRank2(double             IsI, double chi,
                    const coord& AxAyAz, const EAngles& EA=EAzero, bool T=true);
 
 // ----------------------------------------------------------------------------
@@ -348,17 +348,17 @@ MSVCDLC IntRank2::IntRank2(double             IsI, double chi,
                              EA      : Euler angles (orientation)            */
 
 
-MSVCDLC IntRank2::IntRank2(const std::string&  IsoI, const std::string& IsoS,
+MSVCDLC IntRank2(const std::string&  IsoI, const std::string& IsoS,
                           double Xi, double eta=0, const EAngles& EA = EAzero);
-MSVCDLC IntRank2::IntRank2(const Isotope&      IsoI, const Isotope&     IsoS,
+MSVCDLC IntRank2(const Isotope&      IsoI, const Isotope&     IsoS,
                           double Xi, double eta=0, const EAngles& EA = EAzero);
-MSVCDLC IntRank2::IntRank2(      double        Iqn,        double       Sqn,
+MSVCDLC IntRank2(      double        Iqn,        double       Sqn,
                           double Xi, double eta=0, const EAngles& EA = EAzero);
-MSVCDLC IntRank2::IntRank2(const std::string&  IsoI, const std::string&      IsoS,
+MSVCDLC IntRank2(const std::string&  IsoI, const std::string&      IsoS,
                    double Xi, const coord& AxAyAz, const EAngles& EA = EAzero);
-MSVCDLC IntRank2::IntRank2(const Isotope&      IsoI, const Isotope&     IsoS,
+MSVCDLC IntRank2(const Isotope&      IsoI, const Isotope&     IsoS,
                    double Xi, const coord& AxAyAz, const EAngles& EA = EAzero);
-MSVCDLC IntRank2::IntRank2(      double        Iqn,        double       Sqn,
+MSVCDLC IntRank2(      double        Iqn,        double       Sqn,
                    double Xi, const coord& AxAyAz, const EAngles& EA = EAzero);
 
 
@@ -366,8 +366,8 @@ MSVCDLC IntRank2::IntRank2(      double        Iqn,        double       Sqn,
 //               Here Be The Assignment Operator & Destructor
 // ----------------------------------------------------------------------------
 
-MSVCDLL void    IntRank2::operator= (const IntRank2 &R2I1);
-MSVCDLC virtual IntRank2::~IntRank2 ();
+MSVCDLL void    operator= (const IntRank2 &R2I1);
+MSVCDLC virtual ~IntRank2 ();
 
 // ____________________________________________________________________________
 // B                     SPATIAL TENSOR COMPONENT ACCESS
@@ -420,17 +420,17 @@ static double IntRank2A::delA();				INHERITED    */
    there is no asymmetry.						     */
  
 /*
-complex IntRank2::A20PAS(  ) const; 			// INHERITED
-complex IntRank2::A21PAS(  ) const;			// INHERITED 
-complex IntRank2::A2m1PAS( ) const; 			// INHERITED
-complex IntRank2::A22PAS(  ) const;			// INHERITED
-complex IntRank2::A2m2PAS( ) const;			// INHERITED
+complex A20PAS(  ) const; 			// INHERITED
+complex A21PAS(  ) const;			// INHERITED 
+complex A2m1PAS( ) const; 			// INHERITED
+complex A22PAS(  ) const;			// INHERITED
+complex A2m2PAS( ) const;			// INHERITED
  
-complex IntRank2::A20(  ) const; 			// INHERITED
-complex IntRank2::A21(  ) const;			// INHERITED 
-complex IntRank2::A2m1( ) const; 			// INHERITED
-complex IntRank2::A22(  ) const;			// INHERITED
-complex IntRank2::A2m2( ) const;			// INHERITED
+complex A20(  ) const; 			// INHERITED
+complex A21(  ) const;			// INHERITED 
+complex A2m1( ) const; 			// INHERITED
+complex A22(  ) const;			// INHERITED
+complex A2m2( ) const;			// INHERITED
 
 complex IntRank2A::A20(double  alpha,double beta,double gamma) const; INHERITED
 complex IntRank2A::A21(double  alpha,double beta,double gamma) const; INHERITED
@@ -563,15 +563,15 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
    Spherical     True if there is no scaling factor (XI interaction constant)
    Isotropic     True if there is no scaling factor (XI interaction constant)
 
-// static coord  IntRank2::AisoDelzEta(const coord& AxAyAz);
-// static void   IntRank2::SortAxAyAz(double& x, double& y, double& z);
-//        bool   IntRank2::CheckEta(double eta, bool warn=true) const;
-//        int    IntRank2::Symmetric( ) const;
-//        matrix IntRank2::CartMx(double scale=1.0) const;                  */
+// static coord  AisoDelzEta(const coord& AxAyAz);
+// static void   SortAxAyAz(double& x, double& y, double& z);
+//        bool   CheckEta(double eta, bool warn=true) const;
+//        int    Symmetric( ) const;
+//        matrix CartMx(double scale=1.0) const;                  */
  
-MSVCDLL bool   IntRank2::Spherical( )       const;
-MSVCDLL bool   IntRank2::Isotropic( )       const;
-MSVCDLL matrix IntRank2::CartMx(bool scale) const;
+MSVCDLL bool   Spherical( )       const;
+MSVCDLL bool   Isotropic( )       const;
+MSVCDLL matrix CartMx(bool scale) const;
 
 // ____________________________________________________________________________
 // C                       SPIN TENSOR COMPONENT ACCESS
@@ -629,13 +629,13 @@ MSVCDLL matrix IntRank2::CartMx(bool scale) const;
         // Note                         : Get/Set interaction delzz value
 	//                                or interaction constant
  
-//double IntRank2::delz() const;		// Get delzz value
-//double IntRank2::delzz() const;		// Get delzz value
-//void   IntRank2::delz(double dz);		// Set delzz value
-//void   IntRank2::delzz(double dz);		// Set delzz value
+//double delz() const;		// Get delzz value
+//double delzz() const;		// Get delzz value
+//void   delz(double dz);		// Set delzz value
+//void   delzz(double dz);		// Set delzz value
 
-MSVCDLL virtual double IntRank2::xi() const;		// Get xi value (Hz)
-MSVCDLL virtual void   IntRank2::xi(double xval);	// Set xi value (Hz)
+MSVCDLL virtual double xi() const;		// Get xi value (Hz)
+MSVCDLL virtual void   xi(double xval);	// Set xi value (Hz)
  
 // ____________________________________________________________________________
 // E                          OUTPUT FUNCTIONS
@@ -645,13 +645,13 @@ MSVCDLL virtual void   IntRank2::xi(double xval);	// Set xi value (Hz)
 //     Functions That Generate Strings to Simplify and Modularize Printing
 //-----------------------------------------------------------------------------
 
-MSVCDLL std::string IntRank2::XiString() const;
+MSVCDLL std::string XiString() const;
 
 //-----------------------------------------------------------------------------
 //  Functions That Generate String Arrays to Simplify and Modularize Printing
 //-----------------------------------------------------------------------------
 
-MSVCDLL virtual std::vector<std::string> IntRank2::IR2AStrings() const;
+MSVCDLL virtual std::vector<std::string> IR2AStrings() const;
 
         // Input                R2I     : Rank 2 interaction (this)
         // Output               CSS     : Pointer to array of 5 strings
@@ -665,7 +665,7 @@ MSVCDLL virtual std::vector<std::string> IntRank2::IR2AStrings() const;
                  Over From PAS x-Axis:    xxx.xx Degrees                     */  
 
 
-MSVCDLL virtual std::ostream& IntRank2::printAT(std::ostream& ostr, IST_type ISTT=UNK) const;
+MSVCDLL virtual std::ostream& printAT(std::ostream& ostr, IST_type ISTT=UNK) const;
 
         // Input                R2I     : Rank 2 interaction (this)
         //                      ostr    : Output stream
@@ -693,7 +693,7 @@ MSVCDLL virtual std::ostream& IntRank2::printAT(std::ostream& ostr, IST_type IST
  
 //  "print" is virtual as IntRank2 is a base class for other IntName classes
 
-MSVCDLL virtual std::ostream& IntRank2::print(std::ostream& ostr, int fflag=0) const;
+MSVCDLL virtual std::ostream& print(std::ostream& ostr, int fflag=0) const;
  
         // Input                R2I     : Rank 2 interaction (this)
         //                      ostr    : Output stream
@@ -735,10 +735,10 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& out,const IntRank2& R2I);
 	   Output		osr     : Output stream after having info
 	   				  regarding ISL placed into it       */
 
-MSVCDLL static std::ostream& IntRank2::printISLList(std::ostream& ostr,
+MSVCDLL static std::ostream& printISLList(std::ostream& ostr,
                                               const std::list<IntRank2T>& ISL);
-MSVCDLL static std::ostream& IntRank2::printList(std::ostream& ostr, bool fflag=false);
-MSVCDLL static std::ostream& IntRank2::printList(std::ostream& ostr,IST_type X,int=0);
+MSVCDLL static std::ostream& printList(std::ostream& ostr, bool fflag=false);
+MSVCDLL static std::ostream& printList(std::ostream& ostr,IST_type X,int=0);
 
 // ____________________________________________________________________________
 // G                 RANK 2 INTERACTION COMPARISON FUNCTIONS
@@ -816,20 +816,20 @@ MSVCDLL int operator!=(const IntRank2 &R2I2) const;
                                           With HSs: return in composite spin
                                           Hilbert space                      */
 
-MSVCDLL virtual matrix IntRank2::H0() const;
-MSVCDLL virtual matrix IntRank2::H0(double alpha, double beta, double gamma) const;
-MSVCDLL virtual matrix IntRank2::H0(const EAngles& EA) const;
+MSVCDLL virtual matrix H0() const;
+MSVCDLL virtual matrix H0(double alpha, double beta, double gamma) const;
+MSVCDLL virtual matrix H0(const EAngles& EA) const;
 
-MSVCDLL virtual matrix IntRank2::H0(const std::vector<int>& HSs, int i)          const;
-MSVCDLL virtual matrix IntRank2::H0(const std::vector<int>& HSs, int i,
+MSVCDLL virtual matrix H0(const std::vector<int>& HSs, int i)          const;
+MSVCDLL virtual matrix H0(const std::vector<int>& HSs, int i,
                                            double A, double B, double G) const;
-MSVCDLL virtual matrix IntRank2::H0(const std::vector<int>& HSs, int i, 
+MSVCDLL virtual matrix H0(const std::vector<int>& HSs, int i, 
                                                       const EAngles& EA) const;
 
-MSVCDLL virtual matrix IntRank2::H0(const std::vector<int>& HSs, int i, int j)   const;
-MSVCDLL virtual matrix IntRank2::H0(const std::vector<int>& HSs, int i, int j,
+MSVCDLL virtual matrix H0(const std::vector<int>& HSs, int i, int j)   const;
+MSVCDLL virtual matrix H0(const std::vector<int>& HSs, int i, int j,
                                            double A, double B, double G) const;
-MSVCDLL virtual matrix IntRank2::H0(const std::vector<int>& HSs, int i, int j, 
+MSVCDLL virtual matrix H0(const std::vector<int>& HSs, int i, int j, 
                                                       const EAngles& EA) const;
 
 
@@ -859,14 +859,14 @@ MSVCDLL virtual matrix IntRank2::H0(const std::vector<int>& HSs, int i, int j,
                                           Hilbert space                      */
 
    
-MSVCDLL virtual matrix IntRank2::H() const;
-MSVCDLL virtual matrix IntRank2::H(double alpha, double beta, double gamma) const;
-MSVCDLL virtual matrix IntRank2::H(const EAngles& EA) const;
+MSVCDLL virtual matrix H() const;
+MSVCDLL virtual matrix H(double alpha, double beta, double gamma) const;
+MSVCDLL virtual matrix H(const EAngles& EA) const;
 
-MSVCDLL virtual matrix IntRank2::H(const std::vector<int>& HSs, int i, int j)   const;
-MSVCDLL virtual matrix IntRank2::H(const std::vector<int>& HSs, int i, int j,
+MSVCDLL virtual matrix H(const std::vector<int>& HSs, int i, int j)   const;
+MSVCDLL virtual matrix H(const std::vector<int>& HSs, int i, int j,
                                            double A, double B, double G) const;
-MSVCDLL virtual matrix IntRank2::H(const std::vector<int>& HSs, int i, int j, 
+MSVCDLL virtual matrix H(const std::vector<int>& HSs, int i, int j, 
                                                       const EAngles& EA) const;
 };
  

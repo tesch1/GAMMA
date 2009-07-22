@@ -133,11 +133,11 @@ volatile void IHFfatal(int eidx, const std::string& pname)              const;
    scaled such that, when rotated they are normalized rank 2 spherical
    harmonics in a symmetric case (eta=0).                                    */
 
-// void IntHF::setAs();         INHERITED  Set spatial tensor comps (IntRank2)
-// void IntHF::setTs();         INHERITED  Set spin    tensor comps (IntRank2)
+// void setAs();         INHERITED  Set spatial tensor comps (IntRank2)
+// void setTs();         INHERITED  Set spin    tensor comps (IntRank2)
 
 
-//void IntHF::setTs();
+//void setTs();
 
         // Input                HF	: Hyperfine interaction (this)
         // Output               none    : Hyperfine interaction spherical
@@ -159,7 +159,7 @@ volatile void IHFfatal(int eidx, const std::string& pname)              const;
              2,0  [6]    z         2,1     2  +           2,2                */
 
 
-void IntHF::setT20wh();
+void setT20wh();
 
         // Input                D       : Dipolar interaction (this)
         // Output               none    : Dipolar interaction weak
@@ -226,15 +226,15 @@ void IntHF::setT20wh();
        Output           TF      : True if hyperfine interaction defined
                                   Argument values are set		     */
 
-bool IntHF::getHFI(const ParameterSet& pset, double& Iqn, double& Sqn,
+bool getHFI(const ParameterSet& pset, double& Iqn, double& Sqn,
          double& hfc, double& hfa, double& eta, EAngles& EA,
                                      int idxI, int idxS, bool warn=true) const;
 
-bool IntHF::getHFI1(const ParameterSet& pset, double& Iqn, double& Sqn,
+bool getHFI1(const ParameterSet& pset, double& Iqn, double& Sqn,
          double& hfc, double& hfa, double& eta, EAngles& EA,
                                                int idxI, bool warn=true) const;
 
-bool IntHF::getHFI2(const ParameterSet& pset, double& Iqn, double& Sqn,
+bool getHFI2(const ParameterSet& pset, double& Iqn, double& Sqn,
          double& hfc, double& hfa, double& eta, EAngles& EA,
                                      int idxI, int idxS, bool warn=true) const;
 
@@ -254,7 +254,7 @@ bool IntHF::getHFI2(const ParameterSet& pset, double& Iqn, double& Sqn,
         Note                    : This WILL NOT alter the interaction
         Note                    : Parameters are A, A(#), A(#,#)             */
 
-bool IntHF::getHFC(const ParameterSet& pset, double& hfc,
+bool getHFC(const ParameterSet& pset, double& hfc,
                                   int idxI, int idxS=-1, bool warn=true) const;
 
 
@@ -273,7 +273,7 @@ bool IntHF::getHFC(const ParameterSet& pset, double& hfc,
         Note                    : This WILL NOT alter the interaction
         Note                    : Parameters are AA, AA(#), AA(#,#)         */
 
-bool IntHF::getHFA(const ParameterSet& pset, double& hfa,
+bool getHFA(const ParameterSet& pset, double& hfa,
                                   int idxI, int idxS=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -285,7 +285,7 @@ bool IntHF::getHFA(const ParameterSet& pset, double& hfa,
    interaction, namely { Iqn,Sqn,A,Adelz,eta,alpha,beta,gamma }. If the
    interaction definition is found, we set the interaction or return false.  */
 
-bool IntHF::setHFI(const ParameterSet& ps,int idxI=-1,int idxS=-1,int warn=1);
+bool setHFI(const ParameterSet& ps,int idxI=-1,int idxS=-1,int warn=1);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -317,8 +317,8 @@ bool IntHF::setHFI(const ParameterSet& ps,int idxI=-1,int idxS=-1,int warn=1);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC IntHF::IntHF();
-MSVCDLC IntHF::IntHF(const IntHF &HF1);
+MSVCDLC IntHF();
+MSVCDLC IntHF(const IntHF &HF1);
 
 // ----------------------------------------------------------------------------
 //              Direct Constructors Using Cartesian Components
@@ -335,11 +335,11 @@ MSVCDLC IntHF::IntHF(const IntHF &HF1);
                              from Axx, Ayy, Azz contained in
                              the input coordinate (in Gauss)                 */
 
-MSVCDLC IntHF::IntHF(const std::string& II, const std::string& IS,
+MSVCDLC IntHF(const std::string& II, const std::string& IS,
                                   const coord& Axyz, const EAngles& EA=EAzero);
-MSVCDLC IntHF::IntHF(const Isotope&     II, const Isotope&     IS,
+MSVCDLC IntHF(const Isotope&     II, const Isotope&     IS,
                                   const coord& Axyz, const EAngles& EA=EAzero);
-MSVCDLC IntHF::IntHF(      double       Iz,       double       Sz,
+MSVCDLC IntHF(      double       Iz,       double       Sz,
                                   const coord& Axyz, const EAngles& EA=EAzero);
 
 // ----------------------------------------------------------------------------
@@ -356,11 +356,11 @@ MSVCDLC IntHF::IntHF(      double       Iz,       double       Sz,
                     Aeta    : Spatial tensor asymmetry value [0,1]
         Output      none    : Hyperfine interaction constructed              */
 
-MSVCDLC IntHF::IntHF(const std::string& II, const std::string& IS,
+MSVCDLC IntHF(const std::string& II, const std::string& IS,
         double Aiso, double Adelzz, double Aeta=0.0, const EAngles& EA=EAzero);
-MSVCDLC IntHF::IntHF(const Isotope&     II, const Isotope&     IS,
+MSVCDLC IntHF(const Isotope&     II, const Isotope&     IS,
         double Aiso, double Adelzz, double Aeta=0.0, const EAngles& EA=EAzero);
-MSVCDLC IntHF::IntHF(      double       Iz,       double       Sz,
+MSVCDLC IntHF(      double       Iz,       double       Sz,
         double Aiso, double Adelzz, double Aeta=0.0, const EAngles& EA=EAzero);
 
 // ----------------------------------------------------------------------------
@@ -385,15 +385,15 @@ MSVCDLC IntHF::IntHF(      double       Iz,       double       Sz,
                                        for spins with quantum numbers qI & qS
                                        and parameters in pset                */
 
-MSVCDLC IntHF::IntHF(const ParameterSet& pset, int idxI, int idxS=-1, int warn=2);
+MSVCDLC IntHF(const ParameterSet& pset, int idxI, int idxS=-1, int warn=2);
 
 /*
-IntHF::IntHF(const ParameterSet& pset, int idxI, int idxS, int warn=2);
-IntHF::IntHF(int idxI, int idxS, const ParameterSet& pset, int warn=2);
+IntHF(const ParameterSet& pset, int idxI, int idxS, int warn=2);
+IntHF(int idxI, int idxS, const ParameterSet& pset, int warn=2);
 
-IntHF::IntHF(const std::string&  II, const std::string&  IS,
+IntHF(const std::string&  II, const std::string&  IS,
                     const ParameterSet& pset, int idxI, int IdxS, int warn=2);
-IntHF::IntHF(const  Isotope&     II, const Isotope&      IS,
+IntHF(const  Isotope&     II, const Isotope&      IS,
                     const ParameterSet& pset, int idxI, int IdxS, int warn=2);
 */
 
@@ -401,8 +401,8 @@ IntHF::IntHF(const  Isotope&     II, const Isotope&      IS,
 //                          Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-MSVCDLL void IntHF::operator= (const IntHF &HF1);
-MSVCDLC      IntHF::~IntHF();
+MSVCDLL void operator= (const IntHF &HF1);
+MSVCDLC      ~IntHF();
 
 // ____________________________________________________________________________
 // B          HYPERFINE INTERACTION SPATIAL TENSOR ACCESS FUNCTIONS
@@ -418,10 +418,10 @@ MSVCDLC      IntHF::~IntHF();
                            A    = _ | h  + h  + h   |
                             iso   3 [  xx   yy   zz ]                        */
 
-MSVCDLL double IntHF::iso() const;
-MSVCDLL void   IntHF::iso(double aiso);
-MSVCDLL double IntHF::A() const;
-MSVCDLL void   IntHF::A(double aiso);
+MSVCDLL double iso() const;
+MSVCDLL void   iso(double aiso);
+MSVCDLL double A() const;
+MSVCDLL void   A(double aiso);
 
 // ----------------------------------------------------------------------------
 //                      Spatial Tensor Anisotropy Value
@@ -452,10 +452,10 @@ MSVCDLL void   IntHF::A(double aiso);
 // static double IntRank2A::delzz();                            INHERITED
 // static double IntRank2A::delA();                             INHERITED
 
-MSVCDLL double IntHF::aniso() const;
-MSVCDLL void   IntHF::aniso(double aiso);
-MSVCDLL double IntHF::AA()    const;
-MSVCDLL void   IntHF::AA(double aiso);
+MSVCDLL double aniso() const;
+MSVCDLL void   aniso(double aiso);
+MSVCDLL double AA()    const;
+MSVCDLL void   AA(double aiso);
 
 // ----------------------------------------------------------------------------
 //                      Spatial Tensor Asymmetry Value
@@ -465,8 +465,8 @@ MSVCDLL void   IntHF::AA(double aiso);
 // |Azz| >= |Ayy| >= |Axx| in the treatment contained herein.  These functions
 // are inherited from the base class IntRank2A
 
-//MSVCDLL double IntHF::eta( ) const;            INHERITED       Get the asymmetry
-//void   IntHF::eta(double HFeta);       INHERITED       Set the asymmetry
+//MSVCDLL double eta( ) const;            INHERITED       Get the asymmetry
+//void   eta(double HFeta);       INHERITED       Set the asymmetry
 
 //-----------------------------------------------------------------------------
 //                    Spherical Tensor Component Access
@@ -568,35 +568,35 @@ IR2ASph IntRank2A::SphCmp(const EAngles& EA)           const;   INHERITED    */
                       h   = | ---- |    * del   * A   + h
                        uv   [  5   ]         zz    uv    iso                 */
 
-MSVCDLL double IntHF::hxx() const;
-MSVCDLL double IntHF::hyy() const;
-MSVCDLL double IntHF::hzz() const;
-MSVCDLL double IntHF::hxy() const;
-MSVCDLL double IntHF::hyx() const;
-MSVCDLL double IntHF::hxz() const;
-MSVCDLL double IntHF::hzx() const;
-MSVCDLL double IntHF::hyz() const;
-MSVCDLL double IntHF::hzy() const;
+MSVCDLL double hxx() const;
+MSVCDLL double hyy() const;
+MSVCDLL double hzz() const;
+MSVCDLL double hxy() const;
+MSVCDLL double hyx() const;
+MSVCDLL double hxz() const;
+MSVCDLL double hzx() const;
+MSVCDLL double hyz() const;
+MSVCDLL double hzy() const;
 
-MSVCDLL double IntHF::hxx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hyy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hzz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hyx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hxy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hzx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hzy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hxz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntHF::hyz(double alpha, double beta, double gamma) const;
+MSVCDLL double hxx(double alpha, double beta, double gamma) const;
+MSVCDLL double hyy(double alpha, double beta, double gamma) const;
+MSVCDLL double hzz(double alpha, double beta, double gamma) const;
+MSVCDLL double hyx(double alpha, double beta, double gamma) const;
+MSVCDLL double hxy(double alpha, double beta, double gamma) const;
+MSVCDLL double hzx(double alpha, double beta, double gamma) const;
+MSVCDLL double hzy(double alpha, double beta, double gamma) const;
+MSVCDLL double hxz(double alpha, double beta, double gamma) const;
+MSVCDLL double hyz(double alpha, double beta, double gamma) const;
 
-MSVCDLL double IntHF::hxx(const EAngles& EA) const;
-MSVCDLL double IntHF::hyy(const EAngles& EA) const;
-MSVCDLL double IntHF::hzz(const EAngles& EA) const;
-MSVCDLL double IntHF::hxy(const EAngles& EA) const;
-MSVCDLL double IntHF::hyx(const EAngles& EA) const;
-MSVCDLL double IntHF::hxz(const EAngles& EA) const;
-MSVCDLL double IntHF::hzx(const EAngles& EA) const;
-MSVCDLL double IntHF::hyz(const EAngles& EA) const;
-MSVCDLL double IntHF::hzy(const EAngles& EA) const;
+MSVCDLL double hxx(const EAngles& EA) const;
+MSVCDLL double hyy(const EAngles& EA) const;
+MSVCDLL double hzz(const EAngles& EA) const;
+MSVCDLL double hxy(const EAngles& EA) const;
+MSVCDLL double hyx(const EAngles& EA) const;
+MSVCDLL double hxz(const EAngles& EA) const;
+MSVCDLL double hzx(const EAngles& EA) const;
+MSVCDLL double hyz(const EAngles& EA) const;
+MSVCDLL double hzy(const EAngles& EA) const;
 
 //-----------------------------------------------------------------------------
 //                         Orientation Angle Access
@@ -664,8 +664,8 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
 /* This function also returns a scaled Cartesian spatial tensor. That tensor
    values may either be
 
-        1.) GAMMA normalized Auv - Done With IntHF::CartMx()
-        2.) Typical Suv values   - Done With IntHF::Smx(true);
+        1.) GAMMA normalized Auv - Done With CartMx()
+        2.) Typical Suv values   - Done With Smx(true);
         3.) Shown in lab frame   - Done With This Function
 
    For case 3.) the values are related to the GAMMA normalized (Auv) and
@@ -678,7 +678,7 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
 
    where Kdel is a Kronecker delta function.                                 */
 
-MSVCDLL matrix IntHF::Amx() const;
+MSVCDLL matrix Amx() const;
 
 // ____________________________________________________________________________
 // C                       SPIN TENSOR COMPONENT ACCESS
@@ -731,8 +731,8 @@ MSVCDLL matrix IntHF::Amx() const;
    when the interaction very weak relative to the Zeeman interaction, and
    that is most often the case. See T20wh and the function H0.               */
 
-MSVCDLL matrix IntHF::T20het() const;
-MSVCDLL matrix IntHF::T20het(const std::vector<int>& HSs, int i, int j) const;
+MSVCDLL matrix T20het() const;
+MSVCDLL matrix T20het(const std::vector<int>& HSs, int i, int j) const;
 
 // ____________________________________________________________________________
 // D             HYPERFINE INTERACTION CONSTANT ACCESS FUNCTIONS
@@ -757,7 +757,7 @@ MSVCDLL matrix IntHF::T20het(const std::vector<int>& HSs, int i, int j) const;
         // Return               xi      : Interaction constant (rad/sec)     */
 
 
-MSVCDLL double IntHF::xi( ) const;
+MSVCDLL double xi( ) const;
 
 // ____________________________________________________________________________
 // E                HYPEFINE INTERACTION AUXILIARY FUNCTIONS
@@ -797,7 +797,7 @@ MSVCDLL double IntHF::xi( ) const;
 
 MSVCDLL              operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const IntHF &HF);
-MSVCDLL void IntHF::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
+MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
 
 // ----------------------------------------------------------------------------
 //  Functions To Output Hypefine Interaction To ASCII File (via Parameter Set)
@@ -816,8 +816,8 @@ MSVCDLL void IntHF::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
                                           written in parameter set format to
                                           file filename or ostream ofstr     */
 
-MSVCDLL int IntHF::write(const std::string &fn,int idx=-1,int pfx=-1,int wrn=2) const;
-MSVCDLL int IntHF::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2) const;
+MSVCDLL int write(const std::string &fn,int idx=-1,int pfx=-1,int wrn=2) const;
+MSVCDLL int write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2) const;
 
 // ____________________________________________________________________________
 // G                   HYPERFINE INTERACTION INPUT FUNCTIONS
@@ -847,8 +847,8 @@ MSVCDLL int IntHF::write(std::ofstream& ofstr, int idx=-1,int pfx=-1,int wrn=2) 
         // Output               none    : Interaction read from parameters
         //                                in file or pset                    */
 
-MSVCDLL bool IntHF::read(const std::string &filename,  int idxI=-1,int IdxS=-1,int warn=2);
-MSVCDLL bool IntHF::read(const ParameterSet& pset,int idxI=-1,int idxS=-1,int warn=2);
+MSVCDLL bool read(const std::string &filename,  int idxI=-1,int IdxS=-1,int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,int idxI=-1,int idxS=-1,int warn=2);
 
 // ____________________________________________________________________________
 // H                    HYPERFINE HAMILTONIAN FUNCTIONS
@@ -911,15 +911,15 @@ MSVCDLL bool IntHF::read(const ParameterSet& pset,int idxI=-1,int idxS=-1,int wa
                                           With HSs: return in composite spin
                                           Hilbert space                      */
 
-MSVCDLL matrix IntHF::H0(bool wh) const;
-MSVCDLL matrix IntHF::H0(double A, double B, double G, bool wh) const;
-MSVCDLL matrix IntHF::H0(const EAngles& EA, bool wh) const;
+MSVCDLL matrix H0(bool wh) const;
+MSVCDLL matrix H0(double A, double B, double G, bool wh) const;
+MSVCDLL matrix H0(const EAngles& EA, bool wh) const;
 
 
-MSVCDLL matrix IntHF::H0(const std::vector<int>& HSs, int i, int j, bool wh) const;
-MSVCDLL matrix IntHF::H0(const std::vector<int>& HSs, int i, int j,
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, int j, bool wh) const;
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, int j,
                   double A, double B, double G, bool wh) const;
-MSVCDLL matrix IntHF::H0(const std::vector<int>& HSs, int i, int j,
+MSVCDLL matrix H0(const std::vector<int>& HSs, int i, int j,
                              const EAngles& EA, bool wh) const;
 
 // ----------------------------------------------------------------------------
@@ -986,11 +986,11 @@ MSVCDLL matrix IntHF::H0(const std::vector<int>& HSs, int i, int j,
      Electron I Value:        I               m = [0,4] => {0,1,-1,2,-2}
      Nucleus I Value:         S                                              */
 
-//vector<string> IntHF::CartAStrings(const std::string& CSForm) const;
-//vector<string> IntHF::SphAStrings()                           const;
-MSVCDLL std::vector<std::string> IntHF::CartAStrings(const std::string& CSForm) const;
-MSVCDLL std::vector<std::string> IntHF::InfoStrings()                           const;
-MSVCDLL std::vector<std::string> IntHF::SphAStrings()                           const;
+//vector<string> CartAStrings(const std::string& CSForm) const;
+//vector<string> SphAStrings()                           const;
+MSVCDLL std::vector<std::string> CartAStrings(const std::string& CSForm) const;
+MSVCDLL std::vector<std::string> InfoStrings()                           const;
+MSVCDLL std::vector<std::string> SphAStrings()                           const;
 
 
 //-----------------------------------------------------------------------------
@@ -1009,13 +1009,13 @@ MSVCDLL std::vector<std::string> IntHF::SphAStrings()                           
            Output               none    : Hyperfine interaction information
                                           placed into the output stream      */
 
-MSVCDLL        std::ostream& IntHF::print(std::ostream& out, int fflag=-1) const;
+MSVCDLL        std::ostream& print(std::ostream& out, int fflag=-1) const;
 MSVCDLL friend std::ostream& operator<<  (std::ostream& out, IntHF& HF);
 
 
-MSVCDLL std::ostream& IntHF::printSpherical(std::ostream& ostr);
-MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr);
-MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr, double theta, double phi=0);
+MSVCDLL std::ostream& printSpherical(std::ostream& ostr);
+MSVCDLL std::ostream& printCartesian(std::ostream& ostr);
+MSVCDLL std::ostream& printCartesian(std::ostream& ostr, double theta, double phi=0);
          
 // Axx = (A22+A2m2)/2 - A20/sqrt(6)      Axy = -i*(A22-A21)/2 = Ayx
 // Ayy = -(A22+A2m2)/2 - A20/sqrt(6)     Axz = -(A21-A2m1)/2  = Azx
@@ -1110,9 +1110,9 @@ MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr, double theta, do
 
 
 //friend void operator+= (ParameterSet& pset, const IntHF &HF);
-//       void IntHF::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
+//       void PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
 
-//void IntHF::write(const string &filename, int idx=-1);
+//void write(const string &filename, int idx=-1);
 
 	// Input		AHF	: Hyperfine interaction (this)
 	//			filename: Output file name
@@ -1127,7 +1127,7 @@ MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr, double theta, do
 // ____________________________________________________________________________
 
 
-//string IntHF::ask_read(int argc, char* argv[], int argn, int idxI,int idxS);
+//string ask_read(int argc, char* argv[], int argn, int idxI,int idxS);
 
         // Input                HF	: Hyperfine interaction (this)
         //                      argc    : Number of arguments
@@ -1145,7 +1145,7 @@ MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr, double theta, do
         //                                containing known IntHF parameters
         // Note                         : The interaction D is modifed (filled)
 
-//string IntHF::ask_read(int argc, char* argv[], int argn,
+//string ask_read(int argc, char* argv[], int argn,
 //                                   double Iqn=0.5, double Sqn=0.5, int idx=-1);
 
         // Input                HF	: Hyperfine interaction (this)
@@ -1166,7 +1166,7 @@ MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr, double theta, do
         // Note                         : The interaction D is modifed (filled)
 
  
-//void IntHF::ask(int argc, char* argv[], int& argq, double& Iqn, double& Sqn,
+//void ask(int argc, char* argv[], int& argq, double& Iqn, double& Sqn,
 //       double& Cnqcc, double& Ceta, double& theta, double& Cphi, int Cflag=0);
 
         // Input                HF	: Hyperfine interaction (this)
@@ -1185,7 +1185,7 @@ MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr, double theta, do
         // Note                         : This is INTERACTIVE! 
 
  
-//void IntHF::askset(int argc, char* argv[], int& qn, int Cflag=0);
+//void askset(int argc, char* argv[], int& qn, int Cflag=0);
  
         // Input                D      : Hyperfine interaction (this)
         //                      argc    : Number of arguments
@@ -1196,7 +1196,7 @@ MSVCDLL std::ostream& IntHF::printCartesian(std::ostream& ostr, double theta, do
         // Note                         : This is INTERACTIVE!
  
 
-//void IntHF::askset(int Cflag=0);
+//void askset(int Cflag=0);
 
         // Input                D      : Hyperfine interaction (this)
         // Output               none    : Dis set interactively

@@ -57,9 +57,9 @@ class MatLab5Im : MatLab5SE
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLab5Im::MLIM5error(int eidx, int noret=1);
-void MatLab5Im::MLIM5error(int eidx, const std::string& pname, int noret=1);
-volatile void MatLab5Im::MLIM5fatality(int eidx);
+void MLIM5error(int eidx, int noret=1);
+void MLIM5error(int eidx, const std::string& pname, int noret=1);
+volatile void MLIM5fatality(int eidx);
 
 
 public:
@@ -74,9 +74,9 @@ public:
 // ____________________________________________________________________________
  
 
-MatLab5Im::MatLab5Im();
-MatLab5Im::MatLab5Im(const matrix& mx);
-virtual MatLab5Im::~MatLab5Im();
+MatLab5Im();
+MatLab5Im(const matrix& mx);
+virtual ~MatLab5Im();
 
 // ____________________________________________________________________________
 // B            MATLAB MAT 5 Imags Array Sub-Element Access Functions
@@ -104,14 +104,14 @@ virtual MatLab5Im::~MatLab5Im();
                 Note                    : No care taken herein to insure the 
                                           sub-element is properly written.   */ 
   
-int MatLab5Im::write(std::fstream& fp, const matrix& mx)     const;
-int MatLab5Im::write(std::fstream& fp, const row_vector& rv) const;
-int MatLab5Im::write(std::fstream& fp, const col_vector& cv) const;
+int write(std::fstream& fp, const matrix& mx)     const;
+int write(std::fstream& fp, const row_vector& rv) const;
+int write(std::fstream& fp, const col_vector& cv) const;
 
 /* These are the functions which will return the number of bytes that are 
    written upon output the sub-element in MATLAB ".mat" binary format, V.5   */ 
   
-int MatLab5Im::Size(const matrix& mx) const;
+int Size(const matrix& mx) const;
  
 
 // ____________________________________________________________________________
@@ -129,7 +129,7 @@ int MatLab5Im::Size(const matrix& mx) const;
 					  the imags array is written
 					  in the file.                       */
  
-// int MatLab5Im::write(fstream& fp) const; 	// Handled in base class
+// int write(fstream& fp) const; 	// Handled in base class
 
 
 // ____________________________________________________________________________
@@ -154,15 +154,15 @@ int MatLab5Im::Size(const matrix& mx) const;
 					  a data element (as it should be
                                           in MATLAB)                         */
 
-int MatLab5Im::fread(std::fstream& fp, int bigend,             int warn=1);
-int MatLab5Im::read(std::fstream& fp,  int bigend, matrix& mx, int warn);
+int fread(std::fstream& fp, int bigend,             int warn=1);
+int read(std::fstream& fp,  int bigend, matrix& mx, int warn);
  
 // ____________________________________________________________________________
 // E      MATLAB MAT 5 Imags Array Sub-Element ASCII Output Functions
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab5Im::print(std::ostream& ostr) const;
+void print(std::ostream& ostr) const;
  
         // Input                ML5Im	: MAT version 5 imags array (this)
         //                      ostr    : An output stream

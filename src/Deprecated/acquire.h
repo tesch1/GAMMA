@@ -360,7 +360,7 @@ MSVCDLL void operator () (gen_op& sigma, matrix& mx, double cutoff=1.e-10);
 // ______________________________________________________________________
 
 
-MSVCDLL int acquire::ls() const;
+MSVCDLL int ls() const;
 
 	// Input	ACQ   : An acquire (this)
 	// Output	ls    : Liouville space size
@@ -411,7 +411,7 @@ MSVCDLL friend std::ostream &operator << (std::ostream &ostr, acquire &ACQ);
 	//				to the output stream
 
 
-MSVCDLL std::ostream& acquire::printT(std::ostream &ostr, gen_op& sigma, int np);
+MSVCDLL std::ostream& printT(std::ostream &ostr, gen_op& sigma, int np);
 
         // Input                ACQ   : Acquire
         //                      ostr  : Output stream

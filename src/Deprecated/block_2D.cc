@@ -39,6 +39,8 @@
 #include <Deprecated/block_2D.h>
 #include <assert.h>
 #include <iostream>
+#include <stdlib.h>
+
 using namespace std;
 
 

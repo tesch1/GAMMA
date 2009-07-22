@@ -39,6 +39,7 @@
 #include <LSLib/DensOp.h>		// Include density operators
 #include <Basics/StringCut.h>
 #include <string>			// Must know libstdc++ strings
+#include <stdlib.h>
 
 double CP_TCUT = 1.e-11;		// Time precision
 

@@ -149,18 +149,18 @@ class CartMx2A
         Output               none    : Error message
                                        Program execution stopped if fatal   */
 
-         void CartMx2A::C2Aerror(int eidx, int noret=0) const;
-volatile void CartMx2A::C2Afatal(int eidx)              const;
-         void CartMx2A::C2Aerror(int eidx, const std::string& p, int n=0) const;
-volatile void CartMx2A::C2Afatal(int eidx, const std::string& p)          const;
+         void C2Aerror(int eidx, int noret=0) const;
+volatile void C2Afatal(int eidx)              const;
+         void C2Aerror(int eidx, const std::string& p, int n=0) const;
+volatile void C2Afatal(int eidx, const std::string& p)          const;
 
 // ____________________________________________________________________________
 // ii                   Class CartMx2A SetUp Functions
 // ____________________________________________________________________________
 
-void CartMx2A::SetDefaults();
-bool CartMx2A::SetAMx(const matrix& AC, int warn=2);
-void CartMx2A::SetAngles();
+void SetDefaults();
+bool SetAMx(const matrix& AC, int warn=2);
+void SetAngles();
 
 // ____________________________________________________________________________
 // iii        Class CartMx2A Jacobian Matrix Singularity Test
@@ -172,7 +172,7 @@ void CartMx2A::SetAngles();
    zero and 2.) row j where j<i is not a constant multiple of row i. The
    latter check is done for all rows j where j<i.                            */   
 
-bool CartMx2A::CheckSing(double ai0, double ai1, double ai2, int i);
+bool CheckSing(double ai0, double ai1, double ai2, int i);
 
 // ____________________________________________________________________________
 // iv         Class CartMx2A Caretesian Matrix Conversion Routine
@@ -183,7 +183,7 @@ bool CartMx2A::CheckSing(double ai0, double ai1, double ai2, int i);
    because it uses the current class settings which dictate how the
    conversion process will be attempted.                                     */
 
-bool CartMx2A::Convert(int warn=2);
+bool Convert(int warn=2);
  
 
 // ____________________________________________________________________________
@@ -195,19 +195,19 @@ bool CartMx2A::Convert(int warn=2);
    make sure its range is [0,5]. There are only three rows of the Jacobian 
    so we insure that the range of frow is [0,2].                             */
 
-bool CartMx2A::CheckF(int findex, int frow, int warn=2) const;
-bool CartMx2A::CheckNorms() const;
+bool CheckF(int findex, int frow, int warn=2) const;
+bool CheckNorms() const;
 
 
 // ____________________________________________________________________________
 // vi          Class CartMx2A Euler Angles For Minimizaiton Search
 // ____________________________________________________________________________
 
-double               CartMx2A::NewAlpha(int i) const;
-double               CartMx2A::NewBeta(int  i) const;
-double               CartMx2A::NewGamma(int i) const;
-std::vector<EAngles> CartMx2A::AngSeeds()      const;
-std::vector<int>     CartMx2A::FctSeeds()      const;
+double               NewAlpha(int i) const;
+double               NewBeta(int  i) const;
+double               NewGamma(int i) const;
+std::vector<EAngles> AngSeeds()      const;
+std::vector<int>     FctSeeds()      const;
 
 // ____________________________________________________________________________
 
@@ -221,10 +221,10 @@ public:
 // A            Class CartMx2A Construction, Assignment, Destruction
 // ____________________________________________________________________________
 
-MSVCDLC      CartMx2A::CartMx2A();
-MSVCDLC      CartMx2A::CartMx2A(const matrix& AC, int warn=2);
-MSVCDLL void CartMx2A::operator= (const CartMx2A& C2A);
-MSVCDLC      CartMx2A::~CartMx2A();
+MSVCDLC      CartMx2A();
+MSVCDLC      CartMx2A(const matrix& AC, int warn=2);
+MSVCDLL void operator= (const CartMx2A& C2A);
+MSVCDLC      ~CartMx2A();
 
 // ____________________________________________________________________________
 // B                  Class CartMx2A Access Functions
@@ -234,34 +234,34 @@ MSVCDLC      CartMx2A::~CartMx2A();
 //                   Functions To Obtain Class Values
 // ----------------------------------------------------------------------------
 
-MSVCDLL matrix     CartMx2A::ACart()         const;	// Get Cartesian Tensor
-MSVCDLL double     CartMx2A::Aiso()          const;	// Get Tensor Isotropy
-MSVCDLL double     CartMx2A::Eta()           const;	// Get Tensor Asymmetry [0,1]
-MSVCDLL double     CartMx2A::delzz()         const;	// Get Tensor PAS delzz (Anis) 
-MSVCDLL EAngles    CartMx2A::EulerAngles()   const;	// Get Tensor Euler Angles
+MSVCDLL matrix     ACart()         const;	// Get Cartesian Tensor
+MSVCDLL double     Aiso()          const;	// Get Tensor Isotropy
+MSVCDLL double     Eta()           const;	// Get Tensor Asymmetry [0,1]
+MSVCDLL double     delzz()         const;	// Get Tensor PAS delzz (Anis) 
+MSVCDLL EAngles    EulerAngles()   const;	// Get Tensor Euler Angles
 
-MSVCDLL int        CartMx2A::MaxIterations() const;	// Get Max. Allowed Iterations
-MSVCDLL int        CartMx2A::Iteration()     const;	// Get Current Iteration
-MSVCDLL matrix     CartMx2A::Jacobian()      const;	// Get Jacobian Matrix J (3x3)
-MSVCDLL row_vector CartMx2A::Functional()    const;	// Get Function Vector F (3x1) 
-MSVCDLL EAngles    CartMx2A::StartAngles()   const;	// Get Initial Euler Angles
-MSVCDLL double     CartMx2A::EtaCutoff()     const;	// Get Asymmetry Zero Cutoff
-MSVCDLL double     CartMx2A::DifCutoff()     const;	// Get Differential Zero Cutoff
-MSVCDLL int        CartMx2A::PrintLevel()    const;	// Get Current Min. Print Level
-MSVCDLL int        CartMx2A::JFunct(int i)   const;	// Get Jacobian Row i Function
+MSVCDLL int        MaxIterations() const;	// Get Max. Allowed Iterations
+MSVCDLL int        Iteration()     const;	// Get Current Iteration
+MSVCDLL matrix     Jacobian()      const;	// Get Jacobian Matrix J (3x3)
+MSVCDLL row_vector Functional()    const;	// Get Function Vector F (3x1) 
+MSVCDLL EAngles    StartAngles()   const;	// Get Initial Euler Angles
+MSVCDLL double     EtaCutoff()     const;	// Get Asymmetry Zero Cutoff
+MSVCDLL double     DifCutoff()     const;	// Get Differential Zero Cutoff
+MSVCDLL int        PrintLevel()    const;	// Get Current Min. Print Level
+MSVCDLL int        JFunct(int i)   const;	// Get Jacobian Row i Function
 
 // ----------------------------------------------------------------------------
 //                     Functions To Set Class Values
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool CartMx2A::ACart(const matrix& AC, int w=2);// Set Cartesian Tensor
-MSVCDLL void CartMx2A::MaxIterations(int mi);		// Set Max. Allowed Iterations
-MSVCDLL void CartMx2A::EtaCutoff(double  ec);		// Set Asymmetry Zero Cutoff
-MSVCDLL void CartMx2A::StartAngles(const EAngles& EAin);// Set Initial Euler Angles
-MSVCDLL void CartMx2A::DifCutoff(double  dc);		// Set Differential Zero Cutoff
-MSVCDLL void CartMx2A::PrintLevel(int    pl);		// Set Minimization Print Level
-MSVCDLL void CartMx2A::JFuncts(int f1,int f2,int f3);	// Set 3 Jacobian row functions
-MSVCDLL void CartMx2A::JFuncts(int f1f2f3);		// Set 3 Jacobian row functions
+MSVCDLL bool ACart(const matrix& AC, int w=2);// Set Cartesian Tensor
+MSVCDLL void MaxIterations(int mi);		// Set Max. Allowed Iterations
+MSVCDLL void EtaCutoff(double  ec);		// Set Asymmetry Zero Cutoff
+MSVCDLL void StartAngles(const EAngles& EAin);// Set Initial Euler Angles
+MSVCDLL void DifCutoff(double  dc);		// Set Differential Zero Cutoff
+MSVCDLL void PrintLevel(int    pl);		// Set Minimization Print Level
+MSVCDLL void JFuncts(int f1,int f2,int f3);	// Set 3 Jacobian row functions
+MSVCDLL void JFuncts(int f1f2f3);		// Set 3 Jacobian row functions
 
 // ____________________________________________________________________________
 // C          CARTESIAN MATRIX ISOTROPY, ANISOTROPY, ASYMMETRY
@@ -279,8 +279,8 @@ MSVCDLL void CartMx2A::JFuncts(int f1f2f3);		// Set 3 Jacobian row functions
    where we adhere to the convention |A  | >= |A  | >= |A  | or eta = [0,1]
                                         zz       yy       xx                 */
 
-MSVCDLL void CartMx2A::AisoDelzEta(const matrix& A);
-MSVCDLL void CartMx2A::AisoDelzEta();
+MSVCDLL void AisoDelzEta(const matrix& A);
+MSVCDLL void AisoDelzEta();
 
 // ____________________________________________________________________________
 // D                      CARTESIAN MATRIX EULER ANGLES
@@ -309,7 +309,7 @@ MSVCDLL void CartMx2A::AisoDelzEta();
 //                Euler Angles For Symmetric Cartesian Tensor
 // ----------------------------------------------------------------------------
 
-MSVCDLL void CartMx2A::DiagSymCartEA();
+MSVCDLL void DiagSymCartEA();
 
 /* This function will assume that the irreducible Cartesian spatial tensor
    array A (symmetric) has no asymmetry. That is, eta = 0 for A.  It will
@@ -331,7 +331,7 @@ MSVCDLL void CartMx2A::DiagSymCartEA();
                                   | 3 del  * sin(2*beta) |
                                   [      zz              ]                   */
 
-MSVCDLL void CartMx2A::SymCartEA();
+MSVCDLL void SymCartEA();
 
 
 // ----------------------------------------------------------------------------
@@ -346,19 +346,19 @@ MSVCDLL void CartMx2A::SymCartEA();
    are several angle combinations possible. We do not cover them all herein,
    so the function returns false if we don't find them.                     */
 
-MSVCDLL bool CartMx2A::DiagASymCartEA();
+MSVCDLL bool DiagASymCartEA();
 
 // ----------------------------------------------------------------------------
 // Euler Angles For Asymmetric Cartesian Tensor With Some Off-Diagonals At Zero
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool CartMx2A::ASymCartODZEA(int warn=2);
+MSVCDLL bool ASymCartODZEA(int warn=2);
 
 // ----------------------------------------------------------------------------
 //  Euler Angles For Asymmetric Cartesian Tensor With Symmetric Off-Diagonals
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool CartMx2A::ASymCartODSEA(int warn=2);
+MSVCDLL bool ASymCartODSEA(int warn=2);
 
 // ----------------------------------------------------------------------------
 //                 Euler Angles For Generic Cartesian Tensor
@@ -370,26 +370,26 @@ MSVCDLL bool CartMx2A::ASymCartODSEA(int warn=2);
    PAS to the input array axes. For this case, the angles must be found
    through an iterative minimization process.                                */
 
-MSVCDLL bool CartMx2A::ASymCartEA();
-MSVCDLL int  CartMx2A::MinAction(bool TFM, bool TFA, int NJ, int JSteps, double lastnorm) const;
+MSVCDLL bool ASymCartEA();
+MSVCDLL int  MinAction(bool TFM, bool TFA, int NJ, int JSteps, double lastnorm) const;
 
 // ____________________________________________________________________________
 // E                 Class CartMx2A Minimization Functions
 // ____________________________________________________________________________
 
-MSVCDLL bool CartMx2A::Minimize();
+MSVCDLL bool Minimize();
 
 
 // ----------------------------------------------------------------------------
 //           Jacobian Matrix & Functional Vector Generators
 // ----------------------------------------------------------------------------
  
-MSVCDLL void CartMx2A::Axx(double& f, double& dfda, double& dfdb, double& dfdg) const;
-MSVCDLL void CartMx2A::Axy(double& f, double& dfda, double& dfdb, double& dfdg) const;
-MSVCDLL void CartMx2A::Axz(double& f, double& dfda, double& dfdb, double& dfdg) const;
-MSVCDLL void CartMx2A::Ayy(double& f, double& dfda, double& dfdb, double& dfdg) const;
-MSVCDLL void CartMx2A::Ayz(double& f, double& dfda, double& dfdb, double& dfdg) const;
-MSVCDLL void CartMx2A::Azz(double& f, double& dfda, double& dfdb, double& dfdg) const;
+MSVCDLL void Axx(double& f, double& dfda, double& dfdb, double& dfdg) const;
+MSVCDLL void Axy(double& f, double& dfda, double& dfdb, double& dfdg) const;
+MSVCDLL void Axz(double& f, double& dfda, double& dfdb, double& dfdg) const;
+MSVCDLL void Ayy(double& f, double& dfda, double& dfdb, double& dfdg) const;
+MSVCDLL void Ayz(double& f, double& dfda, double& dfdb, double& dfdg) const;
+MSVCDLL void Azz(double& f, double& dfda, double& dfdb, double& dfdg) const;
 
 /* This function will generate a 3x3 Jacobian matrix and a 3x1 Functional
    vector for use in a Newton minimization to determine the three Euler angles
@@ -456,23 +456,23 @@ MSVCDLL void CartMx2A::Azz(double& f, double& dfda, double& dfdb, double& dfdg) 
 	   Note				: If the function returns false, one
 	  				  should try a new starting vector   */
 
-MSVCDLL bool CartMx2A::JacobianF();
+MSVCDLL bool JacobianF();
 
-MSVCDLL void CartMx2A::TrackMin(int info, double val=0) const;
+MSVCDLL void TrackMin(int info, double val=0) const;
 
 // ____________________________________________________________________________
 // F                  Class CartMx2A Auxiliary Functions
 // ____________________________________________________________________________
 
-MSVCDLL matrix      CartMx2A::Regenerate()         const;
-MSVCDLL double      CartMx2A::Check()              const;
-MSVCDLL bool        CartMx2A::Check(double cutoff) const;
-MSVCDLL std::string CartMx2A::Type()               const;
-MSVCDLL std::string CartMx2A::Method()             const;
-MSVCDLL std::string CartMx2A::JFunctName(int i)    const;
-MSVCDLL void        CartMx2A::TrackConv(int info)  const;
-MSVCDLL bool        CartMx2A::OffDiagonals()       const;
-MSVCDLL bool        CartMx2A::SymOffDiags()        const;
+MSVCDLL matrix      Regenerate()         const;
+MSVCDLL double      Check()              const;
+MSVCDLL bool        Check(double cutoff) const;
+MSVCDLL std::string Type()               const;
+MSVCDLL std::string Method()             const;
+MSVCDLL std::string JFunctName(int i)    const;
+MSVCDLL void        TrackConv(int info)  const;
+MSVCDLL bool        OffDiagonals()       const;
+MSVCDLL bool        SymOffDiags()        const;
 
 // ____________________________________________________________________________
 // Z               Class CartMx2A Formatted Output Functions
@@ -491,7 +491,7 @@ MSVCDLL bool        CartMx2A::SymOffDiags()        const;
                                           into the output stream            */
 
 
-MSVCDLL        std::ostream& CartMx2A::print(std::ostream& ostr, int   fflag=0) const;
+MSVCDLL        std::ostream& print(std::ostream& ostr, int   fflag=0) const;
 MSVCDLL friend std::ostream& operator<<     (std::ostream& ostr, const CartMx2A& C2A);
 
   };						// End Of Class CartMx2A

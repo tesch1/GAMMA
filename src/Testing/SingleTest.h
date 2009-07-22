@@ -75,8 +75,8 @@ class SingleTest
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void SingleTest::STerror(int eidx, int noret=0) const;
-volatile void SingleTest::STfatality(int eidx)           const;
+         void STerror(int eidx, int noret=0) const;
+volatile void STfatality(int eidx)           const;
 
 // ____________________________________________________________________________ 
 // ii                       SINGLE TEST DEFAULTS
@@ -92,7 +92,7 @@ volatile void SingleTest::STfatality(int eidx)           const;
    this class when it calls TrueFct. A possible alternative is to use a
    static member function, but I have not learned how to do that yet.        */
 
-//static int SingleTest::TrueFct(std::ostream& ostr, int RL);
+//static int TrueFct(std::ostream& ostr, int RL);
 friend int TrueFct(std::ostream& ostr, int RL);
 
 
@@ -114,10 +114,10 @@ public:
 
 */
 
-MSVCDLC      SingleTest::SingleTest();
-MSVCDLC      SingleTest::SingleTest(const SingleTest& ST);
-MSVCDLC      SingleTest::~SingleTest();
-MSVCDLL void SingleTest::operator= (const SingleTest& ST);
+MSVCDLC      SingleTest();
+MSVCDLC      SingleTest(const SingleTest& ST);
+MSVCDLC      ~SingleTest();
+MSVCDLL void operator= (const SingleTest& ST);
 
 // ____________________________________________________________________________
 // B                        SINGLE TEST ACCESS FUNCTIONS
@@ -140,18 +140,18 @@ MSVCDLL void SingleTest::operator= (const SingleTest& ST);
    Note that none of these function will run the test. They only allow users
    to access the current test parameters.                                    */
 
-MSVCDLL const std::string& SingleTest::name()      const;		// Get name
-MSVCDLL       int          SingleTest::status()    const;		// Get status
-MSVCDLL const std::string& SingleTest::describe()  const;		// Get descript
-MSVCDLL       int          SingleTest::runlevel()  const;		// Get runlev
+MSVCDLL const std::string& name()      const;		// Get name
+MSVCDLL       int          status()    const;		// Get status
+MSVCDLL const std::string& describe()  const;		// Get descript
+MSVCDLL       int          runlevel()  const;		// Get runlev
   typedef int GTestFct(std::ostream&, int);	// Simplify code (hopefully)
-MSVCDLL       GTestFct*    SingleTest::test()     const;		// Test function (pointer to)
+MSVCDLL       GTestFct*    test()     const;		// Test function (pointer to)
 
-MSVCDLL void SingleTest::name(const std::string& Name);			// Set name
-MSVCDLL void SingleTest::status(    int          Status);		// Set status
-MSVCDLL void SingleTest::describe(const std::string& D);		// Set decript
-MSVCDLL void SingleTest::runlevel(  int          RunLev);		// Set runlevel
-MSVCDLL void SingleTest::test(int (*T)(std::ostream& O, int RF));	// Set test
+MSVCDLL void name(const std::string& Name);			// Set name
+MSVCDLL void status(    int          Status);		// Set status
+MSVCDLL void describe(const std::string& D);		// Set decript
+MSVCDLL void runlevel(  int          RunLev);		// Set runlevel
+MSVCDLL void test(int (*T)(std::ostream& O, int RF));	// Set test
 
 // ____________________________________________________________________________
 // C                       SINGLE TEST TESTING FUNCTIONS
@@ -163,12 +163,12 @@ MSVCDLL void SingleTest::test(int (*T)(std::ostream& O, int RF));	// Set test
    status flag is set (default = -1 ==> untested) so that subsequent testing
    within a loop can readily be avoided.                                     */ 
  
-MSVCDLL int SingleTest::runtest(std::ostream&   ostr, int force=1);
-MSVCDLL int SingleTest::RunLevel0(std::ostream& ostr, int force=1);
-MSVCDLL int SingleTest::RunLevel1(std::ostream& ostr, int force=1);
-MSVCDLL int SingleTest::RunLevel2(std::ostream& ostr, int force=1);
-MSVCDLL int SingleTest::RunLevel3(std::ostream& ostr, int force=1);
-MSVCDLL int SingleTest::RunLevel4(std::ostream& ostr, int force=1);
+MSVCDLL int runtest(std::ostream&   ostr, int force=1);
+MSVCDLL int RunLevel0(std::ostream& ostr, int force=1);
+MSVCDLL int RunLevel1(std::ostream& ostr, int force=1);
+MSVCDLL int RunLevel2(std::ostream& ostr, int force=1);
+MSVCDLL int RunLevel3(std::ostream& ostr, int force=1);
+MSVCDLL int RunLevel4(std::ostream& ostr, int force=1);
 
 // ____________________________________________________________________________
 // D                       SINGLE TEST OUTPUT FUNCTIONS
@@ -191,10 +191,10 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const SingleTest& S
    They don't make a lot of sense and aren't really used, it is just that
    some compilers complain if they are not present (MSVC++ for one)          */
 
-MSVCDLL bool SingleTest::operator==(const SingleTest& ST) const;
-MSVCDLL bool SingleTest::operator!=(const SingleTest& ST) const;
-MSVCDLL bool SingleTest::operator< (const SingleTest& ST) const;
-MSVCDLL bool SingleTest::operator> (const SingleTest& ST) const;
+MSVCDLL bool operator==(const SingleTest& ST) const;
+MSVCDLL bool operator!=(const SingleTest& ST) const;
+MSVCDLL bool operator< (const SingleTest& ST) const;
+MSVCDLL bool operator> (const SingleTest& ST) const;
 
 // ____________________________________________________________________________
 // F                       SINGLE TEST OUTPUT FUNCTIONS
@@ -205,9 +205,9 @@ MSVCDLL bool SingleTest::operator> (const SingleTest& ST) const;
    utilized. That is, NO TESTS ARE RUN.  So, any testing should be performed
    prior to calling test output functions.                                   */
 
-MSVCDLL std::ostream& SingleTest::Header(std::ostream& ostr, const std::string& S) const;
-MSVCDLL std::ostream& SingleTest::Header(std::ostream& ostr) const;
-MSVCDLL std::ostream& SingleTest::Result(std::ostream& ostr) const;
+MSVCDLL std::ostream& Header(std::ostream& ostr, const std::string& S) const;
+MSVCDLL std::ostream& Header(std::ostream& ostr) const;
+MSVCDLL std::ostream& Result(std::ostream& ostr) const;
 };
 
 #endif							// SingleTest.h

@@ -79,7 +79,7 @@ volatile void XWinPSetfatality(int eidx, const std::string& pname) const;
 // ii              XWinNMR Parameter File Default Parmameters
 // ____________________________________________________________________________
 
-virtual void XWinPSet::SetDefaults();
+virtual void SetDefaults();
 
 public:
 // ____________________________________________________________________________ 
@@ -92,11 +92,11 @@ public:
    The reading of the associated ASCII parameter file is done in one step,
    so we don't need anything complex.                                        */
 
-XWinPSet::XWinPSet();
-XWinPSet::XWinPSet(const std::string& name);
-XWinPSet::XWinPSet(const XWinPSet& XWP);
-virtual XWinPSet::~XWinPSet();                                                             
-void XWinPSet::operator= (const XWinPSet& XWP);
+XWinPSet();
+XWinPSet(const std::string& name);
+XWinPSet(const XWinPSet& XWP);
+virtual ~XWinPSet();                                                             
+void operator= (const XWinPSet& XWP);
 
 // ____________________________________________________________________________
 // B                  XWinPSet Parameter Access Functions
@@ -109,8 +109,8 @@ void XWinPSet::operator= (const XWinPSet& XWP);
  ---------  ----------------------    ----------   ------------------------
    name     File name as string         order       Stored data byte order   */
 
-virtual std::string XWinPSet::name()   const;	// File name             
-//virtual bool   XWinPSet::order()  const;	// Data byte order 
+virtual std::string name()   const;	// File name             
+//virtual bool   order()  const;	// Data byte order 
 
 // ____________________________________________________________________________
 // C                       XWinPSet Input Functions
@@ -131,12 +131,12 @@ virtual std::string XWinPSet::name()   const;	// File name
                         format so it must be parsed appropriately.
       getPar            Returns parameter found in the parameter set herein  */
  
-bool XWinPSet::readPSet(const std::string& filein, int warn=1);
-bool XWinPSet::readPSet(int warn=1);
-ParameterSet XWinPSet::getPSet() const;
-int XWinPSet::getPar(const std::string& pn, int& val,         int id=0, int wrn=0) const;
-int XWinPSet::getPar(const std::string& pn, double& val,      int id=0, int wrn=0) const;
-int XWinPSet::getPar(const std::string& pn, std::string& val, int id=0, int wrn=0) const;
+bool readPSet(const std::string& filein, int warn=1);
+bool readPSet(int warn=1);
+ParameterSet getPSet() const;
+int getPar(const std::string& pn, int& val,         int id=0, int wrn=0) const;
+int getPar(const std::string& pn, double& val,      int id=0, int wrn=0) const;
+int getPar(const std::string& pn, std::string& val, int id=0, int wrn=0) const;
 
 // ____________________________________________________________________________
 // D                       XWinPSet Output Functions
@@ -159,9 +159,9 @@ friend  std::ostream& operator<< (std::ostream& ostr, const XWinPSet& BruPSet);
     the Bruker parameter values mean.  I just add things as I learn them here
     so that GAMMA output can remind me what all of these parameters are...   */
 
-std::string XWinPSet::FT_modS(int val) const;
-std::string XWinPSet::BYTORDS(int val) const;
-std::string XWinPSet::TDeffS(int val) const;
+std::string FT_modS(int val) const;
+std::string BYTORDS(int val) const;
+std::string TDeffS(int val) const;
 
 
 // ____________________________________________________________________________
@@ -174,20 +174,20 @@ std::string XWinPSet::TDeffS(int val) const;
    That is, the output functions can be used to quickly generate a list in
    two columns that would be seen from "dpp" for example.                    */
 
-int         XWinPSet::brusize(double value) const;
-std::string XWinPSet::brustring(int befdec, int aftdec) const;
-std::string XWinPSet::bruform(double value, int aftdec) const;
-void        XWinPSet::bru8(std::ostream&  ostr, const std::string& label) const;
-void        XWinPSet::bru15(std::ostream& ostr, const std::string& label) const;
+int         brusize(double value) const;
+std::string brustring(int befdec, int aftdec) const;
+std::string bruform(double value, int aftdec) const;
+void        bru8(std::ostream&  ostr, const std::string& label) const;
+void        bru15(std::ostream& ostr, const std::string& label) const;
 
-void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,
+void        bru(std::ostream&   ostr, const std::string& label,
                         int value, const std::string& units, int type=0) const;
-void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,
+void        bru(std::ostream&   ostr, const std::string& label,
                         long value, const std::string& units, int type=0) const;
-void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,
+void        bru(std::ostream&   ostr, const std::string& label,
          const std::string& value, const std::string& units, int type=0) const;
 
-void        XWinPSet::bru(std::ostream&   ostr, const std::string& label,
+void        bru(std::ostream&   ostr, const std::string& label,
  double value, const std::string& units, const std::string& parse, int type) const;
 };
 

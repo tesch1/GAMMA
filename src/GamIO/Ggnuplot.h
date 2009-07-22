@@ -74,7 +74,7 @@ struct GPdat				// Gnuplot info
 
 //  bool   pause;				// Flag for pause after plot
 
-  GPdat::GPdat()
+  GPdat()
     {
     nokey    = 0;			// Keep key plotted
     border   = 1;			// Plot border

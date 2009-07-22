@@ -30,6 +30,7 @@
 #  endif
 
 #include <Floquet/Floq2Op.h>		// Include the header file
+#include <stdlib.h>
 
 // ----------------------------------------------------------------------
 // ------------------------ PRIVATE FUNCTIONS ---------------------------

@@ -41,6 +41,7 @@
 #include <BWRRelax/relaxRF.h>		 // Include relaxation with rf
 #include <HSLib/HSham.h>		// Include NMR Hamiltonians
 #include <Level1/nmr_tensor.h>		// Include NMR tensors
+#include <stdlib.h>
 
 const double mu0d4pi = 1.0e-7;		// mu0/4p (J-sec C  m  )
 const double pi2 = 6.283185307;		// 2*pi

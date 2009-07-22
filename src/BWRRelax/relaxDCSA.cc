@@ -40,6 +40,7 @@
 
 #include <BWRRelax/relaxDCSA.h>		// Include header
 #include <Level1/nmr_tensor.h>		// Inlcude common MR spin tensors
+#include <stdlib.h>
 
 
 // ______________________________________________________________________

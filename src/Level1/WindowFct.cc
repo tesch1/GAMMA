@@ -36,6 +36,8 @@
 #include <Matrix/row_vector.h>		// Include row vectors
 #include <Basics/Gconstants.h>		// Include constant PI
 #include <cmath>			// Include Bessel functions (j0)
+#include <stdlib.h>
+
 
 using std::cout;			// Using libstdc++ standard output
 

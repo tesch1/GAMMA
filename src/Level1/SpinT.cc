@@ -32,6 +32,7 @@
 #include <Level1/SpinT.h>		// Include our own interface
 #include <HSLib/SpinOpCmp.h>		// Include composite spin operators
 #include <Level1/Wigner.h>		// Include Wigner rotations
+#include <stdlib.h>
 
 #ifdef PYGAMMA				// If we are compiling PyGAMMA
   #include <sstream>			//   Include string stream for Python

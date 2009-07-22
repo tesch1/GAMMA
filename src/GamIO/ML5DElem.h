@@ -68,9 +68,9 @@ class MatLab5DE
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLab5DE::MLDE5error(int eidx, int noret=1);
-void MatLab5DE::MLDE5error(int eidx, const std::string& pname, int noret=1);
-volatile void MatLab5DE::MLDE5fatality(int eidx);
+void MLDE5error(int eidx, int noret=1);
+void MLDE5error(int eidx, const std::string& pname, int noret=1);
+volatile void MLDE5fatality(int eidx);
 
 
 //public:	/* Keeping Everything Private, Allow MatLabFile Use!!! */
@@ -85,15 +85,15 @@ volatile void MatLab5DE::MLDE5fatality(int eidx);
 // ____________________________________________________________________________
  
 
-MatLab5DE::MatLab5DE();
-MatLab5DE::MatLab5DE(const matrix& mx, const std::string& Name, int cmplx=1);
-virtual MatLab5DE::~MatLab5DE();
+MatLab5DE();
+MatLab5DE(const matrix& mx, const std::string& Name, int cmplx=1);
+virtual ~MatLab5DE();
 
 // ____________________________________________________________________________
 // B            MATLAB MAT 5 Data Element Access Functions
 // ____________________________________________________________________________
  
-void MatLab5DE::whos(std::ostream& ostr, std::fstream& fp, int bigend);
+void whos(std::ostream& ostr, std::fstream& fp, int bigend);
  
         // Input                ML5DE   : MAT version 5 data element (this)
         //                      ostr    : An output stream
@@ -108,9 +108,9 @@ void MatLab5DE::whos(std::ostream& ostr, std::fstream& fp, int bigend);
         // Note                         : The file stream position will be
         //                                advanced to the end of the element
  
-int    MatLab5DE::Size    (std::fstream& fp, int bigend);
-std::string MatLab5DE::Name    (std::fstream& fp, int bigend);
-void   MatLab5DE::skip    (std::fstream& fp, int bigend);
+int    Size    (std::fstream& fp, int bigend);
+std::string Name    (std::fstream& fp, int bigend);
+void   skip    (std::fstream& fp, int bigend);
 
 
 // ____________________________________________________________________________
@@ -141,17 +141,17 @@ void   MatLab5DE::skip    (std::fstream& fp, int bigend);
                                           data element is written &
                                           written at data element start.      */ 
  
-int MatLab5DE::write(std::fstream& fp) const;
-int MatLab5DE::write(std::fstream& fp,const matrix& mx,    const std::string& AN) const;
-int MatLab5DE::write(std::fstream& fp,const row_vector& rv,const std::string& AN) const;
-int MatLab5DE::write(std::fstream& fp,const col_vector& cv,const std::string& AN) const;
+int write(std::fstream& fp) const;
+int write(std::fstream& fp,const matrix& mx,    const std::string& AN) const;
+int write(std::fstream& fp,const row_vector& rv,const std::string& AN) const;
+int write(std::fstream& fp,const col_vector& cv,const std::string& AN) const;
  
  
 /* These are the functions which will return the number of bytes that are
    written upon output a data element in MATLAB ".mat" binary format, Ver. 5 */
  
-int MatLab5DE::DataSize(const matrix& mx,const std::string& name,int cmplx=0) const;
-int MatLab5DE::Size(const matrix& mx, const std::string& name, int cmplx=0) const;
+int DataSize(const matrix& mx,const std::string& name,int cmplx=0) const;
+int Size(const matrix& mx, const std::string& name, int cmplx=0) const;
 
 // ____________________________________________________________________________
 // D          MATLAB MAT 5 Data Element Binary Input Functions
@@ -175,8 +175,8 @@ int MatLab5DE::Size(const matrix& mx, const std::string& name, int cmplx=0) cons
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-int MatLab5DE::read(std::fstream& fp, int bigend, int warn=1);
-matrix MatLab5DE::GetMatrix(std::fstream& fp, int bigend, int warn=1);
+int read(std::fstream& fp, int bigend, int warn=1);
+matrix GetMatrix(std::fstream& fp, int bigend, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -184,7 +184,7 @@ matrix MatLab5DE::GetMatrix(std::fstream& fp, int bigend, int warn=1);
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab5DE::print(std::ostream& ostr) const;
+void print(std::ostream& ostr) const;
  
         // Input                ML5DE	: MAT version 5 data element (this)
         //                      ostr    : An output stream
@@ -210,7 +210,7 @@ friend std::ostream& operator<< (std::ostream& ostr, const MatLab5DE& ML5DE);
    in ASCII to an output stream.  Thus it is easy to see most of what is
    being written, at least in principle.....                                 */
                                             
-void MatLab5DE::print(std::ostream& ostr,
+void print(std::ostream& ostr,
                            const matrix& mx, const std::string& N, int cmplx) const;
 };
 

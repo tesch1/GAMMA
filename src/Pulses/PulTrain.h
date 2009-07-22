@@ -95,7 +95,7 @@ MSVCDLC PulTrain();
 	///F_list 	PulTrain- Constructor
 
  
-MSVCDLC PulTrain::PulTrain(const PulComposite& CPul, std::string N="");
+MSVCDLC PulTrain(const PulComposite& CPul, std::string N="");
  
         // Input        CPul    : Composite pulse
 	//		N	: Composite pulse name
@@ -104,7 +104,7 @@ MSVCDLC PulTrain::PulTrain(const PulComposite& CPul, std::string N="");
         //                        or supercycles in the train 
  
 
-MSVCDLC PulTrain::PulTrain(const PulComposite& CPul, const PulCycle& Cyc, std::string N="");
+MSVCDLC PulTrain(const PulComposite& CPul, const PulCycle& Cyc, std::string N="");
 
         // Input        CPul    : Composite pulse
 	//		Cyc	: Pulse cycle
@@ -112,7 +112,7 @@ MSVCDLC PulTrain::PulTrain(const PulComposite& CPul, const PulCycle& Cyc, std::s
         // Output       PT	: Pulse train (this) constructed
 
 
-MSVCDLC PulTrain::PulTrain(const PulComposite& CPul, const PulCycle& Cyc,
+MSVCDLC PulTrain(const PulComposite& CPul, const PulCycle& Cyc,
                                    const PulSupCycle& SCyc, std::string N="");
 
         // Input        CPul    : Composite pulse
@@ -122,7 +122,7 @@ MSVCDLC PulTrain::PulTrain(const PulComposite& CPul, const PulCycle& Cyc,
         // Output       PT      : Pulse train (this) constructed
 
 
-MSVCDLC PulTrain::PulTrain(const PulTrain& PT1);
+MSVCDLC PulTrain(const PulTrain& PT1);
 
 	// Input	PT1  : Pulse train
 	// None		PT   : Pulse train (this) constructed from PT1
@@ -152,7 +152,7 @@ MSVCDLL void operator = (const PulTrain& PT1);
    in the pulse cycle.  The full cycle is cycled through with phase changes
    specified in the pulse supercycle.                                        */
 
-MSVCDLL HSprop PulTrain::GetU(double td);
+MSVCDLL HSprop GetU(double td);
 
         // Input                PT      : A pulse train (this)
         //                      td      : A delay time(sec)
@@ -165,7 +165,7 @@ MSVCDLL HSprop PulTrain::GetU(double td);
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& PulTrain::info(std::ostream& ostr, double td) const;
+MSVCDLL std::ostream& info(std::ostream& ostr, double td) const;
 
         // Input        PT    : An pultrain (this)
         //              td    : A delay time(sec)
@@ -175,7 +175,7 @@ MSVCDLL std::ostream& PulTrain::info(std::ostream& ostr, double td) const;
 
 
 
-MSVCDLL std::ostream& PulTrain::info(std::ostream& ostr, double td, int npts) const;
+MSVCDLL std::ostream& info(std::ostream& ostr, double td, int npts) const;
 
         // Input        PT    : An pultrain (this)
         //              td    : A delay time(sec)
@@ -224,7 +224,7 @@ MSVCDLL row_vector FIDR(int npts, double td, gen_op &D, gen_op& sigmap);
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& PulTrain::printEvolve(std::ostream &ostr, double td, int full=0) const;
+MSVCDLL std::ostream& printEvolve(std::ostream &ostr, double td, int full=0) const;
 
         // Input                PT      : Pulse Train
         //                      td      : Evolution time
@@ -234,7 +234,7 @@ MSVCDLL std::ostream& PulTrain::printEvolve(std::ostream &ostr, double td, int f
         //                                is sent to the output stream
 
 
-MSVCDLL std::ostream& PulTrain::printCycle(std::ostream &ostr, int full=0) const;
+MSVCDLL std::ostream& printCycle(std::ostream &ostr, int full=0) const;
 
         // Input                PT    : Pulse Train
         //                      ostr  : Output stream
@@ -243,7 +243,7 @@ MSVCDLL std::ostream& PulTrain::printCycle(std::ostream &ostr, int full=0) const
         //                              to the output stream
 
  
-MSVCDLL std::ostream& PulTrain::printSCycle(std::ostream &ostr, int full=0) const;
+MSVCDLL std::ostream& printSCycle(std::ostream &ostr, int full=0) const;
 
         // Input                PT    : Pulse Train
         //                      ostr  : Output stream

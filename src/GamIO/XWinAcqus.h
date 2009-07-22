@@ -97,11 +97,11 @@ public:
    constructor specified.  The reading and writing of the associated ASCII
    parameter file is done in one step, so we don't need anything complex.    */
 
-        XWinAcqus::XWinAcqus();
-        XWinAcqus::XWinAcqus(const std::string& name);
-        XWinAcqus::XWinAcqus(const XWinAcqus& XWA);
-virtual XWinAcqus::~XWinAcqus();
-void    XWinAcqus::operator= (const XWinAcqus& XWA);
+        XWinAcqus();
+        XWinAcqus(const std::string& name);
+        XWinAcqus(const XWinAcqus& XWA);
+virtual ~XWinAcqus();
+void    operator= (const XWinAcqus& XWA);
 
 // ____________________________________________________________________________
 // B                  XWinAcqus Parameter Access Functions
@@ -113,60 +113,60 @@ void    XWinAcqus::operator= (const XWinAcqus& XWA);
 
                      INHERITED FROM CLASS XWinAcqPar
  
-int    XWinAcqus::acqname()  const;	// File name (short)
-double XWinAcqus::field()    const;	// Field strength (T)
-double XWinAcqus::AQ()	     const;	// Acquisition length (sec)
-int    XWinAcqus::AQ_mod()   const;	// Acquisition mode
-double XWinAcqus::BF1()      const;	// Base Spectrometer freq.
-double XWinAcqus::BF2()      const;	// Base Spectrometer freq.
-int    XWinAcqus::BYTORDA()  const;	// Binary byte order
-int    XWinAcqus::DS()       const;	// Number of dummy scans
-string XWinAcqus::EXP()      const;	// Experiment name
-double XWinAcqus::IN(int i)  const;	// Dwell time
-string XWinAcqus::NAME()     const;     // Full File Name
-int    XWinAcqus::NS()       const;	// Number of scans
-string XWinAcqus::NUC(int i) const;	// Nucleus for a channel
-string XWinAcqus::NUCLEUS()  const;	// Base nucleus
-double XWinAcqus::O1()       const;	// Offset freq.
-double XWinAcqus::O2()       const;	// Offset freq.
-int    XWinAcqus::PARMODE()  const;	// Acquisiiton dimension
-string XWinAcqus::PULPROG()  const;	// Pulse program
-double XWinAcqus::SFO1()     const;	// Spectrometer freq.
-double XWinAcqus::SFO2()     const;	// Spectrometer freq.
-double XWinAcqus::SFO3()     const;	// Spectrometer freq.
-string XWinAcqus::SOLVENT()  const;	// Solvent
-double XWinAcqus::SW()       const;	// Spectral width (PPM)
-double XWinAcqus::SW_h()     const;	// Spectral width (Hz)
-int    XWinAcqus::TD()       const;	// Total points
-double XWinAcqus::TE()       const;	// Sample temperature
+int    acqname()  const;	// File name (short)
+double field()    const;	// Field strength (T)
+double AQ()	     const;	// Acquisition length (sec)
+int    AQ_mod()   const;	// Acquisition mode
+double BF1()      const;	// Base Spectrometer freq.
+double BF2()      const;	// Base Spectrometer freq.
+int    BYTORDA()  const;	// Binary byte order
+int    DS()       const;	// Number of dummy scans
+string EXP()      const;	// Experiment name
+double IN(int i)  const;	// Dwell time
+string NAME()     const;     // Full File Name
+int    NS()       const;	// Number of scans
+string NUC(int i) const;	// Nucleus for a channel
+string NUCLEUS()  const;	// Base nucleus
+double O1()       const;	// Offset freq.
+double O2()       const;	// Offset freq.
+int    PARMODE()  const;	// Acquisiiton dimension
+string PULPROG()  const;	// Pulse program
+double SFO1()     const;	// Spectrometer freq.
+double SFO2()     const;	// Spectrometer freq.
+double SFO3()     const;	// Spectrometer freq.
+string SOLVENT()  const;	// Solvent
+double SW()       const;	// Spectral width (PPM)
+double SW_h()     const;	// Spectral width (Hz)
+int    TD()       const;	// Total points
+double TE()       const;	// Sample temperature
 
-void XWinAcqus::AQ_mod(int aqmo);
-void XWinAcqus::BF1(double bf);
-void XWinAcqus::BF2(double bf);
-void XWinAcqus::BYTORDA(int bo);
-int  XWinAcqus::D(int idx, double tsec, int warn=2);
-void XWinAcqus::DS(int ds);
-void XWinAcqus::EXP(const string& exp);
-void XWinAcqus::IN(int i, double in);
-void XWinAcqus::O1(double of);
-void XWinAcqus::O2(double of);
-void XWinAcqus::NAME(const string& name);
-void XWinAcqus::NS(int ns);
-void XWinAcqus::NUC(int i, const string& N);
-void XWinAcqus::NUCLEI(int channel, const string& I, double O, int warn=2);
-void XWinAcqus::NUCLEUS(const string& I);
-int  XWinAcqus::P(int idx, double tp, int warn=2);
-void XWinAcqus::PARMODE(int pm);
-void XWinAcqus::PULPROG(const string& P);
-void XWinAcqus::SFO1(double sf);
-void XWinAcqus::SFO2(double sf);
-void XWinAcqus::SFO3(double sf);
-void XWinAcqus::SFO(double sf, int i);
-void XWinAcqus::SOLVENT(const string& S);
-void XWinAcqus::SW(double sw);
-void XWinAcqus::SW_h(double sw);
-void XWinAcqus::TE(double te);
-void XWinAcqus::TD(int npts);                                                */
+void AQ_mod(int aqmo);
+void BF1(double bf);
+void BF2(double bf);
+void BYTORDA(int bo);
+int  D(int idx, double tsec, int warn=2);
+void DS(int ds);
+void EXP(const string& exp);
+void IN(int i, double in);
+void O1(double of);
+void O2(double of);
+void NAME(const string& name);
+void NS(int ns);
+void NUC(int i, const string& N);
+void NUCLEI(int channel, const string& I, double O, int warn=2);
+void NUCLEUS(const string& I);
+int  P(int idx, double tp, int warn=2);
+void PARMODE(int pm);
+void PULPROG(const string& P);
+void SFO1(double sf);
+void SFO2(double sf);
+void SFO3(double sf);
+void SFO(double sf, int i);
+void SOLVENT(const string& S);
+void SW(double sw);
+void SW_h(double sw);
+void TE(double te);
+void TD(int npts);                                                */
  
 // ____________________________________________________________________________
 // C                       XWinAcqus Input Functions
@@ -189,9 +189,9 @@ void XWinAcqus::TD(int npts);                                                */
 
                      INHERITED FROM CLASS XWinAcqPar
  
-virtual bool XWinAcqus::readAPar(const string& filein, int warn=1);
-virtual bool XWinAcqus::readPar(int warn=1);
-vittual bool XWinAcqus::parsePSet(int warn=1);                               */
+virtual bool readAPar(const string& filein, int warn=1);
+virtual bool readPar(int warn=1);
+vittual bool parsePSet(int warn=1);                               */
 
  
 // ____________________________________________________________________________
@@ -203,8 +203,8 @@ vittual bool XWinAcqus::parsePSet(int warn=1);                               */
 
                        INHERITED FROM CLASS XWinAcqPar
 
-int XWinAcqus::writeAPar(const string& name, int warn=2);
-int XWinAcqus::writeAPar(int warn=2) const;                                  */
+int writeAPar(const string& name, int warn=2);
+int writeAPar(int warn=2) const;                                  */
 
 // ____________________________________________________________________________
 // E                 XWinAcqus Standard Output Functions
@@ -215,7 +215,7 @@ int XWinAcqus::writeAPar(int warn=2) const;                                  */
    users can just glance at acqus parameters or store then in a small file.
 
         ostream& printPset(ostream& ostr) const;	INHERITED            */
-virtual std::ostream& XWinAcqus::print(std::ostream& ostr, int full=0, int hdr=1) const;
+virtual std::ostream& print(std::ostream& ostr, int full=0, int hdr=1) const;
 friend  std::ostream& operator<< (std::ostream& ostr, const XWinAcqus& AcqPar);
 
 // ____________________________________________________________________________
@@ -228,7 +228,7 @@ friend  std::ostream& operator<< (std::ostream& ostr, const XWinAcqus& AcqPar);
    as the Bruker output because I'm bored and its often a mystery how they
    get some of their values.....                                             */
 
-std::ostream& XWinAcqus::dpa(std::ostream& ostr) const;
+std::ostream& dpa(std::ostream& ostr) const;
 virtual std::ostream& printGAMMA(std::ostream& ostr) const;
 };
 

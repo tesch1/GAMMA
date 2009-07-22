@@ -35,6 +35,7 @@
 #    pragma implementation		// This is the implementation
 #  endif
 
+#include <stdlib.h>
 #include <GamIO/Gascii.h>		// Include the interface
 #include <string>			// Know about libstc++ strings
 #include <Basics/StringCut.h>		// Know about string cutting

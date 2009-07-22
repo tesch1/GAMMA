@@ -37,6 +37,7 @@
 #include <BWRRelax/relaxRF.h>		// Include rf-field functions
 #include <Level1/nmr_tensor.h>		// Include commont spin tensors
 #include <LSLib/sys_dynamic.h>		// Include aniostropic systems
+#include <stdlib.h>
 
 // ______________________________________________________________________
 // *********** Quadrupole & CSA Cross Relaxation Superoperators *********

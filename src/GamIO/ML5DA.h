@@ -59,9 +59,9 @@ class MatLab5DA : MatLab5SE
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLab5DA::MLDA5error(int eidx, int noret=1);
-void MatLab5DA::MLDA5error(int eidx, const std::string& pname, int noret=1);
-volatile void MatLab5DA::MLDA5fatality(int eidx);
+void MLDA5error(int eidx, int noret=1);
+void MLDA5error(int eidx, const std::string& pname, int noret=1);
+volatile void MLDA5fatality(int eidx);
 
 
 public:
@@ -76,8 +76,8 @@ public:
 // ____________________________________________________________________________
  
 
-MatLab5DA::MatLab5DA();
-MatLab5DA::MatLab5DA(const matrix& mx);
+MatLab5DA();
+MatLab5DA(const matrix& mx);
 
         // Input                ML5DA   : MAT version 5 dimensions array (this)
         //                      mx      : A GAMMA matrix
@@ -91,14 +91,14 @@ MatLab5DA::MatLab5DA(const matrix& mx);
         //                                & output size is eight bytes as is
         //                                indicated in the preceding tag
 
-virtual MatLab5DA::~MatLab5DA();
+virtual ~MatLab5DA();
 
 // ____________________________________________________________________________
 // B         MATLAB MAT 5 Dimensions Array Sub-Element Access Functions
 // ____________________________________________________________________________
 
-int MatLab5DA::Dims()     const;
-int MatLab5DA::Dim(int i) const;
+int Dims()     const;
+int Dim(int i) const;
  
 // ____________________________________________________________________________
 // C     MATLAB MAT 5 Dimensions Array Sub-Element Binary Output Functions
@@ -126,16 +126,16 @@ int MatLab5DA::Dim(int i) const;
                 Note                    : No care taken herein to insure the
                                           sub-element is properly written.   */
   
-int MatLab5DA::write(std::fstream& fp)                       const;
-int MatLab5DA::write(std::fstream& fp, const matrix& mx)     const;
-int MatLab5DA::write(std::fstream& fp, const row_vector& rv) const;
-int MatLab5DA::write(std::fstream& fp, const col_vector& cv) const;
+int write(std::fstream& fp)                       const;
+int write(std::fstream& fp, const matrix& mx)     const;
+int write(std::fstream& fp, const row_vector& rv) const;
+int write(std::fstream& fp, const col_vector& cv) const;
 
   
 /* These are the functions which will return the number of bytes that are  
    written upon output this sub-element in MATLAB ".mat" binary format, V5   */ 
   
-int MatLab5DA::Size(const matrix& mx) const;
+int Size(const matrix& mx) const;
 
 
 // ____________________________________________________________________________
@@ -160,7 +160,7 @@ int MatLab5DA::Size(const matrix& mx) const;
                                           tag is read from the top of a data
                                           element (as it should be in MATLAB)*/
 
-int MatLab5DA::read(std::fstream& fp, int bigend, int warn=1);
+int read(std::fstream& fp, int bigend, int warn=1);
 
  
 // ____________________________________________________________________________
@@ -168,7 +168,7 @@ int MatLab5DA::read(std::fstream& fp, int bigend, int warn=1);
 // ____________________________________________________________________________
 
                                                                                 
-void MatLab5DA::print(std::ostream& ostr) const;
+void print(std::ostream& ostr) const;
  
         // Input                ML5DA	: MAT version 5 array flags (this)
         //                      ostr    : An output stream

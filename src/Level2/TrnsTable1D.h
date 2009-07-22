@@ -97,16 +97,16 @@ class TTable1D: private matrix
 	//		eidx  : An error index
         // Output       void  : Error Message Output, Execution Stopped
  
-         void TTable1D::TTaberror(int    eidx,                           int noret=0) const;
-         void TTable1D::TTaberror(int    eidx, const std::string& pname, int noret=0) const;
-volatile void TTable1D::TTabfatality(int eidx=0)                                      const;
-volatile void TTable1D::TTabfatality(int eidx, const std::string& pname)              const;
+         void TTaberror(int    eidx,                           int noret=0) const;
+         void TTaberror(int    eidx, const std::string& pname, int noret=0) const;
+volatile void TTabfatality(int eidx=0)                                      const;
+volatile void TTabfatality(int eidx, const std::string& pname)              const;
  
 // ____________________________________________________________________________
 // ii              CLASS TRANSITIONS TABLE 1D CHECKING FUNCTIONS
 // ____________________________________________________________________________
 
-int TTable1D::CheckType(int typ, int warn=0) const;
+int CheckType(int typ, int warn=0) const;
 
 	// Input	TTab1D: A transitions table (this)
 	//		typ   : A frequency output type
@@ -120,13 +120,13 @@ int TTable1D::CheckType(int typ, int warn=0) const;
 // iii              CLASS TRANSITIONS TABLE COMMON CODE
 // ____________________________________________________________________________
 
-void TTable1D::setDefaults();
+void setDefaults();
 
 	// Input	TTab1D: A transitions table (this)
 	// Output	void  : This sets the default internals
 
 
-void TTable1D::copySettings(const TTable1D& TTab1);
+void copySettings(const TTable1D& TTab1);
 
 	// Input	TTab1D: A transitions table (this)
 	//		TTab1 : A second transitions table
@@ -141,7 +141,7 @@ void TTable1D::copySettings(const TTable1D& TTab1);
    they make assumptions about the order in which the table is set up, the
    functions MUST be private, their misuse may make an inconsistent table.   */
 
-int TTable1D::SetNTrans(const ParameterSet& pset, int warn=2);
+int SetNTrans(const ParameterSet& pset, int warn=2);
  
         // Input                TTab1D  : A transitions table (this)
         //                      pset    : A parameter set
@@ -152,7 +152,7 @@ int TTable1D::SetNTrans(const ParameterSet& pset, int warn=2);
         //                                set from parameters in pset
 
 
-int TTable1D::SetConv(const ParameterSet& pset, int warn=0);
+int SetConv(const ParameterSet& pset, int warn=0);
 
         // Input                TTab1D  : A transitions table (this)
         //                      pset    : A parameter set
@@ -164,7 +164,7 @@ int TTable1D::SetConv(const ParameterSet& pset, int warn=0);
         //                                parameters in pset
 
 
-double TTable1D::GetFreq(const ParameterSet& pset, int& idx, int warn=1);
+double GetFreq(const ParameterSet& pset, int& idx, int warn=1);
 
         // Input                TTab1D  : A transitions table (this)
         //                      pset    : A parameter set
@@ -177,7 +177,7 @@ double TTable1D::GetFreq(const ParameterSet& pset, int& idx, int warn=1);
 	// Note				: Return idx is -1 if failure
 
 
-double TTable1D::GetLWR2T2(const ParameterSet& pset, int idx, int warn=0);
+double GetLWR2T2(const ParameterSet& pset, int idx, int warn=0);
 
         // Input                TTab1D  : A transitions table (this)
         //                      pset    : A parameter set
@@ -189,7 +189,7 @@ double TTable1D::GetLWR2T2(const ParameterSet& pset, int idx, int warn=0);
         // Output               R       : Table transition idx rate
 
 
-double TTable1D::GetPhase(const ParameterSet& pset, int idx, int warn=0);
+double GetPhase(const ParameterSet& pset, int idx, int warn=0);
 
         // Input                TTab1D  : A transitions table (this)
         //                      pset    : A parameter set
@@ -201,7 +201,7 @@ double TTable1D::GetPhase(const ParameterSet& pset, int idx, int warn=0);
         // Output               Phi     : Table transition idx phase
 
 
-double TTable1D::GetIntensity(const ParameterSet& pset, int idx, int warn=1);
+double GetIntensity(const ParameterSet& pset, int idx, int warn=1);
 
         // Input                TTab1D  : A transitions table (this)
         //                      pset    : A parameter set
@@ -213,7 +213,7 @@ double TTable1D::GetIntensity(const ParameterSet& pset, int idx, int warn=1);
         // Output               Inorm   : Table transition idx intensity
 
 
-int TTable1D::SetTrans(const ParameterSet& pset, int warn=2);
+int SetTrans(const ParameterSet& pset, int warn=2);
 
         // Input                TTab1D  : A transitions table (this)
         //                      pset    : A parameter set
@@ -245,7 +245,7 @@ int TTable1D::SetTrans(const ParameterSet& pset, int warn=2);
 
                                                            */
 
-std::vector<int> TTable1D::ExpCutoffs(double tinc, int N, double C) const;
+std::vector<int> ExpCutoffs(double tinc, int N, double C) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -271,12 +271,12 @@ std::vector<int> TTable1D::ExpCutoffs(double tinc, int N, double C) const;
                   mx               Table directly from nx2 complex array
                  TTab              Table replicating the input table         */
 
-MSVCDLC      TTable1D::TTable1D();
-MSVCDLC      TTable1D::TTable1D(const matrix& mx);
-MSVCDLC      TTable1D::TTable1D(const matrix& mx, int warn);
-MSVCDLC      TTable1D::TTable1D(const TTable1D& TTab1);
-MSVCDLC      TTable1D::~TTable1D();
-MSVCDLL void TTable1D::operator = (const TTable1D& TTab1);
+MSVCDLC      TTable1D();
+MSVCDLC      TTable1D(const matrix& mx);
+MSVCDLC      TTable1D(const matrix& mx, int warn);
+MSVCDLC      TTable1D(const TTable1D& TTab1);
+MSVCDLC      ~TTable1D();
+MSVCDLL void operator = (const TTable1D& TTab1);
 
 
 // ____________________________________________________________________________ 
@@ -310,12 +310,12 @@ MSVCDLL void TTable1D::operator = (const TTable1D& TTab1);
 	   Output BC		void	: All transitions havign frequencies
 					  within 0+/-res will be removed     */
  
-MSVCDLL double TTable1D::center(bool wa=true);
-MSVCDLL void   TTable1D::offset(double F, int inHz=1);
-MSVCDLL void   TTable1D::offset(double F, int tr, int inHz);
-MSVCDLL void   TTable1D::FRscale(double Fscf);
-MSVCDLL void   TTable1D::FRscale(double Fscf, int tr);
-MSVCDLL void   TTable1D::BC(double res=-1.0);
+MSVCDLL double center(bool wa=true);
+MSVCDLL void   offset(double F, int inHz=1);
+MSVCDLL void   offset(double F, int tr, int inHz);
+MSVCDLL void   FRscale(double Fscf);
+MSVCDLL void   FRscale(double Fscf, int tr);
+MSVCDLL void   BC(double res=-1.0);
 
 // __________________________ Intensity Alterations ___________________________
 
@@ -324,11 +324,11 @@ MSVCDLL void   TTable1D::BC(double res=-1.0);
 	// Output		void	: The transition intensities are all
 	//				  adjusted as <i|mx|1> *= Iscf
  
-MSVCDLL void TTable1D::Iscale(double         Iscf);
-MSVCDLL void TTable1D::Iscale(double         Iscf, int tr);
-MSVCDLL void TTable1D::Iscale(const complex& Iscf);
-MSVCDLL void TTable1D::Iscale(const complex& Iscf, int tr);
-MSVCDLL void TTable1D::Iremove(double        dcut=-1.0);
+MSVCDLL void Iscale(double         Iscf);
+MSVCDLL void Iscale(double         Iscf, int tr);
+MSVCDLL void Iscale(const complex& Iscf);
+MSVCDLL void Iscale(const complex& Iscf, int tr);
+MSVCDLL void Iremove(double        dcut=-1.0);
 
 // __________________________ Linewidth Alterations ___________________________
 
@@ -341,12 +341,12 @@ MSVCDLL void TTable1D::Iremove(double        dcut=-1.0);
 	// Note				: Negative linewidths are not allowed,
 
 
-MSVCDLL void TTable1D::broaden(double LWR, int inHz=1);
-MSVCDLL void TTable1D::broaden(double LWR, int tr, int inHz);
+MSVCDLL void broaden(double LWR, int inHz=1);
+MSVCDLL void broaden(double LWR, int tr, int inHz);
 
 // __________________________ Resolution Alterations __________________________
 
-MSVCDLL void TTable1D::resolution(double res);
+MSVCDLL void resolution(double res);
 
 // ____________________________________________________________________________
 // C                    Time Domain Spectra Generation
@@ -376,10 +376,10 @@ MSVCDLL void TTable1D::resolution(double res);
 	// Note		      : The input time increment is adjusted to
 	//			account for "Hz" output.
 
-MSVCDLL row_vector              TTable1D::T(int npts,         double tinc) const;
-MSVCDLL void                    TTable1D::T(row_vector& data, double tinc) const;
-MSVCDLL std::vector<row_vector> TTable1D::Ts(int npts,        double tinc) const;
-MSVCDLL std::vector<int>        TTable1D::TCutoffs(int npts,  double tinc) const;
+MSVCDLL row_vector              T(int npts,         double tinc) const;
+MSVCDLL void                    T(row_vector& data, double tinc) const;
+MSVCDLL std::vector<row_vector> Ts(int npts,        double tinc) const;
+MSVCDLL std::vector<int>        TCutoffs(int npts,  double tinc) const;
 
 // ____________________________________________________________________________ 
 // D                        Frequency Domain Spectra
@@ -421,9 +421,9 @@ MSVCDLL std::vector<int>        TTable1D::TCutoffs(int npts,  double tinc) const
 	// Note			: Users must insure data is first zeroed!
 
 
-MSVCDLL row_vector              TTable1D::F(int npts,        double Fst,double Ffi) const;
-MSVCDLL void                    TTable1D::F(row_vector& data,double Fst,double Ffi) const;
-MSVCDLL std::vector<row_vector> TTable1D::Fs(int npts,       double Fst,double Ffi) const;
+MSVCDLL row_vector              F(int npts,        double Fst,double Ffi) const;
+MSVCDLL void                    F(row_vector& data,double Fst,double Ffi) const;
+MSVCDLL std::vector<row_vector> Fs(int npts,       double Fst,double Ffi) const;
 
 // ____________________________________________________________________________ 
 // E             Frequency Domain Spectra In Derivative Mode
@@ -459,8 +459,8 @@ MSVCDLL std::vector<row_vector> TTable1D::Fs(int npts,       double Fst,double F
 	// Note		      : Users must insure data is first zeroed!
 
 
-MSVCDLL row_vector TTable1D::FD(int N,            double fstart, double fend) const;
-MSVCDLL void       TTable1D::FD(row_vector& data, double fstart, double fend) const;
+MSVCDLL row_vector FD(int N,            double fstart, double fend) const;
+MSVCDLL void       FD(row_vector& data, double fstart, double fend) const;
 
 // ____________________________________________________________________________
 // F                            PHASE CORRECTION
@@ -531,8 +531,8 @@ MSVCDLL void       TTable1D::FD(row_vector& data, double fstart, double fend) co
    where Wpivot is the pivot frequency where no 1st order phase correction
    is applied.                                                               */
 
-MSVCDLL complex TTable1D::pcorrect(double& w0,    double w1, int order);
-MSVCDLL void    TTable1D::pcorrect(double Wpivot, complex& P);
+MSVCDLL complex pcorrect(double& w0,    double w1, int order);
+MSVCDLL void    pcorrect(double Wpivot, complex& P);
 
 // ____________________________________________________________________________ 
 // G            CLASS TRANSITIONS TABLE 1D AUXILIARY FUNCTIONS
@@ -549,10 +549,10 @@ MSVCDLL void    TTable1D::pcorrect(double Wpivot, complex& P);
                   I        complex: The transition intensity 
                   Tr	   vector:  The transiton (in array format)          */
 
-MSVCDLL double     TTable1D::R2(int tr) const;
-MSVCDLL double     TTable1D::Fr(int tr) const;
-MSVCDLL complex    TTable1D::I(int  tr) const;
-MSVCDLL row_vector TTable1D::Tr(int tr) const;
+MSVCDLL double     R2(int tr) const;
+MSVCDLL double     Fr(int tr) const;
+MSVCDLL complex    I(int  tr) const;
+MSVCDLL row_vector Tr(int tr) const;
 
 /* These functions allow users to access values that are global over all
    transitons in the table.  No transition index is required.
@@ -571,18 +571,18 @@ MSVCDLL row_vector TTable1D::Tr(int tr) const;
        Noisemax      double: Largest noise signal present in table spectrum
        mx            matrix: Table as a matrix                               */
 
-MSVCDLL bool   TTable1D::LineWidths()  const;
-MSVCDLL bool   TTable1D::Intensities() const;
-MSVCDLL bool   TTable1D::Phases()      const;
-MSVCDLL int    TTable1D::size()        const;
-MSVCDLL double TTable1D::FRmax()       const;
-MSVCDLL double TTable1D::FRmin()       const;
-MSVCDLL double TTable1D::Tdmin()       const;
-MSVCDLL double TTable1D::LWmax()       const;
-MSVCDLL double TTable1D::LWmin()       const;
-MSVCDLL double TTable1D::Imax()        const;
-MSVCDLL double TTable1D::Noisemax()    const;
-MSVCDLL matrix TTable1D::mx()	       const;
+MSVCDLL bool   LineWidths()  const;
+MSVCDLL bool   Intensities() const;
+MSVCDLL bool   Phases()      const;
+MSVCDLL int    size()        const;
+MSVCDLL double FRmax()       const;
+MSVCDLL double FRmin()       const;
+MSVCDLL double Tdmin()       const;
+MSVCDLL double LWmax()       const;
+MSVCDLL double LWmin()       const;
+MSVCDLL double Imax()        const;
+MSVCDLL double Noisemax()    const;
+MSVCDLL matrix mx()	       const;
 
 MSVCDLL friend TTable1D sum(const TTable1D& TT1, const TTable1D& TT2, double res=1.e-6);
 
@@ -596,7 +596,7 @@ MSVCDLL friend TTable1D sum(const TTable1D& TT1, const TTable1D& TT2, double res
 	//			  summed intensity and weighted frequency
  
 
-MSVCDLL std::vector<int> TTable1D::Sort(int k, int type, int colf) const;
+MSVCDLL std::vector<int> Sort(int k, int type, int colf) const;
 
         // Input	TTab1D	: A transitions table (this)
  	//		k     	: A row/column index to sort
@@ -633,8 +633,8 @@ MSVCDLL std::vector<int> TTable1D::Sort(int k, int type, int colf) const;
            Output               none    : Transitions table filled with
                                           transitions specified in filein    */
  
-MSVCDLL bool TTable1D::readPSet(const std::string& filein, int indx=-1, int warn=2);
-MSVCDLL bool TTable1D::readPSet(const ParameterSet& pset,  int indx,    int warn=2);
+MSVCDLL bool readPSet(const std::string& filein, int indx=-1, int warn=2);
+MSVCDLL bool readPSet(const ParameterSet& pset,  int indx,    int warn=2);
   
 // ____________________________________________________________________________
 // H             CLASS TRANSITIONS TABLE 1D I/O FUNCTIONS
@@ -667,36 +667,36 @@ MSVCDLL bool TTable1D::readPSet(const ParameterSet& pset,  int indx,    int warn
    T2P          setT2print      1: Flag print T2 values /   0 = as needed
    PHP          setPHprint      1: Flag print phases   /    1 = always       */
 
-MSVCDLL void TTable1D::setType(int     typ);
-MSVCDLL void TTable1D::setSort(int     sf);
-MSVCDLL void TTable1D::setConv(double  cf);
-MSVCDLL void TTable1D::setIcut(double  ct);
-MSVCDLL void TTable1D::setInorm(double in=0.0);
-MSVCDLL void TTable1D::setSN(double    S2N);
-MSVCDLL void TTable1D::setHprint(int   hp);
-MSVCDLL void TTable1D::setRprint(int   rp);
-MSVCDLL void TTable1D::setLWprint(int  lwp);
-MSVCDLL void TTable1D::setT2print(int  t2p);
-MSVCDLL void TTable1D::setPHprint(int  php);
-MSVCDLL void TTable1D::setFreqRev();
+MSVCDLL void setType(int     typ);
+MSVCDLL void setSort(int     sf);
+MSVCDLL void setConv(double  cf);
+MSVCDLL void setIcut(double  ct);
+MSVCDLL void setInorm(double in=0.0);
+MSVCDLL void setSN(double    S2N);
+MSVCDLL void setHprint(int   hp);
+MSVCDLL void setRprint(int   rp);
+MSVCDLL void setLWprint(int  lwp);
+MSVCDLL void setT2print(int  t2p);
+MSVCDLL void setPHprint(int  php);
+MSVCDLL void setFreqRev();
  
-MSVCDLL int    TTable1D::getType()    const;
-MSVCDLL int    TTable1D::getSort()    const;
-MSVCDLL double TTable1D::getConv()    const;
-MSVCDLL double TTable1D::getIcut()    const;
-MSVCDLL double TTable1D::getInorm()   const;
-MSVCDLL double TTable1D::getSN()      const;
-MSVCDLL int    TTable1D::getHprint()  const;
-MSVCDLL int    TTable1D::getRprint()  const;
-MSVCDLL int    TTable1D::getLWprint() const;
-MSVCDLL int    TTable1D::getT2print() const;
-MSVCDLL int    TTable1D::getPHprint() const;
-MSVCDLL bool   TTable1D::getFreqRev() const;
+MSVCDLL int    getType()    const;
+MSVCDLL int    getSort()    const;
+MSVCDLL double getConv()    const;
+MSVCDLL double getIcut()    const;
+MSVCDLL double getInorm()   const;
+MSVCDLL double getSN()      const;
+MSVCDLL int    getHprint()  const;
+MSVCDLL int    getRprint()  const;
+MSVCDLL int    getLWprint() const;
+MSVCDLL int    getT2print() const;
+MSVCDLL int    getPHprint() const;
+MSVCDLL bool   getFreqRev() const;
 
 // ---------------------- ASCII Output Functions ------------------------------
 
-MSVCDLL std::vector<std::string> TTable1D::printStrings()           const;
-MSVCDLL std::ostream&            TTable1D::print(std::ostream& out) const;
+MSVCDLL std::vector<std::string> printStrings()           const;
+MSVCDLL std::ostream&            print(std::ostream& out) const;
 
         // Input                out      : output stream;
         // Output               none     : modifies output stream
@@ -709,7 +709,7 @@ MSVCDLL friend std::ostream& operator << (std::ostream &ostr, const TTable1D& TT
         // Output               none  : Transitions table vector is sent
 	//				to the output stream
 
-MSVCDLL std::ostream& TTable1D::status(std::ostream& ostr) const;
+MSVCDLL std::ostream& status(std::ostream& ostr) const;
 
         // Input		TTab1D	: A transitions table (this)
         //                      ostr    : An output stream
@@ -728,8 +728,8 @@ MSVCDLL std::ostream& TTable1D::status(std::ostream& ostr) const;
 	//				  starting at it current position
         // Note				: The file format is BINARY
 
-MSVCDLL void           TTable1D::write(const std::string& fn) const;
-MSVCDLL std::ofstream& TTable1D::write(std::ofstream&     fp) const;
+MSVCDLL void           write(const std::string& fn) const;
+MSVCDLL std::ofstream& write(std::ofstream&     fp) const;
 
 // ------------------- Binary Read Functions (For Storage) --------------------
  
@@ -740,15 +740,15 @@ MSVCDLL std::ofstream& TTable1D::write(std::ofstream&     fp) const;
         //                                from filestream fp taken from its
 	//				  current location
  
-MSVCDLL void           TTable1D::read(const std::string& fn);
-MSVCDLL std::ifstream& TTable1D::read(std::ifstream&     fp);
+MSVCDLL void           read(const std::string& fn);
+MSVCDLL std::ifstream& read(std::ifstream&     fp);
 
 // ____________________________________________________________________________ 
 // I         CLASS TRANSITIONS TABLE 1D DEBUGGING HELPER FUNCTIONS
 // ____________________________________________________________________________ 
 
  
-MSVCDLL std::ostream& TTable1D::printT(std::ostream& ostr, double tinc, int npts, int P2P=0);
+MSVCDLL std::ostream& printT(std::ostream& ostr, double tinc, int npts, int P2P=0);
 
 	// Input		TTab1D : Transitions table (this)
 	//			tinc	: Dwell time in seconds
@@ -760,7 +760,7 @@ MSVCDLL std::ostream& TTable1D::printT(std::ostream& ostr, double tinc, int npts
         //                                the acquisition time domain
 	//				  calculation with debugging info
  
-MSVCDLL std::ostream& TTable1D::printF(std::ostream& ostr, int npts, double Fst, double Ffi);
+MSVCDLL std::ostream& printF(std::ostream& ostr, int npts, double Fst, double Ffi);
 
 	// Input		TTab1D : Transitions table (this)
 	//			npts	: Number of points
@@ -792,7 +792,7 @@ friend void offset(matrix& mx, double F, double LWR, int inHz=0);
 //                         Standard Output
 // -------------------------------------------------------------------------
 
-std::string TTable1D::PyPrint();
+std::string PyPrint();
 
 #endif						// End PyGAMMA code block
 

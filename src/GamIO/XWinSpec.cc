@@ -59,6 +59,7 @@
 #include <GamIO/BinIOBase.h>		// Include binary I/O functions
 #include <Basics/Gutils.h>		// Include GAMMA errors
 #include <Matrix/row_vector.h>		// Include GAMMA row vectors
+#include <stdlib.h>
 
 using std::string;			// Using libstdc++ strings
 using std::ios;

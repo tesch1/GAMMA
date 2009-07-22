@@ -59,10 +59,10 @@ class quatern
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-         void quatern::Qerror(int eidx,                          int noret=0) const;
-         void quatern::Qerror(int eidx,   const std::string& pn, int noret=0) const;
-volatile void quatern::Qfatal(int eidx=0)                                     const;
-volatile void quatern::Qfatal(int eidx,   const std::string& pn)              const;
+         void Qerror(int eidx,                          int noret=0) const;
+         void Qerror(int eidx,   const std::string& pn, int noret=0) const;
+volatile void Qfatal(int eidx=0)                                     const;
+volatile void Qfatal(int eidx,   const std::string& pn)              const;
 
 // ____________________________________________________________________________
 // ii              PRIVATE FACILITATOR FUNCTIONS FOR QUATERNIONS
@@ -74,9 +74,9 @@ volatile void quatern::Qfatal(int eidx,   const std::string& pn)              co
    deal with the 4x4 rotation matrix associated with the Quaternion. The
    array must not only be 4x4 but also orthonormal.                          */
 
-bool quatern::CheckNorm(int warn=2) const;
-bool quatern::CheckNorm(double A,double B,double C,double D,int warn=2) const;
-bool quatern::CheckNorm(const matrix& Rotmx, bool warn=true) const; 
+bool CheckNorm(int warn=2) const;
+bool CheckNorm(double A,double B,double C,double D,int warn=2) const;
+bool CheckNorm(const matrix& Rotmx, bool warn=true) const; 
 
 // ____________________________________________________________________________
 // iii         PRIVATE PARAMETER PARSING FUNCTIONS FOR QUATERNIONS
@@ -88,19 +88,19 @@ bool quatern::CheckNorm(const matrix& Rotmx, bool warn=true) const;
    data in the form (A, B, C, D) which will be parsed. Once parsed, the
    values will be checked for consistency.                                   */
 
-bool quatern::SetQuatern(const ParameterSet& pset, int idx=-1, int warn=2);
+bool SetQuatern(const ParameterSet& pset, int idx=-1, int warn=2);
 
-bool quatern::SetSinPos() const;
-bool quatern::SetCosPos() const;
-bool quatern::SetTanPos() const;
+bool SetSinPos() const;
+bool SetCosPos() const;
+bool SetTanPos() const;
 
-double  quatern::FindBeta()                             const;
-double  quatern::FindAlpha()                            const;
-double  quatern::FindAlpha(double beta)                 const;
-double  quatern::FindGamma()                            const;
-double  quatern::FindGamma(double dbeta, double dalpha) const;
-EAngles quatern::FindEAs()                              const;
-double  quatern::GetAngle(double sinval, double cosval) const;
+double  FindBeta()                             const;
+double  FindAlpha()                            const;
+double  FindAlpha(double beta)                 const;
+double  FindGamma()                            const;
+double  FindGamma(double dbeta, double dalpha) const;
+EAngles FindEAs()                              const;
+double  GetAngle(double sinval, double cosval) const;
 
 // ____________________________________________________________________________
 //                QUATERNION COMMON INTERNAL FUNCTIONS
@@ -140,12 +140,12 @@ double  quatern::GetAngle(double sinval, double cosval) const;
    particular see Equation [3] of that article. Also see the article 
    Ernst, JMR, 63, 133 (85). The norm of the 4 components is always 1.      */
 
-MSVCDLC quatern::quatern();
-MSVCDLC quatern::quatern(const coord&   ABG, bool inv=false);
-MSVCDLC quatern::quatern(const EAngles& EA,  bool inv=false);
-MSVCDLC quatern::quatern(const quatern& Qrt, bool inv=false);
-MSVCDLC quatern::quatern(const ParameterSet& pset, int idx=-1, int warn=2);
-MSVCDLC quatern::quatern(double QA, double QB, double QC, double QD, bool inv=false);
+MSVCDLC quatern();
+MSVCDLC quatern(const coord&   ABG, bool inv=false);
+MSVCDLC quatern(const EAngles& EA,  bool inv=false);
+MSVCDLC quatern(const quatern& Qrt, bool inv=false);
+MSVCDLC quatern(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLC quatern(double QA, double QB, double QC, double QD, bool inv=false);
 
 // ----------------------------------------------------------------------------
 //                  Assignment Operators & Destructor
@@ -153,10 +153,10 @@ MSVCDLC quatern::quatern(double QA, double QB, double QC, double QD, bool inv=fa
 
 // Remember, we assume coord is in degrees whereas EAngles is always in radians
 
-MSVCDLC          quatern::~quatern();
-MSVCDLL quatern& quatern::operator= (const quatern& QRT);
-MSVCDLL quatern& quatern::operator= (const coord&   EA);
-MSVCDLL quatern& quatern::operator= (const EAngles& EA);
+MSVCDLC          ~quatern();
+MSVCDLL quatern& operator= (const quatern& QRT);
+MSVCDLL quatern& operator= (const coord&   EA);
+MSVCDLL quatern& operator= (const EAngles& EA);
 
 // ____________________________________________________________________________
 // B                     QUATERNION ACCESS FUNCTIONS
@@ -168,10 +168,10 @@ MSVCDLL quatern& quatern::operator= (const EAngles& EA);
 ///F_list C			- Access to Quaternion value C
 ///F_list D			- Access to Quaternion value D
 
-MSVCDLL double quatern::A() const;
-MSVCDLL double quatern::B() const;
-MSVCDLL double quatern::C() const;
-MSVCDLL double quatern::D() const;
+MSVCDLL double A() const;
+MSVCDLL double B() const;
+MSVCDLL double C() const;
+MSVCDLL double D() const;
 
 // ____________________________________________________________________________
 // C                 QUATERNION TO EULER ANGLE FUNCTIONS
@@ -203,11 +203,11 @@ MSVCDLL double quatern::D() const;
    that arises from use of the arc sine and arc cosine functions.  To resolve
    any conflicts, the angles may be generated from mulitple formulae.        */
 
-MSVCDLL double  quatern::alpha() const;
-MSVCDLL double  quatern::beta()  const;
-MSVCDLL double  quatern::gamma() const;
-MSVCDLL EAngles quatern::EA()    const;
-MSVCDLL coord   quatern::ABG()   const;
+MSVCDLL double  alpha() const;
+MSVCDLL double  beta()  const;
+MSVCDLL double  gamma() const;
+MSVCDLL EAngles EA()    const;
+MSVCDLL coord   ABG()   const;
 
 // ____________________________________________________________________________
 // D               CLASS QUATERNION COMPOSITE ROTATION FUNCTIONS
@@ -225,14 +225,14 @@ MSVCDLL coord   quatern::ABG()   const;
    on an article by
                           Spiess, JMR, 61, 356 (1985)                         */
 
-MSVCDLL quatern quatern::operator*  (const quatern& Q) const;
-MSVCDLL void    quatern::operator*= (const quatern& Q);
-MSVCDLL void    quatern::operator&= (const quatern& Q);
+MSVCDLL quatern operator*  (const quatern& Q) const;
+MSVCDLL void    operator*= (const quatern& Q);
+MSVCDLL void    operator&= (const quatern& Q);
 MSVCDLL friend  quatern  operator*  (const matrix&  Rmx,  const quatern& Q);
 
-MSVCDLL quatern quatern::composite(const quatern& Q, bool rev=false) const;	// Deprecated
-MSVCDLL matrix quatern::RotMx() const; 						// Deprecated
-MSVCDLL matrix quatern::RMx() const;
+MSVCDLL quatern composite(const quatern& Q, bool rev=false) const;	// Deprecated
+MSVCDLL matrix RotMx() const; 						// Deprecated
+MSVCDLL matrix RMx() const;
 
 MSVCDLL friend  quatern composite(const EAngles& EA1,  const EAngles& EA2);
 MSVCDLL friend  quatern composite(const coord&   EA1,  const coord&   EA2);
@@ -254,8 +254,8 @@ MSVCDLL friend  quatern composite(const matrix&  Rmx,  const quatern& Qrt1);	// 
 	// Note				: All valid quaternions should
 	//				  have a norm of 1
 
-MSVCDLL double  quatern::norm()    const;
-MSVCDLL quatern quatern::inverse() const;
+MSVCDLL double  norm()    const;
+MSVCDLL quatern inverse() const;
 
 // ____________________________________________________________________________
 // F                    CLASS QUATERNION I/O FUNCTIONS
@@ -265,7 +265,7 @@ MSVCDLL quatern quatern::inverse() const;
 ///F_list print               - Print to output filestream
 ///F_list <<                  - Standard output
 
-MSVCDLL std::ostream& quatern::print(std::ostream& ostr, bool nf=true, bool hdr=true) const; 
+MSVCDLL std::ostream& print(std::ostream& ostr, bool nf=true, bool hdr=true) const; 
 MSVCDLL friend std::ostream& operator <<    (std::ostream& ostr, const quatern& Quar);
 
 	// Input		Quar  : Quaternion
@@ -277,10 +277,10 @@ MSVCDLL friend std::ostream& operator <<    (std::ostream& ostr, const quatern& 
 // G              Class Quaternion Container Support Functions
 // ____________________________________________________________________________
 
-MSVCDLL bool quatern::operator== (const quatern& Quar) const;
-MSVCDLL bool quatern::operator!= (const quatern& Quar) const;
-MSVCDLL bool quatern::operator<  (const quatern& Quar) const;
-MSVCDLL bool quatern::operator>  (const quatern& Quar) const;
+MSVCDLL bool operator== (const quatern& Quar) const;
+MSVCDLL bool operator!= (const quatern& Quar) const;
+MSVCDLL bool operator<  (const quatern& Quar) const;
+MSVCDLL bool operator>  (const quatern& Quar) const;
 
 // ____________________________________________________________________________
 // H                  Class Quaternion Range Functions
@@ -298,8 +298,8 @@ MSVCDLL bool quatern::operator>  (const quatern& Quar) const;
    They only affect of range will be in the Euler angle values output.  The
    quarternions and the associated rotation(s) will remain the same.        */
 
-//       int  quatern::range() const; 
-//static void quatern::range(int r);
+//       int  range() const; 
+//static void range(int r);
 
 // ____________________________________________________________________________
 // I            Class Quaternion Parameter & Parameter Set Functions
@@ -316,9 +316,9 @@ MSVCDLL bool quatern::operator>  (const quatern& Quar) const;
         //                                with default name and comment unless
         //                                specified
 
-MSVCDLL SinglePar quatern::param()                                                    const;
-MSVCDLL SinglePar quatern::param(const std::string& pname)                            const;
-MSVCDLL SinglePar quatern::param(const std::string& pname, const std::string& pstate) const;
+MSVCDLL SinglePar param()                                                    const;
+MSVCDLL SinglePar param(const std::string& pname)                            const;
+MSVCDLL SinglePar param(const std::string& pname, const std::string& pstate) const;
 
 //-----------------------------------------------------------------------------
 //                       Parameter Set From Quaternion
@@ -326,7 +326,7 @@ MSVCDLL SinglePar quatern::param(const std::string& pname, const std::string& ps
 
 MSVCDLL operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const quatern& Qrt);
-MSVCDLL bool quatern::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
+MSVCDLL bool PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
 
 //-----------------------------------------------------------------------------
 //                       Parameter Set File From Quaternion
@@ -341,8 +341,8 @@ MSVCDLL bool quatern::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
         // Output               none    : Quaterion is written as a parameter
         //                                to file or output file stream
 
-MSVCDLL bool quatern::write(const std::string& fo,int idx=-1,int pfx=-1,int warn=2) const;
-MSVCDLL bool quatern::write(    std::ofstream& of,int idx=-1,int pfx=-1,int warn=2) const;
+MSVCDLL bool write(const std::string& fo,int idx=-1,int pfx=-1,int warn=2) const;
+MSVCDLL bool write(    std::ofstream& of,int idx=-1,int pfx=-1,int warn=2) const;
 
 //-----------------------------------------------------------------------------
 //                         Quaternion From Parameter Set
@@ -360,8 +360,8 @@ MSVCDLL bool quatern::write(    std::ofstream& of,int idx=-1,int pfx=-1,int warn
         //                                values specified in filein
         //                                or in pset
 
-MSVCDLL bool quatern::read(const std::string&  filein, int indx=-1, int warn=2);
-MSVCDLL bool quatern::read(const ParameterSet& pset,   int indx=-1, int warn=2);
+MSVCDLL bool read(const std::string&  filein, int indx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,   int indx=-1, int warn=2);
 
 // ____________________________________________________________________________
 // J             INVERSE TRIGONOMETRIC ANGLE DISCERNMENT FUNCTIONS
@@ -383,21 +383,21 @@ MSVCDLL bool quatern::read(const ParameterSet& pset,   int indx=-1, int warn=2);
    systems the ranges on both are [-pi/2, pi/2]. These functions just test a
    few values to discern what the standard is on the computer running this.  */
 
-MSVCDLL static bool quatern::ASinPos();
-MSVCDLL static bool quatern::ACosPos();
-MSVCDLL static bool quatern::ATanPos();
+MSVCDLL static bool ASinPos();
+MSVCDLL static bool ACosPos();
+MSVCDLL static bool ATanPos();
 
 // ----------------------------------------------------------------------------
 //                 For Outputting Tests During Conversions
 // ----------------------------------------------------------------------------
 
-MSVCDLL void quatern::ShowConversion() const;
+MSVCDLL void ShowConversion() const;
 
 // ----------------------------------------------------------------------------
 //               Check For Valid Quaternion Rotation Matrix
 // ----------------------------------------------------------------------------
 
-MSVCDLL static bool quatern::ValidRMx(const matrix& R, bool msgs=true);
+MSVCDLL static bool ValidRMx(const matrix& R, bool msgs=true);
 
   };
 
@@ -414,7 +414,7 @@ void PyQuaternion();
 
 
 //typedef quatern quartern;				// Either name OK
-//int quatern::QRange = 1;				// a=g=[0,360],b=[0,pi]
+//int QRange = 1;				// a=g=[0,360],b=[0,pi]
 
 #endif							// Quaternion.h
 

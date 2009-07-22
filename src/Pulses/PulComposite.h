@@ -125,7 +125,7 @@ virtual void deleteUprops();
         //                        are deleted if they exist
  
 
-void PulComposite::deleteLOps();
+void deleteLOps();
  
         // Input        CPul    : A composite pulse (this)
         // Output       none    : CPul step Liouville space operators
@@ -139,7 +139,7 @@ virtual void deleteGprops();
         //                        are deleted if they exist
  
  
-void PulComposite::deleteSSs();
+void deleteSSs();
  
         // Input        CPul    : A composite pulse (this)
         // Output       none    : CPul step steady-state operators
@@ -151,7 +151,7 @@ void PulComposite::deleteSSs();
 // ____________________________________________________________________________
 
 
-void PulComposite::copyHams(const PulComposite& CPul1);
+void copyHams(const PulComposite& CPul1);
 
         // Input        CPul     : A composite pulse (this)
         //              CPul1    : A second composite pulse
@@ -161,7 +161,7 @@ void PulComposite::copyHams(const PulComposite& CPul1);
         //                        are currently empty
 
 
-void PulComposite::copyHIndxs(const PulComposite& CPul1);
+void copyHIndxs(const PulComposite& CPul1);
  
         // Input        CPul    : A composite pulse (this)
         //              CPul1   : A second composite pulse
@@ -170,7 +170,7 @@ void PulComposite::copyHIndxs(const PulComposite& CPul1);
         // Note                 : Assumed array Hindex is empty
  
  
-void PulComposite::copyUIndxs(const PulComposite& CPul1);
+void copyUIndxs(const PulComposite& CPul1);
  
         // Input        CPul    : A composite pulse (this)
         //              CPul1   : A second composite pulse
@@ -179,7 +179,7 @@ void PulComposite::copyUIndxs(const PulComposite& CPul1);
         // Note                 : Assumed array Pindex is currently empty
  
 
-virtual void PulComposite::copyUprops(const PulComposite& CPul1);
+virtual void copyUprops(const PulComposite& CPul1);
  
         // Input        CPul     : A composite pulse (this)
         //              CPul1    : A second composite pulse
@@ -188,7 +188,7 @@ virtual void PulComposite::copyUprops(const PulComposite& CPul1);
         // Note                 : Assumed array Usteps is empty
 
      
-void PulComposite::copyLOps(const PulComposite& CPul1);
+void copyLOps(const PulComposite& CPul1);
  
         // Input        CPul    : A composite pulse (this)
         //              CPul1    : A second PulComposite
@@ -201,7 +201,7 @@ void PulComposite::copyLOps(const PulComposite& CPul1);
         //                        in Lsteps[Hindex[n]]!
 
  
-virtual void PulComposite::copyGprops(const PulComposite& CPul1);
+virtual void copyGprops(const PulComposite& CPul1);
  
         // Input        CPul     : A composite pulse (this)
         //              CPul1    : A second composite pulse
@@ -210,7 +210,7 @@ virtual void PulComposite::copyGprops(const PulComposite& CPul1);
         // Note                 : Assumed array Gsteps is empty
 
 
-void PulComposite::copySSs(const PulComposite& CPul1);
+void copySSs(const PulComposite& CPul1);
  
         // Input        CPul    : A composite pulse (this)
         //              CPul1   : A second PulComposite
@@ -324,7 +324,7 @@ virtual void SetUs();
 // ____________________________________________________________________________
  
  
-void PulComposite::SetSSs();
+void SetSSs();
  
         // Input                CPul    : A composite pulse (this)
         // Output               void    : Steady-state operators for each
@@ -341,7 +341,7 @@ void PulComposite::SetSSs();
    to step end.                                                              */
 
  
-virtual void PulComposite::SetGs( );
+virtual void SetGs( );
  
         // Input                CPul    : A composite pulse (this)
         // Output               void    : Superpropagators for each step
@@ -363,7 +363,7 @@ virtual void PulComposite::SetGs( );
 /* These functions are only active on propagators.  They will have no effect
    if there have been no propagators generated.                              */
  
-void PulComposite::SetUBasis(gen_op& Op);
+void SetUBasis(gen_op& Op);
  
         // Input                CPul    : A composite pulse (this)
         // Output               void    : Hilbert space propagators for all
@@ -372,7 +372,7 @@ void PulComposite::SetUBasis(gen_op& Op);
         // Note                         : This assumes that the Hamiltonians
         //                                have already been calculated!
  
-void PulComposite::SetGBasis(super_op& LOp);
+void SetGBasis(super_op& LOp);
  
         // Input                CPul    : A composite pulse (this)
         // Output               void    : Liouville space propagators for all
@@ -405,7 +405,7 @@ int CheckCH(const spin_sys& sys, const std::string& ch, int ef) const;
         // Output               T/F     : Check to insure channel O.K.
 
 
-int PulComposite::CheckStep(int stp, int eflag, int eflag2=0) const;
+int CheckStep(int stp, int eflag, int eflag2=0) const;
 
         // Input                CPul    : A composite pulse (this)
         //                      stp     : Composite pulse step
@@ -423,7 +423,7 @@ void SetNULL();
         //                                (or after full destruction!)
 
 
-LSprop PulComposite::LSIprop() const;
+LSprop LSIprop() const;
  
         // Input                CPul    : A composite pulse (this)
         // Output               GI      : An identity superpropagator
@@ -479,7 +479,7 @@ MSVCDLC PulComposite(const PulWaveform& pulwf,
 
 
 
-MSVCDLC PulComposite::PulComposite(const PulWaveform& pulwf,
+MSVCDLC PulComposite(const PulWaveform& pulwf,
              const spin_system& sys, const super_op& LOp, const std::string& isoch);
 
         // Input        pulwf   : Pulse waveform
@@ -714,10 +714,10 @@ MSVCDLL std::string     channel() const;
  
 // --------------------- Other Pulse Composite Access -------------------------
  
-MSVCDLL gen_op       PulComposite::FZ()        const;
-MSVCDLL super_op     PulComposite::ROp()       const;
-MSVCDLL densop       PulComposite::SigEq()     const;
-MSVCDLL double       PulComposite::Precision() const;
+MSVCDLL gen_op       FZ()        const;
+MSVCDLL super_op     ROp()       const;
+MSVCDLL densop       SigEq()     const;
+MSVCDLL double       Precision() const;
  
         // Input        CPul    : A composite pulse (this)
         // Output       FZ      : Active Fz operator
@@ -737,9 +737,9 @@ MSVCDLL double       PulComposite::Precision() const;
 // ____________________________________________________________________________
  
 
-//int PulComposite::gamB1const() const;
-//int PulComposite::phaseconst() const;
-//int PulComposite::timeconst() const;
+//int gamB1const() const;
+//int phaseconst() const;
+//int timeconst() const;
 
         // Input        CPul    : A composite pulse (this)
         // Output       gamB1   : Returns true if the RF field strength
@@ -750,7 +750,7 @@ MSVCDLL double       PulComposite::Precision() const;
         //                        is constant through out the waveform
 
 
-MSVCDLL virtual void PulComposite::scalegB1(double sf); 
+MSVCDLL virtual void scalegB1(double sf); 
   
         // Input        CPul    : A composite pulse (this)
         //              sf      : A scaling factor
@@ -759,7 +759,7 @@ MSVCDLL virtual void PulComposite::scalegB1(double sf);
         //                        steps of zero length (ideal pulses) 
 
 
-MSVCDLL void PulComposite::setRelax(const spin_system& sys, const super_op& LOp);
+MSVCDLL void setRelax(const spin_system& sys, const super_op& LOp);
   
         // Input        CPul    : A composite pulse (this)
         //              sys     : A spin system
@@ -775,7 +775,7 @@ MSVCDLL void PulComposite::setRelax(const spin_system& sys, const super_op& LOp)
 
 // ----------------------- Acquisiton Tracking Functions ----------------------
  
-MSVCDLL void PulComposite::FIDheader(int typ, int rlx=0) const;
+MSVCDLL void FIDheader(int typ, int rlx=0) const;
   
         // Input        CPul    : A composite pulse (this)
         //              typ     : FID header type 
@@ -783,7 +783,7 @@ MSVCDLL void PulComposite::FIDheader(int typ, int rlx=0) const;
         // Output       void    : Outputs header for FID tracking
  
 
-MSVCDLL void PulComposite::FIDpoint(int typ, int pt, int iWFs, int iSTs) const;
+MSVCDLL void FIDpoint(int typ, int pt, int iWFs, int iSTs) const;
 
         // Input        CPul    : A composite pulse (this)
         //              typ     : FID header type
@@ -793,7 +793,7 @@ MSVCDLL void PulComposite::FIDpoint(int typ, int pt, int iWFs, int iSTs) const;
         // Output       void    : Outputs header for FID tracking
 
 
-MSVCDLL void PulComposite::FIDvalue(int typ, double td, const complex& z) const;
+MSVCDLL void FIDvalue(int typ, double td, const complex& z) const;
 
         // Input        CPul    : A composite pulse (this)
         //              typ     : FID header type
@@ -802,7 +802,7 @@ MSVCDLL void PulComposite::FIDvalue(int typ, double td, const complex& z) const;
         // Output       void    : Outputs point info for FID tracking
 
 
-MSVCDLL void PulComposite::FIDtell(double SW) const;
+MSVCDLL void FIDtell(double SW) const;
 
         // Input        CPul    : A composite pulse (this)
         //              SW      : Desired spectral width
@@ -965,14 +965,14 @@ MSVCDLL virtual row_vector FIDR(int N, double td, gen_op &D, gen_op& sp, int tra
 // ____________________________________________________________________________
 
 
-//void PulComposite::GP(int type, int split, int ends) const;         INHERITED
+//void GP(int type, int split, int ends) const;         INHERITED
 
 // ____________________________________________________________________________
 // I                 CLASS COMPOSITE PULSE I/O FUNCTIONS
 // ____________________________________________________________________________
  
  
-MSVCDLL virtual std::ostream& PulComposite::printEvolve(std::ostream &ostr, double td) const;
+MSVCDLL virtual std::ostream& printEvolve(std::ostream &ostr, double td) const;
  
         // Input                PWF     : Pulse Waveform 
         //                      td      : Evolution time 
@@ -981,7 +981,7 @@ MSVCDLL virtual std::ostream& PulComposite::printEvolve(std::ostream &ostr, doub
         //                                is sent to the output stream 
  
  
-MSVCDLL virtual std::ostream& PulComposite::printFID(std::ostream &ostr, double td, int n) const;
+MSVCDLL virtual std::ostream& printFID(std::ostream &ostr, double td, int n) const;
  
         // Input        PT    : A pulse train (this) 
         //              ostr  : An output stream 
@@ -991,7 +991,7 @@ MSVCDLL virtual std::ostream& PulComposite::printFID(std::ostream &ostr, double 
         //                      is set to the output stream ostr
  
 
-MSVCDLL virtual std::ostream& PulComposite::printInfo(std::ostream &ostr) const;
+MSVCDLL virtual std::ostream& printInfo(std::ostream &ostr) const;
 
         // Input                CPul     : Composite Pulse
         //                      ostr    : Output stream

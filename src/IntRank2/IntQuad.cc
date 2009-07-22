@@ -75,6 +75,7 @@
 #include <HSLib/SpinOpSng.h>		// Include 1 spin operators
 #include <HSLib/SpinSys.h>		// Include base spin systems
 #include <Basics/StringCut.h>
+#include <stdlib.h>
 #include <vector>			// Inlcude libstdc++ STL vectors
 #include <string>			// Inlcude libstdc++ STL strings
 #if defined(_MSC_VER) || defined(__SUNPRO_CC)				// If we are using MSVC++

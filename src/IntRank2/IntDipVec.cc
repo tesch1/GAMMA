@@ -37,6 +37,7 @@
 #include <Level1/coord.h>		// Include single coordinates
 #include <Level1/coord_vec.h>		// Include coordinate vectors
 #include <Basics/StringCut.h>		//   Done in StringCut
+#include <stdlib.h>
 
 using std::cout;			// Using libstdc++ standard output
 using std::string;			// Using libstdc++ strings

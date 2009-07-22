@@ -90,7 +90,7 @@ void Pulerror(int eidx, const std::string& pname, int noret=0) const;
 // ____________________________________________________________________________
 
 
-void Pulse::SetPhase(const ParameterSet& pset, int idx=-1);
+void SetPhase(const ParameterSet& pset, int idx=-1);
 
         // Intput               Pul      : Pulse parameters
         //                      pset    : Parameter set
@@ -100,7 +100,7 @@ void Pulse::SetPhase(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
 
-void Pulse::SetChannel(const ParameterSet& pset, int idx=-1);
+void SetChannel(const ParameterSet& pset, int idx=-1);
 
         // Intput               Pul      : Pulse parameters
         //                      pset    : Parameter set
@@ -110,7 +110,7 @@ void Pulse::SetChannel(const ParameterSet& pset, int idx=-1);
         //                                with index idx
  
  
-int Pulse::SetAngle(const ParameterSet& pset, int idx=-1);
+int SetAngle(const ParameterSet& pset, int idx=-1);
 
         // Intput               Pul      : Pulse parameters
         //                      pset    : Parameter set
@@ -120,7 +120,7 @@ int Pulse::SetAngle(const ParameterSet& pset, int idx=-1);
         //                                with index idx
 
 
-int Pulse::SetPulLen(const ParameterSet& pset, int idx=-1);
+int SetPulLen(const ParameterSet& pset, int idx=-1);
 
         // Intput               Pul      : Pulse parameters
         //                      pset    : Parameter set
@@ -130,7 +130,7 @@ int Pulse::SetPulLen(const ParameterSet& pset, int idx=-1);
         //                                with index idx
  
  
-int Pulse::SetGamB1(const ParameterSet& pset, int idx=-1);
+int SetGamB1(const ParameterSet& pset, int idx=-1);
  
         // Intput               Pul      : Pulse parameters
         //                      pset    : Parameter set
@@ -158,7 +158,7 @@ MSVCDLC Pulse();
         ///F_list       Pulse	- Constructor
 
 
-MSVCDLC Pulse::Pulse(const std::string& ch, double gB1, double len, double ph=0, double off=0);
+MSVCDLC Pulse(const std::string& ch, double gB1, double len, double ph=0, double off=0);
 
         // Input        ch      : RF-channel
         //              gB1     : RF-field strength (Hz)
@@ -197,12 +197,12 @@ MSVCDLL void operator = (const Pulse& Pulse1);
 // B                     CLASS Pulse ACCESS FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL std::string Pulse::channel()  const;
-MSVCDLL double      Pulse::strength() const;
-MSVCDLL double      Pulse::angle()    const;
-MSVCDLL double      Pulse::phase()    const;
-MSVCDLL double      Pulse::offset()   const;
-MSVCDLL double      Pulse::length()   const;
+MSVCDLL std::string channel()  const;
+MSVCDLL double      strength() const;
+MSVCDLL double      angle()    const;
+MSVCDLL double      phase()    const;
+MSVCDLL double      offset()   const;
+MSVCDLL double      length()   const;
  
         // Intput       Pulse1  : Pulse parameters
         // Output 	channel : Pulse isotope channel  
@@ -214,7 +214,7 @@ MSVCDLL double      Pulse::length()   const;
 
         //              offset  : Pulse offset (Hz)
  
-MSVCDLL void Pulse::strength(double gB1);
+MSVCDLL void strength(double gB1);
  
         // Input        Pul     : Pulse parameters
         //              gB1     : Pulse strength (Hz)
@@ -227,7 +227,7 @@ MSVCDLL void Pulse::strength(double gB1);
 
 
 /*
-MSVCDLL HSprop Pulse::GetU(const spin_system& sys, gen_op& H);
+MSVCDLL HSprop GetU(const spin_system& sys, gen_op& H);
 
         // Input             sys   : Spin system
         //                   H     : Static Hamlitonian without the field
@@ -261,7 +261,7 @@ MSVCDLL HSprop Pulse::GetU(const spin_system& sys, gen_op& H);
 // ____________________________________________________________________________
 
  
-MSVCDLL void Pulse::read(const std::string &filename, int idx=-1);
+MSVCDLL void read(const std::string &filename, int idx=-1);
 
         // Intput               Pul	: Pulse parameters
         //                      idx     : Pulse index
@@ -270,7 +270,7 @@ MSVCDLL void Pulse::read(const std::string &filename, int idx=-1);
         //                                with index idx
 
     
-MSVCDLL void Pulse::read(const ParameterSet& pset, int idx=-1);
+MSVCDLL void read(const ParameterSet& pset, int idx=-1);
 
         // Intput               Pul	: Pulse parameters
         //                      pset    : Parameter set
@@ -286,7 +286,7 @@ MSVCDLL void Pulse::read(const ParameterSet& pset, int idx=-1);
 //       the angle is specified the length will be set to zero (ideal pulse)
  
  
-MSVCDLL std::string Pulse::ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
  
         // Intput               Pul	: Pulse parameters
         //                      argc    : Number of arguments
@@ -308,7 +308,7 @@ MSVCDLL std::string Pulse::ask_read(int argc, char* argv[], int argn);
 // ____________________________________________________________________________
 
 
-MSVCDLL std::ostream& Pulse::printBase(std::ostream &ostr) const;
+MSVCDLL std::ostream& printBase(std::ostream &ostr) const;
  
         // Intput               Pul	: Pulse parameters
         //                      ostr    : Output stream
@@ -316,7 +316,7 @@ MSVCDLL std::ostream& Pulse::printBase(std::ostream &ostr) const;
         //                                to the output stream
 
 
-MSVCDLL virtual std::ostream& Pulse::print(std::ostream &ostr, int full=0) const;
+MSVCDLL virtual std::ostream& print(std::ostream &ostr, int full=0) const;
 
         // Intput               Pul	: Pulse parameters
         //                      ostr    : Output stream

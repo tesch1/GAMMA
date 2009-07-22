@@ -86,10 +86,10 @@ class FMSph
         //                      pn      : string in message
 
 /*
-         void FMSph::FMSerror(int ei,                        int nr=0) const;
-         void FMSph::FMSerror(int ei, const std::string& pn, int nr=0) const;
-volatile void FMSph::FMSfatal(int ei) const;
-volatile void FMSph::FMSfatal(int ei, const std::string& pn) const;
+         void FMSerror(int ei,                        int nr=0) const;
+         void FMSerror(int ei, const std::string& pn, int nr=0) const;
+volatile void FMSfatal(int ei) const;
+volatile void FMSfatal(int ei, const std::string& pn) const;
 */
 
 // ____________________________________________________________________________
@@ -99,8 +99,8 @@ volatile void FMSph::FMSfatal(int ei, const std::string& pn) const;
 /* These are private because they assume that 1.) the output stream is
    viable and 2.) the radius has been set to something reasonable.           */
 
-void FMSph::start(std::ostream& out) const;
-void FMSph::end(std::ostream&   out) const;
+void start(std::ostream& out) const;
+void end(std::ostream&   out) const;
 
 // ____________________________________________________________________________
 // iii                FrameMaker Spherical Coordinate Axes
@@ -110,7 +110,7 @@ void FMSph::end(std::ostream&   out) const;
    viable and 2.) both the radius and orientation has been set to something
    reasonable.                                                               */
 
-void FMSph::axes(std::ostream& out);
+void axes(std::ostream& out);
 
 // ____________________________________________________________________________
 // iii                FrameMaker Spherical Coordinate Planes
@@ -120,15 +120,15 @@ void FMSph::axes(std::ostream& out);
    viable and 2.) both the radius and orientation has been set to something
    reasonable.                                                               */
 
-void FMSph::plane(std::ostream&  out, char plane, int ID) const;
-void FMSph::planes(std::ostream& out);
+void plane(std::ostream&  out, char plane, int ID) const;
+void planes(std::ostream& out);
 
 // ____________________________________________________________________________
 // iv                  FrameMaker Spherical Points
 // ____________________________________________________________________________
 
-row_vector FMSph::project(const coord_vec& data) const;
-void       FMSph::draw(std::ostream& out, const row_vector& vx, int FMID=305) const;
+row_vector project(const coord_vec& data) const;
+void       draw(std::ostream& out, const row_vector& vx, int FMID=305) const;
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -141,9 +141,9 @@ public:
 // ____________________________________________________________________________
 
 
-MSVCDLC FMSph::FMSph();
-MSVCDLC FMSph::FMSph(double R, const EAngles& EA);
-MSVCDLC FMSph::FMSph(const FMSph& FMS);
+MSVCDLC FMSph();
+MSVCDLC FMSph(double R, const EAngles& EA);
+MSVCDLC FMSph(const FMSph& FMS);
 
 // ____________________________________________________________________________
 // B            FrameMaker Spherical Plot Access Functions
@@ -153,10 +153,10 @@ MSVCDLC FMSph::FMSph(const FMSph& FMS);
 //                      Sphere Radius & Plot Margin Access
 // ----------------------------------------------------------------------------
 
-MSVCDLL double FMSph::Radius() const;
-MSVCDLL void   FMSph::Radius(double Rad);
-MSVCDLL double FMSph::Margin() const;
-MSVCDLL void   FMSph::Margin(double Mar);
+MSVCDLL double Radius() const;
+MSVCDLL void   Radius(double Rad);
+MSVCDLL double Margin() const;
+MSVCDLL void   Margin(double Mar);
 
 // ----------------------------------------------------------------------------
 //                      Sphere Orientation Access
@@ -166,54 +166,54 @@ MSVCDLL void   FMSph::Margin(double Mar);
    stored as Euler angles which are in radians. The conversion is performed
    here when needed.                                                         */
 
-MSVCDLL const EAngles& FMSph::Orient() const;
-MSVCDLL void  FMSph::Orient(const EAngles& EA);
-MSVCDLL void  FMSph::Orient(double A, double B, double G);
+MSVCDLL const EAngles& Orient() const;
+MSVCDLL void  Orient(const EAngles& EA);
+MSVCDLL void  Orient(double A, double B, double G);
 
-MSVCDLL double FMSph::Alpha() const;
-MSVCDLL double FMSph::Beta()  const;
-MSVCDLL double FMSph::Gamma() const;
+MSVCDLL double Alpha() const;
+MSVCDLL double Beta()  const;
+MSVCDLL double Gamma() const;
 
-MSVCDLL void   FMSph::Alpha(double A);
-MSVCDLL void   FMSph::Beta(double  B);
-MSVCDLL void   FMSph::Gamma(double G);
+MSVCDLL void   Alpha(double A);
+MSVCDLL void   Beta(double  B);
+MSVCDLL void   Gamma(double G);
 
 // ----------------------------------------------------------------------------
 //                         Spherical Plot Type Access
 // ----------------------------------------------------------------------------
 
-MSVCDLL int  FMSph::PlotType() const;
-MSVCDLL void FMSph::PlotType(int PT);
+MSVCDLL int  PlotType() const;
+MSVCDLL void PlotType(int PT);
 
 
 // ----------------------------------------------------------------------------
 //                      Spherical Plot Line Type Access
 // ----------------------------------------------------------------------------
 
-MSVCDLL int  FMSph::LineType() const;
-MSVCDLL void FMSph::LineType(int LT);
+MSVCDLL int  LineType() const;
+MSVCDLL void LineType(int LT);
 
 // ----------------------------------------------------------------------------
 //                      Spherical Plane Points Access
 // ----------------------------------------------------------------------------
 
-MSVCDLL int  FMSph::PlanePts() const;
-MSVCDLL void FMSph::PlanePts(int PP);
+MSVCDLL int  PlanePts() const;
+MSVCDLL void PlanePts(int PP);
 
 // ____________________________________________________________________________
 // C            FrameMaker Spherical Plot Plotting Functions
 // ____________________________________________________________________________
 
-MSVCDLL void FMSph::plot(const std::string& filename);
-MSVCDLL void FMSph::plot(const std::string& filename, const coord_vec& cvec);
-MSVCDLL void FMSph::plot(const std::string& filename, const std::vector<coord_vec>& cvs);
+MSVCDLL void plot(const std::string& filename);
+MSVCDLL void plot(const std::string& filename, const coord_vec& cvec);
+MSVCDLL void plot(const std::string& filename, const std::vector<coord_vec>& cvs);
 
 
 // ____________________________________________________________________________
 // D             FrameMaker Spherical Plot ASCII Ouptut Functions
 // ____________________________________________________________________________
 
-MSVCDLL std::ostream& FMSph::print(std::ostream& ostr) const;
+MSVCDLL std::ostream& print(std::ostream& ostr) const;
 
 };						// End Of Class FrameMakerSph
 

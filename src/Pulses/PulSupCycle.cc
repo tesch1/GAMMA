@@ -37,6 +37,7 @@
 #include <string>			// Must know stdlibc++ strings
 #include <Basics/StringCut.h>           // Include Gform and Gdec functions
 #include <iostream>                     // Include input output streams
+#include <stdlib.h>
 
 using std::string;			// Using libstdc++ strings
 using std::ostream;			// Using libstdc++ output streams

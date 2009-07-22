@@ -63,6 +63,7 @@
 #include <IntRank2/IntRank2A.h>		// Include spatial tensors
 #include <string>			// Include stdlibc++ strings
 #include <Basics/StringCut.h>		// Include Gform and Gdec functions
+#include <stdlib.h>
 #include <cmath>			// Inlcude HUGE_VAL_VAL
 
 #if defined(_MSC_VER) || defined(__SUNPRO_CC)				// If we are using MSVC++

@@ -88,14 +88,14 @@ public:
 // ____________________________________________________________________________
  
   
-MSVCDLC densop::densop();
+MSVCDLC densop();
          
         // Input                none    :
         // Output               U       : A NULL density operator (this)
         ///F_list               densop  - Constructor
 
                                                       
-MSVCDLC densop::densop(const spin_sys& sys);
+MSVCDLC densop(const spin_sys& sys);
  
         // Input               sys	: A spin system
         // Output              Sigma	: The density matrix describing
@@ -110,7 +110,7 @@ MSVCDLC densop::densop(const spin_sys& sys);
         //				  of any observed transitions
 
 
-MSVCDLC densop::densop(const spin_sys& sys, super_op& L, super_op& R);
+MSVCDLC densop(const spin_sys& sys, super_op& L, super_op& R);
 
 	// Input		sys   : Spin system
 	// 			L     : Full Liouvillian
@@ -131,7 +131,7 @@ MSVCDLC densop::densop(const spin_sys& sys, super_op& L, super_op& R);
 	//				we must first set the equilibrium matrix
  
 
-MSVCDLC densop::densop(super_op& L, super_op& R, gen_op& sigmaeq);
+MSVCDLC densop(super_op& L, super_op& R, gen_op& sigmaeq);
  
         // Input                L       : Full Liouvillian (rad/sec)
         //                      R       : Relaxation Superoperator (rad/sec)
@@ -150,21 +150,21 @@ MSVCDLC densop::densop(super_op& L, super_op& R, gen_op& sigmaeq);
 //         ss       eq                             ss       eq
 
 
-MSVCDLC densop::densop(gen_op& Op, double tevol);
+MSVCDLC densop(gen_op& Op, double tevol);
 
         //                      Op      : Active density operator
         //                      tevol   : Evolution time (seconds)
         // Output               densop  : Sigma set to Op at time tevol
 
   
-MSVCDLC densop::densop(const densop& Sigma);
+MSVCDLC densop(const densop& Sigma);
          
         // Input                none    :
         // Output               Sigma	: A NULL density operator (this)
         ///F_list               densop  - Constructor
 
  
-MSVCDLC densop::~densop();
+MSVCDLC ~densop();
          
         // Input                Sigma	: A density operator
         // Output               void    : Density operator destructed
@@ -199,7 +199,7 @@ MSVCDLL double length() const;
 // ____________________________________________________________________________
  
  
-MSVCDLL void densop::SetTrace(double tr);
+MSVCDLL void SetTrace(double tr);
  
         // Input                Sigma   : A density operator (this)
         //                      tr      : Value for Sigma trace 
@@ -292,7 +292,7 @@ MSVCDLL friend gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq,         int
         // Output               ostr    : Output stream that has had
         //                                Sigma written into it 
 
-MSVCDLL std::ostream& densop::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream &operator << (std::ostream &ostr, const densop& Sigma);
 
 };

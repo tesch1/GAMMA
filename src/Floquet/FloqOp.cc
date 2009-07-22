@@ -39,6 +39,7 @@
 #include <Floquet/FloqOp.h>		// Include the header file
 #include <Basics/Gconstants.h>		// Include Pi and other values
 #include <Basics/Gutils.h>		// Include GAMMA error handling
+#include <stdlib.h>
 
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------

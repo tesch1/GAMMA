@@ -119,7 +119,7 @@ void SetChannel(const ParameterSet& pset, int idx=-1);
         //                                with index idx
  
  
-int GARP::SetGamB1(const ParameterSet& pset, int idx=-1);
+int SetGamB1(const ParameterSet& pset, int idx=-1);
  
         // Intput               DT      : GARP parameters
         //                      pset    : Parameter set
@@ -185,11 +185,11 @@ MSVCDLL void operator = (const GARP& GARP1);
 // B                     CLASS GARP ACCESS FUNCTIONS
 // ____________________________________________________________________________
 
-MSVCDLL std::string GARP::channel()  const;
-MSVCDLL double GARP::strength() const;
-MSVCDLL void   GARP::strength(double gB1);
-MSVCDLL double GARP::phase()    const;
-MSVCDLL double GARP::offset()   const;
+MSVCDLL std::string channel()  const;
+MSVCDLL double strength() const;
+MSVCDLL void   strength(double gB1);
+MSVCDLL double phase()    const;
+MSVCDLL double offset()   const;
 
         // Intput       GARP1  : GARP parameters
         // Output 	channel : GARP isotope channel
@@ -213,8 +213,8 @@ MSVCDLL double GARP::offset()   const;
 // ____________________________________________________________________________
  
 
-MSVCDLL PulWaveform GARP::WF( ) const;
-MSVCDLL PulWaveform GARP::WF_GARP( ) const;
+MSVCDLL PulWaveform WF( ) const;
+MSVCDLL PulWaveform WF_GARP( ) const;
 
         // Input        G       : GARP specifications
         // Output       WF      : A pulse waveform for GARP pulse-delay
@@ -225,8 +225,8 @@ MSVCDLL PulWaveform GARP::WF_GARP( ) const;
 // ____________________________________________________________________________
  
  
-MSVCDLL PulComposite GARP::PCmp(const spin_system& sys) const;
-MSVCDLL PulComposite GARP::PCmpGARP(const spin_system& sys) const;
+MSVCDLL PulComposite PCmp(const spin_system& sys) const;
+MSVCDLL PulComposite PCmpGARP(const spin_system& sys) const;
 
         // Input        GP      : GARP parameters
         //              sys     : A spin system
@@ -234,7 +234,7 @@ MSVCDLL PulComposite GARP::PCmpGARP(const spin_system& sys) const;
         //                        applicable to sys
  
  
-MSVCDLL PulComposite GARP::PCmp(const spin_system& sys, const super_op& LOp) const;
+MSVCDLL PulComposite PCmp(const spin_system& sys, const super_op& LOp) const;
   
         // Input        GP      : GARP parameters
         //              sys     : A spin system 
@@ -253,7 +253,7 @@ MSVCDLL PulComposite GARP::PCmp(const spin_system& sys, const super_op& LOp) con
 where each R is a single GARP-1 composite pulse, and the - indicates a
 180 phase shift.  Indeed, this is just the cycle used in WALTZ-4             */
 
-MSVCDLL PulCycle GARP::CycGARP1(const spin_system& sys) const;
+MSVCDLL PulCycle CycGARP1(const spin_system& sys) const;
 
         // Input        GP      : GARP parameters
         //              sys     : A spin system
@@ -278,8 +278,8 @@ where each R is a single GARP-1 composite pulse, and the - indicates a
 180 phase shift.  Indeed, this is just the cycle used in WALTZ-4             */  
  
  
-//PulTrain GARP::PT(const spin_system& sys) const;
-//PulTrain GARP::PT_GARP1(const spin_system& sys) const;
+//PulTrain PT(const spin_system& sys) const;
+//PulTrain PT_GARP1(const spin_system& sys) const;
  
         // Input        GP      : GARP parameters
         //              sys     : A spin system
@@ -345,7 +345,7 @@ where each R is a single GARP-1 composite pulse, and the - indicates a
 // ____________________________________________________________________________
 
 
-MSVCDLL void GARP::read(const std::string &filename, int idx=-1);
+MSVCDLL void read(const std::string &filename, int idx=-1);
 
         // Intput               GP      : GARP parameters
         //                      idx     : GARP index
@@ -354,7 +354,7 @@ MSVCDLL void GARP::read(const std::string &filename, int idx=-1);
         //                                with index idx
 
 
-MSVCDLL void GARP::read(const ParameterSet& pset, int idx=-1);
+MSVCDLL void read(const ParameterSet& pset, int idx=-1);
 
         // Intput               GP      : GARP parameters
         //                      pset    : Parameter set
@@ -370,7 +370,7 @@ MSVCDLL void GARP::read(const ParameterSet& pset, int idx=-1);
 //       the angle is specified the length will be set to zero (ideal pulse)
 
  
-MSVCDLL void GARP::ask_read(int argc, char* argv[], int argn, int idx=-1);
+MSVCDLL void ask_read(int argc, char* argv[], int argn, int idx=-1);
 
         // Intput               GP      : GARP parameters
         //                      argc    : Number of arguments
@@ -393,7 +393,7 @@ MSVCDLL void GARP::ask_read(int argc, char* argv[], int argn, int idx=-1);
 // ____________________________________________________________________________
  
 
-MSVCDLL std::ostream& GARP::printBase(std::ostream &ostr) const;
+MSVCDLL std::ostream& printBase(std::ostream &ostr) const;
  
         // Intput               GP      : GARP parameters
         //                      ostr    : Output stream
@@ -401,7 +401,7 @@ MSVCDLL std::ostream& GARP::printBase(std::ostream &ostr) const;
         //                                to the output stream
  
  
-MSVCDLL std::ostream& GARP::print(std::ostream &ostr) const;
+MSVCDLL std::ostream& print(std::ostream &ostr) const;
  
         // Intput               GP      : GARP parameters
         //                      ostr    : Output stream

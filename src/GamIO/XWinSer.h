@@ -120,8 +120,8 @@ volatile void XWinSerfatality(int eidx, const std::string& pname) const;
 
    Use of noreplace & nocreate maybe didn't make it to ANSI standard...      */  
 
-void XWinSer::CheckMode(int mode);
-int  XWinSer::CheckSize(int warn=2);
+void CheckMode(int mode);
+int  CheckSize(int warn=2);
 
  
 // ----------------------------------------------------------------------------
@@ -134,16 +134,16 @@ int  XWinSer::CheckSize(int warn=2);
    boundary is reached. Similarly, we'll check that all blocks are all
    written into the file beginning at such a boundary.                       */  
  
-void XWinSer::SetPadding();
-bool XWinSer::CheckBoundary();
-void XWinSer::SkipPadding();
-void XWinSer::AddPadding();
+void SetPadding();
+bool CheckBoundary();
+void SkipPadding();
+void AddPadding();
 
 // ----------------------------------------------------------------------------
 // iv                    File Default Settings
 // ----------------------------------------------------------------------------
 
-void XWinSer::SetDefaults();
+void SetDefaults();
 
 
 public:
@@ -165,12 +165,12 @@ public:
         //                                 trunc  = truncate file at 0 length 
 */
 
-XWinSer::XWinSer();
-XWinSer::XWinSer(const std::string& name, int TD, bool byteord,
+XWinSer();
+XWinSer(const std::string& name, int TD, bool byteord,
                                       int mode = std::ios::binary|std::ios::in);
-XWinSer::XWinSer(const XWinSer& XWF);
-virtual XWinSer::~XWinSer();                                                             
-virtual XWinSer& XWinSer::operator=(const XWinSer& XWF);
+XWinSer(const XWinSer& XWF);
+virtual ~XWinSer();                                                             
+virtual XWinSer& operator=(const XWinSer& XWF);
 
 
 // ____________________________________________________________________________
@@ -180,13 +180,13 @@ virtual XWinSer& XWinSer::operator=(const XWinSer& XWF);
 /* These functions allow users to get some simple intformation regarding the
    contents of the Bruker data serial file.                                  */
 
-	std::string XWinSer::sername() const;		// File name
-virtual int         XWinSer::size()    const;		// No. complex points
-	int         XWinSer::TDS()     const;		// No. total points
-virtual bool        XWinSer::order()   const;		// Data byte order
-virtual int         XWinSer::bytes()   const;		// File size in bytes
-virtual int         XWinSer::blocks()  const;		// No. Sers
-virtual int         XWinSer::pad()     const;		// No. padding bytes
+	std::string sername() const;		// File name
+virtual int         size()    const;		// No. complex points
+	int         TDS()     const;		// No. total points
+virtual bool        order()   const;		// Data byte order
+virtual int         bytes()   const;		// File size in bytes
+virtual int         blocks()  const;		// No. Sers
+virtual int         pad()     const;		// No. padding bytes
 
 // ____________________________________________________________________________
 // C                       XWinSer Input Functions
@@ -212,16 +212,16 @@ virtual int         XWinSer::pad()     const;		// No. padding bytes
 
  Above X=Currently Inactive, +=File Must Be Properly Opened For Reading      */
 
-virtual row_vector XWinSer::readFID(const std::string& F,int TD,int BO=-1,int I=-1);
-row_vector XWinSer::readFID(int indx=-1);
-matrix     XWinSer::readFIDs(const std::string& name, int TD, int BO, int I, int J);
-matrix     XWinSer::readFIDs(int I, int J);
-matrix     XWinSer::readSer(const std::string& name, int TD, int byteord=-1);
-matrix     XWinSer::readSer();
-row_vector XWinSer::readSlice(const std::string& fin, int TD, int BO=-1, int I=-1);
-row_vector XWinSer::readSlice(int idx);
-row_vector XWinSer::readSlices(const std::string& F, int TD, int BO, int I, int J);
-row_vector XWinSer::readSlices(int idx, int NB);
+virtual row_vector readFID(const std::string& F,int TD,int BO=-1,int I=-1);
+row_vector readFID(int indx=-1);
+matrix     readFIDs(const std::string& name, int TD, int BO, int I, int J);
+matrix     readFIDs(int I, int J);
+matrix     readSer(const std::string& name, int TD, int byteord=-1);
+matrix     readSer();
+row_vector readSlice(const std::string& fin, int TD, int BO=-1, int I=-1);
+row_vector readSlice(int idx);
+row_vector readSlices(const std::string& F, int TD, int BO, int I, int J);
+row_vector readSlices(int idx, int NB);
 
 
 // ____________________________________________________________________________
@@ -233,10 +233,10 @@ row_vector XWinSer::readSlices(int idx, int NB);
    a series of row vectors. Note that usually there are parameter file to go
    along with such data files, normally called acqus and acqu2s.             */
 
-virtual int XWinSer::write(const std::string& F, const row_vector& data, int warn=2);
-virtual int XWinSer::write(const row_vector& data, int warn=2);
-virtual int XWinSer::write(const std::string& F, const matrix& data, int warn=2);
-virtual int XWinSer::write(const matrix& data, int warn=2);
+virtual int write(const std::string& F, const row_vector& data, int warn=2);
+virtual int write(const row_vector& data, int warn=2);
+virtual int write(const std::string& F, const matrix& data, int warn=2);
+virtual int write(const matrix& data, int warn=2);
 
 // ____________________________________________________________________________
 // E                    XWinSer Standard Output Functions
@@ -246,14 +246,14 @@ virtual int XWinSer::write(const matrix& data, int warn=2);
    They do not do any manipulations to the file whatsoever, they will only
    report on what in known about the data values and file sizes.             */ 
 
-std::ostream& XWinSer::print(std::ostream& ostr, int full=0, int hdr=1);
+std::ostream& print(std::ostream& ostr, int full=0, int hdr=1);
 friend  std::ostream& operator<< (std::ostream& O, XWinSer& F);
 
 // ____________________________________________________________________________
 // F                  XWinSer File Handling Functions
 // ____________________________________________________________________________
 
-bool XWinSer::open(const std::string& name, int TD, bool byteord,
+bool open(const std::string& name, int TD, bool byteord,
                          int mode = std::ios::binary|std::ios::in, int warn=2);
 
 

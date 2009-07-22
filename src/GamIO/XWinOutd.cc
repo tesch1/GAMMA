@@ -50,6 +50,7 @@
 #include <GamIO/XWinOutd.h>		// Include the interface
 #include <GamIO/XWinPSet.h>             // Include Bruker parameter sets
 #include <Basics/Gutils.h>		// Include GAMMA errors
+#include <stdlib.h>
 #include <string>			// Include libstdc++ strings
 #include <time.h>			// Include time and data access
 #ifndef _MSC_VER                        // If not using MSVC++ then we

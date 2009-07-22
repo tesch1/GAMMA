@@ -94,17 +94,17 @@ class GPControls 			// Gnuplot controls
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-         void GPControls::GPCerror(int eidx,                            int noret=0);
-         void GPControls::GPCerror(int eidx,  const std::string& pname, int noret=0);
-volatile void GPControls::GPCfatal(int eidx);
-volatile void GPControls::GPCfatal(int eidx,  const std::string& pname);
+         void GPCerror(int eidx,                            int noret=0);
+         void GPCerror(int eidx,  const std::string& pname, int noret=0);
+volatile void GPCfatal(int eidx);
+volatile void GPCfatal(int eidx,  const std::string& pname);
 
 //____________________________________________________________________________
 // ii                        Gnuplot Structure Functions
 //____________________________________________________________________________
 
-void GPControls::defaults();
-void GPControls::copy(const GPControls& GPC);
+void defaults();
+void copy(const GPControls& GPC);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -123,54 +123,54 @@ void GPControls::copy(const GPControls& GPC);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC GPControls::GPControls();				// Default controls
-MSVCDLC GPControls::GPControls(const GPControls& GPC);		// Duplicate controls
+MSVCDLC GPControls();				// Default controls
+MSVCDLC GPControls(const GPControls& GPC);		// Duplicate controls
 
-MSVCDLC virtual GPControls::~GPControls();
-MSVCDLL GPControls& GPControls::operator= (const GPControls& GPC);
+MSVCDLC virtual ~GPControls();
+MSVCDLL GPControls& operator= (const GPControls& GPC);
 
 // ____________________________________________________________________________
 //                        Gnuplot Load File Basics
 // ____________________________________________________________________________
 
-MSVCDLL bool GPControls::NewLoadFile(bool warn=true);
-MSVCDLL void GPControls::CloseLoadFile();
-MSVCDLL void GPControls::RunLoadFile();
+MSVCDLL bool NewLoadFile(bool warn=true);
+MSVCDLL void CloseLoadFile();
+MSVCDLL void RunLoadFile();
 
 // ____________________________________________________________________________
 //                        Gnuplot Data File Basics
 // ____________________________________________________________________________
 
-MSVCDLL bool GPControls::NewDataFile(int idx=-1, bool warn=true);
-MSVCDLL void GPControls::CloseDataFile();
+MSVCDLL bool NewDataFile(int idx=-1, bool warn=true);
+MSVCDLL void CloseDataFile();
 
 // ____________________________________________________________________________
 //            Gnuplot Controls Gnuplot Loadfile Output Commands
 // ____________________________________________________________________________
 
-MSVCDLL void GPControls::SetLoadFile(const  std::string& lfn);
-MSVCDLL void GPControls::SetDataFile(const  std::string& dfn);
-MSVCDLL void GPControls::SetDataFiles(const std::vector<std::string>& dfs);
-MSVCDLL void GPControls::SetDelimiter(const std::string& dlt);
-MSVCDLL void GPControls::SetParametric( bool par);
-MSVCDLL void GPControls::SetKey(        bool key);
-MSVCDLL void GPControls::SetBorder(     bool bord);
-MSVCDLL void GPControls::SetXTics(      bool xt);
-MSVCDLL void GPControls::SetYTics(      bool yt);
+MSVCDLL void SetLoadFile(const  std::string& lfn);
+MSVCDLL void SetDataFile(const  std::string& dfn);
+MSVCDLL void SetDataFiles(const std::vector<std::string>& dfs);
+MSVCDLL void SetDelimiter(const std::string& dlt);
+MSVCDLL void SetParametric( bool par);
+MSVCDLL void SetKey(        bool key);
+MSVCDLL void SetBorder(     bool bord);
+MSVCDLL void SetXTics(      bool xt);
+MSVCDLL void SetYTics(      bool yt);
 
 // ____________________________________________________________________________
 //            Gnuplot Controls Gnuplot Loadfile Output Commands
 // ____________________________________________________________________________
 
-MSVCDLL void GPControls::WriteParametric(std::ofstream&  ostr);
-MSVCDLL void GPControls::WriteBorder(std::ofstream& ostr);
-MSVCDLL void GPControls::WriteKey(std::ofstream&    ostr);
-MSVCDLL void GPControls::WriteXLabel(std::ofstream& ostr);
-MSVCDLL void GPControls::WriteYLabel(std::ofstream& ostr);
-MSVCDLL void GPControls::WriteZLabel(std::ofstream& ostr);
-MSVCDLL void GPControls::WriteXTics(std::ofstream&  ostr);
-MSVCDLL void GPControls::WriteYTics(std::ofstream&  ostr);
-MSVCDLL void GPControls::WritePause(std::ofstream&  ostr);
+MSVCDLL void WriteParametric(std::ofstream&  ostr);
+MSVCDLL void WriteBorder(std::ofstream& ostr);
+MSVCDLL void WriteKey(std::ofstream&    ostr);
+MSVCDLL void WriteXLabel(std::ofstream& ostr);
+MSVCDLL void WriteYLabel(std::ofstream& ostr);
+MSVCDLL void WriteZLabel(std::ofstream& ostr);
+MSVCDLL void WriteXTics(std::ofstream&  ostr);
+MSVCDLL void WriteYTics(std::ofstream&  ostr);
+MSVCDLL void WritePause(std::ofstream&  ostr);
 
 // ____________________________________________________________________________
 //            Loadfile Output Commands For Spherical 3D Plots
@@ -182,7 +182,7 @@ MSVCDLL void GPControls::WritePause(std::ofstream&  ostr);
 // Z              Gnuplot Controls Standard Output Functions
 // ____________________________________________________________________________
 
-MSVCDLL virtual std::ostream& GPControls::print(std::ostream& ostr, bool phdr=true);
+MSVCDLL virtual std::ostream& print(std::ostream& ostr, bool phdr=true);
 MSVCDLL friend  std::ostream& operator<< (std::ostream& ostr, GPControls& GPC);
 
 

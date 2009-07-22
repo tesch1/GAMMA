@@ -34,10 +34,14 @@
 
 #include <HSLib/HSprop.h>		// Include the header
 #include <HSLib/GenOp.h> 		// Must know operators
+#include <HSLib/Evolve.h>  
 #include <Basics/Gconstants.h>		// Must know PI and PI2
 #include <Basics/Gutils.h>		// Know about GAMMA errors
 #include <Basics/StringCut.h>	 // Know GAMMA form Gform
 #include <string> 			// Must know about strings
+
+
+using namespace Evolve;
 
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------ 
@@ -289,13 +293,15 @@ HSprop HSprop::Pow(int n) const
   return Upow;					// Return Upow = U^n
   }
 
+/*
+
 // ______________________________________________________________________
 // F                      PROPAGATOR FUNCTIONS
 // ______________________________________________________________________
 
-/* These are from before the invention of propagators.  The will one day
-   become deprecated.  For now the are just "friend" functions of this
-   class and gleaned from what used to be nmrlib.cc                     */
+// These are from before the invention of propagators.  The will one day
+//   become deprecated.  For now the are just "friend" functions of this
+//   class and gleaned from what used to be nmrlib.cc                     
 
 
         //                      ham   : "Hamiltonian" for propagation (in Hertz)
@@ -322,13 +328,14 @@ void prop_ip(gen_op& U, double time)
   }
 
 
+
 // ____________________________________________________________________________
-// G                      EVOLUTION  FUNCTIONS
+//                          EVOLUTION  FUNCTIONS
 // ____________________________________________________________________________
  
-/* This set of functions were in GAMMA before the addition of this propagator
-   class.  They will one day become deprecated.  For now the are just "friend"
-   functions of this class and gleaned from what used to be nmrlib.cc        */ 
+// This set of functions were in GAMMA before the addition of this propagator
+//   class.  They will one day become deprecated.  For now the are just "friend"
+//   functions of this class and gleaned from what used to be nmrlib.cc        
 
 // ----------------------------------------------------------------------------
 //                   EVOLUTION UNDER A STATIC HAMILTONIAN
@@ -378,7 +385,8 @@ void evolve_ip(gen_op& sigma, const gen_op& ham, double time)
 
 gen_op evolve(const gen_op& sigma, const gen_op& U)
   {
-  if(!U.test_EBR()) U.Op_base(sigma);   // Put U in sigma's basis unless EBR
+  if(!U.test_EBR()) 
+    U.Op_base(sigma);   // Put U in sigma's basis unless EBR
   return U.sim_trans(sigma);            // Return propagated sigma
   }
  
@@ -389,14 +397,15 @@ void evolve_ip(gen_op& sigma, const gen_op& U)
   return;                               // Return sigma1
   }
 
+*/
 
 // ____________________________________________________________________________
 // H              HILBERT SPACE PROPAGATOR CONTAINER SUPPORT FUNCTIONS
 // ____________________________________________________________________________
  
-/* Aside for providing basic tests as to whether to operators are equvalent or
-   not, these operators are necessary if any STL container classes are to
-   be used based on propagators (e.g. list<HSprop> or vector<HSprop>)        */  
+// Aside for providing basic tests as to whether to operators are equvalent or
+//   not, these operators are necessary if any STL container classes are to
+//   be used based on propagators (e.g. list<HSprop> or vector<HSprop>)       
 
 
 bool HSprop::operator== (const HSprop& U) const
@@ -408,6 +417,8 @@ bool HSprop::operator== (const HSprop& U) const
 bool HSprop::operator!= (const HSprop& U) const { return !(*this==U); };
 bool HSprop::operator<  (const HSprop& U) const { return (dim()<U.dim()); };
 bool HSprop::operator>  (const HSprop& U) const { return (dim()<U.dim()); };
+
+
 
 // ____________________________________________________________________________
 // X                      COMPLEX OPERATOR FUNCTIONS

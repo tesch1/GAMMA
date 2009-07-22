@@ -84,17 +84,17 @@ friend class BlochSys;
         //                      nr	: Flag for linefeed (0=linefeed)
         //                      pn	: string in message
      
-         void MagVec::MVerror(int ei,                        int nr=0) const;
-         void MagVec::MVerror(int ei, const std::string& pn, int nr=0) const;
-volatile void MagVec::MVfatal(int ei) const;
-volatile void MagVec::MVfatal(int ei, const std::string& pn) const;
+         void MVerror(int ei,                        int nr=0) const;
+         void MVerror(int ei, const std::string& pn, int nr=0) const;
+volatile void MVfatal(int ei) const;
+volatile void MVfatal(int ei, const std::string& pn) const;
 
 // ____________________________________________________________________________
 // ii                   Magnetization Vector Checking Functions
 // ____________________________________________________________________________
 
-bool MagVec::CheckNorms(const  std::vector<double>&  Ns, bool warn=true) const;
-bool MagVec::CheckRange(int cmp,                    bool warn=true) const;
+bool CheckNorms(const  std::vector<double>&  Ns, bool warn=true) const;
+bool CheckRange(int cmp,                    bool warn=true) const;
 
 // ____________________________________________________________________________
 // iii                     Magnetization Vector Setup Functions
@@ -110,12 +110,12 @@ bool MagVec::CheckRange(int cmp,                    bool warn=true) const;
    Parameter NMagVecs is used indicate how many sub-vectors are defined.
    If that is NOT found, it is assumed that there is only 1 sub-vector.     */
 
-bool MagVec::SetVector(const   ParameterSet& P, int pfx=-1, bool W=true);
-bool MagVec::GetNVects(const   ParameterSet& P, int&     N, bool W=true) const;
-bool MagVec::SetSubVects(const ParameterSet& P, int      N, bool W=true);
-bool MagVec::GetCoord(const  ParameterSet& P, 
+bool SetVector(const   ParameterSet& P, int pfx=-1, bool W=true);
+bool GetNVects(const   ParameterSet& P, int&     N, bool W=true) const;
+bool SetSubVects(const ParameterSet& P, int      N, bool W=true);
+bool GetCoord(const  ParameterSet& P, 
                                      coord& pt, int idx=-1, bool W=true) const;
-bool MagVec::GetMxMyMz(const   ParameterSet& P, 
+bool GetMxMyMz(const   ParameterSet& P, 
             double& Mx, double& My, double& Mz, int idx=-1, bool W=true) const;
 
 // ----------------------------------------------------------------------------
@@ -123,7 +123,7 @@ bool MagVec::GetMxMyMz(const   ParameterSet& P,
 // ----------------------------------------------------------------------------
 
 
-//bool MagVec::GetVect(const ParameterSet& pset, int i, double& v, Isotope& I,
+//bool GetVect(const ParameterSet& pset, int i, double& v, Isotope& I,
 //             double& R1, double& R2, coord& Pt, int& Sp, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -149,26 +149,26 @@ public:
 //                          Simple Constructors
 // ----------------------------------------------------------------------------
 
-MSVCDLC MagVec::MagVec(int   N=0);
-MSVCDLC MagVec::MagVec(const MagVec& MV);
-MSVCDLC MagVec::MagVec(const col_vector& CV);
+MSVCDLC MagVec(int   N=0);
+MSVCDLC MagVec(const MagVec& MV);
+MSVCDLC MagVec(const col_vector& CV);
 
 // ----------------------------------------------------------------------------
 //              Constructors Using Individual Magnetization Vectors
 // ----------------------------------------------------------------------------
 
-MSVCDLC MagVec::MagVec(double Mx, double My, double Mz);
-MSVCDLC MagVec::MagVec(const coord& M);
-MSVCDLC MagVec::MagVec(double Mx1,double My1,double Mz1,double Mx2,double My2,double Mz2);
-MSVCDLC MagVec::MagVec(const coord& M1, const coord& M2);
-MSVCDLC MagVec::MagVec(const std::vector<coord>& Ms);
+MSVCDLC MagVec(double Mx, double My, double Mz);
+MSVCDLC MagVec(const coord& M);
+MSVCDLC MagVec(double Mx1,double My1,double Mz1,double Mx2,double My2,double Mz2);
+MSVCDLC MagVec(const coord& M1, const coord& M2);
+MSVCDLC MagVec(const std::vector<coord>& Ms);
 
 // ----------------------------------------------------------------------------
 //                       Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-//        MagVec::~MagVec();
-//MagVec& MagVec::operator= (const MagVec& MV);
+//        ~MagVec();
+//MagVec& operator= (const MagVec& MV);
 
 // ____________________________________________________________________________
 // B           Magnetization Vector - Magnetization Vector Interactions
@@ -184,47 +184,47 @@ MSVCDLC MagVec::MagVec(const std::vector<coord>& Ms);
       +      M,M1     Returns M+M1          +=      M,M1     M1 added to M
       -      M1,M2    Returns M1-M2                                          */
 
-//MagVec MagVec::operator-  ()                 const;
-MSVCDLL MagVec MagVec::operator+  (const MagVec& M1) const;
-MSVCDLL void   MagVec::operator+= (const MagVec& M1);
-MSVCDLL MagVec MagVec::operator-  (const MagVec& M1) const;
-MSVCDLL void   MagVec::operator-= (const MagVec& M1);
+//MagVec operator-  ()                 const;
+MSVCDLL MagVec operator+  (const MagVec& M1) const;
+MSVCDLL void   operator+= (const MagVec& M1);
+MSVCDLL MagVec operator-  (const MagVec& M1) const;
+MSVCDLL void   operator-= (const MagVec& M1);
 
 // ____________________________________________________________________________
 // C                    Magnetization Vector Access
 // ____________________________________________________________________________
 
-//int MagVec::size()   const;			// Inherited
-MSVCDLL int MagVec::NComps() const;
+//int size()   const;			// Inherited
+MSVCDLL int NComps() const;
 
 // ----------------------------------------------------------------------------
 //                  Magnetization (Sub)Vector Components
 // ----------------------------------------------------------------------------
 
-MSVCDLL double MagVec::Mx(int cmp) const;
-MSVCDLL double MagVec::My(int cmp) const;
-MSVCDLL double MagVec::Mz(int cmp) const;
+MSVCDLL double Mx(int cmp) const;
+MSVCDLL double My(int cmp) const;
+MSVCDLL double Mz(int cmp) const;
 
-MSVCDLL void   MagVec::Mx(int cmp, double mx);
-MSVCDLL void   MagVec::My(int cmp, double my);
-MSVCDLL void   MagVec::Mz(int cmp, double mz);
+MSVCDLL void   Mx(int cmp, double mx);
+MSVCDLL void   My(int cmp, double my);
+MSVCDLL void   Mz(int cmp, double mz);
 
-MSVCDLL double MagVec::x(int     cmp=0) const;
-MSVCDLL double MagVec::y(int     cmp=0) const;
-MSVCDLL double MagVec::z(int     cmp=0) const;
-MSVCDLL double MagVec::norm(int  cmp=0) const;
-MSVCDLL double MagVec::theta(int cmp=0) const;
-MSVCDLL double MagVec::phi(int   cmp=0) const;
+MSVCDLL double x(int     cmp=0) const;
+MSVCDLL double y(int     cmp=0) const;
+MSVCDLL double z(int     cmp=0) const;
+MSVCDLL double norm(int  cmp=0) const;
+MSVCDLL double theta(int cmp=0) const;
+MSVCDLL double phi(int   cmp=0) const;
 
 // ----------------------------------------------------------------------------
 //                     Magnetization (Sub)Vector Norms
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::vector<double> MagVec::Norms() const;
-MSVCDLL void                MagVec::Norms(const std::vector<double>& Ns);
+MSVCDLL std::vector<double> Norms() const;
+MSVCDLL void                Norms(const std::vector<double>& Ns);
 
-MSVCDLL double MagVec::Norm(int i) const;
-MSVCDLL void   MagVec::Norm(double nv, int i);
+MSVCDLL double Norm(int i) const;
+MSVCDLL void   Norm(double nv, int i);
 
 // ____________________________________________________________________________
 // C              Magnetization Vector Parameter Set Functions
@@ -245,7 +245,7 @@ virtual int write(std::ofstream& ofstr, int idx=-1, int warn=2) const;
 
 MSVCDLL             operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const MagVec& MV);
-MSVCDLL bool MagVec::PSetAdd(ParameterSet& pset, int pfx=-1)   const;
+MSVCDLL bool PSetAdd(ParameterSet& pset, int pfx=-1)   const;
 
 //-----------------------------------------------------------------------------
 //            Parameter Set File From Magnetization Vector
@@ -259,8 +259,8 @@ MSVCDLL bool MagVec::PSetAdd(ParameterSet& pset, int pfx=-1)   const;
         // Output               none    : Vector is written as a parameter
         //                                to file or output file stream
 
-MSVCDLL bool MagVec::write(const std::string& filename, int pfx=-1, int warn=2) const;
-MSVCDLL bool MagVec::write(std::ofstream& ofstr,        int pfx=-1, int warn=2) const;
+MSVCDLL bool write(const std::string& filename, int pfx=-1, int warn=2) const;
+MSVCDLL bool write(std::ofstream& ofstr,        int pfx=-1, int warn=2) const;
 
 // ____________________________________________________________________________
 // D                  Magnetization Vector Input Functions
@@ -293,34 +293,34 @@ MSVCDLL bool MagVec::write(std::ofstream& ofstr,        int pfx=-1, int warn=2) 
 	// Note			 	 : The vector is modifed (filled)
 
 
-MSVCDLL bool MagVec::read(const std::string& fn,    int idx=-1, int warn=2);
-MSVCDLL bool MagVec::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string& fn,    int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset, int idx=-1, int warn=2);
 
-MSVCDLL std::string MagVec::ask_read(int argc, char* argv[], int argn);
-MSVCDLL std::string MagVec::ask_read(int argc, char* argv[], int argn,
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,
                                                        const std::string& def); 
 
 // ____________________________________________________________________________
 // E                Magnetization Vector Standard I/O Functions
 // ____________________________________________________________________________
 
-MSVCDLL std::vector<std::string> MagVec::printStrings() const;
-MSVCDLL std::ostream&            MagVec::print(std::ostream& out, int np=20) const;
+MSVCDLL std::vector<std::string> printStrings() const;
+MSVCDLL std::ostream&            print(std::ostream& out, int np=20) const;
 MSVCDLL friend std::ostream& operator<<(std::ostream& out, const MagVec& M);
 
 // ____________________________________________________________________________
 // F                  Specialized Magnetization Vectors
 // ____________________________________________________________________________
 
-MSVCDLL        MagVec MagVec::Mx()    const;
-MSVCDLL        MagVec MagVec::My()    const;
-MSVCDLL        MagVec MagVec::Mz()    const;
-MSVCDLL static MagVec MagVec::MxVec(int NC);
-MSVCDLL static MagVec MagVec::MyVec(int NC);
-MSVCDLL static MagVec MagVec::MzVec(int NC);
-MSVCDLL        MagVec MagVec::MxVec() const;
-MSVCDLL        MagVec MagVec::MyVec() const;
-MSVCDLL        MagVec MagVec::MzVec() const;
+MSVCDLL        MagVec Mx()    const;
+MSVCDLL        MagVec My()    const;
+MSVCDLL        MagVec Mz()    const;
+MSVCDLL static MagVec MxVec(int NC);
+MSVCDLL static MagVec MyVec(int NC);
+MSVCDLL static MagVec MzVec(int NC);
+MSVCDLL        MagVec MxVec() const;
+MSVCDLL        MagVec MyVec() const;
+MSVCDLL        MagVec MzVec() const;
 
 // ____________________________________________________________________________
 // G                Magnetization Vector Evolution Functions
@@ -333,7 +333,7 @@ MSVCDLL        MagVec MagVec::MzVec() const;
 
 #ifdef PYGAMMA					// Begin PyGAMMA code block
 
-std::string MagVec::PyPrint() const;
+std::string PyPrint() const;
 
 #endif						// End PyGAMMA code block
 

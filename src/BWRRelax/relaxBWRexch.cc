@@ -39,6 +39,7 @@
 
 #include <BWRRelax/relaxBWRexch.h>	// Include the header
 #include <Basics/ParamSet.h>		// Include parameter sets
+#include <stdlib.h>
 #include <string>			// Include strings
 #include <LSLib/sys_dynamic.h>		// Include dynamic spin systems 
 #include <HSLib/GenOp.h>		// Include operators 

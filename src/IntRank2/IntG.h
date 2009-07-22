@@ -146,11 +146,11 @@ volatile void IGfatal(int eidx, const std::string& pname)              const;
    numbers, there is a separation between determining the spin quantum
    number and the rest of the interaction.                                   */
 
-bool IntG::getGI(const ParameterSet& pset,
+bool getGI(const ParameterSet& pset,
          double& Iqn, double& g, double& gA, double& eta, EAngles& EA,
                                  double& Bo, int idx=-1, bool warn=true) const;
 
-bool IntG::getGI(const ParameterSet& pset, const Isotope& ISI,
+bool getGI(const ParameterSet& pset, const Isotope& ISI,
                     double& g, double& gA, double& eta, EAngles& EA,
                                  double& Bo, int idx=-1, bool warn=true) const;
 
@@ -168,7 +168,7 @@ bool IntG::getGI(const ParameterSet& pset, const Isotope& ISI,
            Note                         : Parameters are G, G(#), g, g(#)
            Note                         : The value is unitless              */
 
-bool IntG::getGIso(const ParameterSet& pset, double& g,
+bool getGIso(const ParameterSet& pset, double& g,
                                              int idx=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ bool IntG::getGIso(const ParameterSet& pset, double& g,
            Note                         : This WILL NOT alter the interaction
            Note                         : Parameters are GA,GA(#),gA,gA(#)   */
 
-bool IntG::getGA(const ParameterSet& pset, double& gA,
+bool getGA(const ParameterSet& pset, double& gA,
                                              int idx=-1, bool warn=true) const;
 
 // ----------------------------------------------------------------------------
@@ -206,7 +206,7 @@ bool IntG::getGA(const ParameterSet& pset, double& gA,
                         GOmega, Omega,  GField(#), GFieldT(#)
                                         gOmega(#), GOmega(#)                 */
 
-bool IntG::getField(const ParameterSet& pset, double& Bo,
+bool getField(const ParameterSet& pset, double& Bo,
                                              int idx=-1, bool warn=true) const;
 
 
@@ -224,8 +224,8 @@ bool IntG::getField(const ParameterSet& pset, double& Bo,
    numbers, there is a special function that takes a spin isotope for the
    spin quantum designation.                                                 */
 
-bool IntG::setGI(const ParameterSet& pset,         int idx=-1, bool warn=true);
-bool IntG::setGI(const Isotope& II, const ParameterSet& pset,
+bool setGI(const ParameterSet& pset,         int idx=-1, bool warn=true);
+bool setGI(const Isotope& II, const ParameterSet& pset,
                                                    int idx=-1, bool warn=true);
 
 // ____________________________________________________________________________
@@ -243,8 +243,8 @@ bool IntG::setGI(const Isotope& II, const ParameterSet& pset,
       setBo      Sets the value of BoFIELD then adjusts the value of _XI
                  based on this value & DELZZ. Bo assumed in Gauss           */
 
-void IntG::setXi();
-void IntG::setBo(double Bo);
+void setXi();
+void setBo(double Bo);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -277,8 +277,8 @@ void IntG::setBo(double Bo);
 //                  Simple Constructors That Don't Do Much
 // ----------------------------------------------------------------------------
 
-MSVCDLC IntG::IntG();					// Null g interaction
-MSVCDLC IntG::IntG(const IntG &GI1);			// Duplicate g interaction
+MSVCDLC IntG();					// Null g interaction
+MSVCDLC IntG(const IntG &GI1);			// Duplicate g interaction
 
 // ----------------------------------------------------------------------------
 //            Direct Constructors That Use Spherical Parameters
@@ -301,11 +301,11 @@ MSVCDLC IntG::IntG(const IntG &GI1);			// Duplicate g interaction
 		   Bo      : External field strength    (Gauss)
 	Output	   none    : GI interaction constructed                      */
 
-MSVCDLC IntG::IntG(const  std::string& Iso, double g, double gA,
+MSVCDLC IntG(const  std::string& Iso, double g, double gA,
                         double geta=0,  const EAngles& EA=EAzero, double Bo=0);
-MSVCDLC IntG::IntG(const  Isotope&     Iso, double g, double gA,
+MSVCDLC IntG(const  Isotope&     Iso, double g, double gA,
                         double geta=0,  const EAngles& EA=EAzero, double Bo=0);
-MSVCDLC IntG::IntG(double Iqn,              double g, double gA,
+MSVCDLC IntG(double Iqn,              double g, double gA,
                         double geta=0,  const EAngles& EA=EAzero, double Bo=0);
 
 // ----------------------------------------------------------------------------
@@ -329,13 +329,13 @@ MSVCDLC IntG::IntG(double Iqn,              double g, double gA,
 		   Bo      : External field strength    (Gauss)
 	Output	   none    : GI interaction constructed                      */
 
-MSVCDLC IntG::IntG(const std::string& I, const coord& Gcart, 
+MSVCDLC IntG(const std::string& I, const coord& Gcart, 
                                          const EAngles& EA=EAzero, double B=0);
-MSVCDLC IntG::IntG(const Isotope&     I, const coord& Gcart,
+MSVCDLC IntG(const Isotope&     I, const coord& Gcart,
                                          const EAngles& EA=EAzero, double B=0);
-MSVCDLC IntG::IntG(double             I, const coord& Gcart,
+MSVCDLC IntG(double             I, const coord& Gcart,
                                          const EAngles& EA=EAzero, double B=0);
-MSVCDLC IntG::IntG(                      const coord& Gcart,
+MSVCDLC IntG(                      const coord& Gcart,
                                          const EAngles& EA=EAzero, double B=0);
 
 // ----------------------------------------------------------------------------
@@ -360,15 +360,15 @@ MSVCDLC IntG::IntG(                      const coord& Gcart,
                                        and parameters in pset                */
 
 
-MSVCDLC IntG::IntG(                  const ParameterSet& pset, int idx=-1, int warn=2);
-MSVCDLC IntG::IntG(const Isotope& II,const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLC IntG(                  const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLC IntG(const Isotope& II,const ParameterSet& pset, int idx=-1, int warn=2);
  
 // ----------------------------------------------------------------------------
 //                          Assignment and Destruction
 // ----------------------------------------------------------------------------
 
-MSVCDLL void IntG::operator= (const IntG &GI1);
-MSVCDLC      IntG::~IntG();
+MSVCDLL void operator= (const IntG &GI1);
+MSVCDLC      ~IntG();
 
 // ____________________________________________________________________________
 // B                   SPATIAL TENSOR COMPONENT ACCESS
@@ -388,10 +388,10 @@ MSVCDLC      IntG::~IntG();
 
    &* should be a value roughly near that of the free electron (2.00231928). */
  
-MSVCDLL double IntG::iso() const;
-MSVCDLL double IntG::g()   const;
-MSVCDLL void   IntG::iso(double giso);
-MSVCDLL void   IntG::g(double   giso);
+MSVCDLL double iso() const;
+MSVCDLL double g()   const;
+MSVCDLL void   iso(double giso);
+MSVCDLL void   g(double   giso);
 
 // ----------------------------------------------------------------------------
 // 			Spatial Tensor Anisotropy Value
@@ -420,13 +420,13 @@ MSVCDLL void   IntG::g(double   giso);
 // static double IntRank2A::delzz();                            INHERITED
 // static double IntRank2A::delA();                             INHERITED
 
-MSVCDLL double IntG::aniso() const;
-MSVCDLL double IntG::gA()    const;
-MSVCDLL void   IntG::aniso(double ga);
-MSVCDLL void   IntG::gA(double    ga);
+MSVCDLL double aniso() const;
+MSVCDLL double gA()    const;
+MSVCDLL void   aniso(double ga);
+MSVCDLL void   gA(double    ga);
 
-MSVCDLL double IntG::gdelz() const;
-MSVCDLL void   IntG::gdelz(double gdz);
+MSVCDLL double gdelz() const;
+MSVCDLL void   gdelz(double gdz);
 
 
 // ----------------------------------------------------------------------------
@@ -437,8 +437,8 @@ MSVCDLL void   IntG::gdelz(double gdz);
 // |Azz| >= |Ayy| >= |Axx| in the treatment contained herein.  These functions
 // are inherited from the base class IntRank2A
 
-//double IntG::eta( ) const; 		INHERITED	Get the asymmetry
-//void   IntG::eta(double Geta);	INHERITED	Set the asymmetry
+//double eta( ) const; 		INHERITED	Get the asymmetry
+//void   eta(double Geta);	INHERITED	Set the asymmetry
 
 //-----------------------------------------------------------------------------
 //                Spherical Tensor Component Access (Normalized)
@@ -543,35 +543,35 @@ IR2ASph IntRank2A::SphCmp(const EAngles& EA)           const;   INHERITED    */
               g   = | ---- |    * del   * A   + Kdel    * g
                uv   [  5   ]         zz    uv       u,v    iso               */
  
-MSVCDLL double IntG::gxx() const;
-MSVCDLL double IntG::gyy() const;
-MSVCDLL double IntG::gzz() const;
-MSVCDLL double IntG::gyx() const;
-MSVCDLL double IntG::gxy() const;
-MSVCDLL double IntG::gzx() const;
-MSVCDLL double IntG::gxz() const;
-MSVCDLL double IntG::gzy() const;
-MSVCDLL double IntG::gyz() const;
+MSVCDLL double gxx() const;
+MSVCDLL double gyy() const;
+MSVCDLL double gzz() const;
+MSVCDLL double gyx() const;
+MSVCDLL double gxy() const;
+MSVCDLL double gzx() const;
+MSVCDLL double gxz() const;
+MSVCDLL double gzy() const;
+MSVCDLL double gyz() const;
 
-MSVCDLL double IntG::gxx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gyy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gzz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gyx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gxy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gzx(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gxz(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gzy(double alpha, double beta, double gamma) const;
-MSVCDLL double IntG::gyz(double alpha, double beta, double gamma) const;
+MSVCDLL double gxx(double alpha, double beta, double gamma) const;
+MSVCDLL double gyy(double alpha, double beta, double gamma) const;
+MSVCDLL double gzz(double alpha, double beta, double gamma) const;
+MSVCDLL double gyx(double alpha, double beta, double gamma) const;
+MSVCDLL double gxy(double alpha, double beta, double gamma) const;
+MSVCDLL double gzx(double alpha, double beta, double gamma) const;
+MSVCDLL double gxz(double alpha, double beta, double gamma) const;
+MSVCDLL double gzy(double alpha, double beta, double gamma) const;
+MSVCDLL double gyz(double alpha, double beta, double gamma) const;
 
-MSVCDLL double IntG::gxx(const EAngles& EA) const;
-MSVCDLL double IntG::gyy(const EAngles& EA) const;
-MSVCDLL double IntG::gzz(const EAngles& EA) const;
-MSVCDLL double IntG::gyx(const EAngles& EA) const;
-MSVCDLL double IntG::gxy(const EAngles& EA) const;
-MSVCDLL double IntG::gzx(const EAngles& EA) const;
-MSVCDLL double IntG::gxz(const EAngles& EA) const;
-MSVCDLL double IntG::gzy(const EAngles& EA) const;
-MSVCDLL double IntG::gyz(const EAngles& EA) const;
+MSVCDLL double gxx(const EAngles& EA) const;
+MSVCDLL double gyy(const EAngles& EA) const;
+MSVCDLL double gzz(const EAngles& EA) const;
+MSVCDLL double gyx(const EAngles& EA) const;
+MSVCDLL double gxy(const EAngles& EA) const;
+MSVCDLL double gzx(const EAngles& EA) const;
+MSVCDLL double gxz(const EAngles& EA) const;
+MSVCDLL double gzy(const EAngles& EA) const;
+MSVCDLL double gyz(const EAngles& EA) const;
 
 //-----------------------------------------------------------------------------
 //                         Orientation Angle Access
@@ -637,8 +637,8 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
 /* This function also returns a scaled Cartesian spatial tensor. That tensor
    values may either be
 
-        1.) GAMMA normalized Auv - Done With IntG::mx()
-        2.) Typical guv values   - Done With IntG::mx(true);
+        1.) GAMMA normalized Auv - Done With mx()
+        2.) Typical guv values   - Done With mx(true);
         3.) Shown in lab frame   - Done With This Function
 
    For case 3.) the values are related to the GAMMA normalized (Auv) and
@@ -651,12 +651,12 @@ void IntRank2A::orientation(double A, double B, double G, bool deg=false);   */
 
    where Kdel is a Kronecker delta function.                                 */
 
-MSVCDLL matrix IntG::Gmx()           const;		// Cartesian G spatial tensor
-MSVCDLL double IntG::Field()         const;		// Get Base Field Bo  (Gauss)
-MSVCDLL double IntG::GOmega()        const;		// Get Base Frequency (GHz)
-MSVCDLL double IntG::Frequency()     const;		// Get Om Frequency   (GHz)
-MSVCDLL void   IntG::Field(double      Bo);		// Set Bo Field       (Gauss)
-MSVCDLL void   IntG::Frequency(double GOm);		// Set Om Frequency   (GHz)
+MSVCDLL matrix Gmx()           const;		// Cartesian G spatial tensor
+MSVCDLL double Field()         const;		// Get Base Field Bo  (Gauss)
+MSVCDLL double GOmega()        const;		// Get Base Frequency (GHz)
+MSVCDLL double Frequency()     const;		// Get Om Frequency   (GHz)
+MSVCDLL void   Field(double      Bo);		// Set Bo Field       (Gauss)
+MSVCDLL void   Frequency(double GOm);		// Set Om Frequency   (GHz)
 
 // ____________________________________________________________________________
 // C                       SPIN TENSOR COMPONENT ACCESS
@@ -718,11 +718,11 @@ MSVCDLL void   IntG::Frequency(double GOm);		// Set Om Frequency   (GHz)
    since this factor affects the anisotropic part of the g interaction if
    the anisotropy is zero, then delzz is zero and xi is zero....            */
 
-MSVCDLL double IntG::xiOm(double Om) const;
-MSVCDLL double IntG::xiBo(double Bo) const;
+MSVCDLL double xiOm(double Om) const;
+MSVCDLL double xiBo(double Bo) const;
 
-MSVCDLL double IntG::xi()         const;		// Overwrites inherited function	
-MSVCDLL void   IntG::xi(double X) const;		// Overwrites inherited function
+MSVCDLL double xi()         const;		// Overwrites inherited function	
+MSVCDLL void   xi(double X) const;		// Overwrites inherited function
 
 // ____________________________________________________________________________
 // E                ELECTRON G INTERACTION AUXILIARY FUNCTIONS
@@ -761,9 +761,9 @@ MSVCDLL void   IntG::xi(double X) const;		// Overwrites inherited function
            			H       : The resonance field (Gauss)
            			Om      : The spectrometer frequency (GHz)   */
 
-MSVCDLL static double IntG::gvalue(double Om, double H);
-MSVCDLL static double IntG::Hvalue(double Om, double g);
-MSVCDLL static double IntG::Omvalue(double H, double g);
+MSVCDLL static double gvalue(double Om, double H);
+MSVCDLL static double Hvalue(double Om, double g);
+MSVCDLL static double Omvalue(double H, double g);
 
 // ----------------------------------------------------------------------------
 //                    Functions To Get Effective G Factors
@@ -773,8 +773,8 @@ MSVCDLL static double IntG::Omvalue(double H, double g);
 //    g    =  g    + - del   | 3cos (theta)-1 + eta*sin (theta)*cos(2*phi) |
 //     eff     iso   2    zz [                                             ]
 
-MSVCDLL double IntG::geff_hfl() const;
-MSVCDLL double IntG::geff_hfl(double theta, double phi) const;
+MSVCDLL double geff_hfl() const;
+MSVCDLL double geff_hfl(double theta, double phi) const;
 
 
 // ----------------------------------------------------------------------------
@@ -797,19 +797,19 @@ MSVCDLL double IntG::geff_hfl(double theta, double phi) const;
         // Note                         : When the field Ho ~ 3 kG and
         //                                g ~ 2.003 then GOm ~ 10 GHz
  
-MSVCDLL double IntG::GOm_iso()  const;
-MSVCDLL double IntG::GOm_para() const;
-MSVCDLL double IntG::GOm_perp() const;
-MSVCDLL double IntG::GOm_xx()   const;
-MSVCDLL double IntG::GOm_yy()   const;
-MSVCDLL double IntG::GOm_zz()   const;
+MSVCDLL double GOm_iso()  const;
+MSVCDLL double GOm_para() const;
+MSVCDLL double GOm_perp() const;
+MSVCDLL double GOm_xx()   const;
+MSVCDLL double GOm_yy()   const;
+MSVCDLL double GOm_zz()   const;
 
-MSVCDLL double IntG::GOm_iso(double  Ho) const;
-MSVCDLL double IntG::GOm_para(double Ho) const;
-MSVCDLL double IntG::GOm_perp(double Ho) const;
-MSVCDLL double IntG::GOm_xx(double   Ho) const;
-MSVCDLL double IntG::GOm_yy(double   Ho) const;
-MSVCDLL double IntG::GOm_zz(double   Ho) const;
+MSVCDLL double GOm_iso(double  Ho) const;
+MSVCDLL double GOm_para(double Ho) const;
+MSVCDLL double GOm_perp(double Ho) const;
+MSVCDLL double GOm_xx(double   Ho) const;
+MSVCDLL double GOm_yy(double   Ho) const;
+MSVCDLL double GOm_zz(double   Ho) const;
 
 
 // ----------------------------------------------------------------------------
@@ -831,12 +831,12 @@ MSVCDLL double IntG::GOm_zz(double   Ho) const;
         // Note                         : When the field GOm ~ 10 GHz and
         //                                g ~ 2.003 then H ~ 3 kGauss
 
-MSVCDLL double IntG::field_iso(double GOm)  const;
-MSVCDLL double IntG::field_para(double GOm) const;
-MSVCDLL double IntG::field_perp(double GOm) const;
-MSVCDLL double IntG::field_xx(double GOm)   const;
-MSVCDLL double IntG::field_yy(double GOm)   const;
-MSVCDLL double IntG::field_zz(double GOm)   const;
+MSVCDLL double field_iso(double GOm)  const;
+MSVCDLL double field_para(double GOm) const;
+MSVCDLL double field_perp(double GOm) const;
+MSVCDLL double field_xx(double GOm)   const;
+MSVCDLL double field_yy(double GOm)   const;
+MSVCDLL double field_zz(double GOm)   const;
 
 // ____________________________________________________________________________
 // F                G INTERACTION PARAMETER SET FUNCTIONS
@@ -869,7 +869,7 @@ MSVCDLL double IntG::field_zz(double GOm)   const;
 
 MSVCDLL operator ParameterSet( ) const;
 MSVCDLL friend void operator+= (ParameterSet& pset, const IntG &GI);
-MSVCDLL void IntG::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
+MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
 
 // ----------------------------------------------------------------------------
 //  Functions To Output Electron G Interaction To ASCII From A Parameter Set
@@ -889,8 +889,8 @@ MSVCDLL void IntG::PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
         //                                parameter set to file filename
         //                                or into output file stream ofstr   */
 
-MSVCDLL bool IntG::write(const std::string &filename, int idx=-1, int warn=2) const;
-MSVCDLL bool IntG::write(      std::ofstream& ofstr,  int idx=-1, int warn=2) const;
+MSVCDLL bool write(const std::string &filename, int idx=-1, int warn=2) const;
+MSVCDLL bool write(      std::ofstream& ofstr,  int idx=-1, int warn=2) const;
 
 // ____________________________________________________________________________
 // H                  ELECTRON G INTERACTION INPUT FUNCTIONS
@@ -918,8 +918,8 @@ MSVCDLL bool IntG::write(      std::ofstream& ofstr,  int idx=-1, int warn=2) co
                                       from parameters in file filename
                                       or those in the parameter set          */
 
-MSVCDLL bool IntG::read(const std::string&  fname, int idx=-1, int warn=2);
-MSVCDLL bool IntG::read(const ParameterSet& pset,  int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string&  fname, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,  int idx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //  Interactive Reading of G Intractions From An ASCII File Or A Parameter Set
@@ -934,8 +934,8 @@ MSVCDLL bool IntG::read(const ParameterSet& pset,  int idx=-1, int warn=2);
         //                                used to supply a filename from which
         //                                the interaction is read
 
-MSVCDLL std::string IntG::ask_read(int argc, char* argv[], int argn,                    int idx=-1);
-MSVCDLL std::string IntG::ask_read(int argc, char* argv[], int argn, const std::string& def, int idx=-1);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn,                    int idx=-1);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn, const std::string& def, int idx=-1);
 
 // ____________________________________________________________________________
 // I                 ELECTRON G INTERACTION OUTPUT FUNCTIONS
@@ -945,10 +945,10 @@ MSVCDLL std::string IntG::ask_read(int argc, char* argv[], int argn, const std::
 //   Functions That Generate Simple Strings To Simplify & Modularize Printing
 //-----------------------------------------------------------------------------
 
-MSVCDLL std::string IntG::GfactorString()    const;
-MSVCDLL std::string IntG::GAString()         const;
-MSVCDLL std::string IntG::GFieldString()     const;
-MSVCDLL std::string IntG::GFrequencyString() const;
+MSVCDLL std::string GfactorString()    const;
+MSVCDLL std::string GAString()         const;
+MSVCDLL std::string GFieldString()     const;
+MSVCDLL std::string GFrequencyString() const;
 
 //-----------------------------------------------------------------------------
 //  Functions That Generate String Arrays to Simplify and Modularize Printing
@@ -989,8 +989,8 @@ MSVCDLL std::string IntG::GFrequencyString() const;
                                 [ zx   zy   zz]                              */
 
 
-MSVCDLL std::vector<std::string> IntG::InfoStrings() const;
-MSVCDLL std::vector<std::string> IntG::CartAStrings(const std::string& CSF) const;
+MSVCDLL std::vector<std::string> InfoStrings() const;
+MSVCDLL std::vector<std::string> CartAStrings(const std::string& CSF) const;
 // string* IntRank2T::TStrings(int M) const;                     INHERITED
 
 //-----------------------------------------------------------------------------
@@ -1008,10 +1008,10 @@ MSVCDLL std::vector<std::string> IntG::CartAStrings(const std::string& CSF) cons
            Output               none    : G spatial tensor parameters
                                           placed into the output stream      */
 
-MSVCDLL        std::ostream& IntG::print(std::ostream& out, bool fflag=false) const;
+MSVCDLL        std::ostream& print(std::ostream& out, bool fflag=false) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& out, const IntG& G);
-MSVCDLL        std::ostream& IntG::printSpherical(std::ostream& ostr);
-MSVCDLL static std::ostream& IntG::STList(std::ostream& ostr, int fflag=0);
+MSVCDLL        std::ostream& printSpherical(std::ostream& ostr);
+MSVCDLL static std::ostream& STList(std::ostream& ostr, int fflag=0);
 
 // ____________________________________________________________________________
 // J                    G FACTOR HAMILTONIAN FUNCTIONS
@@ -1036,8 +1036,8 @@ MSVCDLL static std::ostream& IntG::STList(std::ostream& ostr, int fflag=0);
         H    = -------- * g   * S  = -------- * (g   - g ) * S  = GOm * S
          G         h       eff   z       h        iso   e     z          z   */
  
-MSVCDLL matrix IntG::Hiso(bool rotfrm=false) const;
-MSVCDLL matrix IntG::Hiso(std::vector<int> HSs, int i, bool rotfrm=false) const;
+MSVCDLL matrix Hiso(bool rotfrm=false) const;
+MSVCDLL matrix Hiso(std::vector<int> HSs, int i, bool rotfrm=false) const;
 
 // ----------------------------------------------------------------------------
 //               First Order G factor Interaction Hamiltonian
@@ -1067,14 +1067,14 @@ MSVCDLL matrix IntG::Hiso(std::vector<int> HSs, int i, bool rotfrm=false) const;
                                           ESR definitions of the G tensor.   */
 
 
-//matrix IntG::H0()                             const;                INHERITED
-//matrix IntG::H0(double A, double B, double G) const;                INHERITED
-//matrix IntG::H0(const EAngles& EA)            const;                INHERITED
+//matrix H0()                             const;                INHERITED
+//matrix H0(double A, double B, double G) const;                INHERITED
+//matrix H0(const EAngles& EA)            const;                INHERITED
 
-//matrix IntG::H0(const vector<int>& HSs, int i)                    const;  IHT
-//matrix IntG::H0(const vector<int>& HSs, int i,
+//matrix H0(const vector<int>& HSs, int i)                    const;  IHT
+//matrix H0(const vector<int>& HSs, int i,
 //                                    double A, double B, double G) const;  IHT
-//matrix IntG::H0(const vector<int>& HSs, int i, const EAngles& EA) const;  IHT
+//matrix H0(const vector<int>& HSs, int i, const EAngles& EA) const;  IHT
 
 
 // ----------------------------------------------------------------------------
@@ -1108,9 +1108,9 @@ MSVCDLL matrix IntG::Hiso(std::vector<int> HSs, int i, bool rotfrm=false) const;
                                           With HSs: return in composite spin
                                           Hilbert space                      */
 
-// matrix IntG::H( ) const                                            INHERITED
-// matrix IntG::H(double alpha, double beta, double gamma) const      INHERITED
-// matrix IntG::H(const EAngles& EA) const                            INHERITED
+// matrix H( ) const                                            INHERITED
+// matrix H(double alpha, double beta, double gamma) const      INHERITED
+// matrix H(const EAngles& EA) const                            INHERITED
 
 
 
@@ -1124,10 +1124,10 @@ MSVCDLL matrix IntG::Hiso(std::vector<int> HSs, int i, bool rotfrm=false) const;
 
 
 
-MSVCDLL matrix IntG::Hiso(double GOm, int rotflg=0) const;
-MSVCDLL matrix IntG::Hiso(std::vector<int> HSs, int i, double GOm, int rotflg=0) const;
-MSVCDLL matrix IntG::Hiso_lab(double GOm) const;
-MSVCDLL matrix IntG::Hiso_lab(std::vector<int> HSs, int i, double GOm) const;
+MSVCDLL matrix Hiso(double GOm, int rotflg=0) const;
+MSVCDLL matrix Hiso(std::vector<int> HSs, int i, double GOm, int rotflg=0) const;
+MSVCDLL matrix Hiso_lab(double GOm) const;
+MSVCDLL matrix Hiso_lab(std::vector<int> HSs, int i, double GOm) const;
  
 
 // ----------------------------------------------------------------------------
@@ -1157,10 +1157,10 @@ MSVCDLL matrix IntG::Hiso_lab(std::vector<int> HSs, int i, double GOm) const;
 // Identical to the Anisotropic G Hamiltonian in a high field limit!
 // Note that this Hamiltonian must be ADDED to the isotropic G Hamiltonian.
 
-MSVCDLL matrix IntG::H0X(double Om) const;
-MSVCDLL matrix IntG::H0X(double Om, double theta, double phi=0) const;
-MSVCDLL matrix IntG::H0X(std::vector<int> HSs, int i, double Om) const;
-MSVCDLL matrix IntG::H0X(std::vector<int> HSs, int i, double Om, double theta, double phi=0) const;
+MSVCDLL matrix H0X(double Om) const;
+MSVCDLL matrix H0X(double Om, double theta, double phi=0) const;
+MSVCDLL matrix H0X(std::vector<int> HSs, int i, double Om) const;
+MSVCDLL matrix H0X(std::vector<int> HSs, int i, double Om, double theta, double phi=0) const;
  
         // Input                GI      : G factor interaction
         //                      Om      : Spectrometer field (GHz)
@@ -1177,8 +1177,8 @@ MSVCDLL matrix IntG::H0X(std::vector<int> HSs, int i, double Om, double theta, d
 // These next two use the spherical tensor components explicitly.  The results 
 // should match the those of the above two functions. 
 
-MSVCDLL matrix IntG::H0Direct(double Om) const;
-MSVCDLL matrix IntG::H0Direct(double Om, double theta, double phi=0) const;
+MSVCDLL matrix H0Direct(double Om) const;
+MSVCDLL matrix H0Direct(double Om, double theta, double phi=0) const;
 
 // ----------------------------------------------------------------------------
 //                Full G Interaction Anisotropy Hamiltonians
@@ -1220,16 +1220,16 @@ MSVCDLL matrix IntG::H0Direct(double Om, double theta, double phi=0) const;
         //                                components (i.e. field along +z)
         // Note                         : Xi depends on the frequency herein
 
-MSVCDLL matrix IntG::HA(double GOm) const;
-MSVCDLL matrix IntG::HA(double GOm, double Theta, double Phi=0) const;
-MSVCDLL matrix IntG::HA(std::vector<int> HSs, int i, double GOm) const;
-MSVCDLL matrix IntG::HA(std::vector<int> HSs, int i, double GOm, double T, double P=0) const;
+MSVCDLL matrix HA(double GOm) const;
+MSVCDLL matrix HA(double GOm, double Theta, double Phi=0) const;
+MSVCDLL matrix HA(std::vector<int> HSs, int i, double GOm) const;
+MSVCDLL matrix HA(std::vector<int> HSs, int i, double GOm, double T, double P=0) const;
 
 // These next two use the spherical tensor components explicitly.  The results
 // should match the those of the above two functions.
 
-MSVCDLL matrix IntG::HADirect(double GOm) const;
-MSVCDLL matrix IntG::HADirect(double GOm, double Theta, double Phi) const;
+MSVCDLL matrix HADirect(double GOm) const;
+MSVCDLL matrix HADirect(double GOm, double Theta, double Phi) const;
 
 // ----------------------------------------------------------------------------
 //                      Full G Interaction Hamiltonians
@@ -1257,16 +1257,16 @@ MSVCDLL matrix IntG::HADirect(double GOm, double Theta, double Phi) const;
         //                                components (i.e. field along +z)
         // Note                         : Xi depends on the frequency herein */
 
-MSVCDLL matrix IntG::H(double Om) const;
-MSVCDLL matrix IntG::H(double Om, double Theta, double Phi=0) const;
-MSVCDLL matrix IntG::H(std::vector<int> HSs, int i, double Om) const;
-MSVCDLL matrix IntG::H(std::vector<int> HSs, int i, double Om, double Theta, double Phi=0) const;
+MSVCDLL matrix H(double Om) const;
+MSVCDLL matrix H(double Om, double Theta, double Phi=0) const;
+MSVCDLL matrix H(std::vector<int> HSs, int i, double Om) const;
+MSVCDLL matrix H(std::vector<int> HSs, int i, double Om, double Theta, double Phi=0) const;
 
 // These next two generate the Hamiltonians explicitly.  The results
 // should match the those of the above two functions.
 
-MSVCDLL matrix IntG::HDirect(double Om) const;
-MSVCDLL matrix IntG::HDirect(double Om, double Theta, double Phi=0) const;
+MSVCDLL matrix HDirect(double Om) const;
+MSVCDLL matrix HDirect(double Om, double Theta, double Phi=0) const;
 
 
 
@@ -1280,7 +1280,7 @@ MSVCDLL matrix IntG::HDirect(double Om, double Theta, double Phi=0) const;
 // ____________________________________________________________________________
 
  
-//void IntG::ask(int argc, char* argv[], int& qn, double& CI,
+//void ask(int argc, char* argv[], int& qn, double& CI,
 //       double& Cnqcc, double& Ceta, double& theta, double& Cphi, int Cflag=0);
  
         // Input                GI      : G factor interaction (this)
@@ -1298,7 +1298,7 @@ MSVCDLL matrix IntG::HDirect(double Om, double Theta, double Phi=0) const;
         // Note                         : This is INTERACTIVE! 
 
  
-//void IntG::askset(int argc, char* argv[], int& qn, int Cflag=0);
+//void askset(int argc, char* argv[], int& qn, int Cflag=0);
  
         // Input                GI      : G factor interaction (this)
         //                      argc    : Number of arguments
@@ -1309,7 +1309,7 @@ MSVCDLL matrix IntG::HDirect(double Om, double Theta, double Phi=0) const;
         // Note                         : This is INTERACTIVE!
  
 
-//void IntG::askset(int Cflag=0);
+//void askset(int Cflag=0);
 
         // Input                GI      : G factor interaction (this)
         // Output               none    : GIis set interactively
@@ -1342,10 +1342,10 @@ MSVCDLL matrix IntG::HDirect(double Om, double Theta, double Phi=0) const;
                        [ zx   zy   zz]                                       */
  
 
-MSVCDLL virtual std::ostream& IntG::printCartesian(std::ostream& ostr,
+MSVCDLL virtual std::ostream& printCartesian(std::ostream& ostr,
                                     const std::string& CSF="%6.3f", int tpf=2);
          
-//std::ostream& IntG::printCartesian(std::ostream& ostr, double theta, double phi=0);
+//std::ostream& printCartesian(std::ostream& ostr, double theta, double phi=0);
          
         // Input                G	: Electron G interaction (this)
         //                      ostr	: Output stream
@@ -1355,7 +1355,7 @@ MSVCDLL virtual std::ostream& IntG::printCartesian(std::ostream& ostr,
         //                                output stream
  
 
-MSVCDLL std::ostream& IntG::printCartG(std::ostream& ostr, int tflag=1) const;
+MSVCDLL std::ostream& printCartG(std::ostream& ostr, int tflag=1) const;
          
         // Input                GI      : G spatial tensor (this)
         //                      ostr    : Output stream

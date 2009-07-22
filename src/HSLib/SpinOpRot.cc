@@ -54,6 +54,7 @@
 #include <HSLib/SpinOpSng.h>		// Knowledge of single spin operators
 #include <HSLib/SpinOpCmp.h>		// Knowledge of composite spin operators
 #include <HSLib/SpinSys.h>		// Knowledge of base spin systems
+#include <stdlib.h>
 #include <string>			// Include libstdc++ strings
 
 // ____________________________________________________________________________

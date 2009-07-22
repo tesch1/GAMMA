@@ -41,6 +41,7 @@
 #include <HSLib/SpinOpCmp.h>		// Include composite spin ops
 #include <Basics/StringCut.h>		// Include Gform function
 #include <Basics/Gconstants.h>		// Include HUGE_VAL value
+#include <stdlib.h>
 #include <cmath>			// Inlcude HUGE_VAL_VAL
 
 // ____________________________________________________________________________

@@ -68,8 +68,8 @@ private:
         // Output               none    : Error message
         //                                Program execution stopped (fatal)
 
-         void floq_op::FOperror(int eidx, int noret=0) const;
-volatile void floq_op::FOpfatality(int eidx) const;
+         void FOperror(int eidx, int noret=0) const;
+volatile void FOpfatality(int eidx) const;
 
 // ____________________________________________________________________________
 // ii            FLOQUET OPERATOR COMPATIBILITY CHECKING
@@ -95,15 +95,15 @@ volatile void floq_op::FOpfatality(int eidx) const;
         //                                within Floquet space dimensions where
 	//				  I=(N+N1)*hs+H1 & J=(N+N2)*hs+H2
 
-int floq_op::FOpCheck(const floq_op& FOp1,            int warn=0) const;
-int floq_op::FOpCheck(const matrix& Fmx,              int warn=0) const;
-int floq_op::FOpCheck(int N1, int N2, int H1, int H2, int warn=0) const;
+int FOpCheck(const floq_op& FOp1,            int warn=0) const;
+int FOpCheck(const matrix& Fmx,              int warn=0) const;
+int FOpCheck(int N1, int N2, int H1, int H2, int warn=0) const;
 
 // ____________________________________________________________________________
 // iii            FLOQUET OPERATOR - HILBERT OPERATOR BASES
 // ____________________________________________________________________________
 
-void floq_op::SetBasis(const gen_op& Op);
+void SetBasis(const gen_op& Op);
 
         // Input		FOp	: Floquet operator (this)
 	//			Op	: A Hilbert space opertor
@@ -123,8 +123,8 @@ void floq_op::SetBasis(const gen_op& Op);
 
 public:
   
-MSVCDLC floq_op::floq_op( );
-MSVCDLC floq_op::floq_op(const floq_op& F);
+MSVCDLC floq_op( );
+MSVCDLC floq_op(const floq_op& F);
 
 	// Input                N_   : Floquet space dimension (2*N+1)
         //                      hs_  : Hilbert space dimension (2*hs+1)
@@ -137,9 +137,9 @@ MSVCDLC floq_op::floq_op(const floq_op& F);
 	//			       mx, no bs: with matrix mx as DBR
 	//			       mx, bs:    with matrix mx & basis bs 
 
-MSVCDLC floq_op::floq_op(int N_, int hs_, double omega_);
-MSVCDLC floq_op::floq_op(int N_, int hs_, double omega_, const matrix& mx);
-MSVCDLC floq_op::floq_op(int N_, int hs_, double omega_, const matrix& mx, const basis& bs);
+MSVCDLC floq_op(int N_, int hs_, double omega_);
+MSVCDLC floq_op(int N_, int hs_, double omega_, const matrix& mx);
+MSVCDLC floq_op(int N_, int hs_, double omega_, const matrix& mx, const basis& bs);
 
 	// Input		FOp1 : Floquet operator.
 	// 			FOp  : Floquet operator (this).
@@ -147,8 +147,8 @@ MSVCDLC floq_op::floq_op(int N_, int hs_, double omega_, const matrix& mx, const
 	//			       the input operator, FOp = FOp1.
 	// Note		             : Result EXCLUSIVELY in WBR of FOp1
   
-MSVCDLL floq_op& floq_op::operator = (const floq_op& FOp1);
-MSVCDLC          floq_op::~floq_op();
+MSVCDLL floq_op& operator = (const floq_op& FOp1);
+MSVCDLC          ~floq_op();
 
 // ____________________________________________________________________________
 // B                   FLOQUET OPERATOR ACCESS FUNCTIONS
@@ -163,11 +163,11 @@ MSVCDLC          floq_op::~floq_op();
    dim    - returns full dimension of FloqOp (2N+1)*hs
    size   - returns full dimension of FloqOp (2N+1)*hs                       */
 
-MSVCDLL int    floq_op::hsdim()  const;
-MSVCDLL int    floq_op::phodim() const;
-MSVCDLL double floq_op::omega()  const;
-MSVCDLL int    floq_op::dim()    const;
-MSVCDLL int    floq_op::size()   const;
+MSVCDLL int    hsdim()  const;
+MSVCDLL int    phodim() const;
+MSVCDLL double omega()  const;
+MSVCDLL int    dim()    const;
+MSVCDLL int    size()   const;
 
 // ____________________________________________________________________________
 // C   FLOQUET OPERATOR FUNCTIONS, FLOQUET OPERATOR WITH FLOQUET OPERATOR 
@@ -184,14 +184,14 @@ MSVCDLL int    floq_op::size()   const;
     -=      FOp1        FOp=FOp-FOp1
     -       FOp1        FOp=-FOp1                                            */
 
-MSVCDLL        floq_op floq_op::operator +  (const floq_op &FOp2) const;
-MSVCDLL        void    floq_op::operator += (const floq_op &FOp1);
-MSVCDLL        floq_op floq_op::operator -  (const floq_op &FOp2) const;
-MSVCDLL        floq_op floq_op::operator -  ()                    const;
-MSVCDLL        void    floq_op::operator -= (const floq_op &FOp1);
-MSVCDLL        floq_op floq_op::operator *  (const floq_op &FOp2) const;
-MSVCDLL        void    floq_op::operator *= (const floq_op &FOp1);
-MSVCDLL        void    floq_op::operator &= (const floq_op &FOp1);
+MSVCDLL        floq_op operator +  (const floq_op &FOp2) const;
+MSVCDLL        void    operator += (const floq_op &FOp1);
+MSVCDLL        floq_op operator -  (const floq_op &FOp2) const;
+MSVCDLL        floq_op operator -  ()                    const;
+MSVCDLL        void    operator -= (const floq_op &FOp1);
+MSVCDLL        floq_op operator *  (const floq_op &FOp2) const;
+MSVCDLL        void    operator *= (const floq_op &FOp1);
+MSVCDLL        void    operator &= (const floq_op &FOp1);
 
 // ____________________________________________________________________________
 // D        FLOQUET OPERATOR FUNCTIONS, FLOQUET OPERATOR WITH MATRIX
@@ -208,16 +208,16 @@ MSVCDLL        void    floq_op::operator &= (const floq_op &FOp1);
     -       FOp1,Fmx    FOp=FOp1-Fmx       &=      FMx         FOp=FMx*FOp 
     -=      Fmx         FOp=FOp-Fmx        -       Fmx,FOp1    FOp=Fmx-FOp1  */
 
-MSVCDLL        floq_op floq_op::operator +  (const matrix&  Fmx)  const;
+MSVCDLL        floq_op operator +  (const matrix&  Fmx)  const;
 MSVCDLL friend floq_op          operator +  (const matrix&  Fmx,  const floq_op& FOp1);
-MSVCDLL        void    floq_op::operator += (const matrix&  Fmx);
-MSVCDLL        floq_op floq_op::operator -  (const matrix&  Fmx)  const;
+MSVCDLL        void    operator += (const matrix&  Fmx);
+MSVCDLL        floq_op operator -  (const matrix&  Fmx)  const;
 MSVCDLL friend floq_op          operator -  (const matrix&  Fmx,  const floq_op& FOp1);
-MSVCDLL        void    floq_op::operator -= (const matrix&  Fmx);
-MSVCDLL        floq_op floq_op::operator *  (const matrix&  Fmx)  const;
+MSVCDLL        void    operator -= (const matrix&  Fmx);
+MSVCDLL        floq_op operator *  (const matrix&  Fmx)  const;
 MSVCDLL friend floq_op          operator *  (const matrix&  Fmx,  const floq_op& FOp1);
-MSVCDLL        void    floq_op::operator *= (const matrix&  Fmx);
-MSVCDLL        void    floq_op::operator &= (const matrix&  Fmx);
+MSVCDLL        void    operator *= (const matrix&  Fmx);
+MSVCDLL        void    operator &= (const matrix&  Fmx);
 
 // ____________________________________________________________________________
 // E     FLOQUET  OPERATOR FUNCTIONS, FLOQUET OPERATOR WITH SCALAR
@@ -233,16 +233,16 @@ MSVCDLL        void    floq_op::operator &= (const matrix&  Fmx);
     *        FOp1,d     FOp = d*FOp1        /       FOp1, z   FOp = (1/d)*this
     *        d,FOp1     FOp = d*FOp1       /=       this, z   void, (1/d)*this
                                                                              */
-MSVCDLL        floq_op floq_op::operator *  (const complex &z) const;
+MSVCDLL        floq_op operator *  (const complex &z) const;
 MSVCDLL friend floq_op          operator *  (const complex& z, const floq_op &FOp1);
-MSVCDLL        floq_op floq_op::operator *  (double d)         const;
+MSVCDLL        floq_op operator *  (double d)         const;
 MSVCDLL friend floq_op          operator *  (double d,         const floq_op &Op1);
-MSVCDLL        void    floq_op::operator *= (const complex& z);
-MSVCDLL        void    floq_op::operator *= (double d);
-MSVCDLL        floq_op floq_op::operator /  (const complex &z) const;
-MSVCDLL        floq_op floq_op::operator /  (double d)         const;
-MSVCDLL        void    floq_op::operator /= (const complex& z);
-MSVCDLL        void    floq_op::operator /= (double d);
+MSVCDLL        void    operator *= (const complex& z);
+MSVCDLL        void    operator *= (double d);
+MSVCDLL        floq_op operator /  (const complex &z) const;
+MSVCDLL        floq_op operator /  (double d)         const;
+MSVCDLL        void    operator /= (const complex& z);
+MSVCDLL        void    operator /= (double d);
 
 // ____________________________________________________________________________
 // F                  COMPLEX  FLOQUET OPERATOR FUNCTIONS
@@ -282,8 +282,8 @@ MSVCDLL friend floq_op fprop(floq_op &FLOQHAM, double time);
 
 // --------------------- Floquet Submatrix Manipulations ---------------------
 
-MSVCDLL gen_op floq_op::operator() (int N1, int N2) const;
-MSVCDLL gen_op floq_op::get_block  (int N1, int N2) const;
+MSVCDLL gen_op operator() (int N1, int N2) const;
+MSVCDLL gen_op get_block  (int N1, int N2) const;
      
         // Input                FOp     : Floquet operator (this)
         //                      N1      : Row index of photon dimension
@@ -291,7 +291,7 @@ MSVCDLL gen_op floq_op::get_block  (int N1, int N2) const;
         // Output               Op      : Operator at <N1|FOp|N2>
 
 
-MSVCDLL void floq_op::put_block(const gen_op &Op1, int N1, int N2);
+MSVCDLL void put_block(const gen_op &Op1, int N1, int N2);
 
         // Input                FOp     : Floquet operator (this)
         //                      N1      : Row index of photon dimension
@@ -301,7 +301,7 @@ MSVCDLL void floq_op::put_block(const gen_op &Op1, int N1, int N2);
 
 
 
-MSVCDLL void floq_op::put_sdiag(const gen_op &Op, int sdn_);
+MSVCDLL void put_sdiag(const gen_op &Op, int sdn_);
         
 	// Input                FOp     : Floquet operator (this)
 	//                       Op 	: General operator
@@ -314,7 +314,7 @@ MSVCDLL void floq_op::put_sdiag(const gen_op &Op, int sdn_);
 // -------------------- Individual Element Manipulations ----------------------
 
 
-MSVCDLL void floq_op::put(const complex& z, int row, int col);
+MSVCDLL void put(const complex& z, int row, int col);
        
        // Input                      : Floq_operator (this)
        //                 row,col    : Indices 
@@ -323,7 +323,7 @@ MSVCDLL void floq_op::put(const complex& z, int row, int col);
        // Note                       : floq_op will be changed
  
 
-MSVCDLL complex floq_op::get(int row, int col) const;
+MSVCDLL complex get(int row, int col) const;
 
        // Input                      : Floq_operator (this)
        //                 row,col    : Indices 
@@ -331,7 +331,7 @@ MSVCDLL complex floq_op::get(int row, int col) const;
        // Note                       : floq_op remains unchanged
 
 
-MSVCDLL void floq_op::put(const complex& z, int N1_, int N2_, int H1_ , int H2_ );
+MSVCDLL void put(const complex& z, int N1_, int N2_, int H1_ , int H2_ );
        
        // Input                      : Floq_operator (this)
        //                 N1_,N2_    : Indices of photon space:-N...N
@@ -341,7 +341,7 @@ MSVCDLL void floq_op::put(const complex& z, int N1_, int N2_, int H1_ , int H2_ 
        // Note                       : floq_op will be changed
  
 
-MSVCDLL complex floq_op::get(int N1_ , int N2_ , int H1_ , int H2_) const;
+MSVCDLL complex get(int N1_ , int N2_ , int H1_ , int H2_) const;
 
 
        // Input                      : Floq_operator (this)
@@ -358,8 +358,8 @@ MSVCDLL complex floq_op::get(int N1_ , int N2_ , int H1_ , int H2_) const;
 	// Output (set_DBR)	none  : Op WBR set to DBR 
 	// Output (set_EBR)	none : Op WBR set to EBR 
  
-MSVCDLL void floq_op::set_DBR() const;
-MSVCDLL void floq_op::set_EBR() const;
+MSVCDLL void set_DBR() const;
+MSVCDLL void set_EBR() const;
 
 // ____________________________________________________________________________
 // I                 CLASS FLOQUET OPERATOR I/O FUNCTION
@@ -383,8 +383,8 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const floq_op& FOp)
         // Output sub_omega  F_op    : Floquet operator with omegas subtracted
         //                           : on main diagonal   
 
-MSVCDLL void floq_op::add_omega();           
-MSVCDLL void floq_op::sub_omega();
+MSVCDLL void add_omega();           
+MSVCDLL void sub_omega();
 
 };
 

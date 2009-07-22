@@ -66,10 +66,10 @@ class MatLabFile
            Output               none    : Error message output
                                           Execution stopped (if fatal)       */  
  
-void MatLabFile::MLFerror(int eidx, int noret=0) const;
-void MatLabFile::MLFerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void MatLabFile::MLFfatality(int eidx) const;
-volatile void MatLabFile::MLFfatality(int eidx, const std::string& pname) const;
+void MLFerror(int eidx, int noret=0) const;
+void MLFerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void MLFfatality(int eidx) const;
+volatile void MLFfatality(int eidx, const std::string& pname) const;
  
 // ----------------------------------------------------------------------------
 // ii                       Mode Checking Functions
@@ -83,7 +83,7 @@ volatile void MatLabFile::MLFfatality(int eidx, const std::string& pname) const;
    what modes are available to fstream, so we just stick to the basics.      */  
  
  
-void MatLabFile::CheckMode(int mode); 
+void CheckMode(int mode); 
  
 
 // ----------------------------------------------------------------------------
@@ -96,9 +96,9 @@ public:
 // A                   MatLab File Constructors, Destructor
 // ____________________________________________________________________________
 
-MSVCDLC MatLabFile::MatLabFile();
-MSVCDLC MatLabFile::MatLabFile(const std::string& name, int mode = std::ios::binary|std::ios::in);
-MSVCDLC MatLabFile::MatLabFile(const MatLabFile& MLF);
+MSVCDLC MatLabFile();
+MSVCDLC MatLabFile(const std::string& name, int mode = std::ios::binary|std::ios::in);
+MSVCDLC MatLabFile(const MatLabFile& MLF);
 
         // Input                MLF     : MATLAB MAT file
         //                      name    : External filename
@@ -110,11 +110,11 @@ MSVCDLC MatLabFile::MatLabFile(const MatLabFile& MLF);
         //                                 out    = open for writing
         //                                 trunc  = truncate file at 0 length
  
-MSVCDLC MatLabFile::~MatLabFile();
-MSVCDLL MatLabFile& MatLabFile::operator=(const MatLabFile& MLF);
+MSVCDLC ~MatLabFile();
+MSVCDLL MatLabFile& operator=(const MatLabFile& MLF);
 
-MSVCDLL void MatLabFile::close();
-MSVCDLL void MatLabFile::open(int mode = std::ios::binary|std::ios::in);
+MSVCDLL void close();
+MSVCDLL void open(int mode = std::ios::binary|std::ios::in);
 
 
 // ____________________________________________________________________________
@@ -127,20 +127,20 @@ MSVCDLL void MatLabFile::open(int mode = std::ios::binary|std::ios::in);
    taking no arguments.  The disk file version is returned by the overload
    that takes a file stream.  The disk file version cannot be changed.       */
  
-MSVCDLL        int  MatLabFile::Version() const;
-MSVCDLL        int  MatLabFile::Version(std::fstream& fp);
-MSVCDLL static int  MatLabFile::Version(const std::string& filename);
-MSVCDLL        void MatLabFile::Version(int V);
+MSVCDLL        int  Version() const;
+MSVCDLL        int  Version(std::fstream& fp);
+MSVCDLL static int  Version(const std::string& filename);
+MSVCDLL        void Version(int V);
 
 // ____________________________________________________________________________
 // C                   MatLab File Auxiliary Functions
 // ____________________________________________________________________________
  
-MSVCDLL static void MatLabFile::whos(const std::string& filename, std::ostream& ostr);
-MSVCDLL        void MatLabFile::whos(std::ostream& ostr);
-MSVCDLL static void MatLabFile::details(const std::string& filename, std::ostream& ostr);
-MSVCDLL        void MatLabFile::details(std::ostream& ostr);
-MSVCDLL static void MatLabFile::Header(const std::string& filename, std::ostream& ostr);
+MSVCDLL static void whos(const std::string& filename, std::ostream& ostr);
+MSVCDLL        void whos(std::ostream& ostr);
+MSVCDLL static void details(const std::string& filename, std::ostream& ostr);
+MSVCDLL        void details(std::ostream& ostr);
+MSVCDLL static void Header(const std::string& filename, std::ostream& ostr);
 
 // ____________________________________________________________________________
 // D                  MatLab File (Binary) Read Functions
@@ -152,7 +152,7 @@ MSVCDLL static void MatLabFile::Header(const std::string& filename, std::ostream
    a type cast to produce the data in a row or column vector.                */
 
 MSVCDLL friend matrix MATLAB(const std::string& filename, const std::string& name, int warn=2);
-MSVCDLL matrix MatLabFile::GetMatrix(const std::string& name, int warn=1);
+MSVCDLL matrix GetMatrix(const std::string& name, int warn=1);
 
 // ____________________________________________________________________________
 // E                 MatLab File (Binary) Write Functions
@@ -163,10 +163,10 @@ MSVCDLL matrix MatLabFile::GetMatrix(const std::string& name, int warn=1);
  
 MSVCDLL friend int MATLAB(const std::string& file, const std::string& N,
                                        const matrix& mx, int rc=1, int warn=2);
-MSVCDLL int MatLabFile::write(const std::string& N, const matrix& mx, int rc=1, int warn=2);
+MSVCDLL int write(const std::string& N, const matrix& mx, int rc=1, int warn=2);
 MSVCDLL friend int MATLAB(const std::string& file, const std::string& N,
                                        const coord_vec& cvec, int warn=2);
-MSVCDLL int MatLabFile::write(const std::string& N, const coord_vec& cvec, int warn=2);
+MSVCDLL int write(const std::string& N, const coord_vec& cvec, int warn=2);
 
 // ____________________________________________________________________________
 // F                  MatLab File (ASCII) Print Functions
@@ -178,8 +178,8 @@ MSVCDLL int MatLabFile::write(const std::string& N, const coord_vec& cvec, int w
            Output               ostr    : Output stream with MATLAB MAT file 
                                           base info placed into it           */
  
-MSVCDLL static void MatLabFile::print(const std::string& filename,std::ostream& ostr,int full=0);
-MSVCDLL void   MatLabFile::print(std::ostream& ostr, int full=0);
+MSVCDLL static void print(const std::string& filename,std::ostream& ostr,int full=0);
+MSVCDLL void   print(std::ostream& ostr, int full=0);
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, MatLabFile& MLF);
 
 // ____________________________________________________________________________
@@ -191,7 +191,7 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, MatLabFile& MLF);
    in ASCII to an output stream.  Thus it is easy to see most of what is
    being written, at least in principle.....                                 */
  
-MSVCDLL void MatLabFile::print(std::ostream& ostr, 
+MSVCDLL void print(std::ostream& ostr, 
                         const matrix& mx, const std::string& N, int cmplx=1) const;
 
 // ____________________________________________________________________________

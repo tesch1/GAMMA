@@ -40,6 +40,7 @@
 #include <LSLib/DensOp.h>		// Include density operators
 #include <LSLib/LSAux.h>		// Include inversion routines
 #include <HSLib/HSauxil.h>		// Inlcude sigma_eq function
+#include <stdlib.h>
 
 // ____________________________________________________________________________ 
 // ******* RF-FIELD RELAXATION SUPEROPERATORS VIA ELEMENT CALCULATIONS ********

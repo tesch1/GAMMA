@@ -43,6 +43,7 @@
 #include <string> 				// Must know about strings
 #include <HSLib/SpinSys.h>			// Know about spin systems
 #include <Basics/StringCut.h>			// Know about the Gdec function
+#include <stdlib.h>
 
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------ 

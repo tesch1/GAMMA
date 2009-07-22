@@ -88,10 +88,10 @@ class XWin1D: public XWinAcqus, public XWinFid,
 // i                   XWinNMR 1D Data Set Error Handling
 // ____________________________________________________________________________
  
-         void XWin1D::XWin1Derror(int eidx, int noret=1) const;
-         void XWin1D::XWin1Derror(int eidx, const std::string& P, int nore=1) const;
-volatile void XWin1D::XWin1Dfatality(int eidx) const;
-volatile void XWin1D::XWin1Dfatality(int eidx, const std::string& P) const;
+         void XWin1Derror(int eidx, int noret=1) const;
+         void XWin1Derror(int eidx, const std::string& P, int nore=1) const;
+volatile void XWin1Dfatality(int eidx) const;
+volatile void XWin1Dfatality(int eidx, const std::string& P) const;
  
 // ____________________________________________________________________________       
 // ii                  XWinNMR 1D Data Set Error Handling
@@ -109,9 +109,9 @@ int CheckWrite(int TF, int warn, const std::string& dout) const;
    insure the that the parameter sets are self-consistent. This should be
    called before the data set (or at least the parameter files) are output.  */
 
-void XWin1D::SetNames();
-int  XWin1D::MakeDirs(int warn=2);
-void XWin1D::SetConsistent();
+void SetNames();
+int  MakeDirs(int warn=2);
+void SetConsistent();
 
 public:
 // ____________________________________________________________________________ 
@@ -137,8 +137,8 @@ public:
 				  out    = open for writing 
 				  trunc  = truncate file at 0 length        */
  
-XWin1D::XWin1D();
-virtual XWin1D::~XWin1D();
+XWin1D();
+virtual ~XWin1D();
  
 // ____________________________________________________________________________
 // B                    XWin1D Parameter Access Functions
@@ -154,31 +154,31 @@ virtual XWin1D::~XWin1D();
 			      Acquisiton Parameters 
 			      (Handled by XWinAcqus)
 
-double XWin1D::acqname()    const;	// The acqus file name (short)
-double XWin1D::AQ()         const;	// Acquisition length (sec)
-int    XWin1D::AQ_mod()     const;	// Acquisition mode
-double XWin1D::BF1()        const;	// Base frequency channel 1
-double XWin1D::BF2()        const;	// Base frequency channel 2
-int    XWin1D::BYTORDA()    const; 	// Binary byte ordering
-int    XWin1D::DS()         const;	// Number of dummy scans
-double XWin1D::IN(int i)    const;
-std::string XWin1D::EXP()        const;	// Experiment name
-std::string XWin1D::NAME()       const;	// Full File Name (long)
-int    XWin1D::NS()         const;	// Number of scans
-std::string XWin1D::NUC(int i)   const;	// Nucleus for a channel
-std::string XWin1D::NUCLEUS()    const;	// Base nucleus
-double XWin1D::O1()         const;	// Offset frequency channel 1
-double XWin1D::O2()         const;	// Offset frequency channel 2
-int    XWin1D::PARMODE()    const;	// Acquisiiton dimension
-std::string XWin1D::PULPROG()    const;	// Pulse program
-double XWin1D::SFO1()       const;	// Spectrometer freq.
-double XWin1D::SFO2()       const;	// Spectrometer freq.
-double XWin1D::SFO3()       const;	// Spectrometer freq.
-std::string XWin1D::SOLVENT()    const;	// Solvent
-double XWin1D::SW()         const;	// Spectral width (PPM)
-double XWin1D::SW_h()       const;	// Spectral width (Hz)
-int    XWin1D::TD()         const;	// Total points
-double XWin1D::TE()         const;	// Sample temperature
+double acqname()    const;	// The acqus file name (short)
+double AQ()         const;	// Acquisition length (sec)
+int    AQ_mod()     const;	// Acquisition mode
+double BF1()        const;	// Base frequency channel 1
+double BF2()        const;	// Base frequency channel 2
+int    BYTORDA()    const; 	// Binary byte ordering
+int    DS()         const;	// Number of dummy scans
+double IN(int i)    const;
+std::string EXP()        const;	// Experiment name
+std::string NAME()       const;	// Full File Name (long)
+int    NS()         const;	// Number of scans
+std::string NUC(int i)   const;	// Nucleus for a channel
+std::string NUCLEUS()    const;	// Base nucleus
+double O1()         const;	// Offset frequency channel 1
+double O2()         const;	// Offset frequency channel 2
+int    PARMODE()    const;	// Acquisiiton dimension
+std::string PULPROG()    const;	// Pulse program
+double SFO1()       const;	// Spectrometer freq.
+double SFO2()       const;	// Spectrometer freq.
+double SFO3()       const;	// Spectrometer freq.
+std::string SOLVENT()    const;	// Solvent
+double SW()         const;	// Spectral width (PPM)
+double SW_h()       const;	// Spectral width (Hz)
+int    TD()         const;	// Total points
+double TE()         const;	// Sample temperature
 
 			          Binary Access
 			      (Handled by XWinFid)
@@ -230,45 +230,45 @@ int    XWinProcs::WDW()       const;  // Window function
 			      Acquisiton Parameters 
 			      (Handled by XWinAcqus)
 
-void XWin1D::AQ_mod(int aqmo);
-int  XWin1D::D(int idx, double tsec, int warn=2);
-void XWin1D::DS(int ds);
-void XWin1D::EXP(const std::string& exp);
-void XWin1D::NAME(const std::string& name);
-void XWin1D::NS(int ns);
-void XWin1D::NUC(int i, const std::string& N);
-//void XWin1D::NUCLEI(int channel, const std::string& I, double O, int warn=2);
-void XWin1D::NUCLEUS(const std::string& I);
-int  XWin1D::P(int idx, double tp, int warn=2);
-void XWin1D::PARMODE(int pm);
-void XWin1D::PULPROG(const std::string& P);
-void XWin1D::SFO1(double sf);
-void XWin1D::SFO2(double sf);
-void XWin1D::SFO3(double sf);
-void XWin1D::SFO(double sf, int i);
-void XWin1D::SOLVENT(const std::string& S);
-void XWin1D::SW(double sw);
-void XWin1D::SW_h(double sw);
-void XWin1D::TD(int npts);
-void XWin1D::TE(double te);
+void AQ_mod(int aqmo);
+int  D(int idx, double tsec, int warn=2);
+void DS(int ds);
+void EXP(const std::string& exp);
+void NAME(const std::string& name);
+void NS(int ns);
+void NUC(int i, const std::string& N);
+//void NUCLEI(int channel, const std::string& I, double O, int warn=2);
+void NUCLEUS(const std::string& I);
+int  P(int idx, double tp, int warn=2);
+void PARMODE(int pm);
+void PULPROG(const std::string& P);
+void SFO1(double sf);
+void SFO2(double sf);
+void SFO3(double sf);
+void SFO(double sf, int i);
+void SOLVENT(const std::string& S);
+void SW(double sw);
+void SW_h(double sw);
+void TD(int npts);
+void TE(double te);
 
                               Processing Parameters
                               (Handled by XWinProcs)
 
-void XWin1D::MC2(int mc);
-void XWin1D::REVERSE(int yn);
-void XWin1D::PPARMOD(int pm);
-void XWin1D::SI(int si);
-void XWin1D::SF(double SF);
-void XWin1D::SSB(int sb);
-void XWin1D::STSI(int sb);
-void XWin1D::STSR(int sr);
-void XWin1D::SW_p(double swp);
-void XWin1D::WDW(int wd); 						    */
+void MC2(int mc);
+void REVERSE(int yn);
+void PPARMOD(int pm);
+void SI(int si);
+void SF(double SF);
+void SSB(int sb);
+void STSI(int sb);
+void STSR(int sr);
+void SW_p(double swp);
+void WDW(int wd); 						    */
 
-std::string     XWin1D::name()     const;
-row_vector XWin1D::FID()      const;
-row_vector XWin1D::Spectrum() const;
+std::string     name()     const;
+row_vector FID()      const;
+row_vector Spectrum() const;
 
 // ____________________________________________________________________________
 // C                   XWinNMR 1D Data Set Input Functions
@@ -278,12 +278,12 @@ row_vector XWin1D::Spectrum() const;
    parameter file, typically named acqus.  Any parameters relevant to GAMMA
    will be internally stored and accessible.                                 */
 
-int XWin1D::read(const std::string& dirin, int aidx=1, int pidx=1, int warn=2);
-int XWin1D::read(int warn=2);
-int XWin1D::readFID(const std::string& dirin, int exp=1, int warn=2);
-int XWin1D::readFID(int warn=2);
-int XWin1D::readSpectrum(const std::string& dirin, int aidx=1, int pidx=1, int w=2);
-int XWin1D::readSpectrum(int warn=2);
+int read(const std::string& dirin, int aidx=1, int pidx=1, int warn=2);
+int read(int warn=2);
+int readFID(const std::string& dirin, int exp=1, int warn=2);
+int readFID(int warn=2);
+int readSpectrum(const std::string& dirin, int aidx=1, int pidx=1, int w=2);
+int readSpectrum(int warn=2);
 
 // ____________________________________________________________________________
 // C                   XWinNMR 1D Data Set Input/Output Functions
@@ -308,8 +308,8 @@ int XWin1D::readSpectrum(int warn=2);
    files in pdata, since this class will NOT do any OUTPUT of frequency
    domain 1D data, will be defaults based on values in acqus.                */
  
-int XWin1D::write(const std::string& fout, const row_vector& data, int warn=2); 
-int XWin1D::write(const row_vector& data, int warn=2); 
+int write(const std::string& fout, const row_vector& data, int warn=2); 
+int write(const row_vector& data, int warn=2); 
 
 // ____________________________________________________________________________ 
 // E                 XWinNMR 1D Data Set ASCII Output Functions
@@ -319,7 +319,7 @@ int XWin1D::write(const row_vector& data, int warn=2);
    They are set to write all sorts of information concerning both the ASCII
    parameter file (acqus) and the binary data file (fid) in a nice format.   */
 
-virtual std::ostream& XWin1D::print(std::ostream& out, int full=1) const;
+virtual std::ostream& print(std::ostream& out, int full=1) const;
 friend  std::ostream& operator<<(std::ostream& out, const XWin1D& XW1D);
  
         // Input                out      : output stream;
@@ -332,7 +332,7 @@ friend  std::ostream& operator<<(std::ostream& out, const XWin1D& XW1D);
 // ____________________________________________________________________________
 
 
-std::string XWin1D::ask_read(int argc,char* argv[],int& argn,int aidx=1,int pidx=1);
+std::string ask_read(int argc,char* argv[],int& argn,int aidx=1,int pidx=1);
 
 	// Input                XW1D : An XWinNMR 1D data set
 	//                      argc    : Number of arguments

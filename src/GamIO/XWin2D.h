@@ -95,10 +95,10 @@ class XWin2D
 // i                   XWinNMR 2D Data Set Error Handling
 // ____________________________________________________________________________
  
-         void XWin2D::XWin2Derror(int eidx, int noret=1) const;
-         void XWin2D::XWin2Derror(int eidx, const std::string& P, int noret=1) const;
-volatile void XWin2D::XWin2Dfatality(int eidx) const;
-volatile void XWin2D::XWin2Dfatality(int eidx, const std::string& P) const;
+         void XWin2Derror(int eidx, int noret=1) const;
+         void XWin2Derror(int eidx, const std::string& P, int noret=1) const;
+volatile void XWin2Dfatality(int eidx) const;
+volatile void XWin2Dfatality(int eidx, const std::string& P) const;
  
 // ____________________________________________________________________________       
 // ii                  XWinNMR 2D Data Set Error Handling
@@ -116,12 +116,12 @@ int CheckWrite(int TF, int warn, const std::string& dout) const;
    insure the that the parameter sets are self-consistent. This should be
    called before the data set (or at least the parameter files) are output.  */
 
-//void XWin2D::SetField();			// Set Spectrometer Field (T)
-//void XWin2D::FieldReset(double BoT);		// Set Spectrometer Field (T)
-void XWin2D::SetNames();			// Set Directory & File Names
-int  XWin2D::MakeDirs(int warn=2);		// Construct Directories
-int  XWin2D::ReadPars(int warn=2);		// Read All Parameter Files
-void XWin2D::SetConsistent();
+//void SetField();			// Set Spectrometer Field (T)
+//void FieldReset(double BoT);		// Set Spectrometer Field (T)
+void SetNames();			// Set Directory & File Names
+int  MakeDirs(int warn=2);		// Construct Directories
+int  ReadPars(int warn=2);		// Read All Parameter Files
+void SetConsistent();
  
 public:
 // ____________________________________________________________________________ 
@@ -144,11 +144,11 @@ public:
    the ASCII parameter files and NOT the larger binary files.  Writing and/or
    binary reading is left to other functions.                                */
 
-XWin2D::XWin2D();
-XWin2D::XWin2D(const std::string& dname, int mode = std::ios::in, int eno=1, int pno=0);
-XWin2D::XWin2D(const XWin2D& XW2D);
-virtual XWin2D::~XWin2D();
-virtual XWin2D& XWin2D::operator=(const XWin2D& XW2D);
+XWin2D();
+XWin2D(const std::string& dname, int mode = std::ios::in, int eno=1, int pno=0);
+XWin2D(const XWin2D& XW2D);
+virtual ~XWin2D();
+virtual XWin2D& operator=(const XWin2D& XW2D);
 
  
 // ____________________________________________________________________________
@@ -170,64 +170,64 @@ virtual XWin2D& XWin2D::operator=(const XWin2D& XW2D);
 /*                   NOT REALLY INHERITED FROM CLASS XWinAcqPar
                            (Applies To Acqs and Acq2s)                       */
  
-std::string XWin2D::acqname(int d=0)    const;	// Acq. Par. File name (short)
-double XWin2D::AQ(int d=0)         const;	// Acquisition length (sec)
-int    XWin2D::AQ_mod(int d=0)     const;	// Acquisition mode
-double XWin2D::BF1(int d=0)        const;	// Base Spectrometer freq.
-double XWin2D::BF2(int d=0)        const;	// Base Spectrometer freq.
-int    XWin2D::BYTORDA(int d=0)    const;	// Binary byte order
-int    XWin2D::DS(int d=0)         const;	// Number of dummy scans
-std::string XWin2D::EXP(int d=0)        const;	// Experiment name
-double XWin2D::XW_IN(int i,int d=0)   const;	// Dwell time
-std::string XWin2D::NAME(int d=0)       const;	// Full File Name
-int    XWin2D::NS(int d=0)         const;	// Number of scans
-std::string XWin2D::NUC(int i,int d=0)  const;	// Nucleus for a channel
-std::string XWin2D::NUCLEUS(int d=0)    const;	// Base nucleus
-double XWin2D::O1(int d=0)         const;	// Offset freq.
-double XWin2D::O2(int d=0)         const;	// Offset freq.
-int    XWin2D::PARMODE(int d=0)    const;	// Acquisiiton dimension
-std::string XWin2D::PULPROG(int d=0)    const;	// Pulse program
-double XWin2D::SFO1(int d=0)       const;	// Spectrometer freq.
-double XWin2D::SFO2(int d=0)       const;	// Spectrometer freq.
-double XWin2D::SFO3(int d=0)       const;	// Spectrometer freq.
-std::string XWin2D::SOLVENT(int d=0)    const;	// Solvent
-double XWin2D::SW(int d=0)         const;	// Spectral width (PPM)
-double XWin2D::SW_h(int d=0)       const;	// Spectral width (Hz)
-int    XWin2D::TD(int d=0)         const;	// Total points
-double XWin2D::TE(int d=0)         const;	// Sample temperature
+std::string acqname(int d=0)    const;	// Acq. Par. File name (short)
+double AQ(int d=0)         const;	// Acquisition length (sec)
+int    AQ_mod(int d=0)     const;	// Acquisition mode
+double BF1(int d=0)        const;	// Base Spectrometer freq.
+double BF2(int d=0)        const;	// Base Spectrometer freq.
+int    BYTORDA(int d=0)    const;	// Binary byte order
+int    DS(int d=0)         const;	// Number of dummy scans
+std::string EXP(int d=0)        const;	// Experiment name
+double XW_IN(int i,int d=0)   const;	// Dwell time
+std::string NAME(int d=0)       const;	// Full File Name
+int    NS(int d=0)         const;	// Number of scans
+std::string NUC(int i,int d=0)  const;	// Nucleus for a channel
+std::string NUCLEUS(int d=0)    const;	// Base nucleus
+double O1(int d=0)         const;	// Offset freq.
+double O2(int d=0)         const;	// Offset freq.
+int    PARMODE(int d=0)    const;	// Acquisiiton dimension
+std::string PULPROG(int d=0)    const;	// Pulse program
+double SFO1(int d=0)       const;	// Spectrometer freq.
+double SFO2(int d=0)       const;	// Spectrometer freq.
+double SFO3(int d=0)       const;	// Spectrometer freq.
+std::string SOLVENT(int d=0)    const;	// Solvent
+double SW(int d=0)         const;	// Spectral width (PPM)
+double SW_h(int d=0)       const;	// Spectral width (Hz)
+int    TD(int d=0)         const;	// Total points
+double TE(int d=0)         const;	// Sample temperature
 
 /*                   NOT REALLY INHERITED FROM CLASS XWinSer
                              (Applies to File ser)                           */
  
-std::string XWin2D::sername() 	const;		// File name
-int    XWin2D::TDS()		const;		// No. total points
+std::string sername() 	const;		// File name
+int    TDS()		const;		// No. total points
 
 /*                  NOT REALLY INHERITED FROM CLASS XWinProcPar
                            (Applies To Procs and Proc2s)                    */
  
-std::string XWin2D::parname(int d=0)   const;  // ASCII File name
-int    XWin2D::BYTORDP(int d=0)   const;  // Binary byte order
-int    XWin2D::FT_mod(int d=0)    const;  // How FFT is performed
-double XWin2D::LB(int d=0)        const;  // Line Broadening
-int    XWin2D::MC2(int d=0)       const;  // FT type on t1
-double XWin2D::OFFSET(int d=0)    const;  // Spectrum offset
-double XWin2D::PHC0(int d=0)      const;  // Zero order phase
-double XWin2D::PHC1(int d=0)      const;  // 1st order phase
-int    XWin2D::PH_mod(int d=0)    const;  // Phasing type
-int    XWin2D::REVERSE(int d=0)   const;  // Plot spectrum reverse
-double XWin2D::SF(int d=0)        const;  // Spectrometer frequency
-int    XWin2D::SI(int d=0)        const;  // Data size (re+im)
-int    XWin2D::SSB(int d=0)       const;  // Sine bell
-int    XWin2D::STSI(int d=0)      const;  // Strip size
-int    XWin2D::STSR(int d=0)      const;  // Strip start
-double XWin2D::SW_p(int d=0)      const;  // Spectral width (PPM)
-double XWin2D::TDeff(int d=0)     const;  // Effective FFT size
-int    XWin2D::WDW(int d=0)       const;  // Window function
+std::string parname(int d=0)   const;  // ASCII File name
+int    BYTORDP(int d=0)   const;  // Binary byte order
+int    FT_mod(int d=0)    const;  // How FFT is performed
+double LB(int d=0)        const;  // Line Broadening
+int    MC2(int d=0)       const;  // FT type on t1
+double OFFSET(int d=0)    const;  // Spectrum offset
+double PHC0(int d=0)      const;  // Zero order phase
+double PHC1(int d=0)      const;  // 1st order phase
+int    PH_mod(int d=0)    const;  // Phasing type
+int    REVERSE(int d=0)   const;  // Plot spectrum reverse
+double SF(int d=0)        const;  // Spectrometer frequency
+int    SI(int d=0)        const;  // Data size (re+im)
+int    SSB(int d=0)       const;  // Sine bell
+int    STSI(int d=0)      const;  // Strip size
+int    STSR(int d=0)      const;  // Strip start
+double SW_p(int d=0)      const;  // Spectral width (PPM)
+double TDeff(int d=0)     const;  // Effective FFT size
+int    WDW(int d=0)       const;  // Window function
  
 /*                   ACCESS FUNCTIONS ON THIS LEVEL ONLY                     */
 
-std::string XWin2D::name()  const;
-double XWin2D::Field() const;
+std::string name()  const;
+double Field() const;
 
 
 /* -------------------------------------------------------------------------- 
@@ -237,64 +237,64 @@ double XWin2D::Field() const;
 /*                NOT REALLY INHERITED FROM CLASS XWinAcqPar
                          (Applies To Acqs and Acq2s)                         */
  
-void XWin2D::AQ_mod(int aqmo, int d=0);		// Acquisiiton mode
-//void XWin2D::BF1(double bf, int d=0);		// 1st/2nd channel Omega
-//void XWin2D::BF2(double bf, int d=0);		// 2nd/1st channel Omega
-//void XWin2D::BYTORDA(int bo, int d=0);	// Bin. byte order <=== arch
-int  XWin2D::D(int idx, double tsec, int d=0, int warn=2);
-void XWin2D::DS(int ds, int d=0);		// Dummy scans
-void XWin2D::EXP(const std::string& exp, int d=0);	// Experiment name
-void XWin2D::XW_IN(int i, double in, int d=0);	// Delay increments
-void XWin2D::O1(double of, int d=0);		// 1st/2nd channel offset
-void XWin2D::O2(double of, int d=0);		// 2nd/1st channel offset
-//void XWin2D::NAME(const std::string& n, int d=0);	// File name <===== on output
-void XWin2D::NS(int ns, int d=0);		// Number of scans
-//void XWin2D::NUC(int i, const std::string& N, int d=0);
-void XWin2D::NUCLEI(int channel, const std::string& I, double O, int warn=2);
-//void XWin2D::NUCLEUS(const std::string& I, int d=0);
-int  XWin2D::P(int idx, double tp, int d=0, int warn=2);
-//void XWin2D::PARMODE(int pm, int d=0);	// Data dimension <======== 2
-void XWin2D::PULPROG(const std::string& P, int d=0);	// Pulse program
-void XWin2D::SFO1(double sf, int d=0);		// 1st/2nd channel spec. freq.
-void XWin2D::SFO2(double sf, int d=0);		// 2nd/1st channel spec. freq.
-//void XWin2D::SFO3(double sf, int d=0);	// 3rd channel spec. freq.
-//void XWin2D::SFO(double sf, int i, int d=0);	// Spectrometer frequencies
-void XWin2D::SOLVENT(const std::string& S, int d=0);	// Solvent type
-void XWin2D::SW(double sw, int d=-1);		// Spectral width in ppm 
-void XWin2D::SW_h(double sw, int d=-1);		// Spectral width in Hz
-//void XWin2D::TD(int npts, int d=0);		// Set size <======= on output
-void XWin2D::TE(double te, int d=0);		// Set temperature
+void AQ_mod(int aqmo, int d=0);		// Acquisiiton mode
+//void BF1(double bf, int d=0);		// 1st/2nd channel Omega
+//void BF2(double bf, int d=0);		// 2nd/1st channel Omega
+//void BYTORDA(int bo, int d=0);	// Bin. byte order <=== arch
+int  D(int idx, double tsec, int d=0, int warn=2);
+void DS(int ds, int d=0);		// Dummy scans
+void EXP(const std::string& exp, int d=0);	// Experiment name
+void XW_IN(int i, double in, int d=0);	// Delay increments
+void O1(double of, int d=0);		// 1st/2nd channel offset
+void O2(double of, int d=0);		// 2nd/1st channel offset
+//void NAME(const std::string& n, int d=0);	// File name <===== on output
+void NS(int ns, int d=0);		// Number of scans
+//void NUC(int i, const std::string& N, int d=0);
+void NUCLEI(int channel, const std::string& I, double O, int warn=2);
+//void NUCLEUS(const std::string& I, int d=0);
+int  P(int idx, double tp, int d=0, int warn=2);
+//void PARMODE(int pm, int d=0);	// Data dimension <======== 2
+void PULPROG(const std::string& P, int d=0);	// Pulse program
+void SFO1(double sf, int d=0);		// 1st/2nd channel spec. freq.
+void SFO2(double sf, int d=0);		// 2nd/1st channel spec. freq.
+//void SFO3(double sf, int d=0);	// 3rd channel spec. freq.
+//void SFO(double sf, int i, int d=0);	// Spectrometer frequencies
+void SOLVENT(const std::string& S, int d=0);	// Solvent type
+void SW(double sw, int d=-1);		// Spectral width in ppm 
+void SW_h(double sw, int d=-1);		// Spectral width in Hz
+//void TD(int npts, int d=0);		// Set size <======= on output
+void TE(double te, int d=0);		// Set temperature
  
 /*                  NOT REALLY INHERITED FROM CLASS XWinProcPar
                            (Applies To Procs and Proc2s)                    */
 
-//void XWin2D::BYTORDP(int bo, int d=0);	// Bin. byte order <===== arch
-void XWin2D::FT_mod(int ft, int d=-1);		// Set transform type 
-void XWin2D::FT_mod(const std::string& ft, int d=0);	// Set transform type
-void XWin2D::GB(int gb,  int d=-1);		// Set Gaussian broadening
-void XWin2D::LB(int lb,  int d=-1);		// Set line broadening
-void XWin2D::MC2(int mc, int d=0);		// Set acquisition type (t1)
-void XWin2D::MC2(const std::string& mc, int d=0);	// Set acquisition type (t1)
-void XWin2D::PHC0(double ph0,  int d=-1);	// Set 0th order phase correct
-void XWin2D::PHC1(double ph1,  int d=-1);	// Set 1st order phase correct
-void XWin2D::PH_mod(const std::string& p, int d=-1);	// Set type of phase correct
-void XWin2D::REVERSE(int yn, int d=-1);		// Set spectrum reverse
-//void XWin2D::PPARMOD(int pm, int d=0);	// Data dim. <============== 2
-//void XWin2D::SI(int si, int d=0);		// Set data size (re+im)
-//void XWin2D::SF(double SF, int d=0);		// Set spectrometer freq.
-//void XWin2D::SR(double SR, int d=0);		// Ref. freq. <========= BF-SF
-void XWin2D::SSB(int sb, int d=0);		// Sine offset (pi/sb)
-//void XWin2D::STSI(int sb, int d=0);		// Strip size
-//void XWin2D::STSR(int sr, int d=0);		// Strip start
-//void XWin2D::SW_p(double swp, int d=0);	// SW (ppm) <========= acqus SW
-void XWin2D::WDW(int wd, int d=-1);		// Set window function
-void XWin2D::WDW(const std::string& wd, int d=-1);	// Set window function
+//void BYTORDP(int bo, int d=0);	// Bin. byte order <===== arch
+void FT_mod(int ft, int d=-1);		// Set transform type 
+void FT_mod(const std::string& ft, int d=0);	// Set transform type
+void GB(int gb,  int d=-1);		// Set Gaussian broadening
+void LB(int lb,  int d=-1);		// Set line broadening
+void MC2(int mc, int d=0);		// Set acquisition type (t1)
+void MC2(const std::string& mc, int d=0);	// Set acquisition type (t1)
+void PHC0(double ph0,  int d=-1);	// Set 0th order phase correct
+void PHC1(double ph1,  int d=-1);	// Set 1st order phase correct
+void PH_mod(const std::string& p, int d=-1);	// Set type of phase correct
+void REVERSE(int yn, int d=-1);		// Set spectrum reverse
+//void PPARMOD(int pm, int d=0);	// Data dim. <============== 2
+//void SI(int si, int d=0);		// Set data size (re+im)
+//void SF(double SF, int d=0);		// Set spectrometer freq.
+//void SR(double SR, int d=0);		// Ref. freq. <========= BF-SF
+void SSB(int sb, int d=0);		// Sine offset (pi/sb)
+//void STSI(int sb, int d=0);		// Strip size
+//void STSR(int sr, int d=0);		// Strip start
+//void SW_p(double swp, int d=0);	// SW (ppm) <========= acqus SW
+void WDW(int wd, int d=-1);		// Set window function
+void WDW(const std::string& wd, int d=-1);	// Set window function
 
 /*                   ACCESS FUNCTIONS ON THIS LEVEL ONLY                     */  
  
-void XWin2D::Field(double Bo);
-void XWin2D::Field(double Om, const std::string& I);
-void XWin2D::OldMeta(int om);
+void Field(double Bo);
+void Field(double Om, const std::string& I);
+void OldMeta(int om);
 
  
 
@@ -335,8 +335,8 @@ row_vector XWinSer::readFID(int idx=-1)
 matrix     XWinSer::readFIDs(const std::string& fin, int TD, int bytord)
 matrix     XWinSer::readFIDs()                                               */
 
-row_vector XWin2D::readFID(const std::string& d,int I=-1,int a=1,int p=1,int wn=2);
-row_vector XWin2D::readFID(int idx, int warn=2);
+row_vector readFID(const std::string& d,int I=-1,int a=1,int p=1,int wn=2);
+row_vector readFID(int idx, int warn=2);
 
 // ____________________________________________________________________________
 // D                 XWinNMR 2D Data Set Output Functions
@@ -378,8 +378,8 @@ row_vector XWin2D::readFID(int idx, int warn=2);
 		  SW, SW_h   Spectral Width (PPM, Hz)
 									     */
 
-int XWin2D::write(const std::string& Bdir, const matrix& data, int warn=2);
-//int XWin2D::write(const row_vector& data, int warn=2);
+int write(const std::string& Bdir, const matrix& data, int warn=2);
+//int write(const row_vector& data, int warn=2);
 
 
 // ____________________________________________________________________________ 
@@ -392,10 +392,10 @@ int XWin2D::write(const std::string& Bdir, const matrix& data, int warn=2);
    small file if needed.  The two function "dpa" and "dpp" mimick the output
    that would be seen in XWinNMR.                                            */
 
-std::ostream& XWin2D::dpa(std::ostream& ostr, const std::string& dirin);
-std::ostream& XWin2D::dpa(std::ostream& ostr) const;
-std::ostream& XWin2D::dpp(std::ostream& ostr, const std::string& dirname);
-std::ostream& XWin2D::dpp(std::ostream& ostr) const;
+std::ostream& dpa(std::ostream& ostr, const std::string& dirin);
+std::ostream& dpa(std::ostream& ostr) const;
+std::ostream& dpp(std::ostream& ostr, const std::string& dirname);
+std::ostream& dpp(std::ostream& ostr) const;
 
        std::ostream& print(std::ostream& out, int full=1) const;
 friend std::ostream& operator<<(std::ostream& out, const XWin2D& XW2D);
@@ -410,7 +410,7 @@ friend std::ostream& operator<<(std::ostream& out, const XWin2D& XW2D);
 // ____________________________________________________________________________
 
 
-//std::string XWin2D::ask_read(int argc, char* argv[], int& argn, int idx=1);
+//std::string ask_read(int argc, char* argv[], int& argn, int idx=1);
 
 	// Input                XW2D : An XWinNMR 2D data set
 	//                      argc    : Number of arguments

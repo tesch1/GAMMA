@@ -67,16 +67,16 @@ private:
         Output                  none    : Error message output
                                           Program execution stopped if fatal */
 
-void IntHFVec::IHFVerror(int eidx,                           int noret=0) const;
-void IntHFVec::IHFVerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void IntHFVec::IHFVfatality(int eidx) const;
+void IHFVerror(int eidx,                           int noret=0) const;
+void IHFVerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void IHFVfatality(int eidx) const;
 
 // ____________________________________________________________________________
 // ii             HYPERFINE INTERACTION VECTOR SETUP FUNCTIONS
 // ____________________________________________________________________________
  
 
-bool IntHFVec::check_spin(int spin, int warn=0) const;
+bool check_spin(int spin, int warn=0) const;
  
         // Input                IHFV     : Hyperfine interaction vector (this)
         //                      spin	: A spin index
@@ -107,8 +107,8 @@ bool IntHFVec::check_spin(int spin, int warn=0) const;
         // Output               void    : Interaction vector filled from
         //                                pset single indexed parameters    */
 
-void IntHFVec::setHFs(const ParameterSet& pset, int idx, int warn=2);
-//int IntHFVec::getNInts(const ParameterSet& pset, int idx=-1) const;
+void setHFs(const ParameterSet& pset, int idx, int warn=2);
+//int getNInts(const ParameterSet& pset, int idx=-1) const;
  
         // Input                IHFV     : Hyperfine interaction vector (this)
         //                      pset    : A parameter set
@@ -118,7 +118,7 @@ void IntHFVec::setHFs(const ParameterSet& pset, int idx, int warn=2);
         //                                # = { 0, 1, ...., ns-1 }.
 
 
-//int IntHFVec::setGs(const ParameterSet& pset, int idx=-1, int warn=0);
+//int setGs(const ParameterSet& pset, int idx=-1, int warn=0);
 
         // Input                IHFV     : Hyperfine interaction vector (this)
         //                      pset    : A parameter set
@@ -174,8 +174,8 @@ void IntHFVec::setHFs(const ParameterSet& pset, int idx, int warn=2);
                                             2 - fatal if no spins specified
            Output               ns      : # of spins specified in pset       */
 
-int  IntHFVec::getNSpins(const ParameterSet& pset, int indx, int warn=2) const;
-void IntHFVec::setHFs(int ns, const ParameterSet& pset, int idx, int warn=2);
+int  getNSpins(const ParameterSet& pset, int indx, int warn=2) const;
+void setHFs(int ns, const ParameterSet& pset, int idx, int warn=2);
 
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
@@ -197,8 +197,8 @@ public:
    have to keep looking them up all the time.
 */
 
-MSVCDLC IntHFVec::IntHFVec();				// Empty Interaction Vector
-MSVCDLC IntHFVec::IntHFVec(const IntHFVec& HFV);	// Copy Of Interaction Vector
+MSVCDLC IntHFVec();				// Empty Interaction Vector
+MSVCDLC IntHFVec(const IntHFVec& HFV);	// Copy Of Interaction Vector
 
 // ----------------------------------------------------------------------------
 //                      Constructors Using Parameter Sets 
@@ -218,8 +218,8 @@ MSVCDLC IntHFVec::IntHFVec(const IntHFVec& HFV);	// Copy Of Interaction Vector
 	//				  to read {[idx]Hyperfine(i)} from i=0 
 	//				  to i=ns-1 where ns is the number
 
-//IntHFVec::IntHFVec(const         ParameterSet& pset, int indx=-1, int warn=1);
-//IntHFVec::IntHFVec(int ns, const ParameterSet& pset, int indx=-1, int warn=1);
+//IntHFVec(const         ParameterSet& pset, int indx=-1, int warn=1);
+//IntHFVec(int ns, const ParameterSet& pset, int indx=-1, int warn=1);
 
 // ----------------------------------------------------------------------------
 //          This Constructor Supports Generation From A Spin System
@@ -245,7 +245,7 @@ MSVCDLC IntHFVec::IntHFVec(const IntHFVec& HFV);	// Copy Of Interaction Vector
 
 
 
-MSVCDLC IntHFVec::IntHFVec(const std::vector<Isotope>& Isos,
+MSVCDLC IntHFVec(const std::vector<Isotope>& Isos,
                                          const ParameterSet& pset, int warn=2);
 
 // ----------------------------------------------------------------------------
@@ -267,16 +267,16 @@ MSVCDLC IntHFVec::IntHFVec(const std::vector<Isotope>& Isos,
         // Note                         : If idx is negative then no
         //                                parameter prefix will be used     */
 
-//IntHFVec::IntHFVec(const ParameterSet& pset,          int indx=-1, int warn=1);
-MSVCDLC IntHFVec::IntHFVec(const ParameterSet& pset,
+//IntHFVec(const ParameterSet& pset,          int indx=-1, int warn=1);
+MSVCDLC IntHFVec(const ParameterSet& pset,
                     const std::vector<Isotope>& Isos, int indx=-1, int warn=2);
 
 // ----------------------------------------------------------------------------
 //               Here Be The Assignment Operator & Destructor
 // ----------------------------------------------------------------------------
 
-MSVCDLL void IntHFVec::operator= (const IntHFVec& IHFV);
-MSVCDLC      IntHFVec::~IntHFVec ();
+MSVCDLL void operator= (const IntHFVec& IHFV);
+MSVCDLC      ~IntHFVec ();
 
 // ____________________________________________________________________________ 
 // B                Hyperfine INTERACTION ACCESS & MANIPULATIONS
@@ -297,8 +297,8 @@ MSVCDLC      IntHFVec::~IntHFVec ();
 	//				  for specified spin
  
 
-MSVCDLL void   IntHFVec::CValue(int spin, double val, int type);
-MSVCDLL double IntHFVec::CValue(int spin,             int type) const;
+MSVCDLL void   CValue(int spin, double val, int type);
+MSVCDLL double CValue(int spin,             int type) const;
 
 
 // ---------------------------------------------------------------------------- 
@@ -312,10 +312,10 @@ MSVCDLL double IntHFVec::CValue(int spin,             int type) const;
 	// Note				: Defined in class IntHF as 1.5 times
 	//			          the Hyperfine tensor delzz value
 
-//void   IntHFVec::hfa(int  spin, double Hyperfine);
-//double IntHFVec::hfa(int  spin) const;
-MSVCDLL void   IntHFVec::delz(int spin, double dcc);
-MSVCDLL double IntHFVec::delz(int spin) const;
+//void   hfa(int  spin, double Hyperfine);
+//double hfa(int  spin) const;
+MSVCDLL void   delz(int spin, double dcc);
+MSVCDLL double delz(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Hyperfine Asymmetry Values
@@ -327,8 +327,8 @@ MSVCDLL double IntHFVec::delz(int spin) const;
 	// Output		none	: Get/Set Hyperfine spin asymmetry
 	// Note				: Defined in class IntHyperfine between [0,1]
 
-MSVCDLL void   IntHFVec::eta(int spin, double ceta);
-MSVCDLL double IntHFVec::eta(int spin) const;
+MSVCDLL void   eta(int spin, double ceta);
+MSVCDLL double eta(int spin) const;
 
  
 // ---------------------------------------------------------------------------- 
@@ -341,8 +341,8 @@ MSVCDLL double IntHFVec::eta(int spin) const;
 	// Output		none	: Get/Set Hyperfine spin theta angle
 	// Note				: Defined class IntHyperfine between [0,180]
 
-MSVCDLL void   IntHFVec::theta(int spin, double ctheta);
-MSVCDLL double IntHFVec::theta(int spin) const;
+MSVCDLL void   theta(int spin, double ctheta);
+MSVCDLL double theta(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //               Hyperfine Phi Orientation (Over From +x Axis)
@@ -354,14 +354,14 @@ MSVCDLL double IntHFVec::theta(int spin) const;
 	// Output		none	: Get/Set Hyperfine spin phi angle
 	// Note				: Defined in IntHyperfine between [0,360]
 
-MSVCDLL void   IntHFVec::phi(int spin, double phi);
-MSVCDLL double IntHFVec::phi(int spin) const;
+MSVCDLL void   phi(int spin, double phi);
+MSVCDLL double phi(int spin) const;
 
 // ---------------------------------------------------------------------------- 
 //                        Full Hyperfine Interaction
 // ---------------------------------------------------------------------------- 
 
-MSVCDLL IntHF& IntHFVec::operator() (int spins);                                          
+MSVCDLL IntHF& operator() (int spins);                                          
 
         // Input                IHFV	: Hyperfine interaction vector (this)
         //                      spins	: Interaction index
@@ -369,7 +369,7 @@ MSVCDLL IntHF& IntHFVec::operator() (int spins);
         // Note				: Returns a reference to the interaction
 
 
-MSVCDLL IntHF IntHFVec::get(int spins) const;
+MSVCDLL IntHF get(int spins) const;
 
 	// Input		IHFV	: Hyperfine interaction vector
 	// 			spins	: Hyperfine index
@@ -381,13 +381,13 @@ MSVCDLL IntHF IntHFVec::get(int spins) const;
 // ----------------------------------------------------------------------------
  
  
-//int IntHFVec::size() const;
+//int size() const;
  
         // Input                IHFV   : Hyperfine interaction vector
         // Output               ns    : Number of interactions in vector
  
  
-MSVCDLL bool IntHFVec::nonzero() const;
+MSVCDLL bool nonzero() const;
  
         // Input                IHFV   : Hyperfine interaction vector
         // Output               TF    : True if any interactions with a
@@ -444,7 +444,7 @@ MSVCDLL void PSetAdd(ParameterSet& pset, int idx=-1) const;
 // ---------------------------------------------------------------------------- 
 
 
-MSVCDLL void IntHFVec::operator= (const ParameterSet& pset);
+MSVCDLL void operator= (const ParameterSet& pset);
 
         // Input                IHFV     : Hyperfine interaction vector (this)
         //                      pset    : A parameter set
@@ -456,7 +456,7 @@ MSVCDLL void IntHFVec::operator= (const ParameterSet& pset);
 
 
 
-MSVCDLL bool IntHFVec::setIHFVec(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL bool setIHFVec(const ParameterSet& pset, int idx=-1, int warn=2);
 
 	// Input		IHFV	: Hyperfine interaction vector (this)
 	// 			pset	: A parameter set
@@ -486,8 +486,8 @@ MSVCDLL bool IntHFVec::setIHFVec(const ParameterSet& pset, int idx=-1, int warn=
         //                                as a parameter set either to file
 	//				  filename or ourput stream ofstr
  
-MSVCDLL int IntHFVec::write(const std::string &filename, int idx=-1, int warn=2) const;
-MSVCDLL int IntHFVec::write(std::ofstream& ofstr,        int idx=-1, int warn=2) const;
+MSVCDLL int write(const std::string &filename, int idx=-1, int warn=2) const;
+MSVCDLL int write(std::ofstream& ofstr,        int idx=-1, int warn=2) const;
 
 
 // ____________________________________________________________________________ 
@@ -498,7 +498,7 @@ MSVCDLL int IntHFVec::write(std::ofstream& ofstr,        int idx=-1, int warn=2)
 //        Direct Read of Vector From An ASCII File Or A Parameter Set
 // ----------------------------------------------------------------------------
 
-MSVCDLL bool IntHFVec::read(const std::string &filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string &filename, int idx=-1, int warn=2);
 
 	// Input		IHFV	: Hyperfine interaction vector (this)
 	// 			filename: Input filename
@@ -507,7 +507,7 @@ MSVCDLL bool IntHFVec::read(const std::string &filename, int idx=-1, int warn=2)
 	//				  parameters read from file
 
  
-MSVCDLL bool IntHFVec::read(const ParameterSet& pset, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset, int idx=-1, int warn=2);
  
         // Input                IHFV     : Hyperfine interaction vector (this)
         //                      pset    : Parameter set
@@ -520,7 +520,7 @@ MSVCDLL bool IntHFVec::read(const ParameterSet& pset, int idx=-1, int warn=2);
 //       Interactive Read of Hyperfine Interaction Vector From An ASCII File
 // ----------------------------------------------------------------------------
 
-MSVCDLL std::string IntHFVec::ask_read(int argc, char* argv[], int argn);
+MSVCDLL std::string ask_read(int argc, char* argv[], int argn);
 
 	// Input		IHFV	: Hyperfine interaction vector (this)
         //                      argc    : Number of arguments
@@ -541,7 +541,7 @@ MSVCDLL std::string IntHFVec::ask_read(int argc, char* argv[], int argn);
 // ____________________________________________________________________________ 
 
 
-MSVCDLL std::ostream& IntHFVec::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 
 	// Input		IHFV	: Hyperfine interaction vector (this)
 	// 			ostr	: Output stream
