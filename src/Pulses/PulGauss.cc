@@ -39,7 +39,7 @@
 #include <HSLib/HSauxil.h>		// Include propagators
 #include <HSLib/GenOp.h>		// Include operators
 #include <HSLib/HSprop.h>		// Include operators
-#include <HSLib/Evolve.h>
+//#include <HSLib/Evolve.h>
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <HSLib/HSham.h>		// Knowledge of isotropic Hamiltonians
 #include <Level2/acquire1D.h>		// Include knowledge of "acquisitions"
@@ -58,7 +58,7 @@ using std::ostream;			// Using libstdc++ output streams
 using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
 
-using namespace Evolve;
+//using namespace Evolve;
 
 // ______________________________________________________________________
 //                         Gaussian Pulse Propagators 

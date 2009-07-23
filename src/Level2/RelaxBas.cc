@@ -55,7 +55,7 @@
 #include <HSLib/SpinOp.h>		// Include spin operators
 #include <HSLib/SpinSys.h>		// Include isotropic spin systems
 #include <HSLib/HSprop.h>		// Include Hilbert space evolution
-#include <HSLib/Evolve.h>
+//#include <HSLib/Evolve.h>
 #include <HSLib/HSauxil.h>		// Include density operator stuff
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <LSLib/LSacquire.h>		// Include Liouville acquisitions
@@ -65,8 +65,7 @@ static double DefR12 = 0.0; 		// Default R1,R2 value
 static double DefT12 = 1.e6;            // Default T1,T2 value
 static double DefLW  = 1.e-4;           // Default LW    value
 
-
-using namespace Evolve;
+//using namespace Evolve;
 
 // ----------------------------------------------------------------------------
 // ----------------------------- PRIVATE FUNCTIONS ----------------------------

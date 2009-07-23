@@ -61,9 +61,9 @@
 #include <HSLib/PulseI.h>		// Knowledge of ideal pulses
 #include <HSLib/HSprop.h>		// Knowledge of propagators
 #include <Basics/Gutils.h>		// Include GAMMA error handling
-#include <HSLib/Evolve.h>
+//#include <HSLib/Evolve.h>
 
-using namespace Evolve;
+//using namespace Evolve;
 
 // ____________________________________________________________________________
 // i                       Soft Pulse Error Handling

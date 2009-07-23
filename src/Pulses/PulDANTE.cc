@@ -40,7 +40,7 @@
 #include <Basics/ParamSet.h>		// Include GAMMA parameter sets
 #include <Level2/acquire1D.h>		// Include 1D acquisitions
 #include <Basics/StringCut.h>		// Include Gdec and Gform
-#include <HSLib/Evolve.h>
+//#include <HSLib/Evolve.h>
 #include <stdlib.h>
 #include <string>                       // Include libstdc++ strings
 #include <iostream>                     // Include input output streams (cout)
@@ -50,7 +50,7 @@ using std::ostream;			// Using libstdc++ output streams
 using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
 
-using namespace Evolve;
+//using namespace Evolve;
 
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------

@@ -39,10 +39,10 @@
 #include <HSLib/HSprop.h>		// Knowledge of propagators
 #include <HSLib/SpinSys.h>
 #include <HSLib/GenOp.h>
-#include <HSLib/Evolve.h>
+//#include <HSLib/Evolve.h>
 #include <vector>			// Include libstdc++ stl vectors
 
-using namespace Evolve;
+//using namespace Evolve;
 
 // ____________________________________________________________________________
 // A               Pulses Acting Directly On Density Operators

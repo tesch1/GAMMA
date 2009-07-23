@@ -41,11 +41,11 @@
 #include <HSLib/PulseS.h>		// Knowledfe of soft pulses
 #include <HSLib/HSprop.h>		// Knowledge of evolution steps
 #include <Basics/Gutils.h>		// Know GAMMA error handling
-#include <HSLib/Evolve.h>
+//#include <HSLib/Evolve.h>
 #include <vector>			// Know stdlibc++ stl vectors
 
 
-using namespace Evolve;
+//using namespace Evolve;
 // ____________________________________________________________________________
 // i                       Shaped Pulse Error Handling
 // ____________________________________________________________________________
