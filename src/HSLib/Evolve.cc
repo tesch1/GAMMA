@@ -2,8 +2,8 @@
 
 
 #include <HSLib/Evolve.h>
+#include <Basics/Gconstants.h>
 
-using namespace Evolve;
 
 // ______________________________________________________________________
 // F                      PROPAGATOR FUNCTIONS
@@ -23,14 +23,14 @@ using namespace Evolve;
         // Note                       : Done in place, overwriting ham
  
 
-gen_op prop(const gen_op& ham, double time)
+gen_op Evolve::prop(const gen_op& ham, double time)
   {
   ham.set_EBR();                        // Put ham into its eigenbase
   complex z(0,-PIx2*time);		// Exponential factor (rad->Hz)
   return ham.exp(z);			// Generate evolution propagator
   }
         
-void prop_ip(gen_op& U, double time)
+void Evolve::prop_ip(gen_op& U, double time)
   {
   U.set_EBR();                          // Put ham into its eigenbase
   complex z(0,-PIx2*time);		// Exponential factor (rad -> Hz)
@@ -61,14 +61,14 @@ void prop_ip(gen_op& U, double time)
         // Note                       : As propagator U is unitless & the exp
         //                              argument is in radians, 2*PI is used
 
-gen_op evolve(const gen_op& sigma, const gen_op& ham, double time)
+gen_op Evolve::evolve(const gen_op& sigma, const gen_op& ham, double time)
   {
   if(!ham.exists()) return sigma; 	// No ham, no change in sigma
   gen_op U = prop(ham,time);		// Construct HS propagator
   return U.sim_trans(sigma);		// Return sigma evolved by U
   }
 
-void evolve_ip(gen_op& sigma, const gen_op& ham, double time)
+void Evolve::evolve_ip(gen_op& sigma, const gen_op& ham, double time)
   {
   if(!ham.exists()) return;             // Do nothing if no Hamiltonian
   gen_op U = prop(ham,time);		// Construct HS propagator
@@ -91,17 +91,16 @@ void evolve_ip(gen_op& sigma, const gen_op& ham, double time)
         //                              EB of sigma and the computation done
         //                              in that eigenbase
 
-gen_op evolve(const gen_op& sigma, const gen_op& U)
+gen_op Evolve::evolve(const gen_op& sigma, const gen_op& U)
   {
   if(!U.test_EBR()) 
     U.Op_base(sigma);   // Put U in sigma's basis unless EBR
   return U.sim_trans(sigma);            // Return propagated sigma
   }
  
-void evolve_ip(gen_op& sigma, const gen_op& U)
+void Evolve::evolve_ip(gen_op& sigma, const gen_op& U)
   {
   if(!U.test_EBR()) U.Op_base(sigma);   // Put U in sigma's basis unless EBR
   sigma.sim_trans_ip(U);                // Evolve density matrix
   return;                               // Return sigma1
   }
-

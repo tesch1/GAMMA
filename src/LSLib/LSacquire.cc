@@ -37,6 +37,9 @@
 #include <HSLib/GenOp.h>		// Knowledge of operators
 #include <LSLib/SuperOp.h>		// Knowledge of superoperators
 #include <HSLib/HSprop.h>		// Knowledge of nmr evolutions
+#include <HSLib/Evolve.h>
+
+using namespace Evolve;
 
 // ____________________________________________________________________________
 // A                Generic Liouville Space Acquisition Functions
