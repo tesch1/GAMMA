@@ -53,6 +53,80 @@
 #include <Matrix/matrix.h>		// Know GAMMA matrices
 #include <Matrix/complex.h>		// Know GAMMA complex numbers
 
+
+MSVCDLL void ask_relax(int argc, char* argv[], int& argn,
+                               super_op& R, const sys_dynamic& sys, gen_op& H);
+
+MSVCDLL void REXijkl(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
+         matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+
+MSVCDLL void REXijk(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
+         matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+
+MSVCDLL void REXkij(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
+         matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+
+MSVCDLL void REXij(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
+         matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+ 
+MSVCDLL void REXmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, double* w, int hs,
+              double* taus, double* c1s, double* c2s, double xi1xi2,
+               double w0, double w1, double w2, int l, int level, int autoc, int DFS=0, int het=0);
+
+MSVCDLL void REXmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, double* w, int hs,
+              double* taus, double* c1s, double* c2s, double xi1xi2,
+         double w0, double w1, double w2, int l, int level, int autoc, int DFS, int het,
+                               gen_op& Fz11, double W11, gen_op& Fz12, double W12,
+                               gen_op& Fz21, double W21, gen_op& Fz22, double W22);
+
+MSVCDLL void REXrfijkl(super_op &LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
+         double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+
+MSVCDLL void REXrfijk(super_op& LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
+         double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+MSVCDLL void REXrfkij(super_op& LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
+         double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+
+MSVCDLL void REXrfij(super_op& LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
+         double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+
+MSVCDLL void REXrfmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, matrix* J12,
+                  double* J, double* w, int rank, int level, int autoc, int DFS=0, int het=0);
+
+MSVCDLL void REX_4(super_op& LOp, int rank, gen_op* T1s, gen_op* T2s, matrix& J12);
+
+MSVCDLL complex REX_4(int hs, gen_op* T1s, gen_op* T2s, matrix& J12,
+		 	         int rank, int a, int b, int aa, int bb);
+
+MSVCDLL void REX_4(super_op& LOp, int rank, gen_op* T1s, gen_op* T2s, matrix& J12,
+                               gen_op& Fz11, double W11, gen_op& Fz12, double W12,
+                               gen_op& Fz21, double W21, gen_op& Fz22, double W22);
+
+MSVCDLL complex REX_4(int hs, gen_op* T1s, gen_op* T2s, matrix& J12,
+                        int rank, int a, int b, int aa, int bb,
+                               gen_op& Fz1, double W1, gen_op& Fz2, double W2);
+
+MSVCDLL void REX_3(super_op& LOp, double* w, int rank, gen_op* T1s, gen_op* T2s,
+					 matrix& J12, double cutoff=1.e-2);
+
+MSVCDLL void REXrf_4(super_op& LOp, int rank, gen_op* T1s, gen_op* T2s, matrix* J12a);
+
+MSVCDLL complex REXrf_4(int hs, gen_op* T1s, gen_op* T2s, matrix* J12,
+		 	         int rank, int a, int b, int aa, int bb);
+MSVCDLL void REXrf_3(super_op& LOp, double* w, int rank, gen_op* T1s,
+                                         gen_op* T2s, matrix* J12, double cutoff=1.e-6);
+
+
+
+
 class WBRExch 
   {
   int DD; 	                      // Flag for Dipolar Relaxation
@@ -716,23 +790,23 @@ MSVCDLL friend void ask_relax(int argc, char* argv[], int& argn,
  
 MSVCDLL friend void REXijkl(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
          matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
 
 MSVCDLL friend void REXijk(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
          matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
 
 MSVCDLL friend void REXkij(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
          matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
 
 MSVCDLL friend void REXij(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
          matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
  
 MSVCDLL friend void REXmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, double* w, int hs,
               double* taus, double* c1s, double* c2s, double xi1xi2,
-               double w0, double w1, double w2, int l, int level, int autoc, int DFS=0, int het=0);
+               double w0, double w1, double w2, int l, int level, int autoc, int DFS, int het);
 
 // ---------------- Routing to Specific Level Computation ---------------
 // ------------------ This Is For Heteronuclear Systems -----------------
@@ -753,7 +827,7 @@ MSVCDLL friend void REXmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, double* w, 
 
 MSVCDLL friend void REXrfijkl(super_op &LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
          double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
 
 
  
@@ -761,12 +835,12 @@ MSVCDLL friend void REXrfijkl(super_op &LOp, const sys_dynamic& sys, gen_op& Hef
 
 MSVCDLL friend void REXrfijk(super_op& LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
          double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
 
 
 MSVCDLL friend void REXrfkij(super_op& LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
          double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
 
 
 
@@ -774,11 +848,11 @@ MSVCDLL friend void REXrfkij(super_op& LOp, const sys_dynamic& sys, gen_op& Heff
 
 MSVCDLL friend void REXrfij(super_op& LOp, const sys_dynamic& sys, gen_op& Heff, double* w,
          double Wrflab, matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
-         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS=0);
+         spin_T* T1, spin_T* T2, double* taus, double chi, int type, int level, int DFS);
 
 
 MSVCDLL friend void REXrfmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, matrix* J12,
-                  double* J, double* w, int rank, int level, int autoc, int DFS=0, int het=0);
+                  double* J, double* w, int rank, int level, int autoc, int DFS, int het);
 
 
 
@@ -816,7 +890,7 @@ MSVCDLL friend complex REX_4(int hs, gen_op* T1s, gen_op* T2s, matrix& J12,
 //                  (Applies Secular Approximation)
 
 MSVCDLL friend void REX_3(super_op& LOp, double* w, int rank, gen_op* T1s, gen_op* T2s,
-					 matrix& J12, double cutoff=1.e-2);
+					 matrix& J12, double cutoff);
 
 
 //*************************************************************
@@ -835,7 +909,7 @@ MSVCDLL friend complex REXrf_4(int hs, gen_op* T1s, gen_op* T2s, matrix* J12,
 //                  (Applies Secular Approximation)
 
 MSVCDLL friend void REXrf_3(super_op& LOp, double* w, int rank, gen_op* T1s,
-                                         gen_op* T2s, matrix* J12, double cutoff=1.e-6);
+                                         gen_op* T2s, matrix* J12, double cutoff);
 
 
   };
