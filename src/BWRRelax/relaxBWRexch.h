@@ -53,6 +53,12 @@
 #include <Matrix/matrix.h>		// Know GAMMA matrices
 #include <Matrix/complex.h>		// Know GAMMA complex numbers
 
+//
+// Added function declaration here before the class definition.
+//
+// The friend declarations that are included in the class
+// are no longer sufficient (in gcc 4.3.3) as function declaration.
+// 
 
 MSVCDLL void ask_relax(int argc, char* argv[], int& argn,
                                super_op& R, const sys_dynamic& sys, gen_op& H);
