@@ -42,6 +42,35 @@
 #include <HSLib/GenOp.h>		// Know about general operators
 #include <string>			// Know stdlibc++ string class
 
+class super_op;  // Forward declaration so following functions will compile
+
+// These declarations were added here,
+// as the "friend" versions were not considered declarations
+// but rather as defining the relationship to the super_op class.
+
+MSVCDLL super_op left(const gen_op& Op); 	// LOp*Op1 = Op*Op1
+MSVCDLL super_op left(const matrix& mx, const basis& bs);
+MSVCDLL super_op left(const matrix& mx); 
+MSVCDLL super_op right(const gen_op& Op); 	// LOp*Op1 = Op1*Op
+MSVCDLL super_op right(const matrix& mx); 	// LOp*Op1 = Op1*mx
+MSVCDLL super_op right(const matrix& mx, const basis& bs);
+MSVCDLL super_op Hsuper(const gen_op& Heff);
+ 
+MSVCDLL super_op U_transform(const gen_op& Op);
+MSVCDLL super_op U_transform(const matrix& mx);
+
+MSVCDLL super_op commutator(const gen_op& Op); 	// LOp*Op1 = [Op, Op1]
+MSVCDLL super_op commutator(const matrix& mx);	// LOp*mx = [mx, mx1] 
+
+MSVCDLL super_op d_commutator(const gen_op& Op, const complex& z = complex1);
+MSVCDLL super_op d_commutator(const matrix& mx);
+MSVCDLL super_op d_commutator(const gen_op& Op1, const gen_op& Op2);
+MSVCDLL super_op d_commutator(const gen_op& Op1, const gen_op& Op2,
+                                                             const complex& z);
+MSVCDLL super_op d_commutator (const matrix& mx1, const matrix& mx2);
+
+
+
 class super_op
  {
 
@@ -287,7 +316,7 @@ MSVCDLL friend super_op commutator(const matrix& mx);	// LOp*mx = [mx, mx1]
 	4.) LOp*X = z*[Op1, [Op2, X]]
 	5.) LOp*X =   [mx1, [mx2, X]]                                       */
  
-MSVCDLL friend super_op d_commutator(const gen_op& Op, const complex& z = complex1);
+MSVCDLL friend super_op d_commutator(const gen_op& Op, const complex& z);
 MSVCDLL friend super_op d_commutator(const matrix& mx);
 MSVCDLL friend super_op d_commutator(const gen_op& Op1, const gen_op& Op2);
 MSVCDLL friend super_op d_commutator(const gen_op& Op1, const gen_op& Op2,

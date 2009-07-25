@@ -205,8 +205,8 @@ MSVCDLL HSprop Pow(int n) const;
 	//                              is done "in place" overwriting ham
 
  
-MSVCDLL friend gen_op prop(const gen_op& ham, const double time);
-MSVCDLL friend void   prop_ip(   gen_op& ham, const double time);
+//MSVCDLL friend gen_op prop(const gen_op& ham, const double time);
+//MSVCDLL friend void   prop_ip(   gen_op& ham, const double time);
  
 // ----------------------------------------------------------------------------
 //                 EVOLUTION UNDER A STATIC HAMILTONIAN
@@ -224,9 +224,9 @@ MSVCDLL friend void   prop_ip(   gen_op& ham, const double time);
         // Note                       : As propagator U is unitless & the exp
         //                              argument is in radians, 2*PI is used
 
-MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
+//MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
 
-MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+//MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
 
 // ----------------------------------------------------------------------------
 //                EVOLUTION UNDER A HILBERT SPACE PROPAGATOR
@@ -243,9 +243,9 @@ MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time
         //                              EB of sigma and the computation done
         //                              in that eigenbase
 
-MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& U);
+//MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& U);
 
-MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& U);
+//MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& U);
 
 // ____________________________________________________________________________
 // H              HILBERT SPACE PROPAGATOR CONTAINER SUPPORT FUNCTIONS

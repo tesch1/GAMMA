@@ -39,7 +39,7 @@
 #include <HSLib/HSauxil.h>		// Include propagators
 #include <HSLib/GenOp.h>		// Include operators
 #include <HSLib/HSprop.h>		// Include operators
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <HSLib/HSham.h>		// Knowledge of isotropic Hamiltonians
 #include <Level2/acquire1D.h>		// Include knowledge of "acquisitions"
@@ -53,10 +53,8 @@
 using std::cout;
 using std::cin;
 
-//using namespace Evolve;
-
 // ____________________________________________________________________________
-// A                        Sinc Pulse Hamiltonians
+//                         Sinc Pulse Hamiltonians
 // ____________________________________________________________________________
 
 /* These functions are meant to generate an array of Hamiltonians for a Sinc
@@ -128,7 +126,7 @@ void SincPulseUs(gen_op* Us, gen_op& H0, gen_op& Fxy,
     else					// These are the first half
       { 					// of the waveform. We must
       H = H0 - Sinc.get(i)*Fxy;			// calculate the H & U for
-      Us[i] = prop(H, tdiv);			// each of these pulse steps
+      Us[i] = Evolve::prop(H, tdiv);			// each of these pulse steps
       }
     }
   }    
@@ -168,7 +166,7 @@ gen_op SincPulseU(gen_op& H0rot, gen_op& Fxy,
   Fxy.Op_base(H0rot);				// Set Fxy basis for easy add
   double gB1 = Sinc.getRe(0);			// Field strength of 1st step
   gen_op H = H0rot + gB1*Fxy; 			// Total Ham., 1st step
-  gen_op Utlow = prop(H, tdiv);			// Propagator for 1st step
+  gen_op Utlow = Evolve::prop(H, tdiv);			// Propagator for 1st step
   gen_op Uthigh = Utlow;			// Propagator for Nth step
   gen_op U, Ustep;				// Working propagators
   int i;
@@ -176,7 +174,7 @@ gen_op SincPulseU(gen_op& H0rot, gen_op& Fxy,
     {						// steps, symmetry for 2nd half
     gB1 = Sinc.getRe(i);			// RF-field strength this step
     H = H0rot + gB1*Fxy;			// Total Hamiltonian, this step
-    Ustep = prop(H, tdiv);			// Prop. for this pulse step
+    Ustep = Evolve::prop(H, tdiv);			// Prop. for this pulse step
     Utlow &= Ustep;				// Utlow = Ustep*Utlow
     Uthigh *= Ustep;				// Uthigh = Uthigh*Ustep
     }
@@ -185,7 +183,7 @@ gen_op SincPulseU(gen_op& H0rot, gen_op& Fxy,
     {						// still need to do middle step
     gB1 = Sinc.getRe(i);			// RF-field of middle step
     H = H0rot + gB1*Fxy;			// Total Hamiltonian, this step
-    U = prop(H,tdiv);				// Prop. for middle step
+    U = Evolve::prop(H,tdiv);				// Prop. for middle step
     U *= Utlow;					// Add in after earlier steps
     U &= Uthigh;				// Add later steps after middle
     }
@@ -813,7 +811,7 @@ SincPulDat SincAsk(int argc, char* argv[], int& qn, int type)
   } 
 
 // sosi - this function makes us depende upon the Level2 module
- 
+/* 
 double ask_Sinc(spin_system& sys, std::string& Iso, gen_op& H, double cutoff)
 
 	// Input		sys	: A spin system
@@ -848,7 +846,7 @@ double ask_Sinc(spin_system& sys, std::string& Iso, gen_op& H, double cutoff)
   cout << "\n";
   return v;
   }
-
+*/
 
 void set_Sinc(double gamB1, double& tmix, double& tpul, double tdel, int& numb, int& type)
 

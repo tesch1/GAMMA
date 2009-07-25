@@ -33,10 +33,9 @@
 #include <Gradients/Gradients2.h>	// Include the interface
 #include <Gradients/sys_gradz.h>	// Include z-gradient spin systems
 #include <HSLib/HSLibIF.h>		// Include Hilbert space stuff
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 #include <vector>			// Include libstdc++ STL vectors
 
-//using namespace Evolve;
 
 // ____________________________________________________________________________
 // A                           Hamiltonian Functions
@@ -105,7 +104,7 @@ std::vector<gen_op> Hzgrad(const sys_gradz& sys, gen_op& H0)
 
 void Props(int NSS, gen_op* Hs, double t, gen_op* Us)
 {
-  for(int i=0; i<NSS; i++) Us[i] = prop(Hs[i], t);
+  for(int i=0; i<NSS; i++) Us[i] = Evolve::prop(Hs[i], t);
 }
 
 std::vector<gen_op> Props(std::vector<gen_op>& Hs, double t)
@@ -113,7 +112,7 @@ std::vector<gen_op> Props(std::vector<gen_op>& Hs, double t)
   unsigned ns = Hs.size();
   std::vector<gen_op> Us;
   for(unsigned i=0; i<ns; i++)
-    Us.push_back(prop(Hs[i], t));
+    Us.push_back(Evolve::prop(Hs[i], t));
   return Us;
 }
 

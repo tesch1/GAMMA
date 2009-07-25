@@ -42,6 +42,11 @@
 #include <LSLib/DensOp.h>		// Know density operator class
 #include <HSLib/HSprop.h>		// Know Hilbert space propagators
 
+
+MSVCDLL super_op R_prop(super_op& eLt, gen_op sigmaeq);
+MSVCDLL super_op R_prop(super_op& L, gen_op& sigmaeq, double t);
+
+
 class LSprop
   {
   super_op GOp;				// Propagator superoperator

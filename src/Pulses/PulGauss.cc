@@ -39,7 +39,7 @@
 #include <HSLib/HSauxil.h>		// Include propagators
 #include <HSLib/GenOp.h>		// Include operators
 #include <HSLib/HSprop.h>		// Include operators
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <HSLib/HSham.h>		// Knowledge of isotropic Hamiltonians
 #include <Level2/acquire1D.h>		// Include knowledge of "acquisitions"
@@ -58,7 +58,6 @@ using std::ostream;			// Using libstdc++ output streams
 using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
 
-//using namespace Evolve;
 
 // ______________________________________________________________________
 //                         Gaussian Pulse Propagators 
@@ -100,7 +99,7 @@ gen_op Hstep;
 // should build two in reverse order then multiply em!
      Hstep = H0;
      Hstep -= Gs.get(i)*Fxy;			// Total Ham. this step
-     Ustep = prop(H, tdiv);			// Prop for this step
+     Ustep = Evolve::prop(H, tdiv);			// Prop for this step
      U *= Ustep;
      }
    return U;					// Return Gaussian prop.
@@ -198,7 +197,7 @@ void Gpulse_Us(gen_op* Us, gen_op& H0, gen_op& Fxy,
        {
        H = H0;
        H -= Gs.get(i)*Fxy;			// Total Ham., this step
-       Us[i] = prop(H, tdiv);			// Prop. this pulse step
+       Us[i] = Evolve::prop(H, tdiv);			// Prop. this pulse step
        }
      }
    }
@@ -292,7 +291,7 @@ gen_op Gpulse_U(gen_op& H0rot, gen_op& Fxy,
    double gB1 = Gs.getRe(0);			// Field strength first step
    gen_op H = H0rot;
    H += gB1*Fxy;				// Total Ham., 1st step
-   gen_op Utlow = prop(H, tdiv);		// Propagator for 1st step
+   gen_op Utlow = Evolve::prop(H, tdiv);		// Propagator for 1st step
    gen_op Uthigh = Utlow;			// Propagator for Nth step
    gen_op U, Ustep;				// Working propagators
    int i;
@@ -301,7 +300,7 @@ gen_op Gpulse_U(gen_op& H0rot, gen_op& Fxy,
      gB1 = Gs.getRe(i);				// RF-field strength this step
      H = H0rot;					// Static Hamiltonian
      H += gB1*Fxy;				// Total Hamiltonian, this step
-     Ustep = prop(H, tdiv);			// Prop. for this pulse step
+     Ustep = Evolve::prop(H, tdiv);			// Prop. for this pulse step
      Utlow &= Ustep;				// Utlow = Ustep*Utlow
      Uthigh *= Ustep;				// Uthigh = Uthigh*Ustep
      }
@@ -311,7 +310,7 @@ gen_op Gpulse_U(gen_op& H0rot, gen_op& Fxy,
      gB1 = Gs.getRe(i);				// RF-field of middle step
      H = H0rot;					// Static Hamiltonian
      H += gB1*Fxy;				// Total Ham. , middle step
-     U = prop(H,tdiv);				// Prop. for middle step
+     U = Evolve::prop(H,tdiv);				// Prop. for middle step
      U *= Utlow;				// Add in after earlier steps
      U &= Uthigh;				// Add later steps after middle
      }
@@ -362,7 +361,7 @@ gen_op Gpulse_U(gen_op& H0rot, gen_op& Fxy,
      tang += gB1*tdiv*360.;
      cout << ", Total Angle " << tang << " Degrees";
      }
-   gen_op Utlow = prop(H, tdiv);		// Propagator for 1st step
+   gen_op Utlow = Evolve::prop(H, tdiv);		// Propagator for 1st step
    gen_op Uthigh = Utlow;			// Propagator for Nth step
    gen_op U, Ustep;				// Working propagators
    double tpx = tdiv;				// Used for debugging
@@ -374,7 +373,7 @@ gen_op Gpulse_U(gen_op& H0rot, gen_op& Fxy,
      gB1 = Gs.getRe(i);				// RF-field strength this step
      H = H0rot;					// Static Hamiltonian
      H += gB1*Fxy;				// Total Hamiltonian, this step
-     Ustep = prop(H, tdiv);			// Prop. for this pulse step
+     Ustep = Evolve::prop(H, tdiv);			// Prop. for this pulse step
      Utlow &= Ustep;				// Utlow = Ustep*Utlow
      Uthigh *= Ustep;				// Uthigh = Uthigh*Ustep
      if(debug)
@@ -395,7 +394,7 @@ gen_op Gpulse_U(gen_op& H0rot, gen_op& Fxy,
      gB1 = Gs.getRe(i);
      H = H0rot;
      H += gB1*Fxy;			// Total Ham. , middle step
-     U = prop(H,tdiv);
+     U = Evolve::prop(H,tdiv);
      U *= Utlow;
      U &= Uthigh;
      if(debug)
@@ -1181,7 +1180,7 @@ int OK = 0;
   }
 
 // sosi - this function makes us depende upon the Level2 module
-
+/*
 double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
 
 	// Input		sys	: A spin system
@@ -1215,8 +1214,8 @@ double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
   cout << "\n";
   return v;
   }
-
-
+*/
+/*
   void set_Gaussian(double gamB1, double& tmix, double& tpul, double tdel, int& numb, int& type)
 
 	// Input		gamB1: RF-Field strength (Hz)
@@ -1316,7 +1315,7 @@ double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
       }
     return;
     }
-
+*/
 // _________________________________________________________________________
 //                    Gaussian Pulse Output Functions
 // _________________________________________________________________________

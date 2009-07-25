@@ -45,6 +45,12 @@
 #include <LSLib/SuperOp.h>		// Know about superoperator class
 #include <HSLib/SpinSys.h>		// Know about spin system class
 
+
+
+MSVCDLL gen_op SigmaEq(const spin_sys& sys);
+MSVCDLL gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int wrn);
+MSVCDLL gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq, int wrn);
+
 class densop : public gen_op
   {
   double Sigmat;			// Evolution time

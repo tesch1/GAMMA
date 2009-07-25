@@ -40,7 +40,7 @@
 #include <Basics/ParamSet.h>		// Include GAMMA parameter sets
 #include <Level2/acquire1D.h>		// Include 1D acquisitions
 #include <Basics/StringCut.h>		// Include Gdec and Gform
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 #include <stdlib.h>
 #include <string>                       // Include libstdc++ strings
 #include <iostream>                     // Include input output streams (cout)
@@ -50,7 +50,6 @@ using std::ostream;			// Using libstdc++ output streams
 using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
 
-//using namespace Evolve;
 
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------
@@ -855,7 +854,7 @@ gen_op UDANTE(const spin_system& sys, gen_op& H, const string& Iso,
 	// Note			   : Ideal Pulses, No Relaxation
 
   {
-  gen_op Udante = prop(H, td);			// Delay propagator (no relaxation)
+  gen_op Udante = Evolve::prop(H, td);			// Delay propagator (no relaxation)
   Udante *= Ixypuls_U(sys, Iso, phi, theta);	// Multiply into pulse propagator (ideal)
   return Udante;
   }
@@ -876,7 +875,7 @@ gen_op UDANTE(const spin_system& sys, gen_op& H, const string& Iso,
 	// Note			   : Real Pulses, No Relaxation
 
     {
-    gen_op Udante = prop(H, td);		// Delay propagator (no relaxation)
+    gen_op Udante = Evolve::prop(H, td);		// Delay propagator (no relaxation)
     Udante *= 					// Multiply into pulse propagator (real)
        SxypulsB_U(sys,H,Iso,0.0,tpul,gamB1,phi);  
     return Udante;
@@ -891,7 +890,7 @@ gen_op UDANTE(const spin_system& sys, gen_op& H, const DANTE& D)
 	// Output	     U     : Propagator for a DANTE step
 
   {
-  gen_op Udante = prop(H, D.dlength());		// Delay propagator (no relaxation)
+  gen_op Udante = Evolve::prop(H, D.dlength());		// Delay propagator (no relaxation)
   if(D.plength())
     Udante *= 					// Multiply into pulse propagator (real)
        Sxypuls_U(sys,H,D.channel(),D.offset(),D.plength(),D.angle(),D.phase());  
@@ -1004,7 +1003,7 @@ gen_op DANTE(spin_system& sys, gen_op& H, string& Iso,
     double the = theta/double(n);		// Pulse angle for each step
     double td = 1/v;				// Time for 1 cycle at frequency v (Hz)
     if(rad) td *= 2.0*PI;			// Adjust if frequency given in radians
-    gen_op Udante = prop(H, td);		// Delay propagator (no relaxation)
+    gen_op Udante = Evolve::prop(H, td);		// Delay propagator (no relaxation)
     Udante *= Ixypuls_U(sys, Iso, phi, the);	// Multiply into pulse propagator (ideal)
     return pow(Udante,n); 			// Apply propagator n times for DANTE
     }
@@ -1015,7 +1014,7 @@ gen_op DANTE(spin_system& sys, gen_op& H, string& Iso,
 // ____________________________________________________________________________
 
 // sosi - this function makes us depende upon the Level2 module
-
+/*
 double ask_DANTE(const spin_system& sys, const string& Iso, gen_op& H, double cutoff)
 
 	// Input		sys	: A spin system
@@ -1050,7 +1049,7 @@ double ask_DANTE(const spin_system& sys, const string& Iso, gen_op& H, double cu
   cout << "\n";
   return v;
   }
-
+*/
 
 void set_DANTE(double gamB1, double& tmix, double& tpul, double tdel, int& numb, int& type)
 

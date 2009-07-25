@@ -41,11 +41,10 @@
 #include <HSLib/PulseS.h>		// Knowledfe of soft pulses
 #include <HSLib/HSprop.h>		// Knowledge of evolution steps
 #include <Basics/Gutils.h>		// Know GAMMA error handling
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 #include <vector>			// Know stdlibc++ stl vectors
 
 
-//using namespace Evolve;
 // ____________________________________________________________________________
 // i                       Shaped Pulse Error Handling
 // ____________________________________________________________________________
@@ -511,7 +510,7 @@ gen_op Shpul_axis(const spin_sys &sys, row_vector &BLK, gen_op sigma, gen_op &H,
 {
   gen_op U;
   U = Shpul_U_axis(sys, BLK, H, iso, freq, time, fact, axis);
-  sigma = evolve(sigma, U);
+  sigma = Evolve::evolve(sigma, U);
   return sigma;
 }
 
@@ -583,7 +582,7 @@ gen_op Shpul_plane(const spin_sys &sys, row_vector &BLK, gen_op sigma, gen_op &H
 {
   gen_op U;
   U = Shpul_U_plane(sys, BLK, H, iso, freq, time, fact, phi);
-  sigma = evolve(sigma, U);
+  sigma = Evolve::evolve(sigma, U);
   return sigma;
 }
 
@@ -609,7 +608,7 @@ gen_op Shpul_plane(const spin_sys &sys, row_vector &BLK, gen_op sigma,
 {
   gen_op U;
   U = Shpul_U_plane(sys, BLK, H, iso1, freq1, iso2, freq2, time, fact, phi);
-  sigma = evolve(sigma, U);
+  sigma = Evolve::evolve(sigma, U);
   return sigma;
 }
 

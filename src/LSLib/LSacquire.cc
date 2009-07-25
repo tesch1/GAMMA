@@ -37,9 +37,8 @@
 #include <HSLib/GenOp.h>		// Knowledge of operators
 #include <LSLib/SuperOp.h>		// Knowledge of superoperators
 #include <HSLib/HSprop.h>		// Knowledge of nmr evolutions
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 
-//using namespace Evolve;
 
 // ____________________________________________________________________________
 // A                Generic Liouville Space Acquisition Functions
@@ -400,7 +399,7 @@ void FIDrot(gen_op sigma, gen_op& sigma0, gen_op& det, super_op &L, gen_op& Fz,
   //        = trace { det * [[ S * exp(-D*dt) * S-1 * delsigma(k-1)] + sigma0] }
 
     {
-    sigma = evolve(sigma, Fz, -Wrf*time);	// Put sigma in Wrf rotating frame
+    sigma = Evolve::evolve(sigma, Fz, -Wrf*time);	// Put sigma in Wrf rotating frame
     L.LOp_base(sigma);				// Put sigma into Hilbert basis of L
     L.LOp_base(sigma0);				// (Eq./steady-state) dens.op. to H-basis of L
     L.LOp_base(det);				// Put detection operator into Hilbert basis of L
@@ -417,7 +416,7 @@ void FIDrot(gen_op sigma, gen_op& sigma0, gen_op& det, super_op &L, gen_op& Fz,
         sigmat = delsigma + sigma0;		// sigma(k) in Wrf rotating frame
         time += dt;
         }
-      sigmat = evolve(sigmat,Fz, Wrf*time);	// sigma(k) in initial rotating frame
+      sigmat = Evolve::evolve(sigmat,Fz, Wrf*time);	// sigma(k) in initial rotating frame
       z = trace(sigmat, det);			// FID(k) from Tr{sigma(k)*det}
       fid.put(z, k); 
       }

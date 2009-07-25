@@ -577,7 +577,7 @@ MSVCDLL gen_op UDANTE(spin_system& sys, gen_op& H, std::string& Iso,
 // ____________________________________________________________________________
 
 
-MSVCDLL double ask_DANTE(spin_system& sys, std::string& Iso, gen_op& H, double cutoff=1.e-10);
+//MSVCDLL double ask_DANTE(spin_system& sys, std::string& Iso, gen_op& H, double cutoff=1.e-10);
 
 	// Input		sys	: A spin system
 	//			Iso     : String designating an isotope

@@ -55,7 +55,7 @@
 #include <HSLib/SpinOp.h>		// Include spin operators
 #include <HSLib/SpinSys.h>		// Include isotropic spin systems
 #include <HSLib/HSprop.h>		// Include Hilbert space evolution
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 #include <HSLib/HSauxil.h>		// Include density operator stuff
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <LSLib/LSacquire.h>		// Include Liouville acquisitions
@@ -64,8 +64,6 @@
 static double DefR12 = 0.0; 		// Default R1,R2 value
 static double DefT12 = 1.e6;            // Default T1,T2 value
 static double DefLW  = 1.e-4;           // Default LW    value
-
-//using namespace Evolve;
 
 // ----------------------------------------------------------------------------
 // ----------------------------- PRIVATE FUNCTIONS ----------------------------
@@ -982,7 +980,7 @@ gen_op RBasic::Evolve(const spin_sys& sys, const gen_op& sigmap, double t)
 
   gen_op sigmat = sigmap;			// The sigma to be evolved
   gen_op siginf = sigma_eq(sys);		// The equilibrium operator
-  if(H0.dim()) evolve_ip(sigmat, H0, t);	// Evolve under H0 if set
+  if(H0.dim()) Evolve::evolve_ip(sigmat, H0, t);	// Evolve under H0 if set
   sigmat.set_DBR();				// Put into default basis
 
 //                    First We Perform Ad Hoc T1 Evolution  
@@ -1024,7 +1022,7 @@ gen_op RBasic::Evolve(const gen_op& sigmap, double t)
 //         First Evolve Under The Static Hamiltonian (If Existing)
 
   gen_op sigmat = sigmap;			// The sigma to be evolved
-  if(H0.dim()) evolve_ip(sigmat, H0, t);	// Evolve under H0 if set
+  if(H0.dim()) Evolve::evolve_ip(sigmat, H0, t);	// Evolve under H0 if set
 
 //              Next We Perform Phenomenological T1 Evolution  
 //      Only Affects T1 Components, These Are Izi On The Diagonal
@@ -1111,7 +1109,7 @@ void RBasic::FID(const gen_op& sigmap, double td, row_vector& fid, int N)
       {
       time += td;				//   Time at point k
       if(H0.dim())				//   Evolve under H0 
-        sigmat = evolve(sigmap, H0, time);	//   if Hamiltonian is set
+        sigmat = Evolve::evolve(sigmap, H0, time);	//   if Hamiltonian is set
       sigmat.set_DBR();				// Put into default basis
       for(i=0; i<ns; i++)			// Loop over all spins and
         {					// relax longitidunally
@@ -1177,7 +1175,7 @@ void RBasic::FID(const spin_sys& sys, const gen_op& sigmap,
       {
       time += td;				//   Time at point k
       if(H0.dim())				//   Evolve under H0 
-        sigmat = evolve(sigmap, H0, time);	//   if Hamiltonian is set
+        sigmat = Evolve::evolve(sigmap, H0, time);	//   if Hamiltonian is set
       sigmat.set_DBR();				// Put into default basis
       for(i=0; i<ns && LongRlx; i++)		// Loop over all spins and
         {					// relax longitidunally

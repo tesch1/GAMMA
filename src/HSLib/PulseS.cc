@@ -61,9 +61,8 @@
 #include <HSLib/PulseI.h>		// Knowledge of ideal pulses
 #include <HSLib/HSprop.h>		// Knowledge of propagators
 #include <Basics/Gutils.h>		// Include GAMMA error handling
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 
-//using namespace Evolve;
 
 // ____________________________________________________________________________
 // i                       Soft Pulse Error Handling
@@ -372,9 +371,9 @@ gen_op Spul_axis(const spin_sys& sys, const gen_op& sigma, const gen_op& H,
     default:  Heff += fact*Fx(sys,iso); break;// Field along the x-axis
     case 'y': Heff += fact*Fy(sys,iso); break;// Field along the y-axis
     }
-  gen_op sigmap = evolve(sigma, Heff, tp);	// Evolve through soft pulse
+  gen_op sigmap = Evolve::evolve(sigma, Heff, tp);	// Evolve through soft pulse
   Heff  = freq*Fz(sys, iso);			// To back out of rotframe
-  return evolve(sigmap, Heff, tp);		// Evolve out of rotfame
+  return Evolve::evolve(sigmap, Heff, tp);		// Evolve out of rotfame
   }
 
 //_______________ Soft Pulse on Coordinate Axis Propagator ______________
@@ -412,9 +411,9 @@ gen_op Spul_U_axis(const spin_sys& sys, const gen_op& H, const std::string& iso,
     default:  Heff += fact*Fx(sys,iso); break;	// Field along the x-axis
     case 'y': Heff += fact*Fy(sys,iso); break;	// Field along the y-axis
     }
-  U1 = prop(Heff, tp);				// Soft pulse prop. in rotframe
+  U1 = Evolve::prop(Heff, tp);				// Soft pulse prop. in rotframe
   Heff = freq*Fz(sys, iso);			// Ham. to back out of rotframe
-  U1 &= prop(Heff, tp);				// Total soft pulse propagator
+  U1 &= Evolve::prop(Heff, tp);				// Total soft pulse propagator
   return U1;
   }
 
@@ -445,9 +444,9 @@ gen_op Spul_plane(const spin_sys& sys, const gen_op& sigma, const gen_op& H, con
     }
   gen_op Heff = H - freq*Fz(sys, iso);	// Rotating @ rf-field frequency "freq" 
   Heff += fact*Fxy(sys, iso, phi);	// Add rf-field to rotating Hamiltonian
-  gen_op sigmap = evolve(sigma,Heff,tp);// Evolve sigma through soft pulse
+  gen_op sigmap = Evolve::evolve(sigma,Heff,tp);// Evolve sigma through soft pulse
   Heff = freq*Fz(sys, iso);		// Back out of frame rotating at freq
-  return evolve(sigmap, Heff, tp); 	// Propagate the density operator
+  return Evolve::evolve(sigmap, Heff, tp); 	// Propagate the density operator
   }
 
 
@@ -485,10 +484,10 @@ gen_op Spul_plane(const spin_sys& sys, const gen_op& sigma, const gen_op& H,
   Heff += fact*Fxy(sys,flags,phi);		// Add rf-field to rot. Ham.
 // sosi OK to there
 std::cout << "\n\nHeff in Function\n\n" << Heff << "\n\n";
-  gen_op sigmap = evolve(sigma, Heff, tp);	// Evolve through soft pulse
+  gen_op sigmap = Evolve::evolve(sigma, Heff, tp);	// Evolve through soft pulse
   Heff  = freq1*Fz(sys, iso1);			// To back out of rotframe
   Heff -= freq2*Fz(sys, iso2);			// of both isotope channels
-  return evolve(sigmap, -Hz, tp);		// Back out of rotating frames
+  return Evolve::evolve(sigmap, -Hz, tp);		// Back out of rotating frames
   }
 
 //__________________ Soft Pulse in xy-Plane Propagators _________________
@@ -526,11 +525,11 @@ else
   if(freq)					// Adjust Hamiltonian to frame
     Heff -= freq*Fz(sys, iso);			// rotating at rf-field frequency "freq" 
   Heff += fact*Fxy(sys, iso, phi);		// Add rf-field to rotating Hamiltonian
-  U = prop(Heff, tp);				// Propagator through soft pulse
+  U = Evolve::prop(Heff, tp);				// Propagator through soft pulse
   if(freq)
     {
     Heff = freq*Fz(sys, iso);			// Back out of frame rotating at freq
-    U &= prop(Heff, tp);			// Total soft pulse propagator
+    U &= Evolve::prop(Heff, tp);			// Total soft pulse propagator
     }
   }
 return U;
@@ -570,10 +569,10 @@ gen_op Spul_U_plane(const spin_sys& sys, const gen_op& H, const std::string& iso
   for(int i=0; i<sys.spins(); i++)		// Also set flags for spins
     if(sys.symbol(i) == iso2) flags[i]=1;	// of type iso2 to TRUE
   Heff += fact*Fxy(sys, flags, phi);		// Add rf-field to rot. Ham.
-  gen_op U = prop(Heff, tp);			// Propagator through soft pulse
+  gen_op U = Evolve::prop(Heff, tp);			// Propagator through soft pulse
   Heff = freq1*Fz(sys, iso1);			// Back out of rot. frame @
   Heff -= freq2*Fz(sys, iso2);			// freq1 & freq2 
-  U &= prop(Heff, tp);				// Total soft pulse propagator
+  U &= Evolve::prop(Heff, tp);				// Total soft pulse propagator
   return U;
   }
 

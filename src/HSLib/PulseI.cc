@@ -39,10 +39,9 @@
 #include <HSLib/HSprop.h>		// Knowledge of propagators
 #include <HSLib/SpinSys.h>
 #include <HSLib/GenOp.h>
-//#include <HSLib/Evolve.h>
+#include <HSLib/Evolve.h>
 #include <vector>			// Include libstdc++ stl vectors
 
-//using namespace Evolve;
 
 // ____________________________________________________________________________
 // A               Pulses Acting Directly On Density Operators
@@ -80,62 +79,62 @@
 
 
 gen_op Ixpuls(const spin_sys& sys, const gen_op& sigma, int spin,  double beta)
-  { return evolve(sigma, Rx(sys,spin,beta)); }
+  { return Evolve::evolve(sigma, Rx(sys,spin,beta)); }
 
 gen_op Ixpuls(const spin_sys& sys, const gen_op& sigma,
                                                 const std::string& Iso, double beta)
-  { return evolve(sigma, Rx(sys,Iso,beta)); }
+  { return Evolve::evolve(sigma, Rx(sys,Iso,beta)); }
 
 gen_op Ixpuls(const spin_sys& sys, const gen_op& sigma,            double beta)
-  { return evolve(sigma, Rx(sys,beta)); }
+  { return Evolve::evolve(sigma, Rx(sys,beta)); }
 
 gen_op Ixpuls(const spin_sys& sys, const gen_op& sigma,
                                         const flagvec& flags, double beta)
-  { return evolve(sigma, Rx(sys,flags,beta)); }
+  { return Evolve::evolve(sigma, Rx(sys,flags,beta)); }
 
 gen_op Ixpuls_sp(const spin_sys& sys, const gen_op& sigma,         double beta)
-  { return evolve(sigma, Rx_sp(sys,beta)); }
+  { return Evolve::evolve(sigma, Rx_sp(sys,beta)); }
 
 // ************************* Pulse Along the Y Axis ***************************
 
 gen_op Iypuls(const spin_sys& sys, const gen_op& sigma, int spin,  double beta)
-  { return evolve(sigma, Ry(sys,spin,beta)); }
+  { return Evolve::evolve(sigma, Ry(sys,spin,beta)); }
 
 gen_op Iypuls(const spin_sys& sys, const gen_op& sigma,
                                                 const std::string& Iso, double beta)
-  { return evolve(sigma, Ry(sys,Iso,beta)); }
+  { return Evolve::evolve(sigma, Ry(sys,Iso,beta)); }
 
 gen_op Iypuls(const spin_sys& sys, const gen_op& sigma,            double beta)
-  { return evolve(sigma, Ry(sys,beta)); }
+  { return Evolve::evolve(sigma, Ry(sys,beta)); }
 
 gen_op Iypuls(const spin_sys& sys, const gen_op& sigma,
                                         const flagvec& flags, double beta)
-  { return evolve(sigma, Ry(sys,flags,beta)); }
+  { return Evolve::evolve(sigma, Ry(sys,flags,beta)); }
 
 gen_op Iypuls_sp(const spin_sys& sys, const gen_op& sigma,         double beta)
-  { return evolve(sigma, Ry_sp(sys,beta)); }
+  { return Evolve::evolve(sigma, Ry_sp(sys,beta)); }
 
 // ************* Pulse In the XY Plane On Axis Phi Degrees From X *************
 
 gen_op Ixypuls(const spin_sys& sys, const gen_op& sigma,
                                              int spin, double phi, double beta)
-  { return evolve(sigma, Rxy(sys,spin,phi,beta)); }
+  { return Evolve::evolve(sigma, Rxy(sys,spin,phi,beta)); }
 
 gen_op Ixypuls(const spin_sys& sys, const gen_op &sigma,
                                     const std::string& iso, double phi, double beta)
-  { return evolve(sigma, Rxy(sys,iso,phi,beta)); }
+  { return Evolve::evolve(sigma, Rxy(sys,iso,phi,beta)); }
 
 gen_op Ixypuls(const spin_sys& sys, const gen_op &sigma,
                                                        double phi, double beta)
-  { return evolve(sigma, Rxy(sys,phi,beta)); }
+  { return Evolve::evolve(sigma, Rxy(sys,phi,beta)); }
 
 gen_op Ixypuls(const spin_sys& sys, const gen_op& sigma,
                             const flagvec& flags, double phi, double beta)
-  { return evolve(sigma, Rxy(sys,flags,phi,beta)); }
+  { return Evolve::evolve(sigma, Rxy(sys,flags,phi,beta)); }
 
 gen_op Ixypuls_sp(const spin_sys& sys, const gen_op &sigma,
                                                        double phi, double beta)
-  { return evolve(sigma, Rxy_sp(sys,phi,beta)); }
+  { return Evolve::evolve(sigma, Rxy_sp(sys,phi,beta)); }
 
 
 // ____________________________________________________________________________
