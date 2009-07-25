@@ -26,8 +26,9 @@
 **							 		**
 *************************************************************************/
 
-#ifndef   GML5SUBE_H_				// Is file already included?
-#  define GML5SUBE_H_ 1				// If no, then remember it
+#ifndef   _GML5SUBE_H_				// Is file already included?
+#define   _GML5SUBE_H_ 				// If no, then remember it
+
 #  if defined(GAMPRAGMA)			// Using the GNU compiler?
 #    pragma interface				// This is the interface 
 #  endif
@@ -159,4 +160,4 @@ virtual int read(std::fstream& fp, int bigend, int warn=1);
   };
 
 
-#endif							 // ML5SubE.h
+#endif							 // _GML5SUBE_H_

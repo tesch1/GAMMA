@@ -25,9 +25,10 @@
 **                                                                      **
 *************************************************************************/
 
-#ifndef   GML5IM_H_				// Is file already included?
-#  define GML5IM_H_ 1				// If no, then remember it
-#  if defined(GAMPRAGMA)			// Using the GNU compiler?
+#ifndef   _GML5IMAGS_H_			// Is file already included?
+#define   _GML5IMAGS_H_ 		// If no, then remember it
+
+#  if defined(GAMPRAGMA)		// Using the GNU compiler?
 #    pragma interface				// This is the interface 
 #  endif
 
@@ -181,4 +182,4 @@ friend std::ostream& operator<< (std::ostream& ostr, const MatLab5Im& ML5Im);
   };
 
 
-#endif							 // ML5Imags.h
+#endif							 // _GML5IMAGS_H_

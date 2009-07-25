@@ -25,8 +25,9 @@
 **                                                                      **
 *************************************************************************/
 
-#ifndef _ML5RE_CC_				// Is file already included?
-#define _ML5RE_CC_ 1				// If no, then remember it
+#ifndef _ML5REALS_CC_				// Is file already included?
+#define _ML5REALS_CC_ 1				// If no, then remember it
+
 #  if defined(GAMPRAGMA)					// Using the GNU compiler?
 #    pragma implementation				// This is the implementation
 #endif
@@ -329,4 +330,4 @@ std::ostream& operator<< (std::ostream& ostr, const MatLab5Re& ML5Re)
 
   { ML5Re.print(ostr); return ostr; }
 
-#endif							// ML5Reals.cc
+#endif							// _ML5REALS_CC_

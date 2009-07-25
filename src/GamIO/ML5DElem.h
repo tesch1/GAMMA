@@ -25,8 +25,9 @@
 **                                                                      **
 *************************************************************************/
 
-#ifndef   GML5DE_h_				// Is file already included?
-#  define GML5DE_h_ 1				// If no, then remember it
+#ifndef   _GML5DELEM_h_	  			// Is file already included?
+#define   _GML5DELEM_h_   			// If no, then remember it
+
 #  if defined(GAMPRAGMA)			// Using the GNU compiler?
 #    pragma interface				// This is the interface 
 #  endif
@@ -215,4 +216,4 @@ void print(std::ostream& ostr,
 };
 
 
-#endif							 // ML5DE.h
+#endif							 // _GML5DELEM_h_

@@ -27,8 +27,9 @@
 **							 		**
 *************************************************************************/
 
-#ifndef   GML5TAG_h_				// Is file already included?
-#  define GML5TAG_h_ 1				// If no, then remember it
+#ifndef _GML5TAG_h_				// Is file already included?
+#define _GML5TAG_h_				// If no, then remember it
+
 #  if defined(GAMPRAGMA)			// Using the GNU compiler?
 #    pragma interface				// This is the interface 
 #  endif
@@ -38,6 +39,8 @@
 #include <fstream>				// Know libstdc++ filestreams
 #include <GamIO/BinIOBase.h>			// Know binary byte stuff
  
+int IsBigEndian();
+
 class MatLab5Tag
   {
   char EightBytes[8];				// 8 byte field
@@ -63,12 +66,7 @@ void MLT5error(int eidx, int noret=0);
 void MLT5error(int eidx, const std::string& pname, int noret=0); 
 volatile void MLT5fatality(int eidx);
 
-friend int IsBigEndian()
-  {
-  int x = 1;
-  if(*(char *)&x == 1) return 0;
-  else                 return 1;
-  }
+friend int IsBigEndian();
 
 public:
 
@@ -208,4 +206,4 @@ friend std::ostream& operator<< (std::ostream& ostr, const MatLab5Tag& MLT5);
   };
 
 
-#endif							 // ML5Tag.h
+#endif							 // _GML5TAG_h_	

@@ -96,6 +96,13 @@ volatile void MatLab5Tag::MLT5fatality(int eidx)
   GAMMAfatal();					// Clean exit from program
   }
  
+
+int IsBigEndian()
+  {
+  int x = 1;
+  if(*(char *)&x == 1) return 0;
+  else                 return 1;
+  }
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
 // ----------------------------------------------------------------------------

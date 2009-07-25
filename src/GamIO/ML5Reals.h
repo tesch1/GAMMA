@@ -25,8 +25,9 @@
 **                                                                      **
 *************************************************************************/
 
-#ifndef   GML5RE_H_				// Is file already included?
-#  define GML5RE_H_ 1				// If no, then remember it
+#ifndef  _GML5REALS_H_				// Is file already included?
+#define  _GML5REALS_H_ 				// If no, then remember it
+
 #  if defined(GAMPRAGMA)			// Using the GNU compiler?
 #    pragma interface				// This is the interface 
 #  endif
@@ -34,6 +35,7 @@
 #include <GamGen.h>				// Know MSVCDLL (__declspec)
 #include <GamIO/ML5SubE.h>			// Include base class
 #include <GamIO/ML5Tag.h>			// Include MAT 5 tags
+#include <GamIO/ML5DA.h>
 #include <Matrix/matrix.h>			// Include GAMMA matrices
 #include <Matrix/row_vector.h>			// Include GAMMA row vectors
 #include <Matrix/col_vector.h>			// Include GAMMA column vectors
@@ -170,4 +172,4 @@ friend std::ostream& operator<< (std::ostream& ostr, const MatLab5Re& ML5Re);
   };
 
 
-#endif							 // ML5Reals.h
+#endif							 // _GML5REALS_H_

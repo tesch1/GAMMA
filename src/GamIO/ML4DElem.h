@@ -25,8 +25,9 @@
 **                                                                      **
 *************************************************************************/
 
-#ifndef   GML4DE_h_				// Is file already included?
-#  define GML4DE_h_ 1				// If no, then remember it
+#ifndef   _GML4DELEM_h_				// Is file already included?
+#define   _GML4DELEM_h_ 				// If no, then remember it
+
 #  if defined(GAMPRAGMA)			// Using the GNU compiler?
 #    pragma interface				// This is the interface 
 #  endif
@@ -208,4 +209,4 @@ friend std::ostream& operator<< (std::ostream& ostr, const MatLab4DE& ML4DE);
 };
 
 
-#endif							 // ML4DElem.h
+#endif							 // _GML4DELEM_h_
