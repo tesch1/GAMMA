@@ -39,6 +39,98 @@
 #include <Level1/coord.h>		// Include knowledge of coordinates
 #include <Basics/ParamSet.h>		// Include parameter sets
 
+
+// Forward declaration for the benefit 
+// of the following function declarations.
+class space_T;
+
+// Added the following function declarations 
+// to augment the "friend" declarations inside 
+// the class.
+
+MSVCDLL space_T A1(double x, double y, double z);
+MSVCDLL space_T A1(coord &pt);
+
+// No longer supported *** Marked for deletion 
+MSVCDLL space_T A1(row_vector &vx);
+
+// l=0 no longer supported *** Marked for l=0 case removal
+MSVCDLL complex A1(double x, double y, double z, int m, int l=1);
+
+// l=0 no longer supported *** Marked for l=0 case removal
+MSVCDLL complex A1(coord &pt, int m, int l=1);
+
+// No longer supported *** Marked for deletion 
+MSVCDLL complex A1(row_vector &vx, int m, int l=1);
+
+// l=0 no longer supported *** Marked for deletion
+MSVCDLL double A10(int m);
+
+MSVCDLL complex A11(double x, double y, double z, int m);
+
+MSVCDLL space_T SphA1(complex plus, complex zero, complex minus);
+
+MSVCDLL space_T SphA1(coord &pt);
+
+// No longer supported *** Marked for deletion 
+MSVCDLL space_T SphA1(col_vector &vx);
+
+MSVCDLL space_T A2(double Aiso, double delzz, double eta,
+			double alpha, double beta, double gamma);
+
+MSVCDLL space_T A2(coord &Tcomps);
+
+MSVCDLL space_T A2(coord &Tcomps, coord &Tangles);
+
+MSVCDLL space_T A2(const matrix &mx, double prec);
+
+MSVCDLL complex A2(int l, int m, double Aiso, double delzz, double eta);
+
+MSVCDLL complex A2(int l, int m, const matrix& mx);
+
+MSVCDLL complex A20(int m, double Aiso, double delzz, double eta);
+
+MSVCDLL complex A20(int m, const matrix &mx);
+
+MSVCDLL complex A21(int m, double Aiso, double delzz, double eta);
+
+
+MSVCDLL complex A21(int m, const matrix &mx);
+
+MSVCDLL complex A22(int m, double Aiso, double delzz, double eta);
+MSVCDLL complex A22(int m, const matrix &mx);
+
+MSVCDLL complex T_comp(const space_T &SphT, int L, int M);
+// ?? replaced by member function component
+
+MSVCDLL space_T T_mult(const space_T &SphT1, const space_T &SphT2);
+
+
+MSVCDLL space_T T_mult(const space_T &SphT1, int l1, const space_T &SphT2, int l2);
+
+MSVCDLL space_T T_mult(const space_T &SphT1, int l1,
+					 const space_T &SphT2, int l2, int L);
+
+MSVCDLL complex T_mult(const space_T &SphT1, int l1,
+				const space_T &SphT2, int l2, int L, int M);
+
+
+MSVCDLL space_T T_rot(space_T &SphT1, double alpha, double beta, double gamma);
+
+MSVCDLL void T_rot(int num, space_T* SphT, space_T* SphTrot, double alpha, double beta, double gamma);
+
+MSVCDLL  void T_rot(int num, space_T* SphT, space_T* SphTrot, matrix* D);
+
+// ?? replaced by member function rotate
+MSVCDLL complex T_rot(space_T &SphT1, int l, int m,
+				 double alpha, double beta, double gamma);
+
+
+
+
+
+
+
 class space_T
   {
   friend class AQuad;
@@ -373,7 +465,7 @@ MSVCDLL friend space_T A1(row_vector &vx);
  
 
 // l=0 no longer supported *** Marked for l=0 case removal
-MSVCDLL friend complex A1(double x, double y, double z, int m, int l=1);
+MSVCDLL friend complex A1(double x, double y, double z, int m, int l);
 
 	// Input		x     : Cartesian x component
 	// 			y     : Cartesian y component
@@ -384,7 +476,7 @@ MSVCDLL friend complex A1(double x, double y, double z, int m, int l=1);
 
  
 // l=0 no longer supported *** Marked for l=0 case removal
-MSVCDLL friend complex A1(coord &pt, int m, int l=1);
+MSVCDLL friend complex A1(coord &pt, int m, int l);
 
 	// Input		pt    : Cartesian coordinate 
 	// 			m     : Component index
@@ -393,7 +485,7 @@ MSVCDLL friend complex A1(coord &pt, int m, int l=1);
 
 
 // No longer supported *** Marked for deletion 
-MSVCDLL friend complex A1(row_vector &vx, int m, int l=1);
+MSVCDLL friend complex A1(row_vector &vx, int m, int l);
 
 	// Input		vx    : Cartesian vector
 	// 			m     : Component index

@@ -43,6 +43,8 @@
 #include <GamGen.h>			// Know MSVCDLL (__declspec)
 #include <string>			// Know libstdc++ strings
 
+MSVCDLL matrix Rmx(double alpha, double beta, double gamma);
+
 class coord
 {
     

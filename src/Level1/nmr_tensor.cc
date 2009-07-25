@@ -39,6 +39,7 @@
 
 #include <Level1/nmr_tensor.h>
 #include <HSLib/SpinOpCmp.h>
+#include <Level1/SpinT.h>
 
 using std::cout;			// Using libstdc++ standard output
 

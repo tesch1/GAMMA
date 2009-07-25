@@ -41,6 +41,129 @@
 #include <Level1/SpaceT.h>		// Include spatial tensors
 
 
+// Forward declaration of spin_T class
+// for the benefit of following functions.
+class spin_T;
+
+// Added funtion declarations to augment friend declartions
+// that are included in the class.
+
+MSVCDLL spin_T T1(const spin_sys &sys, int spin);
+ 
+MSVCDLL spin_T T11(const spin_sys &sys, int spin);
+
+MSVCDLL spin_op T1(const spin_sys &sys, int spin, int l, int m);
+
+MSVCDLL spin_op T10(const spin_sys &sys, int spin, int m);
+
+MSVCDLL spin_op T10(spin_op &Ie, int m);
+
+MSVCDLL spin_op T11(const spin_sys &sys, int spin, int m);
+
+MSVCDLL spin_op T11(spin_op &Im, spin_op &Iz, spin_op &Ip, int m);
+
+MSVCDLL spin_T T2(const spin_sys &sys, int spin1, int spin2);
+
+MSVCDLL spin_T T22wh(const spin_sys &sys, int spin1, int spin2);
+
+MSVCDLL spin_T T22(const spin_sys &sys, int spin1, int spin2);
+
+MSVCDLL spin_T T22(const spin_sys &sys, spin_op &Im1, spin_op &Iz1, spin_op &Ip1,
+			           spin_op &Im2, spin_op &Iz2, spin_op &Ip2);
+
+MSVCDLL spin_op T2(const spin_sys &sys, int spin1, int spin2, int l, int m);
+
+MSVCDLL spin_op T2(spin_op &Im1, spin_op &Iz1, spin_op &Ip1,
+		spin_op &Im2, spin_op &Iz2, spin_op &Ip2, int l, int m);
+
+MSVCDLL spin_op T20(const spin_sys &sys, int spin1, int spin2, int m);
+
+MSVCDLL spin_op T20(spin_op &Im1, spin_op &Iz1, spin_op& Ip1,
+		spin_op &Im2, spin_op &Iz2, spin_op &Ip2, int m);
+
+MSVCDLL spin_op T21(const spin_sys &sys, int spin1, int spin2, int m);
+
+MSVCDLL spin_op T21(spin_op &Im1, spin_op &Iz1, spin_op& Ip1,
+		spin_op &Im2, spin_op &Iz2, spin_op &Ip2, int m);
+
+MSVCDLL spin_op T22(const spin_sys &sys, int spin1, int spin2, int m);
+
+MSVCDLL spin_op T22(spin_op &Im1, spin_op &Iz1, spin_op& Ip1,
+		spin_op &Im2, spin_op &Iz2, spin_op &Ip2, int m);
+
+MSVCDLL spin_T T2(const spin_sys &sys, int spin, const coord &vect);
+MSVCDLL spin_T T2(const spin_sys &sys, spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect);
+
+MSVCDLL spin_T T2SS(const spin_sys &sys, int spin, const coord &vect, int rev=0);
+
+MSVCDLL spin_T T2SS(const spin_sys &sys, spin_op &Im, spin_op &Iz,
+				      spin_op &Ip, const coord &vect, int rev=0);
+
+MSVCDLL spin_T T22(const spin_sys &sys, int spin, const coord &vect);
+MSVCDLL spin_T T22(const spin_sys &sys, spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect);
+
+MSVCDLL spin_T T22SSirr(const spin_sys &sys, int spin, const coord &vect, int rev=0);
+
+MSVCDLL spin_T T22SSirr(const spin_sys &sys, spin_op &Im, spin_op &Iz,
+					 spin_op &Ip, const coord &vect, int rev=0);
+
+MSVCDLL spin_op T2(const spin_sys &sys, int spin, const coord &vect, int l, int m);
+MSVCDLL spin_op T2(spin_op &Im, spin_op &Iz, spin_op &Ip,
+ 					   const coord &vect, int l, int m);
+MSVCDLL spin_op T20(const spin_sys &sys, int spin, const coord &vect, int m);
+MSVCDLL spin_op T20(spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect, int m);
+MSVCDLL spin_op T21(const spin_sys &sys, int spin, const coord &vect, int m);
+MSVCDLL spin_op T21(spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect, int m);
+MSVCDLL spin_op T22(const spin_sys &sys, int spin, const coord &vect, int m);
+MSVCDLL spin_op T22(spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect, int m);
+
+MSVCDLL spin_op T2SS(const spin_sys &sys, int spin, const coord &vect, int l, int m, int rev=0);
+
+MSVCDLL spin_op T2SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
+ 				   const coord &vect, int l, int m, int rev=0);
+
+MSVCDLL spin_op T20SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev=0);
+
+MSVCDLL spin_op T20SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
+						 const coord &vect, int m, int rev=0);
+
+MSVCDLL spin_op T21SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev=0);
+
+MSVCDLL spin_op T21SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
+					 const coord &vect, int m, int rev=0);
+
+MSVCDLL spin_op T22SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev=0);
+
+MSVCDLL spin_op T22SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
+						const coord &vect, int m, int rev=0);
+
+MSVCDLL spin_op T_comp(spin_T &SphT, int L, int M);
+// ?? Remove this, replaced by member function
+
+MSVCDLL spin_T T_mult(spin_T &SphT1, spin_T &SphT2);
+
+MSVCDLL spin_op T_mult(spin_T &SphT1, spin_T &SphT2, int L, int M);
+
+MSVCDLL spin_T T_rot(spin_T &SphT1, double alpha, double beta, double gamma);
+// ??? this function should be removed, replaced by the member function!
+
+MSVCDLL spin_op T_rot(spin_T &SphT1, int l, int m,
+			 double alpha, double beta, double gamma);
+// ??? this function should be removed, replaced by the member function!
+
+MSVCDLL spin_op T_prod(spin_T &SphT, space_T &SphA, int l, int m);
+MSVCDLL spin_op T_prod(space_T &SphA, spin_T &SphT, int l, int m);
+MSVCDLL spin_op T_prod(spin_T &SphT, space_T &SphA, int l);
+MSVCDLL spin_op T_prod(space_T &SphA, spin_T &SphT, int l);
+
+MSVCDLL spin_op T_prod(spin_T &SphT, space_T &SphA);
+MSVCDLL spin_op T_prod(space_T &SphA, spin_T &SphT);
+
+MSVCDLL double Clebsch_Gordan(int a, int b, int alpha, int beta, int c, int gamma);
+MSVCDLL double Wigner_3j(int a, int b, int c, int alpha, int beta, int gamma);
+
+
+
 class spin_T
   {
 
@@ -390,7 +513,7 @@ MSVCDLL friend spin_op T22(spin_op &Im1, spin_op &Iz1, spin_op& Ip1,
 MSVCDLL friend spin_T T2(const spin_sys &sys, int spin, const coord &vect);
 MSVCDLL friend spin_T T2(const spin_sys &sys, spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect);
 
-MSVCDLL friend spin_T T2SS(const spin_sys &sys, int spin, const coord &vect, int rev=0);
+MSVCDLL friend spin_T T2SS(const spin_sys &sys, int spin, const coord &vect, int rev);
 
 	// Input		sys   : spin system
 	// 			spin  : spin index
@@ -400,7 +523,7 @@ MSVCDLL friend spin_T T2SS(const spin_sys &sys, int spin, const coord &vect, int
 
 
 MSVCDLL friend spin_T T2SS(const spin_sys &sys, spin_op &Im, spin_op &Iz,
-				      spin_op &Ip, const coord &vect, int rev=0);
+				      spin_op &Ip, const coord &vect, int rev);
 
 	// Input                sys   : Spin system
    	//                      Im    : Spin operator I-
@@ -417,7 +540,7 @@ MSVCDLL friend spin_T T2SS(const spin_sys &sys, spin_op &Im, spin_op &Iz,
 MSVCDLL friend spin_T T22(const spin_sys &sys, int spin, const coord &vect);
 MSVCDLL friend spin_T T22(const spin_sys &sys, spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect);
 
-MSVCDLL friend spin_T T22SSirr(const spin_sys &sys, int spin, const coord &vect, int rev=0);
+MSVCDLL friend spin_T T22SSirr(const spin_sys &sys, int spin, const coord &vect, int rev);
 
 	// Input		sys   : spin system
 	// 			spin  : spin index
@@ -428,7 +551,7 @@ MSVCDLL friend spin_T T22SSirr(const spin_sys &sys, int spin, const coord &vect,
 
 
 MSVCDLL friend spin_T T22SSirr(const spin_sys &sys, spin_op &Im, spin_op &Iz,
-					 spin_op &Ip, const coord &vect, int rev=0);
+					 spin_op &Ip, const coord &vect, int rev);
 
   	// Input                sys   : Spin system
   	//                      Im    : Spin operator I-
@@ -453,7 +576,7 @@ MSVCDLL friend spin_op T21(spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &v
 MSVCDLL friend spin_op T22(const spin_sys &sys, int spin, const coord &vect, int m);
 MSVCDLL friend spin_op T22(spin_op &Im, spin_op &Iz, spin_op &Ip, const coord &vect, int m);
 
-MSVCDLL friend spin_op T2SS(const spin_sys &sys, int spin, const coord &vect, int l, int m, int rev=0);
+MSVCDLL friend spin_op T2SS(const spin_sys &sys, int spin, const coord &vect, int l, int m, int rev);
 
 	// Input		sys   : spin system
 	// 			spin  : spin index
@@ -466,7 +589,7 @@ MSVCDLL friend spin_op T2SS(const spin_sys &sys, int spin, const coord &vect, in
 
 
 MSVCDLL friend spin_op T2SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
- 				   const coord &vect, int l, int m, int rev=0);
+ 				   const coord &vect, int l, int m, int rev);
 
   	// Input		Im    : Spin operator I-
   	//                      Iz    : spin operator Iz
@@ -479,7 +602,7 @@ MSVCDLL friend spin_op T2SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
 	//				for spin specified
 
 
-MSVCDLL friend spin_op T20SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev=0);
+MSVCDLL friend spin_op T20SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev);
 
 	// Input		sys   : Spin system
 	// 			spin  : Spin index
@@ -491,7 +614,7 @@ MSVCDLL friend spin_op T20SS(const spin_sys &sys, int spin, const coord &vect, i
 
 
 MSVCDLL friend spin_op T20SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
-						 const coord &vect, int m, int rev=0);
+						 const coord &vect, int m, int rev);
 
   	// Input		Im    : Spin operator I-
   	//                      Iz    : Spin operator Iz
@@ -503,7 +626,7 @@ MSVCDLL friend spin_op T20SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
 	//				for spin specified
 
 
-MSVCDLL friend spin_op T21SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev=0);
+MSVCDLL friend spin_op T21SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev);
 
 	// Input		sys   : Spin system
 	// 			spin  : Spin index
@@ -515,7 +638,7 @@ MSVCDLL friend spin_op T21SS(const spin_sys &sys, int spin, const coord &vect, i
 
 
 MSVCDLL friend spin_op T21SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
-					 const coord &vect, int m, int rev=0);
+					 const coord &vect, int m, int rev);
 
   	// Input		Im    : Spin operator I-
   	//                      Iz    : Spin operator Iz
@@ -527,7 +650,7 @@ MSVCDLL friend spin_op T21SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
 	//				for spin specified
 
 
-MSVCDLL friend spin_op T22SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev=0);
+MSVCDLL friend spin_op T22SS(const spin_sys &sys, int spin, const coord &vect, int m, int rev);
 
 	// Input		sys   : Spin system
 	// 			spin  : Spin index
@@ -539,7 +662,7 @@ MSVCDLL friend spin_op T22SS(const spin_sys &sys, int spin, const coord &vect, i
 
 
 MSVCDLL friend spin_op T22SS(spin_op &Im, spin_op &Iz, spin_op &Ip,
-						const coord &vect, int m, int rev=0);
+						const coord &vect, int m, int rev);
 
   	// Input		Im    : Spin operator I-
   	//                      Iz    : Spin operator Iz
