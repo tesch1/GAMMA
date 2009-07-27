@@ -119,7 +119,7 @@ HSPACEUL    = -----
 HSPACEBASE  = SpinOpSng SpinSys SpinOp SpinOpCmp SpinOpRot\
               Basis GenOpRep GenOp SpinSystem\
               HSacquire HSdetect HSdecomp HSprop HSham HSanalyze\
-              HSauxil PulseI PulseS PulseShp
+              HSauxil PulseI PulseS PulseShp Evolve
 HSPACEHDR   = HSLibIF.h
 HSPACEPY    = PyHSLibIF.h
 ALLFILES   += $(HSPACEBASE)
