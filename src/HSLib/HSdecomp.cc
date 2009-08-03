@@ -39,6 +39,9 @@
 
 #define BD_SMALL 1.0e-15		// Floats < SMALL are zero
 
+// used for rounding off to the nearest integer.
+const double EPSILON_HSDECOMP 0.000001;
+
 
 void int_to_xbase(int retvec[], int x, const int base)
   {
@@ -96,11 +99,12 @@ void Prod_base_dec(const spin_sys &sys, const gen_op &Op, double thres)
    long int longn = nspins;
 	 // *** made changes here.
 	 long fourToN;
-	 fourToN = static_cast<long>(.1+ pow(static_cast<double>(long4),longn));
+	 fourToN = static_cast<long>(pow(static_cast<double>(long4),longn) + EPSILON_HSDECOMP);
    for ( i=1; i<fourToN; i++)	// Loop over all 4**N base operators
       { 
       for (int ii=0; ii<nspins; ii++)	// Initialize all base function
-	basef_nu[ii]= 0;		// codes to contain zeros
+	       basef_nu[ii]= 0;		// codes to contain zeros
+
       int_to_xbase(basef_nu, i, 4); 	// get base function code
 					// for each spin: 0=none, 1=x, 2=y, 3=z
 					// first spin is varying the fastest
@@ -170,17 +174,19 @@ complex coeff = proj(OpX,BOp);	// Projection of Op on unnormalized B
 //	  std::cout << "complex coeficient for " << name << "!\n";
 
 //	double coef = Re(coeff); 	// If real, non-zero coefficient, output
-	if (norm(coeff) > thres) 
-          {
-	  std::cout << coeff << "*\t" ;
-	  if (pow(double(long2),longq) != 1)
-			      // changed long2 to double(long2)
-						// *** may also need to change int(pow...) to
-						// static_cast<int>(pow(...) + .1)
-            std::cout << Gdec(int(pow(double(long2),longq))) << "*";
-          std::cout << "\t" << name << "\n";
-          }	
-    }
+	 if (norm(coeff) > thres) 
+   {
+	   std::cout << coeff << "*\t" ;
+
+     // changed long2 to double(long2)
+		 // *** :FIXME: may also need to change int(pow...) to
+		 // static_cast<int>(pow(...) + .000001)
+	   if (pow(double(long2),longq) != 1)
+       std::cout << Gdec(int(pow(double(long2),longq))) << "*";
+
+     std::cout << "\t" << name << "\n";
+   }	
+  }
   std::cout << "--------------------------------------------------------\n";
   delete [] basef_nu;
   delete [] Ixyz;
