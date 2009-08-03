@@ -40,7 +40,7 @@
 #define BD_SMALL 1.0e-15		// Floats < SMALL are zero
 
 // used for rounding off to the nearest integer.
-const double EPSILON_HSDECOMP 0.000001;
+const double EPSILON_HSDECOMP = 0.000001;
 
 
 void int_to_xbase(int retvec[], int x, const int base)
