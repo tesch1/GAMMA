@@ -35,6 +35,13 @@
 #include <Basics/Gutils.h>			// Include GAMMA errors
 #include <Basics/StringCut.h>
 
+
+//*** :FIXME: Used to round double precision square roots to integers.
+// e.g. static_cast<int>( sqrt(double(9)) + SUPEROP_EPSILON ) = 3
+// With more understanding of how this is used, 
+// this could be changed or removed.
+const double SUPEROP_EPSILON = 0.000001;
+
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------
 // ----------------------------------------------------------------------------
@@ -148,22 +155,28 @@ super_op::super_op(const matrix& mx1)
 	// Input		mx1  : A matrix
 	// Output		LOp  : A super operator (this)
 	//			       constructed with matrix mx1
-        //			       as default basis representation
+  //			       as default basis representation
 
   {
-  if(!checkLOp(mx1, 1))		// Insure matrix acceptable
+ 
+	if(!checkLOp(mx1, 1))		// Insure matrix acceptable
+	{
     LOpfatal(9);		// Error in LOp construction
-  mx = mx1;			// Copy input matrix
+	}
+
+	// Set internal class variable "mx".
+	mx = mx1;			      // Copy input matrix
   LSp = mx.rows();		// Set Liouville space
 
   // HSp = int(sqrt(LSp));		// Set Hilbert space
 	// replace with line below. int(sqrt(int)) fix.
 	// **** add a little to make sure we get the right int back.
-	// for sqrt(9), int(2.9999... + .1) = 3
-	HSp = static_cast<int>(sqrt(static_cast<double>(LSp)) + .1); 
+	// for sqrt(9), int(2.999999999... + .000001) = 3
+	HSp = static_cast<int>(sqrt(static_cast<double>(LSp)) + SUPEROP_EPSILON); 
   
 	Hbs = basis(HSp);		// Set Hilbert space basis to default
   Lbs = basis(LSp);		// Set Liouville space basis to default
+
   }
 
 
@@ -231,7 +244,7 @@ super_op::super_op(const std::vector<matrix>& mxc, const std::vector<matrix>& bs
 
       //ncd[i] = int(sqrt(mxc[i].rows()));// a default Hilbert space basis
 			// *** int(sqrt(int)) fix.
-			ncd[i] = static_cast<int>(sqrt(static_cast<double>(mxc[i].rows())) + .1);
+			ncd[i] = static_cast<int>(sqrt(static_cast<double>(mxc[i].rows())) + SUPEROP_EPSILON);
       
 			HSp += ncd[i];			// and store it in basis vector
       }  
@@ -289,7 +302,7 @@ super_op::super_op(matrix* mxc, int nc, matrix* bsc)
       
 			//ncd[i] = int( sqrt(mxc[i].rows()) );
 			// *** int(sqrt(int)) fix.
-			ncd[i] = static_cast<int>(sqrt(static_cast<double>(mxc[i].rows())) + .1);
+			ncd[i] = static_cast<int>(sqrt(static_cast<double>(mxc[i].rows())) + SUPEROP_EPSILON);
 
       HSp += ncd[i];
       }  
