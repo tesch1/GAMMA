@@ -383,8 +383,8 @@ double spin_sys::gamma(int spin) const			// G.M.Ratio (rad/s-T)
 double spin_sys::gamma(const std::string& iso) const		// G.M.Ratio (rad/s-T)
   { return (Isotope(iso)).gamma(); }
  
-void spin_sys::isotope(int spin, const std::string& symbol)	// Set isotope type
-  { isotope(spin,Isotope(symbol)); }
+void spin_sys::isotope(int spin, const std::string& symbolName)	// Set isotope type
+  { isotope(spin,Isotope(symbolName)); }
 
 void spin_sys::isotope(int spin, const Isotope& Iso)	// Set isotope type
   {
@@ -476,13 +476,13 @@ double spin_sys::qnState(int state) const
         // Output               double  : Quantum number of a state
 
   {
-  double qn = 0;
+  double qnd = 0;
   for(int spin=nspins-1; spin>=0; spin--)
     {
-    qn += Isotopes[spin].qn()- (state%Isotopes[spin].HS());
+    qnd += Isotopes[spin].qn()- (state%Isotopes[spin].HS());
     state /= Isotopes[spin].HS();
     }
-  return qn;
+  return qnd;
   }
 
 
@@ -801,7 +801,7 @@ flagvec spin_sys::GetFlags(const Isotope& isoin, bool TF, bool DefTF) const
 	//			           or name of system returned (i<0)
 	//                                 or name of spin i returned (i>=0)
 
-void spin_sys::name(const std::string& name) { sysname = name; }
+void spin_sys::name(const std::string& name_str) { sysname = name_str; }
 const std::string& spin_sys::name(int i) const
   { if(i<0) return sysname; check_spin(i); return Isotopes[i].name(); }
 
@@ -1482,9 +1482,9 @@ matrix spin_sys::TransitionMap2() const
 	// Output		ostr	 : The output stream modified by
 	//				   the spin system parameters
 
-std::ostream& spin_sys::print(std::ostream& ostr, bool hdr) const
+std::ostream& spin_sys::print(std::ostream& ostr, bool isHdr) const
   {
-  if(hdr)					// Write out a header if
+  if(isHdr)					// Write out a header if
     {						// desired
     std::string hdr("Base Spin System");
     if(sysname.length())

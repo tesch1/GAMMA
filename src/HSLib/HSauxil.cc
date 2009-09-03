@@ -1378,7 +1378,7 @@ double query_Nyquist(const spin_system& sys, int isoset, double lw, double fact)
         repeat = 0;
       }
     return NyqF;
-    fact = 0.0;
+    //fact = 0.0; // this is not needed, nor is it ever executed.
     }
 
 

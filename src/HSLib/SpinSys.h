@@ -41,8 +41,9 @@
 ///        quantities and for disk I/O.
 ///Section Available Spin Sys Functions
 
-#ifndef   SpinSys_h_			// Is this file already included?
-#  define SpinSys_h_ 1			// If no, then remember it
+#ifndef  SpinSys_h_			    // Is this file already included?
+#define  SpinSys_h_ 			// If no, then remember it
+
 #  if defined(GAMPRAGMA)		// Using the GNU compiler?
 #    pragma interface			// Then this is the interface
 #  endif

@@ -46,7 +46,9 @@
 #include <vector>			// Include libstdc++ STL vectors
 
 class spin_system: public spin_sys
-  {
+{
+private:
+
   std::vector<double> cshifts;		// Isotropic chemical shifts
   std::vector<double> gfacts;		// Isotropic g-factors
   std::vector<double> Jcouplings;	// Isotropic J coupling constants

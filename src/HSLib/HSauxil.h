@@ -173,7 +173,7 @@ MSVCDLL int* sort_Op_basis (const spin_sys& sys);
 	///F_list sort_Op_basis		- Returns Fz sorted Op indices
 
 
-MSVCDLL void mqt_v(const spin_sys& sys, gen_op &Ham, int qn, int type);
+MSVCDLL void mqt_v(const spin_sys& sys, gen_op &Ham, int qn, int type, int ncols);
 
 	// Input	sys	: A spin system
 	// 		Ham	: General operator (associated to sys)
