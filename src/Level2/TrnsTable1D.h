@@ -730,6 +730,13 @@ MSVCDLL std::ostream& status(std::ostream& ostr) const;
 
 MSVCDLL void           write(const std::string& fn) const;
 MSVCDLL std::ofstream& write(std::ofstream&     fp) const;
+MSVCDLL void           dbwrite( const std::string& fileName, 
+                                const std::string& compname,  // metabolite name			 
+                                const double& lowppm, 
+			                    const double& highppm, 
+			                    const double& specfreq, 
+			                    const double& reffreq,
+			                    const int& loop) const;
 
 // ------------------- Binary Read Functions (For Storage) --------------------
  

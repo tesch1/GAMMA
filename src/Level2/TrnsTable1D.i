@@ -4,7 +4,7 @@
 #include "Level2/TrnsTable1D.h"
 %}
 
-
+%include "std_string.i"
 
 class TTable1D: private matrix 
 {
@@ -110,6 +110,14 @@ std::vector<std::string> printStrings()           const;
 
 void           write(const std::string& fn) const;
 //std::ofstream& write(std::ofstream&     fp) const;
+
+void            dbwrite(const std::string& fileName, 
+                        const std::string& compname,  // metabolite name			 
+                        const double& lowppm, 
+			            const double& highppm, 
+			            const double& specfreq, 
+			            const double& reffreq,
+			            const int& loop) const;
  
 void           read(const std::string& fn);
 //std::ifstream& read(std::ifstream&     fp);

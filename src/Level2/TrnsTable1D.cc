@@ -2337,6 +2337,151 @@ ofstream& TTable1D::write(ofstream& fp) const
   }
  
 
+/* Added 09/03/09 by DCT */
+void TTable1D::dbwrite( const string& fileName, 
+                        const string& compname,  // metabolite name			 
+                        const double& lowppm, 
+			            const double& highppm, 
+			            const double& specfreq, 
+			            const double& reffreq,
+			            const int& loop) const
+{
+    ofstream ofs;					        // Construct a file
+    ofs.open(fileName.c_str(), ios::out);	// Open file
+
+    // write the file output in the standard format for continued processing
+	std::vector<float>	freqs;
+	std::vector<int>	mx_index;
+	std::vector<float>	freqout;
+	std::vector<float>	ampout;
+	std::vector<float>	phaseout;
+
+	double			freq;
+	double			normal = 1.0;
+	int			    normindex = 0;
+	float			amptemp, ampsum, phasetemp;
+	unsigned long	bincount = 0;
+	const float		freqtol = 0.1/specfreq;		// Use something like half the minimum
+	const float		phasetol = 50.0;				// coupling const. divided by field
+	unsigned long	i,k;						// strength for freqtol
+	int				foundone = 0;
+	double			refhigh, reflow;
+
+	// this is 0 to .2 ppm for protons
+
+	refhigh = reffreq + 0.1;
+	reflow  = reffreq - 0.1;
+
+	// cout << "reflow " << reflow << endl;
+	// cout << "refhigh " << refhigh << endl;
+
+	/* Get index array in PPM order -------------------------------------*/
+
+	mx_index = this->Sort(0,-1,0);     
+
+	
+	/* Convert frequencies to PPM ---------------------------------------*/
+	
+	for(i=0; i<static_cast<unsigned long>(this->size()); i++)      
+	{
+		freqs.push_back(-this->Fr(mx_index[i])/(2.0*PI*specfreq));
+	}
+
+	/* Sum over the normalizer peak -------------------------------------*/
+
+	std::vector<float>::iterator itf;
+
+	for(i=0, itf=freqs.begin(); i<static_cast<unsigned long>(this->size()); i++, itf++)
+	{
+		freq = *itf;
+		// cout << freq << endl;
+		if (freq > reflow && freq < refhigh) 
+		{
+			if (normindex == 0) 
+			{
+				normal =  norm(this->I(mx_index[i]));
+				++normindex;
+			}
+			else 
+			{
+				normal += norm(this->I(mx_index[i])); 
+			}
+		}
+	}
+
+	std::cout << "Normalization in dbwrite: " << normal << " with " << normindex << " line indices\n";
+	/* Simple peak blending based on Freqtol and Phasetol ---------------*/
+	
+	for(i=0, itf=freqs.begin(); i<static_cast<unsigned long>(this->size()); i++, itf++)
+	{
+		freq = *itf;
+		
+		if ((freq > lowppm && freq < reflow) || (freq > refhigh && freq < highppm)) 
+		{
+			amptemp   =  norm(this->I(mx_index[i]))/normal;
+			phasetemp = -RAD2DEG*phase(this->I(mx_index[i]));
+			
+			if (bincount == 0) 
+			{
+				freqout.push_back(freq);
+				ampout.push_back(amptemp);
+				phaseout.push_back(phasetemp);
+				++bincount;
+			}
+			else 
+			{  
+				for(k=0; k < bincount && foundone == 0; k++) 
+				{
+					if(freq >= freqout[k]-freqtol && freq <= freqout[k]+freqtol)
+					{
+						if (phasetemp >= phaseout[k]-phasetol && phasetemp <= phaseout[k]+phasetol) 
+						{
+							ampsum      =  ampout[k]+amptemp;
+							freqout[k]  = (ampout[k]*freqout[k]  + amptemp*freq)/ampsum;
+							phaseout[k] = (ampout[k]*phaseout[k] + amptemp*phasetemp)/ampsum;
+							ampout[k]  +=  amptemp;
+							foundone = 1;
+						}
+					}
+				}
+				if (foundone == 0) 
+				{
+					freqout.push_back(freq);
+					ampout.push_back(amptemp);
+					phaseout.push_back(phasetemp);
+					++bincount;
+				}
+				foundone = 0;
+			}
+		}
+	}
+
+
+	/* Output values to text file --------------------------------------------*/
+
+	ofs << "; " << "\n";
+	ofs << "; Standard Sequence Simulation: Using 90 data acquisition" << "\n";
+	ofs << "; " << "\n";
+
+
+	std::vector<float>::iterator Fr, Am, Ph;
+
+	for(i=0, Fr=freqout.begin(), Am=ampout.begin(), Ph=phaseout.begin(); i<bincount; i++, Fr++, Am++, Ph++)
+	  {
+		ofs << compname;					// metabolite name
+		ofs << "\t" <<  loop;				// loop number
+		ofs << "\t" <<  0;					// group number in metabolite
+		ofs << "\t" <<  i;					// line index in metabolite
+		ofs << "\t" <<  *Fr;				// frequency in ppm
+		ofs << "\t" <<  *Am;				// intensity
+		ofs << "\t" <<  ((*Ph) * (-1));	// phase
+		ofs << "\n";		
+	  }
+
+    ofs.close();     // Close file
+}
+
+
 // -------------------------- Binary Input Functions --------------------------
  
 	// Input		TTab1D	: Transitions table (this)
