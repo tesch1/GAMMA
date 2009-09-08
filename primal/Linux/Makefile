@@ -1,3 +1,7 @@
+# /gamma/trunk/primal/Linux/Makefile.
+#
+# :FIXME:  1. always builds pygamma_wrap.cxx, and pygamma_wrap.o
+#
 #########################################################################
 #                                                                       #
 #          GAMMA Primal Makefile: Linux ==> (Py)GAMMA Library		#
@@ -101,10 +105,11 @@ SRCDIR        = ../../src
 BINDIR        = ../../i686-pc-linux-gnu
 
 DEBUG    = -g #-O2
+
 CC       = gcc
 CFLAGS   = $(DEBUG)
 
-CXX      = c++
+CXX      = g++
 CPPFLAGS = -I"../../src" -DGSTATIC=1
 CXXFLAGS = $(DEBUG)
 
@@ -120,6 +125,9 @@ PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMI
              -isystem "${BOOSTINCDIR}"
 PYCXXFLAGS = 
 
+PYSWCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"../../src" -I"${PYSINCDIR}"
+PYSWCXXFLAGS = 
+
 LDFLAGS  = 
 exeext   = .out
 defext   = .def
@@ -131,6 +139,9 @@ RANLIB   = ranlib
 LDCONFIG = /sbin/ldconfig
 
 NPD      = --no-print-directory
+
+#pygamma_wrap.cxx : ${SRCDIR}/pygamma.i
+     
 
 #########################################################################
 #									#
@@ -183,6 +194,12 @@ PY_NAMEX   = ${PY_NAME}.${VERNO}
 PY_NAMEXX  = ${PY_NAMEX}.${MINNO}
 PY_NAMEXXX = ${PY_NAMEXX}.${RELNO}
 
+
+PYS_NAME    = _pygamma.so
+PYS_NAMEX   = ${PYS_NAME}.${VERNO}
+PYS_NAMEXX  = ${PYS_NAMEX}.${MINNO}
+PYS_NAMEXXX = ${PYS_NAMEXX}.${RELNO}
+
 #########################################################################
 #                                                                       #
 #                       Gamma Related Variables                         #
@@ -212,18 +229,57 @@ PY_NAMEXXX = ${PY_NAMEXX}.${RELNO}
 
 include ../../make/MakeMods
 
+
+
+#########################################################################
+#									#
+#                              Main Target				#
+#									#
+# This target produce the static library.				#
+#									#
+# LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)	#
+#									#
+#########################################################################
+
+all: ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
+lib: ihatewindows $(BINDIR) $(BINDIR)/$(LIB_NAME)
+so:  ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
+pyg: ihatewindows $(BINDIR) $(BINDIR)/$(PY_NAME)
+pysg: ihatewindows $(BINDIR) $(BINDIR)/$(PYS_NAME)
+
+${LIB_NAME}: ${BINDIR}/${LIB_NAME}
+${SO_NAME}:  ${BINDIR}/${SO_NAME}
+${PY_NAME}:  ${BINDIR}/${PY_NAME}
+${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
+
+
+#########################################################################
+
 LIB_SRCS = $(ALLCCFILES)
 LIB_OBJS = $(addsuffix .o, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
 SO_SRCS = $(ALLCCFILES)
 SO_OBJS = $(addsuffix .soo, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
+# Python Boost
 PYG_SRCS = $(ALLCCFILES)
 PYG_SRCS = 
 PYG_OBJS = $(addsuffix .po, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
+# Python Swig
+PYSG_SRCS = $(ALLCCFILES)
+PYSG_SRCS = 
+PYSG_OBJS = $(addsuffix .pso, $(addprefix $(BINDIR)/, $(ALLFILES)))
+
 GAM_HDRS = $(ALLHFILES)
 INS_HDRS = $(addprefix $(HDRINSTALLDIR)/, $(ALLHFILES))
+
+PYSG_WRAP_SRCS = $(addprefix $(BINDIR)/, "pygamma_wrap.cxx")
+PYSG_WRAP_OBJS = $(addprefix $(BINDIR)/, "pygamma_wrap.o")
+
+$(PYSG_WRAP_SRCS) : ../../src/pygamma.i
+	swig -c++ -python -outdir $(BINDIR) -o $(PYSG_WRAP_SRCS) \
+         -I../../src  ../../src/pygamma.i 
 
 #########################################################################
 #									#
@@ -484,6 +540,71 @@ ${BINDIR}/%.po : ${SRCDIR}/${DEPREC}/%.cc
 ${BINDIR}/%.po : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(PYCPPFLAGS) $(PYCXXFLAGS) $< -o $@
 
+
+#########################################################################
+#
+#               Build _PGSGAMMA (SWIG) Shared Library Pattern Rules
+#
+#
+########################################################################
+
+${BINDIR}/%.pso : ${SRCDIR}/${BASICS}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${MATRIX}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${HSPACE}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${LEVEL1}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${LSPACE}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${LEVEL2}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${BLOCH}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${GAMIO}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${BWR}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${PULSES}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${INTRANK2}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${FLOQUET}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${GRADIENTS}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${MULTISYS}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${ESRLIB}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${DEPREC}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
+	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+
+$(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRCS)
+	gcc -c $(PYSWCPPFLAGS) $(PYSG_WRAP_SRCS)  \
+         -o $(PYSG_WRAP_OBJS)
+
+#PYSWCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"${SRCDIR}" -I"${PYINCDIR}"
+
 #########################################################################
 #									#
 #                      Copying GAMMA Headers Rules		        #
@@ -497,25 +618,6 @@ ${BINDIR}/%.po : ${SRCDIR}/${TESTING}/%.cc
 
 ${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
 	cp -f $< $@
-
-#########################################################################
-#									#
-#                              Main Target				#
-#									#
-# This target produce the static library.				#
-#									#
-# LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)	#
-#									#
-#########################################################################
-
-all: ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
-lib: ihatewindows $(BINDIR) $(BINDIR)/$(LIB_NAME)
-so:  ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
-pyg: ihatewindows $(BINDIR) $(BINDIR)/$(PY_NAME)
-
-${LIB_NAME}: ${BINDIR}/${LIB_NAME}
-${SO_NAME}:  ${BINDIR}/${SO_NAME}
-${PY_NAME}:  ${BINDIR}/${PY_NAME}
 
 #########################################################################
 #									#
@@ -558,6 +660,9 @@ SO_LDLIBS  =
 
 PY_LDFLAGS = -shared
 PY_LDLIBS  =
+
+PYS_LDFLAGS = -shared
+PYS_LDLIBS  =
 
 #########################################################################
 #									#
@@ -687,11 +792,14 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 PYGFLAGS   = -D_PYGAMMA=1 -I${BOOSTINCDIR} -I${PYINCDIR}
 PYG_LDFLAGS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR} -lboost_python
 PYGLDLIBS = 
-PYINCDIR    = /usr/include/python2.2
-PYLIBDIR    = /usr/lib/python2.2
-PYLIB2DIR   = /usr/lib/python2.2/config
-BOOSTINCDIR = "/usr/local/src/boost_1_29_0"
-BOOSTLIBDIR = "/usr/local/src/boost_1_29_0/libs/python/build/bin/libboost_python.so/gcc/release/inlining-on/runtime-link-dynamic/shared-linkable-true"
+
+PYINCDIR    = /usr/include/python2.5
+PYLIBDIR    = /usr/lib/python2.5
+PYLIB2DIR   = /usr/lib/python2.5/config
+
+BOOSTINCDIR = "/usr/include/boost"
+BOOSTLIBDIR = "/usr/lib"
+#BOOSTLIBDIR = "/usr/local/src/boost_1_29_0/libs/python/build/bin/libboost_python.so/gcc/release/inlining-on/runtime-link-dynamic/shared-linkable-true"
 
 %.po : %.cc
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(PYGFLAGS) $< -o $@
@@ -766,6 +874,60 @@ ${BINDIR}/$(PY_NAME): PyGAMMAChk $(PYG_OBJS)
 # and headers required for PyGAMMA. The actual source code files from	#
 
 
+########################################################################
+#
+#  Python Swig build shared library details
+#
+########################################################################
+
+
+PYSGFLAGS   = -D_PYSGAMMA=1 -I${PYINCDIR}
+PYSG_LDFLAGS = -L${PYSLIBDIR} -L${PYSLIB2DIR}
+PYSGLDLIBS = 
+
+PYSINCDIR    = /usr/include/python2.5
+PYSLIBDIR    = /usr/lib/python2.5
+PYSLIB2DIR   = /usr/lib/python2.5/config
+
+
+#%.pso : %.cc
+#	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(PYSGFLAGS) $< -o $@
+
+PYSGAMMAChk:
+	@echo
+	@echo "Making PySGAMMA Shared and Swigged Library $(PYS_NAME) From Pythonized Object Files"
+	@echo
+	@if (test -d ${PYSINCDIR}) \
+	then echo Good. The Linux Python Includes Directory Exists. ${PYSINCDIR}; \
+	else echo Cannot Find The Linux Python Includes Directory! ${PYSINCDIR}; \
+	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
+	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+	     echo; \
+	     false; \
+	fi
+	@if (test -d ${PYSLIBDIR}) \
+	then echo Good. The Linux Python Library Directory Exists. ${PYSLIBDIR}; \
+	else echo Cannot Find The Linux Python Library Directory! ${PYSLIBDIR}; \
+	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
+	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+	     echo; \
+	     false; \
+	fi
+	@echo "Compiling GAMMA Source Into PYSGAMMA Object Code"
+	@echo
+
+
+${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) PYSGAMMAChk 
+	@echo
+	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
+	@echo
+	g++ ${PYS_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+#    cp ${BINDIR}/${PYS_NAME} ${BINDIR}/${PYS_NAMEXXX}
+
+# g++ -shared pygamma_wrap.o /home/dtodd/dev/gamma/trunk/i686-pc-linux-gnu/libgamma.so -o _pygamma.so
+
+
+
 #########################################################################
 #									#
 #               Insure Needed Linux Binary Directory Exists		#
@@ -782,6 +944,7 @@ ${BINDIR}: force
 	fi
 
 force:
+
 
 #########################################################################
 #									#
@@ -1143,6 +1306,7 @@ clean:
 	rm -f ${LIB_OBJS}
 	rm -f ${SO_OBJS}
 	@rm -f $(PYG_OBJS)
+	@rm -f $(PYSG_OBJS)
 	@rm -f $(TEST_OBJ)
 	@rm -f *.asc
 	@rm -f *.gnu
