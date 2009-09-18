@@ -101,9 +101,14 @@ INSTALLDIR    = /usr
 BININSTALLDIR = /usr/bin
 LIBINSTALLDIR = /usr/lib
 HDRINSTALLDIR = /usr/include/gamma-${VERNO}.${MINNO}.${RELNO}
-SRCDIR        = ./../../src
+
+SRCDIR  = ../../src
+SRCDIR1 = ../../src
+SRCDIRINCL_FLAG = -I$(SRCDIR1)
+
 BINDIR        = ./../../i686-pc-linux-gnu
 PYVERSION	  = 2.5
+
 
 DEBUG    = -g #-O2
 
@@ -111,23 +116,23 @@ CC       = gcc
 CFLAGS   = $(DEBUG)
 
 CXX      = g++
-CPPFLAGS = -I"../../src" -DGSTATIC=1
+CPPFLAGS = $(SRCDIRINCL_FLAG) -DGSTATIC=1
 CXXFLAGS = $(DEBUG)
 
-LIBCPPFLAGS = -I"../../src"
+LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
 LIBCXXFLAGS = $(DEBUG)
 
-#SOCPPFLAGS = -I"${SRCDIR}"
-SOCPPFLAGS = -I"../../src"
+#SOCPPFLAGS = $(SRCDIRINCL_FLAG)
+SOCPPFLAGS = $(SRCDIRINCL_FLAG)
 SOCXXFLAGS = -fPIC
 
 PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMIC_LIB \
-             -O3 -Wno-inline -fPIC -fomit-frame-pointer -I"${SRCDIR}" -isystem "${PYINCDIR}" \
+             -O3 -Wno-inline -fPIC -fomit-frame-pointer $(SRCDIRINCL_FLAG) -isystem "${PYINCDIR}" \
              -isystem "${BOOSTINCDIR}"
 PYCXXFLAGS = 
 
-PYSGCPPINCLFLAGS = -I"$(SRCDIR)"
-PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"../../src"
+PYSGCPPINCLFLAGS = 
+PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = 
 
 LDFLAGS  = 
