@@ -101,8 +101,9 @@ INSTALLDIR    = /usr
 BININSTALLDIR = /usr/bin
 LIBINSTALLDIR = /usr/lib
 HDRINSTALLDIR = /usr/include/gamma-${VERNO}.${MINNO}.${RELNO}
-SRCDIR        = ../../src
-BINDIR        = ../../i686-pc-linux-gnu
+SRCDIR        = ./../../src
+BINDIR        = ./../../i686-pc-linux-gnu
+PYVERSION	  = 2.5
 
 DEBUG    = -g #-O2
 
@@ -125,8 +126,9 @@ PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMI
              -isystem "${BOOSTINCDIR}"
 PYCXXFLAGS = 
 
-PYSWCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"../../src" -I"${PYSINCDIR}"
-PYSWCXXFLAGS = 
+PYSGCPPINCLFLAGS = -I"$(SRCDIR)"
+PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"../../src"
+PYSGCXXFLAGS = 
 
 LDFLAGS  = 
 exeext   = .out
@@ -227,6 +229,8 @@ PYS_NAMEXXX = ${PYS_NAMEXX}.${RELNO}
 #                                                                       #
 #########################################################################
 
+
+
 include ../../make/MakeMods
 
 
@@ -241,11 +245,11 @@ include ../../make/MakeMods
 #									#
 #########################################################################
 
-all: ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
-lib: ihatewindows $(BINDIR) $(BINDIR)/$(LIB_NAME)
-so:  ihatewindows $(BINDIR) $(BINDIR)/$(SO_NAME)
-pyg: ihatewindows $(BINDIR) $(BINDIR)/$(PY_NAME)
-pysg: ihatewindows $(BINDIR) $(BINDIR)/$(PYS_NAME)
+all: windowsfilefix  $(BINDIR) $(BINDIR)/$(SO_NAME)
+lib: windowsfilefix  $(BINDIR) $(BINDIR)/$(LIB_NAME)
+so:  windowsfilefix  $(BINDIR) $(BINDIR)/$(SO_NAME)
+pyg: windowsfilefix  $(BINDIR) $(BINDIR)/$(PY_NAME)
+pysg: windowsfilefix  $(BINDIR) $(BINDIR)/$(PYS_NAME)
 
 ${LIB_NAME}: ${BINDIR}/${LIB_NAME}
 ${SO_NAME}:  ${BINDIR}/${SO_NAME}
@@ -549,61 +553,62 @@ ${BINDIR}/%.po : ${SRCDIR}/${TESTING}/%.cc
 ########################################################################
 
 ${BINDIR}/%.pso : ${SRCDIR}/${BASICS}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${MATRIX}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${HSPACE}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${LEVEL1}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${LSPACE}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${LEVEL2}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${BLOCH}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${GAMIO}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${BWR}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${PULSES}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${INTRANK2}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${FLOQUET}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${GRADIENTS}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${MULTISYS}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${ESRLIB}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${DEPREC}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
-	$(CXX) -c $(PYSWCPPFLAGS) $(PYSWCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRCS)
-	gcc -c $(PYSWCPPFLAGS) $(PYSG_WRAP_SRCS)  \
-         -o $(PYSG_WRAP_OBJS)
+	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRCS)  \
+         $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
-#PYSWCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"${SRCDIR}" -I"${PYINCDIR}"
+
+#PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"${SRCDIR}" -I"${PYINCDIR}"
 
 #########################################################################
 #									#
@@ -793,9 +798,9 @@ PYGFLAGS   = -D_PYGAMMA=1 -I${BOOSTINCDIR} -I${PYINCDIR}
 PYG_LDFLAGS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR} -lboost_python
 PYGLDLIBS = 
 
-PYINCDIR    = /usr/include/python2.5
-PYLIBDIR    = /usr/lib/python2.5
-PYLIB2DIR   = /usr/lib/python2.5/config
+PYINCDIR    = /usr/include/python$(PYVERSION)
+PYLIBDIR    = /usr/lib/python$(PYVERSION)
+PYLIB2DIR   = /usr/lib/python$(PYVERSION)/config
 
 BOOSTINCDIR = "/usr/include/boost"
 BOOSTLIBDIR = "/usr/lib"
@@ -881,15 +886,20 @@ ${BINDIR}/$(PY_NAME): PyGAMMAChk $(PYG_OBJS)
 ########################################################################
 
 
-PYSGFLAGS   = -D_PYSGAMMA=1 -I${PYINCDIR}
-PYSG_LDFLAGS = -L${PYSLIBDIR} -L${PYSLIB2DIR}
+
+PYSINCDIR    = /usr/include/python$(PYVERSION)
+PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
+PYSLIBDIR    = /usr/lib/python$(PYVERSION)
+
+PYSINCFLAGS = -I${PYINCDIR} -I$(PYSINC2DIR)
+
+
 PYSGLDLIBS = 
+PYSLIB2DIR   = /usr/lib/python$(PYVERSION)/config
 
-PYSINCDIR    = /usr/include/python2.5
-PYSLIBDIR    = /usr/lib/python2.5
-PYSLIB2DIR   = /usr/lib/python2.5/config
+PYSG_LDFLAGS = -L${PYSLIBDIR} -L${PYSLIB2DIR}
 
-
+#PYSGFLAGS   = -D_PYSGAMMA=1 -I${PYINCDIR} -I$(PYSINC2DIR)
 #%.pso : %.cc
 #	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(PYSGFLAGS) $< -o $@
 
@@ -1385,7 +1395,7 @@ include ${MAINMAKEDIR}/TarZipDir
 # Seems To Only Occur On Names That Have All Capitol Letters In Them!
 # Windows Then Converts All Letters To Lower Case For Some Unknown Reason....
 
-ihatewindows: force
+windowsfilefix: force
 	@if (test -f ../../src/GamIO/ml5af.cc) \
 	then mv ../../src/GamIO/ml5af.cc x; \
 	     mv x ../../src/GamIO/ML5AF.cc; \
