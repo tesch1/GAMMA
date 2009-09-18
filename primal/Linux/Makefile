@@ -39,26 +39,29 @@
 #                                                                       #
 # --------------------------------------------------------------------- #
 #                                                                       #
-#                                 Notes					#
+#                                 Notes			                		#
 #                                                                       #
-# This is NOT a standalone makefile. It includes an additional file	#
-# ../../make/MakeMods which is part of standard GAMMA. This latter file #
-# defines which files are part of the GAMMA source codes. Changes in    #
-# MakeMods will evoke changes in the build herein.                      #
-#									#
-# all:									#
+# This is NOT a standalone makefile.                                    #
+#                                                                       #
+# It includes an additional file: ../../make/MakeMods                   #
+#                                                                       #
+# which is part of standard GAMMA. This latter file defines which       #
+# files are part of the GAMMA source codes. Changes in MakeMods         #
+# will evoke changes in the build herein.                               #
+#									                                    #
+# all:									                                #
 # make all: These both run the default target all (first target). It    #
 #           will compile all source codes in GAMMA as defined in file	#
 #           MakeMods into object files. It will then take the object	#
-#           files and convert them into a static library named		#
+#           files and convert them into a static library named		    #
 #           libgamma.a. Similarly, other object files object files will	#
-#	    be compiled and then be combined into a shared library of 	#
+#	        be compiled and then be combined into a shared library of 	#
 #           name libgamma.so. If we are able to find Python as well as 	#
 #           and Boost.Python, then the PyGAMMA shared library is also	#
 #           built, pygamma.so. All libraries and object	files will be	#
 #           made in the directory specified by BINDIR. The shared libs. #
-#	    will be relocated with added soft links when installed.	#
-#									#
+#	    will be relocated with added soft links when installed.	        #
+#                                                                       #
 # make install: This will convert the file gamma.in into the working	#
 #               script gamma and move it into a system file so that it	#
 #               is accessible by all users. Additionally it will move	#
@@ -97,6 +100,8 @@
 #									#
 #########################################################################
 
+SHELL = /bin/sh
+
 INSTALLDIR    = /usr
 BININSTALLDIR = /usr/bin
 LIBINSTALLDIR = /usr/lib
@@ -104,6 +109,7 @@ HDRINSTALLDIR = /usr/include/gamma-${VERNO}.${MINNO}.${RELNO}
 
 SRCDIR  = ../../src
 SRCDIR1 = ../../src
+
 SRCDIRINCL_FLAG = -I$(SRCDIR1)
 
 BINDIR        = ./../../i686-pc-linux-gnu
@@ -283,12 +289,16 @@ PYSG_OBJS = $(addsuffix .pso, $(addprefix $(BINDIR)/, $(ALLFILES)))
 GAM_HDRS = $(ALLHFILES)
 INS_HDRS = $(addprefix $(HDRINSTALLDIR)/, $(ALLHFILES))
 
-PYSG_WRAP_SRCS = $(addprefix $(BINDIR)/, "pygamma_wrap.cxx")
-PYSG_WRAP_OBJS = $(addprefix $(BINDIR)/, "pygamma_wrap.o")
+PYSG_WRAP_SRC = $(addprefix $(BINDIR)/, pygamma_wrap.cxx)
+PYSG_WRAP_SRC1 = $(addprefix $(BINDIR)/, pygamma.py)
 
-$(PYSG_WRAP_SRCS) : ../../src/pygamma.i
-	swig -c++ -python -outdir $(BINDIR) -o $(PYSG_WRAP_SRCS) \
-         -I../../src  ../../src/pygamma.i 
+PYSG_WRAP_SRCS = $(PYSG_WRAP_SRC) $(PYSG_WRAP_SRC1)
+PYSG_WRAP_OBJS = $(addprefix $(BINDIR)/, pygamma_wrap.o)
+
+$(PYSG_WRAP_SRC) : ../../src/pygamma.i
+	@echo
+	swig -c++ -python -outdir $(BINDIR) -o $@ \
+         -I../../src $<
 
 #########################################################################
 #									#
@@ -608,8 +618,8 @@ ${BINDIR}/%.pso : ${SRCDIR}/${DEPREC}/%.cc
 ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
-$(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRCS)
-	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRCS)  \
+$(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
+	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 
@@ -894,49 +904,48 @@ ${BINDIR}/$(PY_NAME): PyGAMMAChk $(PYG_OBJS)
 
 PYSINCDIR    = /usr/include/python$(PYVERSION)
 PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
-PYSLIBDIR    = /usr/lib/python$(PYVERSION)
-
 PYSINCFLAGS = -I${PYINCDIR} -I$(PYSINC2DIR)
+PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
+
+PYSLIBDIR    = /usr/lib/python$(PYVERSION)
+PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
+
+#PYSGLDLIBS = 
+#PYSLIB_CONFIGDIR   = /usr/lib/python$(PYVERSION)/config
+#PYSG_LDFLAGS = -L${PYSLIBDIR} -L$(PYSGLIB2DIR) -L${PYSLIB_CONFIGDIR}
 
 
-PYSGLDLIBS = 
-PYSLIB2DIR   = /usr/lib/python$(PYVERSION)/config
+PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
 
-PYSG_LDFLAGS = -L${PYSLIBDIR} -L${PYSLIB2DIR}
-
-#PYSGFLAGS   = -D_PYSGAMMA=1 -I${PYINCDIR} -I$(PYSINC2DIR)
-#%.pso : %.cc
-#	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(PYSGFLAGS) $< -o $@
-
-PYSGAMMAChk:
+$(PYSGAMMA_CHK):
 	@echo
-	@echo "Making PySGAMMA Shared and Swigged Library $(PYS_NAME) From Pythonized Object Files"
 	@echo
-	@if (test -d ${PYSINCDIR}) \
-	then echo Good. The Linux Python Includes Directory Exists. ${PYSINCDIR}; \
-	else echo Cannot Find The Linux Python Includes Directory! ${PYSINCDIR}; \
+	@echo Checking for python include and lib directories
+	@echo
+	@if (test -d ${PYSINC2DIR} || test -d ${PYSINCDIR}); \
+	then echo Good. One of these Linux Python Includes Directory Exists. ${PYSINCDIRS}; \
+	else echo Cannot Find The Linux Python Includes Directory! ${PYSINCDIRS}; \
 	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
 	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
-	     echo; \
+	     echo ; \
 	     false; \
 	fi
-	@if (test -d ${PYSLIBDIR}) \
-	then echo Good. The Linux Python Library Directory Exists. ${PYSLIBDIR}; \
-	else echo Cannot Find The Linux Python Library Directory! ${PYSLIBDIR}; \
-	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
-	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
-	     echo; \
-	     false; \
+	@if (test -d ${PYSLIBDIR} || test -d ${PYSLIB2DIR}); \
+	then echo Good. The Linux Python Library Directory Exists. ${PYSLIBDIRS}; \
+	echo 11 > $(PYSGAMMA_CHK);\
+	echo ;\
+	else echo Cannot Find The Linux Python Library Directory! ${PYSLIBDIRS}; \
+		echo Python Must Be Installed On The System For PyGAMMA To Work.; \		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \		echo ; \		false; \
 	fi
-	@echo "Compiling GAMMA Source Into PYSGAMMA Object Code"
-	@echo
+	@echo 
 
-
-${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) PYSGAMMAChk 
+${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK) 
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
 	g++ ${PYS_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+
+
 #    cp ${BINDIR}/${PYS_NAME} ${BINDIR}/${PYS_NAMEXXX}
 
 # g++ -shared pygamma_wrap.o /home/dtodd/dev/gamma/trunk/i686-pc-linux-gnu/libgamma.so -o _pygamma.so
@@ -1321,7 +1330,7 @@ clean:
 	rm -f ${LIB_OBJS}
 	rm -f ${SO_OBJS}
 	@rm -f $(PYG_OBJS)
-	@rm -f $(PYSG_OBJS)
+	@rm -f $(PYSG_OBJS) $(PYSG_WRAP_SRCS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
 	@rm -f $(TEST_OBJ)
 	@rm -f *.asc
 	@rm -f *.gnu
