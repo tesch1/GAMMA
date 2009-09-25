@@ -4,7 +4,7 @@
 #include "HSLib/SpinSys.h"
 %}
 
-
+%include "std_vector.i"
 %include "std_string.i"
 
 class spin_sys
@@ -17,12 +17,13 @@ public:
 
     spin_sys();
     spin_sys(int  spins);
-    //spin_sys(const  spin_sys& sys);
+    spin_sys(const  spin_sys& sys);
 
     ~spin_sys();
 
     //virtual spin_sys& operator=(const spin_sys& sys);
 
+	// int??  shouldn't this be changed to bool?
     //int operator==(const spin_sys& sys) const;
     //int operator!=(const spin_sys &sys) const;
 
@@ -52,16 +53,18 @@ public:
 
     //const  std::vector<Isotope>& IsoVec() const;
 
-    //std::vector<int> HSvect() const;
-    //row_vector  qState(int state) const;
+    std::vector<int> HSvect() const;
+    row_vector  qState(int state) const;
+
     //matrix qStates() const;
+
     double qnState(int state) const;
 
-    //col_vector qnStates() const;
+    col_vector qnStates() const;
 
-    //row_vector qnDist() const;
+    row_vector qnDist() const;
 
-    //row_vector CoherDist() const;
+    row_vector CoherDist() const;
 
     bool   homonuclear()                  const;
 	bool   heteronuclear()                const;

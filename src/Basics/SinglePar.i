@@ -11,6 +11,11 @@
 %include "std_string.i"
 %include "std_vector.i"
 
+%rename(__eq__)  SinglePar::operator== const;
+%rename(__ne__)  SinglePar::operator!= const;
+%rename(__lt__)  SinglePar::operator<  const;
+%rename(__gt__)  SinglePar::operator>  const;
+
 
 class SinglePar
 {
@@ -72,12 +77,12 @@ friend std::ostream& operator<< (std::ostream& ostr, const SinglePar& par);
 bool write(std::ofstream& ostr, int namelen=10) const;
 int read(std::ifstream& inp);
 */
-/*
+
 bool operator==(const SinglePar& par) const;
 bool operator!=(const SinglePar& par) const;
 bool operator< (const SinglePar& par) const;
 bool operator> (const SinglePar& par) const;
-*/
+
 };
 
 

@@ -38,16 +38,18 @@ const gen_op&   D()      const;
 const TTable1D& TTable() const;
 void  Detector(const gen_op& detect);
 
-/*
+
 row_vector T(const gen_op& sigmap, double tinc,      int npts);
 row_vector T(const gen_op& sigmap, int npts,         double tinc);
-void       T(const gen_op& sigmap, row_vector& data, double tinc);
-row_vector F(const gen_op& sigmap,int npts,double Fst,double Ffi);
-void F(const gen_op& sigmap,row_vector& data,double Fst,double Ffi);
 
-row_vector FD(const gen_op& sigma,int npts,double Fst,double Ffi);
-void       FD(const gen_op& sigma,row_vector& data,double Fst,double Ffi);
-*/
+void       T(const gen_op& sigmap, row_vector& data, double tinc);
+row_vector F(const gen_op& sigmap, int npts, double Fst, double Ffi);
+
+void F(const gen_op& sigmap, row_vector& data, double Fst, double Ffi);
+
+row_vector FD(const gen_op& sigma, int npts, double Fst, double Ffi);
+void       FD(const gen_op& sigma, row_vector& data, double Fst, double Ffi);
+
 
 const TTable1D& table(const gen_op& sigmap);
 const TTable1D& table() const;
@@ -61,8 +63,8 @@ void Iscale(double     Iscf, int tr);
 void broaden(double    LWR,          int inHz=1);
 void broaden(double    LWR,  int tr, int inHz);
 void resolution(double res);
-//void pcorrect(double   Wpivot, complex& P);
-//complex pcorrect(double& w0, double w1, int order=5);
+void pcorrect(double   Wpivot, complex& P);
+complex pcorrect(double& w0, double w1, int order=5);
 
 double Wmax()  const;
 double LWmax() const;

@@ -28,8 +28,8 @@ void   BC(double res=-1.0);
  
 void Iscale(double         Iscf);
 void Iscale(double         Iscf, int tr);
-//void Iscale(const complex& Iscf);
-//void Iscale(const complex& Iscf, int tr);
+void Iscale(const complex& Iscf);
+void Iscale(const complex& Iscf, int tr);
 void Iremove(double        dcut=-1.0);
 
 void broaden(double LWR, int inHz=1);
@@ -37,24 +37,24 @@ void broaden(double LWR, int tr, int inHz);
 
 void resolution(double res);
 
-//row_vector              T(int npts,         double tinc) const;
-//void                    T(row_vector& data, double tinc) const;
-//std::vector<row_vector> Ts(int npts,        double tinc) const;
+row_vector              T(int npts,         double tinc) const;
+void                    T(row_vector& data, double tinc) const;
+std::vector<row_vector> Ts(int npts,        double tinc) const;
 std::vector<int>        TCutoffs(int npts,  double tinc) const;
 
-//row_vector              F(int npts,        double Fst,double Ffi) const;
-//void                    F(row_vector& data,double Fst,double Ffi) const;
-//std::vector<row_vector> Fs(int npts,       double Fst,double Ffi) const;
-//row_vector FD(int N,            double fstart, double fend) const;
-//void       FD(row_vector& data, double fstart, double fend) const;
+row_vector              F(int npts,        double Fst,double Ffi) const;
+void                    F(row_vector& data,double Fst,double Ffi) const;
+std::vector<row_vector> Fs(int npts,       double Fst,double Ffi) const;
+row_vector FD(int N,            double fstart, double fend) const;
+void       FD(row_vector& data, double fstart, double fend) const;
 
-//complex pcorrect(double& w0,    double w1, int order);
-//void    pcorrect(double Wpivot, complex& P);
+complex pcorrect(double& w0,    double w1, int order);
+void    pcorrect(double Wpivot, complex& P);
 
 double     R2(int tr) const;
 double     Fr(int tr) const;
-//complex    I(int  tr) const;
-//row_vector Tr(int tr) const;
+complex    I(int  tr) const;
+row_vector Tr(int tr) const;
 
 bool   LineWidths()  const;
 bool   Intensities() const;
