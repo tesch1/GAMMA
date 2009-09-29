@@ -82,17 +82,23 @@ friend gen_op operator - (const gen_op& Op1, const matrix& mx);
 friend gen_op operator - (const matrix& mx,  const gen_op& Op1);
 friend gen_op operator * (const gen_op& Op1, const matrix& mx);
 friend gen_op operator * (const matrix& mx,  const gen_op& Op1);
-       void   operator += (const matrix& mx);	
-       void   operator -= (const matrix &mx);
-       void   operator *= (const matrix& mx);
-       void   operator &= (const matrix& mx);
-       void   operator  = (const matrix& mx);
+*/
 
+/*
+void   operator += (const matrix& mx);	
+void   operator -= (const matrix &mx);
+void   operator *= (const matrix& mx);
+void   operator &= (const matrix& mx);
+void   operator  = (const matrix& mx);
+*/
+
+/*
 friend gen_op operator * (const gen_op &Op1, const complex &z);
 friend gen_op operator * (const complex &z,  const gen_op &Op1);
 friend gen_op operator * (const gen_op &Op1, double z);
 friend gen_op operator * (double z,          const gen_op &Op1);
 */
+
 void operator *= (const complex &z);
 void operator *= (double r);
 
@@ -150,10 +156,10 @@ friend gen_op adjoint(const gen_op &Op1);				//**
 //void   put_mx(const matrix &mx);
 //void   put_matrix(const matrix &mx);
 
-//basis get_bs( )    const;
-//basis get_basis( ) const;
-//void  put_bs(const basis &bs);
-//void  put_basis(const basis &bs);
+basis get_bs( )    const;
+basis get_basis( ) const;
+void  put_bs(const basis &bs);
+void  put_basis(const basis &bs);
 
 
 complex operator() (int row, int col) const;
@@ -178,7 +184,7 @@ int in_DBR()   const;
 void set_DBR() const;
 void set_EBR() const;
 void Op_base(const gen_op &Op1, double cutoff=1.e-12) const; 
-//void Op_base(const basis  &bs) const;
+void Op_base(const basis  &bs) const;
 
 void status(int pf=0) const;
 void setOnlyWBR( );
@@ -188,7 +194,8 @@ void SetLimits(int limit) const;
   
 int  OpCheck(const gen_op& Op1, int warn=2) const;
 //bool OpCheck(const matrix& mx, int warn=2) const;
-//int  OpCheck(const basis&  bs, int warn=2) const;
+
+int  OpCheck(const basis&  bs, int warn=2) const;
 //int  OpCheck(const matrix& mx1, const matrix& mx2, int warn=2) const;
 //int  OpCheck(const matrix& mx, const basis&  bs, int warn=2) const;
 
@@ -204,7 +211,7 @@ void write(const std::string& fn) const;
 
 //void read(const std::string& fn, gen_op& Op1); NOW DEPRECATED!
 
-//void read(const std::string& fn, const basis& bs);
+void read(const std::string& fn, const basis& bs);
 void read(const std::string& fn);
 //std::ifstream& read(std::ifstream &fp);
 
@@ -232,11 +239,10 @@ bool operator>  (const gen_op& Op) const;
 };
 
 
-/*
 inline gen_op I_gen_op(const basis& bs)// Input		bs   : Basis
 // Return		Op   : Identity Operator with basis bs 
 { 
     return gen_op(matrix(bs.size(),bs.size(),i_matrix_type),bs); 
 }
-*/
+
 

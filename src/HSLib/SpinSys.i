@@ -32,11 +32,12 @@ public:
     int HS()         const;
     int HS(int spin) const;
 
-    /*
+
     virtual void isotope(int, const std::string&);
-    virtual void  isotope(int, const Isotope&);
-    virtual const  Isotope&  isotope(int)  const;
-    */
+
+    //virtual void  isotope(int, const Isotope&);
+    //virtual const  Isotope&  isotope(int)  const;
+
 
     double weight(int)                    const;
     std::string symbol(int spin)          const;
@@ -135,7 +136,7 @@ public:
     virtual std::string ask_read(int argc, char* argv[], int argn,
                                              const std::string& def);
     
-    //basis get_basis() const;
+    basis get_basis() const;
 
     //matrix BasisMap1() const;
     //matrix BasisMap2() const;

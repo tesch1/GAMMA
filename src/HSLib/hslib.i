@@ -6,3 +6,6 @@
 %include "SpinOpCmp.i"
 %include "HSauxil.i"
 %include "PulseI.i"
+%include "Basis.i"
+%include "Evolve.i"
+%include "HSprop.i"

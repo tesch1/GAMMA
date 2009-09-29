@@ -20,18 +20,20 @@ acquire1D(gen_op& det, gen_op& H, double cutoff);
 
 //acquire1D(gen_op& det, HSprop& U);
 //acquire1D(gen_op& det, HSprop& U, double cutoff);
-/*
+
 acquire1D(gen_op& D, super_op& L, gen_op& sigi, double cut=1.e-12);
-acquire1D(matrix& D, super_op& L, gen_op& sigi, double cut=1.e-12);
+
+//acquire1D(matrix& D, super_op& L, gen_op& sigi, double cut=1.e-12);
+
 acquire1D(gen_op& D, super_op& L,               double cut=1.e-12);
-acquire1D(matrix& D, super_op& L,               double cut=1.e-12);
-acquire1D(gen_op& D, LSprop&   G,               double cut=1.e-12);
-*/
+
+//acquire1D(matrix& D, super_op& L,               double cut=1.e-12);
+//acquire1D(gen_op& D, LSprop&   G,               double cut=1.e-12);
 
 ~acquire1D();
 //acquire1D& operator= (const acquire1D& ACQ1);
 
-//const super_op& L()	    const;
+const super_op& L()	    const;
 const gen_op&   D()      const;
 //const matrix    S()      const;
 //const matrix&   Sinv()   const;
@@ -91,7 +93,7 @@ void           write(const std::string& fn) const;
 //std::ofstream& write(std::ofstream&     fp) const;
 
  
-// * These two were already commented out before creating .i file. *
+/// * These two were already commented out before creating .i file. *
 //  void read(string& fn, gen_op& Op1);
 //  void read(string& fn, basis& bs);
 

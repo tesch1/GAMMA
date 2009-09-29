@@ -17,20 +17,6 @@
 %rename(__mul__)  row_vector::operator*;
 %rename(__imul__) row_vector::operator*=;
 
-//void operator = (const row_vector& rvec);
-// complex& operator() (int i);
-
-//complex    operator * (const col_vector& cvec) const;
-
-//row_vector operator * (const complex& z)       const;
-//row_vector operator * (double d)               const;
-
-//row_vector operator / (const complex& z)       const;
-//row_vector operator / (double d)               const;
-
-//void operator /= (      double d);
-//void operator /= (const complex& z);
-
 
 //class col_vector;
 

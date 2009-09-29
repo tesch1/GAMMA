@@ -20,6 +20,7 @@
 %rename(__imul__) complex::operator*=;
 %rename(__div__)  complex::operator/ const;
 %rename(__idiv__) complex::operator/=;
+//%rename(__iand__) complex::operator&=;
 
 %rename(__eq__)  complex::operator== const;
 %rename(__ne__)  complex::operator!= const;
