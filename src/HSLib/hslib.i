@@ -9,3 +9,4 @@
 %include "Basis.i"
 %include "Evolve.i"
 %include "HSprop.i"
+%include "SpinOp.i"

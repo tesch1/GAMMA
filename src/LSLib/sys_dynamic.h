@@ -60,7 +60,7 @@ class sys_dynamic: public spin_system, public coord_vec
 // ----------------------------------------------------------------------------
 
 // ____________________________________________________________________________
-// i                CLASS DYNAMIC SPIN SYSTEM ERROR HANDLING
+//                  CLASS DYNAMIC SPIN SYSTEM ERROR HANDLING
 // ____________________________________________________________________________
 
         // Input                dsys    : Dynamic spin system (this)

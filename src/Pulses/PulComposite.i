@@ -13,6 +13,8 @@
 // the commented out line has a method that was already commented
 // out before creating this .i file.
 
+class PulWaveform;
+
 class PulComposite : public PulWaveform
 {
 
