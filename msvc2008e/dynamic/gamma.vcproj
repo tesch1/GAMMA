@@ -49,11 +49,11 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm200 "
 				Optimization="0"
-				AdditionalIncludeDirectories="../../src"
+				AdditionalIncludeDirectories="C:\Python25\include;../../src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;GAMMA_EXPORTS;MAKEDLL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="2"
 				PrecompiledHeaderFile=".\Debug/gamma.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
@@ -75,9 +75,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../i686-pc-msvc/gamma.dll"
+				OutputFile="../../i686-pc-msvc/_pygamma.pyd"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="C:\Python25\libs"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/gamma.pdb"
 				RandomizedBaseAddress="1"
@@ -144,9 +145,9 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm200 "
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\src"
+				AdditionalIncludeDirectories="C:\Python25\include;..\..\src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;GAMMA_EXPORTS;MAKEDLL=1"
-				RuntimeLibrary="3"
+				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				PrecompiledHeaderFile=".\Debug/gamma.pch"
 				AssemblerListingLocation=".\Debug/"
@@ -168,9 +169,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../i686-pc-msvc/gamma.dll"
+				OutputFile="../../i686-pc-msvc/_pygamma.pyd"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="C:\Python25\libs"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=".\Debug/gamma.pdb"
 				RandomizedBaseAddress="1"
@@ -210,6 +212,10 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
+			<File
+				RelativePath="..\..\i686-pc-msvc\pygamma_wrap.cxx"
+				>
+			</File>
 			<Filter
 				Name="Basics Src"
 				>
