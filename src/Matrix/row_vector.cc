@@ -31,10 +31,12 @@
 #  endif
 
 #include <Matrix/row_vector.h>		// Include the interface
-#include <Matrix/complex.h>		// Include GAMMA complex numbers
 #include <Matrix/MxModBas.h>		// Include Matrix module errors
+#include <Matrix/complex.h>		// Include GAMMA complex numbers
 #include <vector>			// Include libstdc++ STL vectors
 #include <cmath>			// Inlcude HUGE_VAL
+#include <stdlib.h>
+
 
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------
@@ -59,6 +61,16 @@
                 (0)                     Program Aborting.....
                 (9)                     Problems During Construction
                 default                 Unknown Error                        */
+
+using namespace std;
+
+// Added this to handle the naming ambiguity of "exp" 
+// from inside the row_vector class. DCT 10/05/09.
+complex complex_exp(const complex& ab)
+{
+	return exp(ab);
+}
+
 
 void row_vector::RVerror(int eidx, int noret) const
   {                                                                             
@@ -957,12 +969,504 @@ std::istream& operator >> (std::istream& istr, row_vector& rvec)
   return istr;
   }
 
-        // Input                rvec : Row vector (this)
-        // Output               void : The function sends questions to
-        //                             standard output interactively asking
-        //                             the user to supply the information to
-        //                             specify the vector.  The vector rvec is modified.
-        // Note                      : Function is for INTERACTIVE programs
+
+
+// code from strproc.cc
+
+/**
+ * trim_left - trim all whitespace from left side of a string
+ * @in: string to be processed. This string is not modified; a
+ * modified copy of the string is returned instead.
+ */
+
+string row_vector::trim_left (const string& in)
+{
+  int n = 0;
+  string::const_iterator p = in.begin();
+
+  if (in.length() == 0) {
+    string out = "";
+    return out;
+  }
+
+  while (p != in.end()) {
+    if (isspace (*p))
+      n++;
+    else
+      break;
+    p++;
+  }
+  string out (in, n, in.length());
+  return out;
+}
+
+/**
+ * trim_right - trim all whitespace from right side of a string
+ * @in: string to be processed. This string is not modified; a
+ * modified copy of the string is returned instead.
+ */
+string row_vector::trim_right (const string& in)
+{
+  int n = 0;
+  string::const_reverse_iterator p = in.rbegin();
+
+  while (p != in.rend()) {
+    if (isspace (*p))
+      n++;
+    else
+      break;
+    p++;
+  }
+  string out (in, 0, in.length() - n);
+  return out;
+}
+
+/**
+ * trim_all - remove whitespace from left and right sides of a string
+ * @in: the string to be processed
+ */
+string row_vector::trim_all (const string& in)
+{
+  if (in.length() == 0) {
+    string out = "";
+    return out;
+  }
+
+  string out = trim_left (in);
+  out = trim_right (out);
+  return out;
+}
+
+/**
+ * isws - use a restricted set of whitespace characters to classify @c
+ * @c: character to be analyzed
+ * Description: isws() returns 1 if @c is a space (` ') or tab (`\t')
+ * character, and 0 otherwise.
+ */
+int row_vector::isws (const char c)
+{
+  if (c == ' ' || c == '\t')
+	return 1;
+  else
+	return 0;
+}
+
+/**
+ * squeeze - remove @line's excess separation characters and leading whitespace
+ * @line: the string to be processed
+ * Description: squeeze() returns a copy of @line with exactly one space
+ * character (` ') between words. Excess space characters and tabs (`\t')
+ * are removed in the returned copy. squeeze() also removes leading
+ * whitespace from @line.
+ */
+string row_vector::squeeze (string line)
+{
+  int nwhite = 0;
+  string squeezed, whchars = " \t";
+
+  if (!line.length())
+    return "";
+
+  int pos = line.find_first_not_of (whchars);
+
+  for (uint i = pos; i < line.length(); i++) {
+    if (isws (line[i]) && nwhite < 1) {    /* Keep one whitespace char.  */
+	  squeezed += " ";
+	  nwhite++;
+	}
+	else if ((isws (line[i])) && nwhite >= 1) {
+	  nwhite++;
+	}
+	else {
+	  squeezed += line[i];
+	  nwhite = 0;
+	}
+  }
+  return squeezed;
+}
+
+/**
+ * split - split a string into tokens delimited by @sep
+ * @s: a string holding a line of text to be split into
+ * fields separated by @sep.
+ * @sep: the character used to separate fields in line.
+ * @field: a vector of strings to hold the tokenized version of @s.
+ * Return Value: The number of fields in @s.
+ */
+int row_vector::split (string s, char sep, vector<string>& field)
+{
+  uint i, j, nfield;
+  string fld;
+
+  if ((i = s.length()) == 0)
+  return 0;
+
+  i = nfield = 0;
+  do {
+    if (i < s.length() && s[i] == sep) { /* skip sep  */
+      ++i;
+    }
+    else {
+      j = s.find_first_of( sep, i );
+      if (j > s.length())
+	j = s.length();
+      fld = string( s, i, j-i );
+    }
+    if (nfield >= field.size())
+      field.push_back( fld );
+    else
+      field[nfield] = fld;
+    nfield++;
+    i = j + 1;
+  } while (j < s.length());
+
+  return nfield;
+}
+
+
+
+//------------- This section imported from readpulse.cc --------------
+
+#ifndef PI
+#define PI 3.14159265358979323846
+#endif
+
+#ifndef DEG2RAD
+#define DEG2RAD (PI/180.0)
+#endif
+
+
+/*******************************************************************
+ * ReadPulse - read pulses from various forms of ASCII files:
+ *
+ * @filename: file name of the pulse profile file
+ *
+ * @PulseFmt: enumerated type of the pulse, corresponding to the
+ * type of hardware the pulse was written by/for.
+ *
+ *******************************************************************/
+
+//int ReadPulse (const char *filename, int PulseFmt, row_vector& v)
+MSVCDLL row_vector row_vector::read_pulse (const string filename, const int PulseFmt)
+{
+  ifstream fin (filename.c_str(), ios_base::in);
+  if (!fin) {
+    //eprintf ("could not open pulse file %s", filename);
+  }
+
+  /* Decide what kind of file we have.  */
+  switch (PulseFmt) {
+	  case SMIS:
+		//weprintf ("Unknown pulse file type; will use ideal pulses");
+		break;
+	  case SIEMENS:  /* Siemens file with header  */
+		return row_vector::ReadSiemens (fin);
+		break;
+	  case SIEMENS_NOHDR:   /* Siemens file without header  */
+		return row_vector::ReadSiemens_Nohdr (fin);
+		break;
+	  case SVS:
+		return row_vector::ReadSVS (fin);
+		break;
+	  case PLAIN_ASCII:
+		return row_vector::Read_Plain_ASCII (fin);
+		//eprintf ("cannot handle PLAIN_ASCII type");
+		break;
+	  case ASCII_MT_DEG:
+		return row_vector::Read_ASCII_mT_Deg (fin);
+		break;
+	  default:
+		//eprintf ("unknown pulse type");
+		break;
+  }
+
+  fin.close();
+
+  return row_vector();
+}
+
+
+/*
+ * ReadSiemens - read a Siemens pulse profile
+ *
+ * @fin: file stream of the pulse file
+*/
+row_vector row_vector::ReadSiemens (ifstream& fin)
+{
+  vector<string> fields;
+  vector<double> pts;
+  int i = 0, count = 0, in_data = 0;
+  string line;
+
+  while (getline (fin, line)) 
+  {
+
+    if (line.find ("Entry_Values") < line.length())
+      in_data = 1;
+
+    if (in_data) 
+    {
+      fields.clear();
+      line = row_vector::squeeze (line);
+      line = row_vector::trim_all (line);
+      i = row_vector::split (line, ' ', fields);
+      for (unsigned int j = 0; j < fields.size(); j++) 
+      {
+		if (is_decimal (fields[j].c_str())) 
+        {
+		  pts.push_back (atof (fields[j].c_str()));
+		  count++;
+		}
+      }
+
+      if (line.find ("End_Entry") < line.length())
+	    in_data = 0;
+    }
+  }
+
+  if (count % 2 != 0) 
+  {
+    //eprintf ("unequal number of amplitudes and phases");
+  }
+  else 
+  {
+    int npts = pts.size() / 2;
+    row_vector v (npts, 0.0);
+    for (int i = 0; i < npts; i++) 
+    {
+      complex ij = complex_exp(-complexi * DEG2RAD * pts[i + npts]);
+      v.put (pts[i] * ij, i);
+    }
+    return v;
+  }
+
+  row_vector nv;
+  return nv;      /* never get here */
+}
+
+/**
+ * ReadSiemens_Nohdr - read and process a Siemens pulse file without header
+ * @fin: file stream of the open pulse file
+ */
+row_vector row_vector::ReadSiemens_Nohdr (ifstream& fin)
+{
+  int pos, numpts, count = 0;
+  string line, cooked;
+  vector<string> field;
+  vector<double> allpts;
+
+  while (fin) {
+    getline (fin, line);
+    if (line.find ("End_Entry:") < line.length())
+      break;
+
+    cooked = row_vector::squeeze (line);
+    pos    = row_vector::split (cooked, ' ', field);
+
+    for (unsigned int i = 0; i < field.size(); i++) {
+      string snum = field[i];
+      const char* cptr = snum.data();
+      /* No way to know where the amplitudes end and the
+       * phases begin.  */
+      allpts.push_back (atof (cptr));
+      count++;
+    }
+    /* Now erase the contents of field, or else they accumulate.  */
+    field.clear();
+  }
+
+  numpts = count / 2;
+  vector<double> amps (numpts), phases (numpts);
+  row_vector rvec (numpts);
+  for (int i = 0; i < numpts; i++) {
+    amps[i]   = allpts[i*2];			//bjs-May2002
+    phases[i] = allpts[i*2 + 1];
+  }
+
+  for (int i = 0; i < numpts; i++) {				//bjs-Aug2001
+	rvec.put ( amps[i] * complex_exp (-complexi * DEG2RAD * phases[i]), i);
+  }
+
+  return rvec;
+
+}
+
+/**
+ * ReadSVS - Read in and process a complete SVS file
+ * @fin - file stream of the open pulse file
+ */
+row_vector row_vector::ReadSVS (ifstream& fin)
+{
+  int pos, numpts = 0, in_data = 0;
+  string line, cooked;
+  double apt;
+  vector<double> pts;
+  vector<string> field;
+  vector<double> amps, phases;
+
+  const char* SIEM_HDR = "Num_Points:";
+  const char* SIEM_VAL = "Entry_Values:";
+
+  while (getline (fin, line)) {
+    cooked = row_vector::trim_all (line);
+    cooked = row_vector::squeeze (line);
+
+    if (cooked.find ("End_Entry:") < cooked.length()) {
+      in_data = 0;
+      break;
+    }
+
+    if (cooked.find (SIEM_HDR) < cooked.length()) {
+      /* Extract number of points in file  */
+      pos = row_vector::split (cooked, ' ', field);
+      string snum = field[1];
+      const char* cptr = snum.data();
+      numpts = atoi (cptr);
+    }
+
+    if (cooked.find (SIEM_VAL) < cooked.length()) {
+      pos = row_vector::split (cooked, ' ', field);
+      /* Excise SIEM_VAL from cooked string.  */
+      pos = cooked.find_first_of (" ");
+      cooked = cooked.substr (pos + 1);
+      /* Now erase the contents of field, or else they accumulate.  */
+      field.clear();
+      in_data = 1;
+    }
+
+    if (in_data) {
+      while (fin >> apt) {
+	pts.push_back (apt);
+      }
+    }
+
+  }
+
+  row_vector rvec ( numpts );
+  for (unsigned int i = 0; i < pts.size()/2; i++) {
+    rvec.put (complex(pts[i], 0.0), i);
+  }
+
+  return rvec;
+}
+
+
+/**
+ * ReadPlain_ASCII - read and process a Plain ASCII pulse file (Ampl(Hz),Phase(degr))
+ * @fin: file stream of the open pulse file
+ */
+row_vector row_vector::Read_Plain_ASCII (ifstream& fin)
+{
+  int pos, numpts, count = 0;
+  string line, cooked;
+  vector<string> field;
+  vector<double> allpts;
+
+  while (fin) {
+    getline (fin, line);
+    if (line.find ("End_Entry:") < line.length())
+      break;
+
+    cooked = row_vector::squeeze (line);
+    pos    = row_vector::split (cooked, ' ', field);
+
+    for (unsigned int i = 0; i < field.size(); i++) {
+      string snum = field[i];
+      const char* cptr = snum.data();
+      /* No way to know where the amplitudes end and the
+       * phases begin.  */
+      allpts.push_back( atof(cptr) );
+      count++;
+    }
+    /* Now erase the contents of field, or else they accumulate.  */
+    field.clear();
+  }
+
+  numpts = count / 2;
+  
+  row_vector rvec (numpts);
+  for (int i = 0; i < numpts; i++) {
+    rvec.put( complex( allpts[i*2],allpts[i*2+1] ), i );
+  }
+  
+  return rvec;
+
+}
+
+
+/**
+ * ReadPlain_ASCII_mT_Deg - read and process a Plain ASCII pulse file (Ampl(mT),Phase(degr))
+ * @fin: file stream of the open pulse file
+ */
+row_vector row_vector::Read_ASCII_mT_Deg (ifstream& fin)
+{
+  int pos, numpts, count = 0;
+  string line, cooked;
+  vector<string> field;
+  vector<double> allpts;
+
+  while (fin) {
+    getline (fin, line);
+    if (line.find ("End_Entry:") < line.length())
+      break;
+
+    cooked = row_vector::squeeze (line);
+    pos    = row_vector::split (cooked, ' ', field);
+
+    for (unsigned int i = 0; i < field.size(); i++) {
+      string snum = field[i];
+      const char* cptr = snum.data();
+      /* No way to know where the amplitudes end and the
+       * phases begin.  */
+      allpts.push_back( atof(cptr) );
+      count++;
+    }
+    /* Now erase the contents of field, or else they accumulate.  */
+    field.clear();
+  }
+
+  numpts = count / 2;
+  
+  row_vector rvec (numpts);
+  for (int i = 0; i < numpts; i++) {
+    rvec.put( complex( allpts[i*2] * 42600.0, allpts[i*2+1] ), i );
+  }
+  
+  return rvec;
+
+}
+
+
+/**
+ * is_decimal - decides whether a string represents a real number
+ * @cp: string containing the suspect number
+ */
+int row_vector::is_decimal (const char *cp)
+{
+  /*
+   * KNOWN BUG: returns true for a string of blanks
+   */
+  if (*cp == '\0')
+    return 0;
+
+  for ( ; *cp != '\0'; *cp++) {
+    if ( isalpha(*cp) || iscntrl(*cp) ) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+
+//--------------
+
+
+// Input                rvec : Row vector (this)
+// Output               void : The function sends questions to
+//                             standard output interactively asking
+//                             the user to supply the information to
+//                             specify the vector.  The vector rvec is modified.
+// Note                      : Function is for INTERACTIVE programs
 
 void row_vector::ask()
   {

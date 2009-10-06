@@ -32,10 +32,13 @@
 
 #include <GamGen.h>			// Include system specifics
 #include <iostream>			// Include libstdc++ io streams
-#include <Matrix/complex.h>		// Include GAMMA complex numbers
 #include <Matrix/matrix.h>		// Include GAMMA matrices
 #include <Matrix/col_vector.h>		// Include GAMMA column vectors
+#include <Matrix/complex.h>		// Include GAMMA complex numbers
+#include <fstream>
 #include <vector>			// Include libstdc++ STL vectors
+
+
 
 class col_vector;
 class row_vector : public matrix
@@ -69,6 +72,28 @@ volatile void RVfatality(int eidx, const std::string& pname) const;
 // ----------------------------------------------------------------------------
 // ---------------------------- PUBLIC FUNCTIONS ------------------------------
 // ----------------------------------------------------------------------------
+
+
+
+// Functions used to read in data, specific to pulse format  
+// Taken from Readpulse.cc.  DCT 10/05/09
+static row_vector ReadSiemens (std::ifstream& fin);
+static row_vector ReadSiemens_Nohdr (std::ifstream& fin);
+static row_vector ReadSVS(std::ifstream& fin);
+static row_vector Read_Plain_ASCII(std::ifstream& fin);
+static row_vector Read_ASCII_mT_Deg(std::ifstream& fin);
+
+static int is_decimal (const char *cp);
+
+// functions from strproc.cc. "lifted" on 10/05/09.
+static std::string trim_left (const std::string&);
+static std::string trim_right (const std::string&);
+static std::string trim_all (const std::string&);
+static std::string squeeze (std::string);
+static int isws (const char);
+static int split (std::string, char, std::vector<std::string>&);
+
+
 
 public:
 
@@ -365,13 +390,21 @@ MSVCDLL        std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator << (std::ostream& ostr, const row_vector& rvec);
 MSVCDLL friend std::istream& operator >> (std::istream& istr, row_vector& rvec);
 
-        // Input                rvec : Row vector (this)
-        // Output               void : The function sends questions to
-        //                             standard output interactively asking
-        //                             the user to supply the information to
-        //                             specify the vector.  rvec is modified.
-        // Note                      : Function is for INTERACTIVE programs
 
+/* Define symbolic constant for pulse file formats of interest.  */
+enum { SMIS = 0, SIEMENS, SIEMENS_NOHDR, PLAIN_ASCII, ASCII_MT_DEG, SVS };
+
+// Used to read in data from a file (filename) in a particular format (PulseFmt).
+MSVCDLL static row_vector read_pulse (const std::string filename, const int PulseFmt);
+
+
+
+// Input                rvec : Row vector (this)
+// Output               void : The function sends questions to
+//                             standard output interactively asking
+//                             the user to supply the information to
+//                             specify the vector.  rvec is modified.
+// Note                      : Function is for INTERACTIVE programs
 MSVCDLL void ask();
 
 // _______________________________________________________________________

@@ -16,7 +16,6 @@
 
 %rename(__mul__)  row_vector::operator*;
 %rename(__imul__) row_vector::operator*=;
-
 
 //class col_vector;
 
@@ -143,6 +142,10 @@ std::string              hdrString() const;
 friend std::ostream& operator << (std::ostream& ostr, const row_vector& rvec);
 friend std::istream& operator >> (std::istream& istr, row_vector& rvec);
 */
+
+enum { SMIS = 0, SIEMENS, SIEMENS_NOHDR, PLAIN_ASCII, ASCII_MT_DEG, SVS };
+
+static row_vector read_pulse (const std::string filename, const int PulseFmt);
 
 void ask();
 };
