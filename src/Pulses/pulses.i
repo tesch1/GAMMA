@@ -1,2 +1,4 @@
-%include "PulComposite.i"
+
 %include "PulWaveform.i"
+
+%include "PulComposite.i"
