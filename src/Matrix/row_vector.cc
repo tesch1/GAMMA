@@ -1069,7 +1069,7 @@ string row_vector::squeeze (string line)
 
   int pos = line.find_first_not_of (whchars);
 
-  for (uint i = pos; i < line.length(); i++) {
+  for (unsigned int i = pos; i < line.length(); i++) {
     if (isws (line[i]) && nwhite < 1) {    /* Keep one whitespace char.  */
 	  squeezed += " ";
 	  nwhite++;
@@ -1095,7 +1095,7 @@ string row_vector::squeeze (string line)
  */
 int row_vector::split (string s, char sep, vector<string>& field)
 {
-  uint i, j, nfield;
+  unsigned int i, j, nfield;
   string fld;
 
   if ((i = s.length()) == 0)

@@ -2362,19 +2362,19 @@ void TTable1D::dbwrite_old( const string& fileName,
 
 
     // write the file output in the standard format for continued processing
-	std::vector<float>	freqs;
+	std::vector<double>	freqs;
 	std::vector<int>	mx_index;
-	std::vector<float>	freqout;
-	std::vector<float>	ampout;
-	std::vector<float>	phaseout;
+	std::vector<double>	freqout;
+	std::vector<double>	ampout;
+	std::vector<double>	phaseout;
 
 	double			freq;
 	double			normal = 1.0;
 	int			    normindex = 0;
-	float			amptemp, ampsum, phasetemp;
+	double			amptemp, ampsum, phasetemp;
 	unsigned long	bincount = 0;
-	const float		freqtol = 0.1/specfreq;		// Use something like half the minimum
-	const float		phasetol = 50.0;				// coupling const. divided by field
+	const double	freqtol = 0.1/specfreq;		// Use something like half the minimum
+	const double	phasetol = 50.0;				// coupling const. divided by field
 	unsigned long	i,k;						// strength for freqtol
 	int				foundone = 0;
 	double			refhigh, reflow;
@@ -2401,7 +2401,7 @@ void TTable1D::dbwrite_old( const string& fileName,
 
 	/* Sum over the normalizer peak -------------------------------------*/
 
-	std::vector<float>::iterator itf;
+	std::vector<double>::iterator itf;
 
 	for(i=0, itf=freqs.begin(); i<static_cast<unsigned long>(this->size()); i++, itf++)
 	{
@@ -2468,7 +2468,7 @@ void TTable1D::dbwrite_old( const string& fileName,
 		}
 	}
 
-	std::vector<float>::iterator Fr, Am, Ph;
+	std::vector<double>::iterator Fr, Am, Ph;
 
 	for(i=0, Fr=freqout.begin(), Am=ampout.begin(), Ph=phaseout.begin(); i<bincount; i++, Fr++, Am++, Ph++)
 	  {
@@ -2524,21 +2524,21 @@ void TTable1D::dbwrite(  const string& fileName,
 	ostr << "; " << "\n";
 
 
-    std::vector<float>    freqs;
+    std::vector<double>    freqs;
    
     std::vector<int>      mx_index;
    
-    std::vector<float>    freqout;
-    std::vector<float>    ampout;
-    std::vector<float>    phaseout;
+    std::vector<double>    freqout;
+    std::vector<double>    ampout;
+    std::vector<double>    phaseout;
 
     double           freq;
     double           normal = 1.0;
     //int            normindex = 0;
-    float            amptemp, ampsum, phasetemp;
+    double            amptemp, ampsum, phasetemp;
     unsigned long    bincount = 0;
-    const float      freqtol = 0.1/specfreq;        // Use something like half the minimum
-    const float      phasetol = 50.0;                // coupling const. divided by field
+    const double     freqtol = 0.1/specfreq;        // Use something like half the minimum
+    const double      phasetol = 50.0;                // coupling const. divided by field
     unsigned long    k;                        // strength for freqtol
     int              foundone = 0;
    
@@ -2560,7 +2560,7 @@ void TTable1D::dbwrite(  const string& fileName,
 
 	// there is no more reference spins, normalization is taken
 	// place by the formula below, where ns is the number of spins
-	normal=pow(2,(ns-1));
+	normal=pow(2.0,(ns-1));
 	normal=normal/2;
 
 	//std::cout << "normal is " << normal<< std::endl;
@@ -2570,7 +2570,7 @@ void TTable1D::dbwrite(  const string& fileName,
     /* Simple peak blending based on Freqtol and Phasetol ---------------*/
 
 	{
-		std::vector<float>::iterator itf;
+		std::vector<double>::iterator itf;
 		long i;
 	   
 		for(i=0, itf=freqs.begin(); i<this->size(); i++, itf++)
@@ -2628,7 +2628,7 @@ void TTable1D::dbwrite(  const string& fileName,
 
 
 	{
-		std::vector<float>::iterator Fr, Am, Ph;
+		std::vector<double>::iterator Fr, Am, Ph;
 		unsigned long i;
 
 		for(i=0, Fr=freqout.begin(), Am=ampout.begin(), Ph=phaseout.begin(); i<bincount; i++, Fr++, Am++, Ph++)
