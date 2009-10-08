@@ -152,8 +152,6 @@ RANLIB   = ranlib
 LDCONFIG = /sbin/ldconfig
 
 NPD      = --no-print-directory
-
-#pygamma_wrap.cxx : ${SRCDIR}/pygamma.i
      
 
 #########################################################################
@@ -295,7 +293,12 @@ PYSG_WRAP_SRC1 = $(addprefix $(BINDIR)/, pygamma.py)
 PYSG_WRAP_SRCS = $(PYSG_WRAP_SRC) $(PYSG_WRAP_SRC1)
 PYSG_WRAP_OBJS = $(addprefix $(BINDIR)/, pygamma_wrap.o)
 
-$(PYSG_WRAP_SRC) : ../../src/pygamma.i
+# If add a new .i file, it needs to be added to gamma/trunk/make/Makemods
+# You'll see examples there of how to do this.
+
+OTHERDOTIFILES = $(addprefix $(SRCDIR)/, $(ALLIFILES))
+
+$(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
 	@echo
 	swig -c++ -python -outdir $(BINDIR) -o $@ \
          -I../../src $<

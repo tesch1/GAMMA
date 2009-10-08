@@ -61,6 +61,11 @@ ALLOFILES  :=
 ALLMODDIRS :=
 ALLMODHDRS :=
 
+# Swig ".i" files.
+
+ALLIFILES  :=
+
+
 ###############################################################################
 #                                                                             #
 #                         GAMMA BASICS MODULE VARIABLES                       #
@@ -83,6 +88,9 @@ ALLMODHDRS += $(BASICSHDR)
 ALLPYFILES += $(BASICSPY)
 BASICSTBAS  = TestBasics TestGconst TestGconstA TestSingPar TestSingParA TestSingParB\
               TestIsoData TestStringCut
+
+BASICS_IBASE  = basics ParamSet SinglePar
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(BASICS)/, $(BASICS_IBASE)))
 
 
 ###############################################################################
@@ -108,6 +116,9 @@ ALLMODHDRS += $(MATRIXHDR)
 ALLPYFILES += $(MATRIXPY)
 MATRIXTBAS  = TestMatrix
 
+MATRIX_IBASE  = Matrix row_vector col_vector complex
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(MATRIX)/, $(MATRIX_IBASE)))
+
 ###############################################################################
 #                                                                             #
 #                      GAMMA HILBERT SPACE MODULE VARIABLES                   #
@@ -132,6 +143,10 @@ ALLMODDIRS += $(HSPACE)
 ALLMODHDRS += $(HSPACEHDR)
 ALLPYFILES += $(HSPACEPY) 
 HSPACETBAS  = TestHSLi1b
+
+HSPACE_IBASE  = hslib SpinSystem SpinSys GenOp HSham SpinOpCmp\
+                HSauxil PulseI Basis Evolve HSprop SpinOp
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(HSPACE)/, $(HSPACE_IBASE)))
 
 ###############################################################################
 #                                                                             #
@@ -177,6 +192,9 @@ ALLMODDIRS += $(LSPACE)
 ALLMODHDRS += $(LSPACEHDR)
 ALLPYFILES += $(LSPACEPY) 
 
+LSPACE_IBASE  = lslib SuperOp sys_dynamic
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(LSPACE)/, $(LSPACE_IBASE)))
+
 ###############################################################################
 #                                                                             #
 #                          GAMMA LEVEL 2 MODULE VARIABLES                     #
@@ -200,6 +218,9 @@ ALLMODHDRS += $(LEVEL2HDR)
 ALLPYFILES += $(LEVEL2PY) 
 LEVEL2TBAS  = TestLevel2 TestTrnsTable1D Testacquire1D \
               TestQuaternion TestQuaternionA TestQuaternionB TestQuaternionC
+
+LEVEL2_IBASE  = level2 TrnsTable1D acquire1D MutExch
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(LEVEL2)/, $(LEVEL2_IBASE)))
 
 ###############################################################################
 #                                                                             #
@@ -301,6 +322,9 @@ ALLOFILES  += $(addsuffix .o,  $(addprefix $(PULSE)/, $(PULSEBASE)))
 ALLMODDIRS += $(PULSE)
 ALLMODHDRS += $(PULSEHDR)
 ALLPYFILES += $(PULSEPY) 
+
+PULSE_IBASE  = pulses PulWaveform PulComposite
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(PULSE)/, $(PULSE_IBASE)))
 
 ###############################################################################
 #                                                                             #
