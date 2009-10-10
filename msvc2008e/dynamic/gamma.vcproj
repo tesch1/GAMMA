@@ -4,6 +4,7 @@
 	Version="9.00"
 	Name="gamma"
 	ProjectGUID="{DE7E3001-2F69-4785-885F-CA2FDCFB220C}"
+	RootNamespace="gamma"
 	TargetFrameworkVersion="0"
 	>
 	<Platforms>
@@ -122,6 +123,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Swig code generation"
+				CommandLine="swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i "
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
