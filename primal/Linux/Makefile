@@ -1,7 +1,5 @@
 # /gamma/trunk/primal/Linux/Makefile.
 #
-# :FIXME:  1. always builds pygamma_wrap.cxx, and pygamma_wrap.o
-#
 #########################################################################
 #                                                                       #
 #          GAMMA Primal Makefile: Linux ==> (Py)GAMMA Library		#
