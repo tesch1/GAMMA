@@ -195,11 +195,11 @@ inline bool operator!= (const complex& z) const;
 
 };
 
-/*
+
 extern const complex complex0;		// z = 0 : (0,0)
 extern const complex complex1;		// z = 1 : (1,0)
 extern const complex complexi;		// z = i : (0,1)
-
+/*
 inline complex::complex() { }
 inline complex::complex(double r, double i) :re(r),im(i) { }
 inline complex::complex(const complex& z) :re(z.re),im(z.im) { }
