@@ -1,0 +1,10 @@
+; 
+; FID/Exchange  Test
+; using input sys file: gsh_test.sys
+; 
+test_lines	0	0	0	-6.01919	0.982948	0.405942
+test_lines	0	0	1	-5.9811	1.0171	0.416079
+test_lines	0	0	2	-4.70002	2.22129	-0.259709
+test_lines	0	0	3	-4.70002	0.221306	-178.893
+test_lines	0	0	4	-3.78859	1.03276	7.06813
+test_lines	0	0	5	-3.75109	0.998604	-7.31527

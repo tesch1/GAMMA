@@ -1,0 +1,9 @@
+; 
+; Spin Echo Simulation Test
+; using input sys file: gsh_test.sys
+; 
+test_lines	0	0	0	3.75079	0.991926	108.644
+test_lines	0	0	1	3.78888	1.00799	71.3713
+test_lines	0	0	2	4.7	2	90
+test_lines	0	0	3	5.98112	1.00799	108.629
+test_lines	0	0	4	6.01921	0.991926	71.3557
