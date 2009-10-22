@@ -1074,12 +1074,15 @@ ${DEMO_PGM_S}: ${DEMO_OBJ_S}
 #									#
 #########################################################################
 
+
+# The TESTDIR does not exist, nor does the TestGAMMA.cc code..
+
 TESTDIR      = ../../test
 TEST_PGM     = $(TESTDIR)/TestGAMMA${exeext}
 TEST_SRC     = $(TESTDIR)/TestGAMMA.cc
 TEST_OBJ     = $(TESTDIR)/TestGAMMA.o
 
-test:	
+testold:	
 	@${MAKE} $(NPD) ${TEST_PGM}
 	${TEST_PGM}
 
@@ -1100,6 +1103,35 @@ ${TEST_PGM}: ${TEST_OBJ}
 
 TestGAMMA.o: %o: %cc
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) -o $@ $<
+
+
+#########################################################################
+# 
+# New Test routines
+#
+
+test:  $(BINDIR)/runtests ${BINDIR}/$(LIB_NAME)
+
+TESTS       = Tests
+TESTSBASE   = testsuite runtests
+TESTSHDR    = testsuite.h
+
+TESTCCFILES += $(addsuffix .cc, $(addprefix $(TESTS)/, $(TESTSBASE)))
+ALLHFILES  += $(addprefix $(TESTS)/, $(TESTSHDR))
+TESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(TESTSBASE)))
+
+
+CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
+CXX_TESTFLAGS = 
+LD_TESTFLAGS = 
+
+
+${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
+	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
+
+$(BINDIR)/runtests : $(TESTOBJFILES)
+	$(CXX) -o $@ $(LD_TESTFLAGS) ${TESTOBJFILES} -L${BINDIR}/ -lgamma 
+
 
 #########################################################################
 #									#
