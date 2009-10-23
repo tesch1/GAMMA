@@ -253,7 +253,7 @@ include ../../make/MakeMods
 #########################################################################
 
 all: windowsfilefix  $(BINDIR) $(BINDIR)/$(SO_NAME)
-lib: windowsfilefix  $(BINDIR) $(BINDIR)/$(LIB_NAME)
+lib: windowsfilefix  $(BINDIR) ${BINDIR}/${LIB_NAME}
 so:  windowsfilefix  $(BINDIR) $(BINDIR)/$(SO_NAME)
 pyg: windowsfilefix  $(BINDIR) $(BINDIR)/$(PY_NAME)
 pysg: windowsfilefix  $(BINDIR) $(BINDIR)/$(PYS_NAME)
@@ -717,15 +717,15 @@ PYS_LDLIBS  =
 #									#
 #########################################################################
 
-${BINDIR}/$(LIB_NAME): ${BINDIR} ${LIB_OBJS}
+${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 	@echo
 	@echo "Making Static Library $(LIB_NAME) From Object Files"
 	@echo
-	${AR} ${ARFLAGS} ${BINDIR}/$(LIB_NAME) $(LIB_OBJS)
+	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS)
 	@echo
 	@echo "Adjusting Static Library $(LIB_NAME) For Random Access"
 	@echo
-	${RANLIB} ${BINDIR}/$(LIB_NAME)
+	${RANLIB} ${BINDIR}/${LIB_NAME}
 
 #########################################################################
 #                                                                       #
@@ -1110,7 +1110,7 @@ TestGAMMA.o: %o: %cc
 # New Test routines
 #
 
-test:  $(BINDIR)/runtests ${BINDIR}/$(LIB_NAME)
+test:  ${BINDIR}/${LIB_NAME}  $(BINDIR)/runtests  run
 
 TESTS       = Tests
 TESTSBASE   = testsuite runtests
@@ -1130,8 +1130,13 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -o $@ $(LD_TESTFLAGS) ${TESTOBJFILES} -L${BINDIR}/ -lgamma 
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) ${TESTOBJFILES} -L${BINDIR}/ -lgamma 
 
+run: force
+	@echo 
+	@echo Running tests:
+	@echo 
+	
 
 #########################################################################
 #									#
