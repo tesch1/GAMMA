@@ -1,11 +1,11 @@
 suite: GammaTest
 
-command: runtests > outfile
+command: ./../../i686-pc-linux-gnu/runtests > outfile
 
-compare: iso_test.txt golden/iso_test.txt
-compare: fid_test.txt golden/fid_test.txt
-compare: spinecho_test.txt golden/spinecho_text.txt
-compare: press_realpulses_test.txt golden/press_realpulses_test.txt
-compare: spinecho_realpulses_test.txt golden/spinecho_realpulses_test.txt
-compare: fid_exchange_test.txt golden/fid_exchange_test.txt
-compare: output golden/stdouterr.txt
+compare: iso_test.txt, golden/iso_test.txt
+compare: fid_test.txt, golden/fid_test.txt
+compare: spinecho_test.txt, golden/spinecho_test.txt
+compare: press_realpulses_test.txt, golden/press_realpulses_test.txt
+compare: spinecho_realpulses_test.txt, golden/spinecho_realpulses_test.txt
+compare: fid_exchange_test.txt, golden/fid_exchange_test.txt
+compare: outfile, golden/stdouterr.txt
