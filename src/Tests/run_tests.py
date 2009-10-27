@@ -6,16 +6,22 @@ import glob
 import sys
 import subprocess
 import filecmp as fc
+from optparse import OptionParser
+
+parser = OptionParser()
+parser.add_option("-p", "--path", dest="path", action="store", default=".",
+                  help="path to executable test progams", metavar="PATH")
+parser.add_option("-v", "--verbose", dest="verbose", 
+                    action="store_true", default=False,
+                    help="print status messages to stdout")
+
+(options, args) = parser.parse_args()
+
 
 filelist = glob.glob('*.suite')
-
 total_failures = 0
 total_comparisons = 0
-
-# FIXME
-# use getopt or opionparse to get command line arguments
-# like -v --verbose.
-is_verbose = True
+is_verbose = options.verbose
 
 print ""
 
@@ -51,7 +57,10 @@ for filename in filelist:
             current_suite = substrings[1].strip()
             print "Running Suite: " + current_suite + "\n"
         if s == "command":
-            retcode = subprocess.call(substrings[1], shell = True)
+            command = ""
+            command += options.path + "/"
+            command += substrings[1].lstrip()
+            retcode = subprocess.call(command, shell = True)
             if retcode < 0:
                 s1 = "Attempt to call " + substrings[1] + " was terminated by signal " + str(retcode)
                 print >> sys.stderr, s1
@@ -65,6 +74,8 @@ for filename in filelist:
             if len(filenames) < 2:
                 print "Error while attempting to compare files"
                 print "Filecount was too small"
+                total_failures += 1
+                continue
 
             file1 = filenames[0]
             file2 = filenames[1].lstrip()
@@ -89,11 +100,13 @@ for filename in filelist:
 
             result = fc.cmp(file1, file2)
             if result == False:	 
-                sys.stdout.write(" *** TEST FAILED ***\n")
+                if is_verbose == True:
+                    sys.stdout.write(" *** TEST FAILED ***\n")
                 total_failures += 1
                 continue
             else:
-                sys.stdout.write("\n")
+                if is_verbose == True:
+                    sys.stdout.write("\n")
 
     f.close()
 

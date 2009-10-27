@@ -1,6 +1,6 @@
 suite: GammaTest
 
-command: ./../../i686-pc-linux-gnu/runtests > outfile
+command: runtests > outfile
 
 compare: iso_test.txt, golden/iso_test.txt
 compare: fid_test.txt, golden/fid_test.txt
