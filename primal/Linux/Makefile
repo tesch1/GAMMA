@@ -1132,9 +1132,14 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 $(BINDIR)/runtests : $(TESTOBJFILES)
 	$(CXX) -static -o $@ $(LD_TESTFLAGS) ${TESTOBJFILES} -L${BINDIR}/ -lgamma 
 
+RUNDIR = ./../../src/Tests
+CURDIR = ./../../primal/Linux
+
 run: force
 	@echo 
 	@echo Running tests:
+	@echo
+	@cd $(RUNDIR); python$(PYVERSION) run_tests.py -v -p $(BINDIR); cd $(CURDIR)
 	@echo 
 	
 
