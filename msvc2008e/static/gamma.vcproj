@@ -44,6 +44,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm200 "
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -791,6 +792,10 @@
 				</File>
 				<File
 					RelativePath="..\..\src\Level2\EAngles.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Level2\MutExch.cc"
 					>
 				</File>
 				<File

@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamma", "gamma.vcproj", "{6180ECF7-3BA9-4900-86AA-C5D8561D90F7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcproj", "{5AF2BA3E-2916-4F28-99F0-A412067B1D89}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7} = {6180ECF7-3BA9-4900-86AA-C5D8561D90F7}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +18,10 @@ Global
 		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7}.Debug|Win32.Build.0 = Debug|Win32
 		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7}.Release|Win32.ActiveCfg = Release|Win32
 		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7}.Release|Win32.Build.0 = Release|Win32
+		{5AF2BA3E-2916-4F28-99F0-A412067B1D89}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5AF2BA3E-2916-4F28-99F0-A412067B1D89}.Debug|Win32.Build.0 = Debug|Win32
+		{5AF2BA3E-2916-4F28-99F0-A412067B1D89}.Release|Win32.ActiveCfg = Release|Win32
+		{5AF2BA3E-2916-4F28-99F0-A412067B1D89}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
