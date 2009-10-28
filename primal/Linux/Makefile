@@ -1139,7 +1139,7 @@ run: force
 	@echo 
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); python$(PYVERSION) run_tests.py -v -p $(BINDIR); cd $(CURDIR)
+	@cd $(RUNDIR); python$(PYVERSION) run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
 	@echo 
 	
 
