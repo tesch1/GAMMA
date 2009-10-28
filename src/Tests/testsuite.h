@@ -1,5 +1,5 @@
 // This file contains interfaces to a set of gamma tests
-#include <gamma.h>
+#include "gamma.h"
 #include <string>
 
 class GammaTest

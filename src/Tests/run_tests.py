@@ -58,8 +58,9 @@ for filename in filelist:
             print "Running Suite: " + current_suite + "\n"
         if s == "command":
             command = ""
-            command += options.path + "/"
+            command += options.path
             command += substrings[1].lstrip()
+            print "running command: " + command
             retcode = subprocess.call(command, shell = True)
             if retcode < 0:
                 s1 = "Attempt to call " + substrings[1] + " was terminated by signal " + str(retcode)

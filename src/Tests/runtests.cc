@@ -1,5 +1,5 @@
 // This file contains a set of gamma tests
-#include <gamma.h>
+#include "gamma.h"
 #include "testsuite.h"
 
 using namespace std;
