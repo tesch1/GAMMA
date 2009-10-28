@@ -8,6 +8,36 @@ import subprocess
 import filecmp as fc
 from optparse import OptionParser
 
+# define comparison function to be used by run_tests.py
+def cmp_nn(file1, file2):
+    # Compare two files 
+    # ignoring the newlines (lf vs cr-lf)
+
+    f1 = open(file1)
+    f2 = open(file2)
+
+    L1 = f1.readline()
+    L2 = f2.readline()
+
+    result = True
+    while L1 and L2:
+        L1 = L1.rstrip("\r\n\f")
+        L2 = L2.rstrip("\r\n\f")
+        if L1 != L2:
+            result = False
+            if is_verbose:
+                print L1
+                print L2
+            break
+        L1 = f1.readline()
+        L2 = f2.readline()   
+
+    f1.close()
+    f2.close()
+    return result
+
+
+# parse the command line.
 parser = OptionParser()
 parser.add_option("-p", "--path", dest="path", action="store", default=".",
                   help="path to executable test progams", metavar="PATH")
@@ -81,7 +111,7 @@ for filename in filelist:
             file1 = filenames[0]
             file2 = filenames[1].lstrip()
             if is_verbose == True:
-                sys.stdout.write("Comparing: " + file1 + " " + file2)
+                print "Comparing: " + file1 + " " + file2
 
             filebad = False
             fileout = ""
@@ -99,15 +129,14 @@ for filename in filelist:
                 total_failures += 1
                 continue
 
-            result = fc.cmp(file1, file2)
+            result = cmp_nn(file1, file2)
+
             if result == False:	 
                 if is_verbose == True:
-                    sys.stdout.write(" *** TEST FAILED ***\n")
+                    print "*** TEST FAILED ***"
+                    print ""
                 total_failures += 1
                 continue
-            else:
-                if is_verbose == True:
-                    sys.stdout.write("\n")
 
     f.close()
 
@@ -119,3 +148,4 @@ print "\nSummary:"
 print "\tRan a total of " + str(total_comparisons) + " comparisons"
 print "\tThere was " + str(total_failures) + " failure(s)"
 print ""
+
