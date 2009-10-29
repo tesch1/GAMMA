@@ -56,7 +56,8 @@ int GammaTest::fid_test(string & sysfile)
   sigma0 = Ixpuls(sys, sigma0, 90.0);    // Apply a 90x pulse
 
   mx = ACQ.table(sigma0);	       // Transitions table (no lb)
-  mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  mx.dbwrite(outfile, outname, specfreq, sys.spins(), 0, header);   // Print Table
 
   return -1;
 }
@@ -103,7 +104,8 @@ int GammaTest::spinecho_test(string & sysfile)
   sigma0 = Evolve::evolve(sigma1,Udelay2);
 
   mx = ACQ.table(sigma0);	       // Transitions table (no lb)
-  mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  mx.dbwrite(outfile, outname, specfreq, sys.spins(), 0, header);   // Print Table
 
   return -1;
 }
@@ -170,8 +172,8 @@ int GammaTest::spinecho_realpulse_test(string & sysfile, string & pulse180file)
   sigma0 = Evolve::evolve(sigma1,Udelay2);     // Evolve through T2
 
   mx = ACQ.table(sigma0);	       // Transitions table (no lb)
-  mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
-  
+  //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  mx.dbwrite(outfile, outname, specfreq, sys.spins(), 0, header);   // Print Table  
 
   return -1;
 }
@@ -242,7 +244,8 @@ int GammaTest::press_realpulses_test(string & sysfile, string & pulse180file)
   sigma0 = Evolve::evolve(sigma1,Udelay3);     // Evolve through TE/2
 
   mx = ACQ.table(sigma0);	       // Transitions table (no lb)
-  mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  mx.dbwrite(outfile, outname, specfreq, sys.spins(), 0, header);   // Print Table
 
   return -1;
 }
@@ -276,7 +279,8 @@ int GammaTest::fid_exchange_test(string & sysfile)
   acquire1D ACQ1(detect,L); 			// Set up the acquisition
 
   mx = ACQ1.table(sigmap);
-  mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
+  mx.dbwrite(outfile, outname, specfreq, sys.spins(), 0, header);   // Print Table
   
   return -1;
 }

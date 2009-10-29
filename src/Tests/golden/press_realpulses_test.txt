@@ -3,8 +3,8 @@
 ; using input sys file: gsh_test.sys
 ; and input 180 pulse file: bjs180_1.txt
 ; 
-test_lines	0	0	0	3.75079	0.984443	-39.0661
-test_lines	0	0	1	3.78888	1.01194	-117.38
-test_lines	0	0	2	4.7	1.99559	-3.73173
-test_lines	0	0	3	5.98112	1.01061	-4.09667
-test_lines	0	0	4	6.01921	0.986085	-82.4158
+test_lines	0	0	0	3.75079	0.492221	-39.0661
+test_lines	0	0	1	3.78888	0.505968	-117.38
+test_lines	0	0	2	4.7	0.997794	-3.73173
+test_lines	0	0	3	5.98112	0.505304	-4.09667
+test_lines	0	0	4	6.01921	0.493042	-82.4158
