@@ -7,6 +7,5 @@
 %include "HSauxil.i"
 %include "PulseI.i"
 %include "Basis.i"
-%include "Evolve.i"
 %include "HSprop.i"
 %include "SpinOp.i"

@@ -91,17 +91,17 @@ int GammaTest::spinecho_test(string & sysfile)
   H = Hcs(sys) + HJ(sys);
   D = Fm(sys);
 
-  Udelay1 = Evolve::prop(H,t1);
-  Udelay2 = Evolve::prop(H,t2);
+  Udelay1 = prop(H,t1);
+  Udelay2 = prop(H,t2);
 
   acquire1D ac(D, H, 0.001);     // Set up acquisition
   ACQ = ac;				  
 
   sigma0 = sigma_eq(sys);	       // Equilibrium density matrix
   sigma1 = Ixpuls(sys,sigma0,90.0);    // Apply a 90x pulse
-  sigma0 = Evolve::evolve(sigma1,Udelay1);
+  sigma0 = evolve(sigma1,Udelay1);
   sigma1 = Ixpuls(sys,sigma0,180);
-  sigma0 = Evolve::evolve(sigma1,Udelay2);
+  sigma0 = evolve(sigma1,Udelay2);
 
   mx = ACQ.table(sigma0);	       // Transitions table (no lb)
   //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
@@ -157,19 +157,19 @@ int GammaTest::spinecho_realpulse_test(string & sysfile, string & pulse180file)
   H = Hcs(sys) + HJ(sys);
   D = Fm(sys);
 
-  Udelay1 = Evolve::prop(H,t1);
-  Udelay2 = Evolve::prop(H,t2);
+  Udelay1 = prop(H,t1);
+  Udelay2 = prop(H,t2);
 
   acquire1D ac(D, H, 0.001);     // Set up acquisition
   ACQ = ac;				  
 
   sigma0 = sigma_eq(sys);	       // Equilibrium density matrix
   sigma1 = Iypuls(sys,sigma0,90.0);    // Apply a 90y pulse
-  sigma0 = Evolve::evolve(sigma1,Udelay1);     // Evolve through T1
+  sigma0 = evolve(sigma1,Udelay1);     // Evolve through T1
 
   Ureal180  = pulc.GetUsum(-1);       // Get the propagator for steps of 180
   sigma1 = Ureal180.evolve(sigma0);    // Evolve through pulse
-  sigma0 = Evolve::evolve(sigma1,Udelay2);     // Evolve through T2
+  sigma0 = evolve(sigma1,Udelay2);     // Evolve through T2
 
   mx = ACQ.table(sigma0);	       // Transitions table (no lb)
   //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table
@@ -225,23 +225,23 @@ int GammaTest::press_realpulses_test(string & sysfile, string & pulse180file)
   H = Hcs(sys) + HJ(sys);
   D = Fm(sys);
 
-  Udelay1 = Evolve::prop(H,tinit);
-  Udelay2 = Evolve::prop(H,TE2);
-  Udelay3 = Evolve::prop(H,TE2);
+  Udelay1 = prop(H,tinit);
+  Udelay2 = prop(H,TE2);
+  Udelay3 = prop(H,TE2);
   
   acquire1D ac(D, H, 0.001);     // Set up acquisition
   ACQ = ac;				  
 
   sigma0 = sigma_eq(sys);	       // Equilibrium density matrix
   sigma1 = Iypuls(sys,sigma0,90.0);    // Apply a 90y pulse
-  sigma0 = Evolve::evolve(sigma1,Udelay1);     // Evolve through TINIT
+  sigma0 = evolve(sigma1,Udelay1);     // Evolve through TINIT
 
   Ureal180  = pulc.GetUsum(-1);        // Get the propagator for steps of 180
 
   sigma1 = Ureal180.evolve(sigma0);    // Evolve through pulse
-  sigma0 = Evolve::evolve(sigma1,Udelay2);     // Evolve through TE/2
+  sigma0 = evolve(sigma1,Udelay2);     // Evolve through TE/2
   sigma1 = Ureal180.evolve(sigma0);    // Evolve through pulse
-  sigma0 = Evolve::evolve(sigma1,Udelay3);     // Evolve through TE/2
+  sigma0 = evolve(sigma1,Udelay3);     // Evolve through TE/2
 
   mx = ACQ.table(sigma0);	       // Transitions table (no lb)
   //mx.dbwrite_old(outfile, outname, -10, 10, specfreq, 0.1, 0, header);   // Print Table

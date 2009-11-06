@@ -177,11 +177,11 @@ MSVCDLC ~super_op( );
 	//			                 LOp = LOp - LOp1
 	//			       Result in basis of LOp
 
-MSVCDLL super_op operator +  (const super_op& LOp1) const;
-MSVCDLL void     operator += (const super_op& LOp1);
-MSVCDLL super_op operator -  (const super_op& LOp1) const;
-MSVCDLL super_op operator -  () const;
-MSVCDLL void     operator -= (const super_op& LOp1);
+MSVCDLL super_op  operator +  (const super_op& LOp1) const;
+MSVCDLL super_op& operator += (const super_op& LOp1);
+MSVCDLL super_op  operator -  (const super_op& LOp1) const;
+MSVCDLL super_op  operator -  () const;
+MSVCDLL super_op& operator -= (const super_op& LOp1);
 
         // Input                LOp  : A super operator (this)
         //                      LOp1 : A super operator
@@ -200,10 +200,10 @@ MSVCDLL void     operator -= (const super_op& LOp1);
 	// Return (=)		LOp1 : Superoperator which is a copy of
 	//			       the input superoperator.
 
-MSVCDLL super_op operator *  (const super_op& LOp1) const;
-MSVCDLL void     operator *= (const super_op& LOp1);
-MSVCDLL void     operator &= (const super_op& LOp1);
-MSVCDLL void     operator  = (const super_op& LOp1);
+MSVCDLL super_op  operator *  (const super_op& LOp1) const;
+MSVCDLL super_op& operator *= (const super_op& LOp1);
+MSVCDLL void      operator &= (const super_op& LOp1);
+MSVCDLL void      operator  = (const super_op& LOp1);
 
 // ____________________________________________________________________________
 // C        SUPER OPERATOR FUNCTIONS: SUPER OPERATOR WITH OPERATOR 
@@ -249,12 +249,12 @@ MSVCDLL friend super_op  operator *  (const super_op& LOp1, const complex& z);
 MSVCDLL friend super_op  operator *  (const complex& z,     const super_op& LOp1);
 MSVCDLL friend super_op  operator *  (const super_op& LOp1, double d);
 MSVCDLL friend super_op  operator *  (double d,             const super_op& LOp1);
-MSVCDLL void   operator *= (const complex& z);
-MSVCDLL void   operator *= (double d);
+MSVCDLL super_op&   operator *= (const complex& z);
+MSVCDLL super_op&   operator *= (double d);
 MSVCDLL friend super_op  operator /  (const super_op& LOp1, const complex& z);
 MSVCDLL friend super_op  operator /  (const super_op& LOp1, double d);
-MSVCDLL void   operator /= (const complex& z);
-MSVCDLL void   operator /= (double d);
+MSVCDLL super_op&   operator /= (const complex& z);
+MSVCDLL super_op&   operator /= (double d);
 
 // ____________________________________________________________________________
 // E                    SUPER OPERATOR COMPLEX FUNCTIONS

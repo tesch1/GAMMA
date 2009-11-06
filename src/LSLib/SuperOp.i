@@ -81,15 +81,15 @@ super_op(const gen_op& Op1, const gen_op& Op2);
 
 ~super_op( );
 
-super_op operator +  (const super_op& LOp1) const;
-void     operator += (const super_op& LOp1);
-super_op operator -  (const super_op& LOp1) const;
-super_op operator -  () const;
-void     operator -= (const super_op& LOp1);
+super_op  operator +  (const super_op& LOp1) const;
+super_op& operator += (const super_op& LOp1);
+super_op  operator -  (const super_op& LOp1) const;
+super_op  operator -  () const;
+super_op& operator -= (const super_op& LOp1);
 
-super_op operator *  (const super_op& LOp1) const;
-void     operator *= (const super_op& LOp1);
-void     operator &= (const super_op& LOp1);
+super_op  operator *  (const super_op& LOp1) const;
+super_op& operator *= (const super_op& LOp1);
+void      operator &= (const super_op& LOp1);
 
 
 //friend gen_op operator * (const super_op& LOp, const gen_op& Op1);
@@ -100,14 +100,14 @@ void     operator &= (const super_op& LOp1);
 //friend super_op  operator *  (const super_op& LOp1, double d);
 //friend super_op  operator *  (double d,             const super_op& LOp1);
 
-void   operator *= (const complex& z);
-void   operator *= (double d);
+super_op& operator *= (const complex& z);
+super_op& operator *= (double d);
 
 //friend super_op  operator /  (const super_op& LOp1, const complex& z);
 //friend super_op  operator /  (const super_op& LOp1, double d);
 
-void   operator /= (const complex& z);
-void   operator /= (double d);
+super_op& operator /= (const complex& z);
+super_op& operator /= (double d);
 /*
 friend super_op left(const gen_op& Op); 	// LOp*Op1 = Op*Op1
 friend super_op left(const matrix& mx, const basis& bs);

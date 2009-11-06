@@ -41,6 +41,14 @@
 #include <HSLib/GenOp.h>		// Know operator information
 #include <vector>			// Know libstdc++ STL vectors
 
+MSVCDLL extern gen_op prop(const gen_op& ham, const double time);
+MSVCDLL extern void   prop_ip(   gen_op& ham, const double time);
+MSVCDLL extern gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL extern void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL extern gen_op evolve(const gen_op& sigma, const gen_op& U);
+MSVCDLL extern void   evolve_ip(   gen_op& sigma, const gen_op& U);
+
+
 class HSprop
   {
   gen_op UOp;				// Propagator operator

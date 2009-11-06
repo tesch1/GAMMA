@@ -34,7 +34,6 @@
 
 #include <HSLib/HSprop.h>		// Include the header
 #include <HSLib/GenOp.h> 		// Must know operators
-#include <HSLib/Evolve.h>  
 #include <Basics/Gconstants.h>		// Must know PI and PI2
 #include <Basics/Gutils.h>		// Know about GAMMA errors
 #include <Basics/StringCut.h>	 // Know GAMMA form Gform
@@ -288,9 +287,7 @@ HSprop HSprop::Pow(int n) const
   Upow.Ut    = n*Ut;				// Set Upow time as n*Ut
   Upow.Hceil = Hceil;				// Our ceilngs are same
   return Upow;					// Return Upow = U^n
-  }
-
-/* 
+  } 
 
 // ______________________________________________________________________
 // F                      PROPAGATOR FUNCTIONS
@@ -394,7 +391,6 @@ void evolve_ip(gen_op& sigma, const gen_op& U)
   return;                               // Return sigma1
   }
 
-*/
 
 // ____________________________________________________________________________
 // H              HILBERT SPACE PROPAGATOR CONTAINER SUPPORT FUNCTIONS
@@ -507,14 +503,14 @@ void PyHSProp()
   ;
 //                               Global Functions
 
-  def("prop",    (gen_op (*)(const gen_op&, double))                &Evolve::prop);
-  def("prop_ip", (void   (*)(gen_op&,       double))                &Evolve::prop_ip);
+  def("prop",    (gen_op (*)(const gen_op&, double))                &prop);
+  def("prop_ip", (void   (*)(gen_op&,       double))                &prop_ip);
 
-  def("evolve",    (gen_op (*)(const gen_op&, const gen_op&, double)) &Evolve::evolve);
-  def("evolve_ip", (void   (*)(gen_op&,       const gen_op&, double)) &Evolve::evolve_ip);
+  def("evolve",    (gen_op (*)(const gen_op&, const gen_op&, double)) &evolve);
+  def("evolve_ip", (void   (*)(gen_op&,       const gen_op&, double)) &evolve_ip);
 
-  def("evolve",    (gen_op (*)(const gen_op&, const gen_op&))         &Evolve::evolve);
-  def("evolve_ip", (void   (*)(gen_op&,       const gen_op&))         &Evolve::evolve_ip);
+  def("evolve",    (gen_op (*)(const gen_op&, const gen_op&))         &evolve);
+  def("evolve_ip", (void   (*)(gen_op&,       const gen_op&))         &evolve_ip);
   }
 
 #endif						// End of PyGAMMA code block

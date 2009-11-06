@@ -257,14 +257,22 @@ void complex::dadp(int   adp)  { if(adp<_digits-2) _digs_aft_dpoint=adp; complex
 bool complex::normphase()      { return _phase;  }
 int    complex::dlength()      { return _digits; }
 string complex::dformat()      { return _form;   }
+
 int    complex::zlength()
-  {
+{
   if(_phase)
-    if(_math) return 2*_digits+7;			// R*exp(PHIi)
-    else      return 2*_digits+3;			// [R,PHI]
-  if(_math)   return 2*_digits+2;			// a + bi
-  else        return 2*_digits+3;			// (a,b)
+  {
+    if(_math) 
+      return 2*_digits+7;			// R*exp(PHIi)
+    else      
+      return 2*_digits+3;			// [R,PHI]
   }
+
+  if(_math)   
+    return 2*_digits+2;			    // a + bi
+  else        
+    return 2*_digits+3;			    // (a,b)
+}
 
 /*                          ASCII I/O Based Functions                        */
 

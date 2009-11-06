@@ -33,7 +33,6 @@
 #include <Gradients/GrdEvolve.h>	// Include the interface
 #include <Gradients/sys_gradz.h>	// Include z-gradient spin systems
 #include <HSLib/HSLibIF.h>		// Include Hilbert space stuff
-#include <HSLib/Evolve.h>
 #include <vector>			// Include libstdc++ STL vectors
 #include <Level2/RelaxBas.h>		// Include phenomenological relaxation
 
@@ -66,7 +65,7 @@ vector<gen_op> evolve(gen_op& sigma0, vector<gen_op>& Hs, double t)
   unsigned nss = Hs.size();
   vector<gen_op> sigmas;
   for(unsigned i=0; i<nss; i++)
-    sigmas.push_back(Evolve::evolve(sigma0, Hs[i], t));
+    sigmas.push_back(evolve(sigma0, Hs[i], t));
   return sigmas;
   }
 
@@ -75,7 +74,7 @@ vector<gen_op> evolve(gen_op& sigma0, vector<gen_op>& Us)
   unsigned nss = Us.size();
   vector<gen_op> sigmas;
   for(unsigned i=0; i<nss; i++)
-   sigmas.push_back(Evolve::evolve(sigma0, Us[i]));
+   sigmas.push_back(evolve(sigma0, Us[i]));
   return sigmas;
   }
 
@@ -111,7 +110,7 @@ vector<gen_op> evolve(gen_op& sigma0, vector<gen_op>& Hs, RBasic& R, double t)
 
 vector<gen_op> evolve(vector<gen_op>& sigmas0, gen_op& H, double t)
   {
-  gen_op U = Evolve::prop(H,t);
+  gen_op U = prop(H,t);
   return evolve(sigmas0, U);
   }
 
@@ -120,7 +119,7 @@ vector<gen_op> evolve(vector<gen_op>& sigmas0, gen_op& U)
   unsigned nss = sigmas0.size();
   vector<gen_op> sigmas;
   for(unsigned i=0; i<nss; i++)
-    sigmas.push_back(Evolve::evolve(sigmas0[i], U));
+    sigmas.push_back(evolve(sigmas0[i], U));
   return sigmas;
   }
 
@@ -147,7 +146,7 @@ vector<gen_op> evolve(vector<gen_op>& sigma0, vector<gen_op>& H, double t)
   unsigned N = sigma0.size();
   vector<gen_op> sigma;
   for(unsigned i=0; i<N; i++)
-    sigma.push_back(Evolve::evolve(sigma0[i], H[i], t));
+    sigma.push_back(evolve(sigma0[i], H[i], t));
   return sigma;
   }
 
@@ -156,7 +155,7 @@ vector<gen_op> evolve(vector<gen_op>& sigma0, vector<gen_op>& U)
   unsigned N = sigma0.size();
   vector<gen_op> sigma;
   for(unsigned i=0; i<N; i++)
-    sigma.push_back(Evolve::evolve(sigma0[i], U[i]));
+    sigma.push_back(evolve(sigma0[i], U[i]));
   return sigma;
   }
 

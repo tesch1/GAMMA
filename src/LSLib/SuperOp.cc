@@ -382,10 +382,11 @@ super_op::~super_op () { LSp = 0; HSp = 0; }
 super_op super_op::operator + (const super_op& LOp1) const
   { super_op LOp(*this); LOp += LOp1; return LOp; }
 
-void super_op::operator += (const super_op& LOp1)
+//void super_op::operator += (const super_op& LOp1)
+super_op& super_op::operator += (const super_op& LOp1)
   {
-  if(!LOp1.LSp) return;			// Just exit if NULL LOp1
-  if(!LSp) { *this = LOp1; return; } 	// Use assign if NULL LOp
+  if(!LOp1.LSp) return (*this);			// Just exit if NULL LOp1
+  if(!LSp) { *this = LOp1; return (*this); } 	// Use assign if NULL LOp
   if(!checkLOp(LOp1, 1))		// Insure LOp-LOp1 compatibility
     {
     LOperror(39, 1);			// LOp, LOp function error
@@ -394,15 +395,17 @@ void super_op::operator += (const super_op& LOp1)
   LOp_Hbase(LOp1);			// LOp into LOp1 Hilbert basis
   LOp_base(LOp1);			// LOp into LOp1 Liouville basis
   mx += LOp1.mx;			// Add LOp1 matrix to LOp
+  return (*this);
   }
 
 super_op super_op::operator - (const super_op& LOp1) const
   { super_op LOp(*this); LOp -= LOp1; return LOp; }
 
-void super_op::operator -= (const super_op& LOp1)
+//void super_op::operator -= (const super_op& LOp1)
+super_op& super_op::operator -= (const super_op& LOp1)
   {
-  if(!LOp1.LSp) return;			// No change if NULL LOp1
-  if(!LSp) { *this = -LOp1; return; }	// If NULL LOp, return -LOp1
+  if(!LOp1.LSp) return (*this);			// No change if NULL LOp1
+  if(!LSp) { *this = -LOp1; return (*this); }	// If NULL LOp, return -LOp1
   if(!checkLOp(LOp1, 1))		// Check LOp-LOp1 compatibility
     {
     LOperror(39, 1);			// LOp, LOp function error
@@ -411,6 +414,7 @@ void super_op::operator -= (const super_op& LOp1)
   LOp_Hbase(LOp1);			// LOp into LOp1 Hilbert basis
   LOp_base(LOp1);			// LOp into LOp1 Liouville basis
   mx -= LOp1.mx;			// Add LOp1 matrix to LOp
+  return (*this);
   }
 
 super_op super_op::operator - () const
@@ -423,10 +427,11 @@ super_op super_op::operator - () const
 super_op super_op::operator * (const super_op& LOp1) const
   { super_op LOp(*this); LOp *= LOp1; return LOp; }
 
-void super_op::operator *= (const super_op& LOp1)
+//void super_op::operator *= (const super_op& LOp1)
+super_op& super_op::operator *= (const super_op& LOp1)
   {
-  if(!LSp)      { *this=super_op(); return; } 	// LOp NULL,  product is NULL
-  if(!LOp1.LSp) { *this=super_op(); return; }	// LOp1 NULL, product is NULL
+  if(!LSp)      { *this=super_op(); return (*this); } 	// LOp NULL,  product is NULL
+  if(!LOp1.LSp) { *this=super_op(); return (*this); }	// LOp1 NULL, product is NULL
   if(!checkLOp(LOp1, 1))			// Insure HS compatibility
     {						// If incompatible, then quit
     LOperror(39, 1);			// LOp, LOp function error
@@ -435,6 +440,7 @@ void super_op::operator *= (const super_op& LOp1)
   LOp_Hbase(LOp1);				// Put LOp in LOp1 HS basis
   LOp_base(LOp1);				// Put LOp in LOp1 LS basis
   mx *= LOp1.mx;				// Multiply into LOp1 matrix
+  return (*this);
   }
 
 void super_op::operator &= (const super_op& LOp1)
@@ -557,8 +563,17 @@ super_op operator * (const super_op& LOp1, double d)
 super_op operator * (double d, const super_op& LOp1)
   { super_op LOp(LOp1); LOp.mx *= d; return LOp;}
 
-void super_op::operator *= (const complex& z) { if(LSp) mx *= z; }
-void super_op::operator *= (double d)         { if(LSp) mx *= d; }
+super_op& super_op::operator *= (const complex& z) 
+  { 
+    if(LSp) mx *= z; 
+    return (*this);
+  }
+
+super_op& super_op::operator *= (double d)         
+  { 
+    if(LSp) mx *= d; 
+    return (*this);
+  }
 
 super_op operator / (const super_op& LOp1, const complex& z)
   { super_op LOp(LOp1); LOp /= z; return LOp; }
@@ -566,8 +581,17 @@ super_op operator / (const super_op& LOp1, const complex& z)
 super_op operator / (const super_op& LOp1, double d)
   { super_op LOp(LOp1); LOp /= d; return LOp; }
 
-void super_op::operator /= (const complex& z) { if(LSp) mx /= z; }
-void super_op::operator /= (double d)         { if(LSp) mx /= d; }
+super_op& super_op::operator /= (const complex& z) 
+  { 
+    if(LSp) mx /= z; 
+    return (*this);
+  }
+
+super_op& super_op::operator /= (double d)         
+  { 
+    if(LSp) mx /= d; 
+    return (*this);
+  }
 
 // ____________________________________________________________________________
 // E                     SUPER OPERATOR COMPLEX FUNCTIONS

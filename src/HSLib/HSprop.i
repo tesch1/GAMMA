@@ -19,6 +19,14 @@
 %rename(__gt__)  HSprop::operator>  const;
 
 
+extern gen_op prop(const gen_op& ham, double time); 
+extern void prop_ip(gen_op& U, double time);
+extern gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
+extern void evolve_ip(gen_op& sigma, const gen_op& ham, double time);
+extern gen_op evolve(const gen_op& sigma, const gen_op& U);
+extern void evolve_ip(gen_op& sigma, const gen_op& U);
+
+
 class HSprop
 {
 

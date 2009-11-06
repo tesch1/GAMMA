@@ -34,7 +34,6 @@
 #include <HSLib/SpinOpCmp.h>		// Composite spin operators
 #include <HSLib/SpinOpRot.h>		// Spin rotation operators
 #include <HSLib/Basis.h>		// Operator bases
-#include <HSLib/Evolve.h>       // Evolution operations (added 09/29/09)
 #include <HSLib/GenOpRep.h>		// Operator representations
 #include <HSLib/GenOp.h>		// Operators
 #include <HSLib/HSacquire.h>		// Acquisitions in Hilbert space

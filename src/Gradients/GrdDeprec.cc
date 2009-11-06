@@ -35,7 +35,6 @@
 #include <HSLib/HSLibIF.h>		// Include Hilbert space stuff
 #include <vector>			// Include libstdc++ STL vectors
 #include <Level2/RelaxBas.h>		// Include phenomenological relaxation
-#include <HSLib/Evolve.h>
 
 // ____________________________________________________________________________
 //                         Time Evolution Functions
@@ -45,7 +44,7 @@ void evolve(int N, gen_op& s0, gen_op* Hs, double t, gen_op* sigs) // DEPRECATED
 { 
   for(int i=0; i<N; i++) 
   {
-    sigs[i] = Evolve::evolve(s0, Hs[i], t);
+    sigs[i] = evolve(s0, Hs[i], t);
   }
 }
 
@@ -53,13 +52,13 @@ void evolve(int N, gen_op& sigma0, gen_op* Us, gen_op* sigmas)	   // DEPRECATED!
 { 
   for(int i=0; i<N; i++) 
   {
-    sigmas[i] = Evolve::evolve(sigma0, Us[i]); 
+    sigmas[i] = evolve(sigma0, Us[i]); 
   }
 }
 
 void evolve(int N, gen_op* s0, gen_op& H, double t, gen_op *sigs)  // DEPRECATED!
 { 
-  gen_op U = Evolve::prop(H,t); 
+  gen_op U = prop(H,t); 
   evolve(N, s0, U, sigs); 
 }
 
@@ -67,7 +66,7 @@ void evolve(int N, gen_op* s0, gen_op& U, gen_op* sigs)            // DEPRECATED
 { 
   for(int i=0; i<N; i++) 
   {
-    sigs[i] = Evolve::evolve(s0[i], U);
+    sigs[i] = evolve(s0[i], U);
   }
 }
 
@@ -75,7 +74,7 @@ void evolve(int N, gen_op* s0, gen_op* Hs, double t, gen_op* sigs) // DEPRECATED
 { 
   for(int i=0; i<N; i++) 
   {
-    sigs[i] = Evolve::evolve(s0[i], Hs[i], t);
+    sigs[i] = evolve(s0[i], Hs[i], t);
   }
 }
 
@@ -83,7 +82,7 @@ void evolve(int N, gen_op* s0, gen_op* U, gen_op* sigs)		   // DEPRECATED!
 { 
   for(int i=0; i<N; i++) 
   {
-    sigs[i] = Evolve::evolve(s0[i], U[i]);
+    sigs[i] = evolve(s0[i], U[i]);
   }
 }
 
