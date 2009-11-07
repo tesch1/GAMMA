@@ -303,10 +303,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\HSLib\Evolve.cc"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\HSLib\GenOp.cc"
 					>
 				</File>
@@ -1182,10 +1178,6 @@
 				>
 				<File
 					RelativePath="..\..\src\HSLib\Basis.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\HSLib\Evolve.h"
 					>
 				</File>
 				<File
