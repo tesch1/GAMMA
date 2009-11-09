@@ -61,7 +61,7 @@
 **									**
 *************************************************************************/
 
-#include <Matrix/matrixIF.h>		// All GAMMA matrix related headers
+#include <Matrix/MatrixIF.h>		// All GAMMA matrix related headers
 
 /*************************************************************************
 **									**
