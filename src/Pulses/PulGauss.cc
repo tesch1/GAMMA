@@ -57,7 +57,6 @@ using std::ostream;			// Using libstdc++ output streams
 using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
 
-
 // ______________________________________________________________________
 //                         Gaussian Pulse Propagators 
 // ______________________________________________________________________
@@ -1179,7 +1178,7 @@ int OK = 0;
   }
 
 // sosi - this function makes us depende upon the Level2 module
-/*
+
 double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
 
 	// Input		sys	: A spin system
@@ -1213,8 +1212,8 @@ double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
   cout << "\n";
   return v;
   }
-*/
-/*
+
+
   void set_Gaussian(double gamB1, double& tmix, double& tpul, double tdel, int& numb, int& type)
 
 	// Input		gamB1: RF-Field strength (Hz)
@@ -1314,7 +1313,7 @@ double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
       }
     return;
     }
-*/
+
 // _________________________________________________________________________
 //                    Gaussian Pulse Output Functions
 // _________________________________________________________________________
