@@ -1374,7 +1374,7 @@ clean:
 	rm -f ${SO_OBJS}
 	@rm -f $(PYG_OBJS)
 	@rm -f $(PYSG_OBJS) $(PYSG_WRAP_SRCS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
-	@rm -f $(TEST_OBJ)
+	@rm -f $(TEST_OBJ) $(TESTOBJFILES)
 	@rm -f *.asc
 	@rm -f *.gnu
 	@rm -f $(DEMO_OBJ)
@@ -1388,7 +1388,7 @@ strip:
 
 testclean:
 	@rm -f $(TEST_PGM)
-	@rm -f $(TEST_OBJ)
+	@rm -f $(TEST_OBJ) $(TESTOBJFILES)
 
 democlean:
 	@rm -f $(DEMO_OBJ)
