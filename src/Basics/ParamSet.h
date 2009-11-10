@@ -307,7 +307,7 @@ double      getDoublePSET(const std::string& name);
 //                      Bypass For Standard Output
 // -------------------------------------------------------------------------
 
-std::string ParameterSet::PyPrint();
+std::string PyPrint();
 
 #endif						// End PyGAMMA code block
 

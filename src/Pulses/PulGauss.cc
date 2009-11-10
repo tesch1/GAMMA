@@ -1178,7 +1178,7 @@ int OK = 0;
   }
 
 // sosi - this function makes us depende upon the Level2 module
-
+/*
 double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
 
 	// Input		sys	: A spin system
@@ -1313,6 +1313,7 @@ double ask_Gaussian(spin_system& sys, string& Iso, gen_op& H, double cutoff)
       }
     return;
     }
+*/
 
 // _________________________________________________________________________
 //                    Gaussian Pulse Output Functions

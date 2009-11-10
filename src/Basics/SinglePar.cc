@@ -159,15 +159,15 @@ int SinglePar::setCoord(string& input)
   {
   cutBlksXBlks(input, "(");			// Cut out past ( 
   string scratch = cutDouble(input);		// Cut out a double
-  if(scratch == "") return -1;			// Bail if no 1st ordinate
+  if(scratch == string("")) return -1;			// Bail if no 1st ordinate
   ParData = string("( ") + scratch;		// Start data with ( #
   cutBlksXBlks(input, ",");			// Remove blanks & comma
   scratch = cutDouble(input);			// Cut out a double
-  if(scratch == "") return -1;			// Bail if no 2nd ordinate
+  if(scratch == string("")) return -1;			// Bail if no 2nd ordinate
   ParData += string(", ") + scratch;		// Data now ( #, #
   cutBlksXBlks(input, ",");			// Remove blanks & comma
   scratch = cutDouble(input);			// Cut out a double
-  if(scratch == "") return -1;			// Bail if no 3nd ordinate
+  if(scratch == string("")) return -1;			// Bail if no 3nd ordinate
   ParData += string(", ") + scratch 		// Data now ( #, #, # ) 
           +  string(" )");
   cutBlksXBlks(input, ")");			// Cut out past closing )
@@ -187,7 +187,7 @@ int SinglePar::setCoord(string& input)
 int SinglePar::setTensor(std::ifstream& inp, string& input)
   {
   ParData = cutInt(input);			// Cut int, tensor rank
-  if(ParData == "") return 0;			// Exit if no rank set
+  if(ParData == string("")) return 0;			// Exit if no rank set
   int rank = atoi(ParData.c_str());		// This is the tensor rank
   if(rank < 0) return 0;			// No negative ranked tensors
   cutBlksXBlks(input, "-");			// Cut remaining past -
