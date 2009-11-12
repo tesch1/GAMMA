@@ -49,7 +49,6 @@ using std::ostream;			// Using libstdc++ output streams
 using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
 
-
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------
 // ----------------------------------------------------------------------------
@@ -1013,7 +1012,7 @@ gen_op DANTE(spin_system& sys, gen_op& H, string& Iso,
 // ____________________________________________________________________________
 
 // sosi - this function makes us depende upon the Level2 module
-/*
+
 double ask_DANTE(const spin_system& sys, const string& Iso, gen_op& H, double cutoff)
 
 	// Input		sys	: A spin system
@@ -1048,7 +1047,7 @@ double ask_DANTE(const spin_system& sys, const string& Iso, gen_op& H, double cu
   cout << "\n";
   return v;
   }
-*/
+
 
 void set_DANTE(double gamB1, double& tmix, double& tpul, double tdel, int& numb, int& type)
 
