@@ -225,7 +225,6 @@ block_2D operator - (block_2D &BLK1)
   }
 
 
-
 void block_2D::operator -= (block_2D &BLK2)
 
 	// Input		BLK1 : a block_2D

@@ -42,7 +42,6 @@
 #include <Matrix/row_vector.h>		// Include base class row_vector 
 #include <Basics/ParamSet.h>		// Include base class ParameterSet 
 
-
 class block_1D : public row_vector, public ParameterSet
   {
 
@@ -310,6 +309,8 @@ MSVCDLL friend void print_dset(block_1D& BLK);
 	// Return		none : BLK data vector printed to std I/O
 
   };
+
+extern void product(block_1D &, const block_1D &);
 
 #endif 						/* __CLASS_BLOCK_1D_H__ */
 

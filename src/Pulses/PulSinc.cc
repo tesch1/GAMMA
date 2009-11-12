@@ -810,7 +810,7 @@ SincPulDat SincAsk(int argc, char* argv[], int& qn, int type)
   } 
 
 // sosi - this function makes us depende upon the Level2 module
-/* 
+ 
 double ask_Sinc(spin_system& sys, std::string& Iso, gen_op& H, double cutoff)
 
 	// Input		sys	: A spin system
@@ -845,7 +845,7 @@ double ask_Sinc(spin_system& sys, std::string& Iso, gen_op& H, double cutoff)
   cout << "\n";
   return v;
   }
-*/
+
 
 void set_Sinc(double gamB1, double& tmix, double& tpul, double tdel, int& numb, int& type)
 
