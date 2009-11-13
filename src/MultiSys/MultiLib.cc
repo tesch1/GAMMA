@@ -34,14 +34,14 @@
 #include <MultiSys/MultiLib.h>		// Include the header file
 #include <MultiSys/MultiSys.h>		// Include multi_sys spin systems
 //#include <MultiSys/MultiAux.h>		// Include multi_sys auxiliary
-#include <HSLib/HSauxil.h>		// Include common sigma_eq
-#include <HSLib/HSham.h>		// Include common Hamiltonians
-#include <HSLib/PulseI.h>		// Include ideal pulses
+//#include <HSLib/HSauxil.h>		// Include common sigma_eq
+//#include <HSLib/HSham.h>		// Include common Hamiltonians
+//#include <HSLib/PulseI.h>		// Include ideal pulses
 #include <HSLib/SpinOp.h>		// Include simple spin operators
-#include <HSLib/SpinOpCmp.h>		// Include composite spin operators
-#include <HSLib/SpinOpRot.h>		// Include rotation spin operators
+//#include <HSLib/SpinOpCmp.h>		// Include composite spin operators
+//#include <HSLib/SpinOpRot.h>		// Include rotation spin operators
 #include <HSLib/GenOp.h>		// Inlcude general operators
-#include <BWRRelax/relaxDip.h>		// Include dipolar relaxation
+//#include <BWRRelax/relaxDip.h>		// Include dipolar relaxation
 #include <BWRRelax/relaxCSA.h>		// Include CSA relaxation
 #include <BWRRelax/relaxQuad.h>		// Include quadrupole relaxation
 #include <BWRRelax/relaxQCSA.h>		// Include CSA-Quad X-correlation
@@ -492,6 +492,50 @@ gen_op multize(gen_op op(const spin_sys&, double, double),
 
 
 
+
+
+
+// ----------------------------------------------------------------------------
+//	          Generic Functions Which Use Superoperators
+//  This one takes a single superoperator of one component and expands
+//  the superoperator matrix to the composite Liouville space dimensions
+// ----------------------------------------------------------------------------
+
+
+
+super_op multize(super_op& SOp, const multi_sys &msys, int icomp)
+  {
+// sosi - check that comp exists
+  int nc = msys.NComps();			// Number of components
+  vector<matrix> mxc;				// Array of matrices
+  vector<matrix> bsc;				// Array of bases
+  int ls, hs;
+  sys_dynamic sys;				// Temp spin system
+  gen_op OpComp;				// Operator component
+  for(int i=0; i<nc; i++)			// Loop over msys components
+    {
+    ls = msys.LS(i);				// Component Liouville space
+    hs = msys.HS(i);				// Component Hilbert space
+    if(i == icomp)				// If its the specified
+      {						// component 
+      if(ls != SOp.dim())			// Insure proper dim
+	{
+// sosi - need proper error message here 
+        exit(-1);
+	}
+      mxc.push_back(SOp.get_mx());		// Store its matrix 
+      bsc.push_back((SOp.get_basis()).U());	// Store its basis
+      }
+    else					// If its not the specified
+      {						// component
+      matrix mxd(ls,ls,0.,d_matrix_type);	//   Temp diagonal mx
+      matrix mxi(hs,hs,i_matrix_type);		//   Temp identity mx
+      mxc.push_back(mxd);			//   Matrix rep is zero
+      bsc.push_back(mxi);			//   Basis is identity
+      }
+    }
+  return super_op(mxc, bsc);
+  }
 
 
 

@@ -47,6 +47,8 @@ MSVCDLL bool     Xnmpelem(const multi_sys& msys, const ExchProc& Pro,
                 const row_vector& braJ, const row_vector& ketJ, 
                 int cmpI, int cmpJ, int& hsnorm);
 
+MSVCDLL super_op Xm(const multi_sys& msys);
+
 // ----------------------------------------------------------------------------
 //  This Function Mimics Xnm Above But Just Outputs Details Of The Calculation
 // ----------------------------------------------------------------------------
@@ -58,5 +60,6 @@ MSVCDLL void Xnmpblk(std::ostream& ostr,  const multi_sys& msys, const ExchProc&
              double K, int cmpI, int cmpJ, int Io, int Iend, int Jo, int Jend);
 
 MSVCDLL super_op XXnm( const    multi_sys& msys);
+
 
 #endif								// MultiExch.h

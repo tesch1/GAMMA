@@ -43,7 +43,6 @@
 // ____________________________________________________________________________
 // A  Generic Functions For Making Primitive Operators in Composite Space
 // ____________________________________________________________________________
-
 /*
                     Function Form                             Example
  --------------------------------------------------- --------------------------
@@ -153,6 +152,8 @@ MSVCDLL gen_op multize(gen_op op(const spin_sys&, double, double),
 //                  Generic Functions Which Use Superoperators
 //              (Often These Are Relaxation Or Exchange Functions)
 // ----------------------------------------------------------------------------
+
+MSVCDLL super_op multize(super_op& SOp, const multi_sys &msys, int icomp);
 
 MSVCDLL super_op multize(super_op SOpFct(const gen_op&), const gen_op& Op, const multi_sys& msys);
  

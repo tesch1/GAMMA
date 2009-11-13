@@ -34,6 +34,8 @@
 #include <MultiSys/MultiExch.h>		// Include out header file
 #include <MultiSys/MultiSys.h>		// Include multi_sys spin systems
 #include <MultiSys/MultiLib.h>		// Include the D_basis function
+#include <HSLib/SpinOpCmp.h>		// Include the Fx
+#include <Level2/MutExch.h>		// Include the Kex function
 
 using std::vector;			// Using libstdc++ STL vectors
 using std::ostream;			// Using libstdc++ output streams
@@ -711,5 +713,66 @@ super_op XXnm(const multi_sys& mixture)
      }						// contribution to Xnm
    return super_op(Xmx,Dbs);
    }
+
+
+
+
+
+
+
+
+
+/*************************************************************************
+**									**
+**			      Function Xm				**
+**									**
+** The purpose of this function is to calculate a superoperator that	**
+** represents all mutual exchanges within all components   		**
+** in a given multi_sys spin system.  The input spin system, msys, 	**
+** contains a number of components, each (possibly) with a set of 	**
+** defined mutual exchange processes, each of which contains the spins 	**
+** exchanging and their exchange rates					**
+**									**
+** Jacco van Beek, 13-03-2009						**
+**									**
+*************************************************************************/
+
+
+super_op Xm(const multi_sys& msys)
+  {
+  super_op LOp;
+
+  int nc = msys.NComps();			// Number of sub-spaces
+  int cmp, ist, ls=0;				// Indicies for sub-spaces
+  matrix I;
+  matrix *mxc, *bsc;					// Array Liouv. sub-matrices
+  int *ncd;					// Array Liouv. sub-space dims
+  mxc = new matrix[nc];
+  bsc = new matrix[nc];
+  ncd = new int[nc];
+  gen_op H;
+  sys_dynamic sysd;
+  super_op Lex;
+
+// 		This Is Composite Liouville Space Superoperator
+//	      (Now We Must Deal With All Sub-Spaces Individually)
+  for(cmp=0; cmp<nc; cmp++)			// Loop subspaces (components)
+    {
+    sysd = msys.Comp(cmp); 			//extract the current component
+    H = Fx(sysd); 				//generate an arbitrary gen_op for its basis
+    Lex = Kex(sysd, H.get_basis()); 		//mutual exchange operator in default Liouville basis
+    
+    mxc[cmp] = Lex.get_mx();			//store mutual exchange matrix, this compon.
+    bsc[cmp] = H.get_basis().get_mx();		//store Hilbert space basis matrix, this compon.
+    ncd[cmp] = mxc[cmp].rows();			//Store subspace dimension
+    ls += ncd[cmp];				//Track total size of Liouville space
+    }
+
+  LOp = super_op(mxc, nc, bsc);
+  delete [] mxc;
+  delete [] bsc;
+  delete [] ncd;
+  return LOp;
+  }
 
 #endif							// MultiExch.cc
