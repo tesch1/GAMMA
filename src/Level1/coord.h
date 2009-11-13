@@ -458,6 +458,15 @@ MSVCDLL friend matrix Rmx(double alpha, double beta, double gamma);
 	//			       Rmx3(gamma)*Rmx2(beta)*Rmx1(alpha)
         ///F_list Rmx		     - Rotation matrix for general rotation
 
+MSVCDLL friend matrix Rmx(coord EA);
+
+	// Input		EA   : Euler angles (radians)
+	// Return		mx   : Rotation matrix
+	// Note			     : Returned matrix should be
+	//			       equivalent to the product
+	//			       Rmx3(gamma)*Rmx2(beta)*Rmx1(alpha)
+        ///F_list Rmx		     - Rotation matrix for general rotation
+
 
 // ********************** Rotation of a Coordinate ****************************
 

@@ -45,7 +45,7 @@
 // for the benefit of following functions.
 class spin_T;
 
-// Added funtion declarations to augment friend declartions
+// Added function declarations to augment friend declartions
 // that are included in the class.
 
 MSVCDLL spin_T T1(const spin_sys &sys, int spin);
