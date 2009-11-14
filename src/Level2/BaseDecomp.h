@@ -325,6 +325,7 @@ MSVCDLL std::ostream& printOps(std::ostream& ostr, bool bs=false) const;
 MSVCDLL std::ostream& print(std::ostream& ostr, const gen_op& Op);
 };
 
+extern void PB_dec(const spin_sys &, const gen_op &);
 
 // ____________________________________________________________________________
 // S                         PyGAMMA Code (Non-Member)

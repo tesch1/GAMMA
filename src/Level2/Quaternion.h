@@ -401,6 +401,11 @@ MSVCDLL static bool ValidRMx(const matrix& R, bool msgs=true);
 
   };
 
+extern  quatern composite(const EAngles&,  const EAngles&);
+extern  quatern composite(const coord&,  const coord&);
+extern  quatern composite(const quatern&, const quatern&);	// Deprecated
+extern  quatern composite(const matrix&,  const quatern&);	// Deprecated
+
 // ____________________________________________________________________________
 // S                         PyGAMMA Code (Non-Member)
 // ____________________________________________________________________________

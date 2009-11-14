@@ -814,6 +814,9 @@ std::string PyPrint();
 
   };
 
+extern TTable1D sum(const TTable1D&, const TTable1D&, double);
+extern void offset(matrix&mx, double, double, int);
+
 // _________________________________________________________________________
 // G                         PyGAMMA Code (Non-Member)
 // _________________________________________________________________________
