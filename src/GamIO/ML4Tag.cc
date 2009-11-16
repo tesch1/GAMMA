@@ -30,7 +30,7 @@
 ** header. Thus, in older MATLAB nomeclature, the MAT version 4 tag is  **
 ** equivalent to a header - where each data element has its own header. **
 **                                                                      **
-** MAT version 4 tags/headers each contain 20 bytes, 5 long (4 byte)    **
+** MAT version 4 tags/headers each contain 20 bytes, 5 int32_t (4 byte)    **
 ** integers. The first integer, type, is the only non-obvious value.    **
 ** When taken as an integer of the form MOPT, where M is the value in   **
 ** the thousands place, O the value in the hundreds, etc., the table    **
@@ -118,12 +118,12 @@ volatile void MatLab4Tag::MLT4fatality(int eidx)
 // ____________________________________________________________________________
  
 void MatLab4Tag::MOPT2Type()
-  { type = long(1000*MLM + 100*MLO + 10*MLP + MLT); }
+  { type = int32_t(1000*MLM + 100*MLO + 10*MLP + MLT); }
 
 void MatLab4Tag::Type2MOPT()
   { 
   MLM = (type - type%1000)/1000;
-  long tmpx = type - MLM;
+  int32_t tmpx = type - MLM;
   MLO = (tmpx - tmpx%100)/100;
   tmpx -= MLO; 
   MLP = (tmpx - tmpx%10)/10;
@@ -301,11 +301,11 @@ int MatLab4Tag::Bytes() const { return mrows*ncols*ElemBytes(); }
 
 int MatLab4Tag::write(std::fstream& fp) const                                       
   {
-  fp.write((char*)&type,   sizeof(long));	// Write in computer type
-  fp.write((char*)&mrows,  sizeof(long));	// Write in array rows
-  fp.write((char*)&ncols,  sizeof(long));	// Write in array columns
-  fp.write((char*)&cmplxf, sizeof(long));	// Write in real/complex flag
-  fp.write((char*)&nlen,   sizeof(long));	// Write in name length
+  fp.write((char*)&type,   sizeof(int32_t));	// Write in computer type
+  fp.write((char*)&mrows,  sizeof(int32_t));	// Write in array rows
+  fp.write((char*)&ncols,  sizeof(int32_t));	// Write in array columns
+  fp.write((char*)&cmplxf, sizeof(int32_t));	// Write in real/complex flag
+  fp.write((char*)&nlen,   sizeof(int32_t));	// Write in name length
   return 1;
   }
 
@@ -335,11 +335,11 @@ int MatLab4Tag::Size() const { return 20; }	// Bytes used in a file
  
 int MatLab4Tag::read(std::fstream& fp, int warn)
   {
-  fp.read((char*)&type,   sizeof(long));	// Read in computer type
-  fp.read((char*)&mrows,  sizeof(long));	// Read in array rows
-  fp.read((char*)&ncols,  sizeof(long));	// Read in array columns
-  fp.read((char*)&cmplxf, sizeof(long));	// Read in real/complex flag
-  fp.read((char*)&nlen,   sizeof(long));	// Read in name length
+  fp.read((char*)&type,   sizeof(int32_t));	// Read in computer type
+  fp.read((char*)&mrows,  sizeof(int32_t));	// Read in array rows
+  fp.read((char*)&ncols,  sizeof(int32_t));	// Read in array columns
+  fp.read((char*)&cmplxf, sizeof(int32_t));	// Read in real/complex flag
+  fp.read((char*)&nlen,   sizeof(int32_t));	// Read in name length
   if(!fp)
     {
     MLT4error(1, 1);				// Problems with filestream

@@ -31,7 +31,7 @@
 ** header. Thus, in older MATLAB nomeclature, the MAT version 4 tag is  **
 ** equivalent to a header - where each data element has its own header. **
 **								 	**
-** MAT version 4 tags/headers each contain 20 bytes, 5 long (4 byte)	**
+** MAT version 4 tags/headers each contain 20 bytes, 5 int32_t (4 byte)	**
 ** integers. The first integer, type, is the only non-obvious value.	**
 ** When taken as an integer of the form MOPT, where M is the value in 	**
 ** the thousands place, O the value in the hundreds, etc., the table	**
@@ -60,11 +60,11 @@
 
 class MatLab4Tag
   {
-  long type;                                    // Computer type
-  long mrows;                                   // Number of data rows
-  long ncols;                                   // Number of data columns
-  long cmplxf;                                  // Flag complex (0=real, 1=cmp)
-  long nlen;                                    // Length of name for data
+  int32_t type;                                    // Computer type
+  int32_t mrows;                                   // Number of data rows
+  int32_t ncols;                                   // Number of data columns
+  int32_t cmplxf;                                  // Flag complex (0=real, 1=cmp)
+  int32_t nlen;                                    // Length of name for data
   int MLM; 					// Endian flag
   int MLO;					// Extra flag
   int MLP;					// Data precision flag
