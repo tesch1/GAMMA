@@ -31,6 +31,10 @@
 #    pragma interface			// This is the interface 
 #  endif
 
+#ifdef _MSC_VER
+#include "ms_stdint.h"
+#endif
+
 #include <string>				// Include libstdc++ strings
 #include <iostream>				// Know ios stuff
 

@@ -53,6 +53,10 @@
 #    pragma interface				// This is the interface 
 #  endif
 
+#ifdef _MSC_VER
+#include "ms_stdint.h"
+#endif
+
 #include <GamGen.h>				// Know MSVCDLL (__declspec)
 #include <string>				// Know libstdc++ strings
 #include <fstream>				// Know libstdc++ filestreams
