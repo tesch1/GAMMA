@@ -743,7 +743,7 @@ super_op Xm(const multi_sys& msys)
   super_op LOp;
 
   int nc = msys.NComps();			// Number of sub-spaces
-  int cmp, ist, ls=0;				// Indicies for sub-spaces
+  int cmp, ls=0;				// Indicies for sub-spaces
   matrix I;
   matrix *mxc, *bsc;					// Array Liouv. sub-matrices
   int *ncd;					// Array Liouv. sub-space dims
