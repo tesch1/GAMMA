@@ -308,13 +308,13 @@ XWinSpec::XWinSpec(const string& basename, const row_vector& data)
   sfpre.seekp(0);			// Set things at real file start
   sfpim.seekp(0);			// Set things at imag file start
   int npts   = sdata.size();		// Number of points (SI)
-  long rval, ival;			// For point reals,imags
+  int32_t rval, ival;			// For point reals,imags
   for(int i=0; i<npts; i++)		// Loop over all points
     {
-    rval = long(data.getRe(i));		//   Real point as int
-    ival = long(data.getIm(i));		//   Imag point as int
-    sfpre.write((char*)&rval, sizeof(long));	//   Write real point
-    sfpim.write((char*)&ival, sizeof(long));	//   Write imag point
+    rval = int32_t(data.getRe(i));		//   Real point as int
+    ival = int32_t(data.getIm(i));		//   Imag point as int
+    sfpre.write((char*)&rval, sizeof(int32_t));	//   Write real point
+    sfpim.write((char*)&ival, sizeof(int32_t));	//   Write imag point
     }
   AddPadding();				// Pad to end of block
   sfpre.seekp(0,ios::end);		// Go to the end of the file
@@ -352,11 +352,11 @@ XWinSpec::XWinSpec(const string& name, int SI, bool byteord)
   int swapon = 0;			// Assume no byte swapping
   if(sbigend != sbyteordin) swapon = 1;	// Need to swap if mismatch
   sdata = row_vector(stotpts/2);	// Array for spectrum data
-  long ptre, ptim;			// These will be input values
+  int32_t ptre, ptim;			// These will be input values
   for(int i=0; i<stotpts/2; i++)	// Loop over spectrum points
     {  
-    sfpre.read((char*)&ptre,sizeof(long)); 	//   Read a (real) point
-    sfpim.read((char*)&ptim,sizeof(long)); 	//   Read a (imag) point
+    sfpre.read((char*)&ptre,sizeof(int32_t)); 	//   Read a (real) point
+    sfpim.read((char*)&ptim,sizeof(int32_t)); 	//   Read a (imag) point
     if(swapon) {Swap(ptre); Swap(ptim);}//   Byte swap if needed
     sdata.put(complex(ptre,ptim), i);	//   Store point
     }  
@@ -502,11 +502,11 @@ bool XWinSpec::read(const string& name, bool byteord, int SI, int warn)
   int swapon = 0;			// Assume no byte swapping
   if(sbigend != sbyteordin) swapon = 1;	// Need to swap if mismatch
   sdata = row_vector(stotpts);		// Array for spectrum data
-  long ptre, ptim;			// These will be input values
+  int32_t ptre, ptim;			// These will be input values
   for(int i=0; i<stotpts; i++)		// Loop over spectrum points
     {  
-    sfpre.read((char*)&ptre,sizeof(long)); 	//   Read a (real) point
-    sfpim.read((char*)&ptim,sizeof(long)); 	//   Read a (imag) point
+    sfpre.read((char*)&ptre,sizeof(int32_t)); 	//   Read a (real) point
+    sfpim.read((char*)&ptim,sizeof(int32_t)); 	//   Read a (imag) point
     if(swapon) {Swap(ptre); Swap(ptim);}//   Byte swap if needed
     sdata.put(complex(ptre,ptim),i);	//   Store point
     }  
@@ -563,13 +563,13 @@ int XWinSpec::write(const string& name, const row_vector& vx, int warn)
   SetPadding();				// Set padding for data boundary
   sfpre.seekp(0);			// Set things at file start
   int npts   = sdata.size();		// Number of points (SI)
-  long rval, ival;			// For point reals,imags
+  int32_t rval, ival;			// For point reals,imags
   for(int i=0; i<npts; i++)		// Loop over all points
     {
-    rval = long(vx.getRe(i));		//   Real point as int
-    ival = long(vx.getIm(i));		//   Imag point as int
-    sfpre.write((char*)&rval, sizeof(long));	//   Write real point
-    sfpim.write((char*)&ival, sizeof(long));	//   Write imag point
+    rval = int32_t(vx.getRe(i));		//   Real point as int
+    ival = int32_t(vx.getIm(i));		//   Imag point as int
+    sfpre.write((char*)&rval, sizeof(int32_t));	//   Write real point
+    sfpim.write((char*)&ival, sizeof(int32_t));	//   Write imag point
     }
   AddPadding();				// Pad to end of block
   sfpre.seekp(0,ios::end);		// Go to the end of the file

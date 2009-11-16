@@ -403,11 +403,11 @@ row_vector XWinSer::readFID(int idx)
   int swappts = 0;				// Assume byte no swapping
   if(fbigend != fbyteordin) swappts = 1;	// Need to swap if mismatch
   row_vector data(ftotpts/2);			// Array for fid data
-  long ptre, ptim;				// These will be input values
+  int32_t ptre, ptim;				// These will be input values
   for(int i=0; i<ftotpts/2; i++)		// Loop over fid points
     {  
-    ffp.read((char*)&ptre,sizeof(long)); 	// Read a (real) point
-    ffp.read((char*)&ptim,sizeof(long)); 	// Read a (imag) point
+    ffp.read((char*)&ptre,sizeof(int32_t)); 	// Read a (real) point
+    ffp.read((char*)&ptim,sizeof(int32_t)); 	// Read a (imag) point
     if(swappts) { Swap(ptre); Swap(ptim); }	// Byte swap if needed
     data.put(complex(ptre,ptim), i);		// Store point
 // sosi - check for end of file here & issue warning
@@ -432,14 +432,14 @@ matrix XWinSer::readFIDs(int idx, int NB)
   matrix data(NB, npts);			// Array for fid data
   int blocksize = 4*ftotpts+fpadding;		// This is block size in bytes
   ffp.seekp(idx*blocksize, std::ios::beg);		// Skip idx blocks in file
-  long ptre, ptim;				// These will be input values
+  int32_t ptre, ptim;				// These will be input values
   int i,j;					// Element indices
   for(i=0; i<NB; i++)				// Loop over fid blocks
     {
     for(j=0; j<npts; j++)			// Loop over fid points
       {  
-      ffp.read((char*)&ptre,sizeof(long)); 	// Read a (real) point
-      ffp.read((char*)&ptim,sizeof(long)); 	// Read a (imag) point
+      ffp.read((char*)&ptre,sizeof(int32_t)); 	// Read a (real) point
+      ffp.read((char*)&ptim,sizeof(int32_t)); 	// Read a (imag) point
       if(swappts) { Swap(ptre); Swap(ptim); }	// Byte swap if needed
       data.put(complex(ptre,ptim), i,j);	// Store point
       }  
@@ -463,15 +463,15 @@ matrix XWinSer::readSer()
   int nblks = blocks();				// Get number of FIDs
   int npts = ftotpts/2;				// Get number of complex pts
   ffp.seekp(std::ios::beg);				// Go to file beginning
-  long ptre, ptim;				// These will be input values
+  int32_t ptre, ptim;				// These will be input values
   int i,j;					// Looping variables
   matrix data(nblks, npts);			// Array for fid data
   for(i=0; i<nblks; i++)			// Loop over fid blocks
     {
     for(j=0; j<npts; j++)			// Loop over fid points
       {  
-      ffp.read((char*)&ptre,sizeof(long)); 	// Read a (real) point
-      ffp.read((char*)&ptim,sizeof(long)); 	// Read a (imag) point
+      ffp.read((char*)&ptre,sizeof(int32_t)); 	// Read a (real) point
+      ffp.read((char*)&ptim,sizeof(int32_t)); 	// Read a (imag) point
       if(swappts) { Swap(ptre); Swap(ptim); }	// Byte swap if needed
       data.put(complex(ptre,ptim),i,j);		// Store point
       }  
@@ -496,11 +496,11 @@ row_vector XWinSer::readSlice(int idx)
   int blocksize = 4*ftotpts+fpadding;		// This is block size in bytes
   ffp.seekp(8*idx, std::ios::beg);			// Skip idx (complex) points
   row_vector data(nblks);			// Array for fid data
-  long ptre, ptim;				// These will be input values
+  int32_t ptre, ptim;				// These will be input values
   for(int i=0; i<nblks; i++)			// Loop over fid points
     {  
-    ffp.read((char*)&ptre,sizeof(long)); 	// Read a (real) point
-    ffp.read((char*)&ptim,sizeof(long)); 	// Read a (imag) point
+    ffp.read((char*)&ptre,sizeof(int32_t)); 	// Read a (real) point
+    ffp.read((char*)&ptim,sizeof(int32_t)); 	// Read a (imag) point
     if(swappts) { Swap(ptre); Swap(ptim); }	// Byte swap if needed
     data.put(complex(ptre,ptim),i);		// Store point
     ffp.seekp(blocksize-8, std::ios::cur);		// Skip to next block, next pt
@@ -525,13 +525,13 @@ row_vector XWinSer::readSlices(int idx, int NB)
   blocksize -= 4*2*NB;				// Subtract complex pts/block
   ffp.seekp(8*idx, std::ios::beg);			// Skip idx (complex) points
   int i, j;					// Row, column point indices
-  long ptre, ptim;				// These will be input values
+  int32_t ptre, ptim;				// These will be input values
   matrix data(nblks, NB);			// Array for slice data
   for(j=0; j<nblks; j++)			// Loop over fid blocks
     for(i=0; i<NB; i++)				// Loop over (complex) points
       {  
-      ffp.read((char*)&ptre,sizeof(long)); 	// Read a (real) point
-      ffp.read((char*)&ptim,sizeof(long));	// Read a (imag) point
+      ffp.read((char*)&ptre,sizeof(int32_t)); 	// Read a (real) point
+      ffp.read((char*)&ptim,sizeof(int32_t));	// Read a (imag) point
       if(swappts) { Swap(ptre); Swap(ptim); }	// Byte swap if needed
       data.put(complex(ptre,ptim),i,j);		// Store point
       ffp.seekp(blocksize, std::ios::cur);		// Skip to next block, next pt
@@ -577,13 +577,13 @@ int XWinSer::write(const row_vector& vx, int warn)
     return 0;
     }
   int npts = vx.size();				// Number of points (2*TD)
-  long rval, ival;				// For point reals,imags
+  int32_t rval, ival;				// For point reals,imags
   for(int i=0; i<npts; i++)			// Loop over all points
     {
-    rval = long(vx.getRe(i));			//   Real point as int
-    ival = long(vx.getIm(i));			//   Imag point as int
-    ffp.write((char*)&rval, sizeof(long));		//   Write real point
-    ffp.write((char*)&ival, sizeof(long));		//   Write imag point
+    rval = int32_t(vx.getRe(i));			//   Real point as int
+    ival = int32_t(vx.getIm(i));			//   Imag point as int
+    ffp.write((char*)&rval, sizeof(int32_t));		//   Write real point
+    ffp.write((char*)&ival, sizeof(int32_t));		//   Write imag point
     }
   AddPadding();					//   Pad to end of block
   return 1;
@@ -614,15 +614,15 @@ int XWinSer::write(const matrix& data, int warn)
   int npts  = data.cols();			// Number of points (2*TD)
   int nfids = data.rows();			// Number of FIDs
   int i,j;					// Loop indexing variables
-  long rval, ival;				// For point reals,imags
+  int32_t rval, ival;				// For point reals,imags
   for(i=0; i<nfids; i++)			// Loop over FIDs
     {
     for(j=0; j<npts; j++)			// Loop over points
       {
-      rval = long(data.getRe(i,j));		// Real point as int
-      ival = long(data.getIm(i,j));		// Imag point as int
-      ffp.write((char*)&rval, sizeof(long));		// Write real point
-      ffp.write((char*)&ival, sizeof(long));		// Write imag point
+      rval = int32_t(data.getRe(i,j));		// Real point as int
+      ival = int32_t(data.getIm(i,j));		// Imag point as int
+      ffp.write((char*)&rval, sizeof(int32_t));		// Write real point
+      ffp.write((char*)&ival, sizeof(int32_t));		// Write imag point
       }
     AddPadding();				//   Pad to end of block
     }
@@ -664,14 +664,14 @@ std::ostream& XWinSer::print(std::ostream& ostr, int full, int hdr)
     int nblks = blocks();                         // Get number of FIDs
     int npts = ftotpts/2;                         // Get number of complex pts
     ffp.seekp(std::ios::beg);                          // Go to file beginning
-    long ptre, ptim;                              // These will be input values
+    int32_t ptre, ptim;                              // These will be input values
     int i,j;                                      // Looping variables
     for(i=0; i<nblks; i++)                        // Loop over fid blocks
       {
       for(j=0; j<npts; j++)                       // Loop over fid points
         {
-	ffp.read((char*)&ptre,sizeof(long));             // Read a (real) point
-	ffp.read((char*)&ptim,sizeof(long));             // Read a (imag) point
+	ffp.read((char*)&ptre,sizeof(int32_t));             // Read a (real) point
+	ffp.read((char*)&ptim,sizeof(int32_t));             // Read a (imag) point
 	if(swappts) { Swap(ptre); Swap(ptim); }   // Byte swap if needed
 	z = complex(ptre,ptim); 	          // Store point
         n  = norm(z);

@@ -290,13 +290,13 @@ XWinFid::XWinFid(const string& name, const row_vector& data)
   SetPadding();				// Set padding for data boundary
   ffp.seekp(0);				// Set things at file start
   int npts   = fdata.size();		// Number of points (2*TD)
-  long rval, ival;			// For point reals,imags
+  int32_t rval, ival;			// For point reals,imags
   for(int i=0; i<npts; i++)		// Loop over all points
     {
-    rval = long(data.getRe(i));		//   Real point as int
-    ival = long(data.getIm(i));		//   Imag point as int
-    ffp.write((char*)&rval, sizeof(long));	//   Write real point
-    ffp.write((char*)&ival, sizeof(long));	//   Write imag point
+    rval = int32_t(data.getRe(i));		//   Real point as int
+    ival = int32_t(data.getIm(i));		//   Imag point as int
+    ffp.write((char*)&rval, sizeof(int32_t));	//   Write real point
+    ffp.write((char*)&ival, sizeof(int32_t));	//   Write imag point
     }
   AddPadding();				// Pad to end of block
   ffp.seekp(0,ios::end);		// Go to the end of the file
@@ -326,11 +326,11 @@ XWinFid::XWinFid(const string& name, int TD, bool byteord)
   int swapon = 0;			// Assume no byte swapping
   if(fbigend != fbyteordin) swapon = 1;	// Need to swap if mismatch
   fdata = row_vector(ftotpts/2);	// Array for fid data
-  long ptre, ptim;			// These will be input values
+  int32_t ptre, ptim;			// These will be input values
   for(int i=0; i<ftotpts/2; i++)	// Loop over fid points
     {  
-    ffp.read((char*)&ptre,sizeof(long));//   Read a (real) point
-    ffp.read((char*)&ptim,sizeof(long));//   Read a (imag) point
+    ffp.read((char*)&ptre,sizeof(int32_t));//   Read a (real) point
+    ffp.read((char*)&ptim,sizeof(int32_t));//   Read a (imag) point
     if(swapon) {Swap(ptre); Swap(ptim);}//   Byte swap if needed
     fdata.put(complex(ptre,ptim), i);	//   Store point
     }  
@@ -438,18 +438,18 @@ bool XWinFid::read(const string& name, bool byteord, int TD, int warn)
   ffsize = ffp.tellp();			// See how many bytes are in the file
   ffp.seekp(0);				// Set things back to the start
   if(TD>0) ftotpts= TD;			// Set points per fid (re + im)
-  else     ftotpts=ffsize/sizeof(long);	// Set points per fid (re + im)
+  else     ftotpts=ffsize/sizeof(int32_t);	// Set points per fid (re + im)
   SetPadding();				// Set any padding for data boundary
   if(!CheckSize(1))			// Insure file size O.K. if open
     XWinFidfatality(46);		// for writing, TD too large else
   int swapon = 0;			// Assume no byte swapping
   if(fbigend != fbyteordin) swapon = 1;	// Need to swap if mismatch
   fdata = row_vector(ftotpts/2);	// Array for fid data
-  long ptre, ptim;			// These will be input values
+  int32_t ptre, ptim;			// These will be input values
   for(int i=0; i<ftotpts/2; i++)	// Loop over fid points
     {  
-    ffp.read((char*)&ptre,sizeof(long));//   Read a (real) point
-    ffp.read((char*)&ptim,sizeof(long));//   Read a (imag) point
+    ffp.read((char*)&ptre,sizeof(int32_t));//   Read a (real) point
+    ffp.read((char*)&ptim,sizeof(int32_t));//   Read a (imag) point
     if(swapon) {Swap(ptre); Swap(ptim);}//   Byte swap if needed
     fdata.put(complex(ptre,ptim),i);	//   Store point
     }  
@@ -493,13 +493,13 @@ int XWinFid::write(const string& name, const row_vector& vx, int warn)
   SetPadding();				// Set padding for data boundary
   ffp.seekp(0);				// Set things at file start
   int npts   = fdata.size();		// Number of points (2*TD)
-  long rval, ival;			// For point reals,imags
+  int32_t rval, ival;			// For point reals,imags
   for(int i=0; i<npts; i++)		// Loop over all points
     {
-    rval = long(vx.getRe(i));		//   Real point as int
-    ival = long(vx.getIm(i));		//   Imag point as int
-    ffp.write((char*)&rval, sizeof(long));	//   Write real point
-    ffp.write((char*)&ival, sizeof(long));	//   Write imag point
+    rval = int32_t(vx.getRe(i));		//   Real point as int
+    ival = int32_t(vx.getIm(i));		//   Imag point as int
+    ffp.write((char*)&rval, sizeof(int32_t));	//   Write real point
+    ffp.write((char*)&ival, sizeof(int32_t));	//   Write imag point
     }
   AddPadding();				// Pad to end of block
   ffp.seekp(0,ios::end);		// Go to the end of the file
