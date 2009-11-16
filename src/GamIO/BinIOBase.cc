@@ -80,7 +80,7 @@ union intchars
 #endif
 
 
-void Swap(long& i)
+void Swap(int32_t& i)
   {
   longchars tmpj, tmpi;
   tmpi.longval=i;
@@ -137,23 +137,10 @@ bool WeRBigEnd()
    the function below to convert to _Ios_Openmode. If not, the function
    will do nothing but return the same integer!                     */
 
-#if defined(__GNUC__)
-  const std::ios_base::openmode Int2Mode(int mode)
+#if (__GNUG__ == 3 || __GNUG__ ==4 )
+  const std::_Ios_Openmode Int2Mode(int mode)
     {
-    switch(mode)
-      {
-       case 1:   return std::ios_base::in;        break;
-       case 2:   return std::ios_base::out;       break;
-       case 4:   return std::ios_base::ate;       break;
-       case 8:   return std::ios_base::app;       break;
-       case 16:  return std::ios_base::trunc;     break;
-//     case 32:  return std::ios_base::nocreate;  break;
-//     case 64:  return std::ios_base::noreplace; break;
-       case 128: return std::ios_base::binary;    break;
-     }
-//  MLFerror(24, 1);                      // File can't open at end
-//  MLFfatality(25);                      // Must be opened without ios::ate
-    return std::ios_base::in;
+    return(std::_Ios_Openmode(mode));
     }
 #else
   int Int2Mode(int mode) { return mode; }
