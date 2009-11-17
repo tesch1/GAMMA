@@ -70,7 +70,7 @@
    module depends upon too.                                                  */
 
 #include <Basics/GBasicsIF.h>				// All of Basics module
-#include <Matrix/matrixIF.h>				// All of Matrix module
+#include <Matrix/MatrixIF.h>				// All of Matrix module
 #include <HSLib/HSLibIF.h>				// All of HSLib module
 
 // ____________________________________________________________________________

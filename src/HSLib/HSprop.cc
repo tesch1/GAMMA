@@ -287,7 +287,7 @@ HSprop HSprop::Pow(int n) const
   Upow.Ut    = n*Ut;				// Set Upow time as n*Ut
   Upow.Hceil = Hceil;				// Our ceilngs are same
   return Upow;					// Return Upow = U^n
-  } 
+  }
 
 // ______________________________________________________________________
 // F                      PROPAGATOR FUNCTIONS
@@ -410,8 +410,6 @@ bool HSprop::operator== (const HSprop& U) const
 bool HSprop::operator!= (const HSprop& U) const { return !(*this==U); };
 bool HSprop::operator<  (const HSprop& U) const { return (dim()<U.dim()); };
 bool HSprop::operator>  (const HSprop& U) const { return (dim()<U.dim()); };
-
-
 
 // ____________________________________________________________________________
 // X                      COMPLEX OPERATOR FUNCTIONS

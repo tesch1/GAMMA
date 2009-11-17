@@ -637,7 +637,6 @@ floq_op exp(const floq_op& FOp)
   }
 
 
-/*
 floq_op floq_op::exp()
 
         // Input                FlOp    : Floquet operator (*this)
@@ -649,10 +648,10 @@ floq_op floq_op::exp()
 
   {
   floq_op ExpFOp(N, hs, Om);	// Allocate return operator
-  ExpFOp gen_op::.gen_op::exp();
+  ExpFOp=*this;
+  ExpFOp.gen_op::operator= (ExpFOp.gen_op::exp());	// Set exponential array
   return ExpFOp;
   }
-*/
 
 
 floq_op prop(floq_op& FH, double time)

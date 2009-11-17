@@ -262,6 +262,11 @@ MSVCDLL friend floq_op exp(const floq_op& Op1);
 	//			       Op = exp(Op1)
         // Note			     : Computed in EBR of Op1
 
+MSVCDLL floq_op exp();
+
+        // Input                FlOp    : Floquet operator (*this)
+        // Return               ExpFlOp : Exponential of Op1
+        //                                   Op = exp(Op1)
 
 MSVCDLL friend floq_op prop(floq_op& FLOQHAM, double time);
  
