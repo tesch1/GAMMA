@@ -1072,6 +1072,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\ms_stdint.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\PyGammaIF.h"
 				>
 			</File>

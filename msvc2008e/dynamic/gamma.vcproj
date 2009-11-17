@@ -1093,6 +1093,10 @@
 				RelativePath="..\..\src\GamGen.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\src\ms_stdint.h"
+				>
+			</File>
 			<Filter
 				Name="Basics Hdr"
 				>
