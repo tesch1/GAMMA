@@ -180,10 +180,10 @@ int MatLab5AN::write(std::fstream& fp, const std::string& aname) const
     }
   else						// If name longer than 4 chars
     {						// write normal sub-element
-    long TB = 1;				// MATLAB data type miDOUBLE
-    fp.write((char*)&TB, sizeof(long));		// Output the data type  (TAG)
+    int32_t TB = 1;				// MATLAB data type miDOUBLE
+    fp.write((char*)&TB, sizeof(int32_t));		// Output the data type  (TAG)
     TB = len;					// Set number of bytes
-    fp.write((char*)&TB, sizeof(long));		// Output # of characters(TAG)
+    fp.write((char*)&TB, sizeof(int32_t));		// Output # of characters(TAG)
     }						// (assumes 1 char = 1 byte)
   char c;
   int i;

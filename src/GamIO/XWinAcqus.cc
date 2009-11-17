@@ -190,7 +190,7 @@ int    XWinAcqus::AQ_mod()    const { return _AQ_mod;           }
 double XWinAcqus::BF1()       const { return _BF[0];            }
 double XWinAcqus::BF2()       const { return _BF[1];            }
 int    XWinAcqus::BYTORDA()   const { return _BYTORDA           }
-int    XWinAcqus::DS()        const { return _DS;               } 
+int    XWinAcqus::DSc()        const { return _DSc;               } 
 string XWinAcqus::EXP()       const { return _EXP;              } 
 double XWinAcqus::IN(int i)   const { return _IN[i];            }
 string XWinAcqus::NAME()      const { return _NAME;             }
@@ -213,7 +213,7 @@ int    XWinAcqus::TD()        const { return _TD;               }
 void XWinAcqus::field(double Bo)          { _Bo      = Bo;          }
 void XWinAcqus::AQ_mod(int aqmo)          { _AQ_mod  = aqmo;        }   
 int  XWinAcqus::D(int i, double t, int w) { return SetDelay(i,t,w); }
-void XWinAcqus::DS(int ds)                { _DS      = ds;          }   
+void XWinAcqus::DSc(int ds)                { _DSc      = ds;          }   
 void XWinAcqus::EXP(const string& exp)    { _EXP     = exp;         }   
 void XWinAcqus::NAME(const string& nm)    { _NAME    = fulldir+nm;  }
 void XWinAcqus::NS(int ns)                { _NS      = ns;          }   
@@ -323,13 +323,13 @@ ostream& XWinAcqus::dpa(ostream& ostr) const
   bru(ostr, "Date_",    static_cast<long>(_DATE),         "",        0);
   bru(ostr, "Time",     "NOCH NICHT",         "",                    1);
 // int tf = pset.getString("Time",sval2);
-//  bru(ostr, "Time",     _TIME,         "",                         1);
+//  bru(ostr, "Time",     _TIME,         "",                           1);
   bru(ostr, "PULPROG",  _PULPROG,      "",                           0);
   bru(ostr, "AQ_mod",   AQ_modS(),     "",                           1);
   bru(ostr, "TD",       TD(),          "",                           0);
   bru(ostr, "PARMODE",  PARMODES(),    "",                           1);
   bru(ostr, "NS",       _NS,           "",                           0);
-  bru(ostr, "DS",       _DS,           "",                           1);
+  bru(ostr, "DS",       _DSc,           "",                           1);
   bru(ostr, "D",        "** Array **", "sec",                        0);
   bru(ostr, "P",        "** Array **", "usec",                       1);
   bru(ostr, "SW",       _SW,           "ppm",    bruform(_SW,4),     0);

@@ -176,7 +176,7 @@ int    AQ_mod(int d=0)     const;	// Acquisition mode
 double BF1(int d=0)        const;	// Base Spectrometer freq.
 double BF2(int d=0)        const;	// Base Spectrometer freq.
 int    BYTORDA(int d=0)    const;	// Binary byte order
-int    DS(int d=0)         const;	// Number of dummy scans
+int    DSc(int d=0)         const;	// Number of dummy scans
 std::string EXP(int d=0)        const;	// Experiment name
 double XW_IN(int i,int d=0)   const;	// Dwell time
 std::string NAME(int d=0)       const;	// Full File Name
@@ -242,7 +242,7 @@ void AQ_mod(int aqmo, int d=0);		// Acquisiiton mode
 //void BF2(double bf, int d=0);		// 2nd/1st channel Omega
 //void BYTORDA(int bo, int d=0);	// Bin. byte order <=== arch
 int  D(int idx, double tsec, int d=0, int warn=2);
-void DS(int ds, int d=0);		// Dummy scans
+void DSc(int ds, int d=0);		// Dummy scans
 void EXP(const std::string& exp, int d=0);	// Experiment name
 void XW_IN(int i, double in, int d=0);	// Delay increments
 void O1(double of, int d=0);		// 1st/2nd channel offset

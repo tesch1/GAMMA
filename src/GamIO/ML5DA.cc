@@ -168,11 +168,11 @@ int MatLab5DA::Dim(int i) const
 int MatLab5DA::write(std::fstream& fp) const
   {
   int TF = MLTag.write(fp);			// Write the Tag (uncompressed)
-  long LI;					// Use long integer for output
+  int32_t LI;					// Use long integer for output
   for(int i=0; i<ND; i++)			// Now write out all the array
     {						// dimensions as long integers
     LI = Sizes[i];
-    fp.write((char*)&LI, sizeof(long));
+    fp.write((char*)&LI, sizeof(int32_t));
     }
   return TF;
   }
@@ -180,14 +180,14 @@ int MatLab5DA::write(std::fstream& fp) const
 
 int MatLab5DA::write(std::fstream& fp, const matrix& mx) const
   {
-  long TB = 5;                                  // MATLAB data type miDOUBLE
-  fp.write((char*)&TB, sizeof(long));                  // Output the data type  (TAG)
-  TB = 2*sizeof(long);				// Number of bytes to output
-  fp.write((char*)&TB, sizeof(long));                  // Output the # of bytes (TAG)
+  int32_t TB = 5;                                  // MATLAB data type miDOUBLE
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the data type  (TAG)
+  TB = 2*sizeof(int32_t);				// Number of bytes to output
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the # of bytes (TAG)
   TB = mx.rows();				// The 1st mx dimension
-  fp.write((char*)&TB, sizeof(long));                  // Output the 1st mx dimension
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the 1st mx dimension
   TB = mx.cols();				// The 2nd mx dimension
-  fp.write((char*)&TB, sizeof(long));                  // Output the 2nd mx dimension
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the 2nd mx dimension
   return 1;
   }
 
@@ -195,14 +195,14 @@ int MatLab5DA::write(std::fstream& fp, const matrix& mx) const
 int MatLab5DA::write(std::fstream& fp, const row_vector& rv) const
   {
   MLTag.write(fp);                              // First write the tag
-  long TB = 5;                                  // MATLAB data type miDOUBLE
-  fp.write((char*)&TB, sizeof(long));                  // Output the data type  (TAG)
-  TB = 2*sizeof(long);				// Number of bytes to output
-  fp.write((char*)&TB, sizeof(long));                  // Output the # of bytes (TAG)
+  int32_t TB = 5;                                  // MATLAB data type miDOUBLE
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the data type  (TAG)
+  TB = 2*sizeof(int32_t);				// Number of bytes to output
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the # of bytes (TAG)
   TB = 1;					// The vector "row" dimension
-  fp.write((char*)&TB, sizeof(long));                  // Output the row dimension
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the row dimension
   TB = rv.size();				// The vector "column" dimen.
-  fp.write((char*)&TB, sizeof(long));                  // Output the vector size
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the vector size
   return 1;
   }
 
@@ -210,14 +210,14 @@ int MatLab5DA::write(std::fstream& fp, const row_vector& rv) const
 int MatLab5DA::write(std::fstream& fp, const col_vector& cv) const
   {
   MLTag.write(fp);                              // First write the tag
-  long TB = 5;                                  // MATLAB data type miDOUBLE
-  fp.write((char*)&TB, sizeof(long));                  // Output the data type  (TAG)
-  TB = 2*sizeof(long);				// Number of bytes to output
-  fp.write((char*)&TB, sizeof(long));                  // Output the # of bytes (TAG)
+  int32_t TB = 5;                                  // MATLAB data type miDOUBLE
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the data type  (TAG)
+  TB = 2*sizeof(int32_t);				// Number of bytes to output
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the # of bytes (TAG)
   TB = cv.size();				// The vector "row" dimension
-  fp.write((char*)&TB, sizeof(long));                  // Output the vector size
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the vector size
   TB = 1;					// The vector "column" dimen.
-  fp.write((char*)&TB, sizeof(long));                  // Output the col dimension
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the col dimension
   return 1;
   }
 
@@ -225,7 +225,7 @@ int MatLab5DA::write(std::fstream& fp, const col_vector& cv) const
 /* These are the functions which will return the number of bytes that are 
    written upon output this sub-element in MATLAB ".mat" binary format, V5   */ 
  
-int MatLab5DA::Size(const matrix& mx) const { return 4*sizeof(long); }
+int MatLab5DA::Size(const matrix& mx) const { return 4*sizeof(int32_t); }
 
 
 // ____________________________________________________________________________

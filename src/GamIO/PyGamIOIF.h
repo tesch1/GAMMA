@@ -53,7 +53,7 @@
 
 /* Note that because the boost.python headers include libstdc++ class complex
    (the header <complex>), we have problems because this supercedes the class
-   complex defined in GAMMA (header <Matrix/complex.h> in <matrixIF.h>). This
+   complex defined in GAMMA (header <Matrix/complex.h> in <MatrixIF.h>). This
    will produce many many errors with some compilers that cannot figure out
    the difference. The only way around this must be to use a namespace. All of
    the boost code properly uses std::complex for all complex declarations!

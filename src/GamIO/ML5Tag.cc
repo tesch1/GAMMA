@@ -317,10 +317,10 @@ int MatLab5Tag::write(std::fstream& fp) const
   {
   if(!Compressed)				// Output format is simple if
     {						// the tag isn't compressed.
-    long LI = DType;				// Two long integers (8 bytes),
-    fp.write((char*)&LI, sizeof(long));		// data type followed by the
+    int32_t LI = DType;				// Two int32_t integers (8 bytes),
+    fp.write((char*)&LI, sizeof(int32_t));		// data type followed by the
     LI = NBytes;				// size of data in bytes
-    fp.write((char*)&LI, sizeof(long));
+    fp.write((char*)&LI, sizeof(int32_t));
     }
   else						// If the tag is compressed
     {						// we just write two short

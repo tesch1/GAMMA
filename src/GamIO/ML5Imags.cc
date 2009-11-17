@@ -140,10 +140,10 @@ MatLab5Im::~MatLab5Im() { }
   
 int MatLab5Im::write(std::fstream& fp, const matrix& mx) const
   {
-  long TB = 9;                                  // MATLAB data type miDOUBLE
-  fp.write((char*)&TB, sizeof(long));                  // Output the data type  (TAG)
+  int32_t TB = 9;                                  // MATLAB data type miDOUBLE
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the data type  (TAG)
   TB = mx.rows()*mx.cols()*sizeof(double);      // Number of bytes to output
-  fp.write((char*)&TB, sizeof(long));                  // Output the # of bytes (TAG)
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the # of bytes (TAG)
   int i,j;
   double d;
   for(j=0; j<mx.cols(); j++)                    // Output the imag elements of
@@ -158,10 +158,10 @@ int MatLab5Im::write(std::fstream& fp, const matrix& mx) const
   
 int MatLab5Im::write(std::fstream& fp, const row_vector& rv) const                      
   {
-  long TB = 9;                                  // MATLAB data type miDOUBLE
-  fp.write((char*)&TB, sizeof(long));                  // Output the data type  (TAG)
+  int32_t TB = 9;                                  // MATLAB data type miDOUBLE
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the data type  (TAG)
   TB = rv.size()*sizeof(double);                // Number of bytes to output
-  fp.write((char*)&TB, sizeof(long));                  // Output the # of bytes (TAG)
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the # of bytes (TAG)
   double d;
   for(int i=0; i<rv.size(); i++)		// Output the vector elements
     {
@@ -174,10 +174,10 @@ int MatLab5Im::write(std::fstream& fp, const row_vector& rv) const
   
 int MatLab5Im::write(std::fstream& fp, const col_vector& cv) const           
   {
-  long TB = 9;                                  // MATLAB data type miDOUBLE
-  fp.write((char*)&TB, sizeof(long));                  // Output the data type  (TAG)
+  int32_t TB = 9;                                  // MATLAB data type miDOUBLE
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the data type  (TAG)
   TB = cv.size()*sizeof(double);                // Number of bytes to output
-  fp.write((char*)&TB, sizeof(long));                  // Output the # of bytes (TAG)
+  fp.write((char*)&TB, sizeof(int32_t));                  // Output the # of bytes (TAG)
   double d;
   for(int i=0; i<cv.size(); i++)		// Output the vector elements
     {

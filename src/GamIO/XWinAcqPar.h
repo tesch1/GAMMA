@@ -95,7 +95,7 @@ class XWinAcqPar: public XWinPSet
   double       _DPOFFS[8];
   int          _DQDMODE;
   int          _DR;	
-  int          _DS;		// Number of dummy scans
+  int          _DSc;		// Number of dummy scans
   std::string       _DSLIST;	
   int          _DSPFIRM;
   int          _DSPFVS;
@@ -308,7 +308,7 @@ int    AQ_mod()   const;	// Acquisition mode
 double BF1()      const;	// Base Spectrometer freq.
 double BF2()      const;	// Base Spectrometer freq.
 int    BYTORDA()  const;	// Binary byte order
-int    DS()       const;	// Number of dummy scans
+int    DSc()       const;	// Number of dummy scans
 double DW()       const;	// The dwell time (sec)
 std::string EXP()      const;	// Experiment name
 double FIDRES()   const;	// The FID resolution (Hz)
@@ -340,7 +340,7 @@ void BYTORDA(int bo);
 int  D(int idx, double tsec, int warn=2);
 void DECBNUC(const std::string& I);
 void DECNUC(const std::string& I);
-void DS(int ds);
+void DSc(int ds);
 void EXP(const std::string& exp);
 // sosi GCC 3.2 has trouble with IN, must be system defined.
 // switched name to XW_IN

@@ -461,8 +461,8 @@ double XWin2D::BF2(int d)        const        // Base Spectrometer freq.
    { if(d==1) return Acq2s.BF2();     return Acqs.BF2(); }
 int    XWin2D::BYTORDA(int d)    const        // Binary byte order
    { if(d==1) return Acq2s.BYTORDA(); return Acqs.BYTORDA(); }
-int    XWin2D::DS(int d)         const        // Number of dummy scans
-   { if(d==1) return Acq2s.DS();      return Acqs.DS(); }
+int    XWin2D::DSc(int d)         const        // Number of dummy scans
+   { if(d==1) return Acq2s.DSc();      return Acqs.DSc(); }
 string XWin2D::EXP(int d)        const        // Experiment name
    { if(d==1) return Acq2s.EXP();     return Acqs.EXP(); }
 double XWin2D::XW_IN(int i,int d)   const        // Dwell time
@@ -576,8 +576,8 @@ void XWin2D::BYTORDA(int bo, int d)			// Not allowed
 */
 int  XWin2D::D(int idx, double tsec, int d, int warn)
   { return Acq2s.D(idx,tsec,warn); return Acqs.D(idx,tsec,warn); }
-void XWin2D::DS(int ds, int d)    
-   { if(d==1) Acq2s.DS(ds); else Acqs.DS(ds); }
+void XWin2D::DSc(int ds, int d)    
+   { if(d==1) Acq2s.DSc(ds); else Acqs.DSc(ds); }
 void XWin2D::EXP(const string& exp, int d)
   { Acq2s.EXP(exp); Acqs.EXP(exp); }
 void XWin2D::XW_IN(int channel, double in, int d) 

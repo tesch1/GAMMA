@@ -152,12 +152,12 @@ void XWinAcqPar::SetDefaults(const string& fname)
   cwd = string(_getcwd(NULL, 128));
 #else
   const struct tm * ptr = localtime(&longtime);
-  _DAY  = asctime(ptr); 
+  _DAY      = asctime(ptr); 
   string cwd;
   cwd = string(getcwd(NULL, 128));
 #endif
   
-	_NAME = cwd + "/" + fname; 		// Full file name
+  _NAME = cwd + "/" + fname; 		// Full file name
   _AQSEQ    = 0;			// Acquire sequence in 2D/3D
   _AQ_mod   = 1;			// Acquisiton mode = qsim
   _AUNM     = "";			// Acquisiton program
@@ -193,7 +193,7 @@ void XWinAcqPar::SetDefaults(const string& fname)
 //_DPOFFS				// Values are in loop below
   _DQDMODE = 0;				// 
   _DR      = 16;			// 
-  _DS      = 0;				// Number of dummy scans
+  _DSc      = 0;				// Number of dummy scans
   _DSLIST  = "SSSSSSSSSSSSSSS";		// 
   _DSPFIRM = 0;				// 
   _DSPFVS  = 0;				// 
@@ -453,7 +453,7 @@ void XWinAcqPar::Copy(const XWinAcqPar& XWAP)
 //_DPOFFS				// Values are in loop below
   _DQDMODE  = XWAP._DQDMODE;
   _DR       = XWAP._DR;
-  _DS       = XWAP._DS;			// Copy dummy scans
+  _DSc       = XWAP._DSc;			// Copy dummy scans
   _DSLIST   = XWAP._DSLIST;
   _DSPFIRM  = XWAP._DSPFIRM;
   _DSPFVS   = XWAP._DSPFVS;
@@ -941,7 +941,7 @@ int    XWinAcqPar::AQ_mod()   const { return _AQ_mod;                     }
 double XWinAcqPar::BF1()      const { return _BF[0];                      }
 double XWinAcqPar::BF2()      const { return _BF[1];                      }
 int    XWinAcqPar::BYTORDA()  const { return _BYTORDA;                    }
-int    XWinAcqPar::DS()       const { return _DS;                         }
+int    XWinAcqPar::DSc()       const { return _DSc;                         }
 double XWinAcqPar::DW()       const { return 1.e6/(2*_SW*_SFO[0]);        }
 string XWinAcqPar::EXP()      const { return _EXP;                        }
 double XWinAcqPar::FIDRES()   const { return _SW*_SFO[0]/_TD;             }
@@ -971,7 +971,7 @@ void XWinAcqPar::BYTORDA(int bo)           { bo?_BYTORDA=1:_BYTORDA=0;    }
 int  XWinAcqPar::D(int i, double t, int w) { return SetDelay(i,t,w);      }
 void XWinAcqPar::DECBNUC(const string& I)  { NUC(2, I);                   }
 void XWinAcqPar::DECNUC(const string& I)   { NUC(1, I);                   }
-void XWinAcqPar::DS(int ds)                { _DS      = ds;               }
+void XWinAcqPar::DSc(int ds)                { _DSc      = ds;               }
 void XWinAcqPar::EXP(const string& exp)    { _EXP     = exp;              }
 void XWinAcqPar::XW_IN(int i, double in)      { _IN[i]   = in;               }
 void XWinAcqPar::O1(double of)             { SetO(0, of);                 }
@@ -1093,7 +1093,7 @@ bool XWinAcqPar::parsePSet(int defs, int warn)
 						// DPOFFS# values Parsed in Loop
   getPar("DQDMODE",  _DQDMODE);			// Try and get this
   getPar("DR",       _DR);			// Try and get this
-  getPar("DS",       _DS);			// Try and get # dummy scans
+  getPar("DS",       _DSc);			// Try and get # dummy scans
   getPar("DSLIST",   _DSLIST);			// Try and get this
   getPar("DSPFIRM",  _DSPFIRM);			// Try and get this
   getPar("DSPFVS",   _DSPFVS);			// Try and get this
@@ -1492,7 +1492,7 @@ int XWinAcqPar::writeAPar(int warn) const
   ofstr << nns << "DQDMODE= " << _DQDMODE << "\n";	// Undocumented
   }
   ofstr << nns << "DR= "      << _DR      << "\n";	// Digitizer resolution
-  ofstr << nns << "DS= "      << _DS      << "\n";	// Number of dummy scans 
+  ofstr << nns << "DS= "      << _DSc      << "\n";	// Number of dummy scans 
   ofstr << nns << "DSLIST= <" << _DSLIST  << ">\n";	// Data set list file
   if(!_PARMODE)						// 0)analog 1)digital 2)homodecoupling digitial
   {
