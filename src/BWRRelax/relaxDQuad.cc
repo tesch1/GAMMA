@@ -38,6 +38,7 @@
 #include <LSLib/sys_dynamic.h>
 #include <Level1/nmr_tensor.h>
 
+using std::cout;
 
 // ______________________________________________________________________
 // ************* Dipole & Quad Cross Relaxation Superoperators ***********
@@ -68,7 +69,12 @@ super_op RDQX(sys_dynamic& sys, gen_op& Ho, int level)
    double taus[5];				// Get 5 taus for spectral densities
    taust(taus, sys.taus());
    double chi = chit(sys.taus());		// Get the system chi value
-   double w[hs];				// Set up for system energy levels (LAB)
+
+   double *w;					// Set up for system energy levels (LAB)
+   w = new double[hs];			//  compiler did not like double w[hs], as hs is not known at compile time,
+
+//   double w[hs];				// Set up for system energy levels (LAB)
+   
    gen_op Holab; 				// these will be in Hertz, ~10**8 in value
    if(abs(level) > 1)				// Needed for higher level computations
      {						// involving spectral density functions
@@ -193,7 +199,12 @@ super_op RDQ(sys_dynamic& sys, gen_op& Ho, int level)
    double taus[5];				// Get 5 taus for spectral densities
    taust(taus, sys.taus());
    double chi = chit(sys.taus());		// Get the system chi value
-   double w[hs];				// Set up for system energy levels (LAB)
+
+   double *w;					// Set up for system energy levels (LAB)
+   w = new double[hs];			//  compiler did not like double w[hs];
+
+// double w[hs];				// Set up for system energy levels (LAB)
+   
    gen_op Holab; 				// these will be in Hertz, ~10**8 in value
    if(abs(level) > 1)				// Needed for higher level computations
      {						// involving spectral density functions
@@ -316,7 +327,12 @@ super_op RQD(sys_dynamic& sys, gen_op& Ho, int level)
    double taus[5];				// Get 5 taus for spectral densities
    taust(taus, sys.taus());
    double chi = chit(sys.taus());		// Get the system chi value
-   double w[hs];				// Set up for system energy levels (LAB)
+
+   double *w;					// Set up for system energy levels (LAB)
+   w = new double[hs];			//  compiler did not like double w[hs];
+
+//   double w[hs];				// Set up for system energy levels (LAB)
+  
    gen_op Holab; 				// these will be in Hertz, ~10**8 in value
    if(abs(level) > 1)				// Needed for higher level computations
      {						// involving spectral density functions
@@ -433,7 +449,12 @@ super_op RQDrf(sys_dynamic& sys, gen_op& Heff, double Wrflab, int level)
    double taus[5];				// Get 5 taus for spectral densities
    taust(taus, sys.taus());
    double chi = chit(sys.taus());		// Get the system chi value
-   double w[hs];				// Set up for system energy levels (LAB)
+
+   double *w;					// Set up for system energy levels (LAB)
+   w = new double[hs];			//  compiler did not like double w[hs];
+
+//   double w[hs];				// Set up for system energy levels (LAB)
+   
    if(abs(level) > 1)				// Needed for higher level computations
      Heff.eigvals(w);
 
