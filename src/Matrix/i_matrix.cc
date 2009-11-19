@@ -1282,8 +1282,12 @@ n_matrix* i_matrix::NMX()
  done upon return.  Since the return here is invariably the same matrix, all
  of this amounts to just incrementing the "this" imx reference count by 2.   */
 
-std::vector<int> i_matrix::BlockDiag(_matrix*    (&BD), _matrix* (&U))
-  { BD = this; U = this; return std::vector<int>(1, rows_); }
+std::vector<int> i_matrix::BlockDiag(_matrix*    (&BD), std::vector<int> &U)
+  { BD = this;
+  int nr = rows_;				// Matrix dimension
+  int i;
+  for(i=0; i<nr; i++) { U.push_back(i); }	// Set both as unpermuted
+  return std::vector<int>(1, rows_); }
 void        i_matrix::HermTriDiag(_matrix* (&HTD), _matrix* (&U))
   { HTD = this; U = this; }
 void        i_matrix::SymTriDiag(_matrix*  (&STD), _matrix* (&U))

@@ -487,7 +487,7 @@ virtual n_matrix* NMX();	// hmx -> nmx (no loss, memory used)
         void             rred(_matrix* (&U),                int newU=0);
         void             tqli(_matrix* (&U), _matrix* (&D), int newU=0);
 virtual void             diag(_matrix* (&D), _matrix* (&U));
-virtual std::vector<int> BlockDiag(_matrix*    (&BD), _matrix* (&U));
+virtual std::vector<int> BlockDiag(_matrix*    (&BD), std::vector<int> &U);
 virtual void             HermTriDiag(_matrix* (&HTD), _matrix* (&U));
 virtual void             SymTriDiag(_matrix*  (&STD), _matrix* (&U));
 virtual void             SymDiag(_matrix*       (&D), _matrix* (&U));

@@ -429,7 +429,7 @@ MSVCDLL        bool operator>  (const complex& z) const;
 
 #ifdef PYGAMMA					// Begin PyGAMMA code block
 
-std::string complex::PyPrint();
+std::string PyPrint();
 
 friend double Re1(const complex& z);
 friend void   Re2(      complex& z, double r);

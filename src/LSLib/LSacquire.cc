@@ -36,8 +36,7 @@
 #include <Matrix/row_vector.h>		// Knowledge of row vectors
 #include <HSLib/GenOp.h>		// Knowledge of operators
 #include <LSLib/SuperOp.h>		// Knowledge of superoperators
-#include <HSLib/HSprop.h>		// Knowledge of nmr evolutions
-
+#include <HSLib/HSprop.h>		// Knowledge of nmr evolutions
 
 // ____________________________________________________________________________
 // A                Generic Liouville Space Acquisition Functions

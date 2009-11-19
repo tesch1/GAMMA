@@ -422,7 +422,7 @@ virtual _matrix* LUinv(int *indx, _matrix* LU);
                                   matrix of _mx eigenvectors respectively 
            Note                 : Just a placeholder, Disallowed             */
  
-virtual std::vector<int> BlockDiag(_matrix*   (&BF),  _matrix* (&U)); 
+virtual std::vector<int> BlockDiag(_matrix*   (&BF),  std::vector<int> &U);
 virtual void             HermTriDiag(_matrix* (&HTD), _matrix* (&U)); 
 virtual void             SymTriDiag(_matrix*  (&STD), _matrix* (&U)); 
 virtual void             SymDiag(_matrix*     (&D),   _matrix* (&U));

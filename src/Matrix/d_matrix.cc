@@ -4,7 +4,7 @@
 **								   	**
 **	Diagonal Matrix                         Implementation		**
 **						   			**
-**	Copyright © 1990, 1991, 1992				   	**
+**	Copyright ï¿½ 1990, 1991, 1992				   	**
 **	Tilo Levante & Scott A. Smith				   	**
 **	Eidgenoessische Technische Hochschule				**
 **	Labor fuer physikalische Chemie				   	**
@@ -1770,12 +1770,14 @@ _matrix* d_matrix::LU(int *indx)
            Note                 : The reference count to dmx must be twice
                                   incremented external by the call origin.   */
 
-std::vector<int> d_matrix::BlockDiag(_matrix* (&BF), _matrix* (&U))
-  {
-  BF = this;
-  U = new i_matrix(cols_, cols_);
-  return std::vector<int>(1, cols_);
-  }
+std::vector<int> d_matrix::BlockDiag(_matrix* (&BF), std::vector<int> &U)
+   {
+   BF = this;
+   int nr = rows_;				// Matrix dimension
+   int i;
+   for(i=0; i<nr; i++) { U.push_back(i); }	// Set both as unpermuted
+   return std::vector<int>(1, cols_);
+   }
 
 void d_matrix::HermTriDiag(_matrix* (&HTD), _matrix* (&U))
   {

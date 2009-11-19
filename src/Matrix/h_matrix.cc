@@ -43,6 +43,7 @@
 #include <fstream>				// Include libstdc++ filestreams
 #include <string>
 #include <cmath>				// Inlcude HUGE_VAL_VAL
+#include <stdlib.h>
 
 // ____________________________________________________________________________
 // i                    CLASS H_MATRIX ERROR HANDLING
@@ -200,17 +201,47 @@ complex h_matrix::get(int i, int j) const
 
 bool h_matrix::put(const complex& z, int i, int j)
   {
-  if(Im(z)!=0 || i!=j) 			// If not real or off-diagonal
-    return false;				// cannot stay Hermitian
-  data[i*cols_-(i*(i-1))/2] = z;	// Set the element
-  return true;				// Return TRUE
+  if(i==j)					// If setting a diagonal
+    {						// it must be real or it
+    if (fabs(Im(z)) > 1e-12) 			// If not real or off-diagonal
+      {
+//
+//JABE, 9-9-2008
+//
+//Previously, this return of a false was used. This can lead to many problems though
+//and now an error message is given and the program will stop
+//
+//    return false;			// cannot stay Hermitian
+//
+      std::cout << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Im(z) << "). Aborting put_h ...\n\n";
+      exit(99);
+      }
+
+    data[i*cols_-(i*(i-1))/2] = z;	// Set the element
+    return true;
+    }
+  else  				// Return False for non-diagonal elements
+    return false;
   }
 
 bool h_matrix::put_h(const complex& z, int i, int j) 
   {
   if(i==j)					// If setting a diagonal
     {						// it must be real or it
-    if(Im(z) != 0) return false; 			// cannot remain Hermitian
+    if (fabs(Im(z)) > 1e-12) 			// If not real or off-diagonal
+      {
+//
+//JABE, 9-9-2008
+//
+//Previously, this return of a false was used. This can lead to many problems though
+//and now an error message is given and the program will stop
+//
+//    return false;			// cannot stay Hermitian
+//
+      std::cout << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Im(z) << "). Aborting put_h ...\n\n";
+      exit(99);
+      }
+
     data[i*cols_-(i*(i-1))/2] = z;
     }
   else if(i<j)					// This for upper triangle
@@ -2592,83 +2623,79 @@ void h_matrix::diag(_matrix* (&D), _matrix* (&U))
 
 // sosi - this is not optimized for h_matrix at all
 
-std::vector<int> h_matrix::BlockDiag(_matrix* (&BD), _matrix* (&U))
+//#include <sys/time.h>
+//#include <sys/resource.h>
+
+std::vector<int> h_matrix::BlockDiag(_matrix* (&BD), std::vector<int> &U)
   {
+//cout << "This is h_matrix block diag\n";
+//struct rusage me;
+//getrusage(0, & me);
+//cout << "block-diag routine: point 01: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//cout.flush();
   int nr = rows_;				// Matrix dimension
   int count = 0;				// Count permutations
   BD = new h_matrix(*this);			// Start with copy
-  U  = new h_matrix(nr,nr,complex0);		// Start with I here
-  h_matrix* Btmp;
-  h_matrix* Utmp;
-  int i,j,j1,j2;				// Row & column indices
-  for(i=0; i<nr; i++) { (*U)(i,i) = complex1; }	// Set both as unpermuted
-  int first0;                                   // First zero off diagonal
-  int j1o = 1;                                  // Last unblocked column
-  for(i=0; i<nr; i++)                           // Loop array rows
-    {
-    first0 = 0;                                 // Know no 0 off diagonals
-    for(j1=j1o; j1<nr && !first0; j1++)         // Loop row (upp. triang. elems)
-      if((*BD).get(i,j1) == complex0)           // and try to find a zero
-         { first0 = j1; j1o=j1; }
-    for(j2=j1+1; first0 && j2<nr; j2++)         // Loop upper triangle elems
-      {                                         // and try to find a non zero
-      if((*BD).get(i,j2) != complex0)		// elements in the row
-        {
-// sosi - need to replace the permute functions with in place ones
-//        or better, just make the swap and permute automatically that way?
-        Btmp = (HPtr)BD->permute(first0, j2);	//   Found one... Permute
-        delete BD;				//   We no longer need this
-        BD = Btmp;				//   Set BD to permute result
-        Utmp = (HPtr)U->swaprows(first0, j2);	//   Also permute the U array
-        delete U;				//   We no longer need this
-        U = Utmp;				//   Set U to swapped result
-        count++;				//   Track we've done something
-        j1o = first0+1;				//   This is lowest column for
-        first0 = 0;				//   next possible permute zero
-        for(j=j1o; j<nr && !first0; j++)        //   Again look for a zero that
-          if((*BD).get(i,j) == complex0)        //   can be swapped into 
-            first0 = j;
-        }
+
+  int i,nze=0,bs=0,t5,t6;
+  for(i=0; i<nr; i++) { U.push_back(i); }	// Set both as unpermuted
+  std::vector<int> blkdims;
+  for(t5=0;t5<nr;++t5)
+  { if(nze==t5)
+      ++nze;
+    for(t6=nze;t6<nr;++t6)
+    { if((*BD).get(t5,t6) != complex0 || (*BD).get(t6,t5) != complex0)
+      { if(t6 != nze)
+        { complex za, zb;
+          int z1;
+	  int t7;
+	  int k1, k2;
+///       getrusage(0, & me);
+///       std::cout << "block-diag routine: before perm: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//	  std::cout << "permuting "<< nze << " and " << t6 << "\n";
+//	  for(k1=0;k1<nr;++k1)
+//	  { for(k2=0;k2<nr;++k2)
+//	       std::cout << (*BD).get(k1,k2) << "  ";
+//	    std::cout << "\n";
+//	  }
+//        std::cout.flush();
+	  for(t7=0;t7<nr;++t7)
+	  { if(t7!=t6 && t7!=nze)
+	    { za=(*BD).get(t7,t6);
+	      zb=(*BD).get(t7,nze);
+	      (*BD).put_h(zb,t7,t6);
+	      (*BD).put_h(za,t7,nze);
+	    }
+	  }
+	  za=(*BD).get(t6,t6);
+	  zb=(*BD).get(nze,nze);
+	  (*BD).put(zb,t6,t6);
+	  (*BD).put(za,nze,nze);
+//	  for(k1=0;k1<nr;++k1)
+//	  { for(k2=0;k2<nr;++k2)
+//	       std::cout << (*BD).get(k1,k2) << "  ";
+//	    std::cout << "\n";
+//	  }
+	  z1=U[t6];
+	  U[t6]=U[nze];
+	  U[nze]=z1;
+//        getrusage(0, & me);
+//        std::cout << "block-diag routine: after  perm: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//        std::cout.flush();
+	}
+	++nze;
       }
     }
-  std::vector<int> blkdims;			// Array of block sizes
-  if(!count)					// If no permutations 
-    {						// then there is only 1
-    blkdims.push_back(nr);			// block.  As such, BD is
-    delete U;					// the input array and
-    U = new i_matrix(nr,nr);			// U is an identity matrix
-    return blkdims;
+    if(nze==(t5+1) || t5==(nr-1))
+    { blkdims.push_back(t5+1-bs);
+      bs=t5+1;
     }
-  int *maxdims;					// Block bounds each diagonal
-  maxdims = new int[nr];			// Array for bounds
-  int rd, cd;
-  for(i=0; i<nr; i++)				// Determine smallest possible
-    { 						// Block for each {row,column}
-    for(j=nr-1, rd=0; j>=0 && !rd; j--)
-      if((*BD).get(i,j) != complex0) rd=j;
-    for(j=nr-1, cd=0; j>=0 && !cd; j--)
-      if((*BD).get(j,i) != complex0) cd=i;
-    maxdims[i] = gmax(rd, cd);
-    }
-  int bend = 0;					// For block end
-  int intone=1, intsize;
-  for(i=0; i<nr; i++)
-    {
-    bend = maxdims[i];
-    if(bend <= i) blkdims.push_back(intone);
-    else
-      { 
-      for(j=i+1;j<bend; j++)
-        bend = gmax(bend, maxdims[j]);
-      intsize = bend-i+1;
-      i += bend-i;
-      blkdims.push_back(intsize);
-      }
-    }
-  delete [] maxdims;
+  }
+//getrusage(0, & me);
+//std::cout << "block-diag routine: point 02: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//std::cout.flush();
   return blkdims;
   }
- 
 
 void h_matrix::HermTriDiag(_matrix* (&HTD), _matrix* (&U))
   {

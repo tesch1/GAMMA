@@ -384,6 +384,8 @@ MSVCDLL friend matrix  conj(const matrix& mx);
 MSVCDLL friend matrix  transpose(const matrix& mx);
 MSVCDLL friend matrix  adjoint(const matrix& mx);
 MSVCDLL friend complex trace(const matrix& mx);
+MSVCDLL friend void enable_blockdiag();
+MSVCDLL friend void disable_blockdiag();
 
 MSVCDLL matrix  operator- () const;
 MSVCDLL matrix  Re()         const;
@@ -436,7 +438,7 @@ MSVCDLL friend matrix times_adjoint(const matrix& mx, const matrix& mx1);
 // ____________________________________________________________________________
 
 MSVCDLL friend  complex         det(const matrix& mx);
-MSVCDLL         complex det() const;
+MSVCDLL         complex         det() const;
 MSVCDLL friend  int             rank(const matrix& mx);
 
 // ***************************      FFT      ****************************
@@ -545,7 +547,7 @@ MSVCDLL friend std::ostream&  operator << (std::ostream& ostr, const matrix& mx)
    binary read & write functions MUST exactly match in format!               */  
 
 MSVCDLL        std::ofstream& write(std::ofstream& fp, int form=0) const;
-MSVCDLL friend std::ofstream&         write(std::ofstream& F,  const matrix& mx);
+MSVCDLL friend std::ofstream& write(std::ofstream& F,  const matrix& mx);
 MSVCDLL        std::ifstream& read(std::ifstream&  F);
 
 //-----------------------------------------------------------------------------
@@ -626,7 +628,7 @@ MSVCDLL void status(int full=0) const;
  routines will be used based on the matrix type and the return arrays will 
  be of the best suited form (e.g diagonal, block, unitary, etc....)          */
 
-MSVCDLL   std::vector<int> BlockDiag(matrix&    BD, matrix& U) const;
+MSVCDLL   std::vector<int> BlockDiag(matrix&    BD, std::vector<int> &U) const;
 MSVCDLL        void        SymTriDiag(matrix&  HTD, matrix& U) const;
 MSVCDLL        void        HermTriDiag(matrix& STD, matrix& U) const;
 MSVCDLL        void        SymDiag(matrix&      SD, matrix& U) const;

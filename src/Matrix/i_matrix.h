@@ -376,7 +376,7 @@ virtual       _matrix* times_adjoint(_matrix* mx);
  done upon return.  Since the return here is invariably the same matrix, all
  of this amounts to just incrementing the "this" imx reference count by 2.   */
 
-virtual std::vector<int> BlockDiag(_matrix*    (&BD), _matrix* (&U));
+virtual std::vector<int> BlockDiag(_matrix*    (&BD), std::vector<int> &U);
 virtual void             HermTriDiag(_matrix* (&HTD), _matrix* (&U));
 virtual void             SymTriDiag(_matrix*  (&STD), _matrix* (&U));
 virtual void             SymDiag(_matrix*       (&D), _matrix* (&U));

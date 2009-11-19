@@ -3611,87 +3611,75 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
            Note                 : The reference count to dmx must be twice
                                   incremented external by the call origin.   */
 
-std::vector<int> n_matrix::BlockDiag(_matrix* (&BD), _matrix* (&U))
-  {
-  int nr = rows_;				// Matrix dimension
-  int i,j,k,l;					// Row & column indices
-  BD = new n_matrix(*this);			// Workspace for block diag.
-  U  = new h_matrix(nr, nr, complex0);		// Space for permutation matrix
-  for(i=0; i<nr; i++) (*U)(i,i) = complex1;	// Start with identity array
-  int *I,*J;					// Permuted indices
-  I = new int[nr];				// For permuted row indices
-  J = new int[nr];				// For permuted column indices
-  for(i=0; i<nr; i++) { J[i]=i; I[i]=i; }	// Set both as unpermuted
-  complex z;					// Temporary element
-  int count = 0;				// Number of permutations
-  for(i=0; i<nr/2; i++)				// Loop array rows
-    {
-    for(j=i+2; j<nr; j++)			// Loop upper triangle elems
-      {						// above 2nd diagonal
-      if(get(I[i],J[j]) != complex0)		// If not zero and the previous
-        if(get(I[i],J[j-1]) == complex0)	// is, try applying permutation
-           {
-           count++;				// Track # of permutations
-           l=I[j-1]; I[j-1]=I[j]; I[j]=l;	// Swap indices in permuted
-           l=J[j-1]; J[j-1]=J[j]; J[j]=l;	// arrays (summed)
-           (*U).put(complex0,J[j-1],J[j-1]);	// Adjust permutation array
-           (*U).put(complex0,J[j],J[j]);	// by zeroing diagonals
-           (*U).put_h(complex1,J[j-1],J[j]);	// and putting 1s on cross
-           for(l=0; l<nr; l++)			// Now swap rows and columns
-             {					// of the output array being 
-             z = (*BD)(J[j],l);			// block diagonalized
-             (*BD)(J[j], l) = (*BD)(J[j-1],l);
-             (*BD)(J[j-1], l) = z;
-             }
-           for(k=0; k<nr; k++)
-             {
-             z = (*BD)(k,J[j]);
-             (*BD)(k, J[j]) = (*BD)(k,J[j-1]);
-             (*BD)(k, J[j-1]) = z;
-             }
-           }					// Return for next perm.
-      }						// Return for next column
-    }						// Return for next row
+//#include <sys/time.h>
+//#include <sys/resource.h>
 
-  std::vector<int> blkdims;                          // Array of block sizes
-  if(!count)                                    // If no permutations 
-    {                                           // then there is only 1
-    blkdims.push_back(nr);                      // block.  As such, BD is
-    delete U;                                   // the input array and
-    U = new i_matrix(nr,nr);                    // U is an identity matrix
-    return blkdims;
-    }
-   
-  int *maxdims;					// Block bounds each diagonal
-  maxdims = new int[nr];			// Array for bounds
-  int rd, cd;
-  for(i=0; i<nr; i++)				// Determine smallest possible
-    { 						// Block for each {row,column}
-    for(j=nr-1, rd=0; j>=0 && !rd; j--)
-      if((*BD)(i,j) != complex0) rd=j;
-    for(j=nr-1, cd=0; j>=0 && !cd; j--)
-      if((*BD)(j,i) != complex0) cd=i;
-    maxdims[i] = gmax(rd, cd);
-    }
-  int bend = 0;					// For block end
-  int intone=1, intsize;
-  for(i=0; i<nr; i++)
-    {
-    bend = maxdims[i];
-    if(bend <= i) blkdims.push_back(intone);
-    else
-      { 
-      for(j=i+1;j<bend; j++)
-        bend = gmax(bend, maxdims[j]);
-      intsize = bend-i+1;
-      i += bend-i;
-      blkdims.push_back(intsize);
+std::vector<int> n_matrix::BlockDiag(_matrix* (&BD), std::vector<int> &U)
+  {
+//std::cout << "This is n_matrix block diag\n";
+//struct rusage me;
+//getrusage(0, & me);
+//std::cout << "block-diag routine: point 01: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//std::cout.flush();
+  int nr = rows_;				// Matrix dimension
+  int count = 0;				// Count permutations
+  BD = new n_matrix(*this);			// Start with copy
+
+  int i,nze=0,bs=0,t5,t6;
+  for(i=0; i<nr; i++) { U.push_back(i); }	// Set both as unpermuted
+  std::vector<int> blkdims;
+  for(t5=0;t5<nr;++t5)
+  { if(nze==t5)
+      ++nze;
+    for(t6=nze;t6<nr;++t6)
+    { if((*BD).get(t5,t6) != complex0 || (*BD).get(t6,t5) != complex0)
+      { if(t6 != nze)
+        { complex z;
+          int z1;
+	  int t7;
+	  int k1, k2;
+//        getrusage(0, & me);
+//        std::cout << "block-diag routine: before perm: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//	  std::cout << "permuting "<< nze << " and " << t6 << "\n";
+//	  for(k1=0;k1<nr;++k1)
+//	  { for(k2=0;k2<nr;++k2)
+//	       std::cout << (*BD).get(k1,k2) << "  ";
+//	    std::cout << "\n";
+//	  }
+//        std::cout.flush();
+	  for(t7=0;t7<nr;++t7)
+	  {  z=(*BD).get(t7,t6);
+	     (*BD).put((*BD).get(t7,nze),t7,t6);
+	     (*BD).put(z,t7,nze);
+	  }
+	  for(t7=0;t7<nr;++t7)
+	  {  z=(*BD).get(t6,t7);
+	     (*BD).put((*BD).get(nze,t7),t6,t7);
+	     (*BD).put(z,nze,t7);
+	  }
+//	  for(k1=0;k1<nr;++k1)
+//	  { for(k2=0;k2<nr;++k2)
+//	       std::cout << (*BD).get(k1,k2) << "  ";
+//	    std::cout << "\n";
+//	  }
+	  z1=U[t6];
+	  U[t6]=U[nze];
+	  U[nze]=z1;
+//        getrusage(0, & me);
+//        std::cout << "block-diag routine: after  perm: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//        std::cout.flush();
+        }
+        ++nze;
       }
     }
-  delete [] I;
-  delete [] J;
-  delete [] maxdims;
-// sosi if only on block should reset U to be i_matrix
+    if(nze==(t5+1) || t5==(nr-1))
+    { blkdims.push_back(t5+1-bs);
+      bs=t5+1;
+    }
+  }
+//getrusage(0, & me);
+//std::cout << "block-diag routine: point 02: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//std::cout.flush();
   return blkdims;
   }
 

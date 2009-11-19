@@ -52,7 +52,7 @@
 #include <sstream>
 
 bool    matrix::FFTComp=true; 		// FFT compatibility (Brigham)
-bool    matrix::BlkDiag=false; 		// Block diag. (Sure, Why Not)
+bool    matrix::BlkDiag=true; 		// Block diag. (Sure, Why Not)
 MxPrint matrix::PrntFlgs(true,		// Set to print matrix header
                          true,		// Set to print real,imag,complex
                          false,		// Set to print only stored elements
@@ -957,6 +957,8 @@ matrix  adjoint_times(const matrix& mx, const matrix& mx1)
   { return matrix(mx.m->adjoint_times(mx1.m)); }
 matrix times_adjoint(const matrix& mx, const matrix& mx1)
   { return matrix(mx.m->times_adjoint(mx1.m)); }
+void enable_blockdiag() {matrix::BlkDiag=true;}
+void disable_blockdiag() {matrix::BlkDiag=false;}
 
 // ____________________________________________________________________________
 // J               CLASS MATRIX COMPLEX UNARY FUNCTIONS
@@ -1648,7 +1650,7 @@ matrix LUinv(matrix &B, int *indx, matrix& LU)
  routines will be used based on the matrix type and the return arrays will 
  be of the best suited form (e.g diagonal, block, unitary, etc....)          */
 
-std::vector<int> matrix::BlockDiag(matrix& BF, matrix& U) const
+std::vector<int> matrix::BlockDiag(matrix& BF, std::vector<int> &U) const
   {
   if(rows() != cols()) 			// Cant block non-square array 
     { 					// so this will be a fatal error
@@ -1656,11 +1658,9 @@ std::vector<int> matrix::BlockDiag(matrix& BF, matrix& U) const
     Mxfatality(28);			//   Diagonalization on non-square mx
     }
   virtual_delete(BF.m);			// Delete BF, it will be overwritten
-  virtual_delete(U.m);			// Delete U, it will be overwritten
   std::vector<int> blks;		// Array of blocks
-  blks = m->BlockDiag(BF.m, U.m);	// Block diagonalize mx: make BF & U
+  blks = m->BlockDiag(BF.m, U);	// Block diagonalize mx: make BF & U
   BF.m = virtual_copy(BF.m);		// Now copy the new matrices as they
-  U.m = virtual_copy(U.m);		// have bypassed reference counting
   return blks;				// Return array of blocks 
   }
 
@@ -1737,9 +1737,10 @@ void diag(const matrix& mx, matrix& D, matrix& S)
     return;
     }
   std::vector<int> blks;		// Array of block dimensions
-  matrix BD, P;				// Arrays: Block Form, Permutation
+  matrix BD;				// Arrays: Block Form, Permutation
+  std::vector<int> P;		// Array of block dimensions
   blks = mx.BlockDiag(BD, P);		// Block diagonalize mx: make BD & P
-  int nblks = blks.size();		// Get the number of blocks
+    int nblks = blks.size();		// Get the number of blocks
   if(nblks == 1)			// If there is only one block then
     {					// we are back to where we were
     virtual_delete(D.m);		//   Delete D, it'll be overwritten
@@ -1751,7 +1752,7 @@ void diag(const matrix& mx, matrix& D, matrix& S)
     }
   int nr = mx.rows(); 			// There are blocks, work block-wise
   D = matrix(nr,nr,0.0,d_matrix_type);	// Initialize D for eigenvalues
-  S = matrix(nr,nr,1.0,d_matrix_type);	// Initialize S for eigenvectors
+  matrix S1 = matrix(nr,nr,1.0,d_matrix_type);	// Initialize S for eigenvectors
   int I=0;				// The block row,column index
   matrix subBLK;			// Array for working with sub-blocks
   matrix subD;
@@ -1760,7 +1761,7 @@ void diag(const matrix& mx, matrix& D, matrix& S)
 //std::cout << "\n\n\tHere is The Original Array: " << mx;
 //std::cout << "\n\n\tHere is The Blocked Array: " << BD;
 //std::cout << "\n\n\tBlock Diag. On Mx Of Dimension " << nr;
-//std::cout << "\n\tThere Are " << nblks << " Blocks";
+//std::cout << "\n\tThere are " << nblks << " Blocks\n";
   for(int i=0; i<nblks; i++)		// Loop over the blocks
     {
     bd = blks[i];			//   Get block dimension
@@ -1788,13 +1789,28 @@ void diag(const matrix& mx, matrix& D, matrix& S)
 //std::cout << "\nHere is Resulting EigenValues: " << subD;
 //std::cout << "\nHere is Resulting EigenVectors: " << subS;
       D.put_block(I,I,subD);		//   Put block of eigenvalues in
-      S.put_block(I,I,subS);		//   Put block of eigenvectors in
+      S1.put_block(I,I,subS);		//   Put block of eigenvectors in
       I += bd;				//   Up index to next block start
       }
 //std::cout << "\nHere is D: " << D;
-//std::cout << "\nHere is S: " << S;
+//std::cout << "\nHere is S: " << S1;
+//std::cout.flush();
     }
-  D = P*D;				//   Adjust P with permutation array 
+//getrusage(0, & me);
+//std::cout << "diag routine: point 03: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//std::cout.flush();
+//std::cout << D;
+//std::cout << S1;
+  S = matrix(nr,nr,0.0,d_matrix_type);	// Initialize S for eigenvectors
+  for(int i=0;i<nr;++i)
+  { for(int j=0;j<nr;++j)
+    { S.put(S1.get(i,j),P[i],j);
+    }
+  }
+//std::cout << S;
+//getrusage(0, & me);
+//std::cout << "diag routine: point 04: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
+//std::cout.flush();
   }
 
 // ____________________________________________________________________________

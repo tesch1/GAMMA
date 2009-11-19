@@ -586,6 +586,7 @@ string complex::PyPrint()
 
 #include <boost/python/class.hpp>			// Boost.Python classes
 #include <boost/python/copy_const_reference.hpp>	// Boost.Python call policy
+#include <boost/python/copy_non_const_reference.hpp>	// Boost.Python call policy
 #include <boost/python/return_value_policy.hpp>		// Boost.Python return policy
 #include <boost/python/operators.hpp>			// Boost.Python operators
 #include <boost/python/def.hpp>

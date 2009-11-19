@@ -41,7 +41,6 @@
 #include <HSLib/GenOp.h>
 #include <vector>			// Include libstdc++ stl vectors
 
-
 // ____________________________________________________________________________
 // A               Pulses Acting Directly On Density Operators
 // ____________________________________________________________________________
@@ -54,7 +53,7 @@
    all spins of a specified isotope type, all spins in the system, or any
    combination of spins in the system as specified by spin flag settings.
 
-	   Input	`	sys   : A (base) spin system
+	   Input		sys   : A (base) spin system
 	   			sigma : Current density operator
 	   			SEL   : Pulse selectivity
 	   			beta  : Pulse rotation angle (degrees)
@@ -74,11 +73,8 @@
 
 // ************************* Pulse Along The X Axis ***************************
 
-// Added here as it is currently only defined in class of
-
-
 gen_op Ixpuls(const spin_sys& sys, const gen_op& sigma, int spin,  double beta)
-  { return evolve(sigma, Rx(sys,spin,beta)); }
+  {  return evolve(sigma, Rx(sys,spin,beta)); }
 
 gen_op Ixpuls(const spin_sys& sys, const gen_op& sigma,
                                                 const std::string& Iso, double beta)
@@ -134,7 +130,6 @@ gen_op Ixypuls(const spin_sys& sys, const gen_op& sigma,
 gen_op Ixypuls_sp(const spin_sys& sys, const gen_op &sigma,
                                                        double phi, double beta)
   { return evolve(sigma, Rxy_sp(sys,phi,beta)); }
-
 
 // ____________________________________________________________________________
 // B                        Ideal Pulse Propagators 
@@ -230,7 +225,6 @@ gen_op Ixypuls_U_sp(const spin_sys& sys,               double phi, double beta)
 void PyPulseI()
   {
 /*
-
     def((gen_op (*)(const spin_sys&, const gen_op&, int, double))                &Ixpuls, "Ixpuls");
     def((gen_op (*)(const spin_sys&, const gen_op&, double))                     &Ixpuls, "Ixpuls");
     def((gen_op (*)(const spin_sys&, const gen_op&, const std::string&, double)) &Ixpuls, "Ixpuls");
@@ -271,10 +265,6 @@ void PyPulseI()
     def((gen_op (*)(const spin_sys&, double, double)) &Ixypuls_U, "Ixypuls_U");
 //def((gen_op (*)(const spin_sys&, const flagvec&, double, double)) &Ixyxpuls, "Ixypuls_U");
     def(Ixypuls_U_sp, "Ixypuls_sp_U");
-
-
-
-
 */
 
   }

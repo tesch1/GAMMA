@@ -418,8 +418,8 @@ _matrix* _matrix::LU(int* indx)
 _matrix* _matrix::LUinv(int* indx, _matrix* LU)
                 { _MxFatal(5, "LU Inverse"); indx=NULL; LU=NULL; return this; }
 
-std::vector<int> _matrix::BlockDiag(_matrix* (&BF), _matrix* (&U))
-             { _MxFatal(5, "Block Diagonalization"); BF=NULL; U=NULL;
+std::vector<int> _matrix::BlockDiag(_matrix* (&BF), std::vector<int> &U)
+             { _MxFatal(5, "Block Diagonalization"); BF=NULL; U=std::vector<int>();
                                                         return std::vector<int>(); }
 void        _matrix::HermTriDiag(_matrix* (&HTD), _matrix* (&U))
              { _MxFatal(5, "Hermitian TriDiagonalization"); HTD=NULL; U=NULL; }
