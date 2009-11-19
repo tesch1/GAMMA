@@ -20,14 +20,14 @@ def cmp_nn(file1, file2):
     L2 = f2.readline()
 
     result = True
-    while L1 and L2:
+    while L1 or L2:
         L1 = L1.rstrip("\r\n\f")
         L2 = L2.rstrip("\r\n\f")
         if L1 != L2:
             result = False
             if is_verbose:
-                print L1
-                print L2
+                print file1 + ": '" + L1 + "'"
+                print file2 + ": '" + L2 + "'"
             break
         L1 = f1.readline()
         L2 = f2.readline()   
