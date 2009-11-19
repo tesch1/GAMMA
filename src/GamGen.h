@@ -139,23 +139,6 @@
  * the * GCC defined macros __GNUC__, __GNUC_MINOR__, & __GNUC_PATCHLEVEL__.
  * These are self defining and would be 3, 2, 0 respectively for GCC 3.2.0   */
 
-#if defined(__GNUG__)
- 
-#  if __GNUC__ == 3 && (__GNUC_MINOR__ > 2 || __GNUC_MINOR__ == 2 )
-#    define __GCC32x__ 1
-#  endif
-
-#  if __GNUC__ == 3 && __GNUC_MINOR__ == 1
-#    define __GCC31x__ 1
-#  endif
-
-#  if __GNUC__ == 3
-#    define __GCC3xx__ 1
-#  endif
-
-#  if __GNUC__ == 2
-#    define __GCC2xx__ 1
-#  endif
  
 /* One problem is in the std::string.compare function. In GCC 2.9.x it seems
    that the argument order is switched over that in GCC 3.2.x. Other compilers
@@ -178,10 +161,6 @@
    used only if 1.) __GNUG__ is defined and 2.) GAMPRAGMA is defined. Here I
    will set GAMPRAGMA only if we are using GCC version 2.x.x.                */
 
-#  ifdef __GCC2xx__
-#    define GAMPRAGMA 1
-#  endif
- 
 // ----------------------------------------------------------------------------
 //                     GCC Template Instantiations
 // ----------------------------------------------------------------------------
@@ -203,8 +182,8 @@
  * that AFAIK this is NOT needed for a shared library build.                */
 
 /*
-#  ifdef __GCC3xx__
-#    ifdef GSTATIC
+#if __GNUC__ >= 3
+#ifdef GSTATIC
 
 #include <string>			// Include libstdc++ strings
 #include <vector>			// Include libstdc++ vectors
@@ -223,8 +202,10 @@ const std::vector<std::string> GamStrVecAssignInit = VecA;
 #    endif				// End of static
 #  endif				// End of GCC 3.x.x
 */
+#if __GNUC__ >= 4
+#include <cstdlib>
+#endif
 
-#endif					// End of GCC section
 
 // ____________________________________________________________________________ 
 // C                   Sun SunPro C++ Compiler (SPARC)
