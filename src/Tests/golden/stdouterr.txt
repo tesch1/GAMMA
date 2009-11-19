@@ -1,5 +1,5 @@
-Normalization in dbwrite: 1 with 0 line indices
-Normalization in dbwrite: 1 with 0 line indices
-Normalization in dbwrite: 1 with 0 line indices
-Normalization in dbwrite: 1 with 0 line indices
-Normalization in dbwrite: 1 with 0 line indices
+Normalization in dbwrite: 2 
+Normalization in dbwrite: 2 
+Normalization in dbwrite: 2 
+Normalization in dbwrite: 2 
+Normalization in dbwrite: 2 

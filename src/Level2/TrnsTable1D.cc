@@ -2566,6 +2566,8 @@ void TTable1D::dbwrite(  const string& fileName,
 	//std::cout << "normal is " << normal<< std::endl;
 	//std::cout << "numberofspins is " << ns<< std::endl;
 
+    // DCT - added on 11/18/09
+	std::cout << "Normalization in dbwrite: " << normal << " \n";
 
     /* Simple peak blending based on Freqtol and Phasetol ---------------*/
 
