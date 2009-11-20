@@ -662,22 +662,22 @@ spin_op Fxy_sp(const spin_sys& sys, double theta)
 	   E. Fp 	int*	flags: Spins with flags TRUE affected        */
 
 spin_op Ip(const spin_sys& sys, int S, double theta)
-  { return Rz(sys,S,theta) * Faxis(sys,S,'p') * adjoint(Rz(sys,S,theta)); }
+  { return Rz(sys,S,theta) * Faxis(sys,S,'p') * Rz(sys,S,theta).adjoint(); }
 
 spin_op Fp(const spin_sys& sys, int S, double theta)
-  { return Rz(sys,S,theta) * Faxis(sys,S,'p') * adjoint(Rz(sys,S,theta)); }
+  { return Rz(sys,S,theta) * Faxis(sys,S,'p') * Rz(sys,S,theta).adjoint(); }
 
 spin_op Fp(const spin_sys& sys, const std::string& iso, double theta)
-  { return Rz(sys,iso,theta)*Faxis(sys,iso,'p')*adjoint(Rz(sys,iso,theta)); }
+  { return Rz(sys,iso,theta)*Faxis(sys,iso,'p') * Rz(sys,iso,theta).adjoint(); }
 
 spin_op Fp(const spin_sys& sys, double theta)
-  { return Rz(sys,theta) * Faxis(sys,'p') * adjoint(Rz(sys,theta)); }
+  { return Rz(sys,theta) * Faxis(sys,'p') * Rz(sys,theta).adjoint(); }
 
 spin_op Fp(const spin_sys& sys, const flagvec& FGs, double theta)
-  { return Rz(sys,FGs,theta)*Faxis(sys,FGs,'p')*adjoint(Rz(sys,FGs,theta)); }
+  { return Rz(sys,FGs,theta)*Faxis(sys,FGs,'p') * Rz(sys,FGs,theta).adjoint(); }
 
 spin_op Fp_sp(const spin_sys& sys, double theta)
-  { return Rz_sp(sys,theta) * Faxis_sp(sys,'p') * adjoint(Rz_sp(sys,theta)); }
+  { return Rz_sp(sys,theta) * Faxis_sp(sys,'p') * Rz_sp(sys,theta).adjoint(); }
 
 
 // ----------------------------------------------------------------------------
@@ -734,7 +734,7 @@ spin_op Fplane(const spin_sys& sys, double theta, char OPtype)
   }
 
 
-spin_op RotSpinOp(const spin_op& R, const spin_op& F) {return R*F*adjoint(R);}
+spin_op RotSpinOp(const spin_op& R, const spin_op& F) {return R*F*R.adjoint();}
 
 	// Input		R	: A spin rotation operator
 	// 			F	: A spin operator to be rotated

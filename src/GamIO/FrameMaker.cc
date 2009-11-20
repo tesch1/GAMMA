@@ -154,8 +154,8 @@ void FM_Axis_tics (std::ostream &out, int ID, char direction, double offset,
     sf = 1;
   if(fabs(max-min) < 1.e-9*sf)		// Warning if Plot is Horizontal
     FM_error(4);
-  double delta = exp(log(double(10))*		// Estimate the distance between two tics
-       (floor(log(max-min)/log(double(10)))-2));
+  double delta = exp(log(10.0)*		// Estimate the distance between two tics
+       (floor(log(max-min)/log(10.0))-2));
   double z[3];				// Search for a delta to yeild
   z[0] = delta;				// approx. 6 tick marks. Begin with
   z[1] = 2.0*delta;			// three guesses and keep increasing until
@@ -372,6 +372,7 @@ std::vector<std::string> FMSeekStrings()
 	infile.open ("C:\\dev\\TextFile1.txt", ifstream::binary);
   if(infile.good())
 */
+
 std::string FMFind(bool vocal)
   {
   std::vector<std::string> FMNames = FMSeekStrings();	// FrameMaker path names
@@ -436,67 +437,13 @@ std::string FMFind(bool vocal)
 				std::cout << " - Not Found"; 
     }
   if(found) 
-		{ 
+	{ 
 		gexec.close(); 
 		return FME; 
-		} 
+	} 
 
   return std::string("");
-  }
-
-
-/*
-std::string FMFind(bool vocal)
-  {
-  std::vector<std::string> FMNames = FMSeekStrings();	// FrameMaker path names
-  int N = FMNames.size();			// Number of path names
-  std::string FME, FMName;				// FrameMaker execution command
-  bool found = false;				// Flag if found executable
-
-  FILE* gexec = NULL;				// FrameMaker executable?
-  int i=0;
-  for(; i<N && !found; i++)
-    {
-    FME = FMNames[i]; 				// Try this name first
-    if(vocal)
-      std::cout << "\n\t Seeking FrameMaker Executable "
-           << FME;
-    gexec = fopen(FME.c_str(), "rb");		// Does this file exist?
-    if(gexec != NULL) found=true;			// If so, use this command
-    if(vocal)
-      if(found) std::cout << " - Success!"; 
-      else      std::cout << " - Not Found"; 
-    }
-  if(found) { fclose(gexec); return FME; } 
-  for(i=0; i<N && !found; i++)
-    {
-    FME = FMNames[i] + std::string(".exe"); 				// Try this name first
-    if(vocal)
-      std::cout << "\n\t Seeking FrameMaker Executable "
-           << FME;
-    gexec = fopen(FME.c_str(), "rb");		// Does this file exist?
-    if(gexec != NULL) found=true;			// If so, use this command
-   if(vocal)
-     if(found) std::cout << " - Success!"; 
-     else      std::cout << " - Not Found"; 
-    }
-  if(found) { fclose(gexec); return FME; } 
-  for(i=0; i<N && !found; i++)
-    {
-    FME = FMNames[i] + std::string(".out"); 				// Try this name first
-    if(vocal)
-      std::cout << "\n\t Seeking FrameMaker Executable "
-           << FME;
-    gexec = fopen(FME.c_str(), "rb");		// Does this file exist?
-    if(gexec != NULL) found=true;			// If so, use this command
-    if(vocal)
-      if(found) std::cout << " - Success!"; 
-      else      std::cout << " - Not Found"; 
-    }
-  if(found) { fclose(gexec); return FME; } 
-  return std::string("");
-  }
-*/
+  }
 
 std::string FMExec(int warn)
   {

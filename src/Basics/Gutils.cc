@@ -69,21 +69,21 @@ void query_parameter(int argc,char* argv[],int par,const string& Q,string& V)
   {
   if(argc>par) V = argv[par];		// If parameter input, set as string
   else { cout << Q; cin >> V; }		// else ask for it & read it
-  while(cin.good()&&(cin.get()!='\n'));	// Clear out any linefeeds
+//while(cin.good()&&(cin.get()!='\n'));	// Clear out any linefeeds
   }
 
 void query_parameter(int argc,char* argv[],int par,const string& Q,double& V)
   {
   if(argc>par) V = atof(argv[par]);	// If parameter input, set as float
   else { cout << Q; cin >> V; }		// else ask for it & read it
-  while(cin.good()&&(cin.get()!='\n'));	// Clear out any linefeeds
+//while(cin.good()&&(cin.get()!='\n'));	// Clear out any linefeeds
   }
 
 void query_parameter(int argc,char* argv[],int par,const string& Q,int& V)
   {
   if(argc>par) V = atoi(argv[par]);	// If parameter input, then set as int
   else { cout << Q; cin >> V; }		// else ask for it & read it
-  while(cin.good()&&(cin.get()!='\n'));	// Clear out any linefeeds
+//while(cin.good()&&(cin.get()!='\n'));	// Clear out any linefeeds
   }
 
 bool ask_set(int argc,char* argv[],int par,const string& Q,string& V)

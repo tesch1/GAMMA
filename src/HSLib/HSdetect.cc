@@ -53,7 +53,7 @@ spin_op GenericD(const spin_sys& sys, spin_op D, double beta)
 
   {
   spin_op RZ = Rz(sys,beta);
-  return  RZ*D*adjoint(RZ);
+  return  RZ*D*RZ.adjoint();
   }
 
 

@@ -549,15 +549,15 @@ spin_op Ipdt(const spin_sys &sys, std::string name)
   char letter;
   for(int spin=0; spin<nOps; spin++)	// Loop through all operators and
     {					// form the appropriate product
-    letter = name[1];
+    letter = name[spin];
     if(letter=='x' || letter== '1')     Iproduct *= Ix(sys,spin);
-    else if(letter=='y' || letter=='2') Iproduct *= Ix(sys,spin);
+    else if(letter=='y' || letter=='2') Iproduct *= Iy(sys,spin);
     else if(letter=='z' || letter=='3') Iproduct *= Iz(sys,spin);
     else if(letter=='p' || letter=='+') Iproduct *= Ip(sys,spin);
     else if(letter=='m' || letter=='-') Iproduct *= Im(sys,spin);
     else if(letter=='a')                Iproduct *= Ia(sys,spin);
     else if(letter=='b')                Iproduct *= Ib(sys,spin);
-    else if(letter!='e' || letter!='0')
+    else if(letter!='e' && letter!='0')
       {
       SOpCmperror(26, 1);		//   Unknown character in name
       SOpCmperror(27);			//   Setting character to 0

@@ -103,8 +103,7 @@ void Prod_base_dec(const spin_sys &sys, const gen_op &Op, double thres)
    for ( i=1; i<fourToN; i++)	// Loop over all 4**N base operators
       { 
       for (int ii=0; ii<nspins; ii++)	// Initialize all base function
-	       basef_nu[ii]= 0;		// codes to contain zeros
-
+	basef_nu[ii]= 0;		// codes to contain zeros
       int_to_xbase(basef_nu, i, 4); 	// get base function code
 					// for each spin: 0=none, 1=x, 2=y, 3=z
 					// first spin is varying the fastest
@@ -159,9 +158,7 @@ void Prod_base_dec(const spin_sys &sys, const gen_op &Op, double thres)
           }
         }
 
-        long int long2 = 2;
-        long int longq = q-1;
-	double scaling = pow(double(long2),longq);	// B normalization via EBW (2.1.87)
+	double scaling = pow(2.0,q-1);	// B normalization via EBW (2.1.87)
 //gen_op BOp = B;			// Projection of Op on unnormalized B
 //gen_op BOp(B.matrix());			// Projection of Op on unnormalized B
 gen_op BOp(B);			// Projection of Op on unnormalized B
@@ -174,19 +171,14 @@ complex coeff = proj(OpX,BOp);	// Projection of Op on unnormalized B
 //	  std::cout << "complex coeficient for " << name << "!\n";
 
 //	double coef = Re(coeff); 	// If real, non-zero coefficient, output
-	 if (norm(coeff) > thres) 
-   {
-	   std::cout << coeff << "*\t" ;
-
-     // changed long2 to double(long2)
-		 // *** :FIXME: may also need to change int(pow...) to
-		 // static_cast<int>(pow(...) + .000001)
-	   if (pow(double(long2),longq) != 1)
-       std::cout << Gdec(int(pow(double(long2),longq))) << "*";
-
-     std::cout << "\t" << name << "\n";
-   }	
-  }
+	if (norm(coeff) > thres) 
+          {
+	  std::cout << coeff << "*\t" ;
+	  if (pow(2.0,q-1) != 1)
+            std::cout << Gdec(int(pow(2.0,q-1))) << "*";
+          std::cout << "\t" << name << "\n";
+          }	
+    }
   std::cout << "--------------------------------------------------------\n";
   delete [] basef_nu;
   delete [] Ixyz;

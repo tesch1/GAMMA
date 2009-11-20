@@ -92,7 +92,7 @@ void SetCeiling(const gen_op& H, bool I=false);
 // ----------------------------------------------------------------------------
  
 public:
-
+ 
 // ____________________________________________________________________________
 // A         CLASS HILBERT SPACE PROPAGATOR CONSTRUCTION, DESTRUCTION
 // ____________________________________________________________________________
@@ -103,7 +103,7 @@ MSVCDLC HSprop(const gen_op& H, double tevol);
 MSVCDLC HSprop(const gen_op& H, double tevol, bool prop);
 MSVCDLC HSprop(const HSprop& U);
 
-MSVCDLC         ~HSprop();
+MSVCDLC ~HSprop();
 MSVCDLL HSprop& operator= (const HSprop& U1);
 
 // ____________________________________________________________________________
@@ -282,7 +282,6 @@ MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream &operator << (std::ostream &ostr, const HSprop& U);
 
 };
-
 
 // ____________________________________________________________________________
 // S                         PyGAMMA Code (Non-Member)
