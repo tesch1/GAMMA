@@ -367,11 +367,6 @@ std::vector<std::string> FMSeekStrings()
 
   return FMNames;
   }
-/*
-  ifstream infile;
-	infile.open ("C:\\dev\\TextFile1.txt", ifstream::binary);
-  if(infile.good())
-*/
 
 std::string FMFind(bool vocal)
   {
@@ -443,7 +438,8 @@ std::string FMFind(bool vocal)
 	} 
 
   return std::string("");
-  }
+  }
+
 
 std::string FMExec(int warn)
   {
@@ -1968,9 +1964,8 @@ int contour_extr(FMcont& FMCP, int posneg, double& threshold, double& extremum)
          FMCP.CLI = fabs(FMCP.CLI);		// Insure CLI increases contour level 
          extremum = threshold;			// Start with extremum at threshold
 
-         // FIXME if needed **** i.e. Revisit if double casting is really needed.
          for(int i=1; i<FMCP.steps; i++)	// Calculate extremum				  
-           extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),int(i-1))*FMCP.CLI);
+           extremum += pow(FMCP.CLM, i-1)*FMCP.CLI;
 					
          if(extremum > FMCP.dmax) 		// Insure it isn't greater than max
                          extremum = FMCP.dmax;
@@ -1985,9 +1980,9 @@ int contour_extr(FMcont& FMCP, int posneg, double& threshold, double& extremum)
         FMCP.CLI = -fabs(FMCP.CLI);		// Insure CLI decreases contour level
         extremum = threshold;			// Start with extremum at threshold
 
-				// FIXME if needed **** i.e. Are two static_casts<>() really needed.
         for(int i=1; i<FMCP.steps; i++)		// Calculate extremum
-          extremum += static_cast<double>(pow(static_cast<long double>(long(FMCP.CLM)),int(i-1))*FMCP.CLI);
+          extremum += pow(FMCP.CLM, i-1) * FMCP.CLI;
+
         if(extremum<FMCP.dmin) 			// Insure it isn't less than min
                          extremum = FMCP.dmin;	// Insure it isn't less than min
          }
