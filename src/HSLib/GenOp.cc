@@ -41,8 +41,8 @@
 // --------------------------- PRIVATE FUNCTIONS ------------------------------
 // ----------------------------------------------------------------------------
 
-int gen_op::DBP     = 499;			// Default Basis Priority 
-int gen_op::EBP     = 500;			// EigenBasis Priority
+int gen_op::DBPr     = 499;			// Default Basis Priority 
+int gen_op::EBPr     = 500;			// EigenBasis Priority
 int gen_op::MaxReps = 3;			// Maximum Operator Reps
 
 // ____________________________________________________________________________
@@ -259,7 +259,7 @@ void gen_op::check_DBR() const
   if(WBR->RepBs.isDefaultBasis())		// (provided in class basis)
     {
     DBR = WBR;					// Set DBR equal to WBR
-    if(DBP>WBR->RepPty) WBR->RepPty=DBP;	// Set DBR priority >= WBR
+    if(DBPr>WBR->RepPty) WBR->RepPty=DBPr;	// Set DBR priority >= WBR
     }
   }
 
@@ -270,7 +270,7 @@ void gen_op::check_EBR(double cutoff) const
     {
     WBR->RepMx.set_type(d_matrix_type);		// Set the matrix diagonal
     EBR = WBR;					// Set EBR equal to WBR
-    if(EBP>WBR->RepPty) WBR->RepPty=EBP; 	// Set WBR priortty >= EBR
+    if(EBPr>WBR->RepPty) WBR->RepPty=EBPr; 	// Set WBR priortty >= EBR
     }
   }
  
@@ -377,7 +377,7 @@ gen_op::gen_op(const matrix &mx) : std::vector<genoprep>()
   if(!OpCheck(mx, 1)) GenOpfatality(9);		// Insure array is square
   setNULL(); 					// Insure no rep pointers
   if(!mx.cols()) return; 			// Empty Op if no array
-  AddRep(genoprep(mx, basis(mx.rows()), DBP));	// else set mx to 1st OpRep
+  AddRep(genoprep(mx, basis(mx.rows()), DBPr));	// else set mx to 1st OpRep
   }
 
 gen_op::gen_op(const spin_op& SOp) : std::vector<genoprep>()
@@ -392,7 +392,7 @@ gen_op::gen_op(const matrix &mx1, const matrix &mx2) : std::vector<genoprep>()
   if(!OpCheck(mx1,mx2,1)) GenOpfatality(9);	// Insure arrays match
   setNULL(); 					// Insure no rep pointers
   if(!mx1.cols()) return; 			// Empty Op if no array
-  AddRep(genoprep(mx1, basis(mx2), DBP));	// Set matrix to 1st OpRep
+  AddRep(genoprep(mx1, basis(mx2), DBPr));	// Set matrix to 1st OpRep
   }
 
 gen_op::gen_op(const matrix &mx, const basis &bs) : std::vector<genoprep>()
@@ -400,7 +400,7 @@ gen_op::gen_op(const matrix &mx, const basis &bs) : std::vector<genoprep>()
   if(!OpCheck(mx,bs,1)) GenOpfatality(9);	// Insure mx & bs match
   setNULL(); 					// Insure no rep pointers
   if(!mx.cols()) return; 			// Empty Op if no array
-  AddRep(genoprep(mx, bs, DBP));		// Set matrix to 1st OpRep
+  AddRep(genoprep(mx, bs, DBPr));		// Set matrix to 1st OpRep
   }
 
 gen_op::gen_op(const gen_op& Op1) : std::vector<genoprep>()
@@ -430,7 +430,7 @@ gen_op::gen_op(const std::vector<matrix>& mxc, const std::vector<matrix>& bsc)
     bs.put_block(pinblk,pinblk,bsc[i]);		// Put bsc component into bs
     pinblk += mxc[i].rows();			// Where next component goes
     }						// i.e. <pb|mx|pb> & <pb|bs|pb>
-  AddRep(genoprep(mx,basis(bs,nc,ncd),DBP));	// Set first Op representation
+  AddRep(genoprep(mx,basis(bs,nc,ncd),DBPr));	// Set first Op representation
 						// in the composite space
   delete [] ncd;				// Remove array of dimensions
   }
@@ -468,7 +468,7 @@ gen_op::gen_op(matrix* mxc, int nc, matrix* bsc) : std::vector<genoprep>()
     if(bsc) bs.put_block(pinblk, pinblk, bsc[i]);// Put bsc component into bs
     pinblk += mxc[i].rows();			// Where next component goes
     }						// i.e. <pb|mx|pb> & <pb|bs|pb>
-  AddRep(genoprep(mx,basis(bs,nc,ncd),DBP));	// Set first Op representation
+  AddRep(genoprep(mx,basis(bs,nc,ncd),DBPr));	// Set first Op representation
   delete [] ncd;
   }
 
@@ -490,7 +490,7 @@ gen_op::gen_op(int N, matrix* mxs, matrix* bss) : std::vector<genoprep>()
   if(N<0) GenOpfatality(9, Gdec(N));		// Negative # of reps, die;
   if(!mxs[0].cols()) return; 			// Empty Op if no array
   setNULL(); 					// Insure no rep pointers
-  AddRep(genoprep(mxs[0],basis(bss[0]),DBP));	// Start first representation
+  AddRep(genoprep(mxs[0],basis(bss[0]),DBPr));	// Start first representation
   for(int i=1; i<N; i++)			// Now add in other reps
     {
     if(!OpCheck(mxs[i], bss[i], 1))		// Insure acceptable pair
@@ -500,7 +500,7 @@ gen_op::gen_op(int N, matrix* mxs, matrix* bss) : std::vector<genoprep>()
       GenOperror(92);				//   OpRep sizes differ!
       GenOpfatality(9); 			//   Can't construct
       }
-    AddRep(genoprep(mxs[i],basis(bss[i]),DBP));	// Add this representation
+    AddRep(genoprep(mxs[i],basis(bss[i]),DBPr));	// Add this representation
     }
   }
 
@@ -797,7 +797,7 @@ void gen_op::operator += (const matrix& mx)
   WBR->RepMx += mx;				// Matrix addition
   EBR = NULL;					// Remove prior reference to EBR
   check_EBR();					// Perhaps WBR is now EBR
-  if(!EBR) WBR->RepPty = DBP;			// If not set, set DBP priority
+  if(!EBR) WBR->RepPty = DBPr;			// If not set, set DBPr priority
   OpName = std::string("");
   }
 
@@ -871,7 +871,7 @@ void gen_op::operator -= (const matrix& mx)
   WBR->RepMx -= mx;			// Matrix subtraction
   EBR = NULL;				// Remove prior reference to EBR
   check_EBR();				// Check possibility WBR is now EBR
-  if(!EBR) WBR->RepPty = DBP;		// If not set, set DBP priority
+  if(!EBR) WBR->RepPty = DBPr;		// If not set, set DBPr priority
   }
 
 
@@ -942,7 +942,7 @@ void gen_op::operator *= (const matrix &mx)
   WBR->RepMx *= mx;			// Matrix multiplication
   EBR = NULL;				// Remove prior reference to EBR
   check_EBR();				// Check possibility WBR is now EBR
-  if(!EBR) WBR->RepPty = DBP;		// If not set, set DBP priority
+  if(!EBR) WBR->RepPty = DBPr;		// If not set, set DBPr priority
   }
 	
 
@@ -966,7 +966,7 @@ void gen_op::operator &= (const matrix& mx)
   WBR->RepMx *= mx*WBR->RepMx;		// Matrix multiplication
   EBR = NULL;				// Remove prior reference to EBR
   check_EBR();				// Check possibility WBR is now EBR
-  if(!EBR) WBR->RepPty = DBP;		// If not set, set DBP priority
+  if(!EBR) WBR->RepPty = DBPr;		// If not set, set DBPr priority
   }
 
 
@@ -986,7 +986,7 @@ void gen_op::operator= (const matrix& mx)
     GenOperror(41, 1); 				// Error in Op-mx operation 
     GenOpfatality(42);				// Assignment problems
     }
-  genoprep OpRep(mx,basis(mx.rows()),DBP);	// New OpRep we will add
+  genoprep OpRep(mx,basis(mx.rows()),DBPr);	// New OpRep we will add
   AddRep(OpRep);				// Add new OpRep as WBR/DBR
   }
 
@@ -1703,7 +1703,7 @@ void gen_op::set_DBR() const
   if(WBR == DBR) return;			// Nothing if WBR already DBR
   if(DBR) { WBR=DBR; return; }			// If DBR exists, set WBR to DBR
   matrix mx=WBR->RepBs.convert_back(WBR->RepMx);// Convert WBR mx to DBR mx
-  genoprep OpRep(mx,basis(mx.rows()),DBP);	// New Op representation (DBR)
+  genoprep OpRep(mx,basis(mx.rows()),DBPr);	// New Op representation (DBR)
   AddRepM(OpRep);				// Add new representation
   SetLimits(MaxReps);				// Impose rep limit on Op
   }
@@ -1725,7 +1725,7 @@ void gen_op::set_EBR() const
   matrix mxd, mxev;				// Arrays for diagonalization
   diag(DBR->RepMx, mxd, mxev);			// Diagonalize Op in DBR
   basis bs(bs0, mxev);				// Construct eigenbasis
-  genoprep OpRep(mxd,bs,EBP);			// EBR Op representaton
+  genoprep OpRep(mxd,bs,EBPr);			// EBR Op representaton
   AddRepM(OpRep);				// Add EBR to Op reps
   SetLimits(MaxReps);				// Impose rep limit on Op
   }

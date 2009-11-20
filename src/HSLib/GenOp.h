@@ -48,8 +48,8 @@ class gen_op : public std::vector <genoprep>
   mutable genoprep*   WBR;		// Op in Working Basis Rep.	(WBR)
           std::string OpName;		// Name of Operator     
   static  int         MaxReps;		// Maximum allowed number of reps
-  static  int         DBP;		// Default Basis Rep priority
-  static  int         EBP;		// EigenBasis    Rep priority
+  static  int         DBPr;		// Default Basis Rep priority
+  static  int         EBPr;		// EigenBasis    Rep priority
 
 private:
 
