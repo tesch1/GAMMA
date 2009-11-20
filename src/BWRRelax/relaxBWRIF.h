@@ -25,7 +25,7 @@
 
 #include <BWRRelax/relaxNMR.h>		// Liquid nmr relaxation
 #include <BWRRelax/relaxRF.h>		// Relaxation with an exteral field
-#include <BWRRelax/relaxAux.h>		// Relaxation auxiliary functions
+//#include <BWRRelax/relaxAux.h>		// Relaxation auxiliary functions
 #include <BWRRelax/relaxJ.h>		// Relaxation spectral density functions
 #include <BWRRelax/relaxDip.h>		// Dipolar relaxation
 #include <BWRRelax/relaxCSA.h>		// Chemical shift anisotropy relaxation

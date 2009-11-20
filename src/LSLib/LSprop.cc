@@ -41,7 +41,6 @@
 
 //sosi - this needs to be fixed too 
 //# include <WBR/relaxProp.h>		// Need R_prop function
-//# include <WBR/relaxAux.h>		// Need R_prop function
 
 using std::string;			// Using libstdc++ strings
 using std::ostream;			// Using libstdc++ output streams

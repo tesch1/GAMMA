@@ -37,7 +37,6 @@
 #include <HSLib/GenOp.h>		// Include knowledge of operators
 #include <LSLib/LSprop.h>		// Include knowledge of superop props 
 //#include <BWRRelax/relaxProp.h>		// Include knowledge of propagators
-//#include <BWRRelax/relaxAux.h>		// Include knowledge of Hsuper function
 #include <Basics/ParamSet.h>		// Include GAMMA parameter sets
 #include <string>			// Include stdlibc++ strings
 

@@ -3637,7 +3637,7 @@ std::vector<int> n_matrix::BlockDiag(_matrix* (&BD), std::vector<int> &U)
         { complex z;
           int z1;
 	  int t7;
-	  int k1, k2;
+//	  int k1, k2;
 //        getrusage(0, & me);
 //        std::cout << "block-diag routine: before perm: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
 //	  std::cout << "permuting "<< nze << " and " << t6 << "\n";

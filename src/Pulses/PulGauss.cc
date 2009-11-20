@@ -42,7 +42,6 @@
 #include <LSLib/SuperOp.h>		// Include superoperators
 #include <HSLib/HSham.h>		// Knowledge of isotropic Hamiltonians
 #include <Level2/acquire1D.h>		// Include knowledge of "acquisitions"
-//#include <WBR/relaxAux.h>		// Include knowledge of Hsuper function
 #include <HSLib/SpinOpCmp.h>		// Include composite spin ops
 #include <HSLib/SpinOpRot.h>		// Include spin rotation operators
 #include <stdlib.h>

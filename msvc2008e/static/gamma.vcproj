@@ -620,10 +620,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\src\BWRRelax\relaxAux.cc"
-					>
-				</File>
-				<File
 					RelativePath="..\..\src\BWRRelax\relaxBWRexch.cc"
 					>
 				</File>
@@ -1531,10 +1527,6 @@
 				</File>
 				<File
 					RelativePath="..\..\src\BWRRelax\relaxanalyze.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\src\BWRRelax\relaxAux.h"
 					>
 				</File>
 				<File

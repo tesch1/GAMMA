@@ -36,7 +36,6 @@
 #include <HSLib/HSham.h>		// Knowledge of isotropic Hamiltonians
 #include <HSLib/GenOp.h>		// Inlucde knowledge of operators 
 //#include <BWRRelax/relaxProp.h>		// Include knowledge of propagators
-//#include <BWRRelax/relaxAux.h>		// Include knowledge of Hsuper function
 #include <string>			// Include knowledge of Strings
 
 class Pulse
