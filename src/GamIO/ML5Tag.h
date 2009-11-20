@@ -39,8 +39,6 @@
 #include <fstream>				// Know libstdc++ filestreams
 #include <GamIO/BinIOBase.h>			// Know binary byte stuff
  
-int IsBigEndian();
-
 class MatLab5Tag
   {
   char EightBytes[8];				// 8 byte field
@@ -66,7 +64,12 @@ void MLT5error(int eidx, int noret=0);
 void MLT5error(int eidx, const std::string& pname, int noret=0); 
 volatile void MLT5fatality(int eidx);
 
-friend int IsBigEndian();
+int IsBigEndian() const
+  {
+  int x = 1;
+  if(*(char *)&x == 1) return 0;
+  else                 return 1;
+  }
 
 public:
 
