@@ -95,11 +95,11 @@ void Prod_base_dec(const spin_sys &sys, const gen_op &Op, double thres)
 
    std::cout << "---Product base decomposition---------------------------\n"; 
 
-   long int long4 = 4;			// Function pow needs long int
-   long int longn = nspins;
-	 // *** made changes here.
-	 long fourToN;
-	 fourToN = static_cast<long>(pow(static_cast<double>(long4),longn) + EPSILON_HSDECOMP);
+     int n = nspins;
+	 // DCT: 11/20/09... made changes here.
+	 // for windows compatibility, and accuracy of comparison.
+	 int fourToN;
+	 fourToN = static_cast<int>(pow(4.0, n) + EPSILON_HSDECOMP);
    for ( i=1; i<fourToN; i++)	// Loop over all 4**N base operators
       { 
       for (int ii=0; ii<nspins; ii++)	// Initialize all base function
