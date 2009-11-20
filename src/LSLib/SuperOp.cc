@@ -853,7 +853,8 @@ super_op d_commutator(const gen_op& Op, const complex& z)
 
   {
   super_op LOp;
-  int hs = dim(Op);				// Hilbert space dimension
+  //  int hs = SuperOp.dim(Op);				// Hilbert space dimension
+  int hs = Op.dim();				// Hilbert space dimension
   if(!hs) return LOp;				// Exit if NULL Op
   LOp.HSp = hs;
   LOp.LSp = hs*hs;
@@ -861,11 +862,56 @@ super_op d_commutator(const gen_op& Op, const complex& z)
   matrix Opmx = Op.get_mx();
   matrix z2Opmx = (z*2.0)*Opmx;
   matrix zOp_sq = z * (Opmx*Opmx);
-  LOp.mx = tensor_product(zOp_sq, I);
-  LOp.mx -= tensor_product(z2Opmx, transpose(Opmx));
-  LOp.mx += tensor_product(I, transpose(zOp_sq));
-  LOp.Hbs = Op.get_basis();			// Hilbert space basis = Op basis
-  LOp.Lbs = basis(LOp.LSp);			// Default Liouville space basis
+
+  basis bs = Op.get_basis();			// Get Hilbert basis
+  int nc = bs.sub_N();				// Number of sub-spaces
+
+// 		This Is Normal Non-Composite Superoperator
+
+  if(nc == 1)					// If only one sub-space
+    {
+    LOp.mx = tensor_product(zOp_sq, I);
+    LOp.mx -= tensor_product(z2Opmx, transpose(Opmx));
+    LOp.mx += tensor_product(I, transpose(zOp_sq));
+    LOp.Hbs = Op.get_basis();			// Hilbert space basis = Op basis
+    LOp.Lbs = basis(LOp.LSp);			// Default Liouville space basis
+    return LOp;
+    }
+
+
+// 		This Is Composite Liouville Space Superoperator
+//	      (Now We Must Deal With All Sub-Spaces Individually)
+//
+  gen_op GOp;
+  int ls = 0;
+  int cmp;
+  matrix *mxc, *bsc;					// Array Liouv. sub-matrices
+  mxc = new matrix[nc];
+  bsc = new matrix[nc];
+  for(cmp=0; cmp<nc; cmp++)			// Loop subspaces (components)
+    {
+    GOp = Op.project_sub(cmp);
+    GOp.set_DBR();
+    hs = GOp.dim();
+    I = matrix(hs, hs, i_matrix_type);
+    ls += hs*hs;
+    
+    Opmx = GOp.get_mx();
+    z2Opmx = (z*2.0)*Opmx;
+    zOp_sq = z * (Opmx*Opmx);
+    
+    LOp.mx = tensor_product(zOp_sq, I);
+    LOp.mx -= tensor_product(z2Opmx, transpose(Opmx));
+    LOp.mx += tensor_product(I, transpose(zOp_sq));
+
+    mxc[cmp] = LOp.get_mx();			//store mutual exchange matrix, this compon.
+    bsc[cmp] = GOp.get_basis().get_mx();	//store Hilbert space basis matrix, this compon.
+    }
+
+  LOp = super_op(mxc, nc, bsc);
+  delete [] mxc;
+  delete [] bsc;
+
   return LOp;
   }
 
@@ -1038,7 +1084,7 @@ super_op U_transform(const gen_op& Op)
 // 		This Is Composite Liouville Space Superoperator
 //	      (Now We Must Deal With All Sub-Spaces Individually)
 
-  LOp.HSp = dim(Op);				// Set Hilbert dimension
+  LOp.HSp = Op.dim();				// Set Hilbert dimension
   LOp.LSp = bs.dim_LS();			// Set Liouville dimension 
   if(!LOp.LSp) return LOp;			// Exit if empty Op
   matrix *mxc;				// Array of Liouville sub-matrices
@@ -1700,8 +1746,12 @@ bool super_op::checkLOp(const gen_op& Op, int warn) const
 	// Output		T_F  : TRUE if LOp and Op are
 	//			       compatible, FALSE if not
   {
-  int hs = Op.dim();			// Get Op Hilbert space dimension 
-  if(mx.cols() == hs*hs) return true;	// Compare Liouville spaces
+  basis bsOp = Op.get_basis();		// Get Hilbert basis
+//  int ncOp = bsOp.sub_N();		// Number of sub-spaces in Op
+//  int ncLOp = Hbs.sub_N();		// Number of sub-spaces in LOp
+  int ls = Op.dim_LS();			// Get Op Hilbert space dimension 
+//  if ((mx.cols() == ls) && (ncOp == ncLOp)) return true;	// Compare Liouville spaces
+  if (mx.cols() == ls) return true;	// Compare Liouville spaces
   if(warn)
     {
     if(warn > 1) LOpfatal(53);	// LOp-Op Dimensioning mismatch!

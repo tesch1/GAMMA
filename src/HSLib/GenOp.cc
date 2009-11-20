@@ -590,12 +590,6 @@ void gen_op::operator -= (const gen_op &Op1)
   {
   if(!Op1.WBR) return;			// Do nothing if Op1 NULL
   if(!WBR) { *this = -Op1; return; }	// If No Op, result is -Op1 
-    { 
-    *this = -Op1; 
-    if(Op1.OpName.length()) 
-     name("Negated " + Op1.OpName);
-    return;
-    }
   if(!OpCheck(Op1,1))			// Check dimensions
     {
     GenOperror(40, 1);		 	// Error during Op-Op operation 
