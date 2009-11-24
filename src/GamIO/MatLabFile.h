@@ -37,6 +37,15 @@
 #include <Matrix/matrix.h>			// Knowledge of matrices
 #include <Level1/coord_vec.h>			// Knowledge of coord. vectors
 
+MSVCDLL matrix MATLAB(const std::string& filename, const std::string& name, int warn=2);
+ 
+MSVCDLL int MATLAB(const std::string& file, const std::string& N,
+                                       const matrix& mx, int rc=1, int warn=2);
+MSVCDLL int MATLAB(const std::string& file, const std::string& N,
+                                       const coord_vec& cvec, int warn=2);
+
+
+
 class MatLabFile
     
 // ----------------------------------------------------------------------------
@@ -151,7 +160,7 @@ MSVCDLL static void Header(const std::string& filename, std::ostream& ostr);
    from matrices, the read always produces matrices as well.  Users must do
    a type cast to produce the data in a row or column vector.                */
 
-MSVCDLL friend matrix MATLAB(const std::string& filename, const std::string& name, int warn=2);
+MSVCDLL friend matrix MATLAB(const std::string& filename, const std::string& name, int warn);
 MSVCDLL matrix GetMatrix(const std::string& name, int warn=1);
 
 // ____________________________________________________________________________
@@ -162,10 +171,11 @@ MSVCDLL matrix GetMatrix(const std::string& name, int warn=1);
    from a GAMMA array.                                                       */  
  
 MSVCDLL friend int MATLAB(const std::string& file, const std::string& N,
-                                       const matrix& mx, int rc=1, int warn=2);
+                                       const matrix& mx, int rc, int warn);
 MSVCDLL int write(const std::string& N, const matrix& mx, int rc=1, int warn=2);
+
 MSVCDLL friend int MATLAB(const std::string& file, const std::string& N,
-                                       const coord_vec& cvec, int warn=2);
+                                       const coord_vec& cvec, int warn);
 MSVCDLL int write(const std::string& N, const coord_vec& cvec, int warn=2);
 
 // ____________________________________________________________________________
