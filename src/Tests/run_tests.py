@@ -60,7 +60,7 @@ for filename in filelist:
     current_suite = ""
     f = open(filename)
     for line in f.readlines():
-        substrings = line.split(':')		
+        substrings = line.split(':')
         # validate that this data line has a valid format.
         if len(substrings) == 0 or len(substrings) > 2:
             continue
@@ -131,7 +131,7 @@ for filename in filelist:
 
             result = cmp_nn(file1, file2)
 
-            if result == False:	 
+            if result == False:
                 if is_verbose == True:
                     print "*** TEST FAILED ***"
                     print ""
