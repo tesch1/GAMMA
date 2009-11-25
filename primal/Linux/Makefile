@@ -252,7 +252,7 @@ include ../../make/MakeMods
 #									#
 #########################################################################
 
-all: windowsfilefix  $(BINDIR) $(BINDIR)/$(SO_NAME)
+all: so lib pysg
 lib: windowsfilefix  $(BINDIR) ${BINDIR}/${LIB_NAME}
 so:  windowsfilefix  $(BINDIR) $(BINDIR)/$(SO_NAME)
 pyg: windowsfilefix  $(BINDIR) $(BINDIR)/$(PY_NAME)
@@ -1117,7 +1117,6 @@ TESTSBASE   = testsuite runtests
 TESTSHDR    = testsuite.h
 
 TESTCCFILES += $(addsuffix .cc, $(addprefix $(TESTS)/, $(TESTSBASE)))
-ALLHFILES  += $(addprefix $(TESTS)/, $(TESTSHDR))
 TESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(TESTSBASE)))
 
 
