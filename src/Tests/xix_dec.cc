@@ -23,7 +23,7 @@ using namespace std;
 
 //spin 0 is detected, spin 1 is irradiated
 
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 
 {
   spin_system ax(2);
@@ -210,4 +210,6 @@ main(int argc, char *argv[])
     }
   } // end of powder loop
   MATLAB(name1,name2,data,1);
+
+  return 0;
 }

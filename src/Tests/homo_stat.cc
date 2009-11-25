@@ -26,11 +26,11 @@ int main(int argc, char *argv[])
   space_T Acsa[MAXSPINS], Acsa_R[MAXSPINS];
   double D[MAXSPINS][MAXSPINS];
   double iso_CSA[MAXSPINS], delta_CSA[MAXSPINS], eta_CSA[MAXSPINS];
-  int i,j,k,count,qu,Fnp;
+  int i,j,count,qu,Fnp;
   string name, names;
   double dw;
   double scale;
-  int nspins, index;
+  int nspins;
   double alpha,beta,gamma;
   double alpha_D[MAXSPINS][MAXSPINS],beta_D[MAXSPINS][MAXSPINS];
   double gamma_D[MAXSPINS][MAXSPINS];
@@ -111,6 +111,7 @@ int main(int argc, char *argv[])
 
   block_1D datax(Fnp);
   block_2D data(nspins,Fnp);
+
   for(i=0;i<nspins;++i)
   { for(j=0;j<Fnp;++j)
     { data(i,j)=0;
@@ -197,6 +198,9 @@ int main(int argc, char *argv[])
     }
 
   } // end of powder loop
-  MATLAB(name1,name2,data,1);
+
+  //cout << "\nEntering matlab with parameters:  " << name1 << ", " << name2 << ", " << "data" << ", 1\n";
+
+  MATLAB(name1, name2, data, 1);
   exit(0);
 }

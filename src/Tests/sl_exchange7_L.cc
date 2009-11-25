@@ -32,8 +32,6 @@ int main(int argc, char *argv[])
   double ltime, time, time_prop, scale;
   int nstart, nspins, index, nprop;
   double alpha,beta,gamma;
-  double alpha_CSA[MAXSPINS],beta_CSA[MAXSPINS];
-  double gamma_CSA[MAXSPINS];
   double alpha_D[MAXSPINS][MAXSPINS],beta_D[MAXSPINS][MAXSPINS];
   double gamma_D[MAXSPINS][MAXSPINS];
   double tauc, kex;
