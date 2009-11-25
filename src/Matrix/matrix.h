@@ -45,6 +45,10 @@
 #include <fstream>			// Include file streams
 #include <vector>			// Include libstdc++ STL vectors
 
+MSVCDLL void enable_blockdiag();
+MSVCDLL void disable_blockdiag();
+
+
 class matrix
   {
   _matrix *m;				// Just pointer to stored matrix

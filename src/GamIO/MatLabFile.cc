@@ -552,10 +552,10 @@ int MatLabFile::write(const std::string& N, const matrix& mx, int rc, int warn)
     }
   else
     {
-//    MatLab5DE DE(mx,N,rc);			// Construct a data element
-//    DE.write(fp, mx, N);			// Write the matrix
-// sosi
-return 0;
+    //    MatLab5DE DE(mx,N,rc);			// Construct a data element
+    //    DE.write(fp, mx, N);			// Write the matrix
+    // sosi
+    return 0;
     }
   return 1;
   }
