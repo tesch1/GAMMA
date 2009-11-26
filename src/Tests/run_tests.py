@@ -91,7 +91,7 @@ for filename in filelist:
             command += options.path
             command += substrings[1].lstrip()
             print "running command: " + command
-            retcode = subprocess.call(command, shell = True)
+            retcode = subprocess.call(command, shell=True)
             if retcode < 0:
                 s1 = "Attempt to call " + substrings[1] + " was terminated by signal " + str(retcode)
                 print >> sys.stderr, s1

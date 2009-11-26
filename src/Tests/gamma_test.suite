@@ -9,3 +9,8 @@ compare: press_realpulses_test.txt, golden/press_realpulses_test.txt
 compare: spinecho_realpulses_test.txt, golden/spinecho_realpulses_test.txt
 compare: fid_exchange_test.txt, golden/fid_exchange_test.txt
 compare: outfile, golden/stdouterr.txt
+
+command: hstat 2spin_HH.sys  20000 0 0 0  0 8000 0 0 0 0  0 8000 0 0 0 0 12 2048 5e-6 test_stat > test_stat.log
+
+compare: test_stat.log, golden/test_stat.log
+compare: test_stat.mat, golden/test_stat.mat

@@ -1,15 +1,14 @@
 /*
-
 homo_stat.cc
 
 Simulation of homonuclear dipolar coupled spin system.
 Can run up to 10 spins with the CSA tensors. 
-
 */
 
 #include "gamma.h"
-#include <sys/time.h>
-#include <sys/resource.h>
+#include <string>
+//#include <time.h>
+//#include <resource.h>
 
 #define NPROP 100
 #define MAXSPINS 12
@@ -17,7 +16,6 @@ Can run up to 10 spins with the CSA tensors.
 using namespace std;
 
 int main(int argc, char *argv[])
-
 {
   spin_system ax(2);
   gen_op Ham, det[MAXSPINS], sigma;
@@ -35,7 +33,7 @@ int main(int argc, char *argv[])
   double alpha_D[MAXSPINS][MAXSPINS],beta_D[MAXSPINS][MAXSPINS];
   double gamma_D[MAXSPINS][MAXSPINS];
   double alpha_CSA[MAXSPINS],beta_CSA[MAXSPINS],gamma_CSA[MAXSPINS];
-  struct rusage me;
+  //struct rusage me;
 
   int value1[] = {1, 50, 100, 144, 200, 300, 538, 1154, 2000, 5000, 10000, 50000, 100000};
   int value2[] = {1,  7,  27,  11,  29,  37,  55,  107,  297, 1197,  3189, 14857,  38057};
@@ -80,8 +78,8 @@ int main(int argc, char *argv[])
 
   cout << "\n\nSimulation of isotropic chemical shift by dipolar coupling\n";
   cout << "==========================================================\n\n";
-  cout << "Program version: " << __FILE__ << " compiled at " << __DATE__ ", "
-       << __TIME__ << "\n\n";
+  //cout << "Program version: " << __FILE__ << " compiled at " << __DATE__ ", "
+  //     << __TIME__ << "\n\n";
   cout << "Parameters:\n";
   cout << "size of spin system            : " << nspins << " spins\n";
   for(i=0;i<nspins-1;++i)
@@ -102,10 +100,18 @@ int main(int argc, char *argv[])
     cout << "relativ orientation of CSA tensor: (" << alpha_CSA[i] << "," <<
              beta_CSA[i] << "," << gamma_CSA[i] << ")\n";
   }
+
+	char dws[100];
+#ifdef _MSC_VER
+	sprintf_s ( dws, "%f", dw);
+#else
+	sprintf ( dws, "%f", dw);
+#endif
+
   cout << "Powder Quality Number:         " << qu << "  (" << value1[qu] <<
           " orientations)\n";
   cout << "Number of data points:         " << Fnp << " points\n";
-  cout << "dwell time:                    " << dw << "s\n";
+  cout << "dwell time:                    " << dws << "s\n";
   cout << "Output filename:               " << name << "\n";
   cout << "\n";
 
@@ -146,7 +152,7 @@ int main(int argc, char *argv[])
     Acsa[i] = Acsa[i].rotate(alpha_CSA[i],beta_CSA[i],gamma_CSA[i]);
   }
 
-  string name1 = name+".mat";
+  string name1 = name + ".mat";
   string name2 = name;
 
 //this is the detection operator
@@ -157,14 +163,20 @@ int main(int argc, char *argv[])
 //reference JCP 59 (8), 3992 (1973).
 
   for(count=1; count<=value1[qu]; ++count)
-  { beta  = 180.0 * count/value1[qu];
+  { 
+		beta  = 180.0 * count/value1[qu];
     alpha = 360.0 * ((value2[qu]*count) % value1[qu])/value1[qu];
     gamma = 360.0 * ((value3[qu]*count) % value1[qu])/value1[qu];
     if(count % 1000 == 1)
-    { getrusage(0, & me);
+    { 
+			// DCT, 2009-11-26. 
+			// getrusage() is a Unix/Linux only command, and does not work on windows.
+			// Also, the time elapsed would be very machine specific so should
+			// not be part of this testing library (other libraries, maybe!).
+			// getrusage(0, & me);
       cout << count << "\tbeta = " << beta << "\talpha = "
-           << alpha << "\tgamma = " << gamma 
-           << ",\ttime used: " << me.ru_utime.tv_sec << " seconds\n";
+           << alpha << "\tgamma = " << gamma << "\n";
+      // << ",\ttime used: " << me.ru_utime.tv_sec << " seconds\n";
       cout.flush();
     }
     scale = sin(beta/180.0*PI);
