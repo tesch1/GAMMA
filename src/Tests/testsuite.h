@@ -2,6 +2,9 @@
 #include "gamma.h"
 #include <string>
 
+#ifndef _TEST_SUITE_H_2009_11_27
+#define _TEST_SUITE_H_2009_11_27
+
 class GammaTest
 
 {
@@ -21,3 +24,5 @@ static int press_realpulses_test(std::string & sysfile, std::string & pulse180fi
 static int fid_exchange_test(std::string & sysfile);
 
 };
+
+#endif // TEST_SUITE_H_2009_11_27

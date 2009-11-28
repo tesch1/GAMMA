@@ -1110,15 +1110,22 @@ TestGAMMA.o: %o: %cc
 # New Test routines
 #
 
-test:  ${BINDIR}/${LIB_NAME}  $(BINDIR)/runtests  run
+test:  ${BINDIR}/${LIB_NAME}  $(BINDIR)/runtests  $(BINDIR)/hstat run
 
 TESTS       = Tests
 TESTSBASE   = testsuite runtests
 TESTSHDR    = testsuite.h
 
-TESTCCFILES += $(addsuffix .cc, $(addprefix $(TESTS)/, $(TESTSBASE)))
+TESTCCFILES   += $(addsuffix .cc, $(addprefix $(TESTS)/, $(TESTSBASE)))
 TESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(TESTSBASE)))
 
+ZTESTSBASE   = homo_stat
+ZTESTSHDR    =
+
+ZTESTCCFILES += $(addsuffix .cc, $(addprefix $(TESTS)/, $(ZTESTSBASE)))
+ZTESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(ZTESTSBASE)))
+
+ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
 CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
 CXX_TESTFLAGS = 
@@ -1129,7 +1136,10 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) ${TESTOBJFILES} -L${BINDIR}/ -lgamma 
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma 
+
+$(BINDIR)/hstat : $(ZTESTOBJFILES)
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(ZTESTOBJFILES) -L${BINDIR}/ -lgamma
 
 RUNDIR = ./../../src/Tests
 CURDIR = ./../../primal/Linux
@@ -1373,7 +1383,7 @@ clean:
 	rm -f ${SO_OBJS}
 	@rm -f $(PYG_OBJS)
 	@rm -f $(PYSG_OBJS) $(PYSG_WRAP_SRCS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
-	@rm -f $(TEST_OBJ) $(TESTOBJFILES)
+	@rm -f $(TEST_OBJ) $(ALLTESTOBJFILES)
 	@rm -f *.asc
 	@rm -f *.gnu
 	@rm -f $(DEMO_OBJ)
@@ -1387,7 +1397,7 @@ strip:
 
 testclean:
 	@rm -f $(TEST_PGM)
-	@rm -f $(TEST_OBJ) $(TESTOBJFILES)
+	@rm -f $(TEST_OBJ) $(ALLTESTOBJFILES)
 
 democlean:
 	@rm -f $(DEMO_OBJ)
