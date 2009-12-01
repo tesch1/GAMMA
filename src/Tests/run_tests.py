@@ -5,6 +5,8 @@ import os
 import glob
 import sys
 import subprocess
+import scipy
+import scipy.io as sio
 import filecmp as fc
 from optparse import OptionParser
 
@@ -35,6 +37,87 @@ def cmp_nn(file1, file2):
     f1.close()
     f2.close()
     return result
+
+
+# define matlab comparison function to be used by run_tests.py
+def cmp_mat(file1, file2):
+    # Compare two matlab files 
+    # ignoring the newlines (lf vs cr-lf)    
+
+    contents1 = sio.loadmat(file1)
+    contents2 = sio.loadmat(file2)
+
+    data1 = contents1[ contents1.keys()[0] ]
+    data2 = contents2[ contents2.keys()[0] ]
+
+    if scipy.rank(data1) != scipy.rank(data2):
+        print "Data sets in the two files are not of the same rank"
+        return False
+
+    if data1.shape != data2.shape:
+        print "Data sets in the two files do not have the same shape"
+        return False
+
+    #print "About to run compare_data()"
+    return compare_data(data1, data2)
+
+
+def compare_data(data_1, data_2):
+
+    max_relative_diff =  0.00000000001 # 1 part in 10 to the 11th.
+    dontcare_point = 0.000000001 # 1 part in 10 to the 9th.
+
+    l = len(data_1.shape)
+
+    if l==0:
+        #print "l==0"
+        return compare_numbers(data_1, data_2, max_relative_diff, dontcare_point)
+
+    if l == 1:
+        #print "l==1"
+        return compare_lists(data_1, data_2, max_relative_diff, dontcare_point)        
+    else:
+        #print "l>1"
+        i = 0
+        for d1 in data_1:
+            d2 = data_2[i]
+            result = compare_data(d1, d2)
+            i += 1
+            if result == True:
+                continue
+            else:
+                return False
+
+    return True
+
+
+def compare_lists(sources, targets, max_relative_difference, do_not_care_point):
+    for source, target in zip(sources, targets):
+        if compare_numbers(source, target, max_relative_difference, do_not_care_point) == True:
+            continue
+        else:
+            print "source = " + str(source)
+            print "target = " + str(target)
+            return False
+
+    #print "returning true"
+    return True
+
+
+def compare_numbers(test_value, expected_value, max_relative_difference, do_not_care_point):
+   
+    # Compares two numbers (usually floats) for fuzzy equality.
+
+    difference = abs(test_value - expected_value)
+
+    # See if the difference is out of tolerance, and also meaningful
+    # i.e. near-zero values sometimes show up as noise, like 7.382239e-304)
+
+    if (difference > ( abs(expected_value) * max_relative_difference )) or \
+       (difference > do_not_care_point):
+        return False
+    else:
+        return True
 
 
 # parse the command line.
@@ -129,7 +212,16 @@ for filename in filelist:
                 total_failures += 1
                 continue
 
-            result = cmp_nn(file1, file2)
+            if file1.endswith(".mat"):
+                if file2.endswith(".mat"):
+                    result = cmp_mat(file1, file2)
+                else:
+                    print ""
+                    print "Both files need to be of type matlab (i.e. 'xxx.mat')."
+                    print ""
+                    result = False
+            else:
+                result = cmp_nn(file1, file2)
 
             if result == False:
                 if is_verbose == True:
