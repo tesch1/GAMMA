@@ -7,6 +7,7 @@ import sys
 import subprocess
 import scipy
 import scipy.io as sio
+import numpy
 import filecmp as fc
 from optparse import OptionParser
 
@@ -64,14 +65,14 @@ def cmp_mat(file1, file2):
 
 def compare_data(data_1, data_2):
 
-    max_relative_diff =  0.00000000001 # 1 part in 10 to the 11th.
-    dontcare_point = 0.000000001 # 1 part in 10 to the 9th.
+    max_relative_diff =  0.0000005 # 1 part in 10 to the 9th.
+    dontcare_point = 1e-28 # 1 part in 10 to the 9th.
 
     l = len(data_1.shape)
 
     if l==0:
         #print "l==0"
-        return compare_numbers(data_1, data_2, max_relative_diff, dontcare_point)
+        return compare_values(data_1, data_2, max_relative_diff, dontcare_point)
 
     if l == 1:
         #print "l==1"
@@ -93,32 +94,69 @@ def compare_data(data_1, data_2):
 
 def compare_lists(sources, targets, max_relative_difference, do_not_care_point):
     for source, target in zip(sources, targets):
-        if compare_numbers(source, target, max_relative_difference, do_not_care_point) == True:
+        if compare_values(source, target, max_relative_difference, do_not_care_point, True) == True:
             continue
         else:
-            print "source = " + str(source)
-            print "target = " + str(target)
             return False
 
     #print "returning true"
     return True
 
 
-def compare_numbers(test_value, expected_value, max_relative_difference, do_not_care_point):
+def compare_values(test_value, expected_value, max_relative_difference, do_not_care_point, do_print=False):
    
     # Compares two numbers (usually floats) for fuzzy equality.
 
-    difference = abs(test_value - expected_value)
+    tvt = type(test_value)
+
+    if tvt == float or tvt == numpy.float32 or tvt == numpy.float64:
+        return compare_floats(test_value, expected_value, max_relative_difference, do_not_care_point, do_print)
+    elif tvt == complex or tvt == numpy.complex64 or tvt == numpy.complex128:
+        return compare_complex(test_value, expected_value, max_relative_difference, do_not_care_point, do_print)
+    else:
+        if test_value != expected_value:
+            if do_print == True:
+                print "Other:"
+                print "test_value = " + str(test_value) + " and expected_value = " + str(expected_value)
+            return False
+        else:
+            return True
+                
+def compare_floats(test_value, expected_value, max_rel_diff, do_not_care_point, do_print = False):
+
+    abs_difference = abs(test_value - expected_value)
 
     # See if the difference is out of tolerance, and also meaningful
     # i.e. near-zero values sometimes show up as noise, like 7.382239e-304)
 
-    if (difference > ( abs(expected_value) * max_relative_difference )) or \
-       (difference > do_not_care_point):
+    if abs_difference > do_not_care_point:
+        if abs_difference > ( abs(expected_value) * max_rel_diff ):
+            if do_print == True:
+                print "float:"
+                print "test_value = %.13f and expected_value = %.13f" % (test_value, expected_value)
+            return False
+    
+    return True
+
+def compare_complex(test_value, expected_value, max_rel_diff, dncp, do_print = False):
+    tR = test_value.real
+    eR = expected_value.real
+
+    tI = test_value.imag
+    eI = expected_value.imag
+
+    compareR = compare_floats(tR, eR, max_rel_diff, dncp)
+    compareI = compare_floats(tI, eI, max_rel_diff, dncp)
+
+    if compareR == False or compareI == False:
+        if do_print == True:
+            print "complex:  compareR == " + str(compareR) + "  compareI == " + str(compareI)
+            print "I values are %.13f, %.13f" % (tI, eI)
+            print "test_value = (%.11f + %.11fj)" % (tR, tI)
+            print "expected_value = (%.11f + %.11fj)" % (eR, eI)
         return False
     else:
         return True
-
 
 # parse the command line.
 parser = OptionParser()
