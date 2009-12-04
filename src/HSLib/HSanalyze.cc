@@ -219,7 +219,7 @@ void wf_labels( std::string* wflabels, int* filter, const spin_sys& sys,
   int bfindl;					// For basis function coefficient index length
 
   int idig = 1;					// Basis function index printed digits
-  while(pow(10.0,long(idig)) < hs)		// Get the index printed digits from 
+  while(pow(10.0, idig) < hs)		// Get the index printed digits from 
     idig++;					// the maximum possible index, hs
   int bfout = 0;				// How many basis functions in wf
 
@@ -388,7 +388,7 @@ void ev_labels( std::string* evlabels, int* filter, gen_op& Op, double cutoff)
   if(rmax < cutoff) prre = 0;			// See if real eigenvalue components should print
   if(prre)
     {
-    while(pow(10.0,long(prre)) < rmax)		// Get the # of printed real digits from 
+    while(pow(10.0, prre) < rmax)		// Get the # of printed real digits from 
       prre++;					// the maximum possible real value
     }
 //          Generate strings for the Real Components of the Eigenvalues
@@ -423,7 +423,7 @@ void ev_labels( std::string* evlabels, int* filter, gen_op& Op, double cutoff)
   if(imax < cutoff) prim = 0;			// See if imag eigenvalue components should print
   if(prim)
     {
-    while(pow(10.0,long(prim)) < imax)		// Get the # of printed imaginary digits from 
+    while(pow(10.0, prim) < imax)		// Get the # of printed imaginary digits from 
       prim++;					// the maximum possible imag value
     }
 //          Generate  std::strings for the Imaginary Components of the Eigenvalues
@@ -573,7 +573,7 @@ void tref_labels( std::string* trlabels, const spin_sys& sys, const matrix &B,
   else						// Get the maximum index length if
     { 						// labeling states by number
     lenmax = 1;
-    while(pow(10.0,long(lenmax)) < hs)
+    while(pow(10.0, lenmax) < hs)
     lenmax++;
     }
 
@@ -903,7 +903,7 @@ void tran_types( std::string* trtypes, const spin_sys& sys, const matrix &B,
   if(rmax < cutoff) prre = 0;			// See if ther are any non-zero real
   if(prre) 					// transition components.  If so, set flag
     { 						// for printint and then get the # of  
-    while(pow(10.0,long(prre)) < rmax)		// printed real digits (above the decimal)
+    while(pow(10.0, prre) < rmax)		// printed real digits (above the decimal)
       prre++;					// from the maximum possible real value
     }
 //          Generate strings for the Real Components of the Transitions
@@ -942,7 +942,7 @@ void tran_types( std::string* trtypes, const spin_sys& sys, const matrix &B,
   if(imax < cutoff) prim = 0;			// See if imag transition components should print
   if(prim)
     {
-    while(pow(10.0,long(prim)) < imax)		// Get the # of printed imaginary digits from 
+    while(pow(10.0, prim) < imax)		// Get the # of printed imaginary digits from 
       prim++;					// the maximum possible imag value
     }
 //          Generate strings for the Imaginary Components of the Transitions 
@@ -1064,7 +1064,7 @@ void wavefunctions(std::ostream& ostr, int* filt, const spin_sys& sys, gen_op &O
       len = (wflabels[wf]).length();
       if(len > maxlen) maxlen = len;
       }
-    while(pow(10.0,long(idig)) < hs)		// Get wavefunction printed index size
+    while(pow(10.0, idig) < hs)		// Get wavefunction printed index size
       idig++;
 
     len = maxlen;				// Each wavefunction is this long
@@ -1200,7 +1200,7 @@ void eigensystem(std::ostream& ostr, int* filt, const spin_sys& sys, gen_op& Op,
       }
 
     int idig=1;					// Use this for eigenstate indexing
-    while(pow(10.0,long(idig)) < hs)		// Get eigenstate printed index size
+    while(pow(10.0, idig) < hs)		// Get eigenstate printed index size
       idig++;
 
     std::string *evlabels;			// Get the system eigenvalues
@@ -1350,7 +1350,7 @@ void transitions(std::ostream& ostr, int* filt, const spin_sys& sys, gen_op& Op,
       }
 
     int idig=1;					// Use this for eigenstate indexing
-    while(pow(10.0,long(idig)) < ls)		// Get eigenstate printed index size
+    while(pow(10.0, idig) < ls)		// Get eigenstate printed index size
       idig++;
 
     std::string *trevlabels;			// Get the system transition values
