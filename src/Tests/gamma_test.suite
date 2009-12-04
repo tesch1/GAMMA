@@ -24,3 +24,19 @@ command: par_xixA 4spin_CCHH.sys 50 -4252 0 0 0 150 -46634 0 108 -29 150 -46634 
 
 compare: test_parxix.log, golden/test_parxix.log
 compare: test_parxix.mat, golden/test_parxix.mat
+
+command: xix_dec 2spin_CH.sys 23000 3000 0.0 00.0 00.0 00.0 100000 00.0 1 0 2 100 30000 1 2048 test_xix01 > test_xix01.log
+
+compare: test_xix01.log, golden/test_xix01.log
+compare: test_xix01.mat, golden/test_xix01.mat
+
+command: xix_dec 2spin_CH.sys 23000 3000 0.0 00.0 00.0 00.0 100000 00.0 1 400 2 100 30000 1 2048 test_xix02 > test_xix02.log
+
+compare: test_xix02.log, golden/test_xix02.log
+compare: test_xix02.mat, golden/test_xix02.mat
+
+xix_dec 2spin_CH.sys  23000 3000 0.0 00.0 00.0 00.0 100000 00.0 1 4000 2 100 30000 1 2048 test_xix03 > test_xix03.log
+
+compare: test_xix03.log, golden/test_xix03.log
+compare: test_xix03.mat, golden/test_xix03.mat
+
