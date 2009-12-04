@@ -307,14 +307,14 @@ HSprop HSprop::Pow(int n) const
         // Note                       : Done in place, overwriting ham
  
 
-gen_op prop(const gen_op& ham, double time)
+gen_op prop(const gen_op& ham, const double time)
   {
   ham.set_EBR();                        // Put ham into its eigenbase
   complex z(0,-PIx2*time);		// Exponential factor (rad->Hz)
   return ham.exp(z);			// Generate evolution propagator
   }
         
-void prop_ip(gen_op& U, double time)
+void prop_ip(gen_op& U, const double time)
   {
   U.set_EBR();                          // Put ham into its eigenbase
   complex z(0,-PIx2*time);		// Exponential factor (rad -> Hz)
