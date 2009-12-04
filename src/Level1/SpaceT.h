@@ -48,7 +48,8 @@ class space_T;
 // to augment the "friend" declarations inside 
 // the class.
 
-MSVCDLL space_T A1(double x, double y, double z);
+MSVCDLL space_T A1(double x, double y, double z);
+
 MSVCDLL space_T A1(coord &pt);
 
 // No longer supported *** Marked for deletion 
@@ -97,7 +98,8 @@ MSVCDLL complex A21(int m, double Aiso, double delzz, double eta);
 
 MSVCDLL complex A21(int m, const matrix &mx);
 
-MSVCDLL complex A22(int m, double Aiso, double delzz, double eta);
+MSVCDLL complex A22(int m, double Aiso, double delzz, double eta);
+
 MSVCDLL complex A22(int m, const matrix &mx);
 
 MSVCDLL complex T_comp(const space_T &SphT, int L, int M);

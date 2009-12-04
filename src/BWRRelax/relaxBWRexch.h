@@ -126,7 +126,8 @@ MSVCDLL void REX_3(super_op& LOp, double* w, int rank, gen_op* T1s, gen_op* T2s,
 MSVCDLL void REXrf_4(super_op& LOp, int rank, gen_op* T1s, gen_op* T2s, matrix* J12a);
 
 MSVCDLL complex REXrf_4(int hs, gen_op* T1s, gen_op* T2s, matrix* J12,
-		 	         int rank, int a, int b, int aa, int bb);
+		 	         int rank, int a, int b, int aa, int bb);
+
 MSVCDLL void REXrf_3(super_op& LOp, double* w, int rank, gen_op* T1s,
                                          gen_op* T2s, matrix* J12, double cutoff=1.e-6);
 

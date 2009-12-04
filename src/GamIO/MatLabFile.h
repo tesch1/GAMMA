@@ -40,7 +40,8 @@
 MSVCDLL matrix MATLAB(const std::string& filename, const std::string& name, int warn=2);
  
 MSVCDLL int MATLAB(const std::string& file, const std::string& N,
-                                       const matrix& mx, int rc=1, int warn=2);
+                                       const matrix& mx, int rc=1, int warn=2);
+
 MSVCDLL int MATLAB(const std::string& file, const std::string& N,
                                        const coord_vec& cvec, int warn=2);
 

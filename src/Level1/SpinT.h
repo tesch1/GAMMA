@@ -152,7 +152,8 @@ MSVCDLL spin_op T_rot(spin_T &SphT1, int l, int m,
 // ??? this function should be removed, replaced by the member function!
 
 MSVCDLL spin_op T_prod(spin_T &SphT, space_T &SphA, int l, int m);
-MSVCDLL spin_op T_prod(space_T &SphA, spin_T &SphT, int l, int m);
+MSVCDLL spin_op T_prod(space_T &SphA, spin_T &SphT, int l, int m);
+
 MSVCDLL spin_op T_prod(spin_T &SphT, space_T &SphA, int l);
 MSVCDLL spin_op T_prod(space_T &SphA, spin_T &SphT, int l);
 
