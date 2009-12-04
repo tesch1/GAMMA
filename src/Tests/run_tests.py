@@ -48,25 +48,35 @@ def cmp_mat(file1, file2):
     contents1 = sio.loadmat(file1)
     contents2 = sio.loadmat(file2)
 
-    data1 = contents1[ contents1.keys()[0] ]
-    data2 = contents2[ contents2.keys()[0] ]
+    # Warning: Cannot guarantee that the data will be the 0th element in this array!!
 
-    if scipy.rank(data1) != scipy.rank(data2):
-        print "Data sets in the two files are not of the same rank"
-        return False
+    keylist = contents1.keys()
 
-    if data1.shape != data2.shape:
-        print "Data sets in the two files do not have the same shape"
-        return False
+    for key in keylist:
+        if key.startswith("test_"):        
+            
+            data1 = contents1[ key ]
+            data2 = contents2[ key ]
 
-    #print "About to run compare_data()"
-    return compare_data(data1, data2)
+            if scipy.rank(data1) != scipy.rank(data2):
+                print "Data sets in the two files are not of the same rank"
+                return False
+
+            if data1.shape != data2.shape:
+                print "Data sets in the two files do not have the same shape"
+                return False
+
+            #print "About to run compare_data()"
+            return compare_data(data1, data2)
+
+    print "No data to compare!"
+    return True
 
 
 def compare_data(data_1, data_2):
 
-    max_relative_diff =  0.0000005 # 1 part in 10 to the 9th.
-    dontcare_point = 1e-28 # 1 part in 10 to the 9th.
+    max_relative_diff =  0.0000005
+    dontcare_point = 1e-24 
 
     l = len(data_1.shape)
 
@@ -139,19 +149,37 @@ def compare_floats(test_value, expected_value, max_rel_diff, do_not_care_point, 
     return True
 
 def compare_complex(test_value, expected_value, max_rel_diff, dncp, do_print = False):
-    tR = test_value.real
+
+    abs_difference = abs(test_value - expected_value)
+
+    tR = test_value.real
     eR = expected_value.real
 
     tI = test_value.imag
     eI = expected_value.imag
 
-    compareR = compare_floats(tR, eR, max_rel_diff, dncp)
-    compareI = compare_floats(tI, eI, max_rel_diff, dncp)
+    if abs_difference > dncp:
+        if abs_difference > ( abs(expected_value) * max_rel_diff ):
+            if do_print == True:
+                print "complex-A:"
+                print "I values are %.29f, %.29f" % (tI, eI)
+                print "R values are %.29f, %.29f" % (tR, eR)
+                print "test_value = (%.11f + %.11fj)" % (tR, tI)
+                print "expected_value = (%.11f + %.11fj)" % (eR, eI)
+            return False
+
+    component_relative_diff =  0.0000005
+    component_dontcare_point = 5e-11 
+
+    compareR = compare_floats(tR, eR, component_relative_diff, component_dontcare_point)
+    compareI = compare_floats(tI, eI, component_relative_diff, component_dontcare_point)
 
     if compareR == False or compareI == False:
         if do_print == True:
-            print "complex:  compareR == " + str(compareR) + "  compareI == " + str(compareI)
-            print "I values are %.13f, %.13f" % (tI, eI)
+            print "complex-B:"
+            print "compareR == " + str(compareR) + "  compareI == " + str(compareI)
+            print "I values are %.29f, %.29f" % (tI, eI)
+            print "R values are %.29f, %.29f" % (tR, eR)
             print "test_value = (%.11f + %.11fj)" % (tR, tI)
             print "expected_value = (%.11f + %.11fj)" % (eR, eI)
         return False
@@ -204,13 +232,17 @@ for filename in filelist:
 
         # now try to interpret what we have.
         s = substrings[0]
+
+        if s[0] == '#':
+            continue
         if s == "suite":
             current_suite = substrings[1].strip()
-            print "Running Suite: " + current_suite + "\n"
+            print "Running Suite: " + current_suite
         if s == "command":
             command = ""
             command += options.path
             command += substrings[1].lstrip()
+            print ""
             print "running command: " + command
             retcode = subprocess.call(command, shell=True)
             if retcode < 0:

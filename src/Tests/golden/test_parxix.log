@@ -3,10 +3,6 @@
 Simulation of CP Under Double XiX Irradiation             
 ==========================================================
 
-Program version: par_xixA.cc compiled at Nov 13 2009, 13:15:41
-
-running on machine purcell
-
 Parameters:
 rotation angle thetam          : 54.7356 Degree
 size of spin system            : 4 spins
@@ -65,13 +61,13 @@ flip angle per pulse (S):      243 degree
 time increments:               2.5e-07s
 Output filename:               test_parxix
 
-1	beta = 1.8	alpha = 97.2	gamma = 147.6,	time used: 0 seconds
-11	beta = 19.8	alpha = 349.2	gamma = 183.6,	time used: 2 seconds
-21	beta = 37.8	alpha = 241.2	gamma = 219.6,	time used: 5 seconds
-31	beta = 55.8	alpha = 133.2	gamma = 255.6,	time used: 8 seconds
-41	beta = 73.8	alpha = 25.2	gamma = 291.6,	time used: 11 seconds
-51	beta = 91.8	alpha = 277.2	gamma = 327.6,	time used: 13 seconds
-61	beta = 109.8	alpha = 169.2	gamma = 3.6,	time used: 16 seconds
-71	beta = 127.8	alpha = 61.2	gamma = 39.6,	time used: 18 seconds
-81	beta = 145.8	alpha = 313.2	gamma = 75.6,	time used: 21 seconds
-91	beta = 163.8	alpha = 205.2	gamma = 111.6,	time used: 23 seconds
+1	beta = 1.8	alpha = 97.2	gamma = 147.6
+11	beta = 19.8	alpha = 349.2	gamma = 183.6
+21	beta = 37.8	alpha = 241.2	gamma = 219.6
+31	beta = 55.8	alpha = 133.2	gamma = 255.6
+41	beta = 73.8	alpha = 25.2	gamma = 291.6
+51	beta = 91.8	alpha = 277.2	gamma = 327.6
+61	beta = 109.8	alpha = 169.2	gamma = 3.6
+71	beta = 127.8	alpha = 61.2	gamma = 39.6
+81	beta = 145.8	alpha = 313.2	gamma = 75.6
+91	beta = 163.8	alpha = 205.2	gamma = 111.6

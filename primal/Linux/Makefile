@@ -1110,7 +1110,8 @@ TestGAMMA.o: %o: %cc
 # New Test routines
 #
 
-test:  ${BINDIR}/${LIB_NAME}  $(BINDIR)/runtests  $(BINDIR)/hstat run
+test:  ${BINDIR}/${LIB_NAME}  $(BINDIR)/runtests  $(BINDIR)/hstat \
+           $(BINDIR)/sl_exchange7_L $(BINDIR)/par_xixA $(BINDIR)/xix_dec run
 
 TESTS       = Tests
 TESTSBASE   = testsuite runtests
@@ -1119,7 +1120,7 @@ TESTSHDR    = testsuite.h
 TESTCCFILES   += $(addsuffix .cc, $(addprefix $(TESTS)/, $(TESTSBASE)))
 TESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(TESTSBASE)))
 
-ZTESTSBASE   = homo_stat
+ZTESTSBASE   = homo_stat sl_exchange7_L par_xixA xix_dec
 ZTESTSHDR    =
 
 ZTESTCCFILES += $(addsuffix .cc, $(addprefix $(TESTS)/, $(ZTESTSBASE)))
@@ -1138,8 +1139,17 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 $(BINDIR)/runtests : $(TESTOBJFILES)
 	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma 
 
-$(BINDIR)/hstat : $(ZTESTOBJFILES)
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(ZTESTOBJFILES) -L${BINDIR}/ -lgamma
+$(BINDIR)/hstat : $(BINDIR)/homo_stat.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma
+
+$(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma
+
+$(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma
+
+$(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma
 
 RUNDIR = ./../../src/Tests
 CURDIR = ./../../primal/Linux

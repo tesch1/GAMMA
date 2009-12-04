@@ -3,8 +3,6 @@
 Simulation of isotropic chemical shift by dipolar coupling
 ==========================================================
 
-Program version: sl_exchange7_L.cc compiled at Nov 13 2009, 13:00:29
-
 Parameters:
 rotation angle thetam          : 54.7356 Degree
 size of spin system            : 3 spins
@@ -30,8 +28,8 @@ correlation time               0.0005 s
 rf-field amplitude:            24000 Hz
 Output filename:               test_exchange
 
-1	beta = 3.6	alpha = 50.4	gamma = 79.2,	time used: 0 seconds
-11	beta = 39.6	alpha = 194.4	gamma = 151.2,	time used: 17 seconds
-21	beta = 75.6	alpha = 338.4	gamma = 223.2,	time used: 33 seconds
-31	beta = 111.6	alpha = 122.4	gamma = 295.2,	time used: 49 seconds
-41	beta = 147.6	alpha = 266.4	gamma = 7.2,	time used: 64 seconds
+1	beta = 3.6	alpha = 50.4	gamma = 79.2
+11	beta = 39.6	alpha = 194.4	gamma = 151.2
+21	beta = 75.6	alpha = 338.4	gamma = 223.2
+31	beta = 111.6	alpha = 122.4	gamma = 295.2
+41	beta = 147.6	alpha = 266.4	gamma = 7.2

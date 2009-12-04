@@ -134,9 +134,9 @@ int main(int argc, char *argv[])
 
   cout << "\n\nSimulation of CP Under Double XiX Irradiation             \n";
   cout << "==========================================================\n\n";
-  cout << "Program version: " << __FILE__ << " compiled at " << __DATE__ ", "
-       << __TIME__ << "\n\n";
-  cout << "running on machine " << hostname << "\n\n";
+  //cout << "Program version: " << __FILE__ << " compiled at " << __DATE__ ", "
+  //     << __TIME__ << "\n\n";
+  //cout << "running on machine " << hostname << "\n\n";
   cout << "Parameters:\n";
   cout << "rotation angle thetam          : " << thetam << " Degree\n";
   cout << "size of spin system            : " << nspins << " spins\n";
@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
     { getrusage(0, & me);
       cout << count << "\tbeta = " << beta << "\talpha = "
            << alpha << "\tgamma = " << gamma 
-           << ",\ttime used: " << me.ru_utime.tv_sec << " seconds\n";
+           << "\n";
       cout.flush();
     }
     scale = sin(beta/180.0*PI);
