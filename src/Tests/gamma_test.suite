@@ -35,7 +35,7 @@ command: xix_dec 2spin_CH.sys 23000 3000 0.0 00.0 00.0 00.0 100000 00.0 1 400 2 
 compare: test_xix02.log, golden/test_xix02.log
 compare: test_xix02.mat, golden/test_xix02.mat
 
-xix_dec 2spin_CH.sys  23000 3000 0.0 00.0 00.0 00.0 100000 00.0 1 4000 2 100 30000 1 2048 test_xix03 > test_xix03.log
+command: xix_dec 2spin_CH.sys  23000 3000 0.0 00.0 00.0 00.0 100000 00.0 1 4000 2 100 30000 1 2048 test_xix03 > test_xix03.log
 
 compare: test_xix03.log, golden/test_xix03.log
 compare: test_xix03.mat, golden/test_xix03.mat
