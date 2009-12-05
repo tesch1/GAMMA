@@ -2634,7 +2634,7 @@ std::vector<int> h_matrix::BlockDiag(_matrix* (&BD), std::vector<int> &U)
 //cout << "block-diag routine: point 01: " << me.ru_utime.tv_sec+me.ru_utime.tv_usec/1.0e6 << " seconds\n";
 //cout.flush();
   int nr = rows_;				// Matrix dimension
-  int count = 0;				// Count permutations
+  //int count = 0;				// Count permutations
   BD = new h_matrix(*this);			// Start with copy
 
   int i,nze=0,bs=0,t5,t6;

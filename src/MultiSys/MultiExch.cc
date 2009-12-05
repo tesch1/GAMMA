@@ -174,9 +174,9 @@ matrix Xnmp(const multi_sys& msys, int p)
     return matrix(msys.LS(),msys.LS(),0);	// is no exchange!
 
   int ncmps    = msys.NComps();			// # comps. in the system
-  int ncl      = msys.NCompsLHS(p);		// # comps. on left,  ex. proc p
-  int ncr      = msys.NCompsLHS(p);		// # comps. on right, ex. proc p
-  int comp0    = Pro.LHSComp(0);		// 0th component on lhs
+  //int ncl      = msys.NCompsLHS(p);		// # comps. on left,  ex. proc p
+  //int ncr      = msys.NCompsLHS(p);		// # comps. on right, ex. proc p
+  //int comp0    = Pro.LHSComp(0);		// 0th component on lhs
   double pmin  = msys.popmin();                 // Smallest component population
   int    dim   = msys.LS();			// Determine overall LS dim
   basis Dbs    = D_basis(msys);	        	// Default basis
@@ -423,7 +423,7 @@ void Xnmp(ostream& ostr, const multi_sys& msys, int p)
   int ncmps = msys.NComps();			// # comps. in the system
   int ncl   = msys.NCompsLHS(p);		// # comps. on left,  ex. proc p
   int ncr   = msys.NCompsLHS(p);		// # comps. on right, ex. proc p
-  int comp0 = Pro.LHSComp(0);			// 0th component on lhs
+  //int comp0 = Pro.LHSComp(0);			// 0th component on lhs
   double pmin  = msys.popmin();			// Smallest component population
   ostr << "\n\t - Exchange Rate Is "                       << K << "/sec";
   ostr << "\n\t - Components In Exchange On The Left Is "  << ncl;
