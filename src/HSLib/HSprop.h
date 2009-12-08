@@ -41,13 +41,13 @@
 #include <HSLib/GenOp.h>		// Know operator information
 #include <vector>			// Know libstdc++ STL vectors
 
-MSVCDLL extern gen_op prop(const gen_op& ham, const double time);
-MSVCDLL extern void   prop_ip(   gen_op& ham, const double time);
-MSVCDLL extern gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
-MSVCDLL extern void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
-MSVCDLL extern gen_op evolve(const gen_op& sigma, const gen_op& U);
-MSVCDLL extern void   evolve_ip(   gen_op& sigma, const gen_op& U);
 
+MSVCDLL gen_op prop(const gen_op& ham, const double time);
+MSVCDLL void   prop_ip(   gen_op& ham, const double time);
+MSVCDLL gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL gen_op evolve(const gen_op& sigma, const gen_op& U);
+MSVCDLL void   evolve_ip(   gen_op& sigma, const gen_op& U);
 
 class HSprop
   {
@@ -212,10 +212,11 @@ MSVCDLL HSprop Pow(int n) const;
         // Note                       : For the "ip" function, the evolution
 	//                              is done "in place" overwriting ham
 
- 
-//MSVCDLL friend gen_op prop(const gen_op& ham, const double time);
-//MSVCDLL friend void   prop_ip(   gen_op& ham, const double time);
- 
+#if defined(__SUNPRO_CC) 
+MSVCDLL friend gen_op prop(const gen_op& ham, const double time);
+MSVCDLL friend void   prop_ip(   gen_op& ham, const double time);
+#endif
+
 // ----------------------------------------------------------------------------
 //                 EVOLUTION UNDER A STATIC HAMILTONIAN
 // ---------------------------------------------------------------------------
@@ -232,9 +233,10 @@ MSVCDLL HSprop Pow(int n) const;
         // Note                       : As propagator U is unitless & the exp
         //                              argument is in radians, 2*PI is used
 
-//MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
 
-//MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+#if defined(__SUNPRO_CC)
+MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+#endif
 
 // ----------------------------------------------------------------------------
 //                EVOLUTION UNDER A HILBERT SPACE PROPAGATOR
@@ -251,9 +253,10 @@ MSVCDLL HSprop Pow(int n) const;
         //                              EB of sigma and the computation done
         //                              in that eigenbase
 
-//MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& U);
-
-//MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& U);
+#if defined(__SUNPRO_CC)
+MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& U);
+MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& U);
+#endif
 
 // ____________________________________________________________________________
 // H              HILBERT SPACE PROPAGATOR CONTAINER SUPPORT FUNCTIONS
