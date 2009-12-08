@@ -42,12 +42,12 @@
 #include <vector>			// Know libstdc++ STL vectors
 
 
-MSVCDLL gen_op prop(const gen_op& ham, const double time);
-MSVCDLL void   prop_ip(   gen_op& ham, const double time);
-MSVCDLL gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
-MSVCDLL void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
-MSVCDLL gen_op evolve(const gen_op& sigma, const gen_op& U);
-MSVCDLL void   evolve_ip(   gen_op& sigma, const gen_op& U);
+MSVCDLL extern gen_op prop(const gen_op& ham, const double time);
+MSVCDLL extern void   prop_ip(   gen_op& ham, const double time);
+MSVCDLL extern gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL extern void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL extern gen_op evolve(const gen_op& sigma, const gen_op& U);
+MSVCDLL extern void   evolve_ip(   gen_op& sigma, const gen_op& U);
 
 class HSprop
   {
