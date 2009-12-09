@@ -7,8 +7,8 @@ sl_exchange5.cc
 */
 
 #include "gamma.h"
-#include <sys/time.h>
-#include <sys/resource.h>
+//#include <sys/time.h>
+//#include <sys/resource.h>
 
 #define NPROP 1000
 #define MAXSPINS 3
@@ -35,8 +35,8 @@ int main(int argc, char *argv[])
   double alpha_D[MAXSPINS][MAXSPINS],beta_D[MAXSPINS][MAXSPINS];
   double gamma_D[MAXSPINS][MAXSPINS];
   double tauc, kex;
-  struct rusage me;
-  struct timeval tp;
+  //struct rusage me;
+  //struct timeval tp;
 
 
   int value1[] = {1, 50, 100, 144, 200, 300, 538, 1154};
@@ -44,8 +44,8 @@ int main(int argc, char *argv[])
   int value3[] = {1, 11,  41,  53,  79,  61, 229,  271};
 
 /*initialize the random number generator*/
-  gettimeofday(&tp,NULL);
-  srand48(tp.tv_usec);
+  //gettimeofday(&tp,NULL);
+  //srand48(tp.tv_usec);
   enable_blockdiag();
 
   count = 1;
@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
     alpha = 360.0 * ((value2[qu]*count) % value1[qu])/value1[qu];
     gamma = 360.0 * ((value3[qu]*count) % value1[qu])/value1[qu];
     if(count % 10 == 1)
-    { getrusage(0, & me);
+    { //getrusage(0, & me);
       cout << count << "\tbeta = " << beta << "\talpha = "
            << alpha << "\tgamma = " << gamma << "\n";
       cout.flush();

@@ -9,8 +9,8 @@ Brute force integration of the MAS rotation (one cycle)
 */
 
 #include "gamma.h"
-#include <sys/time.h>
-#include <sys/resource.h>
+//#include <sys/time.h>
+//#include <sys/resource.h>
 
 #define NPROP 8000
 #define MAXSPINS 10
@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
   double gamma_CSA[MAXSPINS];
   double alpha_D[MAXSPINS][MAXSPINS],beta_D[MAXSPINS][MAXSPINS];
   double gamma_D[MAXSPINS][MAXSPINS];
-  struct rusage me;
-  char hostname[200];
+  //struct rusage me;
+  //char hostname[200];
 
   int value1[] = {1, 50, 100, 144, 200, 300, 538, 1154};
   int value2[] = {1,  7,  27,  11,  29,  37,  55,  107};
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
   angleI     = n_pwI*time_prop*gamB1I*360;
   angleS     = n_pwS*time_prop*gamB1S*360;
 
-  (void) gethostname(hostname,199);
+  //(void) gethostname(hostname,199);
 
   cout << "\n\nSimulation of CP Under Double XiX Irradiation             \n";
   cout << "==========================================================\n\n";
@@ -230,7 +230,7 @@ int main(int argc, char *argv[])
     alpha = 360.0 * ((value2[qu]*count) % value1[qu])/value1[qu];
     gamma = 360.0 * ((value3[qu]*count) % value1[qu])/value1[qu];
     if(count % 10 == 1)
-    { getrusage(0, & me);
+    { //getrusage(0, & me);
       cout << count << "\tbeta = " << beta << "\talpha = "
            << alpha << "\tgamma = " << gamma 
            << "\n";

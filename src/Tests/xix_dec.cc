@@ -14,8 +14,8 @@ arbitrary orientation of the CAS tensor
 */
 
 #include "gamma.h"
-#include <sys/time.h>
-#include <sys/resource.h>
+//#include <sys/time.h>
+//#include <sys/resource.h>
 
 using namespace std;
 
@@ -41,8 +41,8 @@ int main(int argc, char *argv[])
   double alpha_CSA,beta_CSA,gamma_CSA;
   double alpha,beta,gamma;
   double phi;
-  struct rusage me;
-  char hostname[200];
+  //struct rusage me;
+  //char hostname[200];
   matrix exchange(16,16,0);
 
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
   time       = (1.0/mas_freq)/steps;
   time_gamB1 = 1.0/gamB1;
   mod_freq = ntimes*mas_freq;
-  (void) gethostname(hostname,199);
+  //(void) gethostname(hostname,199);
 
   cout << "\n\nSimulation of isotropic chemical shift by dipolar coupling\n";
   cout << "==========================================================\n\n";
@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
     alpha = 360.0 * ((value2[qu]*count) % value1[qu])/value1[qu];
     gamma = 360.0 * ((value3[qu]*count) % value1[qu])/value1[qu];
     if(count % 10 == 1)
-    { getrusage(0, & me);
+    { //getrusage(0, & me);
       cout << count << "\tbeta = " << beta << "\talpha = "
            << alpha << "\tgamma = " << gamma 
            << "\n";

@@ -244,6 +244,7 @@ for filename in filelist:
             command += substrings[1].lstrip()
             print ""
             print "running command: " + command
+            sys.stdout.flush()
             retcode = subprocess.call(command, shell=True)
             if retcode < 0:
                 s1 = "Attempt to call " + substrings[1] + " was terminated by signal " + str(retcode)
@@ -265,6 +266,7 @@ for filename in filelist:
             file2 = filenames[1].lstrip()
             if is_verbose == True:
                 print "Comparing: " + file1 + " " + file2
+                sys.stdout.flush()
 
             filebad = False
             fileout = ""
@@ -297,6 +299,7 @@ for filename in filelist:
                 if is_verbose == True:
                     print "*** TEST FAILED ***"
                     print ""
+                    sys.stdout.flush()
                 total_failures += 1
                 continue
 
