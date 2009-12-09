@@ -96,7 +96,15 @@ int main(int argc, char *argv[])
   cout << "Powder Quality Number:     " << qu << " (" << value1[qu] << " points)\n";
   cout << "Number of data points:     " << Fnp << " points\n";
   cout << "basic rf pulse frequency:  " << gamB1 << " Hz\n";
-  cout << "length of one prop. (dw):  " << time_prop << " s\n";
+
+	char tprop[100];
+#ifdef _MSC_VER
+	sprintf_s ( tprop, "%.10f", time_prop);
+#else
+	sprintf ( tprop, "%.10f", time_prop);
+#endif
+
+  cout << "length of one prop. (dw):  " << tprop << " s\n";
   cout << "phase angle (phi):         " << phi << " degree\n";
   cout << "Modulation frequency:      " << mod_freq << " Hz\n";
   cout << "MAS frequency:             " << mas_freq << " Hz\n";

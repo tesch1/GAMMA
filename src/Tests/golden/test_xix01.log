@@ -15,7 +15,7 @@ Rate constant (k):         0 1/s
 Powder Quality Number:     2 (100 points)
 Number of data points:     2048 points
 basic rf pulse frequency:  100000 Hz
-length of one prop. (dw):  3.33333e-05 s
+length of one prop. (dw):  0.0000333333 s
 phase angle (phi):         0 degree
 Modulation frequency:      30000 Hz
 MAS frequency:             30000 Hz
