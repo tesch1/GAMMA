@@ -15,11 +15,11 @@ Rate constant (k):         4000 1/s
 Powder Quality Number:     2 (100 points)
 Number of data points:     2048 points
 basic rf pulse frequency:  100000 Hz
-length of one prop. (dw):  3.33333e-05 s
+length of one prop. (dw):  0.0000333333 s
 phase angle (phi):         0 degree
 Modulation frequency:      30000 Hz
 MAS frequency:             30000 Hz
-time increments:           3.33333e-07s
+time increments:           0.000000333333s
 Output filename:           test_xix03
 
 1	beta = 1.8	alpha = 97.2	gamma = 147.6

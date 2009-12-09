@@ -108,7 +108,15 @@ int main(int argc, char *argv[])
   cout << "phase angle (phi):         " << phi << " degree\n";
   cout << "Modulation frequency:      " << mod_freq << " Hz\n";
   cout << "MAS frequency:             " << mas_freq << " Hz\n";
-  cout << "time increments:           " << time << "s\n";
+
+	char timex[100];
+#ifdef _MSC_VER
+	sprintf_s ( timex, "%.12f", time);
+#else
+	sprintf ( timex, "%.12f", time);
+#endif
+
+  cout << "time increments:           " << timex << "s\n";
   cout << "Output filename:           " << name << "\n";
   cout << "\n";
 

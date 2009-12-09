@@ -13,12 +13,24 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\test\test.vcproj
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hstat", "..\hstat\hstat.vcproj", "{DA41A81D-333D-43A9-BBD3-75A03A3BBB8C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7} = {6180ECF7-3BA9-4900-86AA-C5D8561D90F7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sl_exchange7_L", "..\sl_exchange7_L\sl_exchange7_L.vcproj", "{A59C91EC-276F-4B15-A02B-07DA5A503D68}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7} = {6180ECF7-3BA9-4900-86AA-C5D8561D90F7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "par_xixA", "..\par_xixA\par_xixA.vcproj", "{A03BCAE1-7FC0-4039-A6BD-4F71B796C8C3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7} = {6180ECF7-3BA9-4900-86AA-C5D8561D90F7}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xix_dec", "..\xix_dec\xix_dec.vcproj", "{2A55E71E-53FB-4BF1-A9F9-2301DFFFD5F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6180ECF7-3BA9-4900-86AA-C5D8561D90F7} = {6180ECF7-3BA9-4900-86AA-C5D8561D90F7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
