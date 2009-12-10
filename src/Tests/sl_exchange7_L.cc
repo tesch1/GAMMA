@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
 #ifdef _MSC_VER
 	sprintf_s ( timex, "%.6f", time);
 #else
-	sprintf ( timex, "%.12f", time);
+	sprintf ( timex, "%.6f", time);
 #endif
 
   cout << "time increments:               " << timex << "s\n";
@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 #ifdef _MSC_VER
 	sprintf_s ( tprop, "%.5f", time_prop);
 #else
-	sprintf ( tprop, "%.10f", time_prop);
+	sprintf ( tprop, "%.5f", time_prop);
 #endif
 
   cout << "dwell time:                    " << tprop << "s\n";
