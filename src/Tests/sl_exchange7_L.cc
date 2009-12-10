@@ -117,8 +117,24 @@ int main(int argc, char *argv[])
           " orientations)\n";
   cout << "Number of data points:         " << Fnp << " points\n";
   cout << "MAS frequency:                 " << mas_freq << " Hz\n";
-  cout << "time increments:               " << time << "s\n";
-  cout << "dwell time:                    " << time_prop << "s\n";
+
+	char timex[100];
+#ifdef _MSC_VER
+	sprintf_s ( timex, "%.6f", time);
+#else
+	sprintf ( timex, "%.12f", time);
+#endif
+
+  cout << "time increments:               " << timex << "s\n";
+
+	char tprop[100];
+#ifdef _MSC_VER
+	sprintf_s ( tprop, "%.5f", time_prop);
+#else
+	sprintf ( tprop, "%.10f", time_prop);
+#endif
+
+  cout << "dwell time:                    " << tprop << "s\n";
   cout << "jump rate constant             " << kex << " s-1\n";
   cout << "correlation time               " << tauc << " s\n";
   cout << "rf-field amplitude:            " << gamB1 << " Hz\n";

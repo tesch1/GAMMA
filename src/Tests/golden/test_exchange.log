@@ -21,8 +21,8 @@ isotropic chemical shift (2) : 1500 Hz
 Powder Quality Number:         1  (50 orientations)
 Number of data points:         4000 points
 MAS frequency:                 50000 Hz
-time increments:               1e-06s
-dwell time:                    2e-05s
+time increments:               0.000001s
+dwell time:                    0.00002s
 jump rate constant             1000 s-1
 correlation time               0.0005 s
 rf-field amplitude:            24000 Hz
