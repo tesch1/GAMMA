@@ -134,6 +134,52 @@ bool ask_set(int argc,char* argv[], int par, const string& Q, double& V)
   return true;
   }
 
+// Bankers rounding.
+// round to nearest even number with required precision.
+// maximum precision is currently set to 24 decimal places.
+double round_b(double a, unsigned int decimal_places)
+{
+	int sign = 1;
+	if(a < 0)
+	{
+	  sign = -1;
+		a = -a;
+	}
+	if(decimal_places > 24)
+		decimal_places = 24;
+
+	double tempInt_d;
+	double multiplier = pow(10.0, int(decimal_places)); 
+	double temp = a * multiplier;
+  double tempFrac = modf(temp, &tempInt_d);
+
+	int tempInt = static_cast<int>(tempInt_d + .000001);
+
+	if(tempFrac > 0.5)
+	{
+		tempInt += 1;
+	} 
+	else if (tempFrac < 0.5)
+	{
+		// do nothing.
+	}
+	else // temp frac == 0.5
+	{
+		if(((tempInt % 2) == 0))
+		{
+			// Do nothing.
+		}
+		else
+		{
+			// if the current integer value is not even, 
+			// round up to the even number.
+			tempInt += 1;
+		}
+	}
+
+	return ( sign * double(tempInt) / multiplier );	
+}
+
 // ____________________________________________________________________________ 
 // B                GAMMA Generic Error Handling Functions
 // ____________________________________________________________________________
