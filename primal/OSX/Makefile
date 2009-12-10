@@ -84,6 +84,15 @@
 #									#
 #########################################################################
 
+
+SRCDIR  = ../../src
+SRCDIR1 = ../../src
+
+SRCDIRINCL_FLAG = -I$(SRCDIR1)
+
+BINDIR   = ../../mac-darwin
+PYVERSION	  = 2.5
+
 DEBUG    = -g #-O2
 
 CC       = gcc
@@ -98,6 +107,10 @@ LIBCXXFLAGS = $(DEBUG)
 
 SOCPPFLAGS = -I../../src
 SOCXXFLAGS = -fno-common
+
+PYSGCPPINCLFLAGS = 
+PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
+PYSGCXXFLAGS = 
 
 LDFLAGS  = 
 exeext   = .out
@@ -130,8 +143,10 @@ LIB_NAME    = libgamma.a
 VERNO      = 4
 MINNO      = 1
 RELNO      = 0
+
 COMPVER    = ${VERNO}.${MINNO}
 CURRVER    = ${COMPVER}.${RELNO}
+
 SO_BASE    = libgamma
 SO_BAUL    = "========"
 SO_NAME    = ${SO_BASE}.dylib
@@ -141,6 +156,12 @@ SO_NAMEXX  = ${SO_BASE}.${COMPVER}.dylib
 SO_NAMEXXX = ${SO_BASE}.${CURRVER}.dylib
 
 PYG_NAME    = pygamma.dll
+
+#PYS_NAME    = _pygamma.dll
+PYS_NAME    = _pygamma.so
+PYS_NAMEX   = ${PYS_NAME}.${VERNO}
+PYS_NAMEXX  = ${PYS_NAMEX}.${MINNO}
+PYS_NAMEXXX = ${PYS_NAMEXX}.${RELNO}
 
 #########################################################################
 #                                                                       #
@@ -169,9 +190,13 @@ PYG_NAME    = pygamma.dll
 #                                                                       #
 #########################################################################
 
+
+# Many of the variables used in this file are defined in MakeMods !
+
 include ../../make/MakeMods
-SRCDIR   =  ../../src
-BINDIR   = ../../mac-darwin
+
+
+
 
 LIB_SRCS = $(ALLCCFILES)
 LIB_OBJS = $(addsuffix .o, $(addprefix $(BINDIR)/, $(ALLFILES)))
@@ -179,9 +204,33 @@ LIB_OBJS = $(addsuffix .o, $(addprefix $(BINDIR)/, $(ALLFILES)))
 SO_SRCS = $(ALLCCFILES)
 SO_OBJS = $(addsuffix .soo, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
+# Python Boost
 PYG_SRCS = $(ALLCCFILES)
 PYG_SRCS = 
 PYG_OBJS = $(addsuffix .po, $(addprefix $(BINDIR)/, $(ALLFILES)))
+
+# Python Swig
+PYSG_SRCS = $(ALLCCFILES)
+PYSG_SRCS = 
+PYSG_OBJS = $(addsuffix .pso, $(addprefix $(BINDIR)/, $(ALLFILES)))
+
+
+PYSG_WRAP_SRC = $(addprefix $(BINDIR)/, pygamma_wrap.cxx)
+PYSG_WRAP_SRC1 = $(addprefix $(BINDIR)/, pygamma.py)
+
+PYSG_WRAP_SRCS = $(PYSG_WRAP_SRC) $(PYSG_WRAP_SRC1)
+PYSG_WRAP_OBJS = $(addprefix $(BINDIR)/, pygamma_wrap.o)
+
+# If add a new .i file, it needs to be added to gamma/trunk/make/Makemods
+# You'll see examples there of how to do this.
+
+OTHERDOTIFILES = $(addprefix $(SRCDIR)/, $(ALLIFILES))
+
+$(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
+	@echo
+	swig -c++ -python -outdir $(BINDIR) -o $@ \
+         -I../../src $<
+
 
 #########################################################################
 #									#
@@ -376,6 +425,69 @@ ${BINDIR}/%.soo : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
 
 
+
+#########################################################################
+#
+#       Build _PGSGAMMA (SWIG) Shared Library Pattern Rules
+#
+#
+########################################################################
+
+${BINDIR}/%.pso : ${SRCDIR}/${BASICS}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${MATRIX}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${HSPACE}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${LEVEL1}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${LSPACE}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${LEVEL2}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${BLOCH}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${GAMIO}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${BWR}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${PULSES}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${INTRANK2}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${FLOQUET}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${GRADIENTS}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${MULTISYS}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${ESRLIB}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${DEPREC}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+
+$(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
+	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
+         $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
+
 #########################################################################
 #									#
 #                              Main Target				#
@@ -387,6 +499,13 @@ ${BINDIR}/%.soo : ${SRCDIR}/${TESTING}/%.cc
 #########################################################################
 
 all: $(BINDIR) $(BINDIR)/$(SO_NAME)
+
+pysg: $(BINDIR) $(BINDIR)/$(PYS_NAME)
+
+
+${SO_NAME}:  ${BINDIR}/${SO_NAME}
+${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
+
 #all: $(BINDIR)/$(LIB_NAME) $(BINDIR)/$(SO_NAME)
 #all: $(LIB_NAME) $(SO_NAME) $(PY_NAME)
 
@@ -590,9 +709,7 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 #########################################################################
 
 PYGFLAGS   = -D_PYGAMMA=1 -I${BOOSTINCDIR} -I${PYINCDIR}
-PYG_LDFLAGS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR} -lboost_python
-PYG_EXP_LIB = libpygamma.dll.a
-PYGLDLIBS = 
+
 PYINCDIR = C:/cygwin/usr/include/python2.2
 PYLIBDIR = C:/cygwin/lib/python2.2
 PYLIB2DIR = C:/cygwin/lib/python2.2/config
@@ -625,12 +742,15 @@ PyGAMMAChk:
 	@echo "Compiling GAMMA Source Into PyGAMMA Object Code"
 	@echo
 
+PYG_EXP_LIB = libpygamma.dll.a
+PYG_LDFLAGS =  -shared -lboost_python
+PYGLDLIBS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR}
 
 $(PYG_NAME): PyGAMMAChk $(PYG_OBJS)
 	@echo
 	@echo "Making PyGAMMA DLL $(PYG_NAME) From Pythonized Object Files"
 	@echo
-	g++ -shared -Wl,--out-implib=$(PYG_EXP_LIB) \
+	g++  -Wl,--out-implib=$(PYG_EXP_LIB) \
 	-o $(PYG_NAME) $(PYG_OBJS) $(PYG_LDFLAGS) $(PYG_LDLIBS)
 
 
@@ -653,6 +773,65 @@ $(PYG_NAME): PyGAMMAChk $(PYG_OBJS)
 # because the sources are compiled into object files with the variable	#
 # _PYGAMMA defined. This cause the build to include addtional sources	#
 # and headers required for PyGAMMA. The actual source code files from	#
+#                                                                       #
+#########################################################################
+
+
+
+########################################################################
+#
+#  Python Swig build shared library details
+#
+########################################################################
+
+
+
+PYSINCDIR    = /usr/include/python$(PYVERSION)
+PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
+PYSINCFLAGS = -I$(PYSINCDIR) -I$(PYSINC2DIR)
+PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
+
+PYSLIBDIR    = /usr/lib/python$(PYVERSION)
+PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
+
+#PYSGLDLIBS = 
+#PYSLIB_CONFIGDIR   = /usr/lib/python$(PYVERSION)/config
+
+
+PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
+
+$(PYSGAMMA_CHK):
+	@echo
+	@echo
+	@echo Checking for python include and lib directories
+	@echo
+	@if (test -d ${PYSINC2DIR} || test -d ${PYSINCDIR}); \
+	then echo Good. One of these Linux Python Includes Directory Exists. ${PYSINCDIRS}; \
+	else echo Cannot Find The Linux Python Includes Directory! ${PYSINCDIRS}; \
+	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
+	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+	     echo ; \
+	     false; \
+	fi
+	@if (test -d ${PYSLIBDIR} || test -d ${PYSLIB2DIR}); \
+	then echo Good. The Linux Python Library Directory Exists. ${PYSLIBDIRS}; \
+	echo 11 > $(PYSGAMMA_CHK);\
+	echo ;\
+	else echo Cannot Find The Linux Python Library Directory! ${PYSLIBDIRS}; \
+		echo Python Must Be Installed On The System For PyGAMMA To Work.; \		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \		echo ; \		false; \
+	fi
+	@echo 
+#PYS_LDFLAGS = -bundle -flat_namespace -undefined suppress
+PYS_LDFLAGS = -shared
+PYS_LDLIBS  = 
+
+${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK) 
+	@echo
+	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
+	@echo
+	g++ ${PYS_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+
+
 
 
 #########################################################################
@@ -892,6 +1071,7 @@ clean:
 	rm -f ${LIB_OBJS}
 	rm -f ${SO_OBJS}
 	@rm -f $(PYG_OBJS)
+	@rm -f $(PYSG_OBJS) $(PYSG_WRAP_SRCS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
 	@rm -f $(TEST_OBJ)
 	@rm -f *.asc
 	@rm -f *.gnu
