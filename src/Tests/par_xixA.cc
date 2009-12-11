@@ -166,17 +166,46 @@ int main(int argc, char *argv[])
           " orientations)\n";
   cout << "Number of data points:         " << Fnp << " points\n";
   cout << "MAS frequency:                 " << mas_freq << " Hz\n";
-  cout << "pulse length (XiX I):          " << time_pwI << " s\n";
+  
+  char timex[100];
+#ifdef _MSC_VER
+	sprintf_s ( timex, "%.6f", time_pwI);
+#else
+	sprintf ( timex, "%.6f", time_pwI);
+#endif
+  
+  cout << "pulse length (XiX I):          " << timex << " s\n";
   cout << "pulse length (XiX I):          " << n_pwI << " propagators\n";
-  cout << "pulse length (XiX S):          " << time_pwS << " s\n";
+  
+#ifdef _MSC_VER
+	sprintf_s ( timex, "%.6f", time_pwS);
+#else
+	sprintf ( timex, "%.6f", time_pwS);
+#endif
+  
+  cout << "pulse length (XiX S):          " << timex << " s\n";
   cout << "pulse length (XiX S):          " << n_pwS << " propagators\n";
   cout << "# of propagators/rotor cycle:  " << n_prop << "\n";
-  cout << "length of one propagator:      " << time_prop << " s\n";
+  
+#ifdef _MSC_VER
+	sprintf_s ( timex, "%.8f", time_prop);
+#else
+	sprintf ( timex, "%.8f", time_prop);
+#endif  
+  
+  cout << "length of one propagator:      " << timex << " s\n";
   cout << "# of rotor cycles:             " << n_cycle << "\n";
   cout << "# of evolution steps:          " << n_evolve << "\n";
   cout << "flip angle per pulse (I):      " << angleI <<" degree\n";
   cout << "flip angle per pulse (S):      " << angleS <<" degree\n";
-  cout << "time increments:               " << time << "s\n";
+  
+#ifdef _MSC_VER
+	sprintf_s ( timex, "%.8f", time);
+#else
+	sprintf ( timex, "%.8f", time);
+#endif  
+
+  cout << "time increments:               " << timex << "s\n";
   cout << "Output filename:               " << name << "\n";
   cout << "\n";
   cout.flush();

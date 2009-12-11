@@ -48,17 +48,17 @@ rf field amplitude on S spins: 45000 Hz
 Powder Quality Number:         2  (100 orientations)
 Number of data points:         513 points
 MAS frequency:                 33333.3 Hz
-pulse length (XiX I):          1.5e-05 s
+pulse length (XiX I):          0.000015 s
 pulse length (XiX I):          60 propagators
-pulse length (XiX S):          1.5e-05 s
+pulse length (XiX S):          0.000015 s
 pulse length (XiX S):          60 propagators
 # of propagators/rotor cycle:  120
-length of one propagator:      2.5e-07 s
+length of one propagator:      0.00000025 s
 # of rotor cycles:             1
 # of evolution steps:          1
 flip angle per pulse (I):      540 degree
 flip angle per pulse (S):      243 degree
-time increments:               2.5e-07s
+time increments:               0.00000025s
 Output filename:               test_parxix
 
 1	beta = 1.8	alpha = 97.2	gamma = 147.6
