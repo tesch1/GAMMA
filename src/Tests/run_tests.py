@@ -11,6 +11,13 @@ import numpy
 import filecmp as fc
 from optparse import OptionParser
 
+
+# According to the python 2.6.4 online documentation,
+# The following names have currently been registered:
+# 'posix', 'nt', 'mac', 'os2', 'ce', 'java', 'riscos'
+os_id = os.name
+     
+
 # define comparison function to be used by run_tests.py
 def cmp_nn(file1, file2):
     # Compare two files 
@@ -208,33 +215,83 @@ for filename in filelist:
     bad_thing_happened = False
     current_suite = ""
     f = open(filename)
+
+    execlist = []
+    delfiles = []
+
+    # read through and get a list of files to delete
+    # and organize the executable lines into a shorter list.
     for line in f.readlines():
-        substrings = line.split(':')
-        # validate that this data line has a valid format.
-        if len(substrings) == 0 or len(substrings) > 2:
-            continue
-        if len(substrings) == 1:
-            s = substrings[0].lstrip()
-            if s:  
-                # if there is something on this line and no ":", we have a problem.
-                s = s.rstrip()
-                print "\nBad command '" + s + "' in file: " + filename
-                bad_thing_happened = True
-                break
-            else:
-                # If this is effectively a blank line, then ignore,
-                # and move on the the next line.
+
+        line = line.strip()
+                
+        if len(line) > 0:
+            if line[0] == '#':  # ignore lines that begin with a '#'
                 continue
+        else:
+            continue  # ignore totally blank lines
+
+        #split into command and detailed information.
+        substrings = line.split(':')
+
+        # validate that this data line has a valid format.
+        if len(substrings) != 2:
+            continue
+
+        s = substrings[0].strip()
+
         # FIXME: 
         # We should add a check to make sure
         # the file does not try to compare files before
         # running the command, etc.
 
-        # now try to interpret what we have.
-        s = substrings[0]
+        # Is this a command we understand?
+        if s == "compare" or s == "suite" or s == "command":
 
-        if s[0] == '#':
+            execlist.append(line)
+
+            # make a list of files to delete.
+            if s == "compare":
+                st = substrings[1].strip()
+                filenames = st.split(",")
+                if len(filenames) >= 2: # make sure there are 2 files to compare.
+                    # then we should delete the first one.
+                    delfiles.append( filenames[0].strip() )
+        else:
+            print ""
+            print "*** Warning: Do not understand instruction, " + s + " !  ***"
+            print ""         
             continue
+
+
+    print "Deleting old output files: "
+    for dfile in delfiles:
+        if dfile.startswith("golden") or dfile.startswith("./golden") or dfile.startswith(".\golden"):
+            print ""
+            print "    *** WARNING: Do not want to delete your golden files, " + dfile
+            print "    Double check how you wrote your suite, " + filename
+            print ""
+            continue
+        if os.path.exists(dfile) == True:
+            print "    " + dfile
+            os.remove(dfile)
+
+    print ""
+
+    # Now execute all the executable lines...
+
+    for line in execlist:
+
+        # A little duplication here, but it's faster to code...for now.
+
+        substrings = line.split(':')
+
+        # double check that there are two items in this list.
+        if len(substrings) != 2:
+            continue
+
+        s = substrings[0].strip()
+
         if s == "suite":
             current_suite = substrings[1].strip()
             print "Running Suite: " + current_suite

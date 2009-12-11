@@ -148,18 +148,27 @@ double round_b(double a, unsigned int decimal_places)
 	if(decimal_places > 24)
 		decimal_places = 24;
 
-	double tempInt_d;
+	double int_a;
+	double *ia = &int_a;
+	double afrac = modf(a, ia);
+
+	double dTempInt = 0.0;
+	double *dt;
 	double multiplier = pow(10.0, int(decimal_places)); 
-	double temp = a * multiplier;
-  double tempFrac = modf(temp, &tempInt_d);
+	double temp = afrac * multiplier;
+	
+	dt = &dTempInt;
+  double frac = modf(temp, dt);
 
-	int tempInt = static_cast<int>(tempInt_d + .000001);
+	// add a little bit to this positive integer 
+	// so it casts out to the right int.
+	long tempInt = static_cast<long>(*dt + .01);
 
-	if(tempFrac > 0.5)
+	if(frac > 0.5)
 	{
-		tempInt += 1;
+		tempInt += 1L;
 	} 
-	else if (tempFrac < 0.5)
+	else if (frac < 0.5)
 	{
 		// do nothing.
 	}
@@ -167,17 +176,21 @@ double round_b(double a, unsigned int decimal_places)
 	{
 		if(((tempInt % 2) == 0))
 		{
-			// Do nothing.
+			// Do nothing. Already even.
 		}
 		else
 		{
 			// if the current integer value is not even, 
 			// round up to the even number.
-			tempInt += 1;
+			tempInt += 1L;
 		}
 	}
 
-	return ( sign * double(tempInt) / multiplier );	
+	double retVal = double(tempInt) / multiplier;
+	retVal += int_a;
+	retVal *= sign;
+
+	return retVal;	
 }
 
 // ____________________________________________________________________________ 
