@@ -62,6 +62,7 @@
 				OutputFile="&quot;..\..\i686-pc-msvc\par_xixA.exe&quot;"
 				AdditionalLibraryDirectories="&quot;..\..\i686-pc-msvc&quot;"
 				GenerateDebugInformation="true"
+				StackReserveSize="2000000"
 				TargetMachine="1"
 			/>
 			<Tool
