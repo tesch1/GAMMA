@@ -825,11 +825,10 @@ $(PYSGAMMA_CHK):
 		echo Python Must Be Installed On The System For PyGAMMA To Work.; \		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \		echo ; \		false; \
 	fi
 	@echo 
-#PYS_LDFLAGS = -bundle -flat_namespace -undefined suppress
-PYS_LDFLAGS = -shared -fPIC
-PYS_LDLIBS0  = python$(PYVERSION)
-PYS_LDLIBS1  = lib$(PYS_LDLIBS0).dylib
-PYS_LDLIBS   = -l $(PYS_LDLIBS0)
+
+PYS_LDFLAGS = -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup
+PYS_LDLIBS   =
+
 
 ${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK) 
 	@echo
