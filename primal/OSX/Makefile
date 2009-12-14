@@ -810,18 +810,18 @@ $(PYSGAMMA_CHK):
 	@echo Checking for python include and lib directories
 	@echo
 	@if (test -d ${PYSINC2DIR} || test -d ${PYSINCDIR}); \
-	then echo Good. One of these Linux Python Includes Directory Exists. ${PYSINCDIRS}; \
-	else echo Cannot Find The Linux Python Includes Directory! ${PYSINCDIRS}; \
+	then echo Good. One of these Python Includes Directory Exists. ${PYSINCDIRS}; \
+	else echo Cannot Find The Python Includes Directory! ${PYSINCDIRS}; \
 	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
 	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
 	     echo ; \
 	     false; \
 	fi
 	@if (test -d ${PYSLIBDIR} || test -d ${PYSLIB2DIR}); \
-	then echo Good. The Linux Python Library Directory Exists. ${PYSLIBDIRS}; \
+	then echo Good. The Python Library Directory Exists. ${PYSLIBDIRS}; \
 	echo 11 > $(PYSGAMMA_CHK);\
 	echo ;\
-	else echo Cannot Find The Linux Python Library Directory! ${PYSLIBDIRS}; \
+	else echo Cannot Find The Python Library Directory! ${PYSLIBDIRS}; \
 		echo Python Must Be Installed On The System For PyGAMMA To Work.; \		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \		echo ; \		false; \
 	fi
 	@echo 
