@@ -822,7 +822,10 @@ $(PYSGAMMA_CHK):
 	echo 11 > $(PYSGAMMA_CHK);\
 	echo ;\
 	else echo Cannot Find The Python Library Directory! ${PYSLIBDIRS}; \
-		echo Python Must Be Installed On The System For PyGAMMA To Work.; \		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \		echo ; \		false; \
+		echo Python Must Be Installed On The System For PyGAMMA To Work.; \
+		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+		echo ; \
+		false; \
 	fi
 	@echo 
 
