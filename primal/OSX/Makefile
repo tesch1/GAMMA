@@ -196,8 +196,6 @@ PYS_NAMEXXX = ${PYS_NAMEXX}.${RELNO}
 include ../../make/MakeMods
 
 
-
-
 LIB_SRCS = $(ALLCCFILES)
 LIB_OBJS = $(addsuffix .o, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
@@ -498,12 +496,15 @@ $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
 #									#
 #########################################################################
 
-all: $(BINDIR) $(BINDIR)/$(SO_NAME)
+all: so  pysg  lib
 
+so: $(BINDIR) $(BINDIR)/$(SO_NAME)
+lib: $(BINDIR) ${BINDIR}/${LIB_NAME}
 pysg: $(BINDIR) $(BINDIR)/$(PYS_NAME)
 
 
 ${SO_NAME}:  ${BINDIR}/${SO_NAME}
+${LIB_NAME}: ${BINDIR}/${LIB_NAME}
 ${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
 
 #all: $(BINDIR)/$(LIB_NAME) $(BINDIR)/$(SO_NAME)
@@ -793,6 +794,9 @@ PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
 
 PYSLIBDIR    = /usr/lib/python$(PYVERSION)
 PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
+PYSLIB3DIR   = /usr/local
+
+PYSG_LIBDIR = -L$(PYSLIBDIR) -L$(PYSLIB2DIR) -L$(PYSLIB3DIR)
 
 #PYSGLDLIBS = 
 #PYSLIB_CONFIGDIR   = /usr/lib/python$(PYVERSION)/config
@@ -822,14 +826,16 @@ $(PYSGAMMA_CHK):
 	fi
 	@echo 
 #PYS_LDFLAGS = -bundle -flat_namespace -undefined suppress
-PYS_LDFLAGS = -shared
-PYS_LDLIBS  = 
+PYS_LDFLAGS = -shared -fPIC
+PYS_LDLIBS0  = python$(PYVERSION)
+PYS_LDLIBS1  = lib$(PYS_LDLIBS0).dylib
+PYS_LDLIBS   = -l $(PYS_LDLIBS0)
 
 ${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK) 
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
-	g++ ${PYS_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+	g++ ${PYS_LDFLAGS} $(PYSG_LIBDIR) -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
 
 

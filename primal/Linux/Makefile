@@ -906,6 +906,7 @@ ${BINDIR}/$(PY_NAME): PyGAMMAChk $(PYG_OBJS)
 PYSINCDIR    = /usr/include/python$(PYVERSION)
 PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
 PYSINCFLAGS = -I${PYINCDIR} -I$(PYSINC2DIR)
+
 PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
 
 PYSLIBDIR    = /usr/lib/python$(PYVERSION)
@@ -913,7 +914,7 @@ PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
 
 #PYSGLDLIBS = 
 #PYSLIB_CONFIGDIR   = /usr/lib/python$(PYVERSION)/config
-#PYSG_LDFLAGS = -L${PYSLIBDIR} -L$(PYSGLIB2DIR) -L${PYSLIB_CONFIGDIR}
+PYSG_LDFLAGS = -L${PYSLIBDIR} -L$(PYSLIB2DIR)
 
 
 PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
@@ -944,7 +945,7 @@ ${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
-	g++ ${PYS_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+	g++ ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
 
 #    cp ${BINDIR}/${PYS_NAME} ${BINDIR}/${PYS_NAMEXXX}
