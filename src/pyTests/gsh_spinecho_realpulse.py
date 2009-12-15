@@ -34,7 +34,7 @@ ptime = pg.row_vector(pulse.size())
 
 #need to use pg.complex() so it can find correct function to call.
 for j in range(pulse.size()):
-	ptime.put(pg.complex(pulsestep, 0), j)
+    ptime.put(pg.complex(pulsestep, 0), j)
 
 pwf = pg.PulWaveform(pulse, ptime, "TestPulse")
 
@@ -66,4 +66,3 @@ sigma0 = pg.evolve(sigma1, Udelay2)     #Evolve through T2
 mx = ACQ.table(sigma0)                  #Transitions table (no lb)
 
 mx.dbwrite(outfile, out_name, specfreq, sys.spins(), 0, header)
-
