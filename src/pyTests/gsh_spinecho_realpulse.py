@@ -1,3 +1,5 @@
+from __future__ import division
+
 import pygamma as pg
 
 dir = ""
@@ -47,21 +49,21 @@ Udelay2 = pg.prop(H, t2);
 # Neet to effectively typecast D as a gen_op.
 ac = pg.acquire1D(pg.gen_op(D), H, 0.001)
 
-ACQ = ac;				  
+ACQ = ac;
 
 sigma0 = pg.sigma_eq(sys)
 
-sigma1 = pg.Iypuls(sys, sigma0, 90.0)    #Apply a 90y pulse
+sigma1 = pg.Iypuls(sys, sigma0, 90.0)   #Apply a 90y pulse
 
 sigma0 = pg.evolve(sigma1, Udelay1)     #Evolve through T1
 
-Ureal180  = pulc.GetUsum(-1)       #Get the propagator for steps of 180
+Ureal180  = pulc.GetUsum(-1)            #Get the propagator for steps of 180
 
-sigma1 = Ureal180.evolve(sigma0)    #Evolve through pulse
+sigma1 = Ureal180.evolve(sigma0)        #Evolve through pulse
 
 sigma0 = pg.evolve(sigma1, Udelay2)     #Evolve through T2
 
-mx = ACQ.table(sigma0)	       #Transitions table (no lb)
+mx = ACQ.table(sigma0)                  #Transitions table (no lb)
 
 mx.dbwrite(outfile, out_name, specfreq, sys.spins(), 0, header)
 
