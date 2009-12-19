@@ -37,6 +37,7 @@
 #include <fstream>			// Include file streams
 #include <string>			// Include libstdc++ strings
 #include <iostream>			// Include input output streams (cout)
+#include <cstring>
 
 using std::string;			// Using libstdc++ strings
 using std::vector;			// Using libstdc++ vectors
@@ -608,6 +609,11 @@ int SinglePar::read(std::ifstream& inp)
   {
   string input, scratch;			// Read string, scratch string
   char buf[200];				// Need a character buffer
+#ifdef _MSC_VER
+  strcpy_s(buf, "");
+#else
+  strcpy(buf, "");
+#endif
   inp.getline(buf, 200, '\n');			// Read line, to \n or 200 chars
   if(inp.eof())					// If we encounter the end of
     {						// the file, we exit if there
