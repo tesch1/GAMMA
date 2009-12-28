@@ -109,7 +109,8 @@ def compare_data(data_1, data_2):
     return True
 
 
-def compare_lists(sources, targets, max_relative_difference, do_not_care_point):
+def compare_lists(sources, targets, max_relative_difference, do_not_care_point):
+
     for source, target in zip(sources, targets):
         if compare_values(source, target, max_relative_difference, do_not_care_point, True) == True:
             continue
@@ -119,7 +120,8 @@ def compare_lists(sources, targets, max_relative_difference, do_not_care_point):
     #print "returning true"
     return True
 
-
+
+
 def compare_values(test_value, expected_value, max_relative_difference, do_not_care_point, do_print=False):
    
     # Compares two numbers (usually floats) for fuzzy equality.
