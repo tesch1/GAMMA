@@ -14,6 +14,13 @@
 **										**
 *********************************************************************************/
 
+#ifndef   Gcomplex_h_			// Is this file already included?
+#define   Gcomplex_h_ 			// If no, then remember it
+
+#if defined(GAMPRAGMA)		// Using the GNU compiler?
+#pragma interface			// Then this is the interface
+#endif
+
 /******************************************************************************
 **                                                                           **
 ** Description                                                               **
@@ -22,12 +29,6 @@
 **  algebraic operations, higher functions, onversions and IO routines.      **
 **                                                                           **
 ******************************************************************************/
-
-#ifndef   Gcomplex_h_			// Is this file already included?
-#  define Gcomplex_h_ 1			// If no, then remember it
-#  if defined(GAMPRAGMA)		// Using the GNU compiler?
-#    pragma interface			// Then this is the interface
-#  endif
 
 #include <iostream>			// Include input/output streams
 #include <cmath>			// Include math.h in libstdc++
