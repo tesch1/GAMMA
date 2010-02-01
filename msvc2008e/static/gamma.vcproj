@@ -27,6 +27,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
