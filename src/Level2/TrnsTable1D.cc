@@ -2649,17 +2649,17 @@ void TTable1D::dbwrite(  const string& fileName,
     ostr.close();     // Close file
 }
 
-
-void TTable1D::calc_spectra( vector<double> & freqout,
-                             vector<double> & ampout,                              
-                             vector<double> & phaseout,
-                             double specfreq,
-                             int numberspins) const
+spectral_data & TTable1D::calc_spectra( double specfreq,
+                                      int numberspins) const
 
 // Note       : Frequencies and Rates are in 1/sec
 {
-    std::vector<double>    freqs;
-    std::vector<int>       mx_index;
+    vector<double>    freqs;
+    vector<int>       mx_index;
+
+    vector<double> freqout;
+    vector<double> ampout;
+    vector<double> phaseout;
    
     double           freq;
     double           normal = 1.0;
@@ -2740,6 +2740,13 @@ void TTable1D::calc_spectra( vector<double> & freqout,
 	  }
   }
     
+  list<vector<double> > * l = new list<vector<double> >;
+  list<vector<double> > & el = *l;
+  el.push_back(freqout);
+  el.push_back(ampout);
+  el.push_back(phaseout);
+
+  return el;
 }
 
 

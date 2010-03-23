@@ -45,6 +45,9 @@
 #include <Matrix/row_vector.h>		// Knowledge of GAMMA row vectors
 #include <string>			// Knowledge of stdlibc++ strings
 #include <vector>			// Knowledge of stdlibc++ STL vectors
+#include <list>
+
+typedef std::list<std::vector<double> > spectral_data;
 
 class TTable1D: private matrix 
   {
@@ -746,12 +749,16 @@ MSVCDLL void 		dbwrite(    const std::string& fileName,
 							 	const int& numberspins,
 							 	const int& loop,
 						        const std::vector<std::string> & header) const;
-                                
+ 
+/*                               
 MSVCDLL void calc_spectra(      std::vector<double> & freqout,
-													      std::vector<double> & ampout,                              
-																std::vector<double> & phaseout,
+								std::vector<double> & ampout,                              
+								std::vector<double> & phaseout,
                                 double specfreq,
                                 int numberspins) const;
+*/
+spectral_data & calc_spectra(double specfreq,
+                                      int numberspins) const;
 
 // ------------------- Binary Read Functions (For Storage) --------------------
  
