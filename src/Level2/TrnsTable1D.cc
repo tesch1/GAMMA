@@ -2649,6 +2649,100 @@ void TTable1D::dbwrite(  const string& fileName,
     ostr.close();     // Close file
 }
 
+
+void TTable1D::calc_spectra( vector<double> & freqout,
+                             vector<double> & ampout,                              
+                             vector<double> & phaseout,
+                             double specfreq,
+                             int numberspins) const
+
+// Note       : Frequencies and Rates are in 1/sec
+{
+    std::vector<double>    freqs;
+    std::vector<int>       mx_index;
+   
+    double           freq;
+    double           normal = 1.0;
+    double           amptemp, ampsum, phasetemp;
+    unsigned long    bincount = 0;
+    const double     freqtol = 0.1/specfreq;        // Use something like half the minimum
+    const double     phasetol = 50.0;                // coupling const. divided by field
+    unsigned long    k;                        // strength for freqtol
+    int              foundone = 0;
+   
+    int ns=numberspins;
+
+
+    /* Get index array in PPM order -------------------------------------*/
+    mx_index = this->Sort(0,-1,0);     
+       
+    /* Convert frequencies to PPM ---------------------------------------*/
+    for(long ii=0; ii<this->size(); ii++)
+    {
+        freqs.push_back(-this->Fr(mx_index[ii])/(2.0*PI*specfreq));
+    }
+
+	// there is no more reference spins, normalization is taken
+	// place by the formula below, where ns is the number of spins
+	normal = pow(2.0,(ns-1));
+	normal = normal/2;
+
+    /* ----- Simple peak blending based on Freqtol and Phasetol -----*/
+	{
+		std::vector<double>::iterator itf;
+		long i;
+	   
+		for(i=0, itf=freqs.begin(); i<this->size(); i++, itf++)
+		{
+		    freq = *itf;  
+
+		    {
+		        amptemp   =  norm(this->I(mx_index[i]))/normal;
+		        phasetemp = -RAD2DEG*phase(this->I(mx_index[i]));		       
+		       
+		        if (bincount == 0) //this is to calculate the very first set of numbers
+		        {
+		            freqout.push_back(freq);
+		            ampout.push_back(amptemp);
+		            phaseout.push_back(phasetemp);
+
+		            bincount += 1;
+		        }
+		        else
+		        { 
+		            for(k=0; k < bincount && foundone == 0; k++) //this is equivalent to while loop in matlab
+		            {
+		                if(freq >= freqout[k]-freqtol && freq <= freqout[k]+freqtol)
+		                {
+		                    if (phasetemp >= phaseout[k]-phasetol && phasetemp <= phaseout[k]+phasetol)
+		                    {
+		                        ampsum      =  ampout[k]+amptemp;
+		                        freqout[k]  = (ampout[k]*freqout[k]  + amptemp*freq)/ampsum;
+		                        phaseout[k] = (ampout[k]*phaseout[k] + amptemp*phasetemp)/ampsum;
+		                        ampout[k]  +=  amptemp;
+
+		                        foundone = 1;                           
+		                    }
+		                }
+		            }
+		            if (foundone == 0)
+		            {
+		                freqout.push_back(freq);
+		                ampout.push_back(amptemp);
+		                phaseout.push_back(phasetemp);
+
+		                bincount += 1;
+		            }
+
+		            foundone = 0;
+		        } //end of else   
+		    }
+	  }
+  }
+    
+}
+
+
 // -------------------------- Binary Input Functions --------------------------
  
 	// Input		TTab1D	: Transitions table (this)

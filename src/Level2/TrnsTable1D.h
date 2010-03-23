@@ -746,6 +746,12 @@ MSVCDLL void 		dbwrite(    const std::string& fileName,
 							 	const int& numberspins,
 							 	const int& loop,
 						        const std::vector<std::string> & header) const;
+                                
+MSVCDLL void calc_spectra(      std::vector<double> & freqout,
+													      std::vector<double> & ampout,                              
+																std::vector<double> & phaseout,
+                                double specfreq,
+                                int numberspins) const;
 
 // ------------------- Binary Read Functions (For Storage) --------------------
  
