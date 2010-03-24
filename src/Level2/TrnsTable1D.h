@@ -47,7 +47,6 @@
 #include <vector>			// Knowledge of stdlibc++ STL vectors
 #include <list>
 
-typedef std::list<std::vector<double> > spectral_data;
 
 class TTable1D: private matrix 
   {
@@ -757,8 +756,11 @@ MSVCDLL void calc_spectra(      std::vector<double> & freqout,
                                 double specfreq,
                                 int numberspins) const;
 */
-spectral_data & calc_spectra(double specfreq,
-                                      int numberspins) const;
+MSVCDLL unsigned int calc_spectra(  std::vector<double> & freq,
+                                    std::vector<double> & ampl,
+                                    std::vector<double> & phase,
+                                    double specfreq,
+                                    int numberspins) const;
 
 // ------------------- Binary Read Functions (For Storage) --------------------
  

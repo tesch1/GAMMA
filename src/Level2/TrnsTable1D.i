@@ -6,10 +6,12 @@
 
 %include "std_vector.i"
 %include "std_string.i"
+%include "std_list.i"
 
 namespace std {
    %template(StringVector) vector<string>;
-   %template(IntVector) vector<int>;
+   %template(IntVector)    vector<int>;
+   %template(DoubleVector) vector<double>;
 }
 
 class TTable1D: private matrix 
@@ -126,15 +128,18 @@ void        dbwrite_old(const std::string& fileName,
 			            const int& loop,
 						const std::vector<std::string> & headerLines) const;
 
-void 		  dbwrite(   const std::string& fileName, 
+void        dbwrite(     const std::string& fileName, 
 						 const std::string& compname, 
 						 const double& specfreq,
 						 const int& numberspins,
 						 const int& loop,
 						 const std::vector<std::string> & header) const;
 						 
-spectral_data & calc_spectra( double specfreq,
-                                      int numberspins) const;
+unsigned int  calc_spectra( std::vector<double> & freq,
+                            std::vector<double> & ampl,
+                            std::vector<double> & phase,
+                            double specfreq,
+                            int numberspins) const;
  
 void           read(const std::string& fn);
 //std::ifstream& read(std::ifstream&     fp);

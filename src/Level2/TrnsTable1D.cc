@@ -2644,13 +2644,18 @@ void TTable1D::dbwrite(  const string& fileName,
 		    ostr << "\t" <<  ((*Ph) * (-1));    // phase
 		    ostr << "\n";       
 		}
+        //ostr << "bincount = " << bincount << "\n";
 	}
 
     ostr.close();     // Close file
 }
 
-spectral_data & TTable1D::calc_spectra( double specfreq,
-                                      int numberspins) const
+
+unsigned int    TTable1D::calc_spectra( vector<double> & frq,
+                                        vector<double> & amp,
+                                        vector<double> & phz,
+                                        double specfreq,
+                                        int numberspins) const
 
 // Note       : Frequencies and Rates are in 1/sec
 {
@@ -2737,16 +2742,22 @@ spectral_data & TTable1D::calc_spectra( double specfreq,
 		            foundone = 0;
 		        } //end of else   
 		    }
-	  }
-  }
+	    }
+    }
     
-  list<vector<double> > * l = new list<vector<double> >;
-  list<vector<double> > & el = *l;
-  el.push_back(freqout);
-  el.push_back(ampout);
-  el.push_back(phaseout);
 
-  return el;
+    frq.resize(bincount);
+    amp.resize(bincount);
+    phz.resize(bincount);
+
+    for(unsigned int i=0; i<bincount; i++)
+    {
+        frq[i] = freqout[i];
+        amp[i] = ampout[i];
+        phz[i] = -1.0*phaseout[i];
+    }
+
+    return bincount;
 }
 
 
