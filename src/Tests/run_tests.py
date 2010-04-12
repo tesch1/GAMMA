@@ -9,6 +9,7 @@ import scipy
 import scipy.io as sio
 import numpy
 import filecmp as fc
+import time
 from optparse import OptionParser
 
 
@@ -304,10 +305,18 @@ for filename in filelist:
             print ""
             print "running command: " + command
             sys.stdout.flush()
+
+
+
+            t1 = time.time()
             retcode = subprocess.call(command, shell=True)
+            t2 = time.time()
             if retcode < 0:
                 s1 = "Attempt to call " + substrings[1] + " was terminated by signal " + str(retcode)
                 print >> sys.stderr, s1
+            else:
+                print '\'%s\' took %0.3f seconds' %(command, (t2-t1))
+
         if s == "compare":
             total_comparisons += 1
             st = substrings[1]
