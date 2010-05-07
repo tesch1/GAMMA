@@ -83,8 +83,10 @@ def cmp_mat(file1, file2):
 
 def compare_data(data_1, data_2):
 
-    max_relative_diff =  0.0000005
+    max_relative_diff =  0.000002
     dontcare_point = 1e-24 
+    # See below for the analogous values for complex numbers
+    # I.e.: component_relative_diff AND component_dontcare_point
 
     l = len(data_1.shape)
 
@@ -178,7 +180,7 @@ def compare_complex(test_value, expected_value, max_rel_diff, dncp, do_print = F
                 print "expected_value = (%.11f + %.11fj)" % (eR, eI)
             return False
 
-    component_relative_diff =  0.0000005
+    component_relative_diff =  0.000002
     component_dontcare_point = 5e-11 
 
     compareR = compare_floats(tR, eR, component_relative_diff, component_dontcare_point)
