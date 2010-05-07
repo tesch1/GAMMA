@@ -1344,6 +1344,7 @@ installsolib: force
 	@echo " *         (This May Take A Couple Of Seconds)"
 	@${LDCONFIG} -n ${LIBINSTALLDIR}
 	@echo " * Adding Link For GAMMA Base Library Name"
+	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
 	@echo
 
