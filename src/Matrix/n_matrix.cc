@@ -41,6 +41,14 @@
 #include <vector>			// Include libstdc++ STL vectors
 #include <cmath>			// Inlcude HUGE_VAL_VAL
 
+// Comment out the next line if you do not want BLAS included.
+//#define _USING_BLAS_
+
+
+#ifdef _USING_BLAS_
+#include <cblas.h>
+#endif
+
 // ____________________________________________________________________________
 // i                  CLASS N_MATRIX CHECKING & ERROR HANDLING
 // ____________________________________________________________________________
@@ -769,116 +777,264 @@ _matrix* n_matrix::subtract(_matrix* mx)
 
 _matrix* n_matrix::multiply(_matrix* mx)
 
-        // Input                nmx  : Input normal matrix (this)
-	//			 mx  : Second matrix
-        // Output               pdt  : New matrix which is the product nmx*mx
-        // Note                      : Uses internal structure of other matrix types
+// Input                nmx  : Input normal matrix (this)
+//			 mx  : Second matrix
+// Output               pdt  : New matrix which is the product nmx*mx
+// Note                      : Uses internal structure of other matrix types
 
+//
 //                            ---
 //                <i|pdt|j> = \   <i|nmx|k> <k|mx|j>
 //                            /
 //                            ---
 //		               k
-  {
+{
   if(cols() != mx->rows())				// Insure nmx & mx dimension match
-    {
+  {
     NMxerror(51,1);					//    Mismatched dimensions
     NMxfatal(22);					//    Cannot perform multiplication
     return mx;
-    }
-  else
-    switch(mx->stored_type())
-      {
-      case n_matrix_type:				// Multiply n_matrix into n_matrix
-	{ 
-	int r = rows();					// Rows of product matrix (& of nmx)
-	int c = mx->cols();				// Columns of product matrix (& of mx)
-	int l = cols();					// Inner loop dimension (nmx cols & mx rows)
-	n_matrix* pdt =	new n_matrix(r,c);		// Create new matrix for product
-	complex *p00 = pdt->data;			// Start of data in pdt matrix
-	complex *n00 = data;				// Start of data in nmx matrix
-	complex *m00 = ((n_matrix*)mx)->data;	 	// Start of data in mx matrix
-	complex *pend = p00 + r*c;			// End of data in pdt matrix
-	complex *m0c = m00 + c;				// End of first row data in mx matrix
-	complex *mend = m00 + c*l;			// End of data in mx matrix
-	complex *nik = n00;				// Index for <i|nmx|k> set to <0|nmx|0>
-	complex *pij, *ni0, *m0j, *mkj;
-	complex z;					// Intermediate storage for <i|pdt|j>
-	for(pij=p00, ni0=n00; pij<pend; ni0=nik)	// Effective sum over index i
-	  for(m0j=m00; m0j<m0c; m0j++, pij++)		// Effective sum over index j
-	    {						// Effective sum over index k 
-	    for(z=0,nik=ni0,mkj=m0j; mkj<mend; nik++,mkj+=c)
-	      z += (*nik) * (*mkj);			// pij += <i|nmx|k><k|mx|j>
-	    *pij = z;
-	    }
-	return pdt;
-	break;
-	}
-      case h_matrix_type:				// Multiply n_matrix into h_matrix
-        {
-	int r = rows();					// Rows of product matrix (& of nmx)
-	int c = mx->cols();				// Columns of product matrix (& of mx)
-	n_matrix* hmx =	new n_matrix(c,c);		// Create new matrix h_matrix
-        mx->convert(hmx);				// Convert h_matrix mx into normal matrix hmx
-	int l = cols();					// Inner loop dimension (nmx cols & mx rows)
-	n_matrix* pdt =	new n_matrix(r,c);		// Create new matrix for product
-	complex *p00 = pdt->data;			// Start of data in pdt matrix
-	complex *n00 = data;				// Start of data in nmx matrix
-// sosi- looks like should be h_matrix below, fix & retest
-	complex *h00 = ((n_matrix*)hmx)->data; 		// Start of data in hmx matrix
-	complex *pend = p00 + r*c;			// End of data in pdt matrix
-	complex *h0c = h00 + c;				// End of first row data in mx matrix
-// sosi- looks like next line is wrong also
-	complex *hend = h00 + c*l;			// End of data in mx matrix
-	complex *nik = n00;				// Index for <i|nmx|k> set to <0|nmx|0>
-	complex *pij, *ni0, *h0j, *hkj;
-	complex z;					// Intermediate storage for <i|pdt|j>
-	for(pij=p00, ni0=n00; pij<pend; ni0=nik)	// Effective sum over index i
-	  for(h0j=h00; h0j<h0c; h0j++, pij++)		// Effective sum over index j
-	    {						// Effective sum over index k 
-	    for(z=0,nik=ni0,hkj=h0j; hkj<hend; nik++,hkj+=c)
-	      z += (*nik) * (*hkj);			// pij += <i|nmx|k><k|hmx|j>
-// sosi- looks incorrect? How does this work at all?
-	    *pij = z;
-	    }
-        delete hmx;					// Get rid of temporary hmx as n_matrix
-	return pdt;
-	break;
-	}
-      case d_matrix_type:				// Multiply n_matrix into d_matrix
-	{
-	int c = cols();					// Rows of product matrix
-	int r = rows();					// Cols of product matrix
-	n_matrix* pdt = new n_matrix(r,c); 		// Create new normal matrix
-	complex *p00 = pdt->data; 			// Start of data of pdt
-	complex *n00 = data;				// Start of data of nmx
-	complex *d00 = ((d_matrix*)mx)->data;		// Start of data of dmx
-	complex *pend = p00 + r*c;			// End of data of pdt
-	complex *dend = d00 + c;			// End of data in dmx
-	complex *pij, *nij, *dij, *ni0;			// Matrix elements & <i|nmx|0>
-	for(pij=p00, ni0=n00; pij<pend; ni0+=c)		// Effective loop over i
-	  for(dij=d00,nij=ni0; dij<dend; nij++,pij++,dij++)	// Effective loop over j
-	    *pij = *nij * *dij;				// <i|pdt|j> = <i|nmx|j><j|dmx|j>
-	return pdt;
-	break;
-	}
-      case i_matrix_type:				// Multiply i_matrix into n_matrix
-	return this;					// Return nmx  
-	break;
-      default:						// Multiply generic matrix into n_matrix
-	{ 						// Cannot use mx internal structure here
-	n_matrix* pdt =					// First construct ne normal matrix
-            new n_matrix(rows(),mx->cols(),complex0);
-	int pos = 0;					// Position of 1st element in pdt
-	int pos1 = 0;					// Position of 1st element in nmx
-	for(int i=0;  i<pdt->rows(); i++, pos1+=cols())	// Loop over the rows of nmx (&pdt) 
-	  for(int j=0; j<pdt->cols(); j++,pos++)	// Loop over the columns mx (&pdt)
-	    for(int k=0; k<cols(); k++)			// Loop over the inner index
-              pdt->data[pos] += this->data[pos1+k]*(*mx)(k,j);
-	return pdt;
-	}
-      }
   }
+  else
+  {
+    switch(mx->stored_type())
+    {
+      case n_matrix_type:				// Multiply n_matrix into n_matrix
+      { 
+            static bool printedNotice = false;
+
+#ifdef _USING_BLAS_
+
+			int A_rows = rows();
+            int A_cols = cols();            
+
+            int B_rows = mx->rows();
+            int B_cols = mx->cols();
+
+            int C_rows = A_rows;
+            int C_cols = B_cols;
+
+            if(printedNotice == false)
+            {
+                // Uncomment out for testing.
+                //std::cout << "\ncblas optimized code\n";
+                printedNotice = true;
+            }
+
+            //NOTE: This should only be used with matrices >= 256 on a side.
+
+            n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+
+            if(C_rows * C_cols > 64000)  //256*256 = 65536
+            {
+
+                //n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+
+                double *A = new double[2*A_rows*A_cols]; // double the size to handle both real and imaginary components.
+                double *B = new double[2*B_rows*B_cols];
+                double *C = new double[2*C_rows*C_cols];
+
+                // Copy over the A matrix. 
+                // There is probably a much faster way to do this
+                // by directly accessing the mx->data element.. more later.
+                complex abc;
+                for(int i=0; i<A_rows; i++)
+                {
+                    for(int j=0; j<A_cols; j++)
+                    {
+                        abc = get(i,j);
+                        A[2*(i*A_cols + j)]     = Re(abc);
+                        A[2*(i*A_cols + j) + 1] = Im(abc);
+                    }
+                }
+
+                // copy over the B matrix.
+                for(int i=0; i<B_rows; i++)
+                {
+                    for(int j=0; j<B_cols; j++)
+                    {
+                        abc = mx->get(i,j);
+                        B[2*(i*B_cols + j)]     = Re(abc);
+                        B[2*(i*B_cols + j) + 1] = Im(abc);
+                    }
+                }
+
+                int A_stride = A_cols;
+                int B_stride = B_cols;
+                int C_stride = C_cols;
+
+                double alpha[2] = {0,0};
+                double beta[2] = {0,0};
+
+                alpha[0] = 1.0;
+                beta[0]  = 0.0;
+
+			    cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
+                             &alpha, A, A_stride, B, B_stride, &beta, C, C_stride);
+
+                for(int i=0; i<C_rows; i++)
+                {
+                    for(int j=0; j<C_cols; j++)
+                    {
+                        // Here we are I*I
+                        complex cij( C[2*(i*C_cols + j)], C[2*(i*C_cols + j) + 1] );
+                        pdt->data[i*C_cols + j] = cij;
+                    }
+                }    
+
+                delete A;
+                delete B;
+                delete C;
+
+            }
+            else
+            {
+                // Duplicate of "original" code from n_matrix.multiply() as of 05/11/10.
+
+                int r = rows();					// Rows of product matrix (& of nmx)
+                int c = mx->cols();				// Columns of product matrix (& of mx)
+                int l = cols();					// Inner loop dimension (nmx cols & mx rows)
+                //n_matrix* pdt =	new n_matrix(r,c);		// Create new matrix for product
+                complex *p00 = pdt->data;			// Start of data in pdt matrix
+                complex *n00 = data;				// Start of data in nmx matrix
+                complex *m00 = ((n_matrix*)mx)->data;	 	// Start of data in mx matrix
+                complex *pend = p00 + r*c;			// End of data in pdt matrix
+                complex *m0c = m00 + c;				// End of first row data in mx matrix
+                complex *mend = m00 + c*l;			// End of data in mx matrix
+                complex *nik = n00;				// Index for <i|nmx|k> set to <0|nmx|0>
+                complex *pij, *ni0, *m0j, *mkj;
+                complex z;					// Intermediate storage for <i|pdt|j>
+
+                for(pij=p00, ni0=n00; pij<pend; ni0=nik)	// Effective sum over index i
+                {
+                  for(m0j=m00; m0j<m0c; m0j++, pij++)		// Effective sum over index j
+                  {						// Effective sum over index k 
+                    for(z=0,nik=ni0,mkj=m0j; mkj<mend; nik++,mkj+=c)
+                      z += (*nik) * (*mkj);			// pij += <i|nmx|k><k|mx|j>
+                      
+                    *pij = z;
+                  }
+                }
+
+            }
+
+#else
+
+        if(printedNotice == false)
+        {
+            // Uncomment out for testing
+            //std::cout << "\nplain old gamma\n";
+            printedNotice = true;
+        }
+
+        int r = rows();					// Rows of product matrix (& of nmx)
+        int c = mx->cols();				// Columns of product matrix (& of mx)
+        int l = cols();					// Inner loop dimension (nmx cols & mx rows)
+        n_matrix* pdt =	new n_matrix(r,c);		// Create new matrix for product
+        complex *p00 = pdt->data;			// Start of data in pdt matrix
+        complex *n00 = data;				// Start of data in nmx matrix
+        complex *m00 = ((n_matrix*)mx)->data;	 	// Start of data in mx matrix
+        complex *pend = p00 + r*c;			// End of data in pdt matrix
+        complex *m0c = m00 + c;				// End of first row data in mx matrix
+        complex *mend = m00 + c*l;			// End of data in mx matrix
+        complex *nik = n00;				// Index for <i|nmx|k> set to <0|nmx|0>
+        complex *pij, *ni0, *m0j, *mkj;
+        complex z;					// Intermediate storage for <i|pdt|j>
+
+        for(pij=p00, ni0=n00; pij<pend; ni0=nik)	// Effective sum over index i
+        {
+          for(m0j=m00; m0j<m0c; m0j++, pij++)		// Effective sum over index j
+          {						// Effective sum over index k 
+            for(z=0,nik=ni0,mkj=m0j; mkj<mend; nik++,mkj+=c)
+              z += (*nik) * (*mkj);			// pij += <i|nmx|k><k|mx|j>
+              
+            *pij = z;
+          }
+        }
+
+
+#endif
+        return pdt;
+        break;
+      }
+      
+      case h_matrix_type:				// Multiply n_matrix into h_matrix
+      {
+        int r = rows();					// Rows of product matrix (& of nmx)
+        int c = mx->cols();				// Columns of product matrix (& of mx)
+        n_matrix* hmx =	new n_matrix(c,c);		// Create new matrix h_matrix
+        mx->convert(hmx);				// Convert h_matrix mx into normal matrix hmx
+        int l = cols();					// Inner loop dimension (nmx cols & mx rows)
+        n_matrix* pdt =	new n_matrix(r,c);		// Create new matrix for product
+        complex *p00 = pdt->data;			// Start of data in pdt matrix
+        complex *n00 = data;				// Start of data in nmx matrix
+        // sosi- looks like should be h_matrix below, fix & retest
+        complex *h00 = ((n_matrix*)hmx)->data; 		// Start of data in hmx matrix
+        complex *pend = p00 + r*c;			// End of data in pdt matrix
+        complex *h0c = h00 + c;				// End of first row data in mx matrix
+        // sosi- looks like next line is wrong also
+        complex *hend = h00 + c*l;			// End of data in mx matrix
+        complex *nik = n00;				// Index for <i|nmx|k> set to <0|nmx|0>
+        complex *pij, *ni0, *h0j, *hkj;
+        complex z;					// Intermediate storage for <i|pdt|j>
+        for(pij=p00, ni0=n00; pij<pend; ni0=nik)	// Effective sum over index i
+        {
+          for(h0j=h00; h0j<h0c; h0j++, pij++)		// Effective sum over index j
+            {						// Effective sum over index k 
+            for(z=0,nik=ni0,hkj=h0j; hkj<hend; nik++,hkj+=c)
+              z += (*nik) * (*hkj);			// pij += <i|nmx|k><k|hmx|j>
+            // sosi- looks incorrect? How does this work at all?
+            *pij = z;
+            }
+        }
+        delete hmx;					// Get rid of temporary hmx as n_matrix
+        return pdt;
+        break;
+	  }
+      
+      case d_matrix_type:				// Multiply n_matrix into d_matrix
+	  {
+        int c = cols();					// Rows of product matrix
+        int r = rows();					// Cols of product matrix
+        n_matrix* pdt = new n_matrix(r,c); 		// Create new normal matrix
+        complex *p00 = pdt->data; 			// Start of data of pdt
+        complex *n00 = data;				// Start of data of nmx
+        complex *d00 = ((d_matrix*)mx)->data;		// Start of data of dmx
+        complex *pend = p00 + r*c;			// End of data of pdt
+        complex *dend = d00 + c;			// End of data in dmx
+        complex *pij, *nij, *dij, *ni0;			// Matrix elements & <i|nmx|0>
+        for(pij=p00, ni0=n00; pij<pend; ni0+=c)		// Effective loop over i
+          for(dij=d00,nij=ni0; dij<dend; nij++,pij++,dij++)	// Effective loop over j
+            *pij = *nij * *dij;				// <i|pdt|j> = <i|nmx|j><j|dmx|j>
+        return pdt;
+        break;
+      }
+      
+      case i_matrix_type:				// Multiply i_matrix into n_matrix
+      {
+        return this;					// Return nmx  
+        break;
+      }
+      
+      default:						// Multiply generic matrix into n_matrix
+      { 						// Cannot use mx internal structure here
+        n_matrix* pdt =					// First construct ne normal matrix
+        new n_matrix(rows(),mx->cols(),complex0);
+        int pos = 0;					// Position of 1st element in pdt
+        int pos1 = 0;					// Position of 1st element in nmx
+        for(int i=0;  i<pdt->rows(); i++, pos1+=cols())	// Loop over the rows of nmx (&pdt) 
+          for(int j=0; j<pdt->cols(); j++,pos++)	// Loop over the columns mx (&pdt)
+            for(int k=0; k<cols(); k++)			// Loop over the inner index
+                  pdt->data[pos] += this->data[pos1+k]*(*mx)(k,j);                  
+        return pdt;
+	  }
+    }
+  }
+
+  // This shouldn't be needed as it should never get here, 
+  // but it get's rid of a warning message.
+  return mx;
+}
 
 
 _matrix* n_matrix::multiply(const complex& z)

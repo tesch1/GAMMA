@@ -45,6 +45,22 @@
 #include <cmath>				// Inlcude HUGE_VAL_VAL
 #include <stdlib.h>
 
+
+//#define _USING_LAPACK_
+
+
+#ifdef _USING_LAPACK_
+// f2c_matrix.h is my own version of f2c.h
+// In it I commented out one line that caused compilation issues,
+// and was not needed for my implementation.
+#include "Matrix/f2c_matrix.h"
+#include "cblas.h"
+extern "C" {
+#include "clapack.h"
+}
+#endif
+
+
 // ____________________________________________________________________________
 // i                    CLASS H_MATRIX ERROR HANDLING
 // ____________________________________________________________________________
@@ -218,6 +234,7 @@ bool h_matrix::put(const complex& z, int i, int j)
       }
 
     data[i*cols_-(i*(i-1))/2] = z;	// Set the element
+
     return true;
     }
   else  				// Return False for non-diagonal elements
@@ -2008,23 +2025,24 @@ _matrix* h_matrix::tensor_product(_matrix* mx)
 
 void h_matrix::cred(_matrix* &U)
  
-        // Input        hmx     : A Hermitian matrix (this)
-        //              U       : Matrix (pointer) to contain eigenvectors
-        // Output       void    : Both matrices, hmx & U are altered
-        //                        Array hmx will be set tri-diagonal
-	//			  Array U will be Hermitian & Unitary
-	// Note			: On input U should be NULL.  It is
-	//			  set to a new array herein
+// Input        hmx     : A Hermitian matrix (this)
+//              U       : Matrix (pointer) to contain eigenvectors
+// Output       void    : Both matrices, hmx & U are altered
+//                        Array hmx will be set tri-diagonal
+//			              Array U will be Hermitian & Unitary
+// Note			: On input U should be NULL.  It is
+//			      set to a new array herein
  
-  {
-//	         Set Up A Complex Vector For Transformations
+{
+
+  //	         Set Up A Complex Vector For Transformations
 
   complex *W;					// Transformation vector
   W = new complex[rows_];
   complex *wend = W + rows_;			// End of vector W + 1
   complex *wl=W, *wlp1, *wi, *wj;		// To access W elements
 
-//		       Set Up An Array Of Eigenvectors
+  //		       Set Up An Array Of Eigenvectors
 
   U = new n_matrix(rows_,rows_,complex0);	// Alocate eigenvector mx
   complex *U00 = ((n_matrix*)U)->data;		// U00 = <0|U|0>
@@ -2034,8 +2052,8 @@ void h_matrix::cred(_matrix* &U)
   for(; Uii<Uend; Uii+=rows_+1)			// Initialize U to I matrix
     *Uii = complex1;
 
-//	            Set Up A Working Copy Of Input Array
-//		(Wish We Could Keep This Hermitian & Avoid It!)
+  //	            Set Up A Working Copy Of Input Array
+  //		(Wish We Could Keep This Hermitian & Avoid It!)
 
   n_matrix* nmx = NMX();			// Copy hmx to nmx for now
   complex *n00  = nmx->data;			// n00  = <0|nmx|0>
@@ -2043,20 +2061,20 @@ void h_matrix::cred(_matrix* &U)
   complex *ni0, *nij, *nji, *nil, *nli;		// To access nmx elements
   complex *nl0, *nlend, *nll, *nlp1l; 		// To access nmx elements
 
-//                      Householder Reduction Section
+  //                      Householder Reduction Section
 
-/* We Loop Through Columns Of The Input Hermitian Matrix. First, All Elements
-   That Are Not Tridiagonal (in the lth Row) Are Checked To See If They Are
-   Non-Zero. If So, Then We Do Some Math For The Transformation. Note That On
-   Successive Columns We Use The Updated Array With Alterations From The 
-   Previous Column Adjustment In Place.                                      */
+  /* We Loop Through Columns Of The Input Hermitian Matrix. First, All Elements
+     That Are Not Tridiagonal (in the lth Row) Are Checked To See If They Are
+     Non-Zero. If So, Then We Do Some Math For The Transformation. Note That On
+     Successive Columns We Use The Updated Array With Alterations From The 
+     Previous Column Adjustment In Place.                                      */
 
   double s, sw;					// Vector norms
   double csf;					// Column scaling factor
   for(int l=0; l<rows_-2; l++, wl++)		// Loop over l
-    {
+  {
 
-//	Check For Non-Zero Tridiagonal Elements Lower Part of Column l
+    //	Check For Non-Zero Tridiagonal Elements Lower Part of Column l
  
     csf = 0.0;					// Column scaling factor
     nll = n00 + l*rows_ + l; 			// Diagonal this l: <l|nmx|l>
@@ -2064,13 +2082,13 @@ void h_matrix::cred(_matrix* &U)
     for(; nil<nend; nil+=rows_)			// Get scaling factor from col
       csf += AbsNorm(*nil);			// elements not tri-diagonal
 
-/*            Next Generate The Vector W For Column l If Needed
+    /*            Next Generate The Vector W For Column l If Needed
 
-  This section assumes that  1. nll=<l|mx|l>   2. nend=<rows_|mx|rows_>+1
-                             3. wl = <l|W>                                   */
+    This section assumes that  1. nll=<l|mx|l>   2. nend=<rows_|mx|rows_>+1
+                               3. wl = <l|W>                                   */
 
     if(csf > 0.0)				// Only need to act if this
-      {						// is a non-triagonal column
+    {						// is a non-triagonal column
       wlp1 = wl+1;				// This is <l+1|W>
       nlp1l = nll + rows_;			// This is <l+1|nmx|l> 
       csf += AbsNorm(*nlp1l); 			// Adjust scaling factor
@@ -2078,23 +2096,29 @@ void h_matrix::cred(_matrix* &U)
       nil = nlp1l + rows_;			// Start at <l+2|nmx|l>
       for(; nil<nend; nil+=rows_)		// Loop down column l using
         sw += square_norm(*nil/csf);		// lower non-tridiagonals
+  
       s = sw + square_norm(*nlp1l/csf);
       s = csf*sqrt(s);
       if(*nlp1l != 0)				// <l+1|W> = 
-        {				  	//                     1+s 
+      {				  	//                     1+s 
         mul(*wlp1, *nlp1l, 1.0+s/norm(*nlp1l));	//    <l+1|mx|l> * ------------
-        }					//                 |<l+1|mx|l>|
-      else *wlp1 = -s;				// <l+1|W> = -s
+      }					//                 |<l+1|mx|l>|
+      else 
+      {
+        *wlp1 = -s;				// <l+1|W> = -s
+      }
+
       s = sw + square_norm(*wlp1/csf);
       s = sqrt(2/s)/csf;
       nil = nlp1l + rows_;			// Start at <l+2|nmx|l>
       wi = wlp1 + 1;				// Begin with <l+2|W>
       for(; nil<nend; wi++,nil+=rows_)		// Loop column l, lower non-
         mul(*wi, *nil, s);			// tridiags: <i|W>=s*<i|nmx|l>
+
       (*wlp1) *= s; 				// <l+1|W> *= s
          
-//                    Transform Matrix From The Left
-//                   This Will Alter The Input Array
+      //                    Transform Matrix From The Left
+      //                    This Will Alter The Input Array
  
 /* For the current column (l), the diagonal values should already be set.
    The element directly below (tri-diagonal) is determined, as are others
@@ -2138,29 +2162,29 @@ void h_matrix::cred(_matrix* &U)
       nlend = nl0 + rows_;			// End of row l
       nli = nl0 + l;				// Start <l|nmx|i>=<l|nmx|l>
       for(; nli<nlend; nli++)			// Loop over nmx row
-        {
+      {
         wj = wlp1;				// Start at <l+1|W>
         nji = nli+rows_;			// Start at <l+1|nmx|i>
         register double ssi=0, ssr=0;		// Real & imag scaling
         for(; wj<wend; wj++,nji+=rows_)		// Loop down nmx column & add
-          {					// <j|W*><j|nmxi> to ss
+        {					// <j|W*><j|nmxi> to ss
           register double tr = Re(*nji);	// Re(<j|nmx|i>
           register double ti = Im(*nji);	// Im(<j|nmx|i>
           register double wr = Re(*wj);		// Re(<j|W>) 		
           register double wi = Im(*wj);		// Im(<j|W>)
           ssr += wr*tr + wi*ti;
           ssi += wr*ti - wi*tr;
-          }
+        }
         wj = wlp1;				// Start at <l+1|W>
         nji = nli+rows_;			// Start at <l+1|nmx|i>
         for(; wj<wend; wj++,nji+=rows_)		// Loop down nmx column & subt.
-          {					// ss*<j|W> from <j|nmx|i>
+        {					// ss*<j|W> from <j|nmx|i>
           register double wr = Re(*wj);		// Re(<j|W>)
           register double wi = Im(*wj);		// Im(<j|W>)
           Re(*nji, Re(*nji)-ssr*wr+ssi*wi);	// Modify Re(j|nmx|i>)
           Im(*nji, Im(*nji)-ssr*wi-ssi*wr);	// Modify Im(j|nmx|i>)
-          }
         }
+      }
              
 //                    Transform Matrix From The Right
 //                    This Will Alter The Input Array
@@ -2201,31 +2225,31 @@ void h_matrix::cred(_matrix* &U)
       ni0 = n00 + l*rows_;				// <i|nmx|0>=<l|nmx|0>
       nil = ni0 + l;					// <i|nmx|l>=<l|nmx|l>
       for(nil=ni0+l; ni0<nend; ni0+=rows_,nil=ni0+l)	// Loop rows >= l
-        {
+      {
         register double ssi=0, ssr=0;			// Real & imag scaling
         wj = wlp1;					// Start at <l+1|W>
         nij = nil+1;					// Start at <i|nmx|l+1>
         for(; wj<wend; wj++,nij++) 			// Loop over nmx row i
-          {						// and sum <j|W><i|nmx|j>
+        {						// and sum <j|W><i|nmx|j>
           register double wr = Re(*wj);			// Re(<j|W>)
           register double wi = Im(*wj);			// Im(<j|W>)
           register double tr = Re(*nij);		// Re(<i|nmx|j>)
           register double ti = Im(*nij);		// Im(<i|nmx|j>)
           ssr += wr*tr - wi*ti;
           ssi += wr*ti + wi*tr;
-          }
+        }
         wj = wlp1;					// Start at <l+1|W>
         nij = nil+1;					// Start at <i|nmx|l+1>
         for(; wj<wend; wj++,nij++) 			// Loop over nmx row i & subt.
-          {						// ss*<j|W*> from <i|nmx|j>
+        {						// ss*<j|W*> from <i|nmx|j>
           register double wr = Re(*wj);			// Re(<j|W>)
           register double wi = Im(*wj);			// Im(<j|W>)
           Re(*nij, Re(*nij)-ssr*wr-ssi*wi);		// New Re(<i|nmx|j>)
           Im(*nij, Im(*nij)+ssr*wi-ssi*wr);		// New Im(<i|nmx|j>)
-          }
         }
+      }
              
-//                        Accumulate Transformations
+//              Accumulate Transformations
 //              (Maintains U As Both Hermitian And Unitary)
  
 /* We Are Through Altering The Input Array For This Column Adjustment.  Now
@@ -2255,37 +2279,37 @@ void h_matrix::cred(_matrix* &U)
                              3. wend = <rows_|W>+1 4. wlp1 = <l+1|W>         */
 
       for(Ui0=U00; Ui0<Uend; Ui0+=rows_)		// Loop all U rows
-        {
+      {
         Uil = Ui0 + l;					// <i|U|l>
         register double ssi=0, ssr=0;			// Real & imag scaling
         for(wj=wlp1, Uij=Uil+1; wj<wend; wj++,Uij++)	// Loop columns l+1 on
-          {
+        {
           register double wr = Re(*wj);			// Re(<j|W>)
           register double wi = Im(*wj);			// Im(<j|W>)
           register double tr = Re(*Uij);		// Re(<i|U|j>)
           register double ti = Im(*Uij);        	// Im(<i|U|j>)
           ssr += wr*tr - wi*ti;                 	// Add up real scaling
           ssi += wr*ti + wi*tr;				// Add up imag scaling
-          }
+        }
         for(wj=wlp1,Uij=Uil+1; wj<wend; wj++,Uij++)	// Loop from j=l+1
-          {
+        {
           register double wr = Re(*wj);			// Re(<j|W>)
           register double wi = Im(*wj);			// Im(<j|W>)
           Re(*Uij, Re(*Uij)-ssr*wr-ssi*wi);		// Set Re(<i|U|j>)
           Im(*Uij, Im(*Uij)+ssr*wi-ssi*wr);		// Set Im(<i|U|j>)
-          }
         }
       }
-    }    
+    }
+  }    
 
-  h_matrix* htmp = nmx->HMX();				// htmp = tri-diag-herm
+  h_matrix* htmp = nmx->HMX();		// htmp = tri-diag-herm
   delete [] data;					// Delete our own data
-  data = htmp->data;					// Set our data to htmp's
-  htmp->data = NULL;					// Set htmp data empty
+  data = htmp->data;				// Set our data to htmp's
+  htmp->data = NULL;				// Set htmp data empty
   delete htmp;						// Now delete htmp
   delete nmx;						// Remove working nmx
   delete [] W;						// Remove temp array
-  }
+}
  
 
 
@@ -2583,26 +2607,160 @@ void h_matrix::tqli(_matrix* (&U), _matrix* (&D), int newU)
 
 void h_matrix::diag(_matrix* (&D), _matrix* (&U))
 
-        // Input        hmx     : h_matrix (this)
-        //              D	: Pointer to mx to become diagonal mx
-        //              U    	: Pointer to mx to become eigenvectors mx
-        // Output       void    : The matrices D and U are set to the diagonal
-	//			  matrix of hmx eigenvalues and the matrix
-	//			  of dmx eigenvectors respectively.
-        // Note                 : Both U and D MUST be input pointing to
-	//			  NULL matrix. Their data will be allocated in
-	//			  cred and tqli respectively. Their reference
-	//			  counting MUST be handled externally.
-        // Note                 : D will be a d_matrix, U n_matrix unitary
+// Input        hmx     : h_matrix (this)
+//              D	    : Pointer to mx to become diagonal mx
+//              U    	: Pointer to mx to become eigenvectors mx
+//
+// Output       void    : The matrices D and U are set to the diagonal
+//                          matrix of hmx eigenvalues and the matrix
+//                          of dmx eigenvectors respectively.
+//
+// Note 1               : Both U and D MUST be input pointing to
+//                          NULL matrix. Their data will be allocated in
+//                          cred and tqli respectively. Their reference
+//                          counting MUST be handled externally.
+// Note 2               : D will be a d_matrix, U n_matrix unitary
 
-  {
-  h_matrix H(*this);			// Make a copy of hmx to use
-  H.cred(U);				// To Hermitian tridiagonal form
-  H.rred(U);				// To real symm. tridiagonal form
-  H.tqli(U, D);				// To real diagonal form
-  ((n_matrix*)U)->unitary = true;	// This should be unitary now
-  return;				// Now hmx = U*D*adj(U)
-  }
+{
+
+
+#ifdef _USING_LAPACK_
+
+    int nrows = this->rows();
+    int ncols = this->cols();
+
+
+    if(nrows != ncols)
+    {
+        // :****: See if there is a better command to call...
+        std::cout << "\n\nWARNING:  nrows does not equal ncols in h_matrix->diag()!!\n\n";
+        exit(-109);
+    }
+    
+    // rowCutoff is the minimum matrix size 
+    // that makes sense (to see any substantial speedup) 
+    // for using LAPACK.
+    static int rowCutoff = 256;
+
+    static bool didPrintFlag = false;
+
+    if(nrows < rowCutoff)  // then do it the old fashioned gamma way.
+    {
+        if(didPrintFlag == false)
+        {    
+            // uncomment when testing.
+            //std::cout << "\nPlain old gamma within LAPACK code.\n";
+            didPrintFlag = true;
+        }
+
+        h_matrix H(*this);			    // Make a copy of hmx to use
+        H.cred(U);				        // To Hermitian tridiagonal form
+        H.rred(U);				        // To real symm. tridiagonal form
+        H.tqli(U, D);				    // To real diagonal form
+        ((n_matrix*)U)->unitary = true;	// This should be unitary now
+    }
+    else
+    {
+        if(didPrintFlag == false)
+        {
+            // uncomment when testing.
+            //std::cout << "\nPURE LAPACK\n";
+            didPrintFlag = true;
+        }
+
+        long a_size = nrows * nrows;
+
+        static long dc_size = 2;
+        static doublecomplex *a1 = new doublecomplex[dc_size];
+
+        if(a_size > dc_size)
+        {    
+            delete [] a1;
+            a1 = new doublecomplex[a_size];
+            dc_size = a_size;
+        }
+
+        complex hij;
+
+        // assume everything is in row major ordering (i.e. the fortran standard).
+        for(int j=0; j<ncols; j++)
+        {
+            for(int i=0; i<nrows; i++)
+            {
+                if(i>j)
+                {
+                    // set lower diagonal components to zero.
+                    (a1[j*nrows + i]).r = 0.0;
+                    (a1[j*nrows + i]).i = 0.0;
+                }
+                else
+                {
+                    hij = this->get(i,j);
+                    (a1[j*nrows + i]).r = hij.Relem();
+                    (a1[j*nrows + i]).i = hij.Ielem();
+                }
+            }
+        } 
+
+        char jobz = 'V';  // Calculate "eigenvectors" AND "eigenvalues".
+        char uplo = 'U';  // Upper triangular...
+        integer  N    = nrows;
+        integer  lda  = nrows;
+        doublereal w_eig[N];
+        integer lwork = 2*N + 10;
+        doublecomplex work[lwork];
+        doublereal rwork[3*N-2];
+        integer info = -55555;
+
+        zheev_(&jobz, &uplo, &N, a1, &lda, w_eig, work, &lwork, rwork, &info);
+
+        if(info == 0)
+        {
+            // all is well.
+        }
+        else if (info > 0)
+        {
+            std::cout << "\nDiagonalization failed to converge\n";
+        }
+        else if(info == -55555)
+        {
+            std::cout << "\nReturn value, 'info', does not appear to have been set\n";
+        }
+        else
+        {
+            std::cout << "\ninfo = " << info << "\n";
+        }
+
+        // Create the matrixes D and U.
+        D = new d_matrix(nrows, ncols, complex0);
+        U = new n_matrix(nrows, ncols, complex0);
+
+        // Copy results back into D and U.
+
+        for(int i=0; i<nrows; i++)
+        {
+            D->put( w_eig[i], i, i);
+
+            for(int j=0; j<ncols; j++)
+            {
+                complex cc((a1[j*nrows + i]).r, (a1[j*nrows + i]).i);
+                U->put(cc, i, j);
+            }
+        }
+    }
+
+#else
+
+    h_matrix H(*this);			    // Make a copy of hmx to use
+    H.cred(U);				        // To Hermitian tridiagonal form
+    H.rred(U);				        // To real symm. tridiagonal form
+    H.tqli(U, D);				    // To real diagonal form
+    ((n_matrix*)U)->unitary = true;	// This should be unitary now
+
+#endif
+
+    return;				            // Now hmx = U*D*adj(U)
+}
 
 
 /*                         Diagonalization Routines
