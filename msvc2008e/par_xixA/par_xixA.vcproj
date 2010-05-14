@@ -114,7 +114,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				RuntimeLibrary="2"
+				AdditionalIncludeDirectories="&quot;..\..\src&quot;"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -130,7 +131,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="gamma.lib"
+				OutputFile="&quot;..\..\i686-pc-msvc\par_xixA.exe&quot;"
+				AdditionalLibraryDirectories="&quot;..\..\i686-pc-msvc&quot;"
 				GenerateDebugInformation="true"
+				StackReserveSize="2000000"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"

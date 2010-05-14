@@ -71,7 +71,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="../../i686-pc-msvc/gamma.lib"
+				OutputFile="..\..\i686-pc-msvc\gamma.lib"
 				SuppressStartupBanner="true"
 			/>
 			<Tool
@@ -104,6 +104,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -122,7 +123,7 @@
 				AdditionalOptions="/Zm200 "
 				Optimization="2"
 				InlineFunctionExpansion="1"
-				AdditionalIncludeDirectories="../../src"
+				AdditionalIncludeDirectories="..\..\src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				StringPooling="true"
 				RuntimeLibrary="0"
