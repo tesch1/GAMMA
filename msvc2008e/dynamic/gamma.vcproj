@@ -27,6 +27,8 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Swig code generation"
+				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc&#x0D;&#x0A;swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -50,7 +52,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/Zm200 "
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\Python25\include;../../src"
+				AdditionalIncludeDirectories="C:\Python25\include;..\..\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;GAMMA_EXPORTS;MAKEDLL=1"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -76,7 +78,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				OutputFile="../../i686-pc-msvc/_pygamma.pyd"
+				OutputFile="..\..\i686-pc-msvc\_pygamma.pyd"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="C:\Python25\libs"
@@ -124,7 +126,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Swig code generation"
-				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc&#x0D;&#x0A;swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i "
+				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc&#x0D;&#x0A;swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
