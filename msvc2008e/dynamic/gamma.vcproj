@@ -28,7 +28,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Swig code generation"
-				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc&#x0D;&#x0A;C:\bin\swigwin-1.3.40\swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
+				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc&#x0D;&#x0A;swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -126,7 +126,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Swig code generation"
-				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc&#x0D;&#x0A;C:\bin\swigwin-1.3.40\swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
+				CommandLine="if not exist ..\..\i686-pc-msvc mkdir ..\..\i686-pc-msvc&#x0D;&#x0A;swig -c++ -python -outdir ..\..\i686-pc-msvc  -I..\..\src -o ..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
