@@ -108,21 +108,29 @@ HDRINSTALLDIR = /usr/include/gamma-${VERNO}.${MINNO}.${RELNO}
 SRCDIR  = ../../src
 SRCDIR1 = ../../src
 
-SRCDIRINCL_FLAG = -I$(SRCDIR1)
+# Un-comment out these next two lines if using blas, atlas, or lapack,
+# and uncomment one or both of the following two lines
+#BLASINCL_FLAG   = -I/usr/include
+#LAPACKINCL_FLAG = -I/home/user/dev/CLAPACK-3.2.1/INCLUDE
+BLASINCL_FLAG   = 
+LAPACKINCL_FLAG = 
+
+SRCDIRINCL_FLAG = -I$(SRCDIR1) $(LAPACKINCL_FLAG) $(BLASINCL_FLAG)
 
 BINDIR        = ./../../i686-pc-linux-gnu
 PYVERSION	  = 2.5
 
 
-DEBUG    = -g 
+DEBUG    = -g
 OPTIMIZE = -O2
 
 CC       = gcc
 #CFLAGS   = $(DEBUG)
-CFLAGS    = $(OPTIMIZE)
+CFLAGS   = $(OPTIMIZE)
 
 CXX      = g++
 CPPFLAGS = $(SRCDIRINCL_FLAG) -DGSTATIC=1
+
 #CXXFLAGS = $(DEBUG)
 CXXFLAGS = $(OPTIMIZE)
 
@@ -144,6 +152,16 @@ PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = $(OPTIMIZE)
 
 LDFLAGS  = 
+
+### un-comment the next four lines if using blas/atls/lapack, 
+# and comment out next line.
+#LAPACK_LIBS = /home/user/dev/CLAPACK-3.2.1/lapack_LINUX.a 
+#BLAS_LIBS  = /home/user/dev/CLAPACK-3.2.1/libcblaswr.a   /home/user/dev/CLAPACK-3.2.1/F2CLIBS/libf2c.a \
+#              /usr/lib/atlas/libblas.a   /usr/lib/libatlas.a
+#LAB_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS)
+LAB_LIBS = 
+
+
 exeext   = .out
 defext   = .def
 
@@ -173,11 +191,11 @@ NPD      = --no-print-directory
 #       numbers are VERNO, MINNO, and RELNO respectively. For GAMMA we  #
 #       are currently on major version 4 and minor version 1 so that it #
 #       will have an soname of libgamma.so.4 whereas the library name   #
-#       produced in the build will be libgamma.so.4.1. When the library #
-#       libgamma.so.4.1 is put into a standard directory (e.g. into     #
+#       produced in the build will be libgamma.so.4.2. When the library #
+#       libgamma.so.4.2 is put into a standard directory (e.g. into     #
 #       /usr/lib .... done with make install) then the program ldconfig #
 #       will make the symbolic link between this file and the soname.   #
-#       That is, libgamma.so.4 -> libgamma.so.4.1. A second link is     #
+#       That is, libgamma.so.4 -> libgamma.so.4.2. A second link is     #
 #       set manually, libgamma.so -> libgamma.so.4 so that ld will find #
 #       the right GAMMA library (with soname) to use at link time. Then #
 #       if GAMMA is upgraded but not to the point that any previous     #
@@ -195,7 +213,7 @@ NPD      = --no-print-directory
 LIB_NAME    = libgamma.a
 
 VERNO      = 4
-MINNO      = 1
+MINNO      = 2
 RELNO      = 0
 SO_NAME    = libgamma.so
 SO_NAMEX   = ${SO_NAME}.${VERNO}
@@ -295,6 +313,7 @@ PYSG_WRAP_SRC1 = $(addprefix $(BINDIR)/, pygamma.py)
 PYSG_WRAP_SRCS = $(PYSG_WRAP_SRC) $(PYSG_WRAP_SRC1)
 PYSG_WRAP_OBJS = $(addprefix $(BINDIR)/, pygamma_wrap.o)
 
+# *** FYI ***
 # If add a new .i file, it needs to be added to gamma/trunk/make/Makemods
 # You'll see examples there of how to do this.
 
@@ -680,14 +699,14 @@ ${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
 #									#
 #########################################################################
 
-SO_LDFLAGS = -shared
-SO_LDLIBS  =
+SO_LDFLAGS = -shared $(LDFLAGS)
+SO_LDLIBS  = $(LAB_LIBS)
 
-PY_LDFLAGS = -shared
-PY_LDLIBS  =
+PY_LDFLAGS = -shared $(LDFLAGS)
+PY_LDLIBS  = $(LAB_LIBS)
 
-PYS_LDFLAGS = -shared
-PYS_LDLIBS  =
+PYS_LDFLAGS = -shared $(LDFLAGS)
+PYS_LDLIBS  = $(LAB_LIBS) 
 
 #########################################################################
 #									#
@@ -725,7 +744,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 	@echo
 	@echo "Making Static Library $(LIB_NAME) From Object Files"
 	@echo
-	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS)
+	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS) $(LDFLAGS) $(LAB_LIBS)
 	@echo
 	@echo "Adjusting Static Library $(LIB_NAME) For Random Access"
 	@echo
@@ -954,7 +973,7 @@ ${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
 
 #    cp ${BINDIR}/${PYS_NAME} ${BINDIR}/${PYS_NAMEXXX}
 
-# g++ -shared pygamma_wrap.o /home/dtodd/dev/gamma/trunk/i686-pc-linux-gnu/libgamma.so -o _pygamma.so
+# g++ -shared pygamma_wrap.o /home/user/dev/gamma/trunk/i686-pc-linux-gnu/libgamma.so -o _pygamma.so
 
 
 
@@ -1115,11 +1134,12 @@ TestGAMMA.o: %o: %cc
 # New Test routines
 #
 
-test:  ${BINDIR}/${LIB_NAME}  $(BINDIR)/runtests  $(BINDIR)/hstat \
-           $(BINDIR)/sl_exchange7_L $(BINDIR)/par_xixA $(BINDIR)/xix_dec run
+test:  ${BINDIR}/${LIB_NAME} $(BINDIR)/runtests $(BINDIR)/hstat \
+       $(BINDIR)/sl_exchange7_L $(BINDIR)/par_xixA $(BINDIR)/xix_dec run
+
 
 TESTS       = Tests
-TESTSBASE   = testsuite runtests
+TESTSBASE   = testsuite runtests 
 TESTSHDR    = testsuite.h
 
 TESTCCFILES   += $(addsuffix .cc, $(addprefix $(TESTS)/, $(TESTSBASE)))
@@ -1133,8 +1153,10 @@ ZTESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(ZTESTSBASE)))
 
 ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
+#CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
 CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
-CXX_TESTFLAGS = 
+CXX_TESTFLAGS = -O2
+
 LD_TESTFLAGS = 
 
 
@@ -1142,19 +1164,19 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma 
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 RUNDIR = ./../../src/Tests
 CURDIR = ./../../primal/Linux
@@ -1182,12 +1204,12 @@ run: force
 # to GAMMA are compiled. This script is tailored for a particular	#
 # version and installation, that is, it knows which GAMMA version it    #
 # is associated with & where the library + headers for that version are	#
-# located. For example, the version may be 4.1.0 & compiled for Linux.	#
+# located. For example, the version may be 4.2.0 & compiled for Linux.	#
 # The library headers are either placed in a Linux system directory	#
-# (e.g. /usr/include/gamma-4.1.0) or they are left in a GAMMA directory	#
-# (e.g. /E/gamma/gamma-4.1.0/src). Similarly the library itself is put  #
+# (e.g. /usr/include/gamma-4.2.0) or they are left in a GAMMA directory	#
+# (e.g. /E/gamma/gamma-4.2.0/src). Similarly the library itself is put  #
 # in either the Linux system directory (e.g. /usr/lib) or left in a	#
-# GAMMA directory (e.g. /E/gamma/gamma-4.1.0/i686-pc-linux-gnu). Since 	#
+# GAMMA directory (e.g. /E/gamma/gamma-4.2.0/i686-pc-linux-gnu). Since 	#
 # shared obeject libraries are preferable on Linux systems, the system  #
 # directories are best because then their location is standard. If, for #
 # reasons unknown, a static library is preferred then the either the    #
@@ -1222,7 +1244,7 @@ run: force
 # them.	All that is required for all this to work is that the gamma     #
 # script (or the compilation command) used to build GAMMA based 	#
 # programs know where the static library is located. This can be either #
-# a GAMMA directory (e.g /E/gamma/gamma-4.1.0/i686-pc-linux-gnu) or a 	#
+# a GAMMA directory (e.g /E/gamma/gamma-4.2.0/i686-pc-linux-gnu) or a 	#
 # Linux system directory (e.g. /usr/lib)                                #
 #									#
 # The same is NOT true when GAMMA based programs link to the shared	#
@@ -1250,7 +1272,7 @@ run: force
 # a symbolic link to the physical library, and the basic library        #
 # /usr/lib/libgamma.so will be a symbolic link to the library having    #
 # the soname name, /usr/lib/libgamma.so.#. Whew. In any event, the	#
-# GAMMA directory (e.g /E/gamma/gamma-4.1.0/i686-pc-linux-gnu) is NOT	#
+# GAMMA directory (e.g /E/gamma/gamma-4.2.0/i686-pc-linux-gnu) is NOT	#
 # used in this case to keep the shared object libraries on the system,	#
 # although they may be built in such a directory.			#
 #									#
@@ -1260,8 +1282,8 @@ run: force
 # programs will include the GAMMA source headers. Whether linking to	#
 # the static or shared library, the headers must exist in a known	#
 # location. On some systems this can be the GAMMA source directory	#
-# (e.g /E/gamma/gamma-4.1.0/src) or it can be a Linux system directory	#
-# (e.g. /usr/include/gamma-4.1.0). It is the latter directory that is	#
+# (e.g /E/gamma/gamma-4.2.0/src) or it can be a Linux system directory	#
+# (e.g. /usr/include/gamma-4.2.0). It is the latter directory that is	#
 # used in typical Linux system GAMMA binary installations.		#
 #									#
 # To summarize, this target (install) does the following:		#
@@ -1348,8 +1370,8 @@ installsolib: force
 	@echo " *         (This May Take A Couple Of Seconds)"
 	@${LDCONFIG} -n ${LIBINSTALLDIR}
 	@echo " * Adding Link For GAMMA Base Library Name"
-	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
+	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
 	@echo
 
 #################################################################################
@@ -1405,6 +1427,8 @@ clean:
 	@rm -f $(DEMO_OBJ)
 	@rm -f $(DEMO_PGM)
 	@rm -f ${BINDIR}/${SO_NAMEXXX}
+	@rm -f ${BINDIR}/${SO_NAMEX}
+	@rm -f ${BINDIR}/${SO_NAME}
 
 strip:
 	@strip ${BINDIR}/${LIB_NAME}
