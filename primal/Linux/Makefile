@@ -274,6 +274,8 @@ include ../../make/MakeMods
 #									#
 #########################################################################
 
+big: so lib pysg test
+
 all: so lib
 lib: windowsfilefix  $(BINDIR) ${BINDIR}/${LIB_NAME}
 so:  windowsfilefix  $(BINDIR) $(BINDIR)/$(SO_NAME)
@@ -1185,7 +1187,7 @@ run: force
 	@echo 
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
+	@cd $(RUNDIR); python$(PYVERSION) run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
 	@echo 
 	
 
