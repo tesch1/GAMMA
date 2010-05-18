@@ -274,7 +274,7 @@ include ../../make/MakeMods
 #									#
 #########################################################################
 
-big: so lib pysg test
+
 
 all: so lib
 lib: windowsfilefix  $(BINDIR) ${BINDIR}/${LIB_NAME}
@@ -287,6 +287,7 @@ ${SO_NAME}:  ${BINDIR}/${SO_NAME}
 ${PY_NAME}:  ${BINDIR}/${PY_NAME}
 ${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
 
+big: so lib pysg test
 
 #########################################################################
 
