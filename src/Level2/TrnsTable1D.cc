@@ -2632,6 +2632,9 @@ void TTable1D::dbwrite(  const string& fileName,
 	{
 		std::vector<double>::iterator Fr, Am, Ph;
 		unsigned long i;
+		char tempFr[100];
+		char tempAm[100];
+		char tempPh[100];
 
 		for(i=0, Fr=freqout.begin(), Am=ampout.begin(), Ph=phaseout.begin(); i<bincount; i++, Fr++, Am++, Ph++)
 		{
@@ -2639,9 +2642,18 @@ void TTable1D::dbwrite(  const string& fileName,
 		    ostr << "\t" <<  loop;                // loop number
 		    ostr << "\t" <<  0;                    // group number in metabolite
 		    ostr << "\t" <<  i;                    // line index in metabolite
-		    ostr << "\t" <<  *Fr;                // frequency in ppm
-		    ostr << "\t" <<  *Am;                // intensity
-		    ostr << "\t" <<  ((*Ph) * (-1));    // phase
+#ifdef _MSC_VER
+			sprintf_s(tempFr, "%.8f", *Fr);
+			sprintf_s(tempAm, "%.8f", *Am);
+		    sprintf_s(tempPh, "%.8f", ((*Ph) * (-1.0)) );
+#else
+			sprintf(tempFr, "%.8f", *Fr);
+			sprintf(tempAm, "%.8f", *Am);
+			sprintf(tempPh, "%.8f", ((*Ph) * (-1.0)) );
+#endif
+		    ostr << "\t" << tempFr;     // frequency in ppm
+			ostr << "\t" << tempAm;     // intensity
+		    ostr << "\t" << tempPh ;    // phase
 		    ostr << "\n";       
 		}
         //ostr << "bincount = " << bincount << "\n";

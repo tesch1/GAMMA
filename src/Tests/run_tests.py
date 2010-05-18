@@ -5,22 +5,49 @@ import os
 import glob
 import sys
 import subprocess
+import numpy
 import scipy
 import scipy.io as sio
-import numpy
 import filecmp as fc
 import time
 from optparse import OptionParser
+
 
 
 # According to the python 2.6.4 online documentation,
 # The following names have currently been registered:
 # 'posix', 'nt', 'mac', 'os2', 'ce', 'java', 'riscos'
 os_id = os.name
-     
 
+
+def is_numeric(x):
+    if(len(x) == 0):
+        return False
+    else:
+        count = 0
+        has_decimal = False
+        for n in x:
+            if count == 0 and (n=='+' or n=='-'):
+                    continue
+            elif n=='.':
+                if has_decimal == False:
+                    has_decimal = True
+                    continue
+                else:
+                    return False
+            elif n.isdigit():
+                continue
+            else:
+                return False
+            
+    return True            
+     
 # define comparison function to be used by run_tests.py
 def cmp_nn(file1, file2):
+
+    mrv =  0.000002
+    dncp = 0.0000001
+
     # Compare two files 
     # ignoring the newlines (lf vs cr-lf)
 
@@ -32,19 +59,64 @@ def cmp_nn(file1, file2):
 
     result = True
     while L1 or L2:
+        if L1 == None:
+            L2 = L2.strip("\r\n\f")
+            L2 = L2.strip()
+            if len(L2) > 0:
+                result == False
+                break
+            else:
+                continue
+        if L2 == None:
+            L1 = L1.strip("\r\n\f")
+            L1 = L1.strip()
+            if len(L1) > 0:
+                result == False
+                break
+            else:
+                continue
         L1 = L1.rstrip("\r\n\f")
         L2 = L2.rstrip("\r\n\f")
         if L1 != L2:
-            result = False
-            if is_verbose:
-                print file1 + ": '" + L1 + "'"
-                print file2 + ": '" + L2 + "'"
+            # Tokenize the string and compare them - element by element.
+            tokens1 = L1.split()
+            tokens2 = L2.split()
+            if(len(tokens1) != len(tokens2)):
+                result == False
+                break
+            
+            for t1, t2 in zip(tokens1, tokens2):
+                s1 = t1.strip()
+                s2 = t2.strip()                
+
+                if s1 == s2:
+                    continue
+                else:
+                    # print s1
+                    # print s2
+                    if is_numeric(s1) and is_numeric(s2):
+                        float_1 = float(s1)
+                        float_2 = float(s2) 
+
+                        if(compare_values(float_1, float_2, mrv, dncp) == False):
+                            result = False
+                            break
+                    else:
+                        result = False
+                        break
+
+        if(result == False):
             break
         L1 = f1.readline()
         L2 = f2.readline()   
 
     f1.close()
     f2.close()
+
+    if is_verbose and result == False:
+        print file1 + ": '" + L1 + "'"
+        print file2 + ": '" + L2 + "'"
+
     return result
 
 
@@ -84,7 +156,7 @@ def cmp_mat(file1, file2):
 def compare_data(data_1, data_2):
 
     max_relative_diff =  0.000002
-    dontcare_point = 1e-24 
+    dontcare_point     = 0.0000001
     # See below for the analogous values for complex numbers
     # I.e.: component_relative_diff AND component_dontcare_point
 
@@ -181,7 +253,7 @@ def compare_complex(test_value, expected_value, max_rel_diff, dncp, do_print = F
             return False
 
     component_relative_diff =  0.000002
-    component_dontcare_point = 5e-11 
+    component_dontcare_point = 0.00000005
 
     compareR = compare_floats(tR, eR, component_relative_diff, component_dontcare_point)
     compareI = compare_floats(tI, eI, component_relative_diff, component_dontcare_point)
