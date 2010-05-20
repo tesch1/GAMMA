@@ -161,7 +161,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Running Tests:"
-				CommandLine="cd ..\..\src\Tests&#x0D;&#x0A;python run_tests.py -v -p ..\\..\\i686-pc-msvc\\&#x0D;&#x0A;cd ..\..\msvc2008e\test&#x0D;&#x0A;"
+				CommandLine="cd ..\..\src\PyTests&#x0D;&#x0A;python ..\Tests\run_tests.py -v &#x0D;&#x0A;cd ..\..\src\Tests&#x0D;&#x0A;python run_tests.py -v -p ..\\..\\i686-pc-msvc\\&#x0D;&#x0A;cd ..\..\msvc2008e\test&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
