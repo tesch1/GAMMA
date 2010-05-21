@@ -1190,7 +1190,19 @@ run: force
 	@echo
 	@cd $(RUNDIR); python$(PYVERSION) run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
 	@echo 
-	
+
+
+# Python test suite.
+
+PY_RUNDIR = ./../../src/pyTests
+
+pytest: force
+	@echo 
+	@echo Running Python tests:
+	@echo
+	@cd $(PY_RUNDIR); python$(PYVERSION) ../Tests/run_tests.py -v; cd $(CURDIR)
+	@echo 	
+
 
 #########################################################################
 #									#

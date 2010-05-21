@@ -1,1 +1,18 @@
 suite: GammaPythonTests
+
+command: python2.5 fid.py
+compare: gsh_fid_pytest.txt, golden/fid_test.txt
+
+#command: python gsh_spinecho.py
+#compare: spinecho_test.txt, golden/spinecho_test.txt
+
+#command: python gsh_press_realpulse.py
+#compare: press_realpulses_test.txt, golden/press_realpulses_test.txt
+
+#command: python gsh_spinecho_realpulse.py
+#compare: spinecho_realpulses_test.txt, golden/spinecho_realpulses_test.txt
+
+#command: python gsh_fid_exchange.py
+#compare: fid_exchange_test.txt, golden/fid_exchange_test.txt
+
+#compare: outfile, golden/stdouterr.txt

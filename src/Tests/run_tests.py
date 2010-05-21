@@ -82,7 +82,7 @@ def cmp_nn(file1, file2):
             tokens1 = L1.split()
             tokens2 = L2.split()
             if(len(tokens1) != len(tokens2)):
-                result == False
+                result = False
                 break
             
             for t1, t2 in zip(tokens1, tokens2):
@@ -272,7 +272,7 @@ def compare_complex(test_value, expected_value, max_rel_diff, dncp, do_print = F
 
 # parse the command line.
 parser = OptionParser()
-parser.add_option("-p", "--path", dest="path", action="store", default=".",
+parser.add_option("-p", "--path", dest="path", action="store", default="",
                   help="path to executable test progams", metavar="PATH")
 parser.add_option("-v", "--verbose", dest="verbose", 
                     action="store_true", default=False,
