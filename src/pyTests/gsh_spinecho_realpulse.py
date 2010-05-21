@@ -7,7 +7,7 @@ dir = ""
 insysfile = dir + "gsh_test.sys"
 inpulse180file = dir + "bjs180_1.txt"
 
-outfile = dir + "spinecho_realpulses_pytest.txt";
+outfile = dir + "gsh_spinecho_realpulses_pytest.txt";
 
 out_name = "test_lines";
 

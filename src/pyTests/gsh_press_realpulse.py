@@ -5,7 +5,7 @@ import os
 
 dir = ""
 
-outfile = os.path.join(dir, "press_realpulses_pytest.txt")
+outfile = os.path.join(dir, "gsh_press_realpulses_pytest.txt")
 sysfile = os.path.join(dir, "gsh_test.sys")
 pulse180file = os.path.join(dir, "bjs180_1.txt")
 

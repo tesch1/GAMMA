@@ -3,7 +3,7 @@ from __future__ import division
 import pygamma as pg
 
 infile = "gsh_test.sys"
-outfile = "fid_exchange_pytest.txt"
+outfile = "gsh_fid_exchange_pytest.txt"
 
 s1 = "FID/Exchange  Test"
 s2 = "using input sys file: " + infile

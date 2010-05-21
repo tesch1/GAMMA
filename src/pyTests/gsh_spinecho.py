@@ -5,9 +5,8 @@ import pygamma as pg
 dir = ""
 
 sysfile = dir + "gsh_test.sys"
-outfile = dir + "spinecho_test.txt"
+outfile = dir + "gsh_spinecho_pytest.txt"
 
-#outname = "gsh-spin-echo"
 runname = "test_lines"
 
 sysfilestr = "using input sys file: " + sysfile
