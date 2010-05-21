@@ -1,6 +1,6 @@
 suite: GammaPythonTests
 
-command: python2.5 fid.py
+command: python fid.py
 compare: gsh_fid_pytest.txt, golden/fid_test.txt
 
 #command: python gsh_spinecho.py
