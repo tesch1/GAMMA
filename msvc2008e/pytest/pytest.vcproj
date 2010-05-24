@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="test"
-	ProjectGUID="{5AF2BA3E-2916-4F28-99F0-A412067B1D89}"
-	RootNamespace="test"
+	Name="pytest"
+	ProjectGUID="{C1E47959-2047-46EB-9C50-895A2E6B9EBF}"
+	RootNamespace="pytest"
 	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
@@ -40,10 +40,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\src&quot;"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="1"
+				RuntimeLibrary="3"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -58,9 +57,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gamma.lib"
-				OutputFile="&quot;..\..\i686-pc-msvc\runtests.exe&quot;"
-				AdditionalLibraryDirectories="&quot;..\..\i686-pc-msvc&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -84,8 +80,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Running Tests:"
-				CommandLine="cd ..\..\src\Tests&#x0D;&#x0A;python run_tests.py -v -p ..\\..\\i686-pc-msvc\\&#x0D;&#x0A;cd ..\..\msvc2008e\test&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -115,8 +109,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\..\src&quot;"
-				RuntimeLibrary="0"
+				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
 				DebugInformationFormat="3"
@@ -132,9 +125,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gamma.lib"
-				OutputFile="&quot;..\..\i686-pc-msvc\runtests.exe&quot;"
-				AdditionalLibraryDirectories="&quot;..\..\i686-pc-msvc&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -160,8 +150,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Running Tests:"
-				CommandLine="cd ..\..\src\Tests&#x0D;&#x0A;python run_tests.py -v -p ..\\..\\i686-pc-msvc\\&#x0D;&#x0A;cd ..\..\msvc2008e\test&#x0D;&#x0A;"
+				CommandLine="cd ..\..\src\PyTests&#x0D;&#x0A;python ..\Tests\run_tests.py -v"
 			/>
 		</Configuration>
 	</Configurations>
@@ -174,11 +163,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\src\Tests\runtests.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\Tests\testsuite.cc"
+				RelativePath=".\simple_test.cc"
 				>
 			</File>
 		</Filter>
@@ -187,14 +172,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\..\src\gamma.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\Tests\testsuite.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
