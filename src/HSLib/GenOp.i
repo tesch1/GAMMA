@@ -99,8 +99,8 @@ friend gen_op operator * (const gen_op &Op1, double z);
 friend gen_op operator * (double z,          const gen_op &Op1);
 */
 
-void operator *= (const complex &z);
-void operator *= (double r);
+gen_op operator *= (const complex &z);
+gen_op operator *= (double r);
 
 //friend gen_op operator / (const gen_op &Op1, const complex &z);
 //friend gen_op operator / (const gen_op& Op1, double r);

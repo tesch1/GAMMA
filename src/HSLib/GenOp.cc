@@ -1015,11 +1015,25 @@ gen_op operator * (const complex& z,   const gen_op&  Op1)
 gen_op operator * (const gen_op& Op1, double d) { return  (complex)d * Op1; }
 gen_op operator * (double d, const gen_op& Op1) { return  (complex)d * Op1; }
 
-void gen_op::operator *= (const complex& z)
-  { if(WBR) { setOnlyWBR(); WBR->RepMx *= z; } }
+gen_op gen_op::operator *= (const complex& z)
+{ 
+	if(WBR) 
+	{ 
+		setOnlyWBR(); 
+		WBR->RepMx *= z; 
+	} 
+	return *this;
+}
 
-void gen_op::operator *= (double r)
-  { if(WBR) { setOnlyWBR(); WBR->RepMx *= (complex)r; } }
+gen_op gen_op::operator *= (double r)
+{ 
+	if(WBR) 
+	{ 
+		setOnlyWBR(); 
+		WBR->RepMx *= (complex)r; 
+	} 
+	return *this;
+}
 
 gen_op operator / (const gen_op& Op1, const complex& z)
   {
