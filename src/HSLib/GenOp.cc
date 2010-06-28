@@ -1015,7 +1015,7 @@ gen_op operator * (const complex& z,   const gen_op&  Op1)
 gen_op operator * (const gen_op& Op1, double d) { return  (complex)d * Op1; }
 gen_op operator * (double d, const gen_op& Op1) { return  (complex)d * Op1; }
 
-gen_op gen_op::operator *= (const complex& z)
+gen_op & gen_op::operator *= (const complex& z)
 { 
 	if(WBR) 
 	{ 
@@ -1025,7 +1025,7 @@ gen_op gen_op::operator *= (const complex& z)
 	return *this;
 }
 
-gen_op gen_op::operator *= (double r)
+gen_op & gen_op::operator *= (double r)
 { 
 	if(WBR) 
 	{ 

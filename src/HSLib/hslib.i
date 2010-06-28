@@ -9,3 +9,4 @@
 %include "Basis.i"
 %include "HSprop.i"
 %include "SpinOp.i"
+%include "PulseS.i"

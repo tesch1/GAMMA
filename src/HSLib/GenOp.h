@@ -322,8 +322,8 @@ MSVCDLL friend gen_op operator * (double z,          const gen_op &Op1);
 	// Note			     : Result Op EXCLUSIVELY in WBR
 
 
-MSVCDLL gen_op operator *= (const complex &z);
-MSVCDLL gen_op operator *= (double r);
+MSVCDLL gen_op & operator *= (const complex &z);
+MSVCDLL gen_op & operator *= (double r);
 
 MSVCDLL friend gen_op operator / (const gen_op &Op1, const complex &z);
 
