@@ -60,8 +60,8 @@ void SetBasis(const gen_op& Op);
 gen_op evolve(const gen_op& Op) const;
 
 HSprop operator *  (const HSprop& U) const;
-void   operator *= (const HSprop& U);
-void   operator &= (const HSprop& U);
+HSprop &   operator *= (const HSprop& U);
+HSprop &   operator &= (const HSprop& U);
 
 HSprop sim_trans(const gen_op& Op);
 

@@ -163,8 +163,8 @@ MSVCDLL gen_op evolve(const gen_op& Op) const;
                             Order matters - U1*U2 != U2*U1                   */
 
 MSVCDLL HSprop operator *  (const HSprop& U) const;
-MSVCDLL void   operator *= (const HSprop& U);
-MSVCDLL void   operator &= (const HSprop& U);
+MSVCDLL HSprop &   operator *= (const HSprop& U);
+MSVCDLL HSprop &   operator &= (const HSprop& U);
 
 // ____________________________________________________________________________
 // F             PROPAGATOR FUNCTIONS, PROPAGATOR WITH OPERATOR

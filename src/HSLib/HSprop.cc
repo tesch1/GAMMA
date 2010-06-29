@@ -248,8 +248,19 @@ HSprop HSprop::operator * (const HSprop& U1) const
   return U; 
   }      
 
-void HSprop::operator *= (const HSprop& U1) { UOp *= U1.UOp; Ut += U1.Ut; } 
-void HSprop::operator &= (const HSprop& U1) { UOp &= U1.UOp; Ut += U1.Ut; } 
+HSprop & HSprop::operator *= (const HSprop& U1) 
+{ 
+    UOp *= U1.UOp; 
+    Ut += U1.Ut; 
+    return *this;
+} 
+
+HSprop & HSprop::operator &= (const HSprop& U1) 
+{ 
+    UOp &= U1.UOp; 
+    Ut += U1.Ut; 
+    return *this;
+} 
 
 // ____________________________________________________________________________
 // F             PROPAGATOR FUNCTIONS, PROPAGATOR WITH OPERATOR
