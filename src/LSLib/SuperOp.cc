@@ -443,24 +443,26 @@ super_op& super_op::operator *= (const super_op& LOp1)
   return (*this);
   }
 
-void super_op::operator &= (const super_op& LOp1)
- 
-  {                                                            
-  if(!LSp)           *this=super_op();  // LOp is NULL, product NULL
-  else if(!LOp1.LSp) *this=super_op();  // LOp1 is NULL, product NULL
+super_op& super_op::operator &= (const super_op& LOp1) 
+{                                                            
+  if(!LSp)           
+    *this=super_op();  // LOp is NULL, product NULL
+  else if(!LOp1.LSp) 
+    *this=super_op();  // LOp1 is NULL, product NULL
   else                                  // Both LOp & LOp1 exist so take
-    {                                   // their product
+  {                                   // their product
     if(!checkLOp(LOp1, 1)) 		// Insure Hilbert space compatibility
-      {                                 // If incompatible, then quit
+    {                                 // If incompatible, then quit
       LOperror(39, 1);		// LOp, LOp function error
       LOpfatal(22);		// LOp, LOp multiplication problems
-      }  
+    }  
     LOp_Hbase(LOp1);                    // Put LOp in LOp1 Hilbert basis
     LOp_base(LOp1);                     // Put LOp in LOp1 Liouville basis
     mx = LOp1.mx*mx;                    // Multiply by LOp1 matrix
-    }
-  return;
-  }  
+  }
+  
+  return *this;
+}  
 
 void super_op::operator = (const super_op& LOp1)
 

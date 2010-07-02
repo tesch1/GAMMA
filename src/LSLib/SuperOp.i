@@ -89,7 +89,7 @@ super_op& operator -= (const super_op& LOp1);
 
 super_op  operator *  (const super_op& LOp1) const;
 super_op& operator *= (const super_op& LOp1);
-void      operator &= (const super_op& LOp1);
+super_op& operator &= (const super_op& LOp1);
 
 
 //friend gen_op operator * (const super_op& LOp, const gen_op& Op1);

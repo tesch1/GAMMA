@@ -202,7 +202,7 @@ MSVCDLL super_op& operator -= (const super_op& LOp1);
 
 MSVCDLL super_op operator *  (const super_op& LOp1) const;
 MSVCDLL super_op& operator *= (const super_op& LOp1);
-MSVCDLL void     operator &= (const super_op& LOp1);
+MSVCDLL super_op& operator &= (const super_op& LOp1);
 MSVCDLL void     operator  = (const super_op& LOp1);
 
 // ____________________________________________________________________________
