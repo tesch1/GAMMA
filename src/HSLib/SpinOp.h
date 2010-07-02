@@ -189,11 +189,11 @@ spin_op& operator= (const spin_op& SOp);
 
 MSVCDLL        spin_op operator-  ()                    const;
 MSVCDLL        spin_op operator+  (const spin_op& SOp1) const;
-MSVCDLL        void    operator+= (const spin_op& SOp1);
+MSVCDLL        spin_op &    operator+= (const spin_op& SOp1);
 MSVCDLL friend spin_op          operator-  (const spin_op& SOp1, const spin_op& SOp2);
-MSVCDLL        void    operator-= (const spin_op& SOp1);
+MSVCDLL        spin_op &    operator-= (const spin_op& SOp1);
 MSVCDLL friend spin_op          operator*  (const spin_op& SOp1, const spin_op& SOp2);
-MSVCDLL        void    operator*= (const spin_op& SOp1);
+MSVCDLL        spin_op &    operator*= (const spin_op& SOp1);
  
 // ____________________________________________________________________________
 // C                   SPIN OPERATOR - SCALAR FUNCTIONS
@@ -214,12 +214,12 @@ MSVCDLL friend spin_op       operator*  (const spin_op& SOp, const complex& z);
 MSVCDLL friend spin_op       operator*  (const spin_op& SOp, double d);
 MSVCDLL friend spin_op       operator*  (const complex& z,   const spin_op& SOp);
 MSVCDLL friend spin_op       operator*  (double d,           const spin_op& SOp);
-MSVCDLL        void operator*= (const complex& z);
-MSVCDLL        void operator*= (double d);
+MSVCDLL        spin_op & operator*= (const complex& z);
+MSVCDLL        spin_op & operator*= (double d);
 MSVCDLL friend spin_op       operator/  (const spin_op& SOp, const complex& z);
 MSVCDLL friend spin_op       operator/  (const spin_op& SOp, double d);
-MSVCDLL        void operator/= (const complex& z);
-MSVCDLL        void operator/= (double d);
+MSVCDLL        spin_op & operator/= (const complex& z);
+MSVCDLL        spin_op & operator/= (double d);
 
 // ____________________________________________________________________________
 // D                  SPIN OPERATOR - MATRIX FUNCTIONS

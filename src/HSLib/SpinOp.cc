@@ -409,17 +409,24 @@ spin_op spin_op::operator- () const
 spin_op spin_op::operator+ (const spin_op &SOp1) const
   { spin_op SOp(*this); SOp+=SOp1; return SOp;}
 
-void spin_op::operator+= (const spin_op &SOp1)
-  {
+spin_op & spin_op::operator+= (const spin_op &SOp1)
+{
   if(pr==NULL && mx.rows()==1)		// If this is an empty spin operator
-    { *(this)=SOp1; return; } 		// then just assign it from SOp1
-  if(!checkSys(SOp1)) SOpfatality(11); 	// Insure spin systems match up
+  { 
+    *(this)=SOp1; // then just assign it from SOp1
+    return *this; 
+  } 		
+
+  if(!checkSys(SOp1))  // Insure spin systems match up
+     SOpfatality(11); 	
+
   blow_up();				// Must use full space array for +
   SOp1.blow_up();			// Must use full space array for +
   mx += SOp1.mx;			// Add the two full space arrays
   DelSubArrays(); 			// Delete sub-space arrays (invalid)
   BlendSpinFlags(SOp1);			// Adjust SOp spin flags
-  }
+  return *this;
+}
 
 spin_op operator- (const spin_op &SOp1, const spin_op &SOp2)
   { spin_op SOp(SOp1); SOp-=SOp2; return SOp;}
@@ -428,25 +435,30 @@ spin_op operator- (const spin_op &SOp1, const spin_op &SOp2)
 	// Return		SOp1   : Spin operator to be subtracted from SOp
 	// 				        SOp = SOp - SOp1
 
-void spin_op::operator-= (const spin_op &SOp1)
-  {
+spin_op & spin_op::operator-= (const spin_op &SOp1)
+{
   if(pr==NULL && mx.rows()==1)		// If this is an empty spin operator
-    { *(this) = -SOp1; return; } 	// then just assign it from -SOp1
+  { 
+    *(this) = -SOp1; // then just assign it from -SOp1
+    return *this; 
+  } 	
+ 
   if(!checkSys(SOp1)) SOpfatality(12); 	// Insure spin systems match up
   blow_up();				// Must use full space array for -
   SOp1.blow_up();			// Must use full space array for -
   mx -= SOp1.mx;			// Subtract off SOp1 full space array
   DelSubArrays();			// Delete sub-space arrays (invalid)
   BlendSpinFlags(SOp1);			// Adjust SOp spin flags
-  }
+  return *this;
+}
 
 spin_op operator* (const spin_op &SOp1, const spin_op &SOp2)
   { spin_op SOp(SOp1); SOp*=SOp2; return SOp;}
 
-void spin_op::operator*= (const spin_op &SOp1)
-  {
+spin_op & spin_op::operator*= (const spin_op &SOp1)
+{
   if(pr==NULL && mx.rows()==1)		// If this is an empty SOp 
-    return; 				// we can just return empty
+    return *this; 				    // we can just return empty
   if(!checkSys(SOp1)) SOpfatality(13); 	// Insure spin systems match up
   if((pr!=NULL)&&(SOp1.pr!=NULL))	// If single spin arrays exist
     {					// then perform multiplication
@@ -462,7 +474,9 @@ void spin_op::operator*= (const spin_op &SOp1)
     mx *= SOp1.mx;			// Multiply full space arrays
     }
   BlendSpinFlags(SOp1);			// Adjust SOp spin flags
-  }
+
+  return *this;
+}
 
 
 // ____________________________________________________________________________
@@ -493,17 +507,33 @@ spin_op operator* (const complex& z, const spin_op& SOp1)
 spin_op operator* (double r, const spin_op& SOp1)
   { spin_op SOp(SOp1); SOp *= r; return SOp;}
 
-void spin_op::operator*= (const complex& z)
-  {
+spin_op & spin_op::operator*= (const complex& z)
+{
   if(mx.rows()>1) mx    *= z;		// Multiply in full space
   if(pr!= NULL)   pr[0] *= z;		// Multiply in sub-space
-  }
+  return *this;
+}
 
-void spin_op::operator*= (double r)               { (*this) *= complex(r,0); }
+spin_op & spin_op::operator*= (double r) 
+{ 
+  (*this) *= complex(r,0); 
+  return *this;
+}
+
 spin_op       operator/  (const spin_op &SOp1, const complex& z) {return SOp1*(1/z);}
 spin_op       operator/  (const spin_op &SOp1, double r)         {return SOp1*(1/r);}
-void spin_op::operator/= (const complex& z)       { (*this) *= (1/z); }
-void spin_op::operator/= (double r)               { (*this) *= (1/r); }
+
+spin_op & spin_op::operator/= (const complex& z)
+{ 
+  (*this) *= (1/z); 
+  return *this;
+}
+
+spin_op & spin_op::operator/= (double r)
+{ 
+  (*this) *= (1/r); 
+  return *this;
+}
 
 // ____________________________________________________________________________
 // D                    SPIN OPERATOR - MATRIX FUNCTIONS

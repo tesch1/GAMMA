@@ -32,29 +32,30 @@ spin_op(const spin_op& SOp);
 
 spin_op operator-  ()                    const;
 spin_op operator+  (const spin_op& SOp1) const;
-void    operator+= (const spin_op& SOp1);
+
+spin_op & operator+= (const spin_op& SOp1);
 
 //friend spin_op          operator-  (const spin_op& SOp1, const spin_op& SOp2);
 
-void    operator-= (const spin_op& SOp1);
+spin_op & operator-= (const spin_op& SOp1);
 
 //friend spin_op          operator*  (const spin_op& SOp1, const spin_op& SOp2);
 
-void    operator*= (const spin_op& SOp1);
+spin_op & operator*= (const spin_op& SOp1);
 
 //friend spin_op       operator*  (const spin_op& SOp, const complex& z);
 //friend spin_op       operator*  (const spin_op& SOp, double d);
 //friend spin_op       operator*  (const complex& z,   const spin_op& SOp);
 //friend spin_op       operator*  (double d,           const spin_op& SOp);
 
-void operator*= (const complex& z);
-void operator*= (double d);
+spin_op & operator*= (const complex& z);
+spin_op & operator*= (double d);
 
 //friend spin_op       operator/  (const spin_op& SOp, const complex& z);
 //friend spin_op       operator/  (const spin_op& SOp, double d);
 
-void operator/= (const complex& z);
-void operator/= (double d);
+spin_op & operator/= (const complex& z);
+spin_op & operator/= (double d);
 
 //matrix   get_mx() const;
 //operator matrix() const;
