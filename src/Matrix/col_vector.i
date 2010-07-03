@@ -78,14 +78,14 @@ col_vector operator * (double            d)    const;
 //col_vector operator / (const complex&    z)    const;
 //col_vector operator / (double            d)    const;
 
-void operator += (const col_vector& cvec1);
+col_vector& operator += (const col_vector& cvec1);
 //void operator += (const matrix&        mx);
 
-void operator -= (const col_vector& cvec1);
+col_vector& operator -= (const col_vector& cvec1);
 //void operator -= (const matrix&        mx);
 
-void operator *= (const complex&        z);
-void operator *= (      double          d);
+col_vector& operator *= (const complex&        z);
+col_vector& operator *= (      double          d);
 
 //void operator /= (const complex&        z);
 //void operator /= (const double          d);

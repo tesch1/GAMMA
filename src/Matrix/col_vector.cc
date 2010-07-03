@@ -343,22 +343,25 @@ col_vector col_vector::operator / (double d) const
       +=    cv,cv1    cv1 added to cv       +=    cv,mx     mx added to cv
       *=    cv,z      cv1 mult. by z        /=    cv,z      cv divided by z  */
  
-void col_vector::operator += (const col_vector& cvec)
-  {
-  if(!cvec.size()) return;				// Nothing if cvec NULL
+col_vector& col_vector::operator += (const col_vector& cvec)
+{
+  if(!cvec.size()) 
+    return *this;				// Nothing if cvec NULL
   if(!size())						// If we are NULL, become cvec
-    {
+  {
     matrix::operator= ( (const matrix&)cvec );
-    return;
-    }
+    return *this;
+  }
   if(size() != cvec.size())
-    {
+  {
     cvec.CVerror(42, 1);				// Vec-Vec dimensions bad
     std::string pname("Column Vector += Column Vector");// Error message string
     cvec.CVfatality(21,pname);				// Error in cvec += cvec
-    }
-  matrix::operator+= ((const matrix&)cvec);
   }
+  
+  matrix::operator+= ((const matrix&)cvec);
+  return *this;
+}
 
 void col_vector::operator += (const matrix& mx)
   {
@@ -372,22 +375,25 @@ void col_vector::operator += (const matrix& mx)
   matrix::operator+= (mx);
   }
 
-void col_vector::operator -= (const col_vector& cvec)
-  {
-  if(!cvec.rows()) return;				// Nothing if mx NULL
+col_vector& col_vector::operator -= (const col_vector& cvec)
+{
+  if(!cvec.rows()) 
+    return *this;				// Nothing if mx NULL
   if(!size())						// Set -cvec if we are empty
-    {
+  {
     (*this) = cvec.matrix::operator-();
-    return;
-    }
+    return *this;
+  }
   if(size() != cvec.size())
-    {
+  {
     CVerror(42, 1);					// Vec-Vec dimensions bad
     std::string pname("Column Vector -= Column Vector");// Error message string
     CVfatality(21,pname);				// Error in cvec -= cvec
-    }
-  matrix::operator-= ((const matrix&)cvec);
   }
+  
+  matrix::operator-= ((const matrix&)cvec);
+  return *this;
+}
 
 void col_vector::operator -= (const matrix& mx)
   {
@@ -401,8 +407,16 @@ void col_vector::operator -= (const matrix& mx)
   matrix::operator-= (mx);
   }
 
-void col_vector::operator *= (const complex& z) { matrix::operator*= (z); }
-void col_vector::operator *= (      double d)   { matrix::operator*= (d); }
+col_vector& col_vector::operator *= (const complex& z) 
+{ 
+  matrix::operator*= (z);
+  return *this;  
+}
+col_vector& col_vector::operator *= (      double d)   
+{ 
+  matrix::operator*= (d); 
+  return *this;
+}
 void col_vector::operator /= (const complex& z) { matrix::operator/= (z); }
 void col_vector::operator /= (      double d)   { matrix::operator/= (d); }
 

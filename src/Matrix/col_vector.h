@@ -190,12 +190,12 @@ MSVCDLL col_vector operator / (double            d)    const;
 // Note: These operators, as they are unable to change the type of the
 //       result, can only be those which return col_vector.
 
-MSVCDLL void operator += (const col_vector& cvec1);
+MSVCDLL col_vector& operator += (const col_vector& cvec1);
 MSVCDLL void operator += (const matrix&        mx);
-MSVCDLL void operator -= (const col_vector& cvec1);
+MSVCDLL col_vector& operator -= (const col_vector& cvec1);
 MSVCDLL void operator -= (const matrix&        mx);
-MSVCDLL void operator *= (const complex&        z);
-MSVCDLL void operator *= (      double          d);
+MSVCDLL col_vector& operator *= (const complex&        z);
+MSVCDLL col_vector& operator *= (      double          d);
 MSVCDLL void operator /= (const complex&        z);
 MSVCDLL void operator /= (const double          d);
 
