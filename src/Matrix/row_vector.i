@@ -72,14 +72,14 @@ row_vector operator * (double d)               const;
 //row_vector operator / (const complex& z)       const;
 //row_vector operator / (double d)               const;
 
-void operator += (const row_vector& rvec1);
+row_vector& operator += (const row_vector& rvec1);
 //void operator += (const matrix& mx);
 
-void operator -= (const row_vector& rvec1);
+row_vector& operator -= (const row_vector& rvec1);
 //void operator -= (const matrix& mx);
 
-void operator *= (      double d);
-void operator *= (const complex& z);
+row_vector& operator *= (      double d);
+row_vector& operator *= (const complex& z);
 //void operator /= (      double d);
 //void operator /= (const complex& z);
 

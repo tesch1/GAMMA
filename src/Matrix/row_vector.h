@@ -224,12 +224,12 @@ MSVCDLL row_vector operator / (double d)               const;
 // Note: These operators, as they are unable to change the type of the
 //       result, can only be those which return row_vector.
 
-MSVCDLL void operator += (const row_vector& rvec1);
+MSVCDLL row_vector& operator += (const row_vector& rvec1);
 MSVCDLL void operator += (const matrix& mx);
-MSVCDLL void operator -= (const row_vector& rvec1);
+MSVCDLL row_vector& operator -= (const row_vector& rvec1);
 MSVCDLL void operator -= (const matrix& mx);
-MSVCDLL void operator *= (      double d);
-MSVCDLL void operator *= (const complex& z);
+MSVCDLL row_vector& operator *= (      double d);
+MSVCDLL row_vector& operator *= (const complex& z);
 MSVCDLL void operator /= (      double d);
 MSVCDLL void operator /= (const complex& z);
 
