@@ -2,7 +2,7 @@
 // Swig interface file
 
 %{
-#include "Matrix/Matrix.h"
+#include "Matrix/matrix.h"
 %}
 
 %include "std_vector.i"

@@ -584,10 +584,14 @@ bool EAngles::read(const ParameterSet& pset, int idx, int warn)
                 Return          void : EA is sent to the output stream      */
 
 ostream& EAngles::print(ostream& ostr, bool deg, bool hdr) const
-  {
+{
   if(hdr)
-    if(deg) ostr << "Euler Angles (deg): ";
-    else    ostr << "Euler Angles (rad): ";
+  {
+    if(deg) 
+      ostr << "Euler Angles (deg): ";
+    else    
+      ostr << "Euler Angles (rad): ";
+  }
   double sf = deg?RAD2DEG:1.0;
   string fmt("%8.4f");
   if(!deg) fmt = string("%7.5f");
@@ -595,7 +599,7 @@ ostream& EAngles::print(ostream& ostr, bool deg, bool hdr) const
        << "Beta = "  << Gform(fmt.c_str(), _beta*sf)  << "  "
        << "Gamma = " << Gform(fmt.c_str(), _gamma*sf);
   return ostr;
-  }
+}
 
 ostream& operator << (ostream& ostr, const EAngles& EA)
   { return EA.print(ostr); }
