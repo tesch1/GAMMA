@@ -230,8 +230,8 @@ MSVCDLL row_vector& operator -= (const row_vector& rvec1);
 MSVCDLL void operator -= (const matrix& mx);
 MSVCDLL row_vector& operator *= (      double d);
 MSVCDLL row_vector& operator *= (const complex& z);
-MSVCDLL void operator /= (      double d);
-MSVCDLL void operator /= (const complex& z);
+MSVCDLL row_vector& operator /= (      double d);
+MSVCDLL row_vector& operator /= (const complex& z);
 
 // ____________________________________________________________________________
 // J               ROW VECTOR SIMPLE UNARY FUNCTIONS

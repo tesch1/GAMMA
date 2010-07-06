@@ -417,8 +417,17 @@ col_vector& col_vector::operator *= (      double d)
   matrix::operator*= (d); 
   return *this;
 }
-void col_vector::operator /= (const complex& z) { matrix::operator/= (z); }
-void col_vector::operator /= (      double d)   { matrix::operator/= (d); }
+col_vector & col_vector::operator /= (const complex& z) 
+{ 
+  matrix::operator/= (z); 
+  return *this;
+}
+
+col_vector & col_vector::operator /= (      double d)   
+{ 
+  matrix::operator/= (d); 
+  return *this;
+}
 
 // ____________________________________________________________________________
 // J                  COLUMN VECTOR SIMPLE UNARY FUNCTIONS

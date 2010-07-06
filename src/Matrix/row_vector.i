@@ -80,8 +80,8 @@ row_vector& operator -= (const row_vector& rvec1);
 
 row_vector& operator *= (      double d);
 row_vector& operator *= (const complex& z);
-//void operator /= (      double d);
-//void operator /= (const complex& z);
+row_vector& operator /= (      double d);
+row_vector& operator /= (const complex& z);
 
 /*
 friend col_vector adjoint(const     row_vector& rvec);

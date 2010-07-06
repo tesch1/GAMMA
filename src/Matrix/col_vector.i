@@ -87,8 +87,8 @@ col_vector& operator -= (const col_vector& cvec1);
 col_vector& operator *= (const complex&        z);
 col_vector& operator *= (      double          d);
 
-//void operator /= (const complex&        z);
-//void operator /= (const double          d);
+col_vector & operator /= (const complex&        z);
+col_vector & operator /= (const double          d);
 
 // col_vector operator- ();                   // MATRIX INHERITED
 

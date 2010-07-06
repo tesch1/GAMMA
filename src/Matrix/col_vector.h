@@ -196,8 +196,8 @@ MSVCDLL col_vector& operator -= (const col_vector& cvec1);
 MSVCDLL void operator -= (const matrix&        mx);
 MSVCDLL col_vector& operator *= (const complex&        z);
 MSVCDLL col_vector& operator *= (      double          d);
-MSVCDLL void operator /= (const complex&        z);
-MSVCDLL void operator /= (const double          d);
+MSVCDLL col_vector & operator /= (const complex&        z);
+MSVCDLL col_vector & operator /= (const double          d);
 
 // ____________________________________________________________________________
 // J                   COLUMN VECTOR SIMPLE UNARY FUNCTIONS

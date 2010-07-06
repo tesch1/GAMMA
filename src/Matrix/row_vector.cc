@@ -414,8 +414,16 @@ row_vector& row_vector::operator *= (const complex& z)
   matrix::operator*= (z); 
   return *this;
 }
-void row_vector::operator /= (      double   d) { matrix::operator/= (d); }
-void row_vector::operator /= (const complex& z) { matrix::operator/= (z); }
+row_vector& row_vector::operator /= (      double   d) 
+{ 
+  matrix::operator/= (d); 
+  return *this;
+}
+row_vector& row_vector::operator /= (const complex& z) 
+{ 
+  matrix::operator/= (z); 
+  return *this;
+}
 
 // ____________________________________________________________________________
 // J                    ROW VECTOR SIMPLE UNARY FUNCTIONS
