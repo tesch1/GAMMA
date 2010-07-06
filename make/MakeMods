@@ -89,7 +89,7 @@ ALLPYFILES += $(BASICSPY)
 BASICSTBAS  = TestBasics TestGconst TestGconstA TestSingPar TestSingParA TestSingParB\
               TestIsoData TestStringCut
 
-BASICS_IBASE  = basics ParamSet SinglePar
+BASICS_IBASE  = basics ParamSet SinglePar Isotope
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(BASICS)/, $(BASICS_IBASE)))
 
 
@@ -116,7 +116,7 @@ ALLMODHDRS += $(MATRIXHDR)
 ALLPYFILES += $(MATRIXPY)
 MATRIXTBAS  = TestMatrix
 
-MATRIX_IBASE  = Matrix row_vector col_vector complex
+MATRIX_IBASE  = matrix_inc matrix row_vector col_vector complex
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(MATRIX)/, $(MATRIX_IBASE)))
 
 ###############################################################################
@@ -145,7 +145,7 @@ ALLPYFILES += $(HSPACEPY)
 HSPACETBAS  = TestHSLi1b
 
 HSPACE_IBASE  = hslib SpinSystem SpinSys GenOp HSham SpinOpCmp\
-                HSauxil PulseI Basis HSprop SpinOp
+                HSauxil PulseI PulseS Basis HSprop SpinOp
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(HSPACE)/, $(HSPACE_IBASE)))
 
 ###############################################################################

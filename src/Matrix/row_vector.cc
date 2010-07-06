@@ -1116,11 +1116,12 @@ string row_vector::squeeze (string line)
  */
 int row_vector::split (string s, char sep, vector<string>& field)
 {
-  unsigned int i, j, nfield;
+  unsigned int i, nfield;
+  unsigned int j = 0;
   string fld;
 
   if ((i = s.length()) == 0)
-  return 0;
+    return 0;
 
   i = nfield = 0;
   do {
@@ -1130,7 +1131,7 @@ int row_vector::split (string s, char sep, vector<string>& field)
     else {
       j = s.find_first_of( sep, i );
       if (j > s.length())
-	j = s.length();
+	    j = s.length();
       fld = string( s, i, j-i );
     }
     if (nfield >= field.size())
