@@ -100,8 +100,8 @@
 
 SHELL = /bin/sh
 
-INSTALLDIR    = /usr
-BININSTALLDIR = /usr/bin
+#INSTALLDIR    = /usr
+BININSTALLDIR = /usr/local/bin
 LIBINSTALLDIR = /usr/lib
 HDRINSTALLDIR = /usr/include/gamma-${VERNO}.${MINNO}.${RELNO}
 
