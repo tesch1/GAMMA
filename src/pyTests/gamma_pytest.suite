@@ -11,6 +11,7 @@ compare: gsh_press_realpulses_pytest.txt, golden/press_realpulses_test.txt
 
 command: python gsh_spinecho_realpulse.py
 compare: gsh_spinecho_realpulses_pytest.txt, golden/spinecho_realpulses_test.txt
+
 command: python gsh_fid_exchange.py
 compare: gsh_fid_exchange_pytest.txt, golden/fid_exchange_test.txt
 
