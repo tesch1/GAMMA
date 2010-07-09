@@ -150,7 +150,6 @@ PYCXXFLAGS = $(OPTIMIZE)
 PYSGCPPINCLFLAGS = 
 PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = $(OPTIMIZE)
-
 LDFLAGS  = 
 
 ### un-comment the next four lines if using blas/atls/lapack, 
@@ -706,8 +705,8 @@ ${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
 SO_LDFLAGS = -shared $(LDFLAGS)
 SO_LDLIBS  = $(LAB_LIBS)
 
-PY_LDFLAGS = -shared $(LDFLAGS)
-PY_LDLIBS  = $(LAB_LIBS)
+#PY_LDFLAGS = -shared $(LDFLAGS)
+#PY_LDLIBS  = $(LAB_LIBS)
 
 
 #########################################################################
@@ -1168,7 +1167,7 @@ ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
 #CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
 CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
-CXX_TESTFLAGS = -O2
+CXX_TESTFLAGS = $(OPTIMIZE)
 
 LD_TESTFLAGS = 
 

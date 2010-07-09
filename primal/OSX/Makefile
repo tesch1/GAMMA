@@ -91,26 +91,28 @@ SRCDIR1 = ../../src
 SRCDIRINCL_FLAG = -I$(SRCDIR1)
 
 BINDIR   = ../../mac-darwin
-PYVERSION	  = 2.5
+#PYVERSION	  = 2.5
 
-DEBUG    = -g #-O2
+DEBUG    = -g 
+OPTIMIZE = -O2
 
 CC       = gcc
-CFLAGS   = $(DEBUG)
+#CFLAGS  = $(DEBUG)
+CFLAGS   = $(OPTIMIZE)
 
 CXX      = c++
 CPPFLAGS = -I../../src -DGSTATIC=1
-CXXFLAGS = $(DEBUG)
+CXXFLAGS = $(OPTIMIZE)
 
 LIBCPPFLAGS = -I../../src
-LIBCXXFLAGS = $(DEBUG)
+LIBCXXFLAGS = $(OPTIMIZE)
 
 SOCPPFLAGS = -I../../src
-SOCXXFLAGS = -fno-common
+SOCXXFLAGS = -fno-common $(OPTIMIZE)
 
 PYSGCPPINCLFLAGS = 
 PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
-PYSGCXXFLAGS = 
+PYSGCXXFLAGS = $(OPTIMIZE)
 
 LDFLAGS  = 
 exeext   = .out
@@ -141,7 +143,7 @@ NPD      = --no-print-directory
 LIB_NAME    = libgamma.a
 
 VERNO      = 4
-MINNO      = 1
+MINNO      = 2
 RELNO      = 0
 
 COMPVER    = ${VERNO}.${MINNO}
@@ -196,6 +198,33 @@ PYS_NAMEXXX = ${PYS_NAMEXX}.${RELNO}
 include ../../make/MakeMods
 
 
+#########################################################################
+#									#
+#                              Main Target				#
+#									#
+# This target produce the static library.				#
+#									#
+# LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)	#
+#									#
+#########################################################################
+
+
+all: so lib
+
+so: $(BINDIR) $(BINDIR)/$(SO_NAME)
+lib: $(BINDIR) ${BINDIR}/${LIB_NAME}
+pysg: $(BINDIR) $(BINDIR)/$(PYS_NAME)
+
+
+${SO_NAME}:  ${BINDIR}/${SO_NAME}
+${LIB_NAME}: ${BINDIR}/${LIB_NAME}
+${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
+
+#all: $(BINDIR)/$(LIB_NAME) $(BINDIR)/$(SO_NAME)
+#all: $(LIB_NAME) $(SO_NAME) $(PY_NAME)
+
+#########################################################################
+
 LIB_SRCS = $(ALLCCFILES)
 LIB_OBJS = $(addsuffix .o, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
@@ -203,9 +232,9 @@ SO_SRCS = $(ALLCCFILES)
 SO_OBJS = $(addsuffix .soo, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
 # Python Boost
-PYG_SRCS = $(ALLCCFILES)
-PYG_SRCS = 
-PYG_OBJS = $(addsuffix .po, $(addprefix $(BINDIR)/, $(ALLFILES)))
+#PYG_SRCS = $(ALLCCFILES)
+#PYG_SRCS = 
+#PYG_OBJS = $(addsuffix .po, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
 # Python Swig
 PYSG_SRCS = $(ALLCCFILES)
@@ -486,29 +515,6 @@ $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
 	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
-#########################################################################
-#									#
-#                              Main Target				#
-#									#
-# This target produce the static library.				#
-#									#
-# LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)	#
-#									#
-#########################################################################
-
-all: so  pysg  lib
-
-so: $(BINDIR) $(BINDIR)/$(SO_NAME)
-lib: $(BINDIR) ${BINDIR}/${LIB_NAME}
-pysg: $(BINDIR) $(BINDIR)/$(PYS_NAME)
-
-
-${SO_NAME}:  ${BINDIR}/${SO_NAME}
-${LIB_NAME}: ${BINDIR}/${LIB_NAME}
-${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
-
-#all: $(BINDIR)/$(LIB_NAME) $(BINDIR)/$(SO_NAME)
-#all: $(LIB_NAME) $(SO_NAME) $(PY_NAME)
 
 #########################################################################
 #									#
@@ -709,50 +715,52 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 #                                                                       #
 #########################################################################
 
-PYGFLAGS   = -D_PYGAMMA=1 -I${BOOSTINCDIR} -I${PYINCDIR}
+#### Comment out this Boost Section for now (07/08/10) ####
 
-PYINCDIR = C:/cygwin/usr/include/python2.2
-PYLIBDIR = C:/cygwin/lib/python2.2
-PYLIB2DIR = C:/cygwin/lib/python2.2/config
-BOOSTINCDIR = "C:/Program Files/Boost/boost_1_28_0"
-BOOSTLIBDIR = "C:/Program Files/Boost/boost_1_28_0/libs/python/build/bin/boost_python.dll/gcc/release/inlining-on/runtime-link-dynamic" 
+#PYGFLAGS   = -D_PYGAMMA=1 -I${BOOSTINCDIR} -I${PYINCDIR}
 
- %.po : %.cc
+#PYINCDIR = C:/cygwin/usr/include/python2.2
+#PYLIBDIR = C:/cygwin/lib/python2.2
+#PYLIB2DIR = C:/cygwin/lib/python2.2/config
+#BOOSTINCDIR = "C:/Program Files/Boost/boost_1_28_0"
+#BOOSTLIBDIR = "C:/Program Files/Boost/boost_1_28_0/libs/python/build/bin/boost_python.dll/gcc/release/inlining-on/runtime-link-dynamic" 
+
+# %.po : %.cc
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(PYGFLAGS) $< -o $@
 
-PyGAMMAChk:
-	@echo
-	@echo "Making PyGAMMA DLL $(PYG_NAME) From Pythonized Object Files"
-	@echo
-	@if (test -d ./${PYINCDIR}) \
-	then echo Good. The Cygwin Python Includes Directory Exists. ${PYINCDIR}; \
-	else echo Cannot File The Cygwin Includes Python Directory! ${PYINCDIR}; \
-	fi
-	@if (test -d ./${PYLIBDIR}) \
-	then echo Good. The Cygwin Python Library Directory Exists. ${PYLIBDIR}; \
-	else echo Cannot File The Cygwin Python Library Directory! ${PYLIBDIR}; \
-	fi
-	@if (test -d ./${BOOSTINCDIR}) \
-	then echo Good. The Cygwin Boost Includes Directory Exists. ${BOOSTINCDIR}; \
-	else echo Cannot File The Cygwin Boost Includes Directory! ${BOOSTINCDIR}; \
-	fi
-	@if (test -d ./${BOOSTLIBDIR}) \
-	then echo Good. The Cygwin Boost Library Directory Exists. ${BOOSTLIBDIR}; \
-	else echo Cannot File The Cygwin Boost Library Directory! ${BOOSTLIBDIR}; \
-	fi
-	@echo "Compiling GAMMA Source Into PyGAMMA Object Code"
-	@echo
+#PyGAMMAChk:
+#	@echo
+#	@echo "Making PyGAMMA DLL $(PYG_NAME) From Pythonized Object Files"
+#	@echo
+#	@if (test -d ./${PYINCDIR}) \
+#	then echo Good. The Cygwin Python Includes Directory Exists. ${PYINCDIR}; \
+#	else echo Cannot File The Cygwin Includes Python Directory! ${PYINCDIR}; \
+#	fi
+#	@if (test -d ./${PYLIBDIR}) \
+#	then echo Good. The Cygwin Python Library Directory Exists. ${PYLIBDIR}; \
+#	else echo Cannot File The Cygwin Python Library Directory! ${PYLIBDIR}; \
+#	fi
+#	@if (test -d ./${BOOSTINCDIR}) \
+#	then echo Good. The Cygwin Boost Includes Directory Exists. ${BOOSTINCDIR}; \
+#	else echo Cannot File The Cygwin Boost Includes Directory! ${BOOSTINCDIR}; \
+#	fi
+#	@if (test -d ./${BOOSTLIBDIR}) \
+#	then echo Good. The Cygwin Boost Library Directory Exists. ${BOOSTLIBDIR}; \
+#	else echo Cannot File The Cygwin Boost Library Directory! ${BOOSTLIBDIR}; \
+#	fi
+#	@echo "Compiling GAMMA Source Into PyGAMMA Object Code"
+#	@echo
+#
+#PYG_EXP_LIB = libpygamma.dll.a
+#PYG_LDFLAGS =  -shared -lboost_python
+#PYGLDLIBS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR}
 
-PYG_EXP_LIB = libpygamma.dll.a
-PYG_LDFLAGS =  -shared -lboost_python
-PYGLDLIBS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR}
-
-$(PYG_NAME): PyGAMMAChk $(PYG_OBJS)
-	@echo
-	@echo "Making PyGAMMA DLL $(PYG_NAME) From Pythonized Object Files"
-	@echo
-	g++  -Wl,--out-implib=$(PYG_EXP_LIB) \
-	-o $(PYG_NAME) $(PYG_OBJS) $(PYG_LDFLAGS) $(PYG_LDLIBS)
+#$(PYG_NAME): PyGAMMAChk $(PYG_OBJS)
+#	@echo
+#	@echo "Making PyGAMMA DLL $(PYG_NAME) From Pythonized Object Files"
+#	@echo
+#	g++  -Wl,--out-implib=$(PYG_EXP_LIB) \
+#	-o $(PYG_NAME) $(PYG_OBJS) $(PYG_LDFLAGS) $(PYG_LDLIBS)
 
 
 #########################################################################
@@ -787,41 +795,45 @@ $(PYG_NAME): PyGAMMAChk $(PYG_OBJS)
 
 
 
-PYSINCDIR    = /usr/include/python$(PYVERSION)
-PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
-PYSINCFLAGS = -I$(PYSINCDIR) -I$(PYSINC2DIR)
-PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
+#PYSINCDIR    = /usr/include/python$(PYVERSION)
+#PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
+#PYSINCFLAGS = -I$(PYSINCDIR) -I$(PYSINC2DIR)
+#PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
+#PYSLIBDIR    = /usr/lib/python$(PYVERSION)
+#PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
+#PYSLIB3DIR   = /usr/local
 
-PYSLIBDIR    = /usr/lib/python$(PYVERSION)
-PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
-PYSLIB3DIR   = /usr/local
+#PYSG_LIBDIR = -L$(PYSLIBDIR) -L$(PYSLIB2DIR) -L$(PYSLIB3DIR)
 
-PYSG_LIBDIR = -L$(PYSLIBDIR) -L$(PYSLIB2DIR) -L$(PYSLIB3DIR)
+# Using python to find the default library and include path for "python" executable on the local machine.
+PYTHON_EXECUTABLE = python
 
-#PYSGLDLIBS = 
-#PYSLIB_CONFIGDIR   = /usr/lib/python$(PYVERSION)/config
+PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
+PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
 
+PYSINCFLAGS = -I$(PYTHONINCDIRS)
+PYSG_LDFLAGS = -L$(PYTHONLIBDIRS)
 
 PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
 
 $(PYSGAMMA_CHK):
 	@echo
+	@echo Include directory: $(PYTHONINCDIRS)
+	@echo Library directory: $(PYTHONLIBDIRS)
 	@echo
 	@echo Checking for python include and lib directories
 	@echo
-	@if (test -d ${PYSINC2DIR} || test -d ${PYSINCDIR}); \
-	then echo Good. One of these Python Includes Directory Exists. ${PYSINCDIRS}; \
-	else echo Cannot Find The Python Includes Directory! ${PYSINCDIRS}; \
+	@if (test -d ${PYTHONINCDIRS}); \
+	then echo Good. The Python Includes Directory Exists. ${PYTHONINCDIRS}; \
+	else echo Cannot Find The Python Include Directory! ${PYTHONINCDIRS}; \
 	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
 	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
 	     echo ; \
 	     false; \
 	fi
-	@if (test -d ${PYSLIBDIR} || test -d ${PYSLIB2DIR}); \
-	then echo Good. The Python Library Directory Exists. ${PYSLIBDIRS}; \
-	echo 11 > $(PYSGAMMA_CHK);\
-	echo ;\
-	else echo Cannot Find The Python Library Directory! ${PYSLIBDIRS}; \
+	@if (test -d ${PYTHONLIBDIRS}); \
+	then echo Good. The Python Library Directory Exists. ${PYTHONLIBDIRS}; \
+	else echo Cannot Find The Python Library Directory! ${PYTHONLIBDIRS}; \
 		echo Python Must Be Installed On The System For PyGAMMA To Work.; \
 		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
 		echo ; \
@@ -957,7 +969,7 @@ TEST_PGM     = $(TESTDIR)/TestGAMMA${exeext}
 TEST_SRC     = $(TESTDIR)/TestGAMMA.cc
 TEST_OBJ     = $(TESTDIR)/TestGAMMA.o
 
-test:	
+testold:	
 	@${MAKE} $(NPD) ${TEST_PGM}
 	${TEST_PGM}
 
@@ -978,6 +990,79 @@ ${TEST_PGM}: ${TEST_OBJ}
 
 TestGAMMA.o: %o: %cc
 	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) -o $@ $<
+
+
+#########################################################################
+# 
+# New Test routines
+#
+
+test:  ${BINDIR}/${LIB_NAME} $(BINDIR)/runtests $(BINDIR)/hstat \
+       $(BINDIR)/sl_exchange7_L $(BINDIR)/par_xixA $(BINDIR)/xix_dec run
+
+
+TESTS       = Tests
+TESTSBASE   = testsuite runtests 
+TESTSHDR    = testsuite.h
+
+TESTCCFILES   += $(addsuffix .cc, $(addprefix $(TESTS)/, $(TESTSBASE)))
+TESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(TESTSBASE)))
+
+ZTESTSBASE   = homo_stat sl_exchange7_L par_xixA xix_dec
+ZTESTSHDR    =
+
+ZTESTCCFILES += $(addsuffix .cc, $(addprefix $(TESTS)/, $(ZTESTSBASE)))
+ZTESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(ZTESTSBASE)))
+
+ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
+
+#CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
+CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG) -DGSTATIC=1
+CXX_TESTFLAGS = $(OPTIMIZE)
+
+LD_TESTFLAGS = 
+
+
+${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
+	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
+
+$(BINDIR)/runtests : $(TESTOBJFILES)
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
+
+$(BINDIR)/hstat : $(BINDIR)/homo_stat.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+
+$(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+
+$(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+
+$(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
+	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+
+RUNDIR = ./../../src/Tests
+CURDIR = ./../../primal/Linux
+
+run: force
+	@echo 
+	@echo Running tests:
+	@echo
+	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
+	@echo 
+
+
+# Python test suite.
+
+PY_RUNDIR = ./../../src/pyTests
+
+pytest: force
+	@echo 
+	@echo Running Python tests:
+	@echo
+	@cd $(PY_RUNDIR); python ../Tests/run_tests.py -v; cd $(CURDIR)
+	@echo 	
+
 
 #########################################################################
 #									#
