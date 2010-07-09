@@ -118,7 +118,7 @@ LAPACKINCL_FLAG =
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(LAPACKINCL_FLAG) $(BLASINCL_FLAG)
 
 BINDIR        = ./../../i686-pc-linux-gnu
-PYVERSION	  = 2.5
+#PYVERSION	  = 2.5
 
 
 DEBUG    = -g
@@ -288,6 +288,7 @@ ${PY_NAME}:  ${BINDIR}/${PY_NAME}
 ${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
 
 big: so lib pysg test
+
 
 #########################################################################
 
@@ -708,8 +709,6 @@ SO_LDLIBS  = $(LAB_LIBS)
 PY_LDFLAGS = -shared $(LDFLAGS)
 PY_LDLIBS  = $(LAB_LIBS)
 
-PYS_LDFLAGS = -shared $(LDFLAGS)
-PYS_LDLIBS  = $(LAB_LIBS) 
 
 #########################################################################
 #									#
@@ -836,66 +835,67 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 #                                                                       #
 #########################################################################
 
-PYGFLAGS   = -D_PYGAMMA=1 -I${BOOSTINCDIR} -I${PYINCDIR}
-PYG_LDFLAGS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR} -lboost_python
-PYGLDLIBS = 
+#### Commenting out Boost code for now (07/09/10) ####
 
-PYINCDIR    = /usr/include/python$(PYVERSION)
-PYLIBDIR    = /usr/lib/python$(PYVERSION)
-PYLIB2DIR   = /usr/lib/python$(PYVERSION)/config
+#PYGFLAGS   = -D_PYGAMMA=1 -I${BOOSTINCDIR} -I${PYINCDIR}
+#PYG_LDFLAGS = -L${BOOSTLIBDIR} -L${PYLIBDIR} -L${PYLIB2DIR} -lboost_python
+#PYGLDLIBS = 
+#PYINCDIR    = /usr/include/python$(PYVERSION)
+#PYLIBDIR    = /usr/lib/python$(PYVERSION)
+#PYLIB2DIR   = /usr/lib/python$(PYVERSION)/config
 
-BOOSTINCDIR = "/usr/include/boost"
-BOOSTLIBDIR = "/usr/lib"
+#BOOSTINCDIR = "/usr/include/boost"
+#BOOSTLIBDIR = "/usr/lib"
 #BOOSTLIBDIR = "/usr/local/src/boost_1_29_0/libs/python/build/bin/libboost_python.so/gcc/release/inlining-on/runtime-link-dynamic/shared-linkable-true"
 
-%.po : %.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(PYGFLAGS) $< -o $@
+#%.po : %.cc
+#	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $(PYGFLAGS) $< -o $@
 
-PyGAMMAChk:
-	@echo
-	@echo "Making PyGAMMA Shared Library $(PY_NAME) From Pythonized Object Files"
-	@echo
-	@if (test -d ${PYINCDIR}) \
-	then echo Good. The Linux Python Includes Directory Exists. ${PYINCDIR}; \
-	else echo Cannot Find The Linux Python Includes Directory! ${PYINCDIR}; \
-	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
-	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
-	     echo; \
-	     false; \
-	fi
-	@if (test -d ${PYLIBDIR}) \
-	then echo Good. The Linux Python Library Directory Exists. ${PYLIBDIR}; \
-	else echo Cannot Find The Linux Python Library Directory! ${PYLIBDIR}; \
-	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
-	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
-	     echo; \
-	     false; \
-	fi
-	@if (test -d ${BOOSTINCDIR}) \
-	then echo Good. The Linux Boost Includes Directory Exists. ${BOOSTINCDIR}; \
-	else echo Cannot Find The Linux Boost Includes Directory! ${BOOSTINCDIR}; \
-	     echo We Must Know Where Boost Is Installed On The System.; \
-	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
-	     echo; \
-	     false; \
-	fi
-	@if (test -d ${BOOSTLIBDIR}) \
-	then echo Good. The Linux Boost Library Directory Exists. ${BOOSTLIBDIR}; \
-	else echo Cannot Find The Linux Boost Library Directory! ${BOOSTLIBDIR}; \
-	     echo The Boost.Python Library Must Be Available On The System.; \
-	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
-	     echo; \
-	     false; \
-	fi
-	@echo "Compiling GAMMA Source Into PyGAMMA Object Code"
-	@echo
+#PyGAMMAChk:
+#	@echo
+#	@echo "Making PyGAMMA Shared Library $(PY_NAME) From Pythonized Object Files"
+#	@echo
+#	@if (test -d ${PYINCDIR}) \
+#	then echo Good. The Linux Python Includes Directory Exists. ${PYINCDIR}; \
+#	else echo Cannot Find The Linux Python Includes Directory! ${PYINCDIR}; \
+#	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
+#	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+#	     echo; \
+#	     false; \
+#	fi
+#	@if (test -d ${PYLIBDIR}) \
+#	then echo Good. The Linux Python Library Directory Exists. ${PYLIBDIR}; \
+#	else echo Cannot Find The Linux Python Library Directory! ${PYLIBDIR}; \
+#	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
+#	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+#	     echo; \
+#	     false; \
+#	fi
+#	@if (test -d ${BOOSTINCDIR}) \
+#	then echo Good. The Linux Boost Includes Directory Exists. ${BOOSTINCDIR}; \
+#	else echo Cannot Find The Linux Boost Includes Directory! ${BOOSTINCDIR}; \
+#	     echo We Must Know Where Boost Is Installed On The System.; \
+#	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+#	     echo; \
+#	     false; \
+#	fi
+#	@if (test -d ${BOOSTLIBDIR}) \
+#	then echo Good. The Linux Boost Library Directory Exists. ${BOOSTLIBDIR}; \
+#	else echo Cannot Find The Linux Boost Library Directory! ${BOOSTLIBDIR}; \
+#	     echo The Boost.Python Library Must Be Available On The System.; \
+#	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+#	     echo; \
+#	     false; \
+#	fi
+#	@echo "Compiling GAMMA Source Into PyGAMMA Object Code"
+#	@echo
 
 
-${BINDIR}/$(PY_NAME): PyGAMMAChk $(PYG_OBJS)
-	@echo
-	@echo "Making PyGAMMA Shared $(PY_NAME) From Pythonized Object Files"
-	@echo
-	g++ ${PY_LDFLAGS} -Wl,-soname,${PY_NAMEX} -o ${BINDIR}/${PY_NAMEXXX} $(PYG_OBJS) $(PY_LDLIBS)
+#${BINDIR}/$(PY_NAME): PyGAMMAChk $(PYG_OBJS)
+#	@echo
+#	@echo "Making PyGAMMA Shared $(PY_NAME) From Pythonized Object Files"
+#	@echo
+#	g++ ${PY_LDFLAGS} -Wl,-soname,${PY_NAMEX} -o ${BINDIR}/${PY_NAMEXXX} $(PYG_OBJS) $(PY_LDLIBS)
 #	g++ -shared -Wl,--out-implib=$(PYG_EXP_LIB) \
 #	-o $(PY_NAME) $(PYG_OBJS) $(PYG_LDFLAGS) $(PYG_LDLIBS)
 
@@ -929,45 +929,55 @@ ${BINDIR}/$(PY_NAME): PyGAMMAChk $(PYG_OBJS)
 
 
 
-PYSINCDIR    = /usr/include/python$(PYVERSION)
-PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
-PYSINCFLAGS = -I${PYINCDIR} -I$(PYSINC2DIR)
+#PYSINCDIR    = /usr/include/python$(PYVERSION)
+#PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
+#PYSINCFLAGS = -I${PYINCDIR} -I$(PYSINC2DIR)
+#PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
+#PYSLIBDIR    = /usr/lib/python$(PYVERSION)
+#PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
+#PYSG_LDFLAGS = -L${PYSLIBDIR} -L$(PYSLIB2DIR)
 
-PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
 
-PYSLIBDIR    = /usr/lib/python$(PYVERSION)
-PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
+# Using python to find the default library and include path for "python" executable on the local machine.
+PYTHON_EXECUTABLE = python
 
-#PYSGLDLIBS = 
-#PYSLIB_CONFIGDIR   = /usr/lib/python$(PYVERSION)/config
-PYSG_LDFLAGS = -L${PYSLIBDIR} -L$(PYSLIB2DIR)
+PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
+PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
 
+PYSINCFLAGS = -I$(PYTHONINCDIRS)
+PYSG_LDFLAGS = -L$(PYTHONLIBDIRS)
 
 PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
 
 $(PYSGAMMA_CHK):
 	@echo
+	@echo Include directory: $(PYTHONINCDIRS)
+	@echo Library directory: $(PYTHONLIBDIRS)
 	@echo
 	@echo Checking for python include and lib directories
 	@echo
-	@if (test -d ${PYSINC2DIR} || test -d ${PYSINCDIR}); \
-	then echo Good. One of these Linux Python Includes Directory Exists. ${PYSINCDIRS}; \
-	else echo Cannot Find The Linux Python Includes Directory! ${PYSINCDIRS}; \
+	@if (test -d ${PYTHONINCDIRS}); \
+	then echo Good. The Python Includes Directory Exists. ${PYTHONINCDIRS}; \
+	else echo Cannot Find The Python Include Directory! ${PYTHONINCDIRS}; \
 	     echo Python Must Be Installed On The System For PyGAMMA To Work.; \
 	     echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
 	     echo ; \
 	     false; \
 	fi
-	@if (test -d ${PYSLIBDIR} || test -d ${PYSLIB2DIR}); \
-	then echo Good. The Linux Python Library Directory Exists. ${PYSLIBDIRS}; \
-	echo 11 > $(PYSGAMMA_CHK);\
-	echo ;\
-	else echo Cannot Find The Linux Python Library Directory! ${PYSLIBDIRS}; \
-		echo Python Must Be Installed On The System For PyGAMMA To Work.; \		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \		echo ; \		false; \
+	@if (test -d ${PYTHONLIBDIRS}); \
+	then echo Good. The Python Library Directory Exists. ${PYTHONLIBDIRS}; \
+	else echo Cannot Find The Python Library Directory! ${PYTHONLIBDIRS}; \
+		echo Python Must Be Installed On The System For PyGAMMA To Work.; \
+		echo Sorry, Cannot Build PyGAMMA Until This Is Taken Care Of.; \
+		echo ; \
+		false; \
 	fi
-	@echo 
+	@echo 
+PYS_LDFLAGS = -shared $(LDFLAGS)
+PYS_LDLIBS  = $(LAB_LIBS) 
 
-${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK) 
+
+${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS) 
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
@@ -1188,7 +1198,7 @@ run: force
 	@echo 
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); python$(PYVERSION) run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
+	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
 	@echo 
 
 
@@ -1200,7 +1210,7 @@ pytest: force
 	@echo 
 	@echo Running Python tests:
 	@echo
-	@cd $(PY_RUNDIR); python$(PYVERSION) ../Tests/run_tests.py -v; cd $(CURDIR)
+	@cd $(PY_RUNDIR); python ../Tests/run_tests.py -v; cd $(CURDIR)
 	@echo 	
 
 
