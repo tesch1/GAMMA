@@ -33,7 +33,10 @@
 
 #ifdef _MSC_VER
 #include "ms_stdint.h"
+#else
+#include <stdint.h>
 #endif
+
 
 #include <string>				// Include libstdc++ strings
 #include <iostream>				// Know ios stuff
