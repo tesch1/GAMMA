@@ -235,7 +235,8 @@ MSVCDLL friend void   prop_ip(   gen_op& ham, const double time);
 
 
 #if defined(__SUNPRO_CC)
-MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
+MSVCDLL friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
 #endif
 
 // ----------------------------------------------------------------------------
