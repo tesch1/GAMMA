@@ -124,6 +124,8 @@ RANLIB   = ranlib
 
 LDCONFIG = /sbin/ldconfig
 
+LAB_LIBS = 
+
 NPD      = --no-print-directory
 
 #########################################################################
