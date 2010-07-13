@@ -1,3 +1,4 @@
+#!/bin/bash
 ###############################################################################
 #									      #
 #                                 G A M M A                                   #
@@ -123,7 +124,7 @@ fi
 #                                                                             #
 ###############################################################################
 
-CXX="/opt/SUNWspro/bin/cc"
+CXX="/opt/SUNWspro/bin/CC"
 CXXFLAGS="-w -g -fast -xtarget=ultra3cu -m32"
 LDFLAGS=""
 NAME=
@@ -175,52 +176,6 @@ GAMMA_LIB=${GAMMA_PATH}/lib/gamma-4.2.0/${host}/
 
 ###############################################################################
 #                                                                             #
-# This section defines the names of the produced GAMMA module libraries. You  #
-# may remove any of these from linking to your GAMMA programs by setting them #
-# to be empty.  For example, to remove the Floquet library from being linked  #
-# simply set "LFLOQ=-lFloquet" to "LFLOQ=".  You should probably comment out  #
-# the original lines so that you may later include such libraries if needed.  #
-# Libraries ending with _p have included profiling during their build.        #
-#                                                                             #
-###############################################################################
-
-MODLIBS=''
-  LBAS=-lBasics				# GAMMA basic library
-  LGMX=-lMatrix				# GAMMA matrices library
-  LHS=-lHSLib				# GAMMA Hilbert space library
-  LGLEV1=-lLevel1			# GAMMA Level 1 library
-  LLS=-lLSLib				# GAMMA Liouville space library
-  LGIO=-lGamIO				# GAMMA I/O interface library
-  LGLEV2=-lLevel2			# GAMMA Level 2 library
-  LBLH=-lBloch				# GAMMA Bloch library
-  LWBR=-lWBR				# GAMMA WBR relaxtion library
-  LFLOQ=-lFloquet 			# GAMMA Floquet operators
-  LIR2=-lIntRank2			# GAMMA rank 2 interactions library
-  LMUL=-lMultiSys			# GAMMA multi-sys systems library
-  LPUL=-lPulses				# GAMMA pulse trains and cycles
-  LDEP=-lDeprecated                     # GAMMA deprecated classes
-  LESR=-lESRLib                         # GAMMA ESR based classes
-  LGRD=-lGradients			# GAMMA field gradients
-  LTST=-lTesting			# GAMMA platform testing
-
-if [ ${GPROF}a != "-pga" ]
-then
-  MLIBS="${LTST} ${LDEP} ${LESR} ${LGRD} ${LMUL} ${LPUL} ${LFLOQ}\
-         ${LIR2} ${LESR} ${LWBR} ${LBLH} ${LGLEV2} ${LGIO} ${LLS} ${LGLEV1}\
-         ${LHS} ${LGMX} ${LBAS}"
-else
-  MLIBS="${LTST}_p ${LDEP}_p ${LESR}_p ${LGRD}_p ${LMUL}_p ${LPUL}_p ${LFLOQ}_p\
-         ${LIR2}_p ${LESR}_p ${LWBR}_p ${LBLH}_p ${LGLEV2}_p ${LGIO}_p ${LLS}_p ${LGLEV1}_p\
-         ${LHS}_p ${LGMX}_p ${LBAS}_p"
-  if [ ${VERBOSE} ]
-  then
-    echo The Compilation Is Using Profiling So Execution Makes gmon.out
-    echo
-  fi
-fi
-
-###############################################################################
-#                                                                             #
 # Finally For The GAMMA Program Compilation. First We Shall Test To See If    #
 # We Can Find The GAMMA Source Code Headers. If We Can Then We Probably Know  #
 # Where We Are and Can Go Ahead And Compile. That Means All The Header Files  #
@@ -232,7 +187,7 @@ fi
 
 if [ ${VERBOSE} ]
 then
-    echo ${CXX} ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -R${GAMMA_LIB} -lgamma -lm ${NAME}
+    echo ${CXX} ${CXXFLAGS} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -R${GAMMA_LIB} -lgamma -lm ${NAME}
 fi
-	${CXX}  ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -R${GAMMA_LIB} -lgamma -lm ${NAME}
+	${CXX}  ${CXXFLAGS} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -R${GAMMA_LIB} -lgamma -lm ${NAME}
 
