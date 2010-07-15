@@ -92,6 +92,7 @@ SRCDIRINCL_FLAG = -I$(SRCDIR1)
 
 BINDIR   = ../../mac-darwin
 #PYVERSION	  = 2.5
+PYVERSION	  = 2.6
 
 DEBUG    = -g 
 OPTIMIZE = -O2
@@ -670,9 +671,9 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@# only want the latter.
 	@rm -f ${BINDIR}/${SO_NAME} ${BINDIR}/${SO_NAMEX} 
 	@echo "   * Linking ${BINDIR}/${SO_NAMEX} To This Library"
-	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAMEX}
+	@cd $(BINDIR);ln -s ${SO_NAMEXXX} ${SO_NAMEX}
 	@echo "   * Linking ${BINDIR}/${SO_NAME} To This Library"
-	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
+	@cd $(BINDIR);ln -s ${SO_NAMEXXX} ${SO_NAME}
 	@echo
 	@echo
 	
