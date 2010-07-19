@@ -2496,12 +2496,12 @@ void TTable1D::dbwrite_old( const string& fileName,
 // imported into TTable1D with slight modifications on interface
 // by DCT 10/07/09
 
-void TTable1D::dbwrite(  const string& fileName, 
-						 const std::string& compname, 
-						 const double& specfreq,
-						 const int& numberspins,
-						 const int& loop,
-    					 const vector<string> & header) const
+void TTable1D::dbwrite( const string& fileName, 
+												const std::string& compname, 
+												const double& specfreq,
+												const int& numberspins,
+												const int& loop,
+    										const vector<string> & header) const
 // Input
 // Note       : Frequencies and Rates are in 1/sec
 
@@ -2510,8 +2510,8 @@ void TTable1D::dbwrite(  const string& fileName,
 	// Added to LK's version so that only the filename needs 
 	// to be passed in (no iostream type). This will work better
 	// in the python implementation.  DCT (10/06/09).
-    ofstream ostr;					        // Construct a file
-    ostr.open(fileName.c_str(), ios::out);	// Open file
+  ofstream ostr;					        // Construct a file
+  ostr.open(fileName.c_str(), ios::out);	// Open file
 
 	// write out header lines
 
@@ -2524,39 +2524,35 @@ void TTable1D::dbwrite(  const string& fileName,
 	ostr << "; " << "\n";
 
 
-    std::vector<double>    freqs;
+  std::vector<double>    freqs;
+  std::vector<int>       mx_index; 
+  std::vector<double>    freqout;
+  std::vector<double>    ampout;
+  std::vector<double>    phaseout;
+
+  double           freq;
+  double           normal = 1.0;
+  double           amptemp, ampsum, phasetemp;
+  unsigned long    bincount = 0;
+  const double     freqtol = 0.1/specfreq;    // Use something like half the minimum
+  const double     phasetol = 50.0;           // coupling const. divided by field
+  unsigned long    k;                         // strength for freqtol
+  int              foundone = 0;
    
-    std::vector<int>      mx_index;
-   
-    std::vector<double>    freqout;
-    std::vector<double>    ampout;
-    std::vector<double>    phaseout;
-
-    double           freq;
-    double           normal = 1.0;
-    //int            normindex = 0;
-    double            amptemp, ampsum, phasetemp;
-    unsigned long    bincount = 0;
-    const double     freqtol = 0.1/specfreq;        // Use something like half the minimum
-    const double      phasetol = 50.0;                // coupling const. divided by field
-    unsigned long    k;                        // strength for freqtol
-    int              foundone = 0;
-   
-    int ns=numberspins;
+  int ns=numberspins;
 
 
-    /* Get index array in PPM order -------------------------------------*/
+  /* Get index array in PPM order -------------------------------------*/
 
-    mx_index = this->Sort(0,-1,0);     
+  mx_index = this->Sort(0,-1,0);     
        
    
-    /* Convert frequencies to PPM ---------------------------------------*/
+  /* Convert frequencies to PPM ---------------------------------------*/
    
-    for(long ii=0; ii<this->size(); ii++)
-    {
-        freqs.push_back(-this->Fr(mx_index[ii])/(2.0*PI*specfreq));
-    }
-
+  for(long ii=0; ii<this->size(); ii++)
+  {
+      freqs.push_back(-this->Fr(mx_index[ii])/(2.0*PI*specfreq));
+  }
 
 	// there is no more reference spins, normalization is taken
 	// place by the formula below, where ns is the number of spins
@@ -2566,10 +2562,10 @@ void TTable1D::dbwrite(  const string& fileName,
 	//std::cout << "normal is " << normal<< std::endl;
 	//std::cout << "numberofspins is " << ns<< std::endl;
 
-    // DCT - added on 11/18/09
+  // DCT - added on 11/18/09
 	std::cout << "Normalization in dbwrite: " << normal << " \n";
 
-    /* Simple peak blending based on Freqtol and Phasetol ---------------*/
+  /* Simple peak blending based on Freqtol and Phasetol ---------------*/
 
 	{
 		std::vector<double>::iterator itf;
@@ -2579,15 +2575,15 @@ void TTable1D::dbwrite(  const string& fileName,
 		{
 		    freq = *itf;
 		   
-			//LK no need for low and high    
-			//if ((freq > lowppm && freq < reflow) || (freq > refhigh && freq < highppm))
+			  //LK no need for low and high    
+			  //if ((freq > lowppm && freq < reflow) || (freq > refhigh && freq < highppm))
+
 		    {
 		        amptemp   =  norm(this->I(mx_index[i]))/normal;
 		        phasetemp = -RAD2DEG*phase(this->I(mx_index[i]));
 
-	   			// std::cout << "phase is " << phase(this->I(mx_index[i]))<< std::endl;
-		       
-		       
+	   			 // std::cout << "phase is " << phase(this->I(mx_index[i]))<< std::endl;
+		       		       
 		        if (bincount == 0) //this is to write out the very first set of numbers
 		        {
 		            freqout.push_back(freq);
@@ -2671,33 +2667,33 @@ unsigned int    TTable1D::calc_spectra( vector<double> & frq,
 
 // Note       : Frequencies and Rates are in 1/sec
 {
-    vector<double>    freqs;
-    vector<int>       mx_index;
+	vector<double>    freqs;
+	vector<int>       mx_index;
 
-    vector<double> freqout;
-    vector<double> ampout;
-    vector<double> phaseout;
-   
-    double           freq;
-    double           normal = 1.0;
-    double           amptemp, ampsum, phasetemp;
-    unsigned long    bincount = 0;
-    const double     freqtol = 0.1/specfreq;        // Use something like half the minimum
-    const double     phasetol = 50.0;                // coupling const. divided by field
-    unsigned long    k;                        // strength for freqtol
-    int              foundone = 0;
-   
-    int ns=numberspins;
+	vector<double> freqout;
+	vector<double> ampout;
+	vector<double> phaseout;
+
+	double           freq;
+	double           normal = 1.0;
+	double           amptemp, ampsum, phasetemp;
+	unsigned long    bincount = 0;
+	const double     freqtol = 0.1/specfreq;        // Use something like half the minimum
+	const double     phasetol = 50.0;                // coupling const. divided by field
+	unsigned long    k;                        // strength for freqtol
+	int              foundone = 0;
+
+	int ns=numberspins;
 
 
-    /* Get index array in PPM order -------------------------------------*/
-    mx_index = this->Sort(0,-1,0);     
-       
-    /* Convert frequencies to PPM ---------------------------------------*/
-    for(long ii=0; ii<this->size(); ii++)
-    {
-        freqs.push_back(-this->Fr(mx_index[ii])/(2.0*PI*specfreq));
-    }
+	/* Get index array in PPM order -------------------------------------*/
+	mx_index = this->Sort(0,-1,0);     
+	   
+	/* Convert frequencies to PPM ---------------------------------------*/
+	for(long ii=0; ii<this->size(); ii++)
+	{
+			freqs.push_back(-this->Fr(mx_index[ii])/(2.0*PI*specfreq));
+	}
 
 	// there is no more reference spins, normalization is taken
 	// place by the formula below, where ns is the number of spins
