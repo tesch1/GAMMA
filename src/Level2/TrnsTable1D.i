@@ -133,13 +133,17 @@ void        dbwrite(     const std::string& fileName,
 						 const double& specfreq,
 						 const int& numberspins,
 						 const int& loop,
-						 const std::vector<std::string> & header) const;
-						 
+						 const std::vector<std::string> & header) const;						
+                            
 unsigned int  calc_spectra( std::vector<double> & freq,
-                            std::vector<double> & ampl,
-                            std::vector<double> & phase,
-                            double specfreq,
-                            int numberspins) const;
+							std::vector<double> & ampl,
+							std::vector<double> & phase,
+							double specfreq,
+							int numberspins,                                       
+							double freqtol = 0.001,
+							double phasetol = 45.0,
+							double lowppm = -1000.0,
+							double highppm = 1000.0) const;
  
 void           read(const std::string& fn);
 //std::ifstream& read(std::ifstream&     fp);

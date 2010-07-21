@@ -2663,7 +2663,11 @@ unsigned int    TTable1D::calc_spectra( vector<double> & frq,
                                         vector<double> & amp,
                                         vector<double> & phz,
                                         double specfreq,
-                                        int numberspins) const
+                                        int numberspins,
+                                        double freqtol,
+                                        double phasetol,
+                                        double lowppm,
+                                        double highppm) const
 
 // Note       : Frequencies and Rates are in 1/sec
 {
@@ -2678,8 +2682,6 @@ unsigned int    TTable1D::calc_spectra( vector<double> & frq,
 	double           normal = 1.0;
 	double           amptemp, ampsum, phasetemp;
 	unsigned long    bincount = 0;
-	const double     freqtol = 0.1/specfreq;        // Use something like half the minimum
-	const double     phasetol = 50.0;                // coupling const. divided by field
 	unsigned long    k;                        // strength for freqtol
 	int              foundone = 0;
 
@@ -2708,7 +2710,8 @@ unsigned int    TTable1D::calc_spectra( vector<double> & frq,
 		for(i=0, itf=freqs.begin(); i<this->size(); i++, itf++)
 		{
 		    freq = *itf;  
-
+            
+			if ((freq > lowppm ) && ( freq < highppm))
 		    {
 		        amptemp   =  norm(this->I(mx_index[i]))/normal;
 		        phasetemp = -RAD2DEG*phase(this->I(mx_index[i]));		       

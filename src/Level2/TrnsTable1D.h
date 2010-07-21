@@ -749,18 +749,16 @@ MSVCDLL void 		dbwrite(    const std::string& fileName,
 							 	const int& loop,
 						        const std::vector<std::string> & header) const;
  
-/*                               
-MSVCDLL void calc_spectra(      std::vector<double> & freqout,
-								std::vector<double> & ampout,                              
-								std::vector<double> & phaseout,
-                                double specfreq,
-                                int numberspins) const;
-*/
+
 MSVCDLL unsigned int calc_spectra(  std::vector<double> & freq,
                                     std::vector<double> & ampl,
                                     std::vector<double> & phase,
                                     double specfreq,
-                                    int numberspins) const;
+                                    int numberspins,                                       
+																		double freqtol = 0.001, // was 0.1/specfreq
+                                    double phasetol = 45.0, // was 50.0
+                                    double lowppm = -1000.0,
+                                    double highppm = 1000.0) const;
 
 // ------------------- Binary Read Functions (For Storage) --------------------
  
