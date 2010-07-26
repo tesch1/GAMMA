@@ -1,9 +1,0 @@
-#!/bin/sh
-rm -f *.asc
-rm -f *.mif
-rm -f *.a
-rm -f *.gnu
-rm -f *.exe
-rm -f *.exe.*
-rm -f *.~*
-

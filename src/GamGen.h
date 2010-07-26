@@ -161,47 +161,7 @@
    used only if 1.) __GNUG__ is defined and 2.) GAMPRAGMA is defined. Here I
    will set GAMPRAGMA only if we are using GCC version 2.x.x.                */
 
-// ----------------------------------------------------------------------------
-//                     GCC Template Instantiations
-// ----------------------------------------------------------------------------
 
-/* This problem is one encountered using GCC 3.2.0 when building GAMMA as a
- * static library. Several functions that use the STL produce errors when any
- * program links to the GAMMA static library. For example, the addition of 
- * strings (AB = A+B;) produces errors about lack of a definition of the
- * class string operator +. Oddly, string operator += works just fine. Other
- * problems arise from use of STL classes vector and list. I am not sure if 
- * this feature is a bug or simply not well documented, but the solution seems
- * to be to somehow use the objects causing trouble in a header file so that
- * they are instantiated. This lets the compiler know how the templated 
- * functions are specialized for use with a specific class. Supposedly later
- * versions of GAMMA will use the "export" qualifier to provide an easier way
- * of doing instantiations. I will use the definition of GSTATIC to set when
- * these are included. That is, one must be using GCC 3.x.x and have defined
- * GSTATIC before any such instantiations are include in the build. Remember
- * that AFAIK this is NOT needed for a shared library build.                */
-
-/*
-#if __GNUC__ >= 3
-#ifdef GSTATIC
-
-#include <string>			// Include libstdc++ strings
-#include <vector>			// Include libstdc++ vectors
-
-//               std::string operator+ (string) instantiation
-
-std::string strA("A");
-std::string strB("B");
-const std::string GamStrAddInit = strA + strB;
-
-//             std::vector<std::string> operator= instantiation
-
-const std::vector<std::string> VecA;
-const std::vector<std::string> GamStrVecAssignInit = VecA;
-
-#    endif				// End of static
-#  endif				// End of GCC 3.x.x
-*/
 #if __GNUC__ >= 4
 #include <cstdlib>
 #endif
