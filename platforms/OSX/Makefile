@@ -1135,7 +1135,7 @@ pytest: force
 #########################################################################
 
 INSTALLDIR    = /usr/local/bin
-LIBINSTALLDIR = /usr/lib
+LIBINSTALLDIR = /usr/local/lib
 GSCRIPT    = gamma
 GSCRIPTIN  = gamma.in
 CURRENTDIR = ${shell pwd}
