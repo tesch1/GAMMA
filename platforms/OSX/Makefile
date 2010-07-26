@@ -1168,7 +1168,7 @@ clean:
 	rm -f ${SO_OBJS}
 	@rm -f $(PYG_OBJS)
 	@rm -f $(PYSG_OBJS) $(PYSG_WRAP_SRCS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
-	@rm -f $(TEST_OBJ)
+	@rm -f $(TEST_OBJ) $(ALLTESTOBJFILES)
 	@rm -f *.asc
 	@rm -f *.gnu
 	@rm -f $(DEMO_OBJ)
@@ -1177,6 +1177,7 @@ clean:
 	@rm -f ${BINDIR}/${SO_NAMEX}
 	@rm -f ${BINDIR}/${SO_NAMEXX}
 	@rm -f ${BINDIR}/${SO_NAMEXXX}
+	@rm -f $(BINDIR)/$(PYS_NAME)
 
 strip:
 	@strip ${BINDIR}/${LIB_NAME}

@@ -6,7 +6,7 @@
 # builds and uses GAMMA as either a static or shared library & how one	#
 # builds and uses PyGAMMA. It assumes that one is using the GCC C++	#
 # compiler provided with (& amidst) Linux. At least, the binaries will	#
-# be placed in a Linux related directory. So, run this makefile from a	#
+# be placed in a Linux relocatedlated directory. So, run this makefile from a	#
 # Linux bash shell so the environment for GCC, make, etc. are set up	#
 # properly. As for PyGAMMA, one must have Python (build for Linux)	#
 # as well as Boost.Python on the system.				#
@@ -1448,10 +1448,11 @@ clean:
 	@rm -f *.gnu
 	@rm -f $(DEMO_OBJ)
 	@rm -f $(DEMO_PGM)
-	@rm -f ${BINDIR}/${SO_NAMEXXX}
-	@rm -f ${BINDIR}/${SO_NAMEX}
 	@rm -f ${BINDIR}/${SO_NAME}
-
+	@rm -f ${BINDIR}/${SO_NAMEX}
+	@rm -f ${BINDIR}/${SO_NAMEXXX}
+	@rm -f $(BINDIR)/$(PYS_NAME)
+	
 strip:
 	@strip ${BINDIR}/${LIB_NAME}
 	@strip ${BINDIR}/${SO_NAME}
