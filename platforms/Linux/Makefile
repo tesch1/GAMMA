@@ -588,6 +588,7 @@ ${BINDIR}/%.po : ${SRCDIR}/${TESTING}/%.cc
 #########################################################################
 #
 #               Build _PGSGAMMA (SWIG) Shared Library Pattern Rules
+
 #
 #
 ########################################################################
@@ -1174,19 +1175,19 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX)  -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 RUNDIR = ./../../src/Tests
 CURDIR = ./../../platforms/Linux
