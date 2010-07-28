@@ -6,6 +6,8 @@
 # move the entire pygamma namespace up into this level which allows users
 # to simply `import pygamma`
 
+from __future__ import division
+
 from pygamma import *
 del pygamma
 
