@@ -73,9 +73,21 @@ KEYWORDS = "GAMMA pygamma MRI MR Spectroscopy"
 
 packages = [ "pygamma" ]
 
-package_dir = { "pygamma" : "homemade" }
+# The PyGamma package consists of just three files -- __init__.py, 
+# pygamma.py (produced by make/SWIG) and a binary called  _pygamma.dll on 
+# Windows and _pygamma.so elsewhere.
+# __init__.py is provided; the other two have to come from a build process,
+# meaning make or MSVC.
+# If a user goes to the trouble of building on her platform, those files
+# will be in the homemade directory and we always prefer them to prebuilt
+# binaries.
+# If there isn't a homemade set of files, we look for a prebuilt binary
+# that matches the platform & Python we're using. 
+# FIXME PS - 28 July 2010 - this is intended behavior. As of yet, there are
+# no prebuilt binaries.
 
-
+# If we can't find a homemade or prebuilt binary, we quit without installing.
+ 
 # package_data tells setup about files other than .py that I want copied.
 # At present all three platforms (OSX, Linux & Windows) need just one of
 # these: _pygamma.dll on Windows and _pygamma.so elsewhere.
@@ -94,19 +106,33 @@ for filename in os.listdir(bin_path):
        not filename.endswith(".pyc"):
         package_data.append(filename)
         
-# FIXME -- need to add code that squawks if package_data is empty. That 
-# means they haven't run make yet.
-        
-package_data = { "pygamma" : package_data }
+if package_data:
+    # Found homemade files; install can continue
+    package_dir = { "pygamma" : "homemade" }
+else:
+    # OK, no homemade files. See if there's anything in prebuilt.
+    
+    # FIXME - we already know the answer; prebuilt is empty.
+    pass
+    
 
 
+if package_data:
+    package_data = { "pygamma" : package_data }
 
-distutils.core.setup(name=NAME,
-                     version=VERSION,
-                     package_dir=package_dir,
-                     packages=packages,
-                     package_data=package_data,
-                     url=URL,
-                     maintainer=MAINTAINER,
-                     maintainer_email=MAINTAINER_EMAIL,
-                     )
+    distutils.core.setup(name=NAME,
+                         version=VERSION,
+                         package_dir=package_dir,
+                         packages=packages,
+                         package_data=package_data,
+                         url=URL,
+                         maintainer=MAINTAINER,
+                         maintainer_email=MAINTAINER_EMAIL,
+                         )
+else:
+    # Still no binary files. We can't continue.
+    print """
+Sorry, setup doesn't have binaries for your platform and Python version.
+You'll have to make them yourself by following the instructions here:
+https://scion.duhs.duke.edu/vespa/gamma/wiki/GammaBuildingLibrary
+"""
