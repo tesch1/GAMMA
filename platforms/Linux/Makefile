@@ -1429,6 +1429,18 @@ install: force
 #	@echo " * Adding Link For GAMMA Base Library Name"
 #	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
 
+
+
+# PYSGDISTDIR is the destination directory for the binary (and pygamma.py) 
+# that the SWIG process creates.
+PYSGDISTDIR = ../../pygamma/homemade
+
+pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
+	cp -f  ${BINDIR}/pygamma.py   $(PYSGDISTDIR)
+	cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGDISTDIR)
+
+
+
 #########################################################################
 #									#
 #                                Clean 					#
