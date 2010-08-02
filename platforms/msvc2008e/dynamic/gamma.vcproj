@@ -126,7 +126,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Swig code generation"
-				CommandLine="if not exist ..\..\..\i686-pc-msvc mkdir ..\..\..\i686-pc-msvc&#x0D;&#x0A;swig -c++ -python -outdir ..\..\..\i686-pc-msvc  -I..\..\..\src -o ..\..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
+				CommandLine="if not exist ..\..\..\i686-pc-msvc mkdir ..\..\..\i686-pc-msvc&#x0D;&#x0A;python write_python_include_path.py&#x0D;&#x0A;swig -c++ -python -outdir ..\..\..\i686-pc-msvc  -I..\..\..\src -o ..\..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -148,9 +148,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zm200 "
+				AdditionalOptions="/Zm200 @python_include_path.rsp"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\Python26\include;..\..\..\src"
+				AdditionalIncludeDirectories="..\..\..\src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;GAMMA_EXPORTS;MAKEDLL=1"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
@@ -207,7 +207,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\i686-pc-msvc\_pygamma.pyd  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\i686-pc-msvc\pygamma.py  ..\..\..\pygamma\homemade"
+				CommandLine="copy ..\..\..\i686-pc-msvc\_pygamma.pyd  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\i686-pc-msvc\pygamma.py  ..\..\..\pygamma\homemade&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
