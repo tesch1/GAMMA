@@ -9,5 +9,10 @@
 from __future__ import division
 
 from pygamma import *
+
+# 'import *' doesn't import anything beginning with a double underscore, 
+# so we have to import the important __version__ string explicitly.
+from pygamma import __version__
+
 del pygamma
 
