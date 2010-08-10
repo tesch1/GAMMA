@@ -126,7 +126,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Build prep and Swig code generation"
-				CommandLine="if not exist ..\..\..\i686-pc-msvc mkdir ..\..\..\i686-pc-msvc&#x0D;&#x0A;python write_python_include_path.py&#x0D;&#x0A;python copy_python_lib.py&#x0D;&#x0A;&quot;c:\Program Files\swigwin-2.0.0\swig.exe&quot; -c++ -python -outdir ..\..\..\i686-pc-msvc  -I..\..\..\src -o ..\..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
+				CommandLine="if not exist ..\..\..\i686-pc-msvc mkdir ..\..\..\i686-pc-msvc&#x0D;&#x0A;python write_python_include_path.py&#x0D;&#x0A;python copy_python_lib.py&#x0D;&#x0A;swig.exe -c++ -python -outdir ..\..\..\i686-pc-msvc  -I..\..\..\src -o ..\..\..\i686-pc-msvc\pygamma_wrap.cxx pygamma.i&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -207,7 +207,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\i686-pc-msvc\_pygamma.pyd  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\i686-pc-msvc\pygamma.py  ..\..\..\pygamma\homemade&#x0D;&#x0A;python clean_python_lib.py&#x0D;&#x0A;"
+				CommandLine="copy ..\..\..\i686-pc-msvc\_pygamma.pyd  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\i686-pc-msvc\pygamma.py  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\VERSION  ..\..\..\pygamma\homemade&#x0D;&#x0A;python clean_python_lib.py&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
