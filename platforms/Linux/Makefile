@@ -103,6 +103,7 @@ BININSTALLDIR = /usr/local/bin
 LIBINSTALLDIR = /usr/local/lib
 HDRINSTALLDIR = /usr/local/include/gamma-${VERNO}.${MINNO}.${RELNO}
 
+ROOTDIR = ../..
 SRCDIR  = ../../src
 SRCDIR1 = ../../src
 
@@ -1438,6 +1439,7 @@ PYSGDISTDIR = ../../pygamma/homemade
 pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
 	cp -f  ${BINDIR}/pygamma.py   $(PYSGDISTDIR)
 	cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGDISTDIR)
+	cp -f  ${ROOTDIR}/VERSION    $(PYSGDISTDIR)
 
 
 
