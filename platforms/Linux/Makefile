@@ -646,7 +646,7 @@ ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
-	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
+	$(CC) -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 
@@ -791,7 +791,7 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo
 	@echo "Making Shared Library $(SO_NAME) From Object Files"
 	@echo
-	@g++ ${SO_LDFLAGS} -Wl,-soname,${SO_NAMEX} -o ${BINDIR}/${SO_NAMEXXX} $(SO_OBJS) $(SO_LDLIBS)
+	@$(CXX) ${SO_LDFLAGS} -Wl,-soname,${SO_NAMEX} -o ${BINDIR}/${SO_NAMEXXX} $(SO_OBJS) $(SO_LDLIBS)
 
 #########################################################################
 #                                                                       #
@@ -980,7 +980,7 @@ ${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS)
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
-	g++ ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+	$(CXX) ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
 
 #    cp ${BINDIR}/${PYS_NAME} ${BINDIR}/${PYS_NAMEXXX}
