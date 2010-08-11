@@ -143,8 +143,8 @@ PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMI
 PYCXXFLAGS = $(OPTIMIZE)
 
 PYSGCPPINCLFLAGS = 
-PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
-PYSGCXXFLAGS = $(OPTIMIZE)
+PYSGCPPFLAGS = -fast -xtarget=ultra3cu -m32 -KPIC $(SRCDIRINCL_FLAG)
+PYSGCXXFLAGS = 
 LDFLAGS  = -m32
 
 ### un-comment the next four lines if using blas/atls/lapack, 
@@ -641,7 +641,7 @@ ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
-	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 
@@ -944,7 +944,7 @@ PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; pri
 PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
 
 PYSINCFLAGS = -I$(PYTHONINCDIRS)
-PYSG_LDFLAGS = -L$(PYTHONLIBDIRS)
+PYSG_LDFLAGS = -L$(PYTHONLIBDIRS) -R$(PYTHONLIBDIRS)
 
 PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
 
@@ -972,15 +972,15 @@ $(PYSGAMMA_CHK):
 		false; \
 	fi
 	@echo 
-PYS_LDFLAGS = -shared $(LDFLAGS)
-PYS_LDLIBS  = $(LAB_LIBS) 
+PYS_LDFLAGS = -G $(LDFLAGS)
+PYS_LDLIBS  = $(LAB_LIBS) -lCstd -lCrun -lm
 
 
 ${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS) 
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
-	g++ ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+	$(CXX) ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
 
 #    cp ${BINDIR}/${PYS_NAME} ${BINDIR}/${PYS_NAMEXXX}
