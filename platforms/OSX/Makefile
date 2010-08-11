@@ -516,7 +516,7 @@ ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
-	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
+	$(CC) -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 
@@ -664,7 +664,7 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo "      ======================${SO_NAUL}=================="  
 	@echo
 	@echo "   * Building Library ${BINDIR}/${SO_NAMEXXX}"
-	@g++ ${SO_LDFLAGS} -install_name ${BINDIR}/${SO_NAMEX} \
+	@$(CXX) ${SO_LDFLAGS} -install_name ${BINDIR}/${SO_NAMEX} \
          -compatibility_version ${COMPVER} -current_version ${CURRVER} \
          -o ${BINDIR}/${SO_NAMEXXX} ${SO_OBJS} $(SO_LDLIBS)
 	@# gcc creates both libgamma.dylib and libgamma.4.1.0.dylib; we
@@ -853,7 +853,7 @@ ${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
-	g++ ${PYS_LDFLAGS} $(PYSG_LIBDIR) -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+	$(CXX) ${PYS_LDFLAGS} $(PYSG_LIBDIR) -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
 
 
