@@ -271,7 +271,7 @@ matrix::matrix(int i, int j, const complex& z, matrix_type t)
   */
   }
 
-matrix::matrix(int i, int j, const double d, matrix_type t, hermitian_type h)
+matrix::matrix(int i, int j, double d, matrix_type t, hermitian_type h)
   {
   switch(t)
     {
@@ -282,7 +282,7 @@ matrix::matrix(int i, int j, const double d, matrix_type t, hermitian_type h)
     }
   }
 
-matrix::matrix(int i, int j, const double d, matrix_type t)
+matrix::matrix(int i, int j, double d, matrix_type t)
   {
   switch(t)
     {
@@ -607,7 +607,7 @@ hermitian_type matrix::check_hermitian(double d)
           If it is not possible, the current matrix type is returned.         */
 
 matrix_type matrix::stored_type() const             { return m->stored_type(); }
-matrix_type matrix::test_type(const matrix_type t, const double d) const
+matrix_type matrix::test_type(matrix_type t, double d) const
                                                    { return m->test_type(t,d); }
 void matrix::set_type(matrix_type t)
   { 

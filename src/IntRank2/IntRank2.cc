@@ -624,7 +624,7 @@ IntRank2::IntRank2(const Isotope& IsoI, double X,
   (ttype)?setSPF():setSPQ(); 		// Set spin-field or spin-self
   }
 
-IntRank2::IntRank2(double qn, double X,
+IntRank2::IntRank2(const double qn, double X,
                      double E, const EAngles& EA, bool ttype) :IntRank2A(E, EA)
   {
   Ival = int(2.0*qn+1);			// Set Ival to 2I+1 (IntRank2T)

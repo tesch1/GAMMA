@@ -423,7 +423,7 @@ col_vector & col_vector::operator /= (const complex& z)
   return *this;
 }
 
-col_vector & col_vector::operator /= (      double d)   
+col_vector & col_vector::operator /= (const double d)   
 { 
   matrix::operator/= (d); 
   return *this;
