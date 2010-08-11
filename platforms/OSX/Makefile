@@ -516,7 +516,7 @@ ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
-	$(CC) -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 
