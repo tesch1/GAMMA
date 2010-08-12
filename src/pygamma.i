@@ -1,9 +1,5 @@
 %module pygamma
 
-%pythoncode %{
-__version__ = "4.2.0"
-%}
-
 
 %include "Basics/basics.i"
 %include "Matrix/matrix_inc.i"

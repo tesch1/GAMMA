@@ -207,7 +207,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy ..\..\..\i686-pc-msvc\_pygamma.pyd  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\i686-pc-msvc\pygamma.py  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\VERSION  ..\..\..\pygamma\homemade&#x0D;&#x0A;python clean_python_lib.py&#x0D;&#x0A;"
+				CommandLine="copy ..\..\..\i686-pc-msvc\_pygamma.pyd  ..\..\..\pygamma\homemade&#x0D;&#x0A;copy ..\..\..\i686-pc-msvc\pygamma.py  ..\..\..\pygamma\homemade&#x0D;&#x0A;python write_pygamma_version.py&#x0D;&#x0A;python clean_python_lib.py&#x0D;&#x0A;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

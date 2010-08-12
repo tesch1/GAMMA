@@ -1466,8 +1466,10 @@ install: force
 PYSGDISTDIR = ../../pygamma/homemade
 
 pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
-	cp -f  ${BINDIR}/pygamma.py   $(PYSGDISTDIR)
-	cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGDISTDIR)
+	@cp -f  ${BINDIR}/pygamma.py   $(PYSGDISTDIR)
+	@cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGDISTDIR)
+	@# Write a tiny Python file that contains the PyGAMMA version 
+	@echo "__version__ = '$(GAMMAVERSION)'" > $(PYSGDISTDIR)/pygamma_version.py
 
 #########################################################################
 #									#

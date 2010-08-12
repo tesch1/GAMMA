@@ -84,7 +84,7 @@
 #									#
 #########################################################################
 
-
+ROOTDIR = ../..
 SRCDIR  = ../../src
 SRCDIR1 = ../../src
 
@@ -128,7 +128,6 @@ LDCONFIG = /sbin/ldconfig
 LAB_LIBS = 
 
 NPD      = --no-print-directory
-
 
 #########################################################################
 #									#
@@ -1156,11 +1155,13 @@ install: force
 
 # PYSGDISTDIR is the destination directory for the binary (and pygamma.py) 
 # that the SWIG process creates.
-PYSGDISTDIR = ../../pygamma/homemade
+PYSGDISTDIR = $(ROOTDIR)/pygamma/homemade
 
 pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
-	cp -f  ${BINDIR}/pygamma.py   $(PYSGDISTDIR)
-	cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGDISTDIR)
+	@cp -f  ${BINDIR}/pygamma.py   $(PYSGDISTDIR)
+	@cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGDISTDIR)
+	@# Write a tiny Python file that contains the PyGAMMA version 
+	@echo "__version__ = '$(GAMMAVERSION)'" > $(PYSGDISTDIR)/pygamma_version.py
 
 
 #########################################################################

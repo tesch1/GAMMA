@@ -65,6 +65,10 @@ ALLMODHDRS :=
 
 ALLIFILES  :=
 
+# GAMMA version
+
+GAMMAVERSION := $(strip `cat ../../VERSION`)
+
 
 ###############################################################################
 #                                                                             #
