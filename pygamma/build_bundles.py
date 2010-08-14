@@ -103,26 +103,21 @@ def build_bundles(target_path, filenames):
             # This is ../VERSION or one of its siblings. Once in the bundle,
             # these should be in the root so I trim the reference to "../".
             bundle_name = bundle_name[3:]
+            
+        bundle_name = os.path.join(BUNDLE_DIR, bundle_name)
 
         tarball.add(filename, bundle_name, False)
 
-        # ZIP files require a little more work.
-        if bundle_name != filename:
-            # This is one of the repositioned files from my parent dir.
-            # The zipfile interface doesn't support renaming them via
-            # zipfile.write(), but this works.
-            zipfile.writestr(bundle_name, open(filename).read())
+        # ZIP files are a little more difficult.
+        if os.path.isdir(filename):
+            # Trouble here. Either the ZIP format or Python's interface
+            # to it doesn't really support empty directories. The
+            # workaround is to add a trailing path separator to the
+            # filename and write it as an empty string.
+            # ref: http://bytes.com/topic/python/answers/19053-add-empty-directory-using-zipfile
+            zipfile.writestr(bundle_name + os.sep, "")
         else:
-            if os.path.isdir(filename):
-                # Trouble here. Either the ZIP format or Python's interface
-                # to it doesn't really support empty directories. The
-                # workaround is to add a trailing path separator to the
-                # filename and write it as an empty string.
-                # ref: http://bytes.com/topic/python/answers/19053-add-empty-directory-using-zipfile
-                zipfile.writestr(filename + os.sep, "")
-            else:
-                # This is the simple case. =)
-                zipfile.write(filename)
+            zipfile.writestr(bundle_name, open(filename).read())
 
     zipfile.close()
     tarball.close()
