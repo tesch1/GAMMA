@@ -251,7 +251,7 @@ else:
     print """
 Sorry, setup doesn't have binaries for your platform and Python version.
 You'll have to make them yourself by following the instructions here:
-https://scion.duhs.duke.edu/vespa/gamma/wiki/PyGamma
+http://scion.duhs.duke.edu/vespa/gamma/wiki/PyGamma
 """
     sys.exit(-1)
 
