@@ -127,10 +127,19 @@ class PlatformSniffer(object):
 
         # Get 32/64 bit mode info.
         #
-        # There's no official way to do this but the canonical way appears
-        # to be to test the value of sys.maxint and see whether or not it
-        # is a 32- or 64-bit long.
-        # ref: http://stackoverflow.com/questions/1405913/how-do-i-determine-if-my-python-shell-is-executing-in-32bit-or-64bit-mode
+        # The official way to do this is via platform.architecture(). 
+        # Unfortunately that relies on executing the operating system's `file`
+        # command against the Python executable. OS X can pack both 32 and 64 
+        # bit binaries into one file which makes the output of the file 
+        # command ambiguous. 
+        # Therefore, we fall back on the crude-but-effective trick of 
+        # testing sys.maxint to see whether or not it is a 32- or 64-bit long.
+        # ref for the sys.maxint trick: 
+        #    http://stackoverflow.com/questions/1405913/how-do-i-determine-if-my-python-shell-is-executing-in-32bit-or-64bit-mode
+        # refs for the limitations of platform.architecture():
+        #    http://mail.python.org/pipermail/python-list/2010-October/1258275.html
+        #    http://groups.google.com/group/comp.lang.python/msg/5e363fcd9131dec4
+
         # Don't succumb to the temptation to use a ternary if statement here;
         # see comment at the top.
         if sys.maxint == 2147483647:
