@@ -104,6 +104,33 @@ def build_bundles(target_path, filenames):
             # these should be in the root so I trim the reference to "../".
             bundle_name = bundle_name[3:]
             
+        # We prefix each file with a directory name (BUNDLE_DIR) so that the
+        # bundle will unbundle neatly in a new, dedicated directory. Under 
+        # *nix this is standard practice for tarballs and ZIP files (although
+        # the latter don't see much use under *nix.)
+        # Unfortunately the standard Windows unzipper always suggests a 
+        # default extraction target that duplicates the .zip filename so
+        # extraction ends up in a folder like this -- 
+        #   C:\pygamma-4.2.0\pygamma-4.2.0\
+        
+        # Other than looking a bit stupid, this is harmless. We could 
+        # work around this by leaving out our prefix, but that creates one
+        # or perhaps two problems for us. First, it would make the PyGAMMA
+        # .zip file different from the Vespa .zip file. That always prefixes
+        # its contents with a bundle dir via a process we can't alter. 
+        # Second, if users have an alternate unzipper that doesn't 
+        # automatically create an extraction dir (or the Windows unzipper
+        # changes its behavior), we'll create a mess if we don't supply
+        # a bundle dir prefix.
+
+        # Interestingly, the OS X unzipper behaves nicely regardless of 
+        # whether or not the prefix is present. If no prefix is present,
+        # it creates a directory matching the .zip file name and unzips into
+        # there. If there is a prefix that matches the directory it would 
+        # have created, it doesn't bother creating its own. 
+
+        # That's nice but it means the OS X unzipper can't be used to 
+        # predict the behavior of the Windows unzipper. 
         bundle_name = os.path.join(BUNDLE_DIR, bundle_name)
 
         tarball.add(filename, bundle_name, False)
