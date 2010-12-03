@@ -22,7 +22,7 @@
 
 if [ "$1" = "-v" ]
 then
-  echo "GAMMA Version 4.1.0 Linux Build"
+  echo "GAMMA Version 4.2.0 Linux Build"
   exit
 fi
 

@@ -640,9 +640,9 @@ ${BINDIR}/$(LIB_NAME): ${BINDIR} ${LIB_OBJS}
 # is created, linkes are set for the other library names to it. For     #
 # example                                                               #
 #									#
-# Library Made: libgamma.4.1.0.dylib					#
-# First Link:   libgamma.4.dylib --> libgamma.4.1.0.dylib               #
-# Second Link:  libgamma.dylib   --> libgamma.4.1.0.dylib               #
+# Library Made: libgamma.4.2.0.dylib					#
+# First Link:   libgamma.4.dylib --> libgamma.4.2.0.dylib               #
+# Second Link:  libgamma.dylib   --> libgamma.4.2.0.dylib               #
 #									#
 # SO_NAME    = Name of shared library to be generated. (libgamma.dylib)	#
 # SO_LDFLAGS = Flags used in shared library linking.   (-dynamiclib) 	#
@@ -666,7 +666,7 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@$(CXX) ${SO_LDFLAGS} -install_name ${BINDIR}/${SO_NAMEX} \
          -compatibility_version ${COMPVER} -current_version ${CURRVER} \
          -o ${BINDIR}/${SO_NAMEXXX} ${SO_OBJS} $(SO_LDLIBS)
-	@# gcc creates both libgamma.dylib and libgamma.4.1.0.dylib; we
+	@# gcc creates both libgamma.dylib and libgamma.4.2.0.dylib; we
 	@# only want the latter.
 	@rm -f ${BINDIR}/${SO_NAME} ${BINDIR}/${SO_NAMEX} 
 	@echo "   * Linking ${BINDIR}/${SO_NAMEX} To This Library"
@@ -1080,10 +1080,10 @@ pytest: force
 # to GAMMA are compiled. This script is tailored for a particular	#
 # version and installation, that is, it knows which GAMMA version it    #
 # is associated with and where that version is located. For example,	#
-# the version may be 4.1.0 and compiled for OSX. On my OSX box that 	#
-# means my GAMMA script will know that /E/gamma/gamma-4.1.0 is my base  #
-# GAMMA directory, that /E/gamma/gamma-4.1.0/src is where it can find   #
-# the GAMMA source headers, & /E/gamma/gamma-4.1.0/mac-darwin	 	#
+# the version may be 4.2.0 and compiled for OSX. On my OSX box that 	#
+# means my GAMMA script will know that /E/gamma/gamma-4.2.0 is my base  #
+# GAMMA directory, that /E/gamma/gamma-4.2.0/src is where it can find   #
+# the GAMMA source headers, & /E/gamma/gamma-4.2.0/mac-darwin	 	#
 # is where any OSX specific GAMMA binaries will be located.		#
 #									#
 # When using the Gnu configuration process all of this information is	#
