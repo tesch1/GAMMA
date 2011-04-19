@@ -33,7 +33,7 @@ BUNDLE_DIR = "pygamma-%s" % VERSION
 # being built for.
 STANDARD = ["setup.py",
             "init.py",
-            "homemade",
+            "homemade/readme.txt",
             os.path.join("..", "LICENSE"),
             os.path.join("..", "README"),
             os.path.join("..", "VERSION"),
@@ -135,16 +135,12 @@ def build_bundles(target_path, filenames):
 
         tarball.add(filename, bundle_name, False)
 
-        # ZIP files are a little more difficult.
-        if os.path.isdir(filename):
-            # Trouble here. Either the ZIP format or Python's interface
-            # to it doesn't really support empty directories. The
-            # workaround is to add a trailing path separator to the
-            # filename and write it as an empty string.
-            # ref: http://bytes.com/topic/python/answers/19053-add-empty-directory-using-zipfile
-            zipfile.writestr(bundle_name + os.sep, "")
-        else:
-            zipfile.writestr(bundle_name, open(filename).read())
+        # We can't add empty directories to ZIP files. Doing so causes a 
+        # problem for some unzippers.
+        # ref: http://scion.duhs.duke.edu/vespa/gamma/ticket/11
+        assert(not os.path.isdir(filename))
+
+        zipfile.writestr(bundle_name, open(filename, "rb").read())
 
     zipfile.close()
     tarball.close()
