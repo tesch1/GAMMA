@@ -23,7 +23,7 @@
 
 if [ "$1" = "-v" ]
 then
-  echo "GAMMA Version 4.2.0 Solaris i386 Sun CC 32 Bit Build"
+  echo "GAMMA Version 4.2.1 Solaris i386 Sun CC 32 Bit Build"
   exit
 fi
 
@@ -43,7 +43,7 @@ then
   echo ""
   echo "              G  A  M  M  A"
   echo ""
-  echo "             (Version 4.2.0)"
+  echo "             (Version 4.2.1)"
   echo ""
   echo "  Written by Scott Smith and Tilo Levante"
   echo ""
@@ -171,8 +171,8 @@ done
 #                                                                             #
 ###############################################################################
 
-GAMMA_INC=${GAMMA_PATH}/include/gamma-4.2.0/
-GAMMA_LIB=${GAMMA_PATH}/lib/gamma-4.2.0/${host}/
+GAMMA_INC=${GAMMA_PATH}/include/gamma-4.2.1/
+GAMMA_LIB=${GAMMA_PATH}/lib/gamma-4.2.1/${host}/
 
 ###############################################################################
 #                                                                             #

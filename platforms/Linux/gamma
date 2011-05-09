@@ -22,7 +22,7 @@
 
 if [ "$1" = "-v" ]
 then
-  echo "GAMMA Version 4.2.0 Linux Build"
+  echo "GAMMA Version 4.2.1 Linux Build"
   exit
 fi
 
@@ -42,7 +42,7 @@ then
   echo ""
   echo "              G  A  M  M  A"
   echo ""
-  echo "             (Version 4.2.0)"
+  echo "             (Version 4.2.1)"
   echo ""
   echo "  Written by Scott Smith and Tilo Levante"
   echo ""
@@ -72,7 +72,7 @@ fi
 #                                                                             #
 ###############################################################################
 
-GAMMA_PATH=${GAMMA_PATH-/usr/include/gamma-4.2.0}
+GAMMA_PATH=${GAMMA_PATH-/usr/include/gamma-4.2.1}
 
 ###############################################################################
 #                                                                             #

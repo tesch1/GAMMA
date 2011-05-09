@@ -23,7 +23,7 @@
 
 if [ "$1" = "-v" ]
 then
-  echo "GAMMA Version 4.2.0 CygWin Build"
+  echo "GAMMA Version 4.2.1 CygWin Build"
   exit
 fi
 
@@ -43,7 +43,7 @@ then
   echo ""
   echo "              G  A  M  M  A"
   echo ""
-  echo "             (Version 4.2.0)"
+  echo "             (Version 4.2.1)"
   echo ""
   echo "  Written by Scott Smith and Tilo Levante"
   echo ""

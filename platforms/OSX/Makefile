@@ -91,8 +91,6 @@ SRCDIR1 = ../../src
 SRCDIRINCL_FLAG = -I$(SRCDIR1)
 
 BINDIR   = ../../mac-darwin
-#PYVERSION	  = 2.5
-PYVERSION	  = 2.6
 
 DEBUG    = -g 
 OPTIMIZE = -O2
@@ -101,6 +99,9 @@ CC       = gcc
 #CFLAGS  = $(DEBUG)
 CFLAGS   = $(OPTIMIZE)
 
+# When building against 32-bit Python 2.5 on OS X Snow Leopard (10.6), it's
+# necessary to add -m32 to the CXX definition. 
+# ref: http://scion.duhs.duke.edu/vespa/gamma/ticket/13
 CXX      = c++
 CPPFLAGS = -I../../src
 CXXFLAGS = $(OPTIMIZE)
@@ -145,28 +146,23 @@ NPD      = --no-print-directory
 
 LIB_NAME    = libgamma.a
 
-VERNO      = 4
-MINNO      = 2
-RELNO      = 0
-
-COMPVER    = ${VERNO}.${MINNO}
-CURRVER    = ${COMPVER}.${RELNO}
+COMPVER    = ${MAJORVERSION}.${MINORVERSION}
+CURRVER    = ${COMPVER}.${RELEASEVERSION}
 
 SO_BASE    = libgamma
 SO_BAUL    = "========"
 SO_NAME    = ${SO_BASE}.dylib
 SO_NAUL    = ${SO_BAUL}======
-SO_NAMEX   = ${SO_BASE}.${VERNO}.dylib
+SO_NAMEX   = ${SO_BASE}.${MAJORVERSION}.dylib
 SO_NAMEXX  = ${SO_BASE}.${COMPVER}.dylib
 SO_NAMEXXX = ${SO_BASE}.${CURRVER}.dylib
 
 PYG_NAME    = pygamma.dll
 
-#PYS_NAME    = _pygamma.dll
 PYS_NAME    = _pygamma.so
-PYS_NAMEX   = ${PYS_NAME}.${VERNO}
-PYS_NAMEXX  = ${PYS_NAMEX}.${MINNO}
-PYS_NAMEXXX = ${PYS_NAMEXX}.${RELNO}
+PYS_NAMEX   = ${PYS_NAME}.${MAJORVERSION}
+PYS_NAMEXX  = ${PYS_NAMEX}.${MINORVERSION}
+PYS_NAMEXXX = ${PYS_NAMEXX}.${RELEASEVERSION}
 
 #########################################################################
 #                                                                       #
@@ -795,18 +791,6 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 #  Python Swig build shared library details
 #
 ########################################################################
-
-
-
-#PYSINCDIR    = /usr/include/python$(PYVERSION)
-#PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
-#PYSINCFLAGS = -I$(PYSINCDIR) -I$(PYSINC2DIR)
-#PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
-#PYSLIBDIR    = /usr/lib/python$(PYVERSION)
-#PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
-#PYSLIB3DIR   = /usr/local
-
-#PYSG_LIBDIR = -L$(PYSLIBDIR) -L$(PYSLIB2DIR) -L$(PYSLIB3DIR)
 
 # Using python to find the default library and include path for "python" executable on the local machine.
 PYTHON_EXECUTABLE = python

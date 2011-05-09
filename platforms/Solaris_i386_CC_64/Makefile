@@ -101,9 +101,9 @@ SHELL = /bin/sh
 #INSTALLDIR    = /usr
 INSTALLDIR    = /nmrnet/gamma
 BININSTALLDIR = ${INSTALLDIR}/bin/
-LIBINSTALLDIRV= ${INSTALLDIR}/lib/gamma-${VERNO}.${MINNO}.${RELNO}
-LIBINSTALLDIR = ${INSTALLDIR}/lib/gamma-${VERNO}.${MINNO}.${RELNO}/i386-pc-solaris2.10-CC64
-HDRINSTALLDIR = ${INSTALLDIR}/include/gamma-${VERNO}.${MINNO}.${RELNO}
+LIBINSTALLDIRV= ${INSTALLDIR}/lib/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}
+LIBINSTALLDIR = ${INSTALLDIR}/lib/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}/i386-pc-solaris2.10-CC64
+HDRINSTALLDIR = ${INSTALLDIR}/include/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}
 
 SRCDIR  = ../../src
 SRCDIR1 = ../../src
@@ -118,7 +118,6 @@ LAPACKINCL_FLAG =
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(LAPACKINCL_FLAG) $(BLASINCL_FLAG)
 
 BINDIR        = ./../../i386-pc-solaris2.10-CC64
-#PYVERSION	  = 2.5
 
 
 DEBUG    = -g
@@ -175,14 +174,14 @@ NPD      =
 # These names are associated with the library we plan to build.		#
 #									#
 # LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)	#
-# VERNO       = Shared library major version number                     #
-# MINNO       = Shared library minor version number                     #
-# RELNO       = Shared library release (or patch) version number        #
+# MAJORVERSION       = Shared library major version number                     #
+# MINORVERSION       = Shared library minor version number                     #
+# RELEASEVERSION       = Shared library release (or patch) version number        #
 # SO_NAME     = Name of shared lib to generate/target.    (libgamma.so)	#
 # PY_NAME    = Name of PyGAMMA shared lib. to generate    (pygamma.so) #
 #									#
 # Note: The shared library name should be libgamma.#.#.# where the 3    #
-#       numbers are VERNO, MINNO, and RELNO respectively. For GAMMA we  #
+#       numbers are MAJORVERSION, MINORVERSION, and RELEASEVERSION respectively. For GAMMA we  #
 #       are currently on major version 4 and minor version 1 so that it #
 #       will have an soname of libgamma.so.4 whereas the library name   #
 #       produced in the build will be libgamma.so.4.2. When the library #
@@ -195,7 +194,7 @@ NPD      =
 #       if GAMMA is upgraded but not to the point that any previous     #
 #       programs are affected, the library may be rebuilt with the same #
 #       soname (that which all previously made executable try to link   #
-#       to) but change the MINNO for the build. If the GAMMA changes    #
+#       to) but change the MINORVERSION for the build. If the GAMMA changes    #
 #       will break older programs, then adjust the major version and    #
 #       the soname (e.g. libgamma.so.5.0 and libgamma.so.5) for the     #
 #       rebuild. Then (after the install to /usr/lib) then switch the   #
@@ -206,24 +205,21 @@ NPD      =
 
 LIB_NAME    = libgamma.a
 
-VERNO      = 4
-MINNO      = 2
-RELNO      = 0
 SO_NAME    = libgamma.so
-SO_NAMEX   = ${SO_NAME}.${VERNO}
-SO_NAMEXX  = ${SO_NAMEX}.${MINNO}
-SO_NAMEXXX = ${SO_NAMEXX}.${RELNO}
+SO_NAMEX   = ${SO_NAME}.${MAJORVERSION}
+SO_NAMEXX  = ${SO_NAMEX}.${MINORVERSION}
+SO_NAMEXXX = ${SO_NAMEXX}.${RELEASEVERSION}
 
 PY_NAME    = pygamma.so
-PY_NAMEX   = ${PY_NAME}.${VERNO}
-PY_NAMEXX  = ${PY_NAMEX}.${MINNO}
-PY_NAMEXXX = ${PY_NAMEXX}.${RELNO}
+PY_NAMEX   = ${PY_NAME}.${MAJORVERSION}
+PY_NAMEXX  = ${PY_NAMEX}.${MINORVERSION}
+PY_NAMEXXX = ${PY_NAMEXX}.${RELEASEVERSION}
 
 
 PYS_NAME    = _pygamma.so
-PYS_NAMEX   = ${PYS_NAME}.${VERNO}
-PYS_NAMEXX  = ${PYS_NAMEX}.${MINNO}
-PYS_NAMEXXX = ${PYS_NAMEXX}.${RELNO}
+PYS_NAMEX   = ${PYS_NAME}.${MAJORVERSION}
+PYS_NAMEXX  = ${PYS_NAMEX}.${MINORVERSION}
+PYS_NAMEXXX = ${PYS_NAMEXX}.${RELEASEVERSION}
 
 #########################################################################
 #                                                                       #
@@ -1369,7 +1365,7 @@ gamma: gamma.in
 
 ${BININSTALLDIR}/gamma: gamma
 	@echo Copying The GAMMA Script To The Bin Directory ${BININSTALLDIR}
-	@cp -f ./${GSCRIPT} ${BININSTALLDIR}/gamma-${VERNO}.${MINNO}.${RELNO}.i386-pc-solaris2.10-CC64
+	@cp -f ./${GSCRIPT} ${BININSTALLDIR}/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}.i386-pc-solaris2.10-CC64
 
 script: gamma
 installscript: ${BININSTALLDIR}/gamma

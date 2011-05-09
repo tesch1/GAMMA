@@ -66,9 +66,18 @@ ALLMODHDRS :=
 ALLIFILES  :=
 
 # GAMMA version
-
-GAMMAVERSION := $(strip `cat ../../VERSION`)
-
+GAMMAVERSION := $(strip $(shell cat ../../VERSION))
+# Here we calculate the major, minor and release versions. e.g. if 
+# GAMMAVERSION is 4.2.1, then major, minor and release are 4, 2, and 1 
+# respectively.
+# The trick with empty & space below comes straight from the GNU Make manual.
+# ref: http://www.gnu.org/software/make/manual/make.html#Syntax-of-Functions
+# _empty and _space are temporary variables.
+_empty:=
+_space:= $(_empty) $(_empty)
+MAJORVERSION   = $(word 1, $(subst .,$(_space), $(GAMMAVERSION)))
+MINORVERSION   = $(word 2, $(subst .,$(_space), $(GAMMAVERSION)))
+RELEASEVERSION = $(word 3, $(subst .,$(_space), $(GAMMAVERSION)))
 
 ###############################################################################
 #                                                                             #
