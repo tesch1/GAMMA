@@ -1,0 +1,18 @@
+Version 4.2.1 - 10 May 2011
+------------------------------------------------------------------------------
+This version is a small update to PyGAMMA's installation routine and prebuilt
+libraries. It contains no functional changes to GAMMA or PyGAMMA.
+
+- We changed the PyGAMMA ZIP file to not contain an empty directory which
+some unzippers can't handle.
+
+- We added prebuilt PyGAMMA binaries for Python 2.7 on OS X, Linux and 
+Windows.
+
+
+
+Version 4.2.0 - 10 Nov 2010
+------------------------------------------------------------------------------
+This is the first version of GAMMA to be released from the UCSF/Duke
+collaboration.
+
