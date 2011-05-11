@@ -99,9 +99,6 @@ CC       = gcc
 #CFLAGS  = $(DEBUG)
 CFLAGS   = $(OPTIMIZE)
 
-# When building against 32-bit Python 2.5 on OS X Snow Leopard (10.6), it's
-# necessary to add -m32 to the CXX definition. 
-# ref: http://scion.duhs.duke.edu/vespa/gamma/ticket/13
 CXX      = c++
 CPPFLAGS = -I../../src
 CXXFLAGS = $(OPTIMIZE)
@@ -792,11 +789,28 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 #
 ########################################################################
 
-# Using python to find the default library and include path for "python" executable on the local machine.
+# Using python to find the default library and include path for "python" 
+# executable on the local machine.
 PYTHON_EXECUTABLE = python
 
-PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
-PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
+PYTHONINCDIRS := ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
+PYTHONLIBDIRS := ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
+
+# Under OS X 10.6 (Snow Leopard), gcc wants to build 64-bit objects by 
+# default and will do so even if Python is 32 bit. We check whether Python 
+# is 32 or 64 bit and then use gcc's -arch flag to ensure it generates the
+# correct object types.
+# The test for 32 versus 64 bit Python is from here:
+# http://stackoverflow.com/questions/1405913/how-do-i-determine-if-my-python-shell-is-executing-in-32bit-or-64bit-mode
+# For the record, I've built a universal (32 and 64 bit) pygamma.so by
+# setting PYTHONARCH to '-arch i386 -arch x86_64'. But with our current 
+# setup routine for PyGAMMA, a universal binary doesn't provide any 
+# advantages.
+PYTHONARCH := ${shell ${PYTHON_EXECUTABLE} -c "import sys; print 'i386' if sys.maxint==2147483647 else 'x86_64'"}
+PYTHONARCH :=  -arch $(PYTHONARCH)
+
+PYSGCPPFLAGS += $(PYTHONARCH)
+
 
 PYSINCFLAGS = -I$(PYTHONINCDIRS)
 PYSG_LDFLAGS = -L$(PYTHONLIBDIRS)
@@ -828,7 +842,7 @@ $(PYSGAMMA_CHK):
 	fi
 	@echo 
 
-PYS_LDFLAGS = -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup
+PYS_LDFLAGS = -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup $(PYTHONARCH)
 PYS_LDLIBS   =
 
 
@@ -843,9 +857,7 @@ ${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
 
 #########################################################################
 #									#
-#                      Insure Needed Directories Exist                  #
-#									#
-#									#
+#                      Ensure Needed Directories Exist                  #
 #									#
 #########################################################################
 

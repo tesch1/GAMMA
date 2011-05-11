@@ -1,3 +1,12 @@
+Version 4.2.2 - 11 May 2011
+------------------------------------------------------------------------------
+This release fixes the broken 32 bit Python 2.6 and 2.7 libraries for OS X
+that were distributed with PyGAMMA 4.2.1.
+
+It contains no other changes.
+
+
+
 Version 4.2.1 - 10 May 2011
 ------------------------------------------------------------------------------
 This version is a small update to PyGAMMA's installation routine and prebuilt
