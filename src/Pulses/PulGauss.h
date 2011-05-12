@@ -55,17 +55,20 @@ struct Gpuldat                          // Gpulse info
 
 // -------------------- Individual Pulse-Delay Steps --------------------
 
-MSVCDLL gen_op Gaussian(spin_system& sys, gen_op& H, std::string& Iso,
-                                 double td, double theta, double phi=0.0);
+// :FIXME: The function declared below does not match any defined in the .cc
+// file, so it will be commented out until further notice.
+//
+//MSVCDLL gen_op Gaussian(spin_system& sys, gen_op& H, std::string& Iso,
+//                                 double td, double theta, double phi=0.0);
 
-	// Input	     sys   : Spin system
+	// Input	 sys   : Spin system
 	// 		     H     : Static Hamiltonian without the field
 	// 		     Iso   : Isotope channel the field is on
 	// 		     td    : Delay following pulse application
 	// 		     theta : Pulse angle (degrees)
 	// 		     phi   : Pulse phase (degrees)
-	// Output	     U     : Propagator for an Gaussian sequence
-	//			     about the axis specified by phi
+	// Output	 U     : Propagator for an Gaussian sequence
+	//			         about the axis specified by phi
 
 
 MSVCDLL void Gpulse_Hs(gen_op* Hs, gen_op& H0, gen_op& Fxy,

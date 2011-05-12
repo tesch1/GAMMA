@@ -18,13 +18,18 @@ struct Gpuldat                          // Gpulse info
   double phi;                           // Pulse phase (degrees)
 };
 
-// :FIXME: This is giving an LNK2019 (linker error)
-// on Windows Visual Studio Express
-// Will investigate further on Linux
-/*
-gen_op Gaussian(spin_system& sys, gen_op& H, std::string& Iso,
-                        double td, double theta, double phi=0.0);
-*/
+// :FIXME: This code gives an LNK2019 (linker error)
+// on Windows Visual Studio Express, and causes problems 
+// when the final pygamma library is loaded into Python
+// on Linux.
+// After further study the function signature included 
+// in the .i and .h is not defined in the .cc. Seems
+// like this was never working in the first place, so
+// will leave it commented out, until further notice.
+//
+//gen_op Gaussian(spin_system& sys, gen_op& H, std::string& Iso,
+//                        double td, double theta, double phi=0.0);
+
                         
 void Gpulse_Hs(gen_op* Hs, gen_op& H0, gen_op& Fxy,
                           int N, double ang, double tp, double fact);                          

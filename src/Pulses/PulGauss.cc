@@ -62,7 +62,7 @@ using std::cin;				// Using libstdc++ standard input
 
 // ---------------------- Real Pulses, No Relaxation --------------------
 
-// This function does not seem to be used and is not in the .h file
+// This function does not seem to be used, and is not in the .h file
 // so will comment it out.
 /*
 gen_op Gaussian(spin_system& sys, string& Iso, double Wrf,
@@ -70,16 +70,16 @@ gen_op Gaussian(spin_system& sys, string& Iso, double Wrf,
 
   // Input             sys   : Spin system
   //                   Iso   : Isotope channel of pulse
-	//		     Wrf   : Freqency of the applied field
+  //		     Wrf   : Freqency of the applied field
   //                   tp    : Gaussian pulse time
-	//		     N     : Number of steps
+  //		     N     : Number of steps
   //                   theta : Gaussian pulse angle (degrees)
   //                   phi   : Gaussian pulse phase (degrees)
   // Output            U     : Propagator for a Gaussian pulse
-	//			     of length tp applied at frequency
-	//			     Wrf on channel Iso and phase phi.
-	//			     The pulse rotates magnetization on
-	//			     resonance by angle theta
+  //			     of length tp applied at frequency
+  //			     Wrf on channel Iso and phase phi.
+  //			     The pulse rotates magnetization on
+  //			     resonance by angle theta
   // Note                    : Real Pulses, No Relaxation
 
   // sosi - this isn't working yet
@@ -106,30 +106,34 @@ gen_op Gaussian(spin_system& sys, string& Iso, double Wrf,
    }
 */
 
+// This next function is also not declared in the .h file
+// so will be commented out for now.
+/*
 gen_op Gaussian(spin_system& sys, string& Iso, double Wrf,
                                 double tp, double theta, double phi=0.0)
 
-        // Input             sys   : Spin system
-        //                   Iso   : Isotope channel of pulse
+    // Input             sys   : Spin system
+    //                   Iso   : Isotope channel of pulse
 	//		     Wrf   : Freqency of the applied field
-        //                   tp    : Gaussian pulse time
-        //                   theta : Gaussian pulse angle (degrees)
-        //                   phi   : Gaussian pulse phase (degrees)
-        // Output            U     : Propagator for a Gaussian pulse
+    //                   tp    : Gaussian pulse time
+    //                   theta : Gaussian pulse angle (degrees)
+    //                   phi   : Gaussian pulse phase (degrees)
+    // Output            U     : Propagator for a Gaussian pulse
 	//			     of length tp applied at frequency
 	//			     Wrf on channel Iso and phase phi.
 	//			     The pulse rotates magnetization on
 	//			     resonance by angle theta
-        // Note                    : Real Pulses, No Relaxation
+    // Note                    : Real Pulses, No Relaxation
 
 // sosi - this isn't working yet
-   {
-if(sys.spins()) Wrf=0; // for compiler
-if(Iso.length()) tp = 0; // for compiler
-theta = phi; // for compiler
+{
+   if(sys.spins()) Wrf=0; // for compiler
+   if(Iso.length()) tp = 0; // for compiler
+   theta = phi; // for compiler
    gen_op U;
    return U;					// Return Gaussian prop.
-   }
+}
+*/
 
 // ______________________________________________________________________
 //                       Gaussian Pulse Hamiltonians
