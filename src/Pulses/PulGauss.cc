@@ -62,38 +62,41 @@ using std::cin;				// Using libstdc++ standard input
 
 // ---------------------- Real Pulses, No Relaxation --------------------
 
+// This function does not seem to be used and is not in the .h file
+// so will comment it out.
+/*
 gen_op Gaussian(spin_system& sys, string& Iso, double Wrf,
                          double tp, int N, double theta, double phi=0.0)
 
-        // Input             sys   : Spin system
-        //                   Iso   : Isotope channel of pulse
+  // Input             sys   : Spin system
+  //                   Iso   : Isotope channel of pulse
 	//		     Wrf   : Freqency of the applied field
-        //                   tp    : Gaussian pulse time
+  //                   tp    : Gaussian pulse time
 	//		     N     : Number of steps
-        //                   theta : Gaussian pulse angle (degrees)
-        //                   phi   : Gaussian pulse phase (degrees)
-        // Output            U     : Propagator for a Gaussian pulse
+  //                   theta : Gaussian pulse angle (degrees)
+  //                   phi   : Gaussian pulse phase (degrees)
+  // Output            U     : Propagator for a Gaussian pulse
 	//			     of length tp applied at frequency
 	//			     Wrf on channel Iso and phase phi.
 	//			     The pulse rotates magnetization on
 	//			     resonance by angle theta
-        // Note                    : Real Pulses, No Relaxation
+  // Note                    : Real Pulses, No Relaxation
 
-// sosi - this isn't working yet
+  // sosi - this isn't working yet
    {
-if(Iso.length()) Wrf=0; // for compiler
-theta = phi; // for compiler
+   if(Iso.length()) Wrf=0; // for compiler
+   theta = phi; // for compiler
    gen_op H0 = Ho(sys);				// Isotropic Hamiltonian
    gen_op HRF, H;				// RF, Total Hamiltonians
 
-double gamB1=0, fact=0;
+   double gamB1=0, fact=0;
    double tdiv = tp/double(N);			// Single step time
    row_vector Gs = Gvect(gamB1,N,fact);		// Gaussian intensities
    gen_op U, Ustep, Fxy;
-gen_op Hstep;
+   gen_op Hstep;
    for(int i=0; i<N; i++)			// Loop Gaussian steps
      {
-// should build two in reverse order then multiply em!
+     // should build two in reverse order then multiply em!
      Hstep = H0;
      Hstep -= Gs.get(i)*Fxy;			// Total Ham. this step
      Ustep = prop(H, tdiv);			// Prop for this step
@@ -101,7 +104,7 @@ gen_op Hstep;
      }
    return U;					// Return Gaussian prop.
    }
-
+*/
 
 gen_op Gaussian(spin_system& sys, string& Iso, double Wrf,
                                 double tp, double theta, double phi=0.0)

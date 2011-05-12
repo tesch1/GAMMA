@@ -1,4 +1,4 @@
-/* SpinOp.h */
+/* SpinOp.i */
 // Swig interface file.
 
 %{
