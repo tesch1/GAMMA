@@ -354,6 +354,7 @@ gen_op ShxpulsB(const spin_sys &sys, row_vector &BLK, gen_op sigma, gen_op &H,
 
 //_______________________ Shaped x-Pulse Propagator ______________________
 
+
 gen_op ShxpulsB_U(const spin_sys &sys, row_vector &BLK, gen_op &H, const std::string& iso,
 		double freq, double time, double gamB1)
 

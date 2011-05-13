@@ -322,8 +322,10 @@ MSVCDLL gen_op ShxpulsB(const spin_sys &sys, row_vector &BLK, gen_op sigma, gen_
 
 //_______________________ Shaped x-Pulse Propagator ______________________
 
-MSVCDLL gen_op ShxpulsB_U(const spin_sys &sys, row_vector &BLK, gen_op &H, char *iso,
+MSVCDLL gen_op ShxpulsB_U(const spin_sys &sys, row_vector &BLK, gen_op &H, const std::string& iso,
 			double freq=0.0, double time=1.0e-5, double gamB1=2.5e4);
+//MSVCDLL gen_op ShxpulsB_U(const spin_sys &sys, row_vector &BLK, gen_op &H, char *iso,
+//			double freq=0.0, double time=1.0e-5, double gamB1=2.5e4);
 
 	// Input		sys   : spin system
 	// 			BLK   : data block

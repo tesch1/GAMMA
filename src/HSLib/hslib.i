@@ -10,3 +10,6 @@
 %include "HSprop.i"
 %include "SpinOp.i"
 %include "PulseS.i"
+%include "HSanalyze.i"
+%include "PulseShp.i"
+%include "HSdecomp.i"
