@@ -96,7 +96,7 @@ MSVCDLC PulWaveform(const PulWaveform& PT1);
 // ------------------------ Destruction & Assignment --------------------------
 
 MSVCDLC virtual ~PulWaveform();
-MSVCDLL void    operator = (const PulWaveform& PWF1);
+MSVCDLL PulWaveform&  operator = (const PulWaveform& PWF1);
 
 // ____________________________________________________________________________
 // B               CLASS PULSE WAVEFORM ACCESS FUNCTIONS

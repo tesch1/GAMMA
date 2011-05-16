@@ -1,6 +1,14 @@
 /* PulWaveform.i */
 // Swig interface file.
 
+%{
+#include "Pulses/PulWaveform.h"
+%}
+
+%include "std_string.i"
+
+%rename(__assign__) PulWaveform::operator=;
+
 
 class PulWaveform
 {
@@ -14,7 +22,7 @@ PulWaveform(const PulWaveform& PT1);
 
 virtual ~PulWaveform();
 
-//void    operator = (const PulWaveform& PWF1);
+PulWaveform& operator = (const PulWaveform& PWF1);
 virtual int         steps()   const;
 virtual std::string name()    const;
 virtual double      length()  const;

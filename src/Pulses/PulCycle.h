@@ -276,7 +276,7 @@ MSVCDLC ~PulCycle();
 // ------------------------------- Assignment ---------------------------------
  
 
-MSVCDLL void operator = (const PulCycle& CYC1);
+MSVCDLL PulCycle& operator = (const PulCycle& CYC1);
 
         // Input        CYC1	: Pulse cycle cycle
         // None         CYC	: Pulse cycle cycle (this) copied from CYC1

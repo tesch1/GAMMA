@@ -148,15 +148,17 @@ PulWaveform::~PulWaveform() { }
 
 // ------------------------------- Assignment ---------------------------------
 
-void PulWaveform::operator = (const PulWaveform& PWF1)
-  {
+PulWaveform& PulWaveform::operator = (const PulWaveform& PWF1)
+{
   WFsteps = PWF1.WFsteps;		// Copy the number of steps
   WFname  = PWF1.WFname;		// Copy pulse waveform name
   WFtp    = PWF1.WFtp;			// Copy pulse waveform length
   WFvals  = PWF1.WFvals;		// Set PT waveform steps
   WFtimes = PWF1.WFtimes;		// Set PT waveform step lengths (sec)
   rad     = PWF1.rad;			// Copy the radians flag
-  }
+
+  return *this;
+}
 
 
 // ____________________________________________________________________________

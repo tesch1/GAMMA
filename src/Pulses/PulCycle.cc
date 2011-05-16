@@ -502,12 +502,12 @@ PulCycle::~PulCycle()
 // ------------------------------- Assignment ---------------------------------
 
 
-void PulCycle::operator = (const PulCycle& CYC1)
+PulCycle& PulCycle::operator = (const PulCycle& CYC1)
 
 	// Input	CYC1	: Pulse Cycle
 	// None		CYC	: Pulse Cycle (this) copied from CYC1
 
-  {
+{
   PulComposite::operator = (CYC1);	// Copy the composite pulse
   CYCsteps  = CYC1.CYCsteps;            // Copy the number of steps
   CYCname   = CYC1.CYCname;             // Copy pulse cycle name
@@ -518,7 +518,9 @@ void PulCycle::operator = (const PulCycle& CYC1)
   copyCIndxs(CYC1);			// Copy and propagator indices
   copyCUprops(CYC1);			// Copy any Hilbert Propagators
   copyCGprops(CYC1);			// Copy any Liouville Propagators
-  }
+
+  return *this;
+}
 
 // ____________________________________________________________________________
 // B                CLASS PULSE CYCLE HAMILTONIAN FUNCTIONS

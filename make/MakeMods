@@ -343,7 +343,7 @@ ALLMODDIRS += $(PULSE)
 ALLMODHDRS += $(PULSEHDR)
 ALLPYFILES += $(PULSEPY) 
 
-PULSE_IBASE  = pulses PulWaveform PulComposite PulGauss PulSinc
+PULSE_IBASE  = pulses PulWaveform PulComposite PulGauss PulSinc PulCycle
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(PULSE)/, $(PULSE_IBASE)))
 
 ###############################################################################

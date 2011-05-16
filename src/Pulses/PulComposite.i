@@ -1,13 +1,13 @@
 /* PulComposite.i */
 // Swig interface file.
 
-
 %{
 #include "Pulses/PulComposite.h"
 %}
 
 %include "std_string.i"
 
+%rename(__assign__) PulComposite::operator=;
 
 // Note: the comment "///" is used in this file to indicate that
 // the commented out line has a method that was already commented
@@ -35,7 +35,7 @@ PulComposite(const PulComposite& PT1);
 
 virtual ~PulComposite();
 
-//void operator = (const PulComposite& CPul1);
+PulComposite & operator = (const PulComposite& CPul1);
 
 gen_op GetH(int i) const;
 

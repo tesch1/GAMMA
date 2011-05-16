@@ -507,7 +507,7 @@ MSVCDLC virtual ~PulComposite();
 // ------------------------------- Assignment ---------------------------------
  
 
-MSVCDLL void operator = (const PulComposite& CPul1);
+MSVCDLL PulComposite & operator = (const PulComposite& CPul1);
 
         // Input        CPul1	: Composite pulse
         // None         CPul	: Composite pulse (this) copied from CPul1

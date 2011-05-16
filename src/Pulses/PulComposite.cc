@@ -1002,7 +1002,7 @@ PulComposite::~PulComposite()
 // ------------------------------- Assignment ---------------------------------
 
 
-void PulComposite::operator = (const PulComposite& CPul1)
+PulComposite& PulComposite::operator = (const PulComposite& CPul1)
 
 	// Input	CPul1	: Composite Pulse
 	// None		CPul	: Composite Pulse (this) copied from CPul1
@@ -1022,6 +1022,8 @@ void PulComposite::operator = (const PulComposite& CPul1)
   copyLOps(CPul1);			// Copy any Hamiltonian superops
   copySSs(CPul1);			// Copy any steady-state operators
   cutzero  = CPul1.cutzero;		// Copy time precision
+
+  return *this;
   }
 
 // ____________________________________________________________________________
