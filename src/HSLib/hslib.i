@@ -13,3 +13,5 @@
 %include "HSanalyze.i"
 %include "PulseShp.i"
 %include "HSdecomp.i"
+%include "GenOpRep.i"
+%include "HSacquire.i"

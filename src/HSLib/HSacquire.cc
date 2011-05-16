@@ -75,6 +75,10 @@ void acquire(gen_op& S, gen_op& D, gen_op& H, double T, int N, row_vector& F, do
 void acquire(gen_op& sig0 , gen_op& D, gen_op& U, int N, row_vector& fid, double CO)
   { FID(sig0, D, U, 0, N, fid, CO); }
 
+// This function was declared, but not defined, before 2011.05.16 (DCT)
+void acquire(gen_op& sig0, gen_op& D, HSprop& Hp, int N, row_vector& fid, double CO)
+  { FID(sig0, D, Hp, N, fid, CO); }
+
 
 void FID(gen_op& sig0, gen_op& D, gen_op& H, double td, int N, row_vector& fid, double CO)
   {
@@ -127,6 +131,10 @@ row_vector acquire(gen_op& sig0 , gen_op& D, gen_op& H, double td, int N, double
 
 row_vector acquire(gen_op& sig0 , gen_op& D, gen_op& U, int N, double CO)
   { row_vector data(N); FID(sig0,D,U,0,N,data,CO); return data; }
+
+// This function was declared, but not defined, before 2011.05.16 (DCT)
+row_vector acquire(gen_op& sig0, gen_op& D, HSprop& Hp, int N, double CO)
+  { row_vector data(N); FID(sig0,D,Hp,N,data,CO); return data; }
 
 
 row_vector FID(gen_op& sig0 , gen_op& D, gen_op& H, double td, int N, double CO)

@@ -162,8 +162,8 @@ ALLPYFILES += $(HSPACEPY)
 HSPACETBAS  = TestHSLi1b
 
 HSPACE_IBASE  = hslib SpinSystem SpinSys GenOp HSham SpinOpCmp\
-                HSauxil PulseI PulseS Basis HSprop SpinOp HSanalyze\
-                HSdecomp PulseShp 
+				HSauxil PulseI PulseS Basis HSprop SpinOp HSanalyze\
+				HSdecomp PulseShp GenOpRep HSacquire
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(HSPACE)/, $(HSPACE_IBASE)))
 
 ###############################################################################
