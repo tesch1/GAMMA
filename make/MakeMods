@@ -62,7 +62,6 @@ ALLMODDIRS :=
 ALLMODHDRS :=
 
 # Swig ".i" files.
-
 ALLIFILES  :=
 
 # GAMMA version
@@ -78,6 +77,11 @@ _space:= $(_empty) $(_empty)
 MAJORVERSION   = $(word 1, $(subst .,$(_space), $(GAMMAVERSION)))
 MINORVERSION   = $(word 2, $(subst .,$(_space), $(GAMMAVERSION)))
 RELEASEVERSION = $(word 3, $(subst .,$(_space), $(GAMMAVERSION)))
+
+###############################################################################
+
+ALLIFILES += pygamma.i
+
 
 ###############################################################################
 #                                                                             #
@@ -158,7 +162,8 @@ ALLPYFILES += $(HSPACEPY)
 HSPACETBAS  = TestHSLi1b
 
 HSPACE_IBASE  = hslib SpinSystem SpinSys GenOp HSham SpinOpCmp\
-                HSauxil PulseI PulseS Basis HSprop SpinOp
+                HSauxil PulseI PulseS Basis HSprop SpinOp HSanalyze\
+                HSdecomp PulseShp 
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(HSPACE)/, $(HSPACE_IBASE)))
 
 ###############################################################################
@@ -258,6 +263,8 @@ ALLMODHDRS += $(BLOCHHDR)
 ALLPYFILES += $(BLOCHPY)
 BLOCHTBAS   = 
 
+BLOCH_IBASE  = 
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(BLOCH)/, $(BLOCH_IBASE)))
 
 ###############################################################################
 #                                                                             #
@@ -336,7 +343,7 @@ ALLMODDIRS += $(PULSE)
 ALLMODHDRS += $(PULSEHDR)
 ALLPYFILES += $(PULSEPY) 
 
-PULSE_IBASE  = pulses PulWaveform PulComposite
+PULSE_IBASE  = pulses PulWaveform PulComposite PulGauss PulSinc
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(PULSE)/, $(PULSE_IBASE)))
 
 ###############################################################################
@@ -404,6 +411,9 @@ ALLOFILES  += $(addsuffix .o,  $(addprefix $(FGRAD)/, $(FGRADBASE)))
 ALLMODDIRS += $(FGRAD)
 ALLMODHDRS += $(FGRADHDR)
 ALLPYFILES += $(FGPY) 
+
+FGRAD_IBASE  = gradients GrdAcquire
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(FGRAD)/, $(FGRAD_IBASE)))
 
 ###############################################################################
 #                                                                             #

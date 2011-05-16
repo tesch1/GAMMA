@@ -7,5 +7,6 @@
 %include "LSLib/lslib.i"
 %include "Level2/level2.i"
 %include "Pulses/pulses.i"
+%include "Gradients/gradients.i"
 
 
