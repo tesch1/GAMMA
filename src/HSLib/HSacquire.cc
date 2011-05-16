@@ -71,6 +71,11 @@
 
 void acquire(gen_op& S, gen_op& D, gen_op& H, double T, int N, row_vector& F, double CO)
   { FID(S,D,H,T,N,F,CO); }
+
+void acquire(gen_op& sig0 , gen_op& D, gen_op& U, int N, row_vector& fid, double CO)
+  { FID(sig0, D, U, 0, N, fid, CO); }
+
+
 void FID(gen_op& sig0, gen_op& D, gen_op& H, double td, int N, row_vector& fid, double CO)
   {
   if(fid.size() < N) fid=row_vector(N);	// Insure block is large enough
@@ -110,22 +115,26 @@ void FID(gen_op& sig0, gen_op& D, gen_op& H, double td, int N, row_vector& fid, 
   delete [] B;				// Delete complex array B
   }
 
-void acquire(gen_op& sig0 , gen_op& D, gen_op& U, int N, row_vector& fid, double CO)
-  { FID(sig0, D, U, 0, N, fid, CO); }
 void FID(gen_op& sig0 , gen_op& D, gen_op& U, int N, row_vector& fid, double CO)
   { FID(sig0, D, U, 0, N, fid, CO); }
+
 void FID(gen_op& sig0 , gen_op& D, HSprop& U, int N, row_vector& fid, double CO)
   { gen_op UOp = U.Op(); FID(sig0, D, UOp, 0, N, fid, CO); }
 
+
 row_vector acquire(gen_op& sig0 , gen_op& D, gen_op& H, double td, int N, double CO)
-  { row_vector data(N); FID(sig0,D,H,td,N,data,CO); return data; }
-row_vector FID(gen_op& sig0 , gen_op& D, gen_op& H, double td, int N, double CO)
   { row_vector data(N); FID(sig0,D,H,td,N,data,CO); return data; }
 
 row_vector acquire(gen_op& sig0 , gen_op& D, gen_op& U, int N, double CO)
   { row_vector data(N); FID(sig0,D,U,0,N,data,CO); return data; }
+
+
+row_vector FID(gen_op& sig0 , gen_op& D, gen_op& H, double td, int N, double CO)
+  { row_vector data(N); FID(sig0,D,H,td,N,data,CO); return data; }
+
 row_vector FID(gen_op& sig0 , gen_op& D, gen_op& U, int N, double CO)
   { row_vector data(N); FID(sig0,D,U,0,N,data,CO); return data; }
+
 row_vector FID(gen_op& sig0 , gen_op& D, HSprop& U, int N, double CO)
   { row_vector data(N); gen_op UOp=U.Op(); FID(sig0,D,UOp,0,N,data,CO); return data; }
 
