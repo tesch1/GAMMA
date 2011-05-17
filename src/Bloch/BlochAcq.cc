@@ -244,8 +244,8 @@ BlochAcq::BlochAcq(const BlochAcq& BAcq1)
 
 BlochAcq::~BlochAcq() { }
 
-void BlochAcq::operator = (const BlochAcq& BAcq1)
-  {
+BlochAcq& BlochAcq::operator = (const BlochAcq& BAcq1)
+{
   BS      = BAcq1.BS;		// Copy the Bloch dimension
   pos     = BAcq1.pos;		// Copy number of necessary points
   I       = BAcq1.I;		// Copy minimum i index array
@@ -257,7 +257,9 @@ void BlochAcq::operator = (const BlochAcq& BAcq1)
   det     = BAcq1.det;		// Copy the system detection operator
   Minf    = BAcq1.Minf;		// Copy the infinite time density matrix
   trinf   = BAcq1.trinf;	// Copy the infinite time trace
-  }
+
+  return (*this);
+}
 
 // ____________________________________________________________________________
 // B                      ALTERATION AND ACCESS FUNCTIONS

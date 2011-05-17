@@ -144,7 +144,7 @@ MSVCDLC BlochAcq(const row_vector& det, const matrix& L, double cut=1.e-12);
 
 MSVCDLC      BlochAcq(const BlochAcq& ACQ1);
 MSVCDLC      ~BlochAcq();
-MSVCDLL void operator = (const BlochAcq& ACQ1);
+MSVCDLL BlochAcq& operator = (const BlochAcq& ACQ1);
 
 // ____________________________________________________________________________
 // B                    ALTERATION AND ACCESS FUNCTIONS

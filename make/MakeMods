@@ -263,7 +263,7 @@ ALLMODHDRS += $(BLOCHHDR)
 ALLPYFILES += $(BLOCHPY)
 BLOCHTBAS   = 
 
-BLOCH_IBASE  = bloch_inc Bloch BlochSys MagVec
+BLOCH_IBASE  = bloch_inc Bloch BlochSys MagVec BlochAcq
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(BLOCH)/, $(BLOCH_IBASE)))
 
 ###############################################################################
