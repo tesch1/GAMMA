@@ -62,7 +62,12 @@ MSVCDLL matrix Mo_vector(double Mox=0, double Moy=0, double Moz=1);
 //           Steady-State Magnetization Vector Functions
 // ----------------------------------------------------------------------------
 
-MSVCDLL matrix Mss_vector(matrix& K, matrix& R, matrix& Meq);
+// This next function is not currently implemented, 2011.05.16 (DCT)
+// MSVCDLL matrix Mss_vector(matrix& K, matrix& R, matrix& Meq);
+
+// This next function was implemented, but until now not
+// declared 2011.05.16 (DCT)
+MSVCDLL matrix Mo_vector(int argc, char* argv[], matrix& Meq, int& qn);
 
 // ----------------------------------------------------------------------------
 //                      Analysis Functions

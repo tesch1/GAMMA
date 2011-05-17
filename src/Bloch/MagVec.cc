@@ -479,14 +479,14 @@ MagVec::MagVec(const std::vector<coord>& Ms) : col_vector(3*Ms.size())
 MagVec MagVec::operator+ (const MagVec& M1) const
   { MagVec M(*this); M += M1; return M;}
 
-void MagVec::operator+= (const MagVec& M1)
-  { col_vector::operator+= (M1); }
+MagVec& MagVec::operator+= (const MagVec& M1)
+  { col_vector::operator+= (M1); return (*this); }
 
 MagVec MagVec::operator- (const MagVec &M1) const
   { MagVec M(*this); M -= M1; return M;}
 
-void MagVec::operator-= (const MagVec& M1)
-  { col_vector::operator-= (M1); }
+MagVec& MagVec::operator-= (const MagVec& M1)
+  { col_vector::operator-= (M1); return (*this); }
 
 // ____________________________________________________________________________
 // B                     Magnetization Vector Access

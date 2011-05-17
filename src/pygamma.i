@@ -2,6 +2,7 @@
 
 
 %include "Basics/basics.i"
+%include "Bloch/bloch_inc.i"
 %include "Matrix/matrix_inc.i"
 %include "HSLib/hslib.i"
 %include "LSLib/lslib.i"

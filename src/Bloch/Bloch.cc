@@ -128,8 +128,7 @@ matrix Mo_vector(double Mox, double Moy, double Moz)
 
 
 
-// 		Set Up The Initial Magnetization Vector
-
+// Set Up The Initial Magnetization Vector
 matrix Mo_vector(int argc, char* argv[], matrix& Meq, int& qn)
  {
  matrix Mo(3, 1, complex0);
@@ -167,7 +166,7 @@ matrix Mo_vector(int argc, char* argv[], matrix& Meq, int& qn)
  void analyze(double tinc, int& ntimes,
           int& do_ss, int& qn, double T1, double gamB1, double w)
 
-// sosi - not do_ss and qn aren't yet used.  Is this uknfinished?
+// sosi - note do_ss and qn aren't yet used.  Is this unfinished?
 //	 	 Set Up Time Parameters
 
  {

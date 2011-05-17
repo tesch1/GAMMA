@@ -66,7 +66,7 @@
 #include <Level1/coord.h>		// Include GAMMA coordinates
 
 class MagVec : public col_vector
-  {
+{
 
 friend class BlochSys;
   
@@ -185,10 +185,10 @@ MSVCDLC MagVec(const std::vector<coord>& Ms);
       -      M1,M2    Returns M1-M2                                          */
 
 //MagVec operator-  ()                 const;
-MSVCDLL MagVec operator+  (const MagVec& M1) const;
-MSVCDLL void   operator+= (const MagVec& M1);
-MSVCDLL MagVec operator-  (const MagVec& M1) const;
-MSVCDLL void   operator-= (const MagVec& M1);
+MSVCDLL MagVec  operator+  (const MagVec& M1) const;
+MSVCDLL MagVec& operator+= (const MagVec& M1);
+MSVCDLL MagVec  operator-  (const MagVec& M1) const;
+MSVCDLL MagVec& operator-= (const MagVec& M1);
 
 // ____________________________________________________________________________
 // C                    Magnetization Vector Access
