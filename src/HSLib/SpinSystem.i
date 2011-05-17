@@ -9,6 +9,8 @@
 %include "std_vector.i"
 %include "HSLib/SpinSys.i"
 
+%rename(__assign__) spin_system::operator=;
+
 
 class spin_system: public spin_sys
 {
@@ -19,7 +21,7 @@ spin_system(int spins=0);
 spin_system(const spin_system &sys);
 
 virtual       ~spin_system ();
-//spin_system&  operator= (const spin_system &sys);
+spin_system&  operator= (const spin_system &sys);
 
 virtual void   shifts(double shift=0);
 virtual void   shift(int, double);

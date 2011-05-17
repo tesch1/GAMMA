@@ -7,6 +7,9 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+%rename(__assign__) spin_sys::operator=;
+
+
 class spin_sys
 {
 
@@ -21,7 +24,7 @@ public:
 
     ~spin_sys();
 
-    //virtual spin_sys& operator=(const spin_sys& sys);
+    virtual spin_sys& operator=(const spin_sys& sys);
 
 	// int??  shouldn't this be changed to bool?
     //int operator==(const spin_sys& sys) const;

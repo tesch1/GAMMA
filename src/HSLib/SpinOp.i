@@ -7,14 +7,15 @@
 
 %include "std_string.i"
 
-%rename(__add__)  complex::operator+;
-%rename(__iadd__) complex::operator+=;
-%rename(__isub__) complex::operator-=;
-%rename(__neg__)  complex::operator- ();
+%rename(__add__)  spin_op::operator+;
+%rename(__iadd__) spin_op::operator+=;
+%rename(__isub__) spin_op::operator-=;
+%rename(__neg__)  spin_op::operator- ();
 
-%rename(__imul__) complex::operator*=;
-%rename(__idiv__) complex::operator/=;
+%rename(__imul__) spin_op::operator*=;
+%rename(__idiv__) spin_op::operator/=;
 
+%rename(__assign__) spin_op::operator=;
 
 
 class spin_op 
@@ -28,17 +29,15 @@ spin_op(const spin_op& SOp);
 
 ~spin_op();
 
-//spin_op& operator= (const spin_op& SOp);
+spin_op& operator= (const spin_op& SOp);
 
 spin_op operator-  ()                    const;
 spin_op operator+  (const spin_op& SOp1) const;
 
+spin_op & operator-= (const spin_op& SOp1);
 spin_op & operator+= (const spin_op& SOp1);
 
 //friend spin_op          operator-  (const spin_op& SOp1, const spin_op& SOp2);
-
-spin_op & operator-= (const spin_op& SOp1);
-
 //friend spin_op          operator*  (const spin_op& SOp1, const spin_op& SOp2);
 
 spin_op & operator*= (const spin_op& SOp1);

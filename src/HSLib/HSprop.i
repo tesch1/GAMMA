@@ -18,6 +18,8 @@
 %rename(__lt__)  HSprop::operator<  const;
 %rename(__gt__)  HSprop::operator>  const;
 
+%rename(__assign__) HSprop::operator=;
+
 
 extern gen_op prop(const gen_op& ham, double time); 
 extern void prop_ip(gen_op& U, double time);
@@ -42,7 +44,7 @@ HSprop(const HSprop& U);
 
 ~HSprop();
 
-//HSprop& operator= (const HSprop& U1);
+HSprop& operator= (const HSprop& U1);
 
 double time()   const;
 double length() const;
@@ -72,12 +74,12 @@ HSprop Pow(int n) const;
 
 // Next six lines were commented out in .h file 
 // prior to making .i file.     DCT, 09/28/09
-//friend gen_op prop(const gen_op& ham, const double time);
-//friend void   prop_ip(   gen_op& ham, const double time);
-//friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
-//friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
-//friend gen_op evolve(const gen_op& sigma, const gen_op& U);
-//friend void   evolve_ip(   gen_op& sigma, const gen_op& U);
+///friend gen_op prop(const gen_op& ham, const double time);
+///friend void   prop_ip(   gen_op& ham, const double time);
+///friend gen_op evolve(const gen_op& sigma, const gen_op& ham, double time);
+///friend void   evolve_ip(   gen_op& sigma, const gen_op& ham, double time);
+///friend gen_op evolve(const gen_op& sigma, const gen_op& U);
+///friend void   evolve_ip(   gen_op& sigma, const gen_op& U);
 
 
 bool operator== (const HSprop& U) const;

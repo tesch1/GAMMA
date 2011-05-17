@@ -11,6 +11,7 @@
 %rename(__eq__)  basis::operator== const;
 %rename(__ne__)  basis::operator!= const;
 
+%rename(__assign__) basis::operator=;
 
 
 class basis : private matrix
@@ -28,7 +29,7 @@ basis(const basis&  bs);
 
        ~basis();
 
-//basis& operator=(const basis& bs);
+basis& operator=(const basis& bs);
 //basis& operator=(const matrix& mx);
 
 int         size() const;

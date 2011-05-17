@@ -7,7 +7,6 @@
 #include "Basics/SinglePar.h"
 %}
 
-
 %include "std_string.i"
 %include "std_vector.i"
 
@@ -15,6 +14,8 @@
 %rename(__ne__)  SinglePar::operator!= const;
 %rename(__lt__)  SinglePar::operator<  const;
 %rename(__gt__)  SinglePar::operator>  const;
+
+%rename(__assign__) SinglePar::operator=;
 
 
 class SinglePar
@@ -32,7 +33,7 @@ SinglePar(const std::string& pname, int ptype, const std::string& pdata, const s
 
 SinglePar(const std::string& pname);
 ~SinglePar();
-//SinglePar& operator=(const SinglePar& par);
+SinglePar& operator=(const SinglePar& par);
 
 
 void SPerror(int eidx, int noret=0) const;
