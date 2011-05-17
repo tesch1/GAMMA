@@ -123,7 +123,7 @@ MSVCDLC ~PulSupCycle();
 // ------------------------------- Assignment ---------------------------------
  
 
-MSVCDLL void operator = (const PulSupCycle& SCyc1);
+MSVCDLL PulSupCycle& operator = (const PulSupCycle& SCyc1);
 
         // Input        SCyc1	: Pulse Supercycle
         // None         SCyc	: Pulse Supercycle (this) copied from SCyc1

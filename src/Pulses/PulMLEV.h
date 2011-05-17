@@ -168,7 +168,7 @@ MSVCDLC ~MLEV();
 // ------------------------------- Assignment ---------------------------------
  
 
-MSVCDLL void operator = (const MLEV& MLEV1);
+MSVCDLL MLEV& operator = (const MLEV& MLEV1);
 
         // Intput       MLEV1   : MLEV parameters
         // Output       MLEV    : MLEV parameters(this) from MLEV1

@@ -134,7 +134,7 @@ MSVCDLC ~PulTrain();
 	// Output	none : PT is destructed
 
 
-MSVCDLL void operator = (const PulTrain& PT1);
+MSVCDLL PulTrain& operator = (const PulTrain& PT1);
 
         // Input        PT1  : Pulse train
         // None         PT   : Pulse train (this) copied from PT1

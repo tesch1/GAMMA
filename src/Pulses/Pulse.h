@@ -185,7 +185,7 @@ MSVCDLC virtual ~Pulse();
 // ------------------------------- Assignment ---------------------------------
 
                                                                                 
-MSVCDLL void operator = (const Pulse& Pulse1);
+MSVCDLL Pulse& operator = (const Pulse& Pulse1);
  
         // Intput	Pulse1	: Pulse parameters
         // Output	Pulse   : Pulse parameters(this) from Pulse1

@@ -341,20 +341,22 @@ Pulse::~Pulse() {}
 // ------------------------------- Assignment ---------------------------------
  
                                          
-void Pulse::operator = (const Pulse& Pulse1)
+Pulse& Pulse::operator = (const Pulse& Pulse1)
 
         // Input       Pulse1  : Pulse parameters
         // Output       Pulse   : Pulse parameters(this) from Pulse1
         ///F_std::list =           - Assignment
 
-  {
+{
   Iso   = Pulse1.Iso;			// Copy pulse channel
   tp	= Pulse1.tp;			// Copy pulse time
   gamB1 = Pulse1.gamB1;			// Copy rf-field strength	
   phi   = Pulse1.phi;			// Copy rf-field phase
   Wrf   = Pulse1.Wrf;			// Copy rf-field offset
   ang	= Pulse1.ang;			// Copy pulse angle
-  }
+
+  return (*this);
+}
  
  
 // ____________________________________________________________________________

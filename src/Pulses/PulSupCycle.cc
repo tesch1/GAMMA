@@ -173,16 +173,18 @@ PulSupCycle::~PulSupCycle() { }
 // ------------------------------- Assignment ---------------------------------
 
 
-void PulSupCycle::operator = (const PulSupCycle& SCyc1)
+PulSupCycle& PulSupCycle::operator = (const PulSupCycle& SCyc1)
 
 	// Input	SCyc1	: Pulse Supercycle
 	// None		SCyc	: Pulse Supercycle (this) copied from SCyc1
 
-  {
+{
   SCycnosteps = SCyc1.SCycnosteps;		// Copy the number of steps
   SCycname    = SCyc1.SCycname;		// Copy pulse cycle name
   SCycsteps   = SCyc1.SCycsteps;		// Copy pulse cycle steps
-  }
+
+  return (*this);
+}
 
 
 void PulSupCycle::operator = (const PulCycle& Cyc)

@@ -219,19 +219,21 @@ PulTrain::~PulTrain() { }
 // ------------------------------- Assignment ---------------------------------
 
 
-void PulTrain::operator = (const PulTrain& PT1)
+PulTrain& PulTrain::operator = (const PulTrain& PT1)
 
 	// Input	PT1   : Pulse Train
 	// None		PT    : Pulse Train (this) copied from PT1
 
-  {
+{
   Name    = PT1.Name;			// Copy pulse train name
   PulComposite::operator=(PT1); 	// Copy the composite pulse
   PTCyc   = PT1.PTCyc;			// Copy the pulse train cycle
   PTSCyc  = PT1.PTSCyc;			// Copy the pulse train supercycle
   Cycles  = PT1.Cycles;			// Copy pulse train cycle flag 
   SCycles = PT1.SCycles;		// Copy pulse train supercycle flag 
-  }
+
+  return (*this);
+}
  
 
 // ____________________________________________________________________________

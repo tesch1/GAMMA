@@ -284,7 +284,7 @@ MLEV::~MLEV() {}
 // ------------------------------- Assignment ---------------------------------
  
  
-void MLEV::operator = (const MLEV& MLEV1) { Pulse::operator=(MLEV1); }
+MLEV& MLEV::operator = (const MLEV& MLEV1) { Pulse::operator=(MLEV1); return (*this); }
 
         // Intput       MLEV1  : MLEV parameters                         
         // Output       MLEV   : MLEV parameters(this) from MLEV1
