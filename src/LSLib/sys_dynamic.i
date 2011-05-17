@@ -8,6 +8,8 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+%rename(__assign__) sys_dynamic::operator=;
+
 
 class sys_dynamic: public spin_system, public coord_vec 
 {
@@ -18,7 +20,7 @@ sys_dynamic();
 sys_dynamic(int spins);
 sys_dynamic(const sys_dynamic &dsys);
 
-//sys_dynamic& operator= (const  sys_dynamic &dsys);
+sys_dynamic& operator= (const  sys_dynamic &dsys);
 
 virtual      ~sys_dynamic ();
 

@@ -7,6 +7,9 @@
 %include "HSLib/GenOp.i"
 %include "std_string.i"
 
+%rename(__assign__) acquire1D::operator=;
+
+
 class acquire1D 
 {
 public:
@@ -31,7 +34,7 @@ acquire1D(gen_op& D, super_op& L,               double cut=1.e-12);
 //acquire1D(gen_op& D, LSprop&   G,               double cut=1.e-12);
 
 ~acquire1D();
-//acquire1D& operator= (const acquire1D& ACQ1);
+acquire1D& operator= (const acquire1D& ACQ1);
 
 const super_op& L()	    const;
 const gen_op&   D()      const;
@@ -94,8 +97,8 @@ void           write(const std::string& fn) const;
 
  
 /// * These two were already commented out before creating .i file. *
-//  void read(string& fn, gen_op& Op1);
-//  void read(string& fn, basis& bs);
+///  void read(string& fn, gen_op& Op1);
+///  void read(string& fn, basis& bs);
 
  
 void read(const std::string& fn);

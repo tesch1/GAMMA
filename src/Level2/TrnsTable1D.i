@@ -8,11 +8,14 @@
 %include "std_string.i"
 %include "std_list.i"
 
+%rename(__assign__) TTable1D::operator=;
+
 namespace std {
    %template(StringVector) vector<string>;
    %template(IntVector)    vector<int>;
    %template(DoubleVector) vector<double>;
 }
+
 
 class TTable1D: private matrix 
 {
@@ -26,7 +29,7 @@ TTable1D(const TTable1D& TTab1);
 
 ~TTable1D();
 
-//void operator= (const TTable1D& TTab1); 
+TTable1D& operator= (const TTable1D& TTab1); 
 double center(bool wa=true);
 void   offset(double F, int inHz=1);
 void   offset(double F, int tr, int inHz);

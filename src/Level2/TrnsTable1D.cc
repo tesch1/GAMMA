@@ -626,11 +626,13 @@ TTable1D::~TTable1D() { }
 	// Input	TTab1  : Transitions table
 	// None		TTab1D : Transitions table (this) copied from TTab1
 
-void TTable1D::operator = (const TTable1D& TTab1)
-  {
+TTable1D& TTable1D::operator = (const TTable1D& TTab1)
+{
   matrix::operator=(TTab1);		// Copy the table array
   copySettings(TTab1);			// Copy the internal settings
-  }
+
+  return (*this);
+}
 
 // ____________________________________________________________________________ 
 // B                     TRANSITION TABLE MANIPULATIONS

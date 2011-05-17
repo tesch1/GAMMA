@@ -5,7 +5,7 @@
 #include "Level2/MutExch.h"
 %}
 
-//%include "std_vector.i"
+%include "std_vector.i"
 
 //matrix Kex(const spin_sys& sys, const ExchProcM& XP);
 

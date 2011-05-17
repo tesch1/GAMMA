@@ -278,7 +278,8 @@ MSVCDLC      TTable1D(const matrix& mx);
 MSVCDLC      TTable1D(const matrix& mx, int warn);
 MSVCDLC      TTable1D(const TTable1D& TTab1);
 MSVCDLC      ~TTable1D();
-MSVCDLL void operator = (const TTable1D& TTab1);
+
+MSVCDLL TTable1D& operator = (const TTable1D& TTab1);
 
 
 // ____________________________________________________________________________ 
