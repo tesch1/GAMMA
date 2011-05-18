@@ -15,3 +15,5 @@
 %include "HSdecomp.i"
 %include "GenOpRep.i"
 %include "HSacquire.i"
+%include "HSdetect.i"
+%include "SpinOpRot.i"

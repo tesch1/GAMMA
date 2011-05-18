@@ -1,4 +1,5 @@
 // SpinSystem.i
+// Swig interface file.
 
 %{
 #include "HSLib/SpinSystem.h"
