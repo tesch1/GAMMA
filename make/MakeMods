@@ -203,7 +203,7 @@ LSPACEHDR   = LSLibIF.h
 LSPACEPY    = PyLSLibIF.h
 ALLFILES   += $(LSPACEBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(LSPACE)/, $(LSPACEBASE)))
-ALLHFILES  += $(addsuffix .h,  $(addprefix $(LSPACE)/, $(LSPACEBASE))) 
+xALLHFILES  += $(addsuffix .h,  $(addprefix $(LSPACE)/, $(LSPACEBASE))) 
 ALLHFILES  += $(addprefix $(LSPACE)/, $(LSPACEHDR))
 ALLHFILES  += $(addprefix $(LSPACE)/, $(LSPACEPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(LSPACE)/, $(LSPACEBASE)))
@@ -211,7 +211,7 @@ ALLMODDIRS += $(LSPACE)
 ALLMODHDRS += $(LSPACEHDR)
 ALLPYFILES += $(LSPACEPY) 
 
-LSPACE_IBASE  = lslib SuperOp sys_dynamic
+LSPACE_IBASE  = lslib SuperOp LSacquire LSprop DensOp sys_dynamic LSanalyze LSAux
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(LSPACE)/, $(LSPACE_IBASE)))
 
 ###############################################################################

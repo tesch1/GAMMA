@@ -229,8 +229,8 @@ MSVCDLL friend void evolve_ip(gen_op &sigma, super_op &GOp);
         // F_list *			- Prop-Prop Reverse Unary Multiply
  
 MSVCDLL LSprop operator *  (const LSprop& G) const;
-MSVCDLL void   operator *= (const LSprop& G);
-MSVCDLL void   operator &= (const LSprop& G);
+MSVCDLL LSprop& operator *= (const LSprop& G);
+MSVCDLL LSprop& operator &= (const LSprop& G);
  
 // ____________________________________________________________________________
 // D           PROPAGATOR FUNCTIONS, PROPAGATOR WITH SUPEROPERATOR

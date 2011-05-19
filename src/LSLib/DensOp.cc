@@ -208,10 +208,11 @@ densop::~densop() { }
         // 			Sigma1	: Another density operator
         // Output               void	: Sigma is set equal to Sigma1
 
-void densop::operator= (const densop& Sigma1)
+densop & densop::operator= (const densop& Sigma1)
   {
   gen_op::operator=(Sigma1);
   Sigmat = Sigma1.Sigmat;
+  return (*this);
   }
 
 // ____________________________________________________________________________

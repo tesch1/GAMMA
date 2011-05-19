@@ -111,8 +111,7 @@ MSVCDLL void wf_labels(std::string* wflabels, int* filter, const spin_sys& sys, 
         // Note                 : Wavefunction ordering depends on LOp input basis!
 
 
-MSVCDLL void wf_labels(std::string* wflabels, const spin_sys& sys, matrix &B,
-             matrix& HB, double cut=1.e-4, int type=-1, int pbf=-1, int pfz=0);
+MSVCDLL void wf_labels(std::string* wflabels, const spin_sys& sys, const matrix &B,const matrix& HB, double cut=1.e-4, int type=-1, int pbf=-1, int pfz=0);
 
         // Input        wflabels: An array of strings
         //              sys     : A basic spin system
@@ -137,8 +136,7 @@ MSVCDLL void wf_labels(std::string* wflabels, const spin_sys& sys, matrix &B,
         // Note                 : Wavefunction ordering depends on LOp input basis!
 
  
-MSVCDLL void wf_labels(std::string* wflabels, int* index, const spin_sys& sys, const matrix &B,
-       const matrix& HB, double cut=1.e-4, int type=-1, int pbf=-1, int pfz=0);
+MSVCDLL void wf_labels(std::string* wflabels, int* index, const spin_sys& sys, const matrix &B,const matrix& HB, double cut=1.e-4, int type=-1, int pbf=-1, int pfz=0);
  
         // Input        wflabels: An array of strings
         //              filter  : An array of integers, output filter

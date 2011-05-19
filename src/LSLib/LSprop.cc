@@ -366,8 +366,8 @@ void evolve_ip(gen_op &sigma, super_op &GOp)
         // Note                         : Order matters - G1*G2 != G2*G1
  
 LSprop LSprop::operator *  (const LSprop& G) const { LSprop G1(*this); G1 *= G; return G1; }
-void   LSprop::operator *= (const LSprop& G)       { GOp *= G.GOp; Gt += G.Gt; } 
-void   LSprop::operator &= (const LSprop& G)       { GOp &= G.GOp; Gt += G.Gt; } 
+LSprop &  LSprop::operator *= (const LSprop& G)       { GOp *= G.GOp; Gt += G.Gt; return (*this);} 
+LSprop &  LSprop::operator &= (const LSprop& G)       { GOp &= G.GOp; Gt += G.Gt; return (*this);} 
 
 // ____________________________________________________________________________
 // D           PROPAGATOR FUNCTIONS, PROPAGATOR WITH SUPEROPERATOR

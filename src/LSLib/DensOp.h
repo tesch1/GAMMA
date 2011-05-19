@@ -175,8 +175,7 @@ MSVCDLC ~densop();
         // Input                Sigma	: A density operator
         // Output               void    : Density operator destructed
  
-
-MSVCDLL void operator= (const densop& Sigma1);
+MSVCDLL densop & operator= (const densop& Sigma1);
  
         // Input                Sigma       : A density operator (this)
         //                      Sigma1      : Another density operator
