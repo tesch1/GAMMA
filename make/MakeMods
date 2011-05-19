@@ -106,7 +106,7 @@ ALLPYFILES += $(BASICSPY)
 BASICSTBAS  = TestBasics TestGconst TestGconstA TestSingPar TestSingParA TestSingParB\
               TestIsoData TestStringCut
 
-BASICS_IBASE  = basics ParamSet SinglePar Isotope
+BASICS_IBASE  = basics ParamSet SinglePar Isotope Gconstants
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(BASICS)/, $(BASICS_IBASE)))
 
 
