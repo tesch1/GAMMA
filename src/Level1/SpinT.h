@@ -250,7 +250,7 @@ MSVCDLC ~spin_T();
 // ____________________________________________________________________________
 
 
-MSVCDLL void operator = (const spin_T &SphT);
+MSVCDLL spin_T & operator = (const spin_T &SphT);
 
 	// Input		SphT : spin tensor
 	// Return		SphT1: spin tensor equivalent to the

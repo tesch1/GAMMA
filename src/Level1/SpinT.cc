@@ -235,9 +235,9 @@ spin_T::~spin_T()
 	// Note		             : SphT and SphT1 must be associated
 	//			       with the same spin system
 
-void spin_T::operator = (const spin_T& SphT)
+spin_T & spin_T::operator = (const spin_T& SphT)
   {
-  if(this == &SphT) return; 		// Exit if already equal
+  if(this == &SphT) return (*this); 		// Exit if already equal
   int span = 0;
   int l = 0;
   if(SphT.pr)				// Copy if non-NULL SphT
@@ -292,6 +292,8 @@ void spin_T::operator = (const spin_T& SphT)
     }
   sys = SphT.sys;			// Copy spin system pointer
   rank = SphT.rank;			// Copy Tensor rank
+  
+  return (*this);
   }
 
 
