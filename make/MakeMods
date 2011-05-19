@@ -238,7 +238,7 @@ ALLPYFILES += $(LEVEL2PY)
 LEVEL2TBAS  = TestLevel2 TestTrnsTable1D Testacquire1D \
               TestQuaternion TestQuaternionA TestQuaternionB TestQuaternionC
 
-LEVEL2_IBASE  = level2 TrnsTable1D acquire1D MutExch
+LEVEL2_IBASE  = level2 TrnsTable1D acquire1D Quaternion EAngles MutExch RelaxBas BaseDecomp 
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(LEVEL2)/, $(LEVEL2_IBASE)))
 
 ###############################################################################

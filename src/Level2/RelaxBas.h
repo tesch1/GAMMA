@@ -148,7 +148,7 @@ MSVCDLC      RBasic();
 MSVCDLC      RBasic(const row_vector& vx);
 MSVCDLC      RBasic(const RBasic& RB);
 MSVCDLC      ~RBasic();
-MSVCDLL void operator= (const RBasic& RB);
+MSVCDLL RBasic & operator= (const RBasic& RB);
 
 // ____________________________________________________________________________
 // B                     Relax Basic Access Functions

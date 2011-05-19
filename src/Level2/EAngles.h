@@ -166,8 +166,8 @@ MSVCDLL void gamma(double G);			// Set gamma (radians)
    Generation of summed rotation angles is done through use of Quaterions.   */
 
 MSVCDLL EAngles operator*  (const EAngles& EA) const;
-MSVCDLL void    operator*= (const EAngles& EA);
-MSVCDLL void    operator&= (const EAngles& EA);
+MSVCDLL EAngles&    operator*= (const EAngles& EA);
+MSVCDLL EAngles&    operator&= (const EAngles& EA);
 MSVCDLL EAngles composite  (const EAngles& EA) const;
 
 // ____________________________________________________________________________

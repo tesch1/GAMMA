@@ -437,8 +437,8 @@ void EAngles::gamma(double G) { SetGamma(G); }
    reason, the quaternion is generated from the inverse set of Euler angles. */
 
 EAngles EAngles::operator*  (const EAngles& EA) const { return composite(EA); }
-void    EAngles::operator*= (const EAngles& EA)       { *this= composite(EA); }
-void    EAngles::operator&= (const EAngles& EA)       { *this= EA.composite(*this); }
+EAngles&    EAngles::operator*= (const EAngles& EA)       { *this= composite(EA); return *this; }
+EAngles&    EAngles::operator&= (const EAngles& EA)       { *this= EA.composite(*this); return *this;}
 EAngles EAngles::composite  (const EAngles& EA) const
   {
   quatern Q1(*this);			// Form Quaterion from us

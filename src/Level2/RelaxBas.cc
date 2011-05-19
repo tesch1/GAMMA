@@ -435,7 +435,7 @@ RBasic::RBasic(const RBasic& RB)
 
 RBasic::~RBasic() { }
 
-void RBasic::operator= (const RBasic& RB) 
+RBasic & RBasic::operator= (const RBasic& RB) 
   {
   R1rates = RB.R1rates;				// Copy R1 relax. rates (T1)
   R2rates = RB.R2rates;				// Copy R2 relax. rates (T2)
@@ -447,6 +447,7 @@ void RBasic::operator= (const RBasic& RB)
   R2mx    = RB.R2mx;				// Copy R2 relax. mx    (T2)
   H0      = RB.H0;				// Copy static Ham.     (Ev/Aq)
   Det     = RB.Det;				// Copy detect op.	(Aq)
+  return *this;
   }
 
 // ____________________________________________________________________________

@@ -821,8 +821,8 @@ coord   quatern::ABG()   const
    in found in Spiess, JMR, 61, 356 (85), eq. [9].                            */
 
 quatern quatern::operator*  (const quatern& Q) const { return composite(Q); }
-void    quatern::operator*= (const quatern& Q)       { *this= composite(Q); }
-void    quatern::operator&= (const quatern& Q)       { *this= Q.composite(*this); }
+quatern&    quatern::operator*= (const quatern& Q)       { *this= composite(Q); return *this;}
+quatern&    quatern::operator&= (const quatern& Q)       { *this= Q.composite(*this); return *this;}
 quatern          operator*  (const matrix&  R, const quatern& Q)
                                                    { return composite(R,Q); }
 

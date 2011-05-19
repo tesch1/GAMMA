@@ -226,8 +226,8 @@ MSVCDLL coord   ABG()   const;
                           Spiess, JMR, 61, 356 (1985)                         */
 
 MSVCDLL quatern operator*  (const quatern& Q) const;
-MSVCDLL void    operator*= (const quatern& Q);
-MSVCDLL void    operator&= (const quatern& Q);
+MSVCDLL quatern&    operator*= (const quatern& Q);
+MSVCDLL quatern&    operator&= (const quatern& Q);
 MSVCDLL friend  quatern  operator*  (const matrix&  Rmx,  const quatern& Q);
 
 MSVCDLL quatern composite(const quatern& Q, bool rev=false) const;	// Deprecated
