@@ -147,9 +147,7 @@ COMPVER    = ${MAJORVERSION}.${MINORVERSION}
 CURRVER    = ${COMPVER}.${RELEASEVERSION}
 
 SO_BASE    = libgamma
-SO_BAUL    = "========"
 SO_NAME    = ${SO_BASE}.dylib
-SO_NAUL    = ${SO_BAUL}======
 SO_NAMEX   = ${SO_BASE}.${MAJORVERSION}.dylib
 SO_NAMEXX  = ${SO_BASE}.${COMPVER}.dylib
 SO_NAMEXXX = ${SO_BASE}.${CURRVER}.dylib
@@ -212,7 +210,6 @@ lib: $(BINDIR) ${BINDIR}/${LIB_NAME}
 pysg: $(BINDIR) $(BINDIR)/$(PYS_NAME)
 
 
-${SO_NAME}:  ${BINDIR}/${SO_NAME}
 ${LIB_NAME}: ${BINDIR}/${LIB_NAME}
 ${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
 
@@ -646,14 +643,14 @@ ${BINDIR}/$(LIB_NAME): ${BINDIR} ${LIB_OBJS}
 
 ${SO_NAME}: ${BINDIR}/${SO_NAME}
 
-${BINDIR}/${SO_NAME}: ${BINDIR}/${SO_NAMEXXX}
+${BINDIR}/${SO_NAME}: ${BINDIR} ${BINDIR}/${SO_NAMEXXX}
 	@rm -f ${BINDIR}/${SO_NAME}
 	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
 
 $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo
 	@echo "Making Shared Library $(SO_NAME) From Object Files"
-	@echo "      ======================${SO_NAUL}=================="  
+	@echo "      ========================================"  
 	@echo
 	@echo "   * Building Library ${BINDIR}/${SO_NAMEXXX}"
 	@$(CXX) ${SO_LDFLAGS} -install_name ${BINDIR}/${SO_NAMEX} \
