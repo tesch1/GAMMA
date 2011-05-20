@@ -6,19 +6,25 @@ and some useful discussions about the GAMMA C++ code.
 They were created by Scott Smith, to whom we owe a
 great deal of gratitude - for his work on this library.
 
-The documents have not been kept up to date 
-so some of the technical discussions may seem dated, 
-but they still serve as a very powerful introduction 
-to the GAMMA library.
+The documents were originally written around 2001 - 
+2003 and have not been kept up to date so some of the 
+technical discussions may seem dated, but they still 
+serve as a very powerful introduction to the GAMMA 
+library.
 
 The complete GAMMA website, as it stood in May of 2011
-has been uploaded into the repository "GAMMA_DOCS" and
-may be downloaded and viewed from there. The links
-have not been updated to point to the local instance;
-so keep that in mind if you choose to view them.
+has been uploaded into the repository gamma_docs and 
+you can browse it or download it (with Subversion) 
+using this URL:
+http://scion/guest_svn/gamma_docs/
 
-The pdf's in this directory are more or less included
-in the gamma_docs directory.
+The links in the HTML have not been updated to point
+to this local instance; so keep that in mind if you 
+choose to view the HTML documents.
+
+The PDFs in this directory are more or less the same
+as those in the gamma_docs Subversion repository.
 
 For the latest information on GAMMA, go to this link:
-https://scion.duhs.duke.edu/vespa/gamma
+http://scion.duhs.duke.edu/vespa/gamma
+
