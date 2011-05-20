@@ -13,9 +13,8 @@ serve as a very powerful introduction to the GAMMA
 library.
 
 The complete GAMMA website, as it stood in May of 2011
-has been uploaded into the repository gamma_docs and 
-you can browse it or download it (with Subversion) 
-using this URL:
+has been uploaded into one of our Subversion repositories.
+you can browse it or download it (with Subversion) here:
 http://scion/guest_svn/gamma_docs/
 
 The links in the HTML have not been updated to point
