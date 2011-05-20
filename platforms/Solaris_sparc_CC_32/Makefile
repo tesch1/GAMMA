@@ -110,10 +110,8 @@ SRCDIR1 = ../../src
 
 # Un-comment out these next two lines if using blas, atlas, or lapack,
 # and uncomment one or both of the following two lines
-#BLASINCL_FLAG   = -I/usr/include
-#LAPACKINCL_FLAG = -I/home/user/dev/CLAPACK-3.2.1/INCLUDE
-BLASINCL_FLAG   = 
-LAPACKINCL_FLAG = 
+#BLASINCL_FLAG   = -I/opt/local/include -D_USING_BLAS_
+#LAPACKINCL_FLAG =
 
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(LAPACKINCL_FLAG) $(BLASINCL_FLAG)
 
@@ -124,17 +122,17 @@ DEBUG    = -g
 OPTIMIZE = -O2
 
 CC       = /opt/SUNWspro/bin/cc
-CFLAGS   = $(DEBUG) -fast -xtarget=ultra3cu -m32
+CFLAGS   = $(SRCDIRINCL_FLAG) $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m32
 CXX      = /opt/SUNWspro/bin/CC
 CPPFLAGS = -I"../../src"
-CXXFLAGS = $(DEBUG) -fast -xtarget=ultra3cu -m32
+CXXFLAGS = $(SRCDIRINCL_FLAG) $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m32
 
 LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
 LIBCXXFLAGS = $(DEBUG) -m32
 
 #SOCPPFLAGS = $(SRCDIRINCL_FLAG)
 SOCPPFLAGS = $(SRCDIRINCL_FLAG)
-SOCXXFLAGS = -KPIC $(DEBUG) -fast -xtarget=ultra3cu -m32
+SOCXXFLAGS = -KPIC $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m32
 
 PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMIC_LIB \
              -O3 -Wno-inline -fPIC -fomit-frame-pointer $(SRCDIRINCL_FLAG) -isystem "${PYINCDIR}" \
@@ -142,16 +140,15 @@ PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMI
 PYCXXFLAGS = $(OPTIMIZE)
 
 PYSGCPPINCLFLAGS = 
-PYSGCPPFLAGS = -fast -xtarget=ultra3cu -m32 -KPIC $(SRCDIRINCL_FLAG)
+PYSGCPPFLAGS = -fast -fsimple=1 -xtarget=ultra3cu -m32 -KPIC $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = 
 LDFLAGS  = -m32
 
 ### un-comment the next four lines if using blas/atls/lapack, 
 # and comment out next line.
-#LAPACK_LIBS = /home/user/dev/CLAPACK-3.2.1/lapack_LINUX.a 
-#BLAS_LIBS  = /home/user/dev/CLAPACK-3.2.1/libcblaswr.a   /home/user/dev/CLAPACK-3.2.1/F2CLIBS/libf2c.a \
-#              /usr/lib/atlas/libblas.a   /usr/lib/libatlas.a
-#LAB_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS)
+#LAPACK_LIBS = -L/opt/solstudio12.2/lib -R/opt/solstudio12.2/lib -lsunperf -lsunmath
+#BLAS_LIBS  = -L/opt/local/lib -lcblas
+#LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
 LAB_LIBS = 
 
 
@@ -315,7 +312,7 @@ OTHERDOTIFILES = $(addprefix $(SRCDIR)/, $(ALLIFILES))
 
 $(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
 	@echo
-	swig -c++ -python -outdir $(BINDIR) -o $@ \
+	/nmrnet/gamma/python-sparc-cc/bin/swig -c++ -python -outdir $(BINDIR) -o $@ \
          -I../../src $<
 
 #########################################################################
@@ -736,7 +733,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 	@echo
 	@echo "Making Static Library $(LIB_NAME) From Object Files"
 	@echo
-	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS) $(LAB_LIBS)
+	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS)
 	@echo
 	@echo "Adjusting Static Library $(LIB_NAME) For Random Access"
 	@echo
@@ -934,7 +931,7 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 
 
 # Using python to find the default library and include path for "python" executable on the local machine.
-PYTHON_EXECUTABLE = /opt/local/bin/python
+PYTHON_EXECUTABLE = /nmrnet/gamma/python-sparc-cc/bin/python
 
 PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
 PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
@@ -1172,19 +1169,19 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -w -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 RUNDIR = ./../../src/Tests
 

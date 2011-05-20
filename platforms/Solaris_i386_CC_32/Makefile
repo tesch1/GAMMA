@@ -124,17 +124,17 @@ DEBUG    = -g
 OPTIMIZE = -O2
 
 CC       = /opt/SUNWspro/bin/cc
-CFLAGS   = $(DEBUG) -fast -xtarget=pentium4 -m32
+CFLAGS   = $(DEBUG) -fast -fsimple=1 -xtarget=pentium4 -m32
 CXX      = /opt/SUNWspro/bin/CC
 CPPFLAGS = -I"../../src"
-CXXFLAGS = $(DEBUG) -fast -xtarget=pentium4 -m32
+CXXFLAGS = $(DEBUG) -fast -fsimple=1 -xtarget=pentium4 -m32
 
 LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
 LIBCXXFLAGS = $(DEBUG) -m32
 
 #SOCPPFLAGS = $(SRCDIRINCL_FLAG)
 SOCPPFLAGS = $(SRCDIRINCL_FLAG)
-SOCXXFLAGS = -KPIC $(DEBUG) -fast -xtarget=pentium4 -m32
+SOCXXFLAGS = -KPIC $(DEBUG) -fast -fsimple=1 -xtarget=pentium4 -m32
 
 PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMIC_LIB \
              -O3 -Wno-inline -fPIC -fomit-frame-pointer $(SRCDIRINCL_FLAG) -isystem "${PYINCDIR}" \
@@ -142,7 +142,7 @@ PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMI
 PYCXXFLAGS = $(OPTIMIZE)
 
 PYSGCPPINCLFLAGS = 
-PYSGCPPFLAGS = -fast -xtarget=pentium4 -m32 -KPIC $(SRCDIRINCL_FLAG)
+PYSGCPPFLAGS = -fast -fsimple=1 -xtarget=pentium4 -m32 -KPIC $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = 
 LDFLAGS  =  -m32
 
@@ -315,7 +315,7 @@ OTHERDOTIFILES = $(addprefix $(SRCDIR)/, $(ALLIFILES))
 
 $(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
 	@echo
-	swig -c++ -python -outdir $(BINDIR) -o $@ \
+	/nmrnet/gamma/python-i86pc-cc/bin/swig -c++ -python -outdir $(BINDIR) -o $@ \
          -I../../src $<
 
 #########################################################################
@@ -934,7 +934,7 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 
 
 # Using python to find the default library and include path for "python" executable on the local machine.
-PYTHON_EXECUTABLE = python
+PYTHON_EXECUTABLE = /nmrnet/gamma/python-i86pc-cc/bin/python
 
 PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
 PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
@@ -1162,7 +1162,7 @@ ZTESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(ZTESTSBASE)))
 ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
 #CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG)
-CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG)
+CPP_TESTFLAGS = $(SRCDIRINCL_FLAG)
 CXX_TESTFLAGS = $(OPTIMIZE)
 
 LD_TESTFLAGS = 
@@ -1172,19 +1172,19 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
 
 RUNDIR = ./../../src/Tests
 
@@ -1192,7 +1192,7 @@ run: force
 	@echo 
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/;
+	@cd $(RUNDIR); ${PYTHON_EXECUTABLE} run_tests.py -v -p $(BINDIR)/;
 	@echo 
 
 
@@ -1204,7 +1204,7 @@ pytest: force
 	@echo 
 	@echo Running Python tests:
 	@echo
-	@cd $(PY_RUNDIR); python ../Tests/run_tests.py -v;
+	@cd $(PY_RUNDIR); ${PYTHON_EXECUTABLE} ../Tests/run_tests.py -v;
 	@echo 	
 
 

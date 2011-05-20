@@ -124,17 +124,17 @@ DEBUG    = -g
 OPTIMIZE = -O2
 
 CC       = /opt/SUNWspro/bin/cc
-CFLAGS   = $(DEBUG) -fast -xtarget=ultra3cu -m64
+CFLAGS   = $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m64
 CXX      = /opt/SUNWspro/bin/CC
 CPPFLAGS = -I"../../src"
-CXXFLAGS = $(DEBUG) -fast -xtarget=ultra3cu -m64
+CXXFLAGS = $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m64
 
 LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
 LIBCXXFLAGS = $(DEBUG) -m64
 
 #SOCPPFLAGS = $(SRCDIRINCL_FLAG)
 SOCPPFLAGS = $(SRCDIRINCL_FLAG)
-SOCXXFLAGS = -KPIC $(DEBUG) -fast -xtarget=ultra3cu -m64
+SOCXXFLAGS = -KPIC $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m64
 
 PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMIC_LIB \
              -O3 -Wno-inline -fPIC -fomit-frame-pointer $(SRCDIRINCL_FLAG) -isystem "${PYINCDIR}" \
