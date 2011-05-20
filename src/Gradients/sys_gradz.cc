@@ -212,13 +212,14 @@ sys_gradz::sys_gradz(const sys_gradz &sys) : spin_system(sys)
   Ps     = sys.Ps;  				// Copy subsystem populations
   }
 
-void sys_gradz::operator= (const sys_gradz &sys)
+sys_gradz& sys_gradz::operator= (const sys_gradz &sys)
   {
   spin_system::operator=(sys);			// Copy spin system stuff
   _NSS   = sys._NSS;				// Copy # of subsystems
   dBodm  = sys.dBodm;				// Copy the field gradient
   efflen = sys.efflen;				// Copy detected sample length
   Ps     = sys.Ps;  				// Copy subsystem populations
+  return *this;
   }
 
 sys_gradz::~sys_gradz () { }

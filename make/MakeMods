@@ -417,7 +417,7 @@ ALLMODDIRS += $(FGRAD)
 ALLMODHDRS += $(FGRADHDR)
 ALLPYFILES += $(FGPY) 
 
-FGRAD_IBASE  = gradients GrdAcquire
+FGRAD_IBASE  = gradients sys_gradz Gradients2 GrdPulses GrdEvolve GrdAcquire
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(FGRAD)/, $(FGRAD_IBASE)))
 
 ###############################################################################

@@ -137,7 +137,7 @@ public:
 MSVCDLC      sys_gradz(int spins=0);
 MSVCDLC      sys_gradz(const sys_gradz& sys);
 MSVCDLC      ~sys_gradz();
-MSVCDLL void operator= (const sys_gradz& sys);
+MSVCDLL sys_gradz& operator= (const sys_gradz& sys);
 
 // ____________________________________________________________________________
 // B                       CHEMICAL SHIFT MANIPULATIONS
