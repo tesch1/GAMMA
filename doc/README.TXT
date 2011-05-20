@@ -6,8 +6,8 @@ and some useful discussions about the GAMMA C++ code.
 They were created by Scott Smith, to whom we owe a
 great deal of gratitude - for his work on this library.
 
-The documents were originally written around 2001 - 
-2003 and have not been kept up to date so some of the 
+The documents were originally written around 1999 - 
+2003, and have not been kept up to date so some of the 
 technical discussions may seem dated, but they still 
 serve as a very powerful introduction to the GAMMA 
 library.
