@@ -110,10 +110,10 @@ SRCDIR1 = ../../src
 
 # Un-comment out these next two lines if using blas, atlas, or lapack,
 # and uncomment one or both of the following two lines
-#BLASINCL_FLAG   = -I/usr/include
-#LAPACKINCL_FLAG = -I/home/user/dev/CLAPACK-3.2.1/INCLUDE
-BLASINCL_FLAG   = 
-LAPACKINCL_FLAG = 
+BLASINCL_FLAG   = -I/opt/local/include -D_USING_BLAS_ -D_USING_SUNPERFLIB_
+LAPACKINCL_FLAG =
+#BLASINCL_FLAG   = 
+#LAPACKINCL_FLAG = 
 
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(LAPACKINCL_FLAG) $(BLASINCL_FLAG)
 
@@ -124,10 +124,10 @@ DEBUG    = -g
 OPTIMIZE = -O2
 
 CC       = /opt/SUNWspro/bin/cc
-CFLAGS   = $(DEBUG) -fast -fsimple=1 -xtarget=pentium4 -m32
+CFLAGS   = $(SRCDIRINCL_FLAG) $(DEBUG) -fast -fsimple=1 -xtarget=pentium4 -m32
 CXX      = /opt/SUNWspro/bin/CC
 CPPFLAGS = -I"../../src"
-CXXFLAGS = $(DEBUG) -fast -fsimple=1 -xtarget=pentium4 -m32
+CXXFLAGS = $(SRCDIRINCL_FLAG) $(DEBUG) -fast -fsimple=1 -xtarget=pentium4 -m32
 
 LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
 LIBCXXFLAGS = $(DEBUG) -m32
@@ -144,15 +144,14 @@ PYCXXFLAGS = $(OPTIMIZE)
 PYSGCPPINCLFLAGS = 
 PYSGCPPFLAGS = -fast -fsimple=1 -xtarget=pentium4 -m32 -KPIC $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = 
-LDFLAGS  =  -m32
+LDFLAGS  = -m32
 
 ### un-comment the next four lines if using blas/atls/lapack, 
 # and comment out next line.
-#LAPACK_LIBS = /home/user/dev/CLAPACK-3.2.1/lapack_LINUX.a 
-#BLAS_LIBS  = /home/user/dev/CLAPACK-3.2.1/libcblaswr.a   /home/user/dev/CLAPACK-3.2.1/F2CLIBS/libf2c.a \
-#              /usr/lib/atlas/libblas.a   /usr/lib/libatlas.a
-#LAB_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS)
-LAB_LIBS = 
+LAPACK_LIBS = -L/opt/solstudio12.2/lib -R/opt/solstudio12.2/lib -lsunperf -lsunmath
+BLAS_LIBS  = -L/opt/local/lib -lcblas
+LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
+#LAB_LIBS = 
 
 
 exeext   = .out
@@ -736,7 +735,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 	@echo
 	@echo "Making Static Library $(LIB_NAME) From Object Files"
 	@echo
-	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS) $(LAB_LIBS)
+	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS)
 	@echo
 	@echo "Adjusting Static Library $(LIB_NAME) For Random Access"
 	@echo
@@ -1163,28 +1162,28 @@ ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
 #CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG)
 CPP_TESTFLAGS = $(SRCDIRINCL_FLAG)
-CXX_TESTFLAGS = $(OPTIMIZE)
+CXX_TESTFLAGS = $(OPTIMIZE) -m32
 
-LD_TESTFLAGS = 
+LD_TESTFLAGS =  -m32
 
 
 ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
-	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
+	$(CXX) -w -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX) -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS) -Bdynamic
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 RUNDIR = ./../../src/Tests
 
@@ -1204,7 +1203,7 @@ pytest: force
 	@echo 
 	@echo Running Python tests:
 	@echo
-	@cd $(PY_RUNDIR); ${PYTHON_EXECUTABLE} ../Tests/run_tests.py -v;
+	@cd $(PY_RUNDIR); ${PYTHON_EXECUTABLE} ../Tests/run_tests.py -v; 
 	@echo 	
 
 
@@ -1467,6 +1466,7 @@ pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
 	@# Write a tiny Python file that contains the PyGAMMA version 
 	@echo "__version__ = '$(GAMMAVERSION)'" > $(PYSGDISTDIR)/pygamma_version.py
 
+
 #########################################################################
 #									#
 #                                Clean 					#
@@ -1520,6 +1520,7 @@ distclean:
 dllclean:
 	@rm -f ./${BINDIR}/*.dll
 	@rm -f ./${BINDIR}/*.dll.*
+
 
 # When Linux and Windows Share Disk Partitions (FAT32) Windows Can Wreck 
 # Some Of The GAMMA Source Code Filenames. This Target Is Run To Fix Them.

@@ -110,10 +110,10 @@ SRCDIR1 = ../../src
 
 # Un-comment out these next two lines if using blas, atlas, or lapack,
 # and uncomment one or both of the following two lines
-#BLASINCL_FLAG   = -I/usr/include
-#LAPACKINCL_FLAG = -I/home/user/dev/CLAPACK-3.2.1/INCLUDE
-BLASINCL_FLAG   = 
-LAPACKINCL_FLAG = 
+BLASINCL_FLAG   = -I/opt/local/include -D_USING_BLAS_ -D_USING_SUNPERFLIB_
+LAPACKINCL_FLAG =
+#BLASINCL_FLAG   = 
+#LAPACKINCL_FLAG = 
 
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(LAPACKINCL_FLAG) $(BLASINCL_FLAG)
 
@@ -124,10 +124,10 @@ DEBUG    = -g
 OPTIMIZE = -O2
 
 CC       = /opt/SUNWspro/bin/cc
-CFLAGS   = $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m64
+CFLAGS   = $(SRCDIRINCL_FLAG) $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m64
 CXX      = /opt/SUNWspro/bin/CC
 CPPFLAGS = -I"../../src"
-CXXFLAGS = $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m64
+CXXFLAGS = $(SRCDIRINCL_FLAG) $(DEBUG) -fast -fsimple=1 -xtarget=ultra3cu -m64
 
 LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
 LIBCXXFLAGS = $(DEBUG) -m64
@@ -142,17 +142,16 @@ PYCPPFLAGS = -Wall -ftemplate-depth-100 -DNDEBUG -DPYGAMMA -DBOOST_PYTHON_DYNAMI
 PYCXXFLAGS = $(OPTIMIZE)
 
 PYSGCPPINCLFLAGS = 
-PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
+PYSGCPPFLAGS = -fast -fsimple=1 -xtarget=ultra3cu -m64 -KPIC $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = $(OPTIMIZE)
 LDFLAGS  = -m64
 
 ### un-comment the next four lines if using blas/atls/lapack, 
 # and comment out next line.
-#LAPACK_LIBS = /home/user/dev/CLAPACK-3.2.1/lapack_LINUX.a 
-#BLAS_LIBS  = /home/user/dev/CLAPACK-3.2.1/libcblaswr.a   /home/user/dev/CLAPACK-3.2.1/F2CLIBS/libf2c.a \
-#              /usr/lib/atlas/libblas.a   /usr/lib/libatlas.a
-#LAB_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS)
-LAB_LIBS = 
+LAPACK_LIBS = -L/opt/solstudio12.2/lib/v9 -R/opt/solstudio12.2/lib/v9 -lsunperf -lsunmath
+BLAS_LIBS  = -L/opt/local/lib/sparcv9/ -lcblas
+LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
+#LAB_LIBS =
 
 
 exeext   = .out
@@ -315,7 +314,7 @@ OTHERDOTIFILES = $(addprefix $(SRCDIR)/, $(ALLIFILES))
 
 $(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
 	@echo
-	swig -c++ -python -outdir $(BINDIR) -o $@ \
+	/nmrnet/gamma/python-sparc-cc/bin/swig -c++ -python -outdir $(BINDIR) -o $@ \
          -I../../src $<
 
 #########################################################################
@@ -637,7 +636,7 @@ ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
 	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
 
 $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
-	gcc -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
+	$(CXX) -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 
@@ -736,7 +735,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 	@echo
 	@echo "Making Static Library $(LIB_NAME) From Object Files"
 	@echo
-	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS) $(LAB_LIBS)
+	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS)
 	@echo
 	@echo "Adjusting Static Library $(LIB_NAME) For Random Access"
 	@echo
@@ -934,13 +933,13 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 
 
 # Using python to find the default library and include path for "python" executable on the local machine.
-PYTHON_EXECUTABLE = python
+PYTHON_EXECUTABLE = /nmrnet/gamma/python-sparc-cc/bin/python
 
 PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
 PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
 
 PYSINCFLAGS = -I$(PYTHONINCDIRS)
-PYSG_LDFLAGS = -L$(PYTHONLIBDIRS)
+PYSG_LDFLAGS = -L$(PYTHONLIBDIRS) -R$(PYTHONLIBDIRS)
 
 PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
 
@@ -968,15 +967,15 @@ $(PYSGAMMA_CHK):
 		false; \
 	fi
 	@echo 
-PYS_LDFLAGS = -shared $(LDFLAGS)
-PYS_LDLIBS  = $(LAB_LIBS) 
+PYS_LDFLAGS = -G $(LDFLAGS)
+PYS_LDLIBS  = $(LAB_LIBS) -lCstd -lCrun -lm
 
 
 ${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS) 
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
-	g++ ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+	$(CXX) ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
 
 #    cp ${BINDIR}/${PYS_NAME} ${BINDIR}/${PYS_NAMEXXX}
@@ -1162,29 +1161,29 @@ ZTESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(ZTESTSBASE)))
 ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
 #CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG)
-CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG)
-CXX_TESTFLAGS = $(OPTIMIZE)
+CPP_TESTFLAGS = $(SRCDIRINCL_FLAG)
+CXX_TESTFLAGS = $(OPTIMIZE) -m64
 
-LD_TESTFLAGS = 
+LD_TESTFLAGS =  -m64
 
 
 ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
-	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
+	$(CXX) -w -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX) -static -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -w -Bstatic -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma -Bdynamic $(LAB_LIBS)
 
 RUNDIR = ./../../src/Tests
 
@@ -1192,7 +1191,7 @@ run: force
 	@echo 
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/;
+	@cd $(RUNDIR); ${PYTHON_EXECUTABLE} run_tests.py -v -p $(BINDIR)/;
 	@echo 
 
 
@@ -1204,7 +1203,7 @@ pytest: force
 	@echo 
 	@echo Running Python tests:
 	@echo
-	@cd $(PY_RUNDIR); python ../Tests/run_tests.py -v;
+	@cd $(PY_RUNDIR); ${PYTHON_EXECUTABLE} ../Tests/run_tests.py -v; 
 	@echo 	
 
 

@@ -110,8 +110,10 @@ SRCDIR1 = ../../src
 
 # Un-comment out these next two lines if using blas, atlas, or lapack,
 # and uncomment one or both of the following two lines
-#BLASINCL_FLAG   = -I/opt/local/include -D_USING_BLAS_
-#LAPACKINCL_FLAG =
+BLASINCL_FLAG   = -I/opt/local/include -D_USING_BLAS_ -D_USING_SUNPERFLIB_
+LAPACKINCL_FLAG =
+#BLASINCL_FLAG   = 
+#LAPACKINCL_FLAG = 
 
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(LAPACKINCL_FLAG) $(BLASINCL_FLAG)
 
@@ -146,10 +148,10 @@ LDFLAGS  = -m32
 
 ### un-comment the next four lines if using blas/atls/lapack, 
 # and comment out next line.
-#LAPACK_LIBS = -L/opt/solstudio12.2/lib -R/opt/solstudio12.2/lib -lsunperf -lsunmath
-#BLAS_LIBS  = -L/opt/local/lib -lcblas
-#LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
-LAB_LIBS = 
+LAPACK_LIBS = -L/opt/solstudio12.2/lib -R/opt/solstudio12.2/lib -lsunperf -lsunmath
+BLAS_LIBS  = -L/opt/local/lib -lcblas
+LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
+#LAB_LIBS = 
 
 
 exeext   = .out
@@ -1160,9 +1162,9 @@ ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
 #CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG)
 CPP_TESTFLAGS = $(SRCDIRINCL_FLAG)
-CXX_TESTFLAGS = $(OPTIMIZE)
+CXX_TESTFLAGS = $(OPTIMIZE) -m32
 
-LD_TESTFLAGS = 
+LD_TESTFLAGS =  -m32
 
 
 ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
