@@ -138,15 +138,15 @@ void volatile spin_T_fatality (int error);
 
 public:
 
-MSVCDLC spin_T();
+spin_T();
 
-MSVCDLC spin_T(const spin_sys &sys);
+spin_T(const spin_sys &sys);
 
-MSVCDLC spin_T(const spin_T &SphT);
+spin_T(const spin_T &SphT);
 
-MSVCDLC spin_T(const spin_T &SphT, int l);
+spin_T(const spin_T &SphT, int l);
 
-MSVCDLC ~spin_T();
+~spin_T();
 
 spin_T & operator = (const spin_T & SphT);
 
