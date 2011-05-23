@@ -973,11 +973,11 @@ coord coord::operator + (const coord& del) const
 coord coord::operator - (const coord& del) const
   { return coord(cx-del.cx, cy-del.cy, cz-del.cz); }
 
-void coord::operator +=(const coord& del)
-  { cx += del.x(); cy += del.y(); cz += del.z(); }
+coord& coord::operator +=(const coord& del)
+  { cx += del.x(); cy += del.y(); cz += del.z(); return (*this); }
 
-void coord::operator -=(const coord& del)
-  { cx -= del.x(); cy -= del.y(); cz -= del.z(); }
+coord& coord::operator -=(const coord& del)
+  { cx -= del.x(); cy -= del.y(); cz -= del.z(); return (*this); }
 
 // ____________________________________________________________________________
 // F                        COORDINATE WITH COORDINATE
@@ -1084,9 +1084,9 @@ coord cdvect(const coord& pt1, const coord& pt2)
 coord operator * (double r, const coord& pt1)
                               { return coord(pt1.cx*r, pt1.cy*r, pt1.cz*r); }
 coord coord::operator *  (double r) const { return coord(cx*r, cy*r, cz*r); }
-void  coord::operator *= (double r)       { cx *= r; cy *= r; cz *= r; }
+coord&  coord::operator *= (double r)       { cx *= r; cy *= r; cz *= r; return (*this); }
 coord coord::operator /  (double r) const { return coord(cx/r, cy/r, cz/r); }
-void  coord::operator /= (double r)       { cx /= r; cy /= r; cz /= r; }
+coord&  coord::operator /= (double r)       { cx /= r; cy /= r; cz /= r; return (*this); }
 
 // ____________________________________________________________________________
 // G                       COORDINATE WITH MATRIX

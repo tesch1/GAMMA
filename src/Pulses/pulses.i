@@ -1,10 +1,10 @@
 
 %include "PulWaveform.i"
 %include "PulComposite.i"
+%include "Pulse.i"
 %include "PulGauss.i"
 %include "PulSinc.i"
 %include "PulCycle.i"
 %include "PulMLEV.i"
-%include "Pulse.i"
 %include "PulTrain.i"
 %include "PulSupCycle.i"

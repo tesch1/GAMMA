@@ -154,7 +154,7 @@ MSVCDLC         coord_vec (const coord_vec& cvec1);
 MSVCDLC         coord_vec(const ParameterSet& pset, int idx=-1, int warn=2);
 MSVCDLC         coord_vec(const row_vector& X, const row_vector& Y, const row_vector& Z);
 MSVCDLC virtual ~coord_vec ();
-MSVCDLL void    operator= (const coord_vec& cvec1);
+MSVCDLL coord_vec& operator= (const coord_vec& cvec1);
 
 // ____________________________________________________________________________
 // B                  COORDINATE VECTOR ROTATION FUNCTIONS
@@ -304,10 +304,11 @@ MSVCDLL row_vector project(int projx, int projy) const;
         cv/=r           Multiplies all coordinates in vector by 1/r          */
       
 MSVCDLL friend    coord_vec  operator *  (double r, const coord_vec& cvec1);
-MSVCDLL coord_vec operator *  (double r) const;
-MSVCDLL void      operator *= (double r);
-MSVCDLL coord_vec operator /  (double r) const;
-MSVCDLL void      operator /= (double r);
+
+MSVCDLL coord_vec  operator *  (double r) const;
+MSVCDLL coord_vec& operator *= (double r);
+MSVCDLL coord_vec  operator /  (double r) const;
+MSVCDLL coord_vec& operator /= (double r);
 
 // ----------------------------------------------------------------------------
 //                      COORDINATE VECTOR WITH COORDINATE
@@ -329,10 +330,10 @@ MSVCDLL void      operator -= (const coord& pt);
 //                  COORDINATE VECTOR WITH COORDINATE VECTOR
 // ----------------------------------------------------------------------------
 
-MSVCDLL coord_vec operator +  (const coord_vec& cv) const;
-MSVCDLL void      operator += (const coord_vec& cv);
-MSVCDLL coord_vec operator -  (const coord_vec& cv) const;
-MSVCDLL void      operator -= (const coord_vec& cv);
+MSVCDLL coord_vec  operator +  (const coord_vec& cv) const;
+MSVCDLL coord_vec& operator += (const coord_vec& cv);
+MSVCDLL coord_vec  operator -  (const coord_vec& cv) const;
+MSVCDLL coord_vec& operator -= (const coord_vec& cv);
 
 // ____________________________________________________________________________
 // F                COORDINATE VECTOR GENERAL FUNCTIONS

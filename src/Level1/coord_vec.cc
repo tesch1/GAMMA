@@ -386,7 +386,7 @@ coord_vec::~coord_vec()
   }
 
 
-void coord_vec::operator= (const coord_vec &cvec1)
+coord_vec& coord_vec::operator= (const coord_vec &cvec1)
 
 	// Input		cvec1 : Coordinate vector(this)
 	// 			cvec  : Coordinate vector
@@ -750,14 +750,14 @@ coord_vec operator * (double r, const coord_vec& cvec1)
 coord_vec coord_vec::operator * (double r) const
   { coord_vec cvec(*this); cvec*=r; return cvec; }
 
-void coord_vec::operator *= (double r)
-  { for(int i=0; i<Npts; i++) Pts[i] *= r; }
+coord_vec& coord_vec::operator *= (double r)
+  { for(int i=0; i<Npts; i++) Pts[i] *= r; return (*this); }
 
 coord_vec coord_vec::operator / (double r) const
   { coord_vec cvec(*this); cvec/=r; return cvec; }
 
-void coord_vec::operator /= (double r)
-  { for(int i=0; i<Npts; i++) Pts[i] /= r; }
+coord_vec& coord_vec::operator /= (double r)
+  { for(int i=0; i<Npts; i++) Pts[i] /= r; return (*this); }
 
 // ----------------------------------------------------------------------------
 //                     COORDINATE VECTOR WITH COORDINATE
@@ -791,14 +791,14 @@ void coord_vec::operator -= (const coord& pt)
 coord_vec coord_vec::operator + (const coord_vec& cv) const
   { coord_vec cvec(*this); cvec+=cv; return cvec; }
 
-void coord_vec::operator += (const coord_vec& cv)
-  { for(int i=0; i<Npts; i++) Pts[i] += cv.Pts[i]; }
+coord_vec& coord_vec::operator += (const coord_vec& cv)
+  { for(int i=0; i<Npts; i++) Pts[i] += cv.Pts[i]; return (*this); }
 
 coord_vec coord_vec::operator - (const coord_vec& cv) const
   { coord_vec cvec(*this); cvec-=cv; return cvec; }
 
-void coord_vec::operator -= (const coord_vec& cv)
-  { for(int i=0; i<Npts; i++) Pts[i] -= cv.Pts[i]; }
+coord_vec& coord_vec::operator -= (const coord_vec& cv)
+  { for(int i=0; i<Npts; i++) Pts[i] -= cv.Pts[i]; return (*this); }
 
 // ____________________________________________________________________________
 // F                  COORDINATE VECTOR GENERAL FUNCTIONS

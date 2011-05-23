@@ -378,11 +378,13 @@ ExchProcM::ExchProcM(const ParameterSet& pset, int ip, int warn)
 //                        Assignment and Destruction
 //---------------------------------------------------------------------------
 
-void ExchProcM::operator=(const ExchProcM& PR)
-  {
+ExchProcM& ExchProcM::operator= (const ExchProcM& PR)
+{
   KRate    = PR.KRate;				// New exchange rate
   Spins    = PR.Spins;				// Copy all spin indices
-  } 
+
+  return (*this);
+} 
 
 ExchProcM::~ExchProcM() { }
 

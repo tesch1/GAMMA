@@ -147,7 +147,7 @@ MSVCDLC ExchProcM(const ParameterSet& pset, int ip=-1, int warn=2);
 //                         Assignment and Destruction
 //---------------------------------------------------------------------------------
 
-MSVCDLL void operator=(const ExchProcM& pr);
+MSVCDLL ExchProcM& operator= (const ExchProcM& pr);
 MSVCDLC      ~ExchProcM();
 
 //________________________________________________________________________________

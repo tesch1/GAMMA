@@ -532,8 +532,8 @@ MSVCDLL void  translate_ip(const coord& del);
 
 MSVCDLL coord operator +  (const coord& del) const;
 MSVCDLL coord operator -  (const coord& del) const;
-MSVCDLL void  operator += (const coord& del);
-MSVCDLL void  operator -= (const coord& del);
+MSVCDLL coord&  operator += (const coord& del);
+MSVCDLL coord&  operator -= (const coord& del);
 
 // ____________________________________________________________________________
 // F                  COORDINATE WITH COORDINATE
@@ -630,9 +630,9 @@ MSVCDLL friend coord cdvect(const coord& pt1, const coord& pt2);
 	
 MSVCDLL friend coord  operator *  (double r, const coord& pt1);
 MSVCDLL coord  operator *  (double r) const;
-MSVCDLL void   operator *= (double r);
+MSVCDLL coord&   operator *= (double r);
 MSVCDLL coord  operator /  (double r) const;
-MSVCDLL void   operator /= (double r);
+MSVCDLL coord&   operator /= (double r);
 
 // ____________________________________________________________________________
 // H                       COORDINATE WITH MATRIX

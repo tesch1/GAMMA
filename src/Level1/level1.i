@@ -1,3 +1,7 @@
 %include "nmr_tensor.i"
 %include "SpinT.i"
-
+%include "coord.i"
+%include "coord_vec.i"
+%include "Exponential.i"
+%include "ExProcessM.i"
+%include "Lorentzian.i"
