@@ -88,7 +88,14 @@ ROOTDIR = ../..
 SRCDIR  = ../../src
 SRCDIR1 = ../../src
 
-SRCDIRINCL_FLAG = -I$(SRCDIR1)
+# Un-comment out these next two lines if using blas, atlas, or lapack,
+# and uncomment one or both of the following two lines
+BLASINCL_FLAG   = -D_USING_BLAS_
+LAPACKINCL_FLAG = -I/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/ -D_USING_LAPACK_
+BLASINCL_FLAG   = 
+LAPACKINCL_FLAG = 
+
+SRCDIRINCL_FLAG = -I$(SRCDIR1) $(BLASINCL_FLAG) $(LAPACKINCL_FLAG)
 
 BINDIR   = ../../mac-darwin
 
@@ -97,17 +104,17 @@ OPTIMIZE = -O2
 
 CC       = gcc
 #CFLAGS  = $(DEBUG)
-CFLAGS   = $(OPTIMIZE)
+CFLAGS   = $(SRCDIRINCL_FLAG) $(OPTIMIZE)
 
 CXX      = c++
 CPPFLAGS = -I../../src
-CXXFLAGS = $(OPTIMIZE)
+CXXFLAGS = $(SRCDIRINCL_FLAG) $(OPTIMIZE)
 
 LIBCPPFLAGS = -I../../src
-LIBCXXFLAGS = $(OPTIMIZE)
+LIBCXXFLAGS = $(SRCDIRINCL_FLAG) $(OPTIMIZE)
 
 SOCPPFLAGS = -I../../src
-SOCXXFLAGS = -fno-common $(OPTIMIZE)
+SOCXXFLAGS = $(SRCDIRINCL_FLAG) -fno-common $(OPTIMIZE)
 
 PYSGCPPINCLFLAGS = 
 PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
@@ -123,6 +130,11 @@ RANLIB   = ranlib
 
 LDCONFIG = /sbin/ldconfig
 
+### un-comment the next four lines if using blas/atls/lapack, 
+# and comment out next line.
+LAPACK_LIBS = 
+BLAS_LIBS  = -framework veclib
+LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
 LAB_LIBS = 
 
 NPD      = --no-print-directory
@@ -546,7 +558,7 @@ $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
 #########################################################################
 
 SO_LDFLAGS = -dynamiclib
-SO_LDLIBS  =
+SO_LDLIBS  = $(LAB_LIBS)
 
 #########################################################################
 #									#
@@ -840,7 +852,7 @@ $(PYSGAMMA_CHK):
 	@echo 
 
 PYS_LDFLAGS = -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup $(PYTHONARCH)
-PYS_LDLIBS   =
+PYS_LDLIBS   = $(LAB_LIBS)
 
 
 ${BINDIR}/$(PYS_NAME): $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK) 
