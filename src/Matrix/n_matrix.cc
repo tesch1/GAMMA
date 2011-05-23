@@ -49,6 +49,10 @@
  #include "gsunperf.h"
 #endif 
 
+#ifdef _USING_LAPACK_
+ #include <clapack.h>
+#endif
+
 // ____________________________________________________________________________
 // i                  CLASS N_MATRIX CHECKING & ERROR HANDLING
 // ____________________________________________________________________________
@@ -3925,7 +3929,7 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
   mxev = new n_matrix(nrows,ncols,complex0); 		// Alocate space for eigenvectors	
   if(test_hermitian())				// See if matrix is Hermitian
     {
-#ifdef _USING_SUNPERFLIB_
+#if defined(_USING_SUNPERFLIB_) || defined(_USING_LAPACK_)
     if(nrows < 16)  // then do it the old fashioned gamma way.
     {
       n_matrix mx2(*this);			// Workspace to diagonalization
@@ -3939,6 +3943,7 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
     else
     {
 	n_matrix* hmx = (n_matrix *)this->transpose();
+#ifdef _USING_SUNPERFLIB_
         char jobz = 'V';  // Calculate "eigenvectors" AND "eigenvalues".
         char uplo = 'U';  // Upper triangular...
         int  N    = nrows;
@@ -3946,7 +3951,26 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
         double *w_eig = new double[N];
         int info = -55555;
         zheev(jobz, uplo, N, (doublecomplex *)hmx->data, lda, w_eig, &info);
-
+#endif
+#ifdef _USING_LAPACK_
+        char jobz = 'V';  // Calculate "eigenvectors" AND "eigenvalues".
+        char uplo = 'U';  // Upper triangular...
+#if defined(__LP64__) /* this is needed on MacOS CLAPACK to make types match*/
+        int  N    = nrows;
+        int  lda  = nrows;
+        int info = -55555;
+        int lwork = 2*N + 10;
+#else
+        long int  N    = nrows;
+        long int  lda  = nrows;
+        long int info = -55555;
+        long int lwork = 2*N + 10;
+#endif
+        double *w_eig = new double[N];
+        complex *work= new complex [2*lwork];
+        double *rwork = new double [3*N-2];
+        zheev_(&jobz, &uplo, &N, (__CLPK_doublecomplex *) hmx->data, &lda, w_eig, (__CLPK_doublecomplex *) work, &lwork, rwork, &info);
+#endif
         if(info == 0)
         { // all is well.
         }
@@ -3970,6 +3994,10 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
         ((n_matrix *)mxev)->unitary = true;		// Eigenvector array is unitary
 	delete [] w_eig;
 	delete hmx;
+#ifdef _USING_LAPACK_
+	delete [] work;
+	delete [] rwork;
+#endif
 //	std::cerr << "nh_matrix diag: using sunperflib code\n";
     }
 #else
@@ -3983,7 +4011,7 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
     }
   else						// Matrix isnt Hermitian
     {
-#ifdef _USING_SUNPERFLIB_
+#if defined(_USING_SUNPERFLIB_) || defined(_USING_LAPACK_)
     if(nrows < 128)  // then do it the old fashioned gamma way.
     {
       n_matrix mx2(*this);			// Workspace to diagonalization
@@ -4000,17 +4028,37 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
     else
     {
 	n_matrix* hmx = (n_matrix *)this->transpose();
+	n_matrix* hmxr = new n_matrix(nrows, ncols);
+#ifdef _USING_SUNPERFLIB_
         char jobvl = 'N';  // Calculate "eigenvectors" AND "eigenvalues".
         char jobvr = 'V';  // Upper triangular...
         int  N    = nrows;
         int  lda  = nrows;
         complex *w_eig = new complex[N];
         int info = -55555;
-//	n_matrix* hmxl =	new n_matrix(nrows, ncols);
-	n_matrix* hmxr =	new n_matrix(nrows, ncols);
-
-        zgeev(jobvl, jobvr, N, (doublecomplex *)hmx->data, lda, (doublecomplex *)w_eig, (doublecomplex *)hmxr->data,N,(doublecomplex *)hmxr->data,N,&info);
-
+        zgeev(jobvl, jobvr, N, (doublecomplex *)hmx->data, lda, (doublecomplex *)w_eig, 
+	      (doublecomplex *)hmxr->data,N,(doublecomplex *)hmxr->data,N,&info);
+#endif
+#ifdef _USING_LAPACK_
+        char jobvl = 'N';  // Calculate "eigenvectors" AND "eigenvalues".
+        char jobvr = 'V';  // Upper triangular...
+#if defined(__LP64__) /* this is needed on MacOS CLAPACK to make types match*/
+        int  N    = nrows;
+        int  lda  = nrows;
+        int info = -55555;
+        int lwork = 2*N + 10;
+#else
+        long int  N    = nrows;
+        long int  lda  = nrows;
+        long int info = -55555;
+        long int lwork = 2*N + 10;
+#endif
+        complex *w_eig = new complex[N];
+        complex *work= new complex [2*lwork];
+	double *rwork = new double [3*N-2];
+        zgeev_(&jobvl, &jobvr, &N, (__CLPK_doublecomplex *)hmx->data, &lda, (__CLPK_doublecomplex *)w_eig,
+	       (__CLPK_doublecomplex *)hmxr->data,&N,(__CLPK_doublecomplex *)hmxr->data,&N,(__CLPK_doublecomplex *) work, &lwork, rwork, &info);
+#endif
         if(info == 0)
         { // all is well.
         }
@@ -4033,8 +4081,11 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
         }
 	delete hmxr;
 	delete hmx;
-//	delete hmxl;
 	delete []  w_eig;
+#ifdef _USING_LAPACK_
+	delete [] work;
+	delete [] rwork;
+#endif
 //	std::cerr << "n_matrix diag: using sunperflib code\n";
     }
 #else

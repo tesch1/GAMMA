@@ -54,16 +54,8 @@
 #endif 
 
 #ifdef _USING_LAPACK_
-// f2c_matrix.h is my own version of f2c.h
-// In it I commented out one line that caused compilation issues,
-// and was not needed for my implementation.
-#include "Matrix/f2c_matrix.h"
-#include "cblas.h"
-extern "C" {
-#include "clapack.h"
-}
+ #include <clapack.h>
 #endif
-
 
 // ____________________________________________________________________________
 // i                    CLASS H_MATRIX ERROR HANDLING
@@ -2872,7 +2864,7 @@ void h_matrix::diag(_matrix* (&D), _matrix* (&U))
 
 {
 
-#ifdef _USING_SUNPERFLIB_
+#if defined(_USING_SUNPERFLIB_) || defined(_USING_LAPACK_)
 
     int nrows = this->rows();
     int ncols = this->cols();
@@ -2890,16 +2882,34 @@ void h_matrix::diag(_matrix* (&D), _matrix* (&U))
 	n_matrix* hmx =	new n_matrix(nrows, ncols);
 	this->convert(hmx);
   	n_matrix* hmx1 = (n_matrix *)hmx->transpose();
-
+#ifdef _USING_SUNPERFLIB_
         char jobz = 'V';  // Calculate "eigenvectors" AND "eigenvalues".
         char uplo = 'U';  // Upper triangular...
         int  N    = nrows;
         int  lda  = nrows;
         double *w_eig = new double[N];
         int info = -55555;
-
         zheev(jobz, uplo, N, (doublecomplex *)hmx1->data, lda, w_eig, &info);
-
+#endif
+#ifdef _USING_LAPACK_
+        char jobz = 'V';  // Calculate "eigenvectors" AND "eigenvalues".
+        char uplo = 'U';  // Upper triangular...
+#if defined(__LP64__) /* this is needed on MacOS CLAPACK to make types match*/
+        int  N    = nrows;
+        int  lda  = nrows;
+        int info = -55555;
+        int lwork = 2*N + 10;
+#else
+        long int  N    = nrows;
+        long int  lda  = nrows;
+        long int info = -55555;
+        long int lwork = 2*N + 10;
+#endif
+        double *w_eig = new double[N];
+        complex *work= new complex [2*lwork];
+        double *rwork = new double [3*N-2];
+        zheev_(&jobz, &uplo, &N, (__CLPK_doublecomplex *) hmx1->data, &lda, w_eig, (__CLPK_doublecomplex *) work, &lwork, rwork, &info);
+#endif
         if(info == 0)
         { // all is well.
         }
@@ -2929,6 +2939,10 @@ void h_matrix::diag(_matrix* (&D), _matrix* (&U))
 	delete hmx;
 	delete hmx1;
 	delete [] w_eig;
+#ifdef _USING_LAPACK_
+	delete [] work;
+	delete [] rwork;
+#endif
 //	std::cerr << "h_matrix diag: using sunperflib code\n";
     }
 #else
