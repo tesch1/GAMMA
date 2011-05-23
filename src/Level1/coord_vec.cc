@@ -392,7 +392,7 @@ coord_vec& coord_vec::operator= (const coord_vec &cvec1)
 	// 			cvec  : Coordinate vector
 	// Output		none  : cvec1 vector identical to cvec
 
-  {
+{
   if(Npts)			// Delete previous points if existing
     {
     delete [] Pts;
@@ -406,7 +406,9 @@ coord_vec& coord_vec::operator= (const coord_vec &cvec1)
     for(int i=0; i<Npts; i++)
       Pts[i] = cvec1.Pts[i];
     }
-  }
+
+  return (*this);
+}
 
 
 // ____________________________________________________________________________
