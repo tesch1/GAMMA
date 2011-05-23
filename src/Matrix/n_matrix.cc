@@ -41,13 +41,13 @@
 #include <vector>			// Include libstdc++ STL vectors
 #include <cmath>			// Inlcude HUGE_VAL_VAL
 
-// Comment out the next line if you do not want BLAS included.
-//#define _USING_BLAS_
-
-
 #ifdef _USING_BLAS_
 #include <cblas.h>
 #endif
+
+#ifdef _USING_SUNPERFLIB_
+ #include "gsunperf.h"
+#endif 
 
 // ____________________________________________________________________________
 // i                  CLASS N_MATRIX CHECKING & ERROR HANDLING
@@ -801,100 +801,29 @@ _matrix* n_matrix::multiply(_matrix* mx)
     {
       case n_matrix_type:				// Multiply n_matrix into n_matrix
       { 
-            static bool printedNotice = false;
-
 #ifdef _USING_BLAS_
-
-			int A_rows = rows();
+            int A_rows = rows();
             int A_cols = cols();            
-
             int B_rows = mx->rows();
             int B_cols = mx->cols();
-
             int C_rows = A_rows;
             int C_cols = B_cols;
-
-            if(printedNotice == false)
-            {
-                // Uncomment out for testing.
-                //std::cout << "\ncblas optimized code\n";
-                printedNotice = true;
-            }
-
-            //NOTE: This should only be used with matrices >= 256 on a side.
-
             n_matrix* pdt =	new n_matrix(C_rows, C_cols);
-
-            if(C_rows * C_cols > 64000)  //256*256 = 65536
+            if(C_rows * C_cols > 16)  //4*4 = 16
             {
-
-                //n_matrix* pdt =	new n_matrix(C_rows, C_cols);
-
-                double *A = new double[2*A_rows*A_cols]; // double the size to handle both real and imaginary components.
-                double *B = new double[2*B_rows*B_cols];
-                double *C = new double[2*C_rows*C_cols];
-
-                // Copy over the A matrix. 
-                // There is probably a much faster way to do this
-                // by directly accessing the mx->data element.. more later.
-                complex abc;
-                for(int i=0; i<A_rows; i++)
-                {
-                    for(int j=0; j<A_cols; j++)
-                    {
-                        abc = get(i,j);
-                        A[2*(i*A_cols + j)]     = Re(abc);
-                        A[2*(i*A_cols + j) + 1] = Im(abc);
-                    }
-                }
-
-                // copy over the B matrix.
-                for(int i=0; i<B_rows; i++)
-                {
-                    for(int j=0; j<B_cols; j++)
-                    {
-                        abc = mx->get(i,j);
-                        B[2*(i*B_cols + j)]     = Re(abc);
-                        B[2*(i*B_cols + j) + 1] = Im(abc);
-                    }
-                }
-
-                int A_stride = A_cols;
-                int B_stride = B_cols;
-                int C_stride = C_cols;
-
                 double alpha[2] = {0,0};
                 double beta[2] = {0,0};
-
                 alpha[0] = 1.0;
                 beta[0]  = 0.0;
-
-			    cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
-                             &alpha, A, A_stride, B, B_stride, &beta, C, C_stride);
-
-                for(int i=0; i<C_rows; i++)
-                {
-                    for(int j=0; j<C_cols; j++)
-                    {
-                        // Here we are I*I
-                        complex cij( C[2*(i*C_cols + j)], C[2*(i*C_cols + j) + 1] );
-                        pdt->data[i*C_cols + j] = cij;
-                    }
-                }    
-
-                delete A;
-                delete B;
-                delete C;
-
+		cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+//              std::cerr << "BLAS: n_matrix * n_matrix\n";
             }
             else
             {
-                // Duplicate of "original" code from n_matrix.multiply() as of 05/11/10.
-
                 int r = rows();					// Rows of product matrix (& of nmx)
                 int c = mx->cols();				// Columns of product matrix (& of mx)
                 int l = cols();					// Inner loop dimension (nmx cols & mx rows)
-                //n_matrix* pdt =	new n_matrix(r,c);		// Create new matrix for product
                 complex *p00 = pdt->data;			// Start of data in pdt matrix
                 complex *n00 = data;				// Start of data in nmx matrix
                 complex *m00 = ((n_matrix*)mx)->data;	 	// Start of data in mx matrix
@@ -915,18 +844,10 @@ _matrix* n_matrix::multiply(_matrix* mx)
                     *pij = z;
                   }
                 }
+//              std::cerr << "NON BLAS: n_matrix * n_matrix\n";
 
             }
-
 #else
-
-        if(printedNotice == false)
-        {
-            // Uncomment out for testing
-            //std::cout << "\nplain old gamma\n";
-            printedNotice = true;
-        }
-
         int r = rows();					// Rows of product matrix (& of nmx)
         int c = mx->cols();				// Columns of product matrix (& of mx)
         int l = cols();					// Inner loop dimension (nmx cols & mx rows)
@@ -951,8 +872,6 @@ _matrix* n_matrix::multiply(_matrix* mx)
             *pij = z;
           }
         }
-
-
 #endif
         return pdt;
         break;
@@ -960,6 +879,62 @@ _matrix* n_matrix::multiply(_matrix* mx)
       
       case h_matrix_type:				// Multiply n_matrix into h_matrix
       {
+#ifdef _USING_BLAS_
+         int A_rows = rows();
+         int A_cols = cols();            
+         int B_rows = mx->rows();
+         int B_cols = mx->cols();
+         int C_rows = A_rows;
+         int C_cols = B_cols;
+
+         int r = rows();					// Rows of product matrix (& of nmx)
+         int c = mx->cols();				// Columns of product matrix (& of mx)
+         n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+
+         if(C_rows * C_cols > 16)  //4*4 = 16
+         {
+            double alpha[2] = {0,0};
+            double beta[2] = {0,0};
+            alpha[0] = 1.0;
+            beta[0]  = 0.0;
+            n_matrix* hmx =	new n_matrix(B_rows,B_cols);		// Create new matrix h_matrix
+            mx->convert(hmx);				// Convert h_matrix mx into normal matrix hmx
+//          cblas_zhemm(CblasRowMajor, CblasRight, CblasUpper, B_rows, A_cols, 
+//                           &alpha, hmx->data, B_cols, data, A_cols, &beta, pdt->data, C_cols);
+	    cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, hmx->data, B_cols, &beta, pdt->data, C_cols);
+//          std::cerr << "BLAS: n_matrix * h_matrix\n";
+	    delete hmx;
+         }
+         else
+         { int l = cols();					// Inner loop dimension (nmx cols & mx rows)
+           n_matrix* hmx =	new n_matrix(c,c);		// Create new matrix h_matrix
+           mx->convert(hmx);				// Convert h_matrix mx into normal matrix hmx
+           complex *p00 = pdt->data;			// Start of data in pdt matrix
+           complex *n00 = data;				// Start of data in nmx matrix
+           // sosi- looks like should be h_matrix below, fix & retest
+           complex *h00 = ((n_matrix*)hmx)->data; 		// Start of data in hmx matrix
+           complex *pend = p00 + r*c;			// End of data in pdt matrix
+           complex *h0c = h00 + c;				// End of first row data in mx matrix
+           // sosi- looks like next line is wrong also
+           complex *hend = h00 + c*l;			// End of data in mx matrix
+           complex *nik = n00;				// Index for <i|nmx|k> set to <0|nmx|0>
+           complex *pij, *ni0, *h0j, *hkj;
+           complex z;					// Intermediate storage for <i|pdt|j>
+           for(pij=p00, ni0=n00; pij<pend; ni0=nik)	// Effective sum over index i
+           {
+             for(h0j=h00; h0j<h0c; h0j++, pij++)		// Effective sum over index j
+             {						// Effective sum over index k 
+              for(z=0,nik=ni0,hkj=h0j; hkj<hend; nik++,hkj+=c)
+                 z += (*nik) * (*hkj);			// pij += <i|nmx|k><k|hmx|j>
+               // sosi- looks incorrect? How does this work at all?
+               *pij = z;
+               }
+           }
+           delete hmx;					// Get rid of temporary hmx as n_matrix
+//         std::cerr << "NON BLAS: n_matrix * h_matrix\n";
+	 }
+#else
         int r = rows();					// Rows of product matrix (& of nmx)
         int c = mx->cols();				// Columns of product matrix (& of mx)
         n_matrix* hmx =	new n_matrix(c,c);		// Create new matrix h_matrix
@@ -987,7 +962,8 @@ _matrix* n_matrix::multiply(_matrix* mx)
             *pij = z;
             }
         }
-        delete hmx;					// Get rid of temporary hmx as n_matrix
+        delete hmx;	  				// Get rid of temporary hmx as n_matrix
+#endif
         return pdt;
         break;
 	  }
@@ -1006,6 +982,7 @@ _matrix* n_matrix::multiply(_matrix* mx)
         for(pij=p00, ni0=n00; pij<pend; ni0+=c)		// Effective loop over i
           for(dij=d00,nij=ni0; dij<dend; nij++,pij++,dij++)	// Effective loop over j
             *pij = *nij * *dij;				// <i|pdt|j> = <i|nmx|j><j|dmx|j>
+//      std::cerr << "NON BLAS: n_matrix * d_matrix\n";
         return pdt;
         break;
       }
@@ -1018,6 +995,39 @@ _matrix* n_matrix::multiply(_matrix* mx)
       
       default:						// Multiply generic matrix into n_matrix
       { 						// Cannot use mx internal structure here
+#ifdef _USING_BLAS_
+        int A_rows = rows();
+        int A_cols = cols();            
+        int B_rows = mx->rows();
+        int B_cols = mx->cols();
+        int C_rows = A_rows;
+        int C_cols = B_cols;
+        n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+        if(C_rows * C_cols > 16)  //4*4 = 16
+        {
+          double alpha[2] = {0,0};
+          double beta[2] = {0,0};
+          alpha[0] = 1.0;
+          beta[0]  = 0.0;
+          cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+//        std::cerr << "BLAS: n_matrix * unknown\n";
+        }
+        else
+        {
+         // Duplicate of "original" code from n_matrix.multiply() as of 05/11/10.
+          n_matrix* pdt =					// First construct ne normal matrix
+          new n_matrix(rows(),mx->cols(),complex0);
+  
+          int pos = 0;					// Position of 1st element in pdt
+          int pos1 = 0;					// Position of 1st element in nmx
+          for(int i=0;  i<pdt->rows(); i++, pos1+=cols())	// Loop over the rows of nmx (&pdt) 
+            for(int j=0; j<pdt->cols(); j++,pos++)	// Loop over the columns mx (&pdt)
+              for(int k=0; k<cols(); k++)			// Loop over the inner index
+                    pdt->data[pos] += this->data[pos1+k]*(*mx)(k,j);                  
+//      std::cerr << "NON BLAS: n_matrix * unknown\n";
+        }
+#else
         n_matrix* pdt =					// First construct ne normal matrix
         new n_matrix(rows(),mx->cols(),complex0);
         int pos = 0;					// Position of 1st element in pdt
@@ -1026,6 +1036,7 @@ _matrix* n_matrix::multiply(_matrix* mx)
           for(int j=0; j<pdt->cols(); j++,pos++)	// Loop over the columns mx (&pdt)
             for(int k=0; k<cols(); k++)			// Loop over the inner index
                   pdt->data[pos] += this->data[pos1+k]*(*mx)(k,j);                  
+#endif
         return pdt;
 	  }
     }
@@ -1605,6 +1616,47 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
       {
       case n_matrix_type:				// Multiply n_matrix adjoint into n_matrix
 	{ 
+#ifdef _USING_BLAS_
+            int A_rows = rows();
+            int A_cols = cols();            
+            int B_rows = mx->rows();
+            int B_cols = mx->cols();
+            int C_rows = A_rows;
+            int C_cols = B_cols;
+            n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+            if(C_rows * C_cols > 16)  //4*4 = 16
+            {
+                double alpha[2] = {0,0};
+                double beta[2] = {0,0};
+                alpha[0] = 1.0;
+                beta[0]  = 0.0;
+		cblas_zgemm(CblasRowMajor, CblasConjTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+//              std::cerr << "BLAS: n_matrix * n_matrix\n";
+            }
+            else
+            {
+	      int r = cols_;					// Rows of product matrix = cols of nmx 
+	      int c = mx->cols();				// Columns of created matrix = cols of mx
+	      int l = rows_;					// Dimension of inner loop
+	      complex *p00 = pdt->data;			// Start of data of pdt
+	      complex *n00 = data;				// Start of data of nmx
+	      complex *m00 = ((n_matrix*)mx)->data;		// Start of data of mx
+	      complex *pend = p00 + r*(mx->cols());		// End of data in pdt
+	      complex *mend = m00 + c*l;			// End of data in mx
+	      complex *m0r = m00 + c;				// End of first row in mx
+	      complex *pij, *nki=n00, *mkj, *m0k, *n0i;
+	      complex z;					// Intermediate storage of <i|pdt|j>
+	      for(pij=p00, n0i=n00; pij<pend; n0i++)		// Effective loop over i
+	        for(m0k=m00; m0k<m0r; m0k++, pij++)		// Effective loop over j
+	          {
+	          for(z=0,mkj=m0k,nki=n0i;			// Effective loop over k
+                            mkj<mend; nki+=r, mkj+=c)
+	            z += conj(*nki,*mkj);			// z += <k|nmx*|i><k|mx|j>
+	          *pij = z;
+	          }
+	    }
+#else
 	int r = cols_;					// Rows of product matrix = cols of nmx 
 	int c = mx->cols();				// Columns of created matrix = cols of mx
 	int l = rows_;					// Dimension of inner loop
@@ -1625,6 +1677,7 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
 	      z += conj(*nki,*mkj);			// z += <k|nmx*|i><k|mx|j>
 	    *pij = z;
 	    }
+#endif
 	  return pdt;
 	}
 	break;
@@ -1649,6 +1702,57 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
 	break;
       case h_matrix_type:				// Multiply n_matrix adjoint into h_matrix
 	{ 
+#ifdef _USING_BLAS_
+         int A_rows = rows();
+         int A_cols = cols();            
+         int B_rows = mx->rows();
+         int B_cols = mx->cols();
+         int C_rows = A_rows;
+         int C_cols = B_cols;
+
+         int r = rows();					// Rows of product matrix (& of nmx)
+         int c = mx->cols();				// Columns of product matrix (& of mx)
+         n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+
+         if(C_rows * C_cols > 16)  //4*4 = 16
+         {
+            double alpha[2] = {0,0};
+            double beta[2] = {0,0};
+            alpha[0] = 1.0;
+            beta[0]  = 0.0;
+            n_matrix* hmx =	new n_matrix(B_rows,B_cols);		// Create new matrix h_matrix
+            mx->convert(hmx);				// Convert h_matrix mx into normal matrix hmx
+//          cblas_zhemm(CblasRowMajor, CblasRight, CblasUpper, B_rows, A_cols, 
+//                           &alpha, hmx->data, B_cols, data, A_cols, &beta, pdt->data, C_cols);
+	    cblas_zgemm(CblasRowMajor, CblasConjTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, hmx->data, B_cols, &beta, pdt->data, C_cols);
+//          std::cerr << "BLAS: n_matrix * h_matrix\n";
+	    delete hmx;
+         }
+         else
+         {
+	   complex *p00 = pdt->data;			// Start of data in pdt: <0|pdt|0>
+	   complex *n00 = data;				// Start of data in nmx: <0|nmx|0>
+	   complex *n10 = n00 + cols_;			// End of 1st nmx row: <1|nmx|0>
+	   complex *h00 = ((h_matrix*)mx)->data;		// Start of data in hmx: <0|hmx|0>
+	   complex *h11 = h00 + rows_;			// End of 1st hmx row: <1|hmx|1>
+	   complex *pij,*nki,*n0i,*hjk,*hkj,*h0j,*hjj;	// These are the matrix elements
+           int hrow;
+	   for(pij=p00,n0i=n00; n0i<n10; n0i++)		// Effective loop over i (via n0i)
+	     for(h0j=h00,hjj=h00; h0j<h11; pij++,h0j++)	// Effective loop over j (via h0j)
+               {
+               *pij = complex0;				// Initialize pij: <i|pdt|j> = 0
+               nki = n0i;					// Set <k|nmx|i> = <0|nmx|i>
+               hkj = h0j;					// Set <k|hmx|j> = <0|hmx|j>
+               hrow = rows_;				// Row length of hmx
+	       for( ; hkj<hjj; nki+=cols_,hrow--,hkj+=hrow)// Loop over the internal index, k<j (via hkj) 
+	         (*pij) += conj(*nki, *hkj);		// <i|pdt|j> += <k|nmx*|i><k|hmx|j>
+               hjj += hrow; 				// <j|hmx|j> -> <j+1|hmx|j+1>
+	       for(hjk=hkj; hjk<hjj; nki+=cols_,hjk++)	// Continue loop over the internal index, k>=j 
+	         (*pij) += conj(*nki) * conj(*hjk);	// <i|pdt|j> += <k|nmx*|i><j|hmx*|k>
+               }
+         }
+#else
 	n_matrix* pdt = new n_matrix(cols_,rows_);	// Create a new n_matrix, initialized to zero
 	complex *p00 = pdt->data;			// Start of data in pdt: <0|pdt|0>
 	complex *n00 = data;				// Start of data in nmx: <0|nmx|0>
@@ -1670,11 +1774,44 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
 	    for(hjk=hkj; hjk<hjj; nki+=cols_,hjk++)	// Continue loop over the internal index, k>=j 
 	      (*pij) += conj(*nki) * conj(*hjk);	// <i|pdt|j> += <k|nmx*|i><j|hmx*|k>
             }
+#endif
 	return pdt;
         }
         break;
       default:						// Multiply n_matrix adjoint into generic matrix
 	{ 
+#ifdef _USING_BLAS_
+        int A_rows = rows();
+        int A_cols = cols();            
+        int B_rows = mx->rows();
+        int B_cols = mx->cols();
+        int C_rows = A_rows;
+        int C_cols = B_cols;
+        n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+        if(C_rows * C_cols > 16)  //4*4 = 16
+        {
+          double alpha[2] = {0,0};
+          double beta[2] = {0,0};
+          alpha[0] = 1.0;
+          beta[0]  = 0.0;
+          cblas_zgemm(CblasRowMajor, CblasConjTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+//        std::cerr << "BLAS: n_matrix * unknown\n";
+        }
+        else
+        {
+  	  int c = mx->cols();				// Columns of created matrix = cols of mx
+	  complex *p00 = pdt->data;			// Start of data in pdt: <0|pdt|0>
+	  complex *n00 = data;				// Start of data in nmx: <0|nmx|0>
+	  complex *pij, *nki, *n0i;			// These are the matrix elements
+          int i,j,k;
+	  for(i=0,pij=p00,n0i=n00; i<cols_; i++,n0i++)	// Loop over all the rows of pdt
+	    for(j=0; j<c; j++,pij++)			// Loop over all the columns of pdt
+	      for(k=0,nki=n0i; k<rows_; k++,nki+=cols_)	// Loop over the internal index 
+	        (*pij) += conj(*nki, (*mx)(k,j));		// <i|pdt|j> += <k|nmx*|i><k|mx|j>
+
+        }
+#else
 	int c = mx->cols();				// Columns of created matrix = cols of mx
 	n_matrix* pdt = new n_matrix(cols_,c,complex0);	// Create a new n_matrix, initialized to zero
 	complex *p00 = pdt->data;			// Start of data in pdt: <0|pdt|0>
@@ -1685,6 +1822,7 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
 	  for(j=0; j<c; j++,pij++)			// Loop over all the columns of pdt
 	    for(k=0,nki=n0i; k<rows_; k++,nki+=cols_)	// Loop over the internal index 
 	      (*pij) += conj(*nki, (*mx)(k,j));		// <i|pdt|j> += <k|nmx*|i><k|mx|j>
+#endif
 	return pdt;
 	}
       }
@@ -1725,6 +1863,45 @@ _matrix* n_matrix::times_adjoint(_matrix* mx)
       {
       case n_matrix_type:		  	// Multiply n_matrix into n_matrix adjoint
 	{ 
+#ifdef _USING_BLAS_
+            int A_rows = rows();
+            int A_cols = cols();            
+            int B_rows = mx->rows();
+            int B_cols = mx->cols();
+            int C_rows = A_rows;
+            int C_cols = B_cols;
+            n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+            if(C_rows * C_cols > 16)  //4*4 = 16
+            {
+                double alpha[2] = {0,0};
+                double beta[2] = {0,0};
+                alpha[0] = 1.0;
+                beta[0]  = 0.0;
+		cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasConjTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+//              std::cerr << "BLAS: n_matrix * n_matrix\n";
+            }
+            else
+            {
+	      int c = mx->rows();			// Columns of product matrix
+	      int l = cols_;				// Dimension of inner loop
+	      complex *p00 = pdt->data;		// Start of data in pdt: <0|pdt|0>
+	      complex *n00 = data;			// Start of data in nmx: <0|nmx|0>
+	      complex *m00 = ((n_matrix*)mx)->data;	// Start of data in mx: <0|mx|0>
+	      complex *pend = p00 + rows_*c;		// End of data in pdt: <rows_|pdt|c+1>
+	      complex *mend = m00 + c*cols_;		// End of data in mx: <c|mx|cols_+1>
+	      complex *pij, *nik=n00, *ni0, *mjk, *mj0;
+	      complex z;				// Intermediate storage
+	      for(pij=p00, ni0=n00; pij<pend; ni0+=l)	// Effective loop over i
+	        for(mj0=m00; mj0<mend; mj0+=l, pij++)	// Effective loop over j
+                {
+	          for(z=0, nik=ni0+l-1, mjk=mj0+l-1;	// Effective loop over k
+                               nik>=ni0; nik--,mjk--)
+	            z += conj(*mjk, *nik);		// <i|pij|j> += <i|nmx|k><j|mx*|k>
+	          *pij = z;
+	        }
+	    }
+#else
 	int c = mx->rows();			// Columns of product matrix
 	int l = cols_;				// Dimension of inner loop
 	n_matrix* pdt = new n_matrix(rows_,c);	// Create a new n_matrix for result
@@ -1743,6 +1920,7 @@ _matrix* n_matrix::times_adjoint(_matrix* mx)
 	      z += conj(*mjk, *nik);		// <i|pij|j> += <i|nmx|k><j|mx*|k>
 	    *pij = z;
 	    }
+#endif
 	return pdt;
 	}
 	break;
@@ -1772,6 +1950,35 @@ _matrix* n_matrix::times_adjoint(_matrix* mx)
 	break;
       default:						// Multiply n_matrix into generic matrix adjoint
 	{ 
+#ifdef _USING_BLAS_
+        int A_rows = rows();
+        int A_cols = cols();            
+        int B_rows = mx->rows();
+        int B_cols = mx->cols();
+        int C_rows = A_rows;
+        int C_cols = B_cols;
+        n_matrix* pdt =	new n_matrix(C_rows, C_cols);
+        if(C_rows * C_cols > 16)  //4*4 = 16
+        {
+          double alpha[2] = {0,0};
+          double beta[2] = {0,0};
+          alpha[0] = 1.0;
+          beta[0]  = 0.0;
+          cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasConjTrans, A_rows, B_cols, A_cols, 
+                             &alpha, data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+//        std::cerr << "BLAS: n_matrix * unknown\n";
+        }
+        else
+        {
+	int pos = 0;					// Index for pdt, set to 0 = <0|pdt|0>
+	for(int i=0; i<rows_; i++)			// Loop over the rows of pdt
+	  for(int j=0; j<pdt->cols(); j++,pos++)	// Loop over the columns of pdt
+	    for(int k=0; k<cols_; k++)			// Loop over the index k
+	      pdt->data[pos] += 			// <i|pdt|j> += <i|nmx|k><j|mx*|k>
+                 conj((*mx)(j,k),(*this)(i,k));
+
+	}
+#else
 	n_matrix* pdt =					// Construct new n_matrix, filled with 0's
           new n_matrix(rows_,mx->cols(),complex0);
 	int pos = 0;					// Index for pdt, set to 0 = <0|pdt|0>
@@ -1780,6 +1987,7 @@ _matrix* n_matrix::times_adjoint(_matrix* mx)
 	    for(int k=0; k<cols_; k++)			// Loop over the index k
 	      pdt->data[pos] += 			// <i|pdt|j> += <i|nmx|k><j|mx*|k>
                  conj((*mx)(j,k),(*this)(i,k));
+#endif
 	return pdt;
 	}
       }
@@ -3699,9 +3907,7 @@ int n_matrix::comqr3(int low,int igh,
 //        so that the pointers to mxd and mxev keep their types properly
 //	  but most other functions have no problem with it anyway......
 
-//void n_matrix::diag(_matrix* &mx, _matrix* &mx1)
 void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
-//void n_matrix::diag(_matrix* mxd, _matrix* mxev)
 
         // Input        nmx     : A normal complex array, n_matrix (this)
         //              mxd     : Pointer to mx to become diagonal mx
@@ -3713,39 +3919,136 @@ void n_matrix::diag(_matrix* (&mxd), _matrix* (&mxev))
         //                        incremented external by the call origin.
 
   {
-  n_matrix mx2(*this);				// Workspace to diagonalization
-  int n=rows();					// Matrix dimension
-  mxd  = new d_matrix(n,n);			// Alocate space for eigenvalues
-  mxev = new n_matrix(n,n,complex0); 		// Alocate space for eigenvectors	
+  int nrows = this->rows();
+  int ncols = this->cols();
+  mxd  = new d_matrix(nrows,ncols);			// Alocate space for eigenvalues
+  mxev = new n_matrix(nrows,ncols,complex0); 		// Alocate space for eigenvectors	
   if(test_hermitian())				// See if matrix is Hermitian
     {
-//    mx2.cred(mxev);				// To Hermitian tridiagonal form
-//    mx2.rred(mxev);				// To real symm. tridiagonal form
-//    mx2.tqli(mxev, mxd);			// To diagonal form
+#ifdef _USING_SUNPERFLIB_
+    if(nrows < 16)  // then do it the old fashioned gamma way.
+    {
+      n_matrix mx2(*this);			// Workspace to diagonalization
+      mx2.cred(*(n_matrix *)mxev);		// To Hermitian tridiagonal form
+      mx2.rred(*(n_matrix *)mxev);		// To real symm. tridiagonal form
+      mx2.tqli(*(n_matrix *)mxev, 		// To diagonal form
+                      *(d_matrix *)mxd);	
+      ((n_matrix *)mxev)->unitary = true;		// Eigenvector array is unitary
+//    std::cerr << "nh_matrix diag: using gamma code\n";
+    }
+    else
+    {
+	n_matrix* hmx = (n_matrix *)this->transpose();
+        char jobz = 'V';  // Calculate "eigenvectors" AND "eigenvalues".
+        char uplo = 'U';  // Upper triangular...
+        int  N    = nrows;
+        int  lda  = nrows;
+        double *w_eig = new double[N];
+        int info = -55555;
+        zheev(jobz, uplo, N, (doublecomplex *)hmx->data, lda, w_eig, &info);
+
+        if(info == 0)
+        { // all is well.
+        }
+        else if (info > 0)
+        { std::cerr << "\nDiagonalization failed to converge\n";
+        }
+        else if(info == -55555)
+        { std::cerr << "\nReturn value, 'info', does not appear to have been set\n";
+        }
+        else
+        { std::cerr << "\ninfo = " << info << "\n";
+        }
+        // Copy results back into mxd and mxev.
+	complex *hmxp = hmx->data;
+        for(int i=0; i<nrows; i++)
+        { ((d_matrix *)mxd)->put( w_eig[i], i, i);
+          for(int j=0; j<ncols; j++)
+          { ((n_matrix *)mxev)->put(hmxp[j*nrows+i], i, j);
+          }
+        }
+        ((n_matrix *)mxev)->unitary = true;		// Eigenvector array is unitary
+	delete [] w_eig;
+	delete hmx;
+//	std::cerr << "nh_matrix diag: using sunperflib code\n";
+    }
+#else
+    n_matrix mx2(*this);			// Workspace to diagonalization
     mx2.cred(*(n_matrix *)mxev);		// To Hermitian tridiagonal form
     mx2.rred(*(n_matrix *)mxev);		// To real symm. tridiagonal form
     mx2.tqli(*(n_matrix *)mxev, 		// To diagonal form
                       *(d_matrix *)mxd);	
     ((n_matrix *)mxev)->unitary = true;		// Eigenvector array is unitary
-//    mx2.cred(*(n_matrix *)mx1);		// To Hermitian tridiagonal form
-//    mx2.rred(*(n_matrix *)mx1);		// To real symm. tridiagonal form
-//    mx2.tqli(*(n_matrix *)mx1, 		// To diagonal form
-//                      *(d_matrix *)mx);	
+#endif
     }
   else						// Matrix isnt Hermitian
     {
-    complex *tmp = mx2.corth(0,n-1);		// To upper Hessenberg form
-//    int err = mx2.comqr3(1,n,tmp,*mxd,*mxev,1); // To diagonal form
-    int err = mx2.comqr3(1, n, tmp,		// To diagonal form
+#ifdef _USING_SUNPERFLIB_
+    if(nrows < 128)  // then do it the old fashioned gamma way.
+    {
+      n_matrix mx2(*this);			// Workspace to diagonalization
+      complex *tmp = mx2.corth(0,nrows-1);		// To upper Hessenberg form
+      int err = mx2.comqr3(1, nrows, tmp,		// To diagonal form
+          *(d_matrix*)mxd,*(n_matrix*)mxev, 1);
+      if(err != 0)
+      { NMxerror(29,1);				// Too many iterations
+        NMxfatal(28);				// Unable to diagonalize
+      }						// Almost surely bad input
+      delete [] tmp;				// Delete tmp array from corth
+//    std::cerr << "n_matrix diag: using gamma code\n";
+    }
+    else
+    {
+	n_matrix* hmx = (n_matrix *)this->transpose();
+        char jobvl = 'N';  // Calculate "eigenvectors" AND "eigenvalues".
+        char jobvr = 'V';  // Upper triangular...
+        int  N    = nrows;
+        int  lda  = nrows;
+        complex *w_eig = new complex[N];
+        int info = -55555;
+//	n_matrix* hmxl =	new n_matrix(nrows, ncols);
+	n_matrix* hmxr =	new n_matrix(nrows, ncols);
+
+        zgeev(jobvl, jobvr, N, (doublecomplex *)hmx->data, lda, (doublecomplex *)w_eig, (doublecomplex *)hmxr->data,N,(doublecomplex *)hmxr->data,N,&info);
+
+        if(info == 0)
+        { // all is well.
+        }
+        else if (info > 0)
+        { std::cerr << "\nDiagonalization failed to converge\n";
+        }
+        else if(info == -55555)
+        { std::cerr << "\nReturn value, 'info', does not appear to have been set\n";
+        }
+        else
+        { std::cerr << "\ninfo = " << info << "\n";
+        }
+        // Copy results back into mxd and mxev.
+	complex *hmxp = hmxr->data;
+        for(int i=0; i<nrows; i++)
+        { mxd->put( w_eig[i], i, i);
+          for(int j=0; j<ncols; j++)
+          { mxev->put(hmxp[j*nrows+i], i, j);
+          }
+        }
+	delete hmxr;
+	delete hmx;
+//	delete hmxl;
+	delete []  w_eig;
+//	std::cerr << "n_matrix diag: using sunperflib code\n";
+    }
+#else
+    n_matrix mx2(*this);			// Workspace to diagonalization
+    complex *tmp = mx2.corth(0,nrows-1);		// To upper Hessenberg form
+    int err = mx2.comqr3(1, nrows, tmp,		// To diagonal form
         *(d_matrix*)mxd,*(n_matrix*)mxev, 1);
-//    int err = mx2.comqr3(1, n, tmp,		// To diagonal form
-//        *(d_matrix*)mx,*(n_matrix*)mx1, 1);
     if(err != 0)
        {
        NMxerror(29,1);				// Too many iterations
        NMxfatal(28);				// Unable to diagonalize
        }					// Almost surely bad input
     delete [] tmp;				// Delete tmp array from corth
+#endif
     }
   }
 
