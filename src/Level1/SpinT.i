@@ -216,7 +216,7 @@ spin_op component(int l, int m);
 //friend spin_op T_mult(spin_T &SphT1, spin_T &SphT2, int L, int M);
 //friend spin_T T_rot(spin_T &SphT1, double alpha, double beta, double gamma);
 //friend spin_op T_rot(spin_T &SphT1, int l, int m,
-			 double alpha, double beta, double gamma);
+//			 double alpha, double beta, double gamma);
 
 spin_T rotate(double alpha, double beta, double gamma);
 

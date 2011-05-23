@@ -190,7 +190,7 @@ ALLMODHDRS += $(LEVEL1HDR)
 ALLPYFILES += $(LEVEL1PY) 
 LEVEL1TBAS  = TestLevel1
 
-LEVEL1_IBASE  = level1 nmr_tensor
+LEVEL1_IBASE  = level1 nmr_tensor SpinT
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(LEVEL1)/, $(LEVEL1_IBASE)))
 
 ###############################################################################
