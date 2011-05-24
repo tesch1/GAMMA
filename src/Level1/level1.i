@@ -6,3 +6,6 @@
 %include "ExProcessM.i"
 %include "Lorentzian.i"
 %include "SpaceT.i"
+%include "SphHarmic.i"
+%include "Wigner.i"
+%include "WindowFct.i"

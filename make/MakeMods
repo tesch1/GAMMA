@@ -190,8 +190,8 @@ ALLMODHDRS += $(LEVEL1HDR)
 ALLPYFILES += $(LEVEL1PY) 
 LEVEL1TBAS  = TestLevel1
 
-LEVEL1_IBASE  = level1 nmr_tensor SpinT SpaceT coord coord_vec Exponential\
-                ExProcessM Lorentzian
+LEVEL1_IBASE  = level1 nmr_tensor SpinT SpaceT coord coord_vec SphHarmic\
+                Exponential ExProcessM Lorentzian Wigner WindowFct
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(LEVEL1)/, $(LEVEL1_IBASE)))
 
 ###############################################################################
