@@ -92,8 +92,8 @@ SRCDIR1 = ../../src
 # and uncomment one or both of the following two lines
 BLASINCL_FLAG   = -D_USING_BLAS_
 LAPACKINCL_FLAG = -I/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/ -D_USING_LAPACK_
-# BLASINCL_FLAG   = 
-# LAPACKINCL_FLAG = 
+BLASINCL_FLAG   = 
+LAPACKINCL_FLAG = 
 
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(BLASINCL_FLAG) $(LAPACKINCL_FLAG)
 
@@ -135,7 +135,7 @@ LDCONFIG = /sbin/ldconfig
 LAPACK_LIBS = 
 BLAS_LIBS  = -framework veclib
 LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
-# LAB_LIBS = 
+LAB_LIBS = 
 
 NPD      = --no-print-directory
 
