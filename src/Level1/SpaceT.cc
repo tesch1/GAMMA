@@ -415,7 +415,7 @@ space_T::~space_T()
 
 // ********************** Tensors with Tensors **************************
 
-void space_T::operator = (const space_T &SphT)
+space_T& space_T::operator = (const space_T &SphT)
 
 	// Input		SphT : spatial tensor
 	// Return		SphT1: spatial tensor equivalent to the
@@ -423,7 +423,7 @@ void space_T::operator = (const space_T &SphT)
 
   {
   int l = 0;
-  if(this == &SphT) return;		// Check if already equal
+  if(this == &SphT) return *this;		// Check if already equal
   if(SphT.vx)				// Input Tensor exists
     {
     if(vx)				// Initially zero output Tensor
@@ -460,7 +460,7 @@ void space_T::operator = (const space_T &SphT)
       vx = NULL;
       }
     }
-  return;
+  return *this;
   }
 
 

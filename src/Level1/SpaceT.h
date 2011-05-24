@@ -260,7 +260,7 @@ MSVCDLC virtual ~space_T();
 // ______________________________________________________________________
 
 
-MSVCDLL virtual void operator = (const space_T &SphT);
+MSVCDLL virtual space_T& operator = (const space_T &SphT);
 	// Input		SphT : spatial tensor
 	// Return		SphT1: spatial tensor equivalent to the
         //	                       input spatial tensor

@@ -5,3 +5,4 @@
 %include "Exponential.i"
 %include "ExProcessM.i"
 %include "Lorentzian.i"
+%include "SpaceT.i"
