@@ -46,7 +46,13 @@
 #include <stdlib.h>
 
 #ifdef _USING_BLAS_
+  #ifdef _USING_GOTOBLAS2_
+  extern "C"{
+  #endif
   #include <cblas.h>
+  #ifdef _USING_GOTOBLAS2_
+  }
+  #endif
 #endif
 
 #ifdef _USING_SUNPERFLIB_
@@ -55,6 +61,18 @@
 
 #ifdef _USING_LAPACK_
  #include <clapack.h>
+#endif
+
+#ifdef _USING_GOTOBLAS2_
+ #define _USING_LAPACK_
+ #define __CLPK_doublecomplex double
+extern "C"
+{ extern void zgeev_(const char*, const char*, const int*, __CLPK_doublecomplex *, const int*,
+                     __CLPK_doublecomplex*, __CLPK_doublecomplex*, const int*, __CLPK_doublecomplex*,
+                     const int*, __CLPK_doublecomplex*, const int*, double*, int*); 
+  extern void zheev_(const char*, const char*, const int*, __CLPK_doublecomplex*, const int*,
+                     double*, __CLPK_doublecomplex*, const int*, double*, int*);
+}
 #endif
 
 // ____________________________________________________________________________
@@ -914,9 +932,7 @@ _matrix* h_matrix::multiply(_matrix* mx)
         this->convert(hmxA);				// Convert h_matrix mx into normal matrix hmx
         mx->convert(hmxB);				// Convert h_matrix mx into normal matrix hmx
         cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
-                         &alpha, hmxA->data, A_cols, hmxB->data, B_cols, &beta, pdt->data, C_cols);
-//      cblas_zhemm(CblasRowMajor, CblasLeft, CblasUpper, A_rows, B_cols, 
-//                      &alpha, hmxA->data, A_cols, hmxB->data, B_cols, &beta, pdt->data, C_cols);
+                         alpha, (double *)hmxA->data, A_cols, (double *)hmxB->data, B_cols, beta, (double *)pdt->data, C_cols);
 //      std::cerr << "BLAS: h_matrix * h_matrix\n";
         delete hmxA;
         delete hmxB;
@@ -1012,9 +1028,7 @@ _matrix* h_matrix::multiply(_matrix* mx)
           n_matrix* hmxA =	new n_matrix(A_rows,A_cols);		// Create new matrix h_matrix
           this->convert(hmxA);				// Convert h_matrix mx into normal matrix hmx
 	  cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
-                           &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
-//        cblas_zhemm(CblasRowMajor, CblasLeft, CblasUpper, A_rows, B_cols, 
-//                        &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+                           alpha, (double *)hmxA->data, A_cols, (double *)((n_matrix*)mx)->data, B_cols, beta, (double *)pdt->data, C_cols);
 //        std::cerr << "BLAS: h_matrix * n_matrix\n";
 	  delete hmxA;
         }
@@ -1103,9 +1117,7 @@ _matrix* h_matrix::multiply(_matrix* mx)
           n_matrix* hmxA =	new n_matrix(A_rows,A_cols);		// Create new matrix h_matrix
           this->convert(hmxA);				// Convert h_matrix mx into normal matrix hmx
 	  cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, A_rows, B_cols, A_cols, 
-                           &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
-//        cblas_zhemm(CblasRowMajor, CblasLeft, CblasUpper, A_rows, B_cols, 
-//                        &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+                           alpha, (double *)hmxA->data, A_cols, (double *)((n_matrix*)mx)->data, B_cols, beta, (double *)pdt->data, C_cols);
 //        std::cerr << "BLAS: h_matrix * unknown\n";
 	  delete hmxA;
         }
@@ -1855,9 +1867,7 @@ _matrix* h_matrix::times_adjoint(_matrix* mx)
           n_matrix* hmxA =	new n_matrix(A_rows,A_cols);		// Create new matrix h_matrix
           this->convert(hmxA);				// Convert h_matrix mx into normal matrix hmx
 	  cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasConjTrans, A_rows, B_cols, A_cols, 
-                           &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
-//        cblas_zhemm(CblasRowMajor, CblasLeft, CblasUpper, A_rows, B_cols, 
-//                        &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+                           alpha, (double *)hmxA->data, A_cols, (double *)((n_matrix*)mx)->data, B_cols, beta, (double *)pdt->data, C_cols);
 //        std::cerr << "BLAS: h_matrix * n_matrix\n";
 	  delete hmxA;
         }
@@ -1960,9 +1970,7 @@ _matrix* h_matrix::times_adjoint(_matrix* mx)
           n_matrix* hmxA =	new n_matrix(A_rows,A_cols);		// Create new matrix h_matrix
           this->convert(hmxA);				// Convert h_matrix mx into normal matrix hmx
 	  cblas_zgemm(CblasRowMajor, CblasNoTrans, CblasConjTrans, A_rows, B_cols, A_cols, 
-                           &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
-//        cblas_zhemm(CblasRowMajor, CblasLeft, CblasUpper, A_rows, B_cols, 
-//                        &alpha, hmxA->data, A_cols, ((n_matrix*)mx)->data, B_cols, &beta, pdt->data, C_cols);
+                           alpha, (double *)hmxA->data, A_cols, (double *)((n_matrix*)mx)->data, B_cols, beta, (double *)pdt->data, C_cols);
 //        std::cerr << "BLAS: h_matrix * unknown\n";
 	  delete hmxA;
         }
