@@ -88,10 +88,11 @@ ROOTDIR = ../..
 SRCDIR  = ../../src
 SRCDIR1 = ../../src
 
-# Un-comment out these next two lines if using blas, atlas, or lapack,
-# and uncomment one or both of the following two lines
+# We use OS X's built-in BLAS/LAPACK/ATLAS libraries by default.
 BLASINCL_FLAG   = -D_USING_BLAS_
 LAPACKINCL_FLAG = -I/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/ -D_USING_LAPACK_
+# Uncomment the next two lines to disable use of OS X's built-in 
+# BLAS/LAPACK/ATLAS libraries.
 BLASINCL_FLAG   = 
 LAPACKINCL_FLAG = 
 
@@ -130,12 +131,13 @@ RANLIB   = ranlib
 
 LDCONFIG = /sbin/ldconfig
 
-### un-comment the next four lines if using blas/atls/lapack, 
-# and comment out next line.
 LAPACK_LIBS = 
 BLAS_LIBS  = -framework veclib
 LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
-LAB_LIBS = 
+# If you want to disable use of OS X's built-in BLAS/ATLAS/LAPACK libraries,
+# it's sufficient to change BLASINCL_FLAG and LAPACKINCL_FLAG (above). But
+# if you want to be really sure, you can uncomment the line below.
+# LAB_LIBS = 
 
 NPD      = --no-print-directory
 
