@@ -147,7 +147,7 @@ MSVCDLC      decomp( );
 MSVCDLC      decomp(const decomp &dec1);
 MSVCDLC      decomp(const spin_sys& sys);
 MSVCDLC      ~decomp ( );
-MSVCDLL void operator= (const decomp &dec);
+MSVCDLL decomp& operator= (const decomp &dec);
 
 	// Input		dec    : Decomposition(this)
 	// 			dec1   : Decomposition

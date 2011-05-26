@@ -780,7 +780,7 @@ std::cout << J0;
   }
 
 
- double xiRDMs(const sys_dynamic& dsys, int i)
+ double xiRDM(const sys_dynamic& dsys, int i)
 
 	// Input		dsys  : A dynamic system
 	// Return		xis   : A matrix of RDM interaction

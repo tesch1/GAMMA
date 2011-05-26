@@ -2181,162 +2181,163 @@ void Rel_12_condense(int hs, int ntermi, int& nterms, complex* strs,
 // ______________________________________________________________________
 
 
- void ask_relax(int argc, char* argv[], int& argn,
-                 super_op& R, const sys_dynamic& sys, gen_op& H, int pflag)
-
-        // Input        argc    : Number of command line arguments
-        //              argv    : Command line arguments
-        //              argn    : Initial command line argument
-        //                        for relaxation parameters
-        //              R       : Relaxation superoperator
-        //              sys     : Dynamic spin system
-        //              H       : Isotropic Hamiltonian
-	//		pflag   : Flag for printing computaions
-        // Output       none    : Function is void.  The relaxation
-        //                        matrix R has different effects added
-        //                        in depending upon user requests
-
-    {
-    int type=0;						// Set for cross relaxation
-    int level=4;					// Set for non-secular  
-    std::string dip = "n", dipdfs = "n",			// Set for no dipolar
-           csa = "n", csadfs = "n",			// Set for no shift anisotropy
-           dipcsa = "n",				// Set for no dipole-shift anisotropy
-           quad = "n", quaddfs = "n",			// Set for no quadrupolar			
-           dipquad = "n", csaquad = "n",		// Set for no dipole-quad, csa-quad
-           rdm = "n";					// Set for no random field				
-
-//			   See About Dipolar Relaxation
-
-    query_parameter(argc, argv, argn,                   // Dipolar relaxation?
-     "\n\tInclude Dipolar Relaxation (y/n)? ", dip);
-    argn++;
-    if(dip=="y")
-      {
-      query_parameter(argc, argv, argn,			// Dipolar DFS relaxation effects
-         "\n\tInclude Dipolar Dynamic Frequency Shifts (y/n)? ", dipdfs);
-      argn++;
-      }
-
-//			     See About CSA Relaxation
-
-    int SA = 0;						// Assume no CSA tensors
-    int i;
-    for(i=0; i<sys.spins() && !SA; i++)			// See if any CSA tensors
-      if((sys.TC(i)).exists())				// are present in sys
-        SA = 1;
-    if(SA)						// If there are CSA tensors
-      {							// see if CSA relaxation is
-      query_parameter(argc, argv, argn,			// desired
-            "\n\tInclude CSA Relaxation (y/n)? ", csa);
-      argn++;
-      if(csa=="y")
-        {
-        query_parameter(argc, argv, argn,		// CSA DFS relaxation effects
-          "\n\tInclude CSA Dynamic Frequency Shifts (y/n)? ", csadfs);
-        argn++;
-        }
-      if((dip=="y") && (csa=="y"))
-        {
-        query_parameter(argc, argv, argn,                   // Dipole-CSA relaxation
-             "\n\tInclude Dipole-CSA Relaxation (y/n)? ", dipcsa);
-        argn++;
-        }
-      }
-
-//		     See About Quadrupolar Relaxation
-
-    int Q = 0;						// Assume no Quadrupolar tensors
-    for(i=0; i<sys.spins() && !Q; i++)		// See if any Quadrupolar tensors
-      if((sys.TQ(i)).exists())				// are present in sys
-        Q = 1;
-    if(Q)						// If there are Quadrupolar tensors
-      {							// see if Quadrupolar relaxation is
-      query_parameter(argc, argv, argn,			// desired
-            "\n\tInclude Quadrupolar Relaxation (y/n)? ", quad);
-      argn++;
-      if(quad=="y")
-        {
-        query_parameter(argc, argv, argn,		// Quadrupolar DFS relaxation effects
-          "\n\tInclude Quadrupolar Dynamic Frequency Shifts (y/n)? ", quaddfs);
-        argn++;
-        }
-      if((dip=="y") && (quad=="y"))
-        {
-        query_parameter(argc, argv, argn,                   // Dipole-Quadrupolar relaxation
-             "\n\tInclude Dipolar-Quadrupolar Relaxation (y/n)? ", dipquad);
-        argn++;
-        }
-      if((csa=="y") && (quad=="y"))
-        {
-        query_parameter(argc, argv, argn,                   // CSA-Quadrupolar relaxation
-             "\n\tInclude CSA-Quadrupolar Relaxation (y/n)? ", csaquad);
-        argn++;
-        }
-      }
-
-//		     See About Random Field Relaxation
-
-    query_parameter(argc, argv, argn,                   // Random Field relaxation
-     "\n\tInclude Random Field Relaxation (y/n)? ", rdm);
-    argn++;
-
-//		     Now Compute All the Relaxation Effects
-
-    if(dip == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The Dipolar Relaxation Matrix";
-      R += RDD(sys, H, type, level);
-      }
-    complex icmplx(0,1);                                // z = 0 + 1i
-    if(dipdfs == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The Dipolar DFS Relaxation Matrix";
-      R += icmplx*RDDds(sys, H, type, level);
-      }
-    if(csa == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The CSA Relaxation Matrix";
-      R += RCC(sys, H, type, level);
-      }
-    if(csadfs == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The CSA DFS Relaxation Matrix";
-      R += icmplx*RCCds(sys, H, type, level);
-      }
-    if(dipcsa == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The Dipole-CSA Relaxation Matrix";
-      R += RDCX(sys, H, level);
-      }
-    if(quad == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The Quadrupolar Relaxation Matrix";
-      R += RQQ(sys, H, type, level);
-      }
-    if(quaddfs == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The Quadrupolar DFS Relaxation Matrix";
-      R += icmplx*RQQds(sys, H, type, level);
-      }
-// sosi - need to build these functions
-//    if(dipquad == "y")
-//      {
-//      if(pflag) std::cout << "\n\tComputing The Dipole-Quadrupolar Relaxation Matrix";
-//      R += RDQX(sys, H, level);
-//      }
-//    if(csaquad == "y")
-//      {
-//      if(pflag) std::cout << "\n\tComputing The CSA-Quadrupolar Relaxation Matrix";
-//      R += RCQX(sys, H, level);
-//      }
-    if(rdm == "y")
-      {
-      if(pflag) std::cout << "\n\tComputing The Random Field Relaxation Matrix";
-      R += complex(5*PI/2)*RRR(sys, H, type, level);
-      }
-    return;
-    }
+// KY - Commenting out this function - not consistent with that in relaxBWR.*
+//   void ask_relax(int argc, char* argv[], int& argn,
+//                  super_op& R, const sys_dynamic& sys, gen_op& H, int pflag)
+// 
+//         // Input        argc    : Number of command line arguments
+//         //              argv    : Command line arguments
+//         //              argn    : Initial command line argument
+//         //                        for relaxation parameters
+//         //              R       : Relaxation superoperator
+//         //              sys     : Dynamic spin system
+//         //              H       : Isotropic Hamiltonian
+// 	//		pflag   : Flag for printing computaions
+//         // Output       none    : Function is void.  The relaxation
+//         //                        matrix R has different effects added
+//         //                        in depending upon user requests
+// 
+//   //    {
+//   // int type=0;						// Set for cross relaxation
+// // int level=4;					// Set for non-secular  
+// //  std::string dip = "n", dipdfs = "n",			// Set for no dipolar
+//     //         csa = "n", csadfs = "n",			// Set for no shift anisotropy
+//   //     dipcsa = "n",				// Set for no dipole-shift anisotropy
+// 	 //       quad = "n", quaddfs = "n",			// Set for no quadrupolar			
+// 		  //   dipquad = "n", csaquad = "n",		// Set for no dipole-quad, csa-quad
+// 		       // rdm = "n";					// Set for no random field				
+// 
+// //			   See About Dipolar Relaxation
+// 
+//     query_parameter(argc, argv, argn,                   // Dipolar relaxation?
+//      "\n\tInclude Dipolar Relaxation (y/n)? ", dip);
+//     argn++;
+//     if(dip=="y")
+//       {
+//       query_parameter(argc, argv, argn,			// Dipolar DFS relaxation effects
+//          "\n\tInclude Dipolar Dynamic Frequency Shifts (y/n)? ", dipdfs);
+//       argn++;
+//       }
+// 
+// //			     See About CSA Relaxation
+// 
+//     int SA = 0;						// Assume no CSA tensors
+//     int i;
+//     for(i=0; i<sys.spins() && !SA; i++)			// See if any CSA tensors
+//       if((sys.TC(i)).exists())				// are present in sys
+//         SA = 1;
+//     if(SA)						// If there are CSA tensors
+//       {							// see if CSA relaxation is
+//       query_parameter(argc, argv, argn,			// desired
+//             "\n\tInclude CSA Relaxation (y/n)? ", csa);
+//       argn++;
+//       if(csa=="y")
+//         {
+//         query_parameter(argc, argv, argn,		// CSA DFS relaxation effects
+//           "\n\tInclude CSA Dynamic Frequency Shifts (y/n)? ", csadfs);
+//         argn++;
+//         }
+//       if((dip=="y") && (csa=="y"))
+//         {
+//         query_parameter(argc, argv, argn,                   // Dipole-CSA relaxation
+//              "\n\tInclude Dipole-CSA Relaxation (y/n)? ", dipcsa);
+//         argn++;
+//         }
+//       }
+// 
+// //		     See About Quadrupolar Relaxation
+// 
+//     int Q = 0;						// Assume no Quadrupolar tensors
+//     for(i=0; i<sys.spins() && !Q; i++)		// See if any Quadrupolar tensors
+//       if((sys.TQ(i)).exists())				// are present in sys
+//         Q = 1;
+//     if(Q)						// If there are Quadrupolar tensors
+//       {							// see if Quadrupolar relaxation is
+//       query_parameter(argc, argv, argn,			// desired
+//             "\n\tInclude Quadrupolar Relaxation (y/n)? ", quad);
+//       argn++;
+//       if(quad=="y")
+//         {
+//         query_parameter(argc, argv, argn,		// Quadrupolar DFS relaxation effects
+//           "\n\tInclude Quadrupolar Dynamic Frequency Shifts (y/n)? ", quaddfs);
+//         argn++;
+//         }
+//       if((dip=="y") && (quad=="y"))
+//         {
+//         query_parameter(argc, argv, argn,                   // Dipole-Quadrupolar relaxation
+//              "\n\tInclude Dipolar-Quadrupolar Relaxation (y/n)? ", dipquad);
+//         argn++;
+//         }
+//       if((csa=="y") && (quad=="y"))
+//         {
+//         query_parameter(argc, argv, argn,                   // CSA-Quadrupolar relaxation
+//              "\n\tInclude CSA-Quadrupolar Relaxation (y/n)? ", csaquad);
+//         argn++;
+//         }
+//       }
+// 
+// //		     See About Random Field Relaxation
+// 
+//     query_parameter(argc, argv, argn,                   // Random Field relaxation
+//      "\n\tInclude Random Field Relaxation (y/n)? ", rdm);
+//     argn++;
+// 
+// //		     Now Compute All the Relaxation Effects
+// 
+//     if(dip == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The Dipolar Relaxation Matrix";
+//       R += RDD(sys, H, type, level);
+//       }
+//     complex icmplx(0,1);                                // z = 0 + 1i
+//     if(dipdfs == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The Dipolar DFS Relaxation Matrix";
+//       R += icmplx*RDDds(sys, H, type, level);
+//       }
+//     if(csa == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The CSA Relaxation Matrix";
+//       R += RCC(sys, H, type, level);
+//       }
+//     if(csadfs == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The CSA DFS Relaxation Matrix";
+//       R += icmplx*RCCds(sys, H, type, level);
+//       }
+//     if(dipcsa == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The Dipole-CSA Relaxation Matrix";
+//       R += RDCX(sys, H, level);
+//       }
+//     if(quad == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The Quadrupolar Relaxation Matrix";
+//       R += RQQ(sys, H, type, level);
+//       }
+//     if(quaddfs == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The Quadrupolar DFS Relaxation Matrix";
+//       R += icmplx*RQQds(sys, H, type, level);
+//       }
+// // sosi - need to build these functions
+// //    if(dipquad == "y")
+// //      {
+// //      if(pflag) std::cout << "\n\tComputing The Dipole-Quadrupolar Relaxation Matrix";
+// //      R += RDQX(sys, H, level);
+// //      }
+// //    if(csaquad == "y")
+// //      {
+// //      if(pflag) std::cout << "\n\tComputing The CSA-Quadrupolar Relaxation Matrix";
+// //      R += RCQX(sys, H, level);
+// //      }
+//     if(rdm == "y")
+//       {
+//       if(pflag) std::cout << "\n\tComputing The Random Field Relaxation Matrix";
+//       R += complex(5*PI/2)*RRR(sys, H, type, level);
+//       }
+//     return;
+//     }
 
 
   void sort(int* indx, matrix& mx, int k, int type, int colf)

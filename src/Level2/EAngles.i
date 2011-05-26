@@ -6,6 +6,7 @@
 
 %include "std_string.i"
 
+%rename(__assign__) EAngles::operator=;
 
 class EAngles
 {

@@ -60,8 +60,9 @@
 // are no longer sufficient (in gcc 4.3.3) as function declaration.
 // 
 
-MSVCDLL void ask_relax(int argc, char* argv[], int& argn,
-                               super_op& R, const sys_dynamic& sys, gen_op& H);
+// KY -- come back to this later - this function is kiling the build 
+// MSVCDLL void ask_relax(int argc, char* argv[], int& argn,
+//                               super_op& R, const sys_dynamic& sys, gen_op& H);
 
 MSVCDLL void REXijkl(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
          matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
@@ -270,7 +271,7 @@ MSVCDLC ~WBRExch();
         // Output               none  : WBRExch is deleted
 
 
-MSVCDLL void operator= (const WBRExch &WBRE);
+MSVCDLL WBRExch& operator= (const WBRExch &WBRE);
 
         // Input                WBRE1 : Relaxation/exchange controls (this)
         //                      WBRE  : Relaxation/exchange controls
@@ -580,7 +581,7 @@ MSVCDLL void SetQCX(const ParameterSet& pset);
         //                                set before this is called
  
  
-MSVCDLL void operator= (const ParameterSet& pset);
+MSVCDLL WBRExch& operator= (const ParameterSet& pset);
  
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      pset     : A parameter set
@@ -774,9 +775,9 @@ MSVCDLL super_op REXrf(const sys_dynamic& sys, gen_op& Heff, double Wrf, int fex
 // ______________________________________________________________________
 
 
-
-MSVCDLL friend void ask_relax(int argc, char* argv[], int& argn,
-                               super_op& R, const sys_dynamic& sys, gen_op& H);
+// KY - this function is causing problems in the build...
+// MSVCDLL friend void ask_relax(int argc, char* argv[], int& argn,
+//                               super_op& R, const sys_dynamic& sys, gen_op& H);
 
         // Input        argc    : Number of command line arguments
         //              argv    : Command line arguments

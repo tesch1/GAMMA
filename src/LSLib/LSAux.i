@@ -4,6 +4,8 @@
 #include "LSLib/LSAux.h"
 %}
 
+%rename(lsprint) print;
+
 void print(const super_op& LOp, double cutoff=1.e-6, int nc=4, int ri=0);
 
 void eigenvalues(super_op& LOp, int sort=1, int nc=4, int ri=0);

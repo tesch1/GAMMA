@@ -323,7 +323,9 @@ ALLHFILES  += $(addprefix $(BWRRLX)/, $(BWRPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(BWRRLX)/, $(BWRBASE)))
 ALLMODDIRS += $(BWRRLX)
 ALLMODHDRS += $(BWRHDR)
-ALLPYFILES += $(BWRPY) 
+BWRRLX_IBASE  = bwrrelax relaxCSA relaxDCSA relaxDip relaxExch relaxJ \
+	        relaxQCSA relaxQuad relaxRand relaxNMR relaxProp relaxRF
+ALLIFILES  += $(addsuffix .i,  $(addprefix $(BWRRLX)/, $(BWRRLX_IBASE)))
 
 ###############################################################################
 #                                                                             #

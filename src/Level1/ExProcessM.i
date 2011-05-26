@@ -8,7 +8,7 @@
 %include "std_string.i"
 %include "std_vector.i"
 
-%rename(__assign__) ExProcessM::operator=;
+%rename(__assign__) ExchProcM::operator=;
 
 class ExchProcM
 {

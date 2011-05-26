@@ -368,7 +368,7 @@ WBRExch::~WBRExch() {}
  
 
 
-void WBRExch::operator= (const WBRExch &WBRE)
+WBRExch& WBRExch::operator= (const WBRExch &WBRE)
 
         // Input                WBRE  : Relaxation/exchange controls (this)
         //                      WBRE  : Coordinate
@@ -394,6 +394,7 @@ void WBRExch::operator= (const WBRExch &WBRE)
 
   level = WBRE.level;
   type = WBRE.type;
+  return *this;
   }
 
 
@@ -1067,7 +1068,7 @@ void WBRExch::SetQCX(const ParameterSet& pset)
   }
  
 
-void WBRExch::operator= (const ParameterSet& pset)
+WBRExch& WBRExch::operator= (const ParameterSet& pset)
  
         // Input                WBRE     : Relaxation/exchange controls (this)
         //                      pset	 : A parameter set
@@ -1092,6 +1093,7 @@ void WBRExch::operator= (const ParameterSet& pset)
    SetDCX(pset);				// Set Dip-SA cross-corr flags
    SetDQX(pset);				// Set Dip-SA cross-corr flags
    SetQCX(pset);				// Set Quad-SA cross-corr flags
+   return *this;
    }
 
 
@@ -2390,75 +2392,75 @@ if(QCdfs) std::cout << " with DFS";
 //                              Class WBRExch LeftOvers 
 // ________________________________________________________________________________
 
- 
- void ask_relax(int argc, char* argv[], int& argn,
-                           super_op& R, const sys_dynamic& sys, gen_op& H)
+// KY - come back to this later - this function is killing the build 
+//  void ask_relax(int argc, char* argv[], int& argn,
+//                            super_op& R, const sys_dynamic& sys, gen_op& H)
 
-        // Input        argc    : Number of command line arguments
-        //              argv    : Command line arguments
-        //              argn    : Initial command line argument
-        //                        for relaxation parameters
-        //              R       : Relaxation superoperator
-        //              sys     : Dynamic spin system
-        //              H       : Hamiltonian
-        // Output       none    : Function is void.  The relaxation
-        //                        matrix R has different effects added
-        //                        in depending upon user requests
+//         // Input        argc    : Number of command line arguments
+//         //              argv    : Command line arguments
+//         //              argn    : Initial command line argument
+//         //                        for relaxation parameters
+//         //              R       : Relaxation superoperator
+//         //              sys     : Dynamic spin system
+//         //              H       : Hamiltonian
+//         // Output       none    : Function is void.  The relaxation
+//         //                        matrix R has different effects added
+//         //                        in depending upon user requests
 
-    {
-    std::string dd="n", cc="n", dc="n", dddfs="n", ccdfs;
-    query_parameter(argc, argv, argn,                   // Dipolar relaxation
-     "\n\tInclude Dipolar Relaxation (y/n)? ", dd);
-    argn++;
-    if(dd=="y")
-      {
-      query_parameter(argc, argv, argn,			// Dipolar DFS relaxation effects
-         "\n\tInclude Dipolar Dynamic Frequency Shifts (y/n)? ", dddfs);
-      argn++;
-      }
-    query_parameter(argc, argv, argn,                   // Dipolar relaxation
-     "\n\tInclude CSA Relaxation (y/n)? ", cc);
-    argn++;
-    if(cc=="y")
-      {
-      query_parameter(argc, argv, argn,			// Dipolar DFS relaxation effects
-         "\n\tInclude CSA Dynamic Frequency Shifts (y/n)? ", ccdfs);
-      argn++;
-      }
-    if((dd=="y") && (cc=="y"))
-      {
-      query_parameter(argc, argv, argn,                   // Dipole-CSA relaxation
-           "\n\tInclude DCX Relaxation (y/n)? ", dc);
-      argn++;
-      }
-    if(dd == "y")
-      {
-      std::cout << "\n\tComputing The Dipolar Relaxation Matrix";
-      R += RDD(sys, H);
-      }
-    if(cc == "y")
-      {
-      std::cout << "\n\tComputing The CSA Relaxation Matrix";
-      R += RCC(sys, H);
-      }
-    if(dc == "y")
-      {
-      std::cout << "\n\tComputing The Dipole-CSA Relaxation Matrix";
-      R += RDCX(sys, H);
-      }
-    complex icmplx(0,1);                                // z = 0 + 1i
-    if(dddfs == "y")
-      {
-      std::cout << "\n\tComputing The Dipolar DFS Relaxation Matrix";
-      R += icmplx*RDDds(sys,H);
-      }
-    if(ccdfs == "y")
-      {
-      std::cout << "\n\tComputing The CSA DFS Relaxation Matrix";
-      R += icmplx*RCCds(sys,H);
-      }
-    return;
-    }
+//     {
+//     std::string dd="n", cc="n", dc="n", dddfs="n", ccdfs;
+//     query_parameter(argc, argv, argn,                   // Dipolar relaxation
+//      "\n\tInclude Dipolar Relaxation (y/n)? ", dd);
+//     argn++;
+//     if(dd=="y")
+//       {
+//       query_parameter(argc, argv, argn,			// Dipolar DFS relaxation effects
+//          "\n\tInclude Dipolar Dynamic Frequency Shifts (y/n)? ", dddfs);
+//       argn++;
+//       }
+//     query_parameter(argc, argv, argn,                   // Dipolar relaxation
+//      "\n\tInclude CSA Relaxation (y/n)? ", cc);
+//     argn++;
+//     if(cc=="y")
+//       {
+//       query_parameter(argc, argv, argn,			// Dipolar DFS relaxation effects
+//          "\n\tInclude CSA Dynamic Frequency Shifts (y/n)? ", ccdfs);
+//       argn++;
+//       }
+//     if((dd=="y") && (cc=="y"))
+//       {
+//       query_parameter(argc, argv, argn,                   // Dipole-CSA relaxation
+//            "\n\tInclude DCX Relaxation (y/n)? ", dc);
+//       argn++;
+//       }
+//     if(dd == "y")
+//       {
+//       std::cout << "\n\tComputing The Dipolar Relaxation Matrix";
+//       R += RDD(sys, H);
+//       }
+//     if(cc == "y")
+//       {
+//       std::cout << "\n\tComputing The CSA Relaxation Matrix";
+//       R += RCC(sys, H);
+//       }
+//     if(dc == "y")
+//       {
+//       std::cout << "\n\tComputing The Dipole-CSA Relaxation Matrix";
+//       R += RDCX(sys, H);
+//       }
+//     complex icmplx(0,1);                                // z = 0 + 1i
+//     if(dddfs == "y")
+//       {
+//       std::cout << "\n\tComputing The Dipolar DFS Relaxation Matrix";
+//       R += icmplx*RDDds(sys,H);
+//       }
+//     if(ccdfs == "y")
+//       {
+//       std::cout << "\n\tComputing The CSA DFS Relaxation Matrix";
+//       R += icmplx*RCCds(sys,H);
+//       }
+//     return;
+//     }
 
 //*************************************************************************
 //*************************************************************************

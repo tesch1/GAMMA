@@ -462,7 +462,7 @@ decomp::decomp(const spin_sys& sys)
 
 decomp::~decomp () { }
 
-void decomp::operator= (const decomp &dec1)
+decomp& decomp::operator= (const decomp &dec1)
   {
   _NS              = dec1._NS;			// Copy the number of spins
   _LS              = dec1._LS;			// Copy the Liouville space
@@ -476,6 +476,7 @@ void decomp::operator= (const decomp &dec1)
   BaseCoherences   = dec1.BaseCoherences;	// Copy base coherences
   BaseCoefficients = dec1.BaseCoefficients;	// Copy base coefficients
   BaseSpins        = dec1.BaseSpins;		// Copy # of spins
+  return *this;
   }
 
 // ______________________________________________________________________

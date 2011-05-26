@@ -4,7 +4,7 @@
 #include "Level1/SpaceT.h"
 %}
 
-%rename(__assign__) coord::operator=;
+%rename(__assign__) space_T::operator=;
 
 class space_T;
 
@@ -99,7 +99,7 @@ space_T(const SinglePar& par);
 
 virtual ~space_T();
 
-virtual spaceT& operator = (const space_T &SphT);
+virtual space_T& operator = (const space_T &SphT);
 
 coord PASys() const;
 

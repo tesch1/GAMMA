@@ -4,6 +4,7 @@
 #include "Level2/Quaternion.h"
 %}
 
+%rename(__assign__) quatern::operator=;
 
 class quatern
 {

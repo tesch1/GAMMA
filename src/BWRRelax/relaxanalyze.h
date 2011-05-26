@@ -813,8 +813,8 @@ MSVCDLL void Rel(std::ostream& ostr, int nterms, std::string* line1, std::string
 // sosi - some if not all of these functions will find an different home
 //        in GAMMA some day 
 
-MSVCDLL void ask_relax(int argc, char* argv[], int& argn,
-                 super_op& R, const sys_dynamic& sys, gen_op& H, int pflag=1);
+// MSVCDLL void ask_relax(int argc, char* argv[], int& argn,
+//                 super_op& R, const sys_dynamic& sys, gen_op& H, int pflag=1);
 
         // Input        argc    : Number of command line arguments
         //              argv    : Command line arguments

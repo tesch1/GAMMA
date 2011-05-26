@@ -4,6 +4,7 @@
 #include "Level2/BaseDecomp.h"
 %}
 
+%rename(__assign__) decomp::operator=;
 
 %include "std_vector.i"
 %include "std_string.i"
@@ -45,7 +46,7 @@ decomp( );
 decomp(const decomp &dec1);
 decomp(const spin_sys& sys);
 ~decomp ( );
-void operator= (const decomp &dec);
+decomp& operator= (const decomp &dec);
 
 void decompose(const gen_op& Op);
 int size() const;			// Base Liouville space
