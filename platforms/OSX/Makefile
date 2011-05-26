@@ -93,8 +93,8 @@ BLASINCL_FLAG   = -D_USING_BLAS_
 LAPACKINCL_FLAG = -I/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/ -D_USING_LAPACK_
 # Uncomment the next two lines to disable use of OS X's built-in 
 # BLAS/LAPACK/ATLAS libraries.
-BLASINCL_FLAG   = 
-LAPACKINCL_FLAG = 
+# BLASINCL_FLAG   = 
+# LAPACKINCL_FLAG = 
 
 SRCDIRINCL_FLAG = -I$(SRCDIR1) $(BLASINCL_FLAG) $(LAPACKINCL_FLAG)
 
