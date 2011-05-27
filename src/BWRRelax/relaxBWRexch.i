@@ -168,7 +168,7 @@ void QuadCSADFS(int i=1);
 
 double LWhh(const sys_dynamic& sys, const std::string& Iso);
 
-operator ParameterSet( ) const;
+//operator ParameterSet( ) const;
 
 void SetZero();
 void SetLevel(const ParameterSet& pset);

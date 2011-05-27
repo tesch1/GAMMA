@@ -84,7 +84,7 @@ SinglePar param()    const;
 SinglePar param(const std::string& pname)  const;
 SinglePar param(const std::string& pname, const std::string& pstate) const;
 
-operator ParameterSet( ) const;
+//operator ParameterSet( ) const;
 bool PSetAdd(ParameterSet& pset, int idx=-1, int pfx=-1) const;
 
 bool write(const std::string& fo,int idx=-1,int pfx=-1,int warn=2) const;

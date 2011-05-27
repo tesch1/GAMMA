@@ -54,7 +54,7 @@ EAngles composite  (const EAngles& EA) const;
 SinglePar param(const std::string& pn,                      bool deg=true) const;
 SinglePar param(const std::string& pn,const std::string& ps,bool deg=true) const;
 
-operator ParameterSet( ) const;
+//operator ParameterSet( ) const;
 void PSetAdd(ParameterSet& pset,        int idx=-1, bool deg=true) const;
 void write(const std::string &filename, int idx=-1, bool deg=true) const;
 

@@ -145,7 +145,7 @@ SinglePar param(const std::string& pname) const;
 
 SinglePar param(const std::string& pname, const std::string& pstate) const;
 
-operator ParameterSet();
+//operator ParameterSet();
 
 virtual void write(const std::string &filename);
 

@@ -46,7 +46,7 @@ double      SubSysShift(double dist, int spin) const;
 double      SubSysPPM(int nss, int spin)       const;
 double      SubSysPPM(double dist, int spin)   const;
 
-operator ParameterSet( ) const;
+//operator ParameterSet( ) const;
 
 void PSetAdd(ParameterSet& pset, int idx=-1) const;
 
