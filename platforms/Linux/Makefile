@@ -109,8 +109,8 @@ SRCDIR1 = ../../src
 
 # Un-comment out these next two lines if using blas, atlas, or lapack,
 # and uncomment one or both of the following two lines
-#BLASINCL_FLAG   = -I/usr/include
-#LAPACKINCL_FLAG = -I/home/user/dev/CLAPACK-3.2.1/INCLUDE
+#BLASINCL_FLAG   = -D_USING_BLAS_ -I/cluster/apps/gotoblas2/include
+#LAPACKINCL_FLAG = -D_USING_GOTOBLAS2_ 
 BLASINCL_FLAG   = 
 LAPACKINCL_FLAG = 
 
@@ -124,13 +124,13 @@ OPTIMIZE = -O2
 
 CC       = gcc
 #CFLAGS   = $(DEBUG)
-CFLAGS   = $(OPTIMIZE)
+CFLAGS   = $(SRCDIRINCL_FLAG) $(OPTIMIZE)
 
 CXX      = g++
 CPPFLAGS = $(SRCDIRINCL_FLAG)
 
 #CXXFLAGS = $(DEBUG)
-CXXFLAGS = $(OPTIMIZE)
+CXXFLAGS = $(SRCDIRINCL_FLAG) $(OPTIMIZE)
 
 LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
 #LIBCXXFLAGS = $(DEBUG)
@@ -150,11 +150,10 @@ PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
 PYSGCXXFLAGS = $(OPTIMIZE)
 LDFLAGS  = 
 
-### un-comment the next four lines if using blas/atls/lapack, 
+### un-comment the next three lines if using blas/atls/lapack, 
 # and comment out next line.
-#LAPACK_LIBS = /home/user/dev/CLAPACK-3.2.1/lapack_LINUX.a 
-#BLAS_LIBS  = /home/user/dev/CLAPACK-3.2.1/libcblaswr.a   /home/user/dev/CLAPACK-3.2.1/F2CLIBS/libf2c.a \
-#              /usr/lib/atlas/libblas.a   /usr/lib/libatlas.a
+#LAPACK_LIBS = 
+#BLAS_LIBS  = -L$(GOTOBLAS2) -lgoto2 -lgfortran
 #LAB_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS)
 LAB_LIBS = 
 
@@ -740,7 +739,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 	@echo
 	@echo "Making Static Library $(LIB_NAME) From Object Files"
 	@echo
-	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS) $(LDFLAGS) $(LAB_LIBS)
+	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS) $(LDFLAGS)
 	@echo
 	@echo "Adjusting Static Library $(LIB_NAME) For Random Access"
 	@echo
@@ -1393,6 +1392,27 @@ installsolib: force
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
 	@echo
 
+${LIBINSTALLDIR}/${LIB_NAME}: ${BINDIR}/${LIB_NAME}
+	@echo Copying The GAMMA Static Object Library To The Lib Directory ${LIBINSTALLDIR}
+	@cp -f ${BINDIR}/${LIB_NAME} ${LIBINSTALLDIR}
+
+installlib: force
+	@if (test -d ${LIBINSTALLDIRV}) \
+	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIRV}; \
+	else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIRV}; \
+		echo * mkdir ${LIBINSTALLDIRV}; \
+		mkdir ${LIBINSTALLDIRV}; \
+	fi
+	@if (test -d ${LIBINSTALLDIR}) \
+	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIR}; \
+      	else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIR}; \
+		echo * mkdir ${LIBINSTALLDIR}; \
+      		mkdir ${LIBINSTALLDIR}; \
+	fi
+	@echo " * Copying Static Library To ${LIBINSTALLDIR}"
+	@cp -f ${BINDIR}/${LIB_NAME} ${LIBINSTALLDIR}
+
+
 #################################################################################
 #										#
 # 	                    Targets For The GAMMA Installation			#
@@ -1409,6 +1429,7 @@ install: force
 	@${MAKE} ${NPD} installscript
 	@${MAKE} ${NPD} installhdrs
 	@${MAKE} ${NPD} installsolib
+	@${MAKE} ${NPD} installlib
 	@echo " * Finished. Compile Command gamma Should Now Work"
 	@echo
 #	@echo " * Setting GAMMA Script To Know GAMMA Path"
