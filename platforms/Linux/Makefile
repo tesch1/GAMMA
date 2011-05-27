@@ -1321,7 +1321,6 @@ pytest: force
 #########################################################################
 
 GSCRIPT       = gamma
-GSCRIPTIN     = gamma.in
 CURRENTDIR    = ${shell pwd}
 #GAMMA_PATH    = ${shell cd ../..; pwd; cd platforms/Linux}
 GAMMA_PATH    = ${HDRINSTALLDIR}
@@ -1358,10 +1357,6 @@ installhdrs: force
 # installscript:	  Same as ${BININSTALLDIR}/gamma			#
 #										#
 #################################################################################
-
-gamma: gamma.in
-	@echo Creating An Appropriate GAMMA Script From gamma.in
-	@sed ${SEDSUB} ${GSCRIPTIN}>${GSCRIPT}
 
 ${BININSTALLDIR}/gamma: gamma
 	@echo Copying The GAMMA Script To The Bin Directory ${BININSTALLDIR}
