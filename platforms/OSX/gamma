@@ -1,5 +1,7 @@
+#!/usr/bin/env bash
+
 ###############################################################################
-#									      #
+#                                                                             #
 #                                 G A M M A                                   #
 #                                                                             #
 #            Compilation Script for the GAMMA MR Simulation Project           #
