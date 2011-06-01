@@ -717,6 +717,18 @@ const TTable1D& acquire1D::table(const gen_op& sigmap)
 
 const TTable1D& acquire1D::table() const { return TTab; }
 
+
+const TTable1D acquire1D::table_snapshot(const gen_op& sigmap)
+{
+    make_table(sigmap); 
+    return TTab; 
+}
+
+const TTable1D acquire1D::table_snapshot() const
+{ 
+   return TTab; 
+}
+
 // ____________________________________________________________________________ 
 // G                     TRANSITION TABLE MANIPULATIONS
 // ____________________________________________________________________________

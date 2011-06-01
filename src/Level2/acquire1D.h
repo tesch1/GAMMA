@@ -385,6 +385,9 @@ MSVCDLL void       FD(const gen_op& sigma,row_vector& data,double Fst,double Ffi
 MSVCDLL const TTable1D& table(const gen_op& sigmap);
 MSVCDLL const TTable1D& table() const;
 
+MSVCDLL const TTable1D table_snapshot(const gen_op& sigmap);
+MSVCDLL const TTable1D table_snapshot() const;
+
 	// Input	ACQ1D : An acquire1D (this)
 	// 		sigma : Density matrix (operator propagated)
 	// Output	mx    : Matrix representation of the 1D spectrum

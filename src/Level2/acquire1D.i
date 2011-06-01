@@ -59,6 +59,9 @@ void       FD(const gen_op& sigma, row_vector& data, double Fst, double Ffi);
 const TTable1D& table(const gen_op& sigmap);
 const TTable1D& table() const;
 
+const TTable1D table_snapshot(const gen_op& sigmap);
+const TTable1D table_snapshot() const;
+
 void offset(double     F,    int inHz=1);
 void offset(double     F,    int tr, int inHz);
 void FRscale(double    Fscf);
