@@ -217,7 +217,7 @@ include ../../make/MakeMods
 #########################################################################
 
 
-all: so lib pysg
+all: so lib
 
 so: $(BINDIR) $(BINDIR)/$(SO_NAME)
 lib: $(BINDIR) ${BINDIR}/${LIB_NAME}
