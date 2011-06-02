@@ -227,6 +227,8 @@ pysg: $(BINDIR) $(BINDIR)/$(PYS_NAME)
 ${LIB_NAME}: ${BINDIR}/${LIB_NAME}
 ${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
 
+big: so lib pysg test
+
 #all: $(BINDIR)/$(LIB_NAME) $(BINDIR)/$(SO_NAME)
 #all: $(LIB_NAME) $(SO_NAME) $(PY_NAME)
 
