@@ -533,7 +533,7 @@ bool multi_sys::CheckProc(const ExchProc& XP, bool warn) const
     nsl = _Comps[L].spins();			// Spins in this comp
     for(s=0; s<nsl; s++)			// Loop component spins
       {
-      if(!XP.SMap(i,s,R,t))			//   If spin has no mapped
+      if(!XP.SMap(L,s,R,t))			//   If spin has no mapped
         {					//   partner we don't know
         if(warn)				//   how it exchanges!
           {
