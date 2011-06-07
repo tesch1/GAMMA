@@ -138,15 +138,16 @@ RANLIB   = ranlib
 
 LDCONFIG = /sbin/ldconfig
 
-### un-comment the next three lines if using blas/atls/lapack,
+### un-comment the next three lines if using blas/atlas/lapack,
 # and comment out next line.
 #LAPACK_LIBS =
 #BLAS_LIBS  = -L$(GOTOBLAS2) -lgoto2 -lgfortran
 #LAB_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS)
 LAB_LIBS =
 
-
 NPD      = --no-print-directory
+
+
 
 #########################################################################
 #
@@ -154,11 +155,9 @@ NPD      = --no-print-directory
 #
 # These names are associated with the library we plan to build.
 #
-# LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)
-# MAJORVERSION     = Shared library major version number
-# MINORVERSION     = Shared library minor version number
-# RELEASEVERSION   = Shared library release (or patch) version number
-# SO_NAME     = Name of shared lib to generate/target.    (libgamma.so)
+# LIB_NAME  = Name of library to be generated
+# SO_NAME   = Name of shared lib to generate
+# PYS_NAME  = Name of SWIG shared lib to generate
 #
 # Note: The shared library name should be libgamma.#.#.# where the 3
 #       numbers are MAJORVERSION, MINORVERSION, and RELEASEVERSION
@@ -178,7 +177,7 @@ NPD      = --no-print-directory
 #       to) but change the MINORVERSION for the build. If the GAMMA changes
 #       will break older programs, then adjust the major version and
 #       the soname (e.g. libgamma.so.5.0 and libgamma.so.5) for the
-#       rebuild. Then (after the install to /usr/lib) then switch the
+#       rebuild. Then (after the install to /usr/local/lib) then switch the
 #       symbolic link to point to the new soname library:
 #       libgamma.so -> libgamma.so.5.
 #
@@ -208,7 +207,7 @@ PYS_NAMEXXX = ${PYS_NAMEXX}.${RELEASEVERSION}
 #
 # MakeMods    = File listing all current GAMMA source files.
 # SRCDIR      = Base directory of GAMMA source codes.
-# BINDIR      = Base directory of Linux binaries.
+# BINDIR      = Base directory of binaries.
 # LIB_SRCS    = All code files to be put into the GAMMA static library.
 # LIB_OBJS    = All object files to be put in the GAMMA static library.
 # SO_SRCS     = All code files to be put into the GAMMA shared library.
@@ -224,9 +223,7 @@ PYS_NAMEXXX = ${PYS_NAMEXX}.${RELEASEVERSION}
 #########################################################################
 
 
-
 include ../../make/MakeMods
-
 
 
 #########################################################################
@@ -238,7 +235,6 @@ include ../../make/MakeMods
 # LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)
 #
 #########################################################################
-
 
 
 all: so lib
@@ -275,7 +271,6 @@ PYSG_WRAP_SRC1 = $(addprefix $(BINDIR)/, pygamma.py)
 PYSG_WRAP_SRCS = $(PYSG_WRAP_SRC) $(PYSG_WRAP_SRC1)
 PYSG_WRAP_OBJS = $(addprefix $(BINDIR)/, pygamma_wrap.o)
 
-# *** FYI ***
 # If add a new .i file, it needs to be added to gamma/trunk/make/Makemods
 # You'll see examples there of how to do this.
 
@@ -474,8 +469,7 @@ ${BINDIR}/%.soo : ${SRCDIR}/${TESTING}/%.cc
 
 #########################################################################
 #
-#               Build _PGSGAMMA (SWIG) Shared Library Pattern Rules
-#
+#         Build _PGSGAMMA (SWIG) Shared Library Pattern Rules
 #
 ########################################################################
 
@@ -535,8 +529,6 @@ $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
          $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 
-#PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector -I"${SRCDIR}" -I"${PYINCDIR}"
-
 #########################################################################
 #
 #                      Copying GAMMA Headers Rules
@@ -562,7 +554,7 @@ ${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
 # LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)
 # LIB_OBJS    = Name of object files used in library.
 #
-# These variables are used exclusively when building a shared library.
+# These variables are used exclusively when building the shared library.
 #
 # SO_LDFLAGS = Flags used in .so build.                      (-shared)
 # SO_LDLIBS  = Any libraries the shared lib. to be built depends upon.
@@ -582,7 +574,6 @@ ${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
 
 SO_LDFLAGS = -shared $(LDFLAGS)
 SO_LDLIBS  = $(LAB_LIBS)
-
 
 #########################################################################
 #
@@ -620,7 +611,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 	@echo
 	@echo "Making Static Library $(LIB_NAME) From Object Files"
 	@echo
-	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS) $(LDFLAGS)
+	${AR} ${ARFLAGS} ${BINDIR}/${LIB_NAME} $(LIB_OBJS)
 	@echo
 	@echo "Adjusting Static Library $(LIB_NAME) For Random Access"
 	@echo
@@ -660,7 +651,7 @@ ${SO_NAME}: ${BINDIR}/${SO_NAME}
 
 ${BINDIR}/${SO_NAME}: ${BINDIR}/${SO_NAMEXXX}
 	@rm -f ${BINDIR}/${SO_NAME}
-	@cp -f ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
+	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
 
 $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo
@@ -680,8 +671,8 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 # executable on the local machine.
 PYTHON_EXECUTABLE = python
 
-PYTHONINCDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
-PYTHONLIBDIRS = ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
+PYTHONINCDIRS := ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
+PYTHONLIBDIRS := ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
 
 PYSINCFLAGS = -I$(PYTHONINCDIRS)
 PYSG_LDFLAGS = -L$(PYTHONLIBDIRS)
@@ -733,7 +724,7 @@ ${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS)
 ${BINDIR}: force
 	@if (test ! -d ./$(BINDIR)) \
         then \
-          echo "First Constructing Binaries Directory For GAMMA"; \
+          echo "First Constructing Binary Directory For GAMMA"; \
           echo "Making Directory ./$(BINDIR)"; \
           mkdir $(BINDIR); \
           chmod ug+w $(BINDIR); \
@@ -756,9 +747,9 @@ force:
 # up to date, that the GAMMA library exists in the PATH, and that the
 # demo executable is up to date.
 #
-# $(exeext)   = Executable extension on system.                  (.exe)
-# CXX         = C++ compiler name                                 (c++)
-# CXXFLAGS    = C++ compiler flags                             $(DEBUG)
+# $(exeext)   = Executable extension on system.
+# CXX         = C++ compiler name
+# CXXFLAGS    = C++ compiler flags
 # LDFLAGS     = Linker flags (automatically used)
 #
 # DEMO_DIR    = Directory where demo program sources are
@@ -788,7 +779,7 @@ DEMO_OBJ_S   = ./${DEMO_NAME}.static.o
 DEMO_PGM_S   = ${DEMO_NAME}.static${exeext}
 DEMO_FLAGS_S = -D_GAMMADEMO=1
 
-# --------------------- Demo Targets With Default Library ---------------------
+# --------------------- Demo Targets With Default Library -------------------
 #            (Use Shared Library If Present, If Not Use Static Library)
 
 %.o : ${DEMO_DIR}/%.cc
@@ -833,13 +824,13 @@ ${DEMO_PGM_S}: ${DEMO_OBJ_S}
 # GAMMA library exists in the PATH, and that the test executable is up
 # to date.
 #
-# $(exeext)   = Executable extension on system.                  (.exe)
-# CXX         = C++ compiler name                                 (c++)
-# CXXFLAGS    = C++ compiler flags                             $(DEBUG)
+# $(exeext)   = Executable extension on system.
+# CXX         = C++ compiler name
+# CXXFLAGS    = C++ compiler flags
 # LDFLAGS     = Linker flags
 #
 # -o $@       : Sets output executable name to match the name of
-#               the target (TestGAMMA.exe)
+#               the target
 # -L          : Look in local directory for libraries
 # -lgamma    : Link to library lgamma
 #
@@ -880,28 +871,27 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX)  -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX)  -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
 
 RUNDIR = ./../../src/Tests
-CURDIR = ./../../platforms/Linux
 
 run: force
 	@echo
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/; cd $(CURDIR)
+	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/
 	@echo
 
 
@@ -913,7 +903,7 @@ pytest: force
 	@echo
 	@echo Running Python tests:
 	@echo
-	@cd $(PY_RUNDIR); python ../Tests/run_tests.py -v; cd $(CURDIR)
+	@cd $(PY_RUNDIR); python ../Tests/run_tests.py -v
 	@echo
 
 
@@ -1126,7 +1116,7 @@ installlib: force
 
 install: force
 	@echo
-	@echo "           Installing Linux GAMMA"
+	@echo "           Installing GAMMA"
 	@echo
 	@echo " * GAMMA Script Installation Directory Is ${BININSTALLDIR}"
 	@echo " * GAMMA Binary Library Installation Directory Is ${LIBINSTALLDIR}"
@@ -1164,14 +1154,12 @@ pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
 	@echo "__version__ = '$(GAMMAVERSION)'" > $(PYSGDISTDIR)/pygamma_version.py
 
 
-
 ########################################################################
 #
 #                                Clean
 #
 # This is the typical Gnuish clean target. It will remove any libraries
-# (both dll and .a), any definition files, all object files, and the
-# build of the test program(s)
+# (dynamic and static), all object files, and the test program(s)
 #
 ########################################################################
 
@@ -1186,6 +1174,7 @@ clean:
 	@rm -f $(DEMO_PGM)
 	@rm -f ${BINDIR}/${SO_NAME}
 	@rm -f ${BINDIR}/${SO_NAMEX}
+	@rm -f ${BINDIR}/${SO_NAMEXX}
 	@rm -f ${BINDIR}/${SO_NAMEXXX}
 	@rm -f $(BINDIR)/$(PYS_NAME)
 
@@ -1211,10 +1200,6 @@ distclean:
 	@rm -f ${LIB_NAME}
 	@rm -f $(DEMO_OBJ)
 	@rm -f $(DEMO_PGM)
-
-dllclean:
-	@rm -f ./${BINDIR}/*.dll
-	@rm -f ./${BINDIR}/*.dll.*
 
 
 
