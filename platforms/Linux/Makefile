@@ -1,15 +1,9 @@
 #########################################################################
 #
-#          GAMMA Makefile: OSX ==> (Py)GAMMA Library
+#          Linux GAMMA Makefile for the (Py)GAMMA Library
 #
-# This is a primitive hand made Makefile to explicitly show how one
-# builds and uses GAMMA as either a static or shared library & how one
-# builds and uses PyGAMMA. It assumes that one is using the GCC C++
-# compiler provided with (& amidst) OSX. At least, the binaries will
-# be placed in a OSX related directory. So, run this makefile from a
-# OSX bash shell so the environment for GCC, make, etc. are set up
-# properly. As for PyGAMMA, one must have Python (build for OSX)
-# as well as Boost.Python on the system.
+# This builds GAMMA and PyGAMMA. It assumes that one is using the GCC C++
+# compiler. As for PyGAMMA, one must have Python available.
 #
 # ---------------------------------------------------------------------
 #
@@ -20,12 +14,12 @@
 #  3. Type "make test" to compile and run the GAMMA test program(s).
 #  4. Type "make clean" to remove all object files.
 #  5. Type "make distclean" to remove all object files libraries, exes.
-#  6. The sources are assumed in SRCDIR == ../../src
-#  7. The object are be produced in BINDIR ==  ../../mac-darwin
-#  8. The lib files are produced in BINDIR ==  ../../mac-darwin
-#  9. Any executable files (test,demo) are produced in this directory.
+#  6. The sources are assumed in SRCDIR
+#  7. The object are be produced in BINDIR
+#  8. The lib files are produced in BINDIR
+#  9. Any executable files (test, demo) are produced in BINDIR.
 # 10. The important static library file is libgamma.a
-# 11. The important DLL library files are gamma.dll and libgamma.dll.a
+# 11. The important dynamic library files are gamma.dll and libgamma.dll.a
 # 12. The important PyGMAMA DLL library file is pygamma.dll.
 # 13. Produces the following: a.) libgamma.a - The GAMMA static library
 #			      b.) gamma.dll  - The GAMMA DLL
@@ -681,17 +675,6 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 #  Python Swig build shared library details
 #
 ########################################################################
-
-
-
-#PYSINCDIR    = /usr/include/python$(PYVERSION)
-#PYSINC2DIR   = /usr/local/include/python$(PYVERSION)
-#PYSINCFLAGS = -I${PYINCDIR} -I$(PYSINC2DIR)
-#PYSINCDIRS = $(PYSINCDIR) $(PYSINC2DIR)
-#PYSLIBDIR    = /usr/lib/python$(PYVERSION)
-#PYSLIB2DIR	 = /usr/local/lib/python$(PYVERSION)
-#PYSG_LDFLAGS = -L${PYSLIBDIR} -L$(PYSLIB2DIR)
-
 
 # Using python to find the default library and include path for "python"
 # executable on the local machine.
