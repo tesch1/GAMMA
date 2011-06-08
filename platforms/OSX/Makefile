@@ -19,7 +19,7 @@
 #  8. The lib files are produced in BINDIR
 #  9. Executable files are produced in BINDIR.
 # 10. The important static library file is libgamma.a
-# 11. The important DLL library files are gamma.dll and libgamma.dll.a
+# 11. The important dynamic library files are gamma.dll and libgamma.dll.a
 # 12. The important PyGMAMA DLL library file is pygamma.dll.
 # 13. Produces the following: a.) libgamma.a - The GAMMA static library
 #			      b.) gamma.dll  - The GAMMA DLL
@@ -243,6 +243,8 @@ PYSG_SRCS = $(ALLCCFILES)
 PYSG_SRCS =
 PYSG_OBJS = $(addsuffix .pso, $(addprefix $(BINDIR)/, $(ALLFILES)))
 
+GAM_HDRS = $(ALLHFILES)
+INS_HDRS = $(addprefix $(HDRINSTALLDIR)/, $(ALLHFILES))
 
 PYSG_WRAP_SRC = $(addprefix $(BINDIR)/, pygamma_wrap.cxx)
 PYSG_WRAP_SRC1 = $(addprefix $(BINDIR)/, pygamma.py)
@@ -299,6 +301,7 @@ MULTISYS  = MultiSys
 ESRLIB    = ESRLib
 DEPREC    = Deprecated
 TESTING   = Testing
+MODULEDIRS = ${ALLMODDIRS}
 
 #########################################################################
 #
@@ -510,6 +513,20 @@ $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
 
 #########################################################################
 #
+#                      Copying GAMMA Headers Rules
+#
+# These rules specify how to update the GAMMA header files in the
+# installation directory from those same header files in a source
+# directory. If the headers are to be kept in the source directory then
+# these targets should never be used.
+#
+#########################################################################
+
+${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
+	cp -f $< $@
+
+#########################################################################
+#
 #                       Library Related Variables
 #
 # These variables are used exclusively when building the static lib.
@@ -660,11 +677,11 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 
 
 
-#########################################################################
+########################################################################
 #
 #  Python Swig build shared library details
 #
-#########################################################################
+########################################################################
 
 # Using python to find the default library and include path for "python"
 # executable on the local machine.
@@ -723,7 +740,7 @@ PYS_LDFLAGS = -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lo
 PYS_LDLIBS   = $(LAB_LIBS)
 
 
-${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS) 
+${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS)
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
@@ -850,8 +867,9 @@ pytest: force
 #                           Installation
 #
 # This is the typical Gnuish install target with some added GAMMA
-# features. There are two items of concern here. 1.) The GAMMA script
-# and 2.) The GAMMA shared library. Here are details for each.
+# features. There are 3 items of concern here. 1.) The GAMMA script,
+# 2.) The GAMMA shared library and 3.) The GAMMA headers. Here are
+# details regarding each.
 #
 # 1.) The GAMMA script (gamma)
 # ============================
@@ -875,13 +893,13 @@ pytest: force
 #
 # In addition, the GAMMA script must be placed into a directory that
 # is commonly known to most users. So, gamma is copied to ${INSTALLDIR}
-# which is typically /usr/local/bin (or maybe just /usr/bin).
+# which is typically /usr/local/bin.
 #
 # 2.) The GAMMA shared library (libgamma.so)
 # ==========================================
 # When building GAMMA based programs using the GAMMA script gamma, the
-# program will be linked to the GAMMA library. This all works just
-# dandy if linking is done to the static library, libgamma.a, because
+# programs will be linked to the GAMMA library. This all works quite
+# simply if linking is done to the static library, libgamma.a, because
 # the GAMMA script tell the compiler to look in the OSX binaries
 # directory for the GAMMA library. Once the program has been compiled
 # into an executable it contains the library functionality (at the
@@ -899,23 +917,38 @@ pytest: force
 #
 # To accomplish this, libgamma.so needs to be put in a standard
 # directory where shared libraries are kept. For OSX this is usually
-# /usr/lib (directory /usr/local/lib AFAIK is not preferred here)
+# /usr/local/lib.
 # Furthermore, libgamma.so should simply exist as a symbolic link to
 # the true library, the true library naming should use GAMMA version
 # numbering in it.
 
+# 3.) The GAMMA headers (*.h)
+# ==========================================
+# When building GAMMA based programs using the GAMMA script gamma, the
+# programs will include the GAMMA source headers. Whether linking to
+# the static or shared library, the headers must exist in a known
+# location. On some systems this can be the GAMMA source directory
+# (e.g /E/gamma/gamma-4.2.0/src) or it can be a Linux system directory
+# (e.g. /usr/include/gamma-4.2.0). It is the latter directory that is
+# used in typical Linux system GAMMA binary installations.
+#
 # To summarize, this target (install) does the following:
 #
 # a.) Determines the GAMMA version directory (this is GAMMA_PATH)
 # b.) Converts gamma.in into gamma where GAMMA_PATH is set properly.
 # c.) Copies gamma to INSTALLDIR (e.g. /usr/local/bin).
+# d.) Copies the GAMMA shared library to LIBINSTALLDIR (e.g. /usr/lib)
+#     This is the full library name, libgamma.so.#.#.#
+# e.) Runs LDCONFIG (/sbin/ldconfig) to set up a symbolic link between
+#     the built library & a file with the soname. That is (in lib dir)
+#                libgamma.so.# --> libgamma.so.#.#.#
+# f.) Makes a final symbolic link between the common library name &
+#     the soname library. Again this is done in LIBINSTALLDIR
+#                    libgamma.so --> libgamma.so.#
 #
 #########################################################################
 
-GSCRIPT       = gamma
-#GAMMA_PATH    = ${shell cd ../..; pwd; cd platforms/Linux}
-# GAMMA_PATH    = ${HDRINSTALLDIR}
-# SEDSUB        = 's|CONFIGUREDGAMMAPATH|${GAMMA_PATH}|g'
+GSCRIPT = gamma
 
 ####################################################################
 #
@@ -925,9 +958,8 @@ GSCRIPT       = gamma
 
 installhdrs: force
 	@if (test -d ${HDRINSTALLDIR}) \
-	then echo The System GAMMA Headers Directory Exists. ${HDRINSTALLDIR}; \
+	then echo The GAMMA Headers Directory Exists. ${HDRINSTALLDIR}; \
 	else echo Creating GAMMA Headers Directory. ${HDRINSTALLDIR}; \
-	     echo * mkdir ${HDRINSTALLDIR}; \
 	     mkdir ${HDRINSTALLDIR}; \
 	     for i in ${MODULEDIRS}; do \
                 echo  "* Making Subdirectory $$i"; \
@@ -938,18 +970,72 @@ installhdrs: force
 	@${MAKE} ${NPD} ${HDRINSTALLDIR}/GamGen.h
 	@${MAKE} ${NPD} ${INS_HDRS}
 
+##########################################################################
+#
+#                           Targets For The GAMMA Script
+#
+# gamma:		  Construct gamma script from gamma.in
+# ${BININSTALLDIR}/gamma: Copy local gamma script to script in BININSTALLDIR
+# script:		  Same as gamma
+# installscript:	  Same as ${BININSTALLDIR}/gamma
+#
+##########################################################################
+
+SEDSUB_VERSION = 's|VERSION_NUMBER_GOES_HERE|${GAMMAVERSION}|g'
+
+${BININSTALLDIR}/gamma: gamma
+	@echo Copying The GAMMA Script To The Bin Directory ${BININSTALLDIR}
+	@cp -f ./${GSCRIPT} ${BININSTALLDIR}
+	@sed -i '' ${SEDSUB_VERSION} ${BININSTALLDIR}/${GSCRIPT}
+	@chmod a+x ${BININSTALLDIR}/${GSCRIPT}
+
+script: gamma
+installscript: ${BININSTALLDIR}/gamma
+
+#######################################################################
+#
+# 	                     Targets For The GAMMA Library
+#
+#######################################################################
+
+${LIBINSTALLDIR}/${SO_NAMEXXX}: ${BINDIR}/${SO_NAMEXXX}
+	@echo Copying The GAMMA Shared Object Library To The Lib Directory ${LIBINSTALLDIR}
+	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
+
+installsolib: force
+	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
+	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
+	@echo " * Setting Link For libgamma.so"
+	@echo " * Adding Link For GAMMA Base Library Name"
+	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
+	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
+	@echo
+
+${LIBINSTALLDIR}/${LIB_NAME}: ${BINDIR}/${LIB_NAME}
+	@echo Copying The GAMMA Static Object Library To The Lib Directory ${LIBINSTALLDIR}
+	@cp -f ${BINDIR}/${LIB_NAME} ${LIBINSTALLDIR}
+
+installlib: force
+	@if (test -d ${LIBINSTALLDIRV}) \
+	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIRV}; \
+	else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIRV}; \
+		mkdir ${LIBINSTALLDIRV}; \
+	fi
+	@if (test -d ${LIBINSTALLDIR}) \
+	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIR}; \
+      	else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIR}; \
+      		mkdir ${LIBINSTALLDIR}; \
+	fi
+	@echo " * Copying Static Library To ${LIBINSTALLDIR}"
+	@cp -f ${BINDIR}/${LIB_NAME} ${LIBINSTALLDIR}
 
 
-# install: force
-# 	@echo
-# 	@echo "           Installing GAMMA"
-# 	@echo
-# 	@echo " * GAMMA library installation directory is ${LIBINSTALLDIR}"
-# 	@echo " * Copying ${SO_NAMEXXX} to ${LIBINSTALLDIR}"
-# 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
-# 	@echo " * Linking ${SO_NAME} to ${SO_NAMEXXX}"
-# 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
-# 	@echo
+######################################################################
+#
+# 	                    Targets For The GAMMA Installation
+#
+######################################################################
+
 install: force
 	@echo
 	@echo "           Installing GAMMA"
@@ -960,6 +1046,7 @@ install: force
 	@${MAKE} ${NPD} installscript
 	@${MAKE} ${NPD} installhdrs
 	@${MAKE} ${NPD} installsolib
+	@${MAKE} ${NPD} installlib
 	@echo " * Finished. Compile Command gamma Should Now Work"
 	@echo
 
@@ -1010,7 +1097,5 @@ testclean:
 distclean:
 	@rm -f $(LIB_OBJS)
 	@rm -f ${LIB_NAME}
-
-
 
 force:

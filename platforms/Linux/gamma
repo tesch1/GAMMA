@@ -74,33 +74,6 @@ GAMMA_INC="/usr/local/include/gamma-"$VERSION""
 
 #############################################################################
 #
-# Here We Try To Find Out Which Computer System GAMMA Is Running On. This Is
-# Done By the Configuration Program "configure", But There Is Chance That Can
-# Fail. The Vaule of "host" Will Be Used To Direct The Compiler To Link To
-# The Achitechture Specific GAMMA Libraries.  This MUST Be The Same One Used
-# During The Installation Of GAMMA On This Machine. On Computers For Which
-# The Value Of host Is Not Set Automatically By configure, Users Need To Set
-# It By Hand. Any Name Can Be Used Here, AS LONG AS It Matches What Was Used
-# By The GAMMA Makefile.  If You Aren't Sure, Look In Makefile For "host" And
-# See What The Value Is Set To There.  After Running "make all" There Will Be
-# A Subdirectory With The host Name Off Of The GAMMA Base Directory. That Is,
-# Along With /share Will Be One With A Name Taken From host.
-#
-# If you are still uncertain, just set host to something like "sun4" or "sgi"
-# both in here and in the Makefile.  The run make all and make install.
-#
-#############################################################################
-
-host='i686-pc-linux-gnu'
-if [ ${VERBOSE} ]
-then
-  echo
-  echo The Compilation Is Specific To ${host}
-  echo
-fi
-
-#############################################################################
-#
 # Now We Must Know Which C++ Compiler To Use. Typically This Is GNU C++ Or
 # The egcs Version Of It.  Variable CXX Is Used To Indicate Where To Find The
 # C++ Compiler Command On The System. It Should Be Set Automatically By The
