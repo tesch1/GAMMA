@@ -272,7 +272,11 @@ WALTZ::~WALTZ() {}
 // ------------------------------- Assignment ---------------------------------
 
 
-void WALTZ::operator = (const WALTZ& WALTZ1) { Pulse::operator=(WALTZ1); }
+WALTZ& WALTZ::operator = (const WALTZ& WALTZ1) 
+{ 
+  Pulse::operator=(WALTZ1); 
+  return (*this);
+}
  
         // Intput       WALTZ1  : WALTZ parameters
         // Output       WALTZ   : WALTZ parameters(this) from WALTZ1

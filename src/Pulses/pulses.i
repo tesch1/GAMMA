@@ -8,3 +8,6 @@
 %include "PulMLEV.i"
 %include "PulTrain.i"
 %include "PulSupCycle.i"
+%include "PulCHIRP.i"
+%include "PulGARP.i"
+%include "PulWALTZ.i"

@@ -304,7 +304,7 @@ GARP::~GARP() {}
 // ------------------------------- Assignment ---------------------------------
 
 
-void GARP::operator = (const GARP& GARP1)
+GARP& GARP::operator = (const GARP& GARP1)
  
         // Intput       GARP1  : GARP parameters
         // Output       GARP   : GARP parameters(this) from GARP1
@@ -315,6 +315,8 @@ void GARP::operator = (const GARP& GARP1)
   gamB1 = GARP1.gamB1;			// Copy rf-field strength
   phi   = GARP1.phi;			// Copy rf-field phase
   Wrf   = GARP1.Wrf;			// Copy rf-field offset
+
+  return (*this);
   }
 
  

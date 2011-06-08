@@ -1,4 +1,4 @@
-/* PulW_GARP.h **************************************************-*-c++-*-
+/* PulGARP.h **************************************************-*-c++-*-
 **			         					**
 ** 	                        G A M M A				**
 **									**
@@ -174,7 +174,7 @@ MSVCDLC ~GARP();
 // ------------------------------- Assignment ---------------------------------
  
 
-MSVCDLL void operator = (const GARP& GARP1);
+MSVCDLL GARP& operator = (const GARP& GARP1);
 
         // Intput       GARP1	: GARP parameters
         // Output       GARP	: GARP parameters(this) from GARP1

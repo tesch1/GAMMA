@@ -213,7 +213,7 @@ MSVCDLC ~DANTE();
 // ------------------------------- Assignment ---------------------------------
 
                                                                                 
-MSVCDLL void operator = (const DANTE& DANTE1);
+MSVCDLL DANTE& operator = (const DANTE& DANTE1);
  
         // Intput	DANTE1	: DANTE parameters
         // Output	DANTE   : DANTE parameters(this) from DANTE1

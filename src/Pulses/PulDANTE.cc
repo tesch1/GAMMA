@@ -427,7 +427,7 @@ DANTE::~DANTE() {}
 // ------------------------------- Assignment ---------------------------------
  
                                          
-void DANTE::operator = (const DANTE& DANTE1)
+DANTE& DANTE::operator = (const DANTE& DANTE1)
 
         // Intput       DANTE1  : DANTE parameters
         // Output       DANTE   : DANTE parameters(this) from DANTE1
@@ -443,6 +443,8 @@ void DANTE::operator = (const DANTE& DANTE1)
   tt	= DANTE1.tt;			// Copy step length
   ang	= DANTE1.ang;			// Copy pulse angle
   F	= DANTE1.F;			// Copy synch frequency
+
+  return (*this);
   }
  
  

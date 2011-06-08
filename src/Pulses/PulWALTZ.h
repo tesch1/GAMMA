@@ -162,7 +162,7 @@ MSVCDLC ~WALTZ();
 // ------------------------------- Assignment ---------------------------------
 
                                                                                 
-MSVCDLL void operator = (const WALTZ& WALTZ1);
+MSVCDLL WALTZ& operator = (const WALTZ& WALTZ1);
  
         // Intput       WALTZ1   : WALTZ parameters
         // Output       WALTZ    : WALTZ parameters(this) from WALTZ1
