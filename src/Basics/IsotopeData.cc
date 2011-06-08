@@ -128,7 +128,7 @@ IsotopeData::IsotopeData(const string& symb) : _symbol(symb)
   _iselectron  = false;
   }
 
-void IsotopeData::operator= (const IsotopeData& ID1)
+IsotopeData& IsotopeData::operator= (const IsotopeData& ID1)
   {
   _HS          = ID1._HS;
   _symbol      = ID1._symbol;
@@ -140,6 +140,8 @@ void IsotopeData::operator= (const IsotopeData& ID1)
   _receptivity = ID1._receptivity;
   _relfreq     = ID1._relfreq;
   _iselectron  = ID1._iselectron;
+
+  return (*this);
   }
 
 IsotopeData::~IsotopeData() {}

@@ -103,7 +103,8 @@ MSVCDLC IsotopeData(const std::string& symbol_);
  	//			    other data parameters aren't filled.
 
  
-MSVCDLL void operator= (const IsotopeData& ID1);
+MSVCDLL IsotopeData& operator= (const IsotopeData& ID1);
+
 MSVCDLC      ~IsotopeData();
 
 // ____________________________________________________________________________ 

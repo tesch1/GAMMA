@@ -59,8 +59,6 @@ MSVCDLL bool ask_set(int argc,char* argv[],int par,const std::string& Q, std::st
 MSVCDLL bool ask_set(int argc,char* argv[],int par,const std::string& Q, double&      V);
 MSVCDLL bool ask_set(int argc,char* argv[],int par,const std::string& Q, int&         V);
 
-MSVCDLL double round_b(double a, unsigned int decimal_places);
-
 // _____________________________________________________________________________
 // B                GAMMA Generic Error Handling Functions
 // _____________________________________________________________________________

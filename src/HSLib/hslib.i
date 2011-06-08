@@ -17,3 +17,4 @@
 %include "HSacquire.i"
 %include "HSdetect.i"
 %include "SpinOpRot.i"
+%include "SpinOpSng.i"

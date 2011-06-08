@@ -106,7 +106,8 @@ ALLPYFILES += $(BASICSPY)
 BASICSTBAS  = TestBasics TestGconst TestGconstA TestSingPar TestSingParA TestSingParB\
               TestIsoData TestStringCut
 
-BASICS_IBASE  = basics ParamSet SinglePar Isotope Gconstants
+BASICS_IBASE  = basics ParamSet SinglePar Isotope Gconstants StringCut\
+                IsotopeData Gutils
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(BASICS)/, $(BASICS_IBASE)))
 
 
@@ -164,7 +165,7 @@ HSPACETBAS  = TestHSLi1b
 HSPACE_IBASE  = hslib SpinSystem SpinSys GenOp HSham SpinOpCmp\
 				HSauxil PulseI PulseS Basis HSprop SpinOp\
 				HSanalyze HSdecomp PulseShp GenOpRep HSacquire\
-				HSdetect SpinOpRot
+				HSdetect SpinOpRot SpinOpSng
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(HSPACE)/, $(HSPACE_IBASE)))
 
 ###############################################################################
