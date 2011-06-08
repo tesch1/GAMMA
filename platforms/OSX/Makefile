@@ -10,21 +10,20 @@
 #                             Quick Info
 #
 #  1. Type "make" to build GAMMA static library.
-#  2. Type "make demo" to compile and run the GAMMA demo program(s).
+#  2. There is no #2.
 #  3. Type "make test" to compile and run the GAMMA test program(s).
 #  4. Type "make clean" to remove all object files.
 #  5. Type "make distclean" to remove all object files libraries, exes.
 #  6. The sources are assumed in SRCDIR
 #  7. The object are be produced in BINDIR
 #  8. The lib files are produced in BINDIR
-#  9. Any executable files (test, demo) are produced in BINDIR.
+#  9. Executable files are produced in BINDIR.
 # 10. The important static library file is libgamma.a
 # 11. The important DLL library files are gamma.dll and libgamma.dll.a
 # 12. The important PyGMAMA DLL library file is pygamma.dll.
 # 13. Produces the following: a.) libgamma.a - The GAMMA static library
 #			      b.) gamma.dll  - The GAMMA DLL
 #			      c.) libgamma.dll.a - GAMMA imports lib.
-#                             e.) DemoGAMMA.exe - The demo program
 #                             f.) TestGAMMA.exe - The test program
 #
 # ---------------------------------------------------------------------
@@ -61,9 +60,6 @@
 #             It is important to run make clean since the object files
 #             can use lots of disk space as well as interfere with
 #             other GAMMA builds (not part of this Makefile)
-#
-# make demo : This will build and run a set of programs that demo the
-#             the modules provided with GAMMA.
 #
 # make test: This will build and run a set of programs that test the
 #             the modules provided with GAMMA.
@@ -731,7 +727,7 @@ ${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS)
 	@echo
 	@echo "Making PYSGAMMA Shared $(PYS_NAME) From Pythonized and Swigged Object Files"
 	@echo
-	$(CXX) ${PYS_LDFLAGS} $(PYSG_LIBDIR) -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
+	$(CXX) ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
 
 
@@ -751,71 +747,6 @@ ${BINDIR}: force
 	fi
 
 force:
-
-#########################################################################
-#
-#                     Build And Run The Demos
-#
-# The purpose of this target is to run the GAMMA demo program(s). The
-# demo programs painstakingly walk the user through each GAMMA module
-# so that they can get a feel of what is available.
-#
-# The program will be named DemoGAMMA and should be found in the GAMMA
-# demo directory in the modules sub-directory. The target should always
-# run the demo program. It will insure that the GAMMA shared library is
-# up to date, that the GAMMA library exists in the PATH, and that the
-# demo executable is up to date.
-#
-# $(exeext)   = Executable extension on system.
-# CXX         = C++ compiler name
-# CXXFLAGS    = C++ compiler flags
-# LDFLAGS     = Linker flags (automatically used)
-#
-# DEMO_DIR    = Directory where demo program sources are
-# DEMO_NAME   = Base name of demo program (without .cc, .o, .exe,...)
-# DEMO_PGM    = Name of produced demo executable
-# DEMO_SRC    = Full name of demo program source file
-# DEMO_OBJ    = Full name of demo program object file
-# DEMO_FLAGS  = Flags to use when compiling the demo program
-# DEMO_LD     = Command to link to shared library during runtime
-#
-# -o $@       : Sets output executable name to match the name of
-#               the target (TestGAMMA.exe)
-# -L          : Look in local directory for libraries
-# -lgamma    : Link to library lgamma
-#
-#########################################################################
-
-DEMO_DIR     = ../../demo/modules
-DEMO_NAME    = DemoGAMMA
-DEMO_PGM     = ${DEMO_NAME}${exeext}
-DEMO_SRC     = $(DEMO_DIR)/${DEMO_NAME}.cc
-DEMO_OBJ     = $(DEMO_DIR)/${DEMO_NAME}.o
-DEMO_FLAGS   = -D_GAMMADEMO=1
-DEMO_LD      = /lib/dyld --library-path
-
-# --------------------- Demo Targets With Default Library -------------------
-#            (Use Shared Library If Present, If Not Use Static Library)
-
-demo:
-	@${MAKE} $(NPD) ${DEMO_PGM}
-	@strip ./${DEMO_PGM}
-#	@${DEMO_LD} ${BINDIR} ./${DEMO_PGM} $(DEMO_DIR)
-
-${DEMO_PGM}: ${DEMO_OBJ}
-	$(CXX) -o $@ ${DEMO_SRC} ${DEMO_FLAGS} $(SOCPPFLAGS) $(CXXFLAGS) \
-        $(LDFLAGS) -L${BINDIR} -lgamma
-
-# --------------------- Demo Targets With Static Library ---------------------
-
-demostatic:
-	@${MAKE} $(NPD) demostat
-	@strip ./${DEMO_PGM}
-	./${DEMO_PGM} $(DEMO_DIR)
-
-demostat: ${DEMO_OBJ}
-	$(CXX) -g -o ${DEMO_PGM} ${DEMO_SRC} ${DEMO_FLAGS} -Wl,-static \
-        $(LIBCPPFLAGS) $(LIBCXXFLAGS) $(LDFLAGS) -L${BINDIR} -static -lgamma
 
 #########################################################################
 #
@@ -1062,8 +993,6 @@ clean:
 	@rm -f $(ALLTESTOBJFILES)
 	@rm -f *.asc
 	@rm -f *.gnu
-	@rm -f $(DEMO_OBJ)
-	@rm -f $(DEMO_PGM)
 	@rm -f ${BINDIR}/${SO_NAME}
 	@rm -f ${BINDIR}/${SO_NAMEX}
 	@rm -f ${BINDIR}/${SO_NAMEXX}
@@ -1078,20 +1007,9 @@ strip:
 testclean:
 	@rm -f $(ALLTESTOBJFILES)
 
-democlean:
-	@rm -f $(DEMO_OBJ)
-	@rm -f $(DEMO_PGM)
-	@rm -f $(DEMO_OBJ_S)
-	@rm -f $(DEMO_PGM_S)
-	@rm -f *.asc
-	@rm -f *.gnu
-	@rm -f *.mif
-
 distclean:
 	@rm -f $(LIB_OBJS)
 	@rm -f ${LIB_NAME}
-	@rm -f $(DEMO_OBJ)
-	@rm -f $(DEMO_PGM)
 
 
 
