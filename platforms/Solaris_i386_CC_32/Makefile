@@ -118,9 +118,6 @@ SOCXXFLAGS = -KPIC $(SRCDIRINCL_FLAG) $(DEBUG) $(OPTIMIZE)
 PYSGCXXFLAGS = -KPIC $(SRCDIRINCL_FLAG) $(DEBUG) $(OPTIMIZE)
 LDFLAGS  = -m32
 
-#exeext   = .out
-#defext   = .def
-
 AR       = ar
 ARFLAGS  = r
 RANLIB   = ranlib
@@ -767,7 +764,7 @@ ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
 CXX_TESTFLAGS = $(OPTIMIZE) $(SRCDIRINCL_FLAG)
 
-LD_TESTFLAGS =  $(LDFLAGS)
+LD_TESTFLAGS = $(LDFLAGS)
 
 
 ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
@@ -794,7 +791,7 @@ run: force
 	@echo
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); $(PYTHON) run_tests.py -v -p $(BINDIR)/;
+	@cd $(RUNDIR); $(PYTHON) run_tests.py -v -p $(BINDIR)/
 	@echo
 
 
@@ -848,8 +845,7 @@ pytest: force
 #
 # In addition, the GAMMA script must be placed into a directory that
 # is commonly known to most users. So, gamma is copied to ${INSTALLDIR}
-# which is typically /usr/local/bin (or maybe just /usr/bin). This make
-# currently defaults to /usr/local/bin.
+# which is typically /usr/local/bin.
 #
 # 2.) The GAMMA shared library (libgamma.so)
 # ==========================================
@@ -882,7 +878,7 @@ pytest: force
 #
 # To accomplish this, libgamma.so needs to be put in a standard
 # directory where shared libraries are kept. For Linux this is usually
-# /usr/lib (directory /usr/local/lib AFAIK is not preferred here.)
+# /usr/local/lib
 # Furthermore, libgamma.so should simply exist as a symbolic link to
 # the library that has the soname that the executable needs. Even more
 # complicated, the true library naming should use GAMMA version
@@ -923,10 +919,7 @@ pytest: force
 #
 #########################################################################
 
-GSCRIPT       = gamma
-CURRENTDIR    = ${shell pwd}
-GAMMA_PATH    = ${INSTALLDIR}
-SEDSUB        = 's|CONFIGUREDGAMMAPATH|${GAMMA_PATH}|g'
+GSCRIPT = gamma
 
 ####################################################################
 #
@@ -936,9 +929,8 @@ SEDSUB        = 's|CONFIGUREDGAMMAPATH|${GAMMA_PATH}|g'
 
 installhdrs: force
 	@if (test -d ${HDRINSTALLDIR}) \
-	then echo The System GAMMA Headers Directory Exists. ${HDRINSTALLDIR}; \
+	then echo The GAMMA Headers Directory Exists. ${HDRINSTALLDIR}; \
 	else echo Creating GAMMA Headers Directory. ${HDRINSTALLDIR}; \
-	     echo * mkdir ${HDRINSTALLDIR}; \
 	     mkdir ${HDRINSTALLDIR}; \
 	     for i in ${MODULEDIRS}; do \
                 echo  "* Making Subdirectory $$i"; \
@@ -960,9 +952,13 @@ installhdrs: force
 #
 ##########################################################################
 
+SEDSUB_VERSION = 's|VERSION_NUMBER_GOES_HERE|${GAMMAVERSION}|g'
+
 ${BININSTALLDIR}/gamma: gamma
 	@echo Copying The GAMMA Script To The Bin Directory ${BININSTALLDIR}
 	@cp -f ./${GSCRIPT} ${BININSTALLDIR}
+	@perl -i -p -e ${SEDSUB_VERSION} ${BININSTALLDIR}/${GSCRIPT}
+	@chmod a+x ${BININSTALLDIR}/${GSCRIPT}
 
 script: gamma
 installscript: ${BININSTALLDIR}/gamma
@@ -1008,13 +1004,11 @@ installlib: force
 	@if (test -d ${LIBINSTALLDIRV}) \
 	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIRV}; \
 	else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIRV}; \
-             echo * mkdir ${LIBINSTALLDIRV}; \
              mkdir ${LIBINSTALLDIRV}; \
 	fi
 	@if (test -d ${LIBINSTALLDIR}) \
 	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIR}; \
         else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIR}; \
-             echo * mkdir ${LIBINSTALLDIR}; \
              mkdir ${LIBINSTALLDIR}; \
 	fi
 	@echo " * Copying Static Library To ${LIBINSTALLDIR}"
@@ -1039,19 +1033,6 @@ install: force
 	@${MAKE} installlib
 	@echo " * Finished. Compile Command gamma Should Now Work"
 	@echo
-#	@echo " * Setting GAMMA Script To Know GAMMA Path"
-#	@sed ${SEDSUB} ${GSCRIPTIN}>${GSCRIPT}
-#	@echo " * Copying GAMMA Script ${GSCRIPT} To Installation Directory"
-#	@cp -f ./${GSCRIPT} ${BININSTALLDIR}
-#	@echo " * GAMMA Library Installation Directory Is ${LIBINSTALLDIR}"
-#	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
-#	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
-#	@echo " * Setting Link For libgamma.so"
-#	@echo " * Running ldconfig To Update Cache Of Known Shared Libraries"
-#	@echo " *         (This May Take A Couple Of Seconds)"
-#	@${LDCONFIG} -n ${LIBINSTALLDIR}
-#	@echo " * Adding Link For GAMMA Base Library Name"
-#	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
 
 
 # PYSGDISTDIR is the destination directory for the binary (and pygamma.py)

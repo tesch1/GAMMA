@@ -9,22 +9,21 @@
 #
 #                             Quick Info
 #
-#  1. Type "make" to build GAMMA static library.
-#  2. There is no #2.
+#  1. Type "make" to build GAMMA static and shared library.
+#  2. Type "make pysg" to compile the PyGAMMA shared library.
 #  3. Type "make test" to compile and run the GAMMA test program(s).
 #  4. Type "make clean" to remove all object files.
 #  5. Type "make distclean" to remove all object files libraries, exes.
 #  6. The sources are assumed in SRCDIR
 #  7. The object are be produced in BINDIR
 #  8. The lib files are produced in BINDIR
-#  9. Executable files are produced in BINDIR.
+#  9. Any executable files are produced in BINDIR.
 # 10. The important static library file is libgamma.a
-# 11. The important dynamic library files are gamma.dll and libgamma.dll.a
-# 12. The important PyGMAMA DLL library file is pygamma.dll.
+# 11. The important dynamic library file is libgamma.so
+# 12. The important PyGAMMA shared library file is _pygamma.so
 # 13. Produces the following: a.) libgamma.a - The GAMMA static library
-#			      b.) gamma.dll  - The GAMMA DLL
-#			      c.) libgamma.dll.a - GAMMA imports lib.
-#                             f.) TestGAMMA.exe - The test program
+#                             b.) libgamma.so  - The GAMMA shared library
+#                             c.) _pygamma.so - The PyGAMMA shared library
 #
 # ---------------------------------------------------------------------
 #
@@ -35,17 +34,15 @@
 # defines which files are part of the GAMMA source codes. Changes in
 # MakeMods will evoke changes in the build herein.
 #
-# all:
 # make all: These both run the default target all (first target). It
 #           will compile all source codes in GAMMA as defined in file
 #           MakeMods into object files. It will then take the object
 #           files and convert them into a static library named
-#           libgamma.a. These same object files will then be combined
-#           into a dynamic library (DLL) with its assocatied imports
-#           library, gamma.dll and libgamma.dll.a respectively. If we
-#           are able to find Python and Boost.Python, then the PyGAMMA
-#           DLL is also built, pygamma.dll. All libraries and object
-#           files will be made in the directory specified by BINDIR.
+#           libgamma.a. Similarly, other object files object files will
+#           be compiled and then be combined into a shared library of
+#           name libgamma.so. All libraries and object files will be
+#           made in the directory specified by BINDIR. The shared libs
+#           will be relocated with added soft links when installed.
 #
 # make install: This will convert the file gamma.in into the working
 #               script gamma and move it into a system file so that it
@@ -53,7 +50,7 @@
 #               the shared library for GAMMA into a system directory
 #		place appropriate soft links so that it is generally
 #               workable. Lastly, if PyGAMMA has been built, its
-#               shared library pygamma.so will be moved into a Python
+#               shared library _pygamma.so will be moved into a Python
 #               directory.
 #
 # make clean: This will delete all object files from any earlier build.
@@ -62,7 +59,7 @@
 #             other GAMMA builds (not part of this Makefile)
 #
 # make test: This will build and run a set of programs that test the
-#             the modules provided with GAMMA.
+#            the modules provided with GAMMA.
 #
 #########################################################################
 
@@ -71,24 +68,30 @@
 #                Semi-Standard Gnuish Makefile Variables
 #
 # CXX         = C++ compiler (used in default compiler rules)
-# CPPFLAGS    = C preprocessor flags (used in default C/C++ rules)
 # CXXFLAGS    = C++ compilation flags (used in default C++ builds)
 #
-# The default rule in make that uses the variables CXX, CPPFLAGS and
+# The default rule in make that uses the variables CXX and
 # CXXFLAGS to generate object files from .cc files is as follows:
 #
 # %.o : %.cc
-#        $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+#        $(CXX) -c $(CXXFLAGS) $< -o $@
 #
 #########################################################################
 
-BININSTALLDIR = /usr/local/bin
-LIBINSTALLDIR = /usr/local/lib
-HDRINSTALLDIR = /usr/local/include/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}
+SHELL  = /bin/bash
+PYTHON = /usr/bin/python
+SWIG   = /usr/bin/swig
+
+GAMMA_ARCH    = i686-pc-linux-gnu
+INSTALLDIR    = /usr/local
+
+BININSTALLDIR = ${INSTALLDIR}/bin
+LIBINSTALLDIRV= ${INSTALLDIR}/lib/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}
+LIBINSTALLDIR = ${INSTALLDIR}/lib/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}/${GAMMA_ARCH}
+HDRINSTALLDIR = ${INSTALLDIR}/include/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}
 
 ROOTDIR = ../..
 SRCDIR  = ../../src
-SRCDIR1 = ../../src
 
 # Un-comment out these next two lines if using blas, atlas, or lapack,
 # and uncomment one or both of the following two lines
@@ -97,36 +100,25 @@ SRCDIR1 = ../../src
 BLASINCL_FLAG   =
 LAPACKINCL_FLAG =
 
-SRCDIRINCL_FLAG = -I$(SRCDIR1) $(BLASINCL_FLAG) $(LAPACKINCL_FLAG)
+SRCDIRINCL_FLAG = -I$(SRCDIR) $(BLASINCL_FLAG) $(LAPACKINCL_FLAG)
 
-BINDIR        = ./../../i686-pc-linux-gnu
+BINDIR        = ./../../${GAMMA_ARCH}
 
 DEBUG    = -g
-OPTIMIZE = -O2
+OPTIMIZE = -O3
 
 CC       = gcc
-#CFLAGS  = $(DEBUG)
-CFLAGS   = $(SRCDIRINCL_FLAG) $(OPTIMIZE)
-
+CFLAGS   = $(SRCDIRINCL_FLAG) $(DEBUG) $(OPTIMIZE)
 CXX      = g++
-CPPFLAGS = $(SRCDIRINCL_FLAG)
+CXXFLAGS = $(SRCDIRINCL_FLAG) $(DEBUG) $(OPTIMIZE)
 
-#CXXFLAGS = $(DEBUG)
-CXXFLAGS = $(SRCDIRINCL_FLAG) $(OPTIMIZE)
+LIBCXXFLAGS = $(SRCDIRINCL_FLAG) $(DEBUG) $(OPTIMIZE)
 
-LIBCPPFLAGS = $(SRCDIRINCL_FLAG)
-#LIBCXXFLAGS = $(DEBUG)
-LIBCXXFLAGS = $(OPTIMIZE)
+SOCXXFLAGS = -fPIC $(SRCDIRINCL_FLAG) $(DEBUG) $(OPTIMIZE)
 
-SOCPPFLAGS = $(SRCDIRINCL_FLAG)
-SOCXXFLAGS = -fPIC $(OPTIMIZE)
-
-PYSGCPPINCLFLAGS =
-PYSGCPPFLAGS = -Wall -fPIC -fno-stack-protector $(SRCDIRINCL_FLAG)
-PYSGCXXFLAGS = $(OPTIMIZE)
+PYSGCXXFLAGS = -fPIC $(SRCDIRINCL_FLAG) $(DEBUG) $(OPTIMIZE) -fno-stack-protector
 
 LDFLAGS  =
-exeext   = .out
 
 AR       = ar
 ARFLAGS  = r
@@ -141,10 +133,6 @@ LDCONFIG = /sbin/ldconfig
 #LAB_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS)
 LAB_LIBS =
 
-NPD      = --no-print-directory
-
-
-
 #########################################################################
 #
 #	           Names Of Various Targets To Build
@@ -158,7 +146,7 @@ NPD      = --no-print-directory
 # Note: The shared library name should be libgamma.#.#.# where the 3
 #       numbers are MAJORVERSION, MINORVERSION, and RELEASEVERSION
 #       respectively. For GAMMA we
-#       are currently on major version 4 and minor version 1 so that it
+#       are currently on major version 4 and minor version 2 so that it
 #       will have an soname of libgamma.so.4 whereas the library name
 #       produced in the build will be libgamma.so.4.2. When the library
 #       libgamma.so.4.2 is put into a standard directory (e.g. into
@@ -226,9 +214,10 @@ include ../../make/MakeMods
 #
 #                              Main Target
 #
-# This target produce the static library.
+# This target produces the dynamic and static library.
 #
 # LIB_NAME    = Name of library to be generated/targeted.  (libgamma.a)
+# SO_NAME     = Name of library to be generated/targeted.  (libgamma.so)
 #
 #########################################################################
 
@@ -240,7 +229,7 @@ pysg: $(BINDIR) $(BINDIR)/$(PYS_NAME)
 
 ${LIB_NAME}: ${BINDIR}/${LIB_NAME}
 ${SO_NAME}:  ${BINDIR}/${SO_NAME}
-${PYS_NAME}:  ${BINDIR}/${PYS_NAME}
+${PYS_NAME}: ${BINDIR}/${PYS_NAME}
 
 big: so lib pysg test
 
@@ -274,7 +263,7 @@ OTHERDOTIFILES = $(addprefix $(SRCDIR)/, $(ALLIFILES))
 
 $(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
 	@echo
-	swig -c++ -python -outdir $(BINDIR) -o $@ \
+	${SWIG} -c++ -python -outdir $(BINDIR) -o $@ \
          -I../../src $<
 
 #########################################################################
@@ -286,7 +275,7 @@ $(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
 # this task:
 #
 # %.o : %.cc
-#        $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+#        $(CXX) -c $(CXXFLAGS) $< -o $@
 #
 # But that does not suffice for two reasons. First, GAMMA source files
 # reside in module directories off of the source directory SRCDIR.
@@ -326,7 +315,7 @@ MODULEDIRS = ${ALLMODDIRS}
 # this task:
 #
 # %.o : %.cc
-#        $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+#        $(CXX) -c $(CXXFLAGS) $< -o $@
 #
 # But that does not suffice for two reasons. First, GAMMA source files
 # reside in module directories off of the source directory SRCDIR.
@@ -339,55 +328,55 @@ MODULEDIRS = ${ALLMODDIRS}
 #########################################################################
 
 ${BINDIR}/%.o : ${SRCDIR}/${BASICS}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${MATRIX}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${HSPACE}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${LEVEL1}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${LSPACE}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${LEVEL2}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${BLOCH}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${GAMIO}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${BWR}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${PULSES}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${INTRANK2}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${FLOQUET}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${GRADIENTS}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${MULTISYS}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${ESRLIB}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${DEPREC}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 ${BINDIR}/%.o : ${SRCDIR}/${TESTING}/%.cc
-	$(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 #########################################################################
 #
@@ -398,7 +387,7 @@ ${BINDIR}/%.o : ${SRCDIR}/${TESTING}/%.cc
 # this task:
 #
 # %.o : %.cc
-#        $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+#        $(CXX) -c $(CXXFLAGS) $< -o $@
 #
 # But that does not suffice for a few reasons. First, GAMMA sources
 # reside in module directories off of the source directory SRCDIR.
@@ -412,55 +401,55 @@ ${BINDIR}/%.o : ${SRCDIR}/${TESTING}/%.cc
 #########################################################################
 
 ${BINDIR}/%.soo : ${SRCDIR}/${BASICS}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${MATRIX}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${HSPACE}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${LEVEL1}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${LSPACE}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${LEVEL2}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${BLOCH}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${GAMIO}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${BWR}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${PULSES}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${INTRANK2}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${FLOQUET}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${GRADIENTS}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${MULTISYS}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${ESRLIB}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${DEPREC}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.soo : ${SRCDIR}/${TESTING}/%.cc
-	$(CXX) -c $(SOCPPFLAGS) $(SOCXXFLAGS) $< -o $@
+	$(CXX) -c $(SOCXXFLAGS) $< -o $@
 
 
 #########################################################################
@@ -470,60 +459,59 @@ ${BINDIR}/%.soo : ${SRCDIR}/${TESTING}/%.cc
 ########################################################################
 
 ${BINDIR}/%.pso : ${SRCDIR}/${BASICS}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${MATRIX}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${HSPACE}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${LEVEL1}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${LSPACE}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${LEVEL2}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${BLOCH}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${GAMIO}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${BWR}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${PULSES}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${INTRANK2}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${FLOQUET}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${GRADIENTS}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${MULTISYS}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${ESRLIB}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${DEPREC}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 ${BINDIR}/%.pso : ${SRCDIR}/${TESTING}/%.cc
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSGCXXFLAGS) $< -o $@
+	$(CXX) -c $(PYSGCXXFLAGS) $< -o $@
 
 $(PYSG_WRAP_OBJS) : $(PYSG_WRAP_SRC)
-	$(CXX) -c $(PYSGCPPFLAGS) $(PYSG_WRAP_SRC)  \
-         $(PYSINCFLAGS) -o $(PYSG_WRAP_OBJS)
-
+	$(CXX) -c $(PYSG_WRAP_SRC)  \
+        $(PYSGCXXFLAGS) $(PYSGINCFLAGS) -o $(PYSG_WRAP_OBJS)
 
 #########################################################################
 #
@@ -563,8 +551,6 @@ ${HDRINSTALLDIR}/%.h : ${SRCDIR}/%.h
 #
 # BINDIR      = Where we will ultimately place or binaries. This is
 #               set to replace a CygWin build.
-# NPD         = Turns of directory name printing when recursing through
-#               other directories.
 #
 #########################################################################
 
@@ -592,7 +578,7 @@ SO_LDLIBS  = $(LAB_LIBS)
 # for GNU make, is
 #
 # %.o : %.cc
-#        $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+#        $(CXX) -c $(CXXFLAGS) $< -o $@
 #
 # This implicit rule can be replaced by defining a new pattern rule
 # with the same target and prerequisites, but different commands.
@@ -636,7 +622,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 # in the documentation for GNU make, is
 #
 # %.o : %.cc
-#        $(CXX) -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
+#        $(CXX) -c $(CXXFLAGS) $< -o $@
 #
 # Since we switched from .o to .soo and use particular sub-directories
 # we have made our own rules to handle the compilation of sources.
@@ -646,6 +632,7 @@ ${BINDIR}/${LIB_NAME}: ${BINDIR} ${LIB_OBJS}
 ${SO_NAME}: ${BINDIR}/${SO_NAME}
 
 ${BINDIR}/${SO_NAME}: ${BINDIR}/${SO_NAMEXXX}
+	@echo "Making Links For Shared Library"
 	@rm -f ${BINDIR}/${SO_NAME}
 	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
 
@@ -655,8 +642,6 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo
 	@$(CXX) ${SO_LDFLAGS} -Wl,-soname,${SO_NAMEX} -o ${BINDIR}/${SO_NAMEXXX} $(SO_OBJS) $(SO_LDLIBS)
 
-
-
 ########################################################################
 #
 #  Python Swig build shared library details
@@ -665,12 +650,11 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 
 # Using python to find the default library and include path for "python"
 # executable on the local machine.
-PYTHON_EXECUTABLE = python
 
-PYTHONINCDIRS := ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
-PYTHONLIBDIRS := ${shell ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
+PYTHONINCDIRS := ${shell ${PYTHON} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"}
+PYTHONLIBDIRS := ${shell ${PYTHON} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_lib()"}
 
-PYSINCFLAGS = -I$(PYTHONINCDIRS)
+PYSGINCFLAGS = -I$(PYTHONINCDIRS)
 PYSG_LDFLAGS = -L$(PYTHONLIBDIRS)
 
 PYSGAMMA_CHK = $(addprefix $(BINDIR)/, python_lib_incl.chk)
@@ -709,8 +693,6 @@ ${BINDIR}/$(PYS_NAME): $(PYSGAMMA_CHK) $(PYSG_OBJS) $(PYSG_WRAP_OBJS)
 	@echo
 	$(CXX) ${PYS_LDFLAGS} ${PYSG_LDFLAGS} -o ${BINDIR}/${PYS_NAME} $(PYSG_OBJS) $(PYSG_WRAP_OBJS) $(PYS_LDLIBS)
 
-
-
 #########################################################################
 #
 #               Ensure Needed Binary Directory Exists
@@ -727,7 +709,6 @@ ${BINDIR}: force
 	fi
 
 force:
-
 
 #########################################################################
 #
@@ -779,15 +760,13 @@ ZTESTOBJFILES  += $(addsuffix .too,  $(addprefix $(BINDIR)/, $(ZTESTSBASE)))
 
 ALLTESTOBJFILES = $(TESTOBJFILES) $(ZTESTOBJFILES)
 
-#CPP_TESTFLAGS = -g -Wall $(SRCDIRINCL_FLAG)
-CPP_TESTFLAGS = -Wall $(SRCDIRINCL_FLAG)
-CXX_TESTFLAGS = $(OPTIMIZE)
+CXX_TESTFLAGS = $(OPTIMIZE) $(SRCDIRINCL_FLAG)
 
-LD_TESTFLAGS =
+LD_TESTFLAGS = $(LDFLAGS)
 
 
 ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
-	$(CXX) -c $(CPP_TESTFLAGS) $(CXX_TESTFLAGS) $< -o $@
+	$(CXX) -c $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
 	$(CXX) -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
@@ -810,7 +789,7 @@ run: force
 	@echo
 	@echo Running tests:
 	@echo
-	@cd $(RUNDIR); python run_tests.py -v -p $(BINDIR)/
+	@cd $(RUNDIR); $(PYTHON) run_tests.py -v -p $(BINDIR)/
 	@echo
 
 
@@ -822,7 +801,7 @@ pytest: force
 	@echo
 	@echo Running Python tests:
 	@echo
-	@cd $(PY_RUNDIR); python ../Tests/run_tests.py -v
+	@cd $(PY_RUNDIR); $(PYTHON) ../Tests/run_tests.py -v
 	@echo
 
 
@@ -897,7 +876,7 @@ pytest: force
 #
 # To accomplish this, libgamma.so needs to be put in a standard
 # directory where shared libraries are kept. For Linux this is usually
-# /usr/local/lib.
+# /usr/local/lib 
 # Furthermore, libgamma.so should simply exist as a symbolic link to
 # the library that has the soname that the executable needs. Even more
 # complicated, the true library naming should use GAMMA version
@@ -956,9 +935,9 @@ installhdrs: force
                 mkdir ${HDRINSTALLDIR}/$$i; \
 	        done; \
 	fi
-	@${MAKE} ${NPD} ${HDRINSTALLDIR}/gamma.h
-	@${MAKE} ${NPD} ${HDRINSTALLDIR}/GamGen.h
-	@${MAKE} ${NPD} ${INS_HDRS}
+	@${MAKE} ${HDRINSTALLDIR}/gamma.h
+	@${MAKE} ${HDRINSTALLDIR}/GamGen.h
+	@${MAKE} ${INS_HDRS}
 
 ##########################################################################
 #
@@ -976,7 +955,7 @@ SEDSUB_VERSION = 's|VERSION_NUMBER_GOES_HERE|${GAMMAVERSION}|g'
 ${BININSTALLDIR}/gamma: gamma
 	@echo Copying The GAMMA Script To The Bin Directory ${BININSTALLDIR}
 	@cp -f ./${GSCRIPT} ${BININSTALLDIR}
-	@sed --in-place ${SEDSUB_VERSION} ${BININSTALLDIR}/${GSCRIPT}
+	@perl -i -p -e ${SEDSUB_VERSION} ${BININSTALLDIR}/${GSCRIPT}
 	@chmod a+x ${BININSTALLDIR}/${GSCRIPT}
 
 script: gamma
@@ -993,6 +972,18 @@ ${LIBINSTALLDIR}/${SO_NAMEXXX}: ${BINDIR}/${SO_NAMEXXX}
 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
 
 installsolib: force
+	@if (test -d ${LIBINSTALLDIRV}) \
+        then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIRV}; \
+        else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIRV}; \
+             echo * mkdir ${LIBINSTALLDIRV}; \
+             mkdir ${LIBINSTALLDIRV}; \
+        fi
+	@if (test -d ${LIBINSTALLDIR}) \
+        then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIR}; \
+        else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIR}; \
+             echo * mkdir ${LIBINSTALLDIR}; \
+             mkdir ${LIBINSTALLDIR}; \
+        fi
 	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
 	@echo " * Setting Link For libgamma.so"
@@ -1000,6 +991,8 @@ installsolib: force
 	@echo " *         (This May Take A Couple Of Seconds)"
 	@${LDCONFIG} -n ${LIBINSTALLDIR}
 	@echo " * Adding Link For GAMMA Base Library Name"
+	@rm -f ${LIBINSTALLDIR}/${SO_NAME}
+	@rm -f ${LIBINSTALLDIR}/${SO_NAMEX}
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
 	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
 	@echo
@@ -1012,16 +1005,15 @@ installlib: force
 	@if (test -d ${LIBINSTALLDIRV}) \
 	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIRV}; \
 	else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIRV}; \
-		mkdir ${LIBINSTALLDIRV}; \
+             mkdir ${LIBINSTALLDIRV}; \
 	fi
 	@if (test -d ${LIBINSTALLDIR}) \
 	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIR}; \
-      	else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIR}; \
-      		mkdir ${LIBINSTALLDIR}; \
+        else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIR}; \
+             mkdir ${LIBINSTALLDIR}; \
 	fi
 	@echo " * Copying Static Library To ${LIBINSTALLDIR}"
 	@cp -f ${BINDIR}/${LIB_NAME} ${LIBINSTALLDIR}
-
 
 ######################################################################
 #
@@ -1036,14 +1028,12 @@ install: force
 	@echo " * GAMMA Script Installation Directory Is ${BININSTALLDIR}"
 	@echo " * GAMMA Binary Library Installation Directory Is ${LIBINSTALLDIR}"
 	@echo " * GAMMA Headers Installation Directory Is ${HDRINSTALLDIR}"
-	@${MAKE} ${NPD} installscript
-	@${MAKE} ${NPD} installhdrs
-	@${MAKE} ${NPD} installsolib
-	@${MAKE} ${NPD} installlib
+	@${MAKE} installscript
+	@${MAKE} installhdrs
+	@${MAKE} installsolib
+	@${MAKE} installlib
 	@echo " * Finished. Compile Command gamma Should Now Work"
 	@echo
-
-
 
 
 # PYSGDISTDIR is the destination directory for the binary (and pygamma.py)
@@ -1067,8 +1057,8 @@ pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
 ########################################################################
 
 clean:
-	rm -f ${LIB_OBJS}
-	rm -f ${SO_OBJS}
+	@rm -f ${LIB_OBJS}
+	@rm -f ${SO_OBJS}
 	@rm -f $(PYSG_OBJS) $(PYSG_WRAP_SRCS) $(PYSG_WRAP_OBJS) $(PYSGAMMA_CHK)
 	@rm -f $(ALLTESTOBJFILES)
 	@rm -f *.asc
@@ -1077,7 +1067,7 @@ clean:
 	@rm -f ${BINDIR}/${SO_NAMEX}
 	@rm -f ${BINDIR}/${SO_NAMEXX}
 	@rm -f ${BINDIR}/${SO_NAMEXXX}
-	@rm -f $(BINDIR)/$(PYS_NAME)
+	@rm -f ${BINDIR}/${PYS_NAME}
 
 strip:
 	@strip ${BINDIR}/${LIB_NAME}
@@ -1090,5 +1080,7 @@ testclean:
 distclean:
 	@rm -f $(LIB_OBJS)
 	@rm -f ${LIB_NAME}
+	@rm -f $(TEST_OBJ)
+	@rm -f $(TEST_PGM)
 
 force:
