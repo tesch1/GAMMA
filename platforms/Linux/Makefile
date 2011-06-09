@@ -84,6 +84,7 @@ SWIG   = /usr/bin/swig
 
 GAMMA_ARCH    = i686-pc-linux-gnu
 INSTALLDIR    = /usr/local
+INSTALLDIR    = /nmrnet/gamma
 
 BININSTALLDIR = ${INSTALLDIR}/bin
 LIBINSTALLDIRV= ${INSTALLDIR}/lib/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}
@@ -769,19 +770,19 @@ ${BINDIR}/%.too : ${SRCDIR}/${TESTS}/%.cc
 	$(CXX) -c $(CXX_TESTFLAGS) $< -o $@
 
 $(BINDIR)/runtests : $(TESTOBJFILES)
-	$(CXX) -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(TESTOBJFILES) -L${BINDIR}/ -Wl,-R${BINDIR} -lgamma $(LAB_LIBS)
 
 $(BINDIR)/hstat : $(BINDIR)/homo_stat.too
-	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/homo_stat.too -L${BINDIR}/ -Wl,-R${BINDIR} -lgamma $(LAB_LIBS)
 
 $(BINDIR)/sl_exchange7_L : $(BINDIR)/sl_exchange7_L.too
-	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/sl_exchange7_L.too -L${BINDIR}/ -Wl,-R${BINDIR} -lgamma $(LAB_LIBS)
 
 $(BINDIR)/par_xixA : $(BINDIR)/par_xixA.too
-	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/par_xixA.too -L${BINDIR}/ -Wl,-R${BINDIR} -lgamma $(LAB_LIBS)
 
 $(BINDIR)/xix_dec : $(BINDIR)/xix_dec.too
-	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -lgamma $(LAB_LIBS)
+	$(CXX) -o $@ $(LD_TESTFLAGS) $(BINDIR)/xix_dec.too -L${BINDIR}/ -Wl,-R${BINDIR} -lgamma $(LAB_LIBS)
 
 RUNDIR = ./../../src/Tests
 
@@ -876,7 +877,7 @@ pytest: force
 #
 # To accomplish this, libgamma.so needs to be put in a standard
 # directory where shared libraries are kept. For Linux this is usually
-# /usr/local/lib 
+# /usr/local/lib
 # Furthermore, libgamma.so should simply exist as a symbolic link to
 # the library that has the soname that the executable needs. Even more
 # complicated, the true library naming should use GAMMA version
@@ -986,16 +987,13 @@ installsolib: force
         fi
 	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
-	@echo " * Setting Link For libgamma.so"
-	@echo " * Running ldconfig To Update Cache Of Known Shared Libraries"
-	@echo " *         (This May Take A Couple Of Seconds)"
-	@${LDCONFIG} -n ${LIBINSTALLDIR}
-	@echo " * Adding Link For GAMMA Base Library Name"
+	@echo "Making Links For Shared Library"
 	@rm -f ${LIBINSTALLDIR}/${SO_NAME}
 	@rm -f ${LIBINSTALLDIR}/${SO_NAMEX}
-	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
-	@ln -sf ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
-	@echo
+	@rm -f ${LIBINSTALLDIR}/${SO_NAMEXX}
+	@ln -s ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEXX}
+	@ln -s ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAMEX}
+	@ln -s ${LIBINSTALLDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}/${SO_NAME}
 
 ${LIBINSTALLDIR}/${LIB_NAME}: ${BINDIR}/${LIB_NAME}
 	@echo Copying The GAMMA Static Object Library To The Lib Directory ${LIBINSTALLDIR}
