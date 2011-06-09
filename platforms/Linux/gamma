@@ -148,7 +148,7 @@ done
 
 if [ ${VERBOSE} ]
 then
-    echo ${CXX} ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -R${GAMMA_LIB} -lgamma -lm ${NAME}
+    echo ${CXX} ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -Wl,-R${GAMMA_LIB} -lgamma -lm ${NAME}
 fi
-	${CXX}  ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -R${GAMMA_LIB} -lgamma -lm ${NAME}
+	${CXX}  ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -Wl,-R${GAMMA_LIB} -lgamma -lm ${NAME}
 
