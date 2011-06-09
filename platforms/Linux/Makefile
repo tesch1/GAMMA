@@ -84,7 +84,6 @@ SWIG   = /usr/bin/swig
 
 GAMMA_ARCH    = i686-pc-linux-gnu
 INSTALLDIR    = /usr/local
-INSTALLDIR    = /nmrnet/gamma
 
 BININSTALLDIR = ${INSTALLDIR}/bin
 LIBINSTALLDIRV= ${INSTALLDIR}/lib/gamma-${MAJORVERSION}.${MINORVERSION}.${RELEASEVERSION}
