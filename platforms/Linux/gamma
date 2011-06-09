@@ -73,7 +73,7 @@ fi
 
 GAMMA_PATH=${GAMMA_PATH-/usr/local}
 GAMMA_INC=${GAMMA_PATH}"/include/gamma-"${GAMMA_VERSION}"/"
-GAMMA_LIB=${GAMMA_PATH}"/lib/gamma-"${GAMMA_VERSION}"/"${GAMMA_ARCH}"/"
+GAMMA_LIB=${GAMMA_PATH}"/lib/gamma-"${GAMMA_VERSION}"/"
 
 #############################################################################
 #
