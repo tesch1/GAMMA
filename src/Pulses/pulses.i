@@ -11,3 +11,5 @@
 %include "PulCHIRP.i"
 %include "PulGARP.i"
 %include "PulWALTZ.i"
+%include "PulTrainSCyc.i"
+%include "PulDANTE.i"

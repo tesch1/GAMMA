@@ -213,7 +213,7 @@ MSVCDLC ~PulTrainSCyc();
 // ------------------------------- Assignment ---------------------------------
  
 
-MSVCDLL void operator = (const PulTrainSCyc& PTSC1);
+MSVCDLL PulTrainSCyc& operator = (const PulTrainSCyc& PTSC1);
 
         // Input        PTSC1	: Pulse train supercycle
         // None         PTSC	: Pulse train supercycle (this) copied from PTSC1

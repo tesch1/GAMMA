@@ -324,19 +324,21 @@ PulTrainSCyc::~PulTrainSCyc()
 // ------------------------------- Assignment ---------------------------------
 
 
-void PulTrainSCyc::operator = (const PulTrainSCyc& PTSC1)
+PulTrainSCyc& PulTrainSCyc::operator = (const PulTrainSCyc& PTSC1)
 
 	// Input	PTSC1	: Pulse Train
 	// None		PTSC	: Pulse Train (this) copied from PTSC1
 
-  {
+{
   PulSupCycle::operator=(PTSC1);		// Copy pulse train definition
   deleteUprops();			// Delete current propagators
   deleteGprops();			// Delete current superpropagators
   tp = PTSC1.tp;				// Copy pulse train supercycle length
   copyUprops(PTSC1);			// Copy any Hilbert Propagators
   copyGprops(PTSC1);			// Copy any Liouville Propagators
-  }
+
+  return (*this);
+}
 
 // ____________________________________________________________________________
 // B                CLASS PULSE TRAIN SUPERCYCLE HAMILTONIAN FUNCTIONS
