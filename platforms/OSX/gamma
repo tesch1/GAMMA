@@ -24,12 +24,13 @@
 # The string below is intended to be replaced with the real version number
 # (e.g. 4.2.2) via sed during the `make install` portion of the Makefile.
 # Once this script is in /usr/local/bin, it should be set correctly.
-VERSION="VERSION_NUMBER_GOES_HERE"
+GAMMA_VERSION="VERSION_NUMBER_GOES_HERE"
+GAMMA_ARCH="mac-darwin"
 
 
 if [ "$1" = "-v" ]
 then
-  echo "GAMMA Version "$VERSION""
+  echo "GAMMA Version "$GAMMA_VERSION""
   exit
 fi
 
@@ -49,7 +50,7 @@ then
   echo ""
   echo "              G  A  M  M  A"
   echo ""
-  echo "             (Version "$VERSION")"
+  echo "             (Version "$GAMMA_VERSION")"
   echo ""
   echo "  Written by Scott Smith and Tilo Levante"
   echo ""
@@ -70,7 +71,9 @@ fi
 # Set Specifically In The GAMMA_INC Line Below.
 #############################################################################
 
-GAMMA_INC="/usr/local/include/gamma-"$VERSION""
+GAMMA_PATH=${GAMMA_PATH-/usr/local}
+GAMMA_INC=${GAMMA_PATH}"/include/gamma-"${GAMMA_VERSION}"/"
+GAMMA_LIB=${GAMMA_PATH}"/lib/gamma-"${GAMMA_VERSION}"/"
 
 #############################################################################
 #
@@ -95,7 +98,8 @@ GAMMA_INC="/usr/local/include/gamma-"$VERSION""
 #############################################################################
 
 CXX="g++"
-CXXFLAGS="-g -O2"
+CXXFLAGS="-g -O3 -Wall"
+EXTRALIB="-framework veclib"
 LDFLAGS=""
 NAME=
 GPROF=""
@@ -132,53 +136,6 @@ do
   shift
 done
 
-
-#############################################################################
-#
-# This section defines the names of the produced GAMMA module libraries. You
-# may remove any of these from linking to your GAMMA programs by setting them
-# to be empty.  For example, to remove the Floquet library from being linked
-# simply set "LFLOQ=-lFloquet" to "LFLOQ=".  You should probably comment out
-# the original lines so that you may later include such libraries if needed.
-# Libraries ending with _p have included profiling during their build.
-#
-#############################################################################
-
-MODLIBS=''
-  LBAS=-lBasics				# GAMMA basic library
-  LGMX=-lMatrix				# GAMMA matrices library
-  LHS=-lHSLib				# GAMMA Hilbert space library
-  LGLEV1=-lLevel1			# GAMMA Level 1 library
-  LLS=-lLSLib				# GAMMA Liouville space library
-  LGIO=-lGamIO				# GAMMA I/O interface library
-  LGLEV2=-lLevel2			# GAMMA Level 2 library
-  LBLH=-lBloch				# GAMMA Bloch library
-  LWBR=-lWBR				# GAMMA WBR relaxtion library
-  LFLOQ=-lFloquet 			# GAMMA Floquet operators
-  LIR2=-lIntRank2			# GAMMA rank 2 interactions library
-  LMUL=-lMultiSys			# GAMMA multi-sys systems library
-  LPUL=-lPulses				# GAMMA pulse trains and cycles
-  LDEP=-lDeprecated                     # GAMMA deprecated classes
-  LESR=-lESRLib                         # GAMMA ESR based classes
-  LGRD=-lGradients			# GAMMA field gradients
-  LTST=-lTesting			# GAMMA platform testing
-
-if [ ${GPROF}a != "-pga" ]
-then
-  MLIBS="${LTST} ${LDEP} ${LESR} ${LGRD} ${LMUL} ${LPUL} ${LFLOQ}\
-         ${LIR2} ${LESR} ${LWBR} ${LBLH} ${LGLEV2} ${LGIO} ${LLS} ${LGLEV1}\
-         ${LHS} ${LGMX} ${LBAS}"
-else
-  MLIBS="${LTST}_p ${LDEP}_p ${LESR}_p ${LGRD}_p ${LMUL}_p ${LPUL}_p ${LFLOQ}_p\
-         ${LIR2}_p ${LESR}_p ${LWBR}_p ${LBLH}_p ${LGLEV2}_p ${LGIO}_p ${LLS}_p ${LGLEV1}_p\
-         ${LHS}_p ${LGMX}_p ${LBAS}_p"
-  if [ ${VERBOSE} ]
-  then
-    echo The Compilation Is Using Profiling So Execution Makes gmon.out
-    echo
-  fi
-fi
-
 #############################################################################
 #
 # Finally For The GAMMA Program Compilation. First We Shall Test To See If
@@ -192,7 +149,7 @@ fi
 
 if [ ${VERBOSE} ]
 then
-    echo ${CXX} ${STRIP} -Wall ${ARG} -I${GAMMA_INC} -lgamma -lm ${NAME}
+    echo ${CXX} ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -lgamma ${EXTRALIB} -lm ${NAME}
 fi
-	${CXX}  ${STRIP} -Wall ${ARG} -I${GAMMA_INC} -lgamma -lm ${NAME}
+	${CXX}  ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -lgamma ${EXTRALIB} -lm ${NAME}
 
