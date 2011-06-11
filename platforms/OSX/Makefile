@@ -647,7 +647,7 @@ $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo "Making Shared Library $(SO_NAME) From Object Files"
 	@echo
 	@echo "   * Building Library ${BINDIR}/${SO_NAMEXXX}"
-	@$(CXX) ${SO_LDFLAGS} -install_name ${BINDIR}/${SO_NAMEX} \
+	@$(CXX) ${SO_LDFLAGS} -install_name ${LIBINSTALLDIRV}/${SO_NAMEX} \
          -compatibility_version ${COMPVER} -current_version ${CURRVER} \
          -o ${BINDIR}/${SO_NAMEXXX} ${SO_OBJS} $(SO_LDLIBS)
 	@# gcc creates both libgamma.dylib and libgamma.4.2.0.dylib; we
