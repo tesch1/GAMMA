@@ -99,6 +99,7 @@ GAMMA_LIB=${GAMMA_PATH}"/lib/gamma-"${GAMMA_VERSION}"/"
 
 CXX="g++"
 CXXFLAGS="-g -O3 -Wall"
+EXTRALIB=""
 LDFLAGS=""
 NAME=
 GPROF=""
@@ -148,7 +149,7 @@ done
 
 if [ ${VERBOSE} ]
 then
-    echo ${CXX} ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -Wl,-R${GAMMA_LIB} -lgamma -lm ${NAME}
+    echo ${CXX} ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -Wl,-R${GAMMA_LIB} -lgamma ${EXTRALIB} -lm ${NAME}
 fi
-	${CXX}  ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -Wl,-R${GAMMA_LIB} -lgamma -lm ${NAME}
+	${CXX}  ${CXXFLAGS} ${STRIP} ${ARG} -I${GAMMA_INC} -L${GAMMA_LIB} -Wl,-R${GAMMA_LIB} -lgamma ${EXTRALIB} -lm ${NAME}
 
