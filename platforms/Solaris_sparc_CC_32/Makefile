@@ -79,8 +79,8 @@
 #########################################################################
 
 SHELL  = /bin/bash
-PYTHON = /nmrnet/gamma/python-sparc-cc/bin/python
-SWIG   = /nmrnet/gamma/python-sparc-cc/bin/swig
+PYTHON = python
+SWIG   = swig
 
 GAMMA_ARCH    = sparc-sun-solaris2.10-CC
 INSTALLDIR    = /nmrnet/gamma

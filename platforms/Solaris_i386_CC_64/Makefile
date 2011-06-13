@@ -79,8 +79,8 @@
 #########################################################################
 
 SHELL  = /bin/bash
-PYTHON = /nmrnet/gamma/python-i86pc-cc/bin/python
-SWIG   = /nmrnet/gamma/python-i86pc-cc/bin/swig
+PYTHON = python
+SWIG   = swig
 
 GAMMA_ARCH    = i386-pc-solaris2.10-CC64
 INSTALLDIR    = /nmrnet/gamma

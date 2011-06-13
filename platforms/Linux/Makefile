@@ -79,8 +79,8 @@
 #########################################################################
 
 SHELL  = /bin/bash
-PYTHON = /usr/bin/python
-SWIG   = /usr/bin/swig
+PYTHON = python
+SWIG   = swig
 
 GAMMA_ARCH    = i686-pc-linux-gnu
 INSTALLDIR    = /usr/local

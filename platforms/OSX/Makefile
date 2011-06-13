@@ -80,7 +80,7 @@
 
 SHELL  = /bin/bash
 PYTHON = python
-SWIG   = /usr/bin/swig
+SWIG   = swig
 
 GAMMA_ARCH    = mac-darwin
 INSTALLDIR    = /usr/local
