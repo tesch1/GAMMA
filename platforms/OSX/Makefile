@@ -103,7 +103,7 @@ LAPACKINCL_FLAG = -I/System/Library/Frameworks/vecLib.framework/Versions/A/Heade
 
 SRCDIRINCL_FLAG = -I$(SRCDIR) $(BLASINCL_FLAG) $(LAPACKINCL_FLAG)
 
-BINDIR        = ./../../mac-darwin
+BINDIR        = ./../../${GAMMA_ARCH}
 
 DEBUG    = -g
 OPTIMIZE = -O3
