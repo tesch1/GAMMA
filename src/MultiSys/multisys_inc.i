@@ -1,7 +1,7 @@
 
 %include "MultiLib0.i"
 %include "ExProcess.i"
-%include "MultiAux.i"
+/* %include "MultiAux.i" */
 %include "MultiSys.i"
 %include "MultiLib.i"
 %include "MultiSOp.i"
