@@ -649,12 +649,13 @@ SpinMaps.clear();
 //                         Assignment and Destruction
 //---------------------------------------------------------------------------------
 
-void ExchProc::operator=(const ExchProc& PR)
+ExchProc& ExchProc::operator=(const ExchProc& PR)
   {
   KRate    = PR.KRate;				// New exchange rate
   SpinMaps = PR.SpinMaps;			// Copy all spin maps
   LHSComps = PR.LHSComps;			// Copy lhs components
   RHSComps = PR.RHSComps;			// New array for lhs comps
+  return *this;
   } 
 
 ExchProc::~ExchProc() { }

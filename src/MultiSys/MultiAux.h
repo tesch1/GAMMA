@@ -97,7 +97,7 @@ MSVCDLC spin_pair(const std::string& SSP);
         // Output               void    : The process is constructed 
 
 
-MSVCDLL inline void operator = (const spin_pair& Sp);
+MSVCDLL inline spin_pair& operator = (const spin_pair& Sp);
 
         // Input                spair   : A spin pairing (this)
 	//			Sp      : A second spin pairing
@@ -272,7 +272,7 @@ MSVCDLC process(const ParameterSet& pset, int ip=-1, int warn=2);
 //                         Assignment and Destruction
 //---------------------------------------------------------------------------------
 
-MSVCDLL void process::operator=(const process& pr);
+MSVCDLL process& process::operator=(const process& pr);
 MSVCDLC      process::~process();
 
         // Input                pro     : Process (this) 
@@ -465,12 +465,13 @@ inline spin_pair::spin_pair(int subA, int spA, int subB, int spB)
   }
 
 
-inline void spin_pair::operator = (const spin_pair& Sp)
+inline spin_pair& spin_pair::operator = (const spin_pair& Sp)
   {
   sub1 = Sp.sub1; 			// Copy the 1st component
   sp1  = Sp.sp1; 			// Copy the 1st component spin
   sub2 = Sp.sub2; 			// Copy the 2nd component
   sp2  = Sp.sp2; 			// Copy the 2nd component spin
+  return *this;
   } 
 
 //_________________________________________________________________________________

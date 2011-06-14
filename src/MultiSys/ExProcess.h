@@ -164,7 +164,7 @@ MSVCDLC ExchProc(const ParameterSet& pset, int ip=-1, int warn=2);
 //                         Assignment and Destruction
 //---------------------------------------------------------------------------------
 
-MSVCDLL void operator=(const ExchProc& pr);
+MSVCDLL ExchProc& operator=(const ExchProc& pr);
 MSVCDLC      ~ExchProc();
 
         // Input                pro     : Process (this) 

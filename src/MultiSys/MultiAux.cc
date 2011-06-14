@@ -750,7 +750,7 @@ comp_rhs[i] = RHS[i];
 //                         Assignment and Destruction
 //----------------------------------------------------------------------------
 
-void process::operator=(const process& PR)
+process& process::operator=(const process& PR)
 
         // Input                pro     : Process (this)
         //                      PR      : Another process
@@ -779,8 +779,8 @@ void process::operator=(const process& PR)
     comp_lhs[j] = PR.comp_lhs[j];
   for(int k=0; k<n_rhs; k++)			// Copy all rhs comp. indices
     comp_rhs[k] = PR.comp_rhs[k];
-  return;
-  } 
+  return *this;
+  }
   
 
 process::~process() 

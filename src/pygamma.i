@@ -11,4 +11,5 @@
 %include "Pulses/pulses.i"
 %include "Gradients/gradients.i"
 %include "BWRRelax/bwrrelax.i"
+%include "MultiSys/multisys_inc.i"
 
