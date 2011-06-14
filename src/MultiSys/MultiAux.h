@@ -184,9 +184,9 @@ class process
         // Output		none    : Output process error message
         //				  Program execution stop (fatal)
  
-void process::XPerror(int eidx,                           int noret=0) const;
-void process::XPerror(int eidx, const std::string& pname, int noret=0) const;
-volatile void process::XPfatal(int eidx)                               const;
+void XPerror(int eidx,                           int noret=0) const;
+void XPerror(int eidx, const std::string& pname, int noret=0) const;
+volatile void XPfatal(int eidx)                               const;
 
 //_________________________________________________________________________________
 // ii                CLASS EXCHANGE PROCESS PARAMETER SET PARSING
@@ -204,7 +204,7 @@ volatile void process::XPfatal(int eidx)                               const;
    The string value defines the components (subsystems) involved in the exchange
    process. We only get the process definition, it doesn't bother to parse it.   */
 
-bool process::getExch(const ParameterSet& pset, int idx,
+bool getExch(const ParameterSet& pset, int idx,
                                            std::string& exch, bool warn=true) const;
 
 //---------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ bool process::getExch(const ParameterSet& pset, int idx,
    to parse out the integer values on each side of <=>, but lying between ().
    Also we must keep track of which are on the left and which are on the right.  */
 
-bool process::parseExch(std::string& Exval,
+bool parseExch(std::string& Exval,
                 std::vector<int>& lhs, std::vector<int>& rhs, bool warn=true) const;
 
 //---------------------------------------------------------------------------------
@@ -224,7 +224,7 @@ bool process::parseExch(std::string& Exval,
 
 // This will read a parameter such as    Kex_nm(0)  (1) : 600.0 - rate
 
-bool process::getRate(const ParameterSet& pset, int idx,
+bool getRate(const ParameterSet& pset, int idx,
                                                double& rate, bool warn=true) const;
 
 
@@ -232,8 +232,8 @@ bool process::getRate(const ParameterSet& pset, int idx,
 //---------------------- Read/Set The Entire Exchange Process ---------------------
 //---------------------------------------------------------------------------------
 
-bool process::getXP(const ParameterSet& pset, int idx, bool warn=true) const;
-bool process::setXP(const ParameterSet& pset, int idx, bool warn=true) const;
+bool getXP(const ParameterSet& pset, int idx, bool warn=true) const;
+bool setXP(const ParameterSet& pset, int idx, bool warn=true) const;
 
 
 //_________________________________________________________________________________
@@ -244,9 +244,9 @@ bool process::setXP(const ParameterSet& pset, int idx, bool warn=true) const;
 //                           Simple Constructors
 //---------------------------------------------------------------------------------
 
-MSVCDLC inline process::process();
-MSVCDLC inline process::process(int N_lhs, int N_rhs);
-       process::process(const process& proc);
+MSVCDLC inline process();
+MSVCDLC inline process(int N_lhs, int N_rhs);
+       process(const process& proc);
 
 //---------------------------------------------------------------------------------
 //                           Simple Constructors
@@ -272,8 +272,8 @@ MSVCDLC process(const ParameterSet& pset, int ip=-1, int warn=2);
 //                         Assignment and Destruction
 //---------------------------------------------------------------------------------
 
-MSVCDLL process& process::operator=(const process& pr);
-MSVCDLC      process::~process();
+MSVCDLL process& operator=(const process& pr);
+MSVCDLC      ~process();
 
         // Input                pro     : Process (this) 
         // Output               void	: The process is destructed
@@ -417,8 +417,8 @@ MSVCDLL void mapping(const std::string& spair);
         // Note                         : The file should be an ASCII file
         //                                containing recognized parameters
 
-MSVCDLL bool process::read(const std::string&  filename, int idx=-1, int warn=2);
-MSVCDLL bool process::read(const ParameterSet& pset,     int idx=-1, int warn=2);
+MSVCDLL bool read(const std::string&  filename, int idx=-1, int warn=2);
+MSVCDLL bool read(const ParameterSet& pset,     int idx=-1, int warn=2);
 
 //_____________________________________________________________________________
 // G                        EXCHANGE PROCESS OUTPUT
@@ -432,7 +432,7 @@ MSVCDLL bool process::read(const ParameterSet& pset,     int idx=-1, int warn=2)
         // Output               ostr  : The output stream  is returned
         //                              with the process added
 
-MSVCDLL std::ostream& process::print(std::ostream& ostr, int full=0) const;
+MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const process& pro);
 
 };					// End of class process
