@@ -31,7 +31,7 @@ gen_op multize(gen_op op(const spin_sys&, double),
 gen_op multize(gen_op op(const spin_sys&, double, double),
                  double phi, double beta, const multi_sys &msys, int icomp=-1);
  
-super_op multize(super_op& SOp, const multi_sys &msys, int icomp);
+/* super_op multize(super_op& SOp, const multi_sys &msys, int icomp); */
 
 super_op multize(super_op SOpFct(const gen_op&), const gen_op& Op, const multi_sys& msys);
 super_op multize(super_op sop(const sys_dynamic&,gen_op&,int,int), gen_op&,
@@ -39,6 +39,6 @@ super_op multize(super_op sop(const sys_dynamic&,gen_op&,int,int), gen_op&,
 super_op multize(super_op sop(const sys_dynamic&,gen_op&,int), gen_op&,
                                                          int, const multi_sys&);
 basis D_basis(const multi_sys& msys);
-std::vector<double> qStateLS(const multi_sys& msys, int I);
+/* std::vector<double> qStateLS(const multi_sys& msys, int I); */
 row_vector LS_qState_bra(const multi_sys& msys, int i);
 row_vector LS_qState_ket(const multi_sys& msys, int i);

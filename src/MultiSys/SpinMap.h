@@ -109,7 +109,7 @@ MSVCDLC      SpinMap();
 MSVCDLC      SpinMap(int c1, int s1, int c2, int s2);
 MSVCDLC      SpinMap(const SpinMap& SM);
 MSVCDLC      SpinMap(const std::string& SM);   
-MSVCDLL void operator = (const SpinMap& SM);
+MSVCDLL SpinMap& operator = (const SpinMap& SM);
 MSVCDLC      ~SpinMap() {};
 
 //_____________________________________________________________________________

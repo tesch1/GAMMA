@@ -234,12 +234,13 @@ SpinMap::SpinMap(const SpinMap& Sp)
   sp2 = Sp.sp2;
   }
 
-void SpinMap::operator = (const SpinMap& Sp)
+SpinMap& SpinMap::operator = (const SpinMap& Sp)
   {
   sub1 = Sp.sub1;                       // Copy the 1st component
   sp1  = Sp.sp1;                        // Copy the 1st component spin
   sub2 = Sp.sub2;                       // Copy the 2nd component
   sp2  = Sp.sp2;                        // Copy the 2nd component spin
+  return *this;
   }
 
 SpinMap::SpinMap(const std::string& SSP)
