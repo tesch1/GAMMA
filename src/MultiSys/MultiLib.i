@@ -2,7 +2,7 @@
 
 
 %{
-#include "MultiSys/MultiAux.h"
+#include "MultiSys/MultiLib.h"
 %}
 
 %include "std_vector.i"

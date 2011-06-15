@@ -447,12 +447,8 @@ ALLMODDIRS   += $(MULTISYS)
 ALLMODHDRS   += $(MULTISYSHDR)
 ALLPYFILES   += $(MULTISYSPY)
 
-# MULTISYS_IBASE  = multisys_inc MultiLib0 ExProcess MultiAux MultiSys MultiLib\
-#                  MultiSOp MultiIPul MultiHSLib MultiLOp MultiExch MultiHam\
-#                  MultiWBR SpinMap
-
-MULTISYS_IBASE  = multisys_inc MultiLib0 ExProcess MultiSys MultiLib\
-                  MultiSOp MultiIPul MultiHSLib MultiLOp MultiExch MultiHam\
+MULTISYS_IBASE  = multisys_inc ExProcess MultiSys MultiLib MultiSOp\
+                  MultiIPul MultiHSLib MultiLOp MultiExch MultiHam\
                   MultiWBR SpinMap
 
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(MULTISYS)/, $(MULTISYS_IBASE)))
