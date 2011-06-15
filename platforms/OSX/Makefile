@@ -983,6 +983,11 @@ ${LIBINSTALLDIR}/${SO_NAMEXXX}: ${BINDIR}/${SO_NAMEXXX}
 
 installsolib: force
 	@echo " * Copying Shared Library To ${LIBINSTALLDIR}"
+	@if (test -d ${LIBINSTALLDIR}) \
+	then echo The System GAMMA Library Directory Exists. ${LIBINSTALLDIR}; \
+        else echo Creating GAMMA Library Directory On System. ${LIBINSTALLDIR}; \
+             mkdir ${LIBINSTALLDIR}; \
+	fi
 	@cp -f ${BINDIR}/${SO_NAMEXXX} ${LIBINSTALLDIR}
 	@echo " * Setting Link For libgamma.dylib"
 	@echo " * Adding Link For GAMMA Base Library Name"
