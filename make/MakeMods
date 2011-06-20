@@ -311,12 +311,10 @@ BWRBASE     = relaxCSA  relaxDCSA relaxDip relaxExch relaxJ relaxQCSA \
               relaxQuad relaxRand relaxNMR  relaxProp relaxRF relaxBWRexch \
               relaxanalyze
 BWRHDR      = relaxBWRIF.h
-BWRPY       = PyBWRIF.h
 ALLFILES   += $(BWRBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(BWRRLX)/, $(BWRBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(BWRRLX)/, $(BWRBASE)))
 ALLHFILES  += $(addprefix $(BWRRLX)/, $(BWRHDR))
-ALLHFILES  += $(addprefix $(BWRRLX)/, $(BWRPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(BWRRLX)/, $(BWRBASE)))
 ALLMODDIRS += $(BWRRLX)
 ALLMODHDRS += $(BWRHDR)

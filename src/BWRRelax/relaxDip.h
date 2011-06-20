@@ -667,15 +667,6 @@ MSVCDLL row_vector R2_DDMQT(const sys_dynamic& sys, int MQC);
 MSVCDLL double     R2_DDMQT(const sys_dynamic& sys, int MQC, int i);
 MSVCDLL double     R2_DDMQT(const sys_dynamic& sys, int MQC, int i, int j);
 
-// _________________________________________________________________________
-// J                              PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBWRDip();
-
-#endif						// End PyGAMMA code block
 
 #endif						// relaxDip.h
 

@@ -1062,33 +1062,6 @@ double xiQ(const sys_dynamic& sys, int i)
   return xii;
   }
 
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-#include <boost/python/overloads.hpp>
-
-using boost::python::def;
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(BWR_RQQ1,     RQQ,      6, 8)
-BOOST_PYTHON_FUNCTION_OVERLOADS(BWR_RQQ2,     RQQ,      2, 4)
-
-super_op RQQBWR1(const sys_dynamic& sys, gen_op& Ho) { return RQQ(sys,Ho); }
-
-void PyBWRQuad()
-  {
-  def("RQQ",      (void(*)    (super_op&, const sys_dynamic&, gen_op&, double*, double*, double, int, int))0, BWR_RQQ1());
-  def("RQQ",      (super_op(*)(const sys_dynamic&, gen_op&, int, int))0, BWR_RQQ2());
-
-  def("R1_QQ", (row_vector(*)(const sys_dynamic&))      &R1_QQ);
-  def("R1_QQ", (double(*)    (const sys_dynamic&, int)) &R1_QQ);
-;
-  }
-
-#endif						// End PyGAMMA c
 
 #endif						// relaxQuad.cc
 

@@ -516,18 +516,6 @@ MSVCDLL double xiQ(const sys_dynamic& sys, int i);
 	//   i     [ 5  ]   2I (2I -1)    [ 5  ]    2I (2I -1)
 	//                    i   i                   i   i
 
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-super_op RQQBWR1(const sys_dynamic& sys, gen_op& Ho);
-
-void PyBWRQuad();
-
-#endif						// End PyGAMMA code block
-
 
 #endif						// relaxQuad.h
 

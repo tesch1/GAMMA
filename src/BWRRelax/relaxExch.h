@@ -77,15 +77,6 @@ MSVCDLL super_op Rex(const sys_dynamic& sys, gen_op Op);
 //           X    = K  * [ K   x K    - E x E ] = K    - E
 //            i,j    ex     i,j   i,j              i,j
 
-// _________________________________________________________________________
-// B                              PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBWRExch();
-
-#endif						// End of PyGAMMA code block
 
 #endif						// relaxExch.h
 

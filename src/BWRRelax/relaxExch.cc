@@ -159,23 +159,6 @@ super_op Rex(const sys_dynamic& sys, gen_op Op)
    return X;
    }
 
-// _________________________________________________________________________
-// B                              PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-void PyBWRExch()
-  {
-  def("Rex", (super_op(*)(const sys_dynamic&))         &Rex);
-  def("Rex", (super_op(*)(const sys_dynamic&, gen_op)) &Rex);
-  }
-
-#endif						// End PyGAMMA code block
 
 #endif						// relaxExch.cc
 
