@@ -1129,67 +1129,6 @@ std::ostream& operator<< (std::ostream& out, const floq2_op &Op)
   }
 
 
-// ____________________________________________________________________________
-// K                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/class.hpp>		// Boost.Python classes
-#include <boost/python/operators.hpp>		// Boost.Python operators
-#include <boost/python/def.hpp>
-
-using boost::python::init;
-using boost::python::self;
-using boost::python::def;
-
-void PyFloq2Op()
-  {
-//                                  The Class
-
-  boost::python::class_<floq2_op>("floq2_op", init<>())
-
-//                                Constructors
-
-    .def(init<const floq2_op&>())
-//    .def(init<int, int, int, double, double>())
-//    .def(init<int, int, int, double, double, const matrix&>())
-//    .def(init<int, int, int, double, double, const matrix&.  const basis&>())
-
-//                               Operators
-
-    .def(self     += matrix())
-    .def(self     -= matrix())
-
-    .def(self     *= complex())
-    .def(self     *= double())
-    .def(self     /  complex())
-    .def(self     /  double())
-    .def(self     /= complex())
-    .def(self     /= double())
-
-//                           Member Functions
-
-    .def("dim",    &floq2_op::dim)
-    .def("size",   &floq2_op::size)
-    .def("hsdim",  &floq2_op::hsdim)
-    .def("phodim", &floq2_op::phodim1)
-    .def("phodim", &floq2_op::phodim2)
-    .def("omega",  &floq2_op::omega1)
-    .def("omega",  &floq2_op::omega2)
-
-    .def("set_DBR",   &floq2_op::set_DBR)
-    .def("set_EBR",   &floq2_op::set_EBR)
-
-    .def(str(self)) 
-
-    .def("add_omegas",   &floq2_op::add_omegas)
-    .def("sub_omegas",   &floq2_op::sub_omegas)
-  ;
-  }
-
-#endif						// End of PyGAMMA code block
-
 
 #endif							// Floq2Op.h
  

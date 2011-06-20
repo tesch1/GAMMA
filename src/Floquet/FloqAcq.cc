@@ -518,18 +518,5 @@ void spec_vega(floq_op sigma, gen_op& det, floq_op& ham,
 }
 
 
-// ____________________________________________________________________________
-// K                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyFloqAcq()
-  {
-  }
-
-#endif						// End of PyGAMMA code block
-
-
 #endif 								// FloqAcq.cc
 

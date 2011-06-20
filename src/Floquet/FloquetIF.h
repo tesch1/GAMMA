@@ -30,12 +30,4 @@
 #include <Floquet/Floq2Op.h>		// Include 2 rotation Floq. ops.
 #include <Floquet/FloqAcq.h>		// Include Floquet acquisitions
 
-/* The Python interface file adds funtionality to Python via Boost.Python
-   It does so by specifying which functions are exported into Python from
-   a general Python module, PyModule. Since this module must first be built
-   (see src/PyGAMMAIF.cc and src/PyGAMMAIF.h) we cannot use the header
-   until after the compilation of PyGAMMAIF.cc.                          */
-
-//#include <Floquet/PyFloquet.h>		// Include Python interface
-
 #endif 					// __FloquetIF_H__ 

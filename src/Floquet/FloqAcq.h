@@ -143,14 +143,5 @@ MSVCDLL void spec_vega(floq_op sigma, gen_op& det, floq_op& ham,
 	// Note			      : it is assumed row_vector spec is at least
 	//				as large as np
 
-// ____________________________________________________________________________
-// K                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyFloqAcq();
-
-#endif						// End of PyGAMMA code block
 
 #endif 						/* __NMR_FLOQ_ACQ_H__ */ 

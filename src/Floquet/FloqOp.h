@@ -393,14 +393,4 @@ MSVCDLL void sub_omega();
 
 };
 
-// ____________________________________________________________________________
-// K                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyFloqOp();
-
-#endif						// End of PyGAMMA code block
-
 #endif						// FloqOp.h
