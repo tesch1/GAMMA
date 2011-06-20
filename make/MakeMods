@@ -148,7 +148,7 @@ HSPACEBASE  = SpinOpSng SpinSys SpinOp SpinOpCmp SpinOpRot\
               HSacquire HSdetect HSdecomp HSprop HSham HSanalyze\
               HSauxil PulseI PulseS PulseShp
 HSPACEHDR   = HSLibIF.h
-HSPACEPY    = PyHSLibIF.h
+HSPACEPY    = 
 ALLFILES   += $(HSPACEBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(HSPACE)/, $(HSPACEBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(HSPACE)/, $(HSPACEBASE)))
@@ -288,7 +288,7 @@ GAMIOBASE   = BinIOBase Gascii GgnuplotC Ggnuplot1D GgnuplotSph Ggnuplot \
 #NMRiFile
 
 GAMIOHDR    = GammaIOIF.h
-GAMIOPY     = PyGamIOIF.h
+GAMIOPY     = 
 ALLFILES   += $(GAMIOBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(GAMIO)/, $(GAMIOBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(GAMIO)/, $(GAMIOBASE)))
@@ -362,7 +362,7 @@ IRANK2BASE  = IntRank2ACmp IntRank2A IntRank2T IntRank2 IntCSA IntDip IntQuad In
               IntDipVec IntCSAVec IntQuadVec IntGVec IntHFVec CompRot SolidSys CartMx2A \
               FrameMap HDipolar HQuadrup HShiftAnis HElectronG
 IRANK2HDR   = IntRank2IF.h
-IRANK2PY    = PyIntRank2.h
+IRANK2PY    = 
 ALLFILES   += $(IRANK2BASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(IRANK2)/, $(IRANK2BASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(IRANK2)/, $(IRANK2BASE)))
@@ -403,7 +403,7 @@ FGRAD       = Gradients
 FGRADUL     = ---------
 FGRADBASE   = sys_gradz Gradients2 GrdPulses GrdEvolve GrdAcquire GrdDeprec
 FGRADHDR    = GradIF.h
-FGPY        = PyGradientsIF.h
+FGPY        = 
 ALLFILES   += $(FGRADBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(FGRAD)/, $(FGRADBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(FGRAD)/, $(FGRADBASE)))
@@ -496,7 +496,7 @@ GTEST       = Testing
 GTESTUL     = -------
 GTESTBASE   = ConstTest SingleTest SectTest ClassTest ModTest GamTest
 GTESTHDR    = TestingIF.h
-GTESTPY     = PyTesting.h
+GTESTPY     = 
 ALLFILES   += $(GTESTBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(GTEST)/, $(GTESTBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(GTEST)/, $(GTESTBASE)))

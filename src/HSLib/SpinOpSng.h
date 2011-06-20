@@ -74,17 +74,6 @@ MSVCDLL matrix Raxis(int qn, double beta, char axis);
   //                      these lists are ordered by qn and the
   //                      rotations must also be ordered by angle
   //                      and axis.
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySpinOpSng();
-
-#endif						// End of PyGAMMA code block
  
 #endif						// SpinOpSng.h (Single Spin Operator)
 

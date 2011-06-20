@@ -473,40 +473,4 @@ gen_op HQsec(const spin_system& sys, double wQ, int i)
   return gen_op(wQ*SOp);		// Switch to an operator
   }
 
-
-// ____________________________________________________________________________
-// S                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA						// If compiling PyGAMMA
-
-#include <boost/python/def.hpp>
-#include <boost/python/overloads.hpp>
-
-using boost::python::def;
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(HSHam_Hz,  Hz,  1, 2)
-
-void PyHSHam()
-  {
-  def("Hcs",     Hcs);
-  def("Hcs_lab", Hcs_lab);
-
-  def("HJ",      HJ);
-  def("HJw",     HJw);
-  def("HJwh",    HJwh);
-  def("HJd",     HJd);
-
-  def("Ho",      Ho);
-  def("How",     How);
-  def("Ho_lab",  Ho_lab);
-
-  def("Hz", (gen_op(*)(const spin_system&, const std::string&))0, HSHam_Hz());
-
-  def("H1",      H1);
-  def("Heff",    Heff);
-  }
-
-#endif							// End of PyGAMMA code
-
 #endif 							// HSham.cc

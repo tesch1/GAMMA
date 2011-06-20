@@ -1574,20 +1574,4 @@ void Felix2D_params(std::ostream& ostr, double O2, double sw2, int npts2, double
   return;
   }
 
-
-// ____________________________________________________________________________
-// S                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA						// If compiling PyGAMMA
-
-#include <boost/python/def.hpp>
-
-void PyHSAuxil()
-  {
-//  def("sigma_eq", (gen_op (*)(const spin_sys&)) &sigma_eq)
-  }
-
-#endif							// End of PyGAMMA code
-
 #endif 							// HSauxil.cc

@@ -155,16 +155,5 @@ MSVCDLL gen_op Ixypuls_U(const spin_sys& sys,                 double phi, double
 MSVCDLL gen_op Ixypuls_U(const spin_sys& sys, const flagvec& flags,
                                                       double phi, double beta);
 MSVCDLL gen_op Ixypuls_U_sp(const spin_sys& sys,              double phi, double beta);
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyPulseI();
-
-#endif						// End of PyGAMMA code block
  
 #endif							 // PulseI.h

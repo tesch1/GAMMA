@@ -265,15 +265,4 @@ MSVCDLL spin_op Fpdt(const spin_sys &sys, std::string name);
 	//			       "+-x" = I+(0)I(1)Ix(2)
 	//			       "y0z" = Iy(0)Iz(2)
 
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySpinOpCmp();
-
-#endif						// End of PyGAMMA code block
- 
 #endif							// SpinOpCmp.h

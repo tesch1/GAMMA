@@ -127,17 +127,6 @@ MSVCDLL bool operator==(const genoprep& OpRep) const;
 MSVCDLL bool operator!=(const genoprep& OpRep) const;
 MSVCDLL bool operator<(const  genoprep& OpRep) const;
 MSVCDLL bool operator>(const  genoprep& OpRep) const;
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-//void PyGenOpRep();
-
-#endif						// End of PyGAMMA code block
  
 };
 

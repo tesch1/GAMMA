@@ -655,18 +655,6 @@ MSVCDLL gen_op Shpul_U_plane(const spin_sys &sys, row_vector &BLK, gen_op &H, co
 	// 			phi   : pulse phase angle
 	// Output		U     : soft pulse propagator
 	// Note			      : Accessed by Shxypuls_U functions
-
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-//void PyHSPulseShp();
-
-#endif						// End of PyGAMMA code block
  
 #endif 						// PulseShp.h
 

@@ -286,16 +286,5 @@ MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream &operator << (std::ostream &ostr, const HSprop& U);
 
 };
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyHSProp();
-
-#endif						// End of PyGAMMA code block
  
 #endif							// HSprop.h

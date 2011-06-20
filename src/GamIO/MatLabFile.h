@@ -205,19 +205,6 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, MatLabFile& MLF);
 MSVCDLL void print(std::ostream& ostr, 
                         const matrix& mx, const std::string& N, int cmplx=1) const;
 
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string Print();
-std::string whos_MATLABFILE_py1(const std::string& filename);
-std::string details_MATLABFILE_py1(const std::string& filename);
-std::string Header_MATLABFILE_py1(const std::string& filename);
-
-#endif						// End of PyGAMMA code block
-
 };							// MatLabFile.h
 
 #endif

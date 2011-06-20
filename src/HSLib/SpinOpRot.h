@@ -471,16 +471,5 @@ MSVCDLL spin_op RotSpinOp(const spin_op& R, const spin_op& F);
 	// Input		R	: A spin rotation operator
 	// 			F       : An operator to be rotated
 	// Return		SOp	: F rotateb by R
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySpinOpRot();
-
-#endif						// End of PyGAMMA code block
  
 #endif					         // SpinOpRot.h

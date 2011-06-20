@@ -52,6 +52,4 @@
 #include <IntRank2/HShiftAnis.h>	// Shift Anisotorpy Hamiltonians
 #include <IntRank2/HElectronG.h>	// Electron G Hamiltonians
 
-#include <IntRank2/PyIntRank2.h>	// Python interface
-
 #endif 					// IntRank2IF.h

@@ -481,14 +481,4 @@ MSVCDLL void GP_contblurb(std::ofstream& ostr, const std::string& plotname);
         //                          to plot in gnuplot is output
         //                          into the ofstream
 
-// ____________________________________________________________________________
-//                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyGgnuplot();
-
-#endif						// End of PyGAMMA code block
-
 #endif 						// Ggnuplot.h

@@ -43,16 +43,5 @@ MSVCDLL void Prod_base_dec(const spin_sys &sys, const gen_op &Op,double thres=BD
 	//		Op	: Operator to be decomposed
         //		thres	: Coefficients below thres (in absolute value) will be set to 0 
 	// Output	Decomposition is written to stdout
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-//void PyHSDecomp();
-
-#endif						// End of PyGAMMA code block
  
 #endif							// HSdecomp.h

@@ -397,18 +397,7 @@ MSVCDLL void Felix2D_params(std::ostream& ostr, double O2, double sw2, int npts2
 	//			: Offset frequency (Hz)
 	// Output	none	: Function is void.  Felix parameters for 2D
 	//		          2D homonuclear spectral workup are sent
-        //                        into the output stream
+    //                        into the output stream
 
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyHSAuxil();
-
-#endif						// End of PyGAMMA code block
  
 #endif						// HSauxil.h 

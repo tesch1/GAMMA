@@ -42,7 +42,6 @@
 #include <GamIO/ML4DElem.h>			// Include MAT V4 data elements
 #include <GamIO/BinIOBase.h>			// Include Int2Mode function
 #include <string>				// Include libstdc++ strings
-					// End of PyGAMMA code block
 
 // ----------------------------------------------------------------------------
 // --------------------------- PRIVATE FUNCTIONS ------------------------------
@@ -691,50 +690,5 @@ void MatLabFile::print(std::ostream& ostr,
     DE.print(ostr);				// Output the data element 
     }
   }
-
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-#include <sstream>
-	
-std::string MatLabFile::Print()
-  {
-  std::stringstream sstr;
-  this->print(sstr);
-  return sstr.str();
-  }
-
-std::string MatLabFile::whos_MATLABFILE_py1(const std::string& filename)
-  {
-  std::stringstream sstr;
-  MatLabFile MLF(filename);
-  MLF.whos(sstr);
-  return sstr.str();
-  }
-
-std::string MatLabFile::details_MATLABFILE_py1(const std::string& filename)
-  {
-  std::stringstream sstr;
-  MatLabFile MLF(filename);
-  MLF.details(sstr);
-  return sstr.str();
-  }
-
-std::string MatLabFile::Header_MATLABFILE_py1(const std::string& filename)
-  {
-  std::stringstream sstr;
-  MatLabFile MLF(filename);		// Open the MatLab file
-  if(MLF.Version(MLF.fp) == 4) return "No main header in version 4 files";	// No main header in version 4 files
-  MatLab5Hdr MH;			// Set up temporary header
-  MH.read(MLF.fp);			// Read the header
-  MH.print(sstr);			// Output main header
-  return sstr.str();
-  }
-
-#endif						// End of PyGAMMA code block
-
 
 #endif							// MatLabFile.cc

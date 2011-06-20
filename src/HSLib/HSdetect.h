@@ -87,15 +87,5 @@ MSVCDLL spin_op Mxy_sp(const spin_sys &sys, double beta=0);
 	//			      spin flags set to TRUE at function
 	//			      call & rotated to a phase angle beta
 
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
 
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-//void PyHSDetect();
-
-#endif						// End of PyGAMMA code block
- 
 #endif 							// HSdetect.h

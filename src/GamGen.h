@@ -119,9 +119,6 @@
 
 #if defined(_MSC_VER)				// If using MSVC++ then
 #  pragma warning (disable : 4786)		// kill STL namelength warnings
-#  if defined(PYGAMMA)				// If building PyGAMMA
-#    pragma warning (disable : 4700)		// kill Boost.Python warnings
-#  endif
 #endif
 
 // ____________________________________________________________________________ 

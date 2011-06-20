@@ -606,34 +606,6 @@ MSVCDLL std::vector<std::string> JStrings(int   colwd=12, int digs=2) const;
 MSVCDLL std::vector<std::string> AStrings(int   colwd=12, int digs=2) const;
 MSVCDLL std::vector<std::string> OmStrings(int  colwd=12, int digs=2) const;
 
-// ____________________________________________________________________________
-//                           SpinSystem Python Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If compiling PyGAMMA
-
-//-----------------------------------------------------------------------------
-//                            ASCII OUTPUT FUNCTIONS
-//-----------------------------------------------------------------------------
-
-std::string PyPrint();
-
-double OmegaSSA()     const;
-double OmegaSSB(int i) const;
-
-#endif							// End of PyGAMMA code
-
 };
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySpinSystem();
-
-#endif						// End of PyGAMMA code block
  
 #endif							// SpinSystem.h

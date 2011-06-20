@@ -251,17 +251,6 @@ MSVCDLL gen_op HQsec(const spin_system& sys, double wQ, int i);
 //                                       2    2
 //                         HQ  = wQ*[3*Iz  - I ]
 
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyHSHam();
-
-#endif						// End of PyGAMMA code block
  
 #endif 							//  HSham.h
 

@@ -171,14 +171,4 @@ MSVCDLL friend void GnuplotSphere(const std::string& name, const coord_vec& data
 
 };
 
-// ____________________________________________________________________________
-// H                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyGgnuplotSph();
-
-#endif						// End of PyGAMMA code block
-
 #endif 								// GgnuplotSph.h

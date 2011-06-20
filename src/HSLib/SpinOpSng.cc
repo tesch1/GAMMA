@@ -334,27 +334,5 @@ matrix Raxis(int hs, double beta, char axis)
   return R;
   }
 
-// ____________________________________________________________________________
-// S                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA						// If compiling PyGAMMA
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-void PySpinOpSng()
-  {
-  def("Ie",    (matrix (*)(int)) &Ie);
-  def("Ip",    (matrix (*)(int)) &Ip);
-  def("Im",    (matrix (*)(int)) &Im);
-  def("Ix",    (matrix (*)(int)) &Ix);
-  def("Iy",    (matrix (*)(int)) &Iy);
-  def("Iz",    (matrix (*)(int)) &Iz);
-  def("Raxis", (matrix (*)(int, double, char)) &Raxis);
-  }
-#endif							// End of PyGAMMA code
-
 #endif 							// SpinOpSng.cc
 

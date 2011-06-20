@@ -505,16 +505,5 @@ MSVCDLL void tr_select(int* select, gen_op &Op, double val1, int type=0,
         // Note                 : Selection ordering depends on Op input basis!
 
 
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-//void PyHSAnalyze();
-
-#endif						// End of PyGAMMA code block
- 
 #endif							                                  // HSanalyze.h
 

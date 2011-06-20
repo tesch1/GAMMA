@@ -153,61 +153,6 @@ row_vector FID(gen_op& sig0 , gen_op& D, HSprop& U, int N, double CO)
 /* This functions exist primarly to check the acquisition functions found
    earlier in this file. They will simply print output aspects of the
    calculation used for the specified input parameters.                      */
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-/* Every function in this module uses preset values in the function calls. This
-   forces us to declare overloads for each function.... ouch. However, the
-   above functions also double up on the names "acquire" and "FID". That is,
-   each acquire function has the same function defined with the name FID.
-   Since we can rename the functions in Boost.Python, we will only expand on the
-   overloads of the FID function then rename them to acquire functions too.
-   Lastly, to handle the overloads cleanly, we can use the Boost.Python defined
-   ones, but then we must have distinguishable functions too.                */
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-#include <boost/python/overloads.hpp>
-
-using boost::python::def;
-
-void FID1(gen_op& sig0,gen_op& D,gen_op& H,double td,int N,row_vector& fid,double CO) { FID(sig0,D,H,td,N,fid,CO); }
-void FID2(gen_op& sig0,gen_op& D,gen_op& U,          int N,row_vector& fid,double CO) { FID(sig0,D,U,   N,fid,CO); }
-void FID3(gen_op& sig0,gen_op& D,HSprop& U,          int N,row_vector& fid,double CO) { FID(sig0,D,U,   N,fid,CO); }
-
-row_vector FID4(gen_op& sig0, gen_op& D, gen_op& H, double td, int N, double CO) { return FID(sig0,D,H,td,N,CO); }
-row_vector FID5(gen_op& sig0, gen_op& D, gen_op& U,            int N, double CO) { return FID(sig0,D,U   ,N,CO); }
-row_vector FID6(gen_op& sig0, gen_op& D, HSprop& U,            int N, double CO) { return FID(sig0,D,U   ,N,CO); }
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(hslib_FID1, FID1, 6, 7)
-BOOST_PYTHON_FUNCTION_OVERLOADS(hslib_FID2, FID2, 5, 6)
-BOOST_PYTHON_FUNCTION_OVERLOADS(hslib_FID3, FID3, 5, 6)
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(hslib_FID4, FID4, 5, 6)
-BOOST_PYTHON_FUNCTION_OVERLOADS(hslib_FID5, FID5, 4, 5)
-BOOST_PYTHON_FUNCTION_OVERLOADS(hslib_FID6, FID6, 4, 5)
-
-void PyHSAcquire()
-  {
-  def("acquire", (void(*)(gen_op&, gen_op&, gen_op&, double, int, row_vector&, double))0, hslib_FID1());
-  def("acquire", (void(*)(gen_op&, gen_op&, gen_op&,         int, row_vector&, double))0, hslib_FID2());
-  def("acquire", (void(*)(gen_op&, gen_op&, HSprop&,         int, row_vector&, double))0, hslib_FID3());
-  def("FID",     (void(*)(gen_op&, gen_op&, gen_op&, double, int, row_vector&, double))0, hslib_FID1());
-  def("FID",     (void(*)(gen_op&, gen_op&, gen_op&,         int, row_vector&, double))0, hslib_FID2());
-  def("FID",     (void(*)(gen_op&, gen_op&, HSprop&,         int, row_vector&, double))0, hslib_FID3());
-
-  def("acquire", (row_vector(*)(gen_op&, gen_op&, gen_op&, double, int, double))0, hslib_FID4());
-  def("acquire", (row_vector(*)(gen_op&, gen_op&, gen_op&,         int, double))0, hslib_FID5());
-  def("acquire", (row_vector(*)(gen_op&, gen_op&, HSprop&,         int, double))0, hslib_FID6());
-  def("FID",     (row_vector(*)(gen_op&, gen_op&, gen_op&, double, int, double))0, hslib_FID4());
-  def("FID",     (row_vector(*)(gen_op&, gen_op&, gen_op&,         int, double))0, hslib_FID5());
-  def("FID",     (row_vector(*)(gen_op&, gen_op&, HSprop&,         int, double))0, hslib_FID6());
-  }
-
-#endif						// End of PyGAMMA code block
  
 // ____________________________________________________________________________
 // Z		      Free Induction Decay Applied Theory

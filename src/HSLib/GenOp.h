@@ -807,22 +807,6 @@ MSVCDLL bool operator== (const gen_op& Op) const;
 MSVCDLL bool operator!= (const gen_op& Op) const;
 MSVCDLL bool operator<  (const gen_op& Op) const;
 MSVCDLL bool operator>  (const gen_op& Op) const;
-
-// ____________________________________________________________________________
-// O                                PyGAMMA  Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void Op_baseOP(const gen_op &Op1) const;
-
-//-----------------------------------------------------------------------------
-//                            ASCII OUTPUT FUNCTIONS
-//-----------------------------------------------------------------------------
-
-std::string PyPrint();
-
-#endif						// End of PyGAMMA code block
  
 };
 
@@ -837,16 +821,5 @@ inline gen_op I_gen_op(const basis& bs)
 	// Return		Op   : Identity Operator with basis bs 
 
   { return gen_op(matrix(bs.size(),bs.size(),i_matrix_type),bs); }
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyGenOp();
-
-#endif						// End of PyGAMMA code block
  
 #endif 							// GenOp.h

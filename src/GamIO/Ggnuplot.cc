@@ -1260,43 +1260,4 @@ void GP_contblurb(std::ofstream& ostr, const string& plotname)
   ostr << "\n";
   }
 
-
-// ____________________________________________________________________________
-//                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/class.hpp>		// Boost.Python classes
-#include <boost/python/def.hpp>			// Boost.Pythond def functions
-#include <boost/python/overloads.hpp>		// Boost.Python function overloads
-
-using boost::python::init;
-using boost::python::def;
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(Ggnuplot_GPFind,  GPFind, 0, 1)
-BOOST_PYTHON_FUNCTION_OVERLOADS(Ggnuplot_GPExec,  GPExec, 0, 1)
-
-void PyGgnuplot()
-  {
-//                      The Class (Structure) GPDat
-
-  boost::python::class_<GPdat>("GPdat", init<>())
-  ;
-
-//                          Global Functions
-
-  def("RunGnuplot",  (void (*)(const std::string&))         &RunGnuplot);
-  def("GPFind",      (std::string (*)(bool))0, Ggnuplot_GPFind());
-  def("GPExec",      (std::string (*)(int))0,  Ggnuplot_GPExec());
-  def("SetLineType", (void (*)(std::ostream& gnuload, int)) &SetLineType);
-  def("CloseMacro",  (void (*)(std::ostream&))              &CloseMacro);
-
-  def("GP_xy",  (void (*)(const std::string&, const row_vector&)) &GP_xy);
-//  def("GP_xy",  (void (*)(std::ostream&,      const row_vector&)) &GP_xy);
-
-  }
-
-#endif						// End of PyGAMMA code block
-
 #endif 						// Gnuplot.cc

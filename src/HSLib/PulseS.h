@@ -282,16 +282,6 @@ MSVCDLL gen_op Spul_U_plane(const spin_sys& sys, const gen_op& H, const std::str
 	 double freq1, const std::string& iso2, double freq2, 
                                            double tp, double fact, double phi);
 
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-//void PyHSPulseS();
-
-#endif						// End of PyGAMMA code block
  
 #endif 								// PulseS.h
 

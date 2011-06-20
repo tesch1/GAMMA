@@ -99,25 +99,6 @@ MSVCDLL row_vector FID(gen_op&     sig0, gen_op& D, gen_op& H, double td, int N,
 MSVCDLL row_vector FID(gen_op&     sig0, gen_op& D, gen_op& U,            int N, double CO=1.e-18);
 MSVCDLL row_vector FID(gen_op&     sig0, gen_op& D, HSprop& U,            int N, double CO=1.e-18);
 
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void FID1(gen_op& sig0,gen_op& D,gen_op& H,double td,int N,row_vector& fid,double CO=1.e-18);
-void FID2(gen_op& sig0,gen_op& D,gen_op& U,          int N,row_vector& fid,double CO=1.e-18);
-void FID3(gen_op& sig0,gen_op& D,HSprop& U,          int N,row_vector& fid,double CO=1.e-18);
-
-row_vector FID4(gen_op& sig0, gen_op& D, gen_op& H, double td, int N, double CO=1.e-18);
-row_vector FID5(gen_op& sig0, gen_op& D, gen_op& U,            int N, double CO=1.e-18);
-row_vector FID6(gen_op& sig0, gen_op& D, HSprop& U,            int N, double CO=1.e-18);
-
-void PyHSAcquire();
-
-#endif						// End of PyGAMMA code block
  
 #endif 						// HSacquire.h
 

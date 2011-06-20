@@ -284,36 +284,6 @@ MSVCDLL void status(int full=1) const;
 
 MSVCDLL void FaxisStruct(char axis) const;
 
-// ____________________________________________________________________________
-// H                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-//                        Code for (int, matrix*) constructor
-
-spin_op(int spins, matrix prmxs);
-
-//-----------------------------------------------------------------------------
-//                            ASCII OUTPUT FUNCTIONS
-//-----------------------------------------------------------------------------
-
-std::string PyPrint();
-
-#endif					// End of PyGAMMA code
-
-
 };
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySpinOp();
-
-#endif						// End of PyGAMMA code block
  
 #endif								// SpinOp.h

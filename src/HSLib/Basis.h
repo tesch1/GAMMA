@@ -351,45 +351,6 @@ MSVCDLL std::ifstream& read(std::ifstream&     fp);
 
 MSVCDLL double TestBasis(int pf=0) const;
 
-// ____________________________________________________________________________
-// I				Basics Python Code
-// ____________________________________________________________________________
-
-/* These functions are only for the PyGAMMA compilation. Since the Python
-   interpreter does not handle standard output & ostreams well, these next
-   functions are to replace the class operator << and print function. Both
-   << and print accomplish the same thing, the former is a friend function
-   while the latter is a member function. They add information about the
-   basis into the output stream. Alternatively, only the "Print" function
-   below will be exported into Python and it returns a string rather than
-   an ostream. The other functions simply support the "Print" function. As
-   such, there is no coupling of output statmenets (e.g. cout << bs1 << bs2)
-   so there is no reason to worry about such issues in this instance.
-  
-           Input                bs      : A basis (this) 
-                                ostr    : Output stream 
-           Output               none    : Basis info placed into the
-                                          output stream ostr
-	   Note                         : sstr << string is OK
-                                          sstr << sstr is NOT accepted       */
-
-#ifdef PYGAMMA                         // If compiling PyGAMMA
-
-std::string PyPrint();
-
-#endif					// End of PyGAMMA code
-
 };
-
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBasis();
-
-#endif						// End of PyGAMMA code block
 
 #endif						// basis.h
