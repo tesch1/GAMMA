@@ -36,7 +36,6 @@
 #include <Matrix/n_matrix.h>		// Normal (full) matrix
 #include <Matrix/h_matrix.h>		// Hermitian matrix
 #include <Matrix/matrix.h>              // Matrix (collection of all types)
-#include <Matrix/py_matrix.h>		// Additonal Python exports from matrix
 #include <Matrix/col_vector.h>		// Column vectors (derived from matrix)
 #include <Matrix/row_vector.h>		// Row vectors    (derived from matrix)
 
