@@ -334,12 +334,10 @@ PULSEBASE   = PulGauss PulSinc PulAuxil Pulse PulComposite PulCycle \
               PulDANTE PulGARP PulMLEV PulWALTZ PulCHIRP \
               PulWaveform PulSupCycle PulTrain PulTrainSCyc
 PULSEHDR    = PulsesIF.h
-PULSEPY     = PyPulsesIF.h 
 ALLFILES   += $(PULSEBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(PULSE)/, $(PULSEBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(PULSE)/, $(PULSEBASE)))
 ALLHFILES  += $(addprefix $(PULSE)/, $(PULSEHDR))
-ALLHFILES  += $(addprefix $(PULSE)/, $(PULSEPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(PULSE)/, $(PULSEBASE)))
 ALLMODDIRS += $(PULSE)
 ALLMODHDRS += $(PULSEHDR)
