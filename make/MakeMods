@@ -118,7 +118,7 @@ ALLIFILES  += $(addsuffix .i,  $(addprefix $(BASICS)/, $(BASICS_IBASE)))
 MATRIX      = Matrix
 MATRIXUL    = ------
 MATRIXBASE  = complex MxModBas _matrix i_matrix d_matrix h_matrix n_matrix\
-              matrix col_vector row_vector py_matrix pyy_matrix
+              matrix col_vector row_vector 
 MATRIXHDR   = MatrixIF.h
 ALLFILES   += $(MATRIXBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(MATRIX)/, $(MATRIXBASE)))
@@ -127,7 +127,6 @@ ALLHFILES  += $(addprefix $(MATRIX)/, $(MATRIXHDR))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(MATRIX)/, $(MATRIXBASE)))
 ALLMODDIRS += $(MATRIX)
 ALLMODHDRS += $(MATRIXHDR) 
-ALLPYFILES += $(MATRIXPY)
 MATRIXTBAS  = TestMatrix
 
 MATRIX_IBASE  = matrix_inc matrix row_vector col_vector complex
@@ -175,16 +174,13 @@ LEVEL1UL    = ------
 LEVEL1BASE  = coord coord_vec SphHarmic Wigner SpinT SpaceT nmr_tensor\
               Exponential Lorentzian WindowFct ExProcessM
 LEVEL1HDR   = Level1IF.h
-LEVEL1PY    = PyLevel1.h
 ALLFILES   += $(LEVEL1BASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(LEVEL1)/, $(LEVEL1BASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(LEVEL1)/, $(LEVEL1BASE)))
 ALLHFILES  += $(addprefix $(LEVEL1)/, $(LEVEL1HDR)) 
-ALLHFILES  += $(addprefix $(LEVEL1)/, $(LEVEL1PY)) 
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(LEVEL1)/, $(LEVEL1BASE)))
 ALLMODDIRS += $(LEVEL1)
 ALLMODHDRS += $(LEVEL1HDR)
-ALLPYFILES += $(LEVEL1PY) 
 LEVEL1TBAS  = TestLevel1
 
 LEVEL1_IBASE  = level1 nmr_tensor SpinT SpaceT coord coord_vec SphHarmic\
@@ -201,16 +197,13 @@ LSPACE      = LSLib
 LSPACEUL    = -----
 LSPACEBASE  = SuperOp LSacquire LSprop sys_dynamic DensOp LSanalyze LSAux
 LSPACEHDR   = LSLibIF.h
-LSPACEPY    = PyLSLibIF.h
 ALLFILES   += $(LSPACEBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(LSPACE)/, $(LSPACEBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(LSPACE)/, $(LSPACEBASE))) 
 ALLHFILES  += $(addprefix $(LSPACE)/, $(LSPACEHDR))
-ALLHFILES  += $(addprefix $(LSPACE)/, $(LSPACEPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(LSPACE)/, $(LSPACEBASE)))
 ALLMODDIRS += $(LSPACE)
 ALLMODHDRS += $(LSPACEHDR)
-ALLPYFILES += $(LSPACEPY) 
 
 LSPACE_IBASE  = lslib SuperOp LSacquire LSprop DensOp sys_dynamic LSanalyze LSAux
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(LSPACE)/, $(LSPACE_IBASE)))
@@ -226,16 +219,13 @@ LEVEL2UL    = ------
 LEVEL2BASE  = TrnsTable1D acquire1D Quaternion EAngles MutExch \
               RelaxBas BaseDecomp
 LEVEL2HDR   = Level2IF.h
-LEVEL2PY    = PyLevel2IF.h
 ALLFILES   += $(LEVEL2BASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(LEVEL2)/, $(LEVEL2BASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(LEVEL2)/, $(LEVEL2BASE)))
 ALLHFILES  += $(addprefix $(LEVEL2)/, $(LEVEL2HDR)) 
-ALLHFILES  += $(addprefix $(LEVEL2)/, $(LEVEL2PY)) 
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(LEVEL2)/, $(LEVEL2BASE)))
 ALLMODDIRS += $(LEVEL2)
 ALLMODHDRS += $(LEVEL2HDR)
-ALLPYFILES += $(LEVEL2PY) 
 LEVEL2TBAS  = TestLevel2 TestTrnsTable1D Testacquire1D \
               TestQuaternion TestQuaternionA TestQuaternionB TestQuaternionC
 
@@ -424,7 +414,6 @@ MULTISYSUL    = --------
 MULTISYSBASE  = SpinMap ExProcess MultiSys MultiLib \
                 MultiSOp MultiHam MultiIPul MultiHSLib MultiLOp MultiWBR MultiExch
 MULTISYSHDR   = MultiSysIF.h
-MULTISYSPY    = PyMultiSysIF.h
 ALLFILES     += $(MULTISYSBASE)
 ALLCCFILES   += $(addsuffix .cc, $(addprefix $(MULTISYS)/, $(MULTISYSBASE)))
 ALLHFILES    += $(addsuffix .h,  $(addprefix $(MULTISYS)/, $(MULTISYSBASE)))
@@ -433,7 +422,6 @@ ALLHFILES    += $(addprefix $(MULTISYS)/, $(MULTISYSHDR))
 ALLOFILES    += $(addsuffix .o,  $(addprefix $(MULTISYS)/, $(MULTISYSBASE)))
 ALLMODDIRS   += $(MULTISYS)
 ALLMODHDRS   += $(MULTISYSHDR)
-ALLPYFILES   += $(MULTISYSPY)
 
 MULTISYS_IBASE  = multisys_inc ExProcess MultiSys MultiLib MultiSOp\
                   MultiIPul MultiHSLib MultiLOp MultiExch MultiHam\
