@@ -195,36 +195,4 @@ MSVCDLL spin_op T_Q(const spin_sys &sys, int spin, int l, int m);
 	//			rank 2 spin tensor for the quadrupolar] T  (i)
 	//			interaction of specified spin         ]  2m
 
-// ____________________________________________________________________________
-//                            PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-spin_T  T_DA(const spin_sys &sys, int spin1, int spin2);
-spin_T  T_DB(const spin_sys &sys, spin_op &Im1, spin_op &Iz1, spin_op &Ip1,
-                                  spin_op &Im2, spin_op &Iz2, spin_op &Ip2);
-spin_op T_DC(const spin_sys &sys, int spin1, int spin2, int m);
-
-spin_T  T_CS2P1(const spin_sys &sys, int spin);
-spin_T  T_CS2P2(const spin_sys &sys, int spin, coord &B);
-spin_op T_CS2P3(const spin_sys &sys, int spin, coord &B, int l, int m);
-
-spin_T  T_CSP1(const spin_sys &sys, int spin);
-spin_op T_CSP2(const spin_sys &sys, int spin, int m);
-
-spin_T  T_RFA(const spin_sys &sys, int spin);
-spin_op T_RFB(const spin_sys &sys, int spin, int l, int m);
-
-spin_T  T_QA(const spin_sys &sys, int spin);
-spin_op T_QB(const spin_sys &sys, int spin, int l, int m);
-
-void PyNMRTensor();
-
-#endif						// End of PyGAMMA code block
-
 #endif						// nmr_tensor.h

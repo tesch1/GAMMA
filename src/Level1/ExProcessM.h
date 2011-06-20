@@ -232,30 +232,7 @@ MSVCDLL std::string ExchStr() const;
 MSVCDLL std::ostream& print(std::ostream& ostr, int full=0) const;
 MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const ExchProcM& pro);
 
-// ____________________________________________________________________________
-// H                        PyGAMMA Code (Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-std::string PyPrint();
-
-double KexA() const;
-void   KexB(double k);
-
-#endif						// End PyGAMMA code
 };
-
-// ____________________________________________________________________________
-// I                     PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-  void PyExchProcM();
-
-#endif						// End PyGAMMA code
-
 
 #endif								// ExchProcM.h
 

@@ -334,14 +334,4 @@ MSVCDLL complex Ylm(int l, int m, double theta, double phi);
 	// Output		z     : rank l normalized spherical harmonic
 	// Note			      : angles theta and phi input in degrees
 
-// ____________________________________________________________________________
-//                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySphHarmic();
-
-#endif						// End of PyGAMMA code block
-
 #endif						// SphHarmic.h

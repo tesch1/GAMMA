@@ -197,27 +197,6 @@ MSVCDLL void Exponen_cut(int* ihi,const matrix& mx,double tinc,int npts,double c
 	//			the exponential magnitude value will be below
 	//			cutoff. 
 
-// ____________________________________________________________________________
-//                              PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-row_vector ExponentialA(int npts, double W, double R);
-row_vector ExponentialB(int npts, double time, double w, double RT);
-row_vector ExponentialC(int npts, double time, double w, double RT, int type);
-
-row_vector DExponentialA(int npts, double W, double R);
-row_vector DExponentialB(int npts, double time, double w, double RT);
-row_vector DExponentialC(int npts, double time, double w, double RT, int type);
-
-int  Exponen_cutA(int npts, double time, double w, double R);
-int  Exponen_cutB(int npts, double time, double w, double R, double cutoff);
-void Exponen_cutC(int* ihi,const matrix& mx,double tinc,int npts,double cutoff);
-
-void PyExponential();
-
-#endif						// End of PyGAMMA code block
 
 /*************************************************************************
 **			Mathematical Details				**

@@ -170,23 +170,4 @@ super_op Kex(const spin_sys& sys,const vector<ExchProcM>& XPs,const basis& Bs)
 super_op Kex(const sys_dynamic& sys, const basis& Bs)
   { return Kex(sys, sys.MExProcs(), Bs); }
 
-// ____________________________________________________________________________
-// S                            PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-void PyMutExch()
-  {
-  def("Kex", (matrix   (*)(const spin_sys&,    const ExchProcM&))                             &Kex);
-  def("Kex", (super_op (*)(const spin_sys&,    const std::vector<ExchProcM>&, const basis& )) &Kex);
-  def("Kex", (super_op (*)(const sys_dynamic&, const basis&))                                 &Kex);
-  }
-
-#endif						// End of PyGAMMA code block
-
 #endif						// MutExch.cc

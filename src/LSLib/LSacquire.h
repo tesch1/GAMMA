@@ -226,29 +226,4 @@ MSVCDLL void FIDx(gen_op sigma, gen_op& sigma0, gen_op& det, super_op &L,
 MSVCDLL void FIDrot(gen_op sigma, gen_op& sigma0, gen_op& det, super_op &L, gen_op& Fz,
                 double Wrf, double time, row_vector &fid, double dt, int np=0);
 
-// ____________________________________________________________________________
-// D                                PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void FIDP1(gen_op&     sig0,             gen_op& D,super_op& L,double td,int N,row_vector& fid,double CO=1.e-18);
-void FIDP2(gen_op&     sig0,gen_op& sigf,gen_op& D,super_op& L,double td,int N,row_vector& fid,double CO=1.e-18);
-
-void FIDP3(gen_op&     sig0,             gen_op& D,super_op& L,row_vector& fid,double td,int np=0,double CO=1.e-18);
-void FIDP4(gen_op&     sig0,gen_op& sigf,gen_op& D,super_op& L,row_vector& fid,double td,int np=0,double CO=1.e-18);
-
-row_vector FIDP5(gen_op& sig0,             gen_op& D,super_op& L,double td,int np,double CO=1.e-18);
-row_vector FIDP6(gen_op& sig0,gen_op& sigf,gen_op& D,super_op& L,double td,int np,double CO=1.e-18);
-
-void FIDP7(gen_op& sig, gen_op& D, super_op& G, row_vector &data, int np=0);
-void FIDP8(gen_op& sig, gen_op& D, LSprop&   G, row_vector &data, int np=0);
-
-row_vector FIDP9(gen_op&     sig, gen_op& D, super_op& G, int np);
-row_vector FIDPZ(gen_op&     sig, gen_op& D, LSprop&   G, int np);
-
-void PyLSAcquire();
-
-#endif						// End PyGAMMA code block
-
 #endif 						// LSacquire.h

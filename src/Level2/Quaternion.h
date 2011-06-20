@@ -406,18 +406,6 @@ extern  quatern composite(const coord&,  const coord&);
 extern  quatern composite(const quatern&, const quatern&);	// Deprecated
 extern  quatern composite(const matrix&,  const quatern&);	// Deprecated
 
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyQuaternion();
-
-#endif						// End of PyGAMMA code block
-
-
 //typedef quatern quartern;				// Either name OK
 //int QRange = 1;				// a=g=[0,360],b=[0,pi]
 

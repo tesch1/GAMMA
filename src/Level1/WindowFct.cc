@@ -263,44 +263,4 @@ void Noise(row_vector& data, double maxN)
     }
   }
 
-// ____________________________________________________________________________
-//                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-#include <boost/python/overloads.hpp>
-
-using boost::python::def;
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_exponential,  exponential,  1, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_Gaussian,     Gaussian,     1, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_Hamming,      Hamming,      1, 2)
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_Hanning,      Hanning,      1, 2)
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_hyperbol_sec, hyperbol_sec, 1, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_Kaiser,       Kaiser,       1, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_Lorentzian,   Lorentzian,   1, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(window_sin_square,   sin_square,   1, 2)
-
-row_vector Noise1(int npts, double maxN)         { return Noise(npts,maxN); }
-void       Noise2(row_vector& data, double maxN) {        Noise(data,maxN); }
-
-void PyWindow()
-  {
-  def("exponential",  (row_vector(*)(int, int, double))0, window_exponential());
-  def("Gaussian",     (row_vector(*)(int, int, double))0, window_Gaussian());
-  def("Hamming",      (row_vector(*)(int, int))0,         window_Hamming());
-  def("Hanning",      (row_vector(*)(int, int))0,         window_Hanning());
-  def("hyperbol_sec", (row_vector(*)(int, int, double))0, window_hyperbol_sec());
-  def("Kaiser",       (row_vector(*)(int, double, int))0, window_Kaiser());
-  def("Lorentzian",   (row_vector(*)(int, int, double))0, window_Lorentzian());
-  def("sin_square",   (row_vector(*)(int, int))0,         window_sin_square());
-  def("sinc",         sinc);
-  def("square_wave",  square_wave);
-  def("Noise",        Noise1);
-  def("Noise",        Noise2);
-  }
-#endif						// End of PyGAMMA code block
-
 #endif 						// WindowFct.cc

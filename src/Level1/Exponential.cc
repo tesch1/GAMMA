@@ -321,54 +321,6 @@ void Exponen_cut(int* ihi,const matrix& mx,double tinc,int npts,double cutoff)
  return;
  }
 
-// ____________________________________________________________________________
-//                              PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-row_vector ExponentialA(int npts, double W, double R)
-  { return Exponential(npts, W, R); }
-row_vector ExponentialB(int npts, double time, double w, double RT)
-  { return Exponential(npts, time, w, RT); }
-row_vector ExponentialC(int npts, double time, double w, double RT, int type)
-  { return Exponential(npts, time, w, RT, type); }
-
-row_vector DExponentialA(int npts, double W, double R)
-  { return DExponential(npts, W, R); }
-row_vector DExponentialB(int npts, double time, double w, double RT)
-  { return DExponential(npts, time, w, RT); }
-row_vector DExponentialC(int npts, double time, double w, double RT, int type)
-  { return DExponential(npts, time, w, RT, type); }
-
-int Exponen_cutA(int npts, double time, double w, double R)
-  { return Exponen_cut(npts, time, w, R); }
-int Exponen_cutB(int npts, double time, double w, double R, double cutoff)
-  { return Exponen_cut(npts, time, w, R, cutoff); }
-void Exponen_cutC(int* ihi,const matrix& mx,double tinc,int npts,double cutoff)
-  { Exponen_cut(ihi, mx, tinc, npts, cutoff); }
-
-void PyExponential()
-  {
-  def("Exponential", ExponentialA);
-  def("Exponential", ExponentialB);
-  def("Exponential", ExponentialC);
-
-  def("DExponential", DExponentialA);
-  def("DExponential", DExponentialB);
-  def("DExponential", DExponentialC);
-
-  def("Exponen_cut", Exponen_cutA);
-  def("Exponen_cut", Exponen_cutB);
-  def("Exponen_cut", Exponen_cutC);
-  }
-
-#endif						// End of PyGAMMA code block
-
 /*************************************************************************
 **			Mathematical Details				**
 *************************************************************************/

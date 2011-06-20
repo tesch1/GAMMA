@@ -3670,36 +3670,4 @@ n_matrix* h_matrix::NMX()
   return nmx;					// Now return the n_matrix
   }  
 
-// ____________________________________________________________________________
-//                               PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-#include <sstream>			// Include libstdc++ string streams
-
-std::string h_matrix::PyPrint(const MxPrint& PFlgs) const
-  {
-  std::vector<std::string> PStrings;	// Array of strings to print
-  PStrings = printStrings(PFlgs);	// Get our print strings
-  std::stringstream sstr;		// Like ostream but with strings
-  unsigned ns = PStrings.size();	// No. of strings to print
-  for(unsigned i=0; i<ns; i++)		// Loop over strings and send
-    sstr << PStrings[i] << std::endl;	// to our string stream
-  return sstr.str();			// Return as Python printable string
-  }
-
-std::string h_matrix::PyPicture(const MxPrint& PFlgs) const
-  {
-  std::vector<std::string> PStrings;	// Array of strings to print
-  PStrings = pictureStrings(PFlgs);	// Get our print strings
-  std::stringstream sstr;		// Like ostream but with strings
-  unsigned ns = PStrings.size();	// No. of strings to print
-  for(unsigned i=0; i<ns; i++)		// Loop over strings and send
-    sstr << PStrings[i] << std::endl;	// to our string stream
-  return sstr.str();			// Return as Python printable string
-  }
-
-#endif						// End PyGAMMA code block
-
 #endif						// h_matrix.cc

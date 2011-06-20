@@ -309,16 +309,6 @@ MSVCDLL friend std::ostream& operator <<  (std::ostream& ostr, const RBasic& RB)
 
 MSVCDLL std::vector <double>FzCoeffs(const spin_sys& sys, const gen_op& sigma);
 
-// ____________________________________________________________________________
-// S                            PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyRelaxBas();
-
-#endif						// End of PyGAMMA code block
-
 };
 
 #endif 							// RelaxBas.h

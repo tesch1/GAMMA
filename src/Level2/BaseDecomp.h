@@ -327,15 +327,4 @@ MSVCDLL std::ostream& print(std::ostream& ostr, const gen_op& Op);
 
 extern void PB_dec(const spin_sys &, const gen_op &);
 
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBaseDecomp();
-
-#endif						// End of PyGAMMA code block
-
-
 #endif 						// Class decomp Header

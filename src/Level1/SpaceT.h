@@ -945,29 +945,7 @@ MSVCDLL friend void Cartesian (const space_T &SphT);
 	//			       irreducible Cartesian components
 	///F_list Cartesian	     - Tensor Cartesian components to output stream
 
-
-// ____________________________________________________________________________
-//                             PyGAMMA Code (Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string Print();
-friend std::string Cartesian_SPACE_T_py1 (const space_T &SphT);
-
-#endif						// End of PyGAMMA code block
-
 };
-
-// _________________________________________________________________________
-// N                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySpaceT();
-
-#endif						// End PyGAMMA code block
 
 #endif						// SpaceT.h
 

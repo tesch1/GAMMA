@@ -348,20 +348,4 @@ MSVCDLL matrix DJ(const matrix& dJbeta, int J, double alpha);
         // Output               mx    : rank J Wigner rotation matrix
 
 
-// ____________________________________________________________________________
-// I                           PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-double d1halfA(          int n, double beta);
-double d1halfB(   int m, int n, double beta);
-double dJA(int J, int m, int n, double beta);
-matrix dJB(int J,               double beta); 
-matrix DJA(const matrix& dJbeta, int J, double alpha);
-            
-void PyWigner();
-
-#endif						// End of PyGAMMA code block
-
 #endif							// Wigner.h

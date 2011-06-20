@@ -688,46 +688,7 @@ MSVCDLL coord_vec Cyl2Cart(int rad=1) const;
 MSVCDLL coord_vec Sph2Cyl(int rad=1) const;
 MSVCDLL coord_vec Cyl2Sph(int rad=1) const;
 
-// ____________________________________________________________________________
-// M                        PyGAMMA Code (Member)
-// ___________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-coord_vec rotateA(const matrix& Rmx) const;
-coord_vec rotateB(double alpha, double beta, double gamma) const;
-coord_vec rotateC(const coord& EA) const;
-
-void rotate_ipA(double alpha, double beta, double gamma);
-void rotate_ipB(const coord &EA);
-
-coord maximaA() const;
-void  maximaB(double &x, double &y, double &z) const;
-
-double max_RA() const;
-void   max_RB(int &maxi, double &maxR) const;
-
-void putA(const coord &pt1, int index);
-void putB(double x, double y, double z, int index);
-
-std::string PyprintCylindrical(double sf) const;
-std::string PyprintSpherical(double sf) const;
-std::string PyprintCartesian(double sf) const;
-std::string PyPrint() const;
-
-#endif						// End of PyGAMMA code block
 
 };
-
-
-// _________________________________________________________________________
-// N                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyCoordVec();
-
-#endif						// End PyGAMMA code block
 
 #endif 						// coord_vec.h

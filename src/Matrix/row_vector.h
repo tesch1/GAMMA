@@ -407,61 +407,6 @@ MSVCDLL static row_vector read_pulse (const std::string filename, const int Puls
 // Note                      : Function is for INTERACTIVE programs
 MSVCDLL void ask();
 
-// _______________________________________________________________________
-// M                       PyGAMMA Code (Member)
-// _______________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-//-----------------------------------------------------------------------------
-//                            ASCII OUTPUT FUNCTIONS
-//-----------------------------------------------------------------------------
-
-std::string PyPrint() const;
-
-//-----------------------------------------------------------------------------
-//                            ACCESS FUNCTIONS
-//-----------------------------------------------------------------------------
-
-/* These add to the put function for Python because there is no automatic
-   cast from double complex as is done in C++.                               */
-
-void putRVEC(double d, int i);
-
-//-----------------------------------------------------------------------------
-//                            VARIOUS FUNCTIONS
-//-----------------------------------------------------------------------------
-
-/* I have not clue at the moment why these are exported in such a manner.    */
-
-friend col_vector adjoint_ROW_VECTOR_py1(const     row_vector& rvec);
-friend col_vector transpose_ROW_VECTOR_py1(const   row_vector& rvec);
-friend complex    trace_ROW_VECTOR_py1(const       row_vector& rvec);
-friend row_vector FFT_ROW_VECTOR_py1(const row_vector& rvec);
-friend row_vector IFFT_ROW_VECTOR_py1(const row_vector& rvec);
-friend double scalar_product_ROW_VECTOR_py1(const row_vector& rvec);
-friend complex scalar_product_ROW_VECTOR_py2(const row_vector& rvec1, const row_vector& rvec2);
-friend complex scalar_product_ROW_VECTOR_py3(const row_vector& rvec, const col_vector& cvec);
-// matrix operator * (const matrix& mx);
-
-#endif						// End of PyGAMMA code block
-
    };
-
-// ____________________________________________________________________________
-// N                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-// Of all GAMMA's matrix classes, only the main matrix class, matrix.{cc,h} is
-// exported into Python. All of the sub-classes are usually not used explicitly
-// in programs anyway. Also, note that there is trouble with enumerations in
-// Boost.Python so we use string intead for the time being until we can figure
-// out how to get enum working.
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyRowVector();
-
-#endif			
 
 #endif							// row_vector.h

@@ -509,17 +509,6 @@ virtual d_matrix* DMX();
 virtual h_matrix* HMX();
 virtual n_matrix* NMX();
 
-// _________________________________________________________________
-//                            PyGAMMA Code
-// _________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-virtual std::string PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string PyPicture(const MxPrint& PFlgs) const;
-
-#endif					// End of PyGAMMA code block
-
   };
 
 #endif							// i_matrix.h

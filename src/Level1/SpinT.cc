@@ -34,10 +34,6 @@
 #include <Level1/Wigner.h>		// Include Wigner rotations
 #include <stdlib.h>
 
-#ifdef PYGAMMA				// If we are compiling PyGAMMA
-  #include <sstream>			//   Include string stream for Python
-#endif
-
 typedef spin_op **pp_spin_op;	        // pointer to a pointer to spin_op
 
 // ----------------------------------------------------------------------------
@@ -1934,71 +1930,5 @@ std::ostream& operator<< (std::ostream& ostr, const spin_T& SphT)
     }
   return ostr; 
 }
-
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string spin_T::Print()
-  {
-  std::stringstream sstr;
-  spin_T SphT = *this;
-  int span = 0;
-  if (SphT.pr)					// Print if tensor not NULL
-    {
-    for (int l=0; l<=SphT.rank; l++)
-      {
-      if (SphT.pr[l])				// Print T  if rank not NULL
-        span = 2*l+1;				//        l
-        for (int m=0; m<span; m++)
-          {
-          if (SphT.pr[l][m])			// Print T   if SOp not NULL
-          {
-            sstr << "\n\tT"
-	         << "\n\t " << l << "," << l-m
-	         << "\n" << *(SphT.pr[l][m]);
-          }
-          else
-            sstr << "\n\tT   = 0"
-	         << "\n\t " << l << "," << l-m << "\n";
-          }
-        }
-      }
-  else
-    sstr << "\n\tSpin Tensor is Currently NULL\n";
-  return sstr.str(); 
-  }
-
-// ____________________________________________________________________________
-// J                       PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#include <boost/python/class.hpp>			// Boost.Python classes
-//#include <boost/python/operators.hpp>			// Boost.Python operators
-
-using boost::python::init;
-//using boost::python::self;
-
-void PySpinT()
-  {
-//                                  The Class
-
-  boost::python::class_<spin_T> ("spin_T", init<>())
-
-//                                Constructors
-    .def(init<const spin_sys&>())
-    .def(init<const spin_T&>())
-    .def(init<const spin_T&, int>())
-
-//                                  Operators
-
-//                              Member Functions
-
-  ;
-  }
-
-#endif						// End of PyGAMMA code block
 
 #endif 						// SpinT.cc

@@ -615,34 +615,7 @@ MSVCDLL std::ofstream& write(std::ofstream&     fp) const;
 MSVCDLL void           read(const std::string& fn);
 MSVCDLL std::ifstream& read(std::ifstream&     fp);
 
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-/*
-std::string PyPrint();
-void genString(std::stringstream &sstr);
-
-// Code for overloaded LOp_base()
-void LOp_base_SUPEROP_py1(const super_op &LOp1) const;
-void LOp_base_SUPEROP_py2(const gen_op &Op) const;
-*/
-
-#endif						// End of PyGAMMA code block
-
 };
-
-// _________________________________________________________________________
-// J                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyAcquire1D();
-
-#endif						// End PyGAMMA code block
 
 /*************************************************************************
 **									**

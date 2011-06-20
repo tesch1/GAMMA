@@ -507,20 +507,4 @@ n_matrix* _matrix::NMX() { _MxFatal(21,"NMX"); return new n_matrix(1,1); }
 _matrix* _matrix::convert(matrix_type mxtype)
   { _MxFatal(5, "convert"); mxtype=_matrix_type; return this; }
 
-// ____________________________________________________________________________
-//                               PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-#include <sstream>			// Include libstdc++ string streams
-
-std::string _matrix::PyPrint(const MxPrint& PFlgs) const
-  { return std::string(""); }
-
-std::string _matrix::PyPicture(const MxPrint& PFlgs) const
-   { return std::string(""); }
-
-#endif					  // End PyGAMMA code block
-
 #endif							// _matrix.cc

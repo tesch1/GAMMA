@@ -379,65 +379,6 @@ MSVCDLL friend std::istream& operator >> (std::istream& istr, col_vector& cvec);
 
 MSVCDLL void ask();
 
-
-// ____________________________________________________________________________
-//                            PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string PyPrint() const;
-
-//-----------------------------------------------------------------------------
-//                            ACCESS FUNCTIONS
-//-----------------------------------------------------------------------------
-
-/* These add to the put function for Python because there is no automatic
-   cast from double complex as is done in C++.                               */
-
-void putCVEC(double d, int i);
-
-//-----------------------------------------------------------------------------
-//                            Simple Unary Functions
-//-----------------------------------------------------------------------------
-
-complex sum1() const;
-complex sum2(int st, int ne) const;
-
-//-----------------------------------------------------------------------------
-//                            Product Functions
-//-----------------------------------------------------------------------------
-
-/* Since the product function overloads use different argument types and
-   numbers we cannot directly export them into Python using Boost.Python. So
-   instead we just make function copies with different names.                */
-
-col_vector Pyproduct1()                        const;
-col_vector Pyproduct2(const row_vector& rvec)  const;
-col_vector Pyproduct3(const col_vector& cvec2) const;
-
-double     Pyscalar_product1()                        const;
-complex    Pyscalar_product2(const col_vector& cvec2) const;
-complex    Pyscalar_product3(const row_vector& rvec)  const;
-
-#endif						// End of PyGAMMA code block
-
 };
-
-// ____________________________________________________________________________
-// N                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-// Of all GAMMA's matrix classes, only the main matrix class, matrix.{cc,h} is
-// exported into Python. All of the sub-classes are usually not used explicitly
-// in programs anyway. Also, note that there is trouble with enumerations in
-// Boost.Python so we use string intead for the time being until we can figure
-// out how to get enum working.
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyColVector();
-
-#endif						// End of PyGAMMA code block
 
 #endif								// col_vector.h

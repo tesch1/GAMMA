@@ -297,15 +297,4 @@ MSVCDLL friend std::ostream &operator << (std::ostream &ostr, const LSprop& G);
 
 };
 
-// _________________________________________________________________________
-// O                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyLSProp();
-
-#endif						// End PyGAMMA code block
-
-
 #endif						// LSprop.h

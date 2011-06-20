@@ -575,16 +575,5 @@ virtual _matrix* inv();
 virtual _matrix* LU(int *indx);
 virtual _matrix* LUinv(int *indx, _matrix* LU);
 
-// _________________________________________________________________
-//                            PyGAMMA Code
-// _________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-virtual std::string PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string PyPicture(const MxPrint& PFlgs) const;
-
-#endif						// End of PyGAMMA code block
-
 }; 
 #endif 								// h_matrix.h

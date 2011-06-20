@@ -624,14 +624,4 @@ std::ostream &operator << (std::ostream &ostr, const densop &Sigma)
   return ostr;
   }
 
-// _________________________________________________________________________
-// O                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-//void PyDensOp();
-
-#endif						// End PyGAMMA code block
-
 #endif						// DensOp.cc

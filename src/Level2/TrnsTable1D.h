@@ -808,38 +808,9 @@ MSVCDLL std::ostream& printF(std::ostream& ostr, int npts, double Fst, double Ff
 
 friend void offset(matrix& mx, double F, double LWR, int inHz=0);
 
-// __________________________________________________________________________
-// I                            PyGAMMA Code
-// __________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-// -------------------------------------------------------------------------
-//                   Bypass For Constructor Overload
-// -------------------------------------------------------------------------
-
-// -------------------------------------------------------------------------
-//                         Standard Output
-// -------------------------------------------------------------------------
-
-std::string PyPrint();
-
-#endif						// End PyGAMMA code block
-
   };
 
 extern TTable1D sum(const TTable1D&, const TTable1D&, double);
 extern void offset(matrix&mx, double, double, int);
-
-// _________________________________________________________________________
-// G                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyTrnsTable();
-
-#endif						// End PyGAMMA code block
-
 
 #endif							// TrnsTable1D.h

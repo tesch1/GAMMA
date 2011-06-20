@@ -710,28 +710,7 @@ MSVCDLL friend super_op HsuperX(const gen_op& Heff);
         // Note                       : LOp is returned in angular frequency
         //                              units
 
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string PyPrint();
-void genString(std::stringstream &sstr);
-
-#endif						// End of PyGAMMA code block
-
 }; 
-
-// _________________________________________________________________________
-// O                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySuperOp();
-
-#endif						// End PyGAMMA code block
 
 #endif 						// SuperOp.h
 

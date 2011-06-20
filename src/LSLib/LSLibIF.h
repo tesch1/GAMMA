@@ -35,10 +35,4 @@
 #include <LSLib/sys_dynamic.h>		// Anisotropic spin systems
 #include <LSLib/DensOp.h>		// Density operators
 
-/* The Python interface file adds funtionality to Python via Boost.Python
-   It does so by specifying which functions are exported into Python from
-   a general Python module, PyModule. Since this module must first be built
-   (see src/PyGAMMAIF.cc and src/PyGAMMAIF.h) we cannot use the header
-   until after the compilation of PyGAMMAIF.cc.                          */
-
 #endif 					// __LSLibIF_H__ 

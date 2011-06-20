@@ -701,27 +701,6 @@ MSVCDLL std::ostream& print_D(std::ostream& out, int full=0);
 	// Output		none	 : Dynamic spin system dipoles 
 	//				   sent to the output stream
 	///F_list print		         - Write dipoles to output stream
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-std::string PyPrint();
-void genString(std::stringstream& sstr);
-
-#endif						// End of PyGAMMA code block
-
 };
-
-// _________________________________________________________________________
-//                          PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySysDynamic();
-
-#endif						// End PyGAMMA code block
 
 #endif						// sys_dynamic.h

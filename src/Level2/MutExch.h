@@ -95,14 +95,4 @@ MSVCDLL super_op Kex(const spin_sys& sys,
 
 MSVCDLL super_op Kex(const sys_dynamic& sys, const basis& Bs);
 
-// ____________________________________________________________________________
-// S                            PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyMutExch();
-
-#endif						// End of PyGAMMA code block
-
 #endif						// MutExch.cc

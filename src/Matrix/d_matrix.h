@@ -594,16 +594,5 @@ virtual n_matrix* NMX();
         // Output               nmx     : A new n_matrix matrix whose
         //                                elements are the same as dmx
         // Note                         : This will allocate memory
-// _________________________________________________________________
-//                            PyGAMMA Code
-// _________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-virtual std::string PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string PyPicture(const MxPrint& PFlgs) const;
-
-#endif					// End of PyGAMMA code block
-
 };
 #endif					// d_matrix.cc

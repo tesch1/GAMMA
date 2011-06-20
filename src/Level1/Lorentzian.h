@@ -391,43 +391,6 @@ MSVCDLL row_vector DLorentzian(int npts, double offset, double R, int max1=0);
 	// Note			: An extra R*R is put into the numerator 
 	//			  for L'max=1 if max1 != 0
  
-// ____________________________________________________________________________
-//                              PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-
-complex    LorentzianA(double Weval, double W,  double R);
-row_vector LorentzianB(int npts,     double Wi, double Wf, double W, double R);
-row_vector LorentzianC(int npts,     double W,  double R);
-row_vector LorentzianD(int npts,     double W,  double R, int max1);
-row_vector LorentzianE(double R, double W, double wst, double wfi, int N, complex& I, double Lcut, int Lint);
-
-void LorentzianF(row_vector& data,double R,double W,double wst,double wfi,complex& I);
-void LorentzianG(row_vector& data,double R,double W,double wst,double wfi,complex& I, double Lcut);
-void LorentzianH(row_vector& data,double R,double W,double wst,double wfi,complex& I, double Lcut, int Lint);
-
-void Lorentz_cutA(int& ilo,int& ihi,double R,double W,double w0,double winc,int npts);
-void Lorentz_cutB(int& ilo,int& ihi,double R,double W,double w0,double winc,int npts,double cutoff);
-
-void Lorentz_cutC(int* ilo,int* ihi,const matrix& R,double w0,double winc,int npts,double cutoff=1.e-4);
-void Lorentz_cutD(int* ilo,int* ihi,const matrix& R,double w0,double winc,int npts,double cutoff=1.e-4);
-
-void Lorentz_intA(int& Lint, double R, double winc);
-void Lorentz_intB(int& Lint, double R, double winc, int N);
-void Lorentz_intC(int* Lint, const matrix& R, double winc);
-void Lorentz_intD(int* Lint, const matrix& R, double winc, int N);
-
-complex    DLorentzianA(double Weval, double W,  double R);
-row_vector DLorentzianB(int npts,     double Wi, double Wf, double W, double R);
-row_vector DLorentzianC(int npts,     double W,  double R);
-row_vector DLorentzianD(int npts,     double W,  double R, int max1);
-
-void PyLorentzian();
-
-#endif						// End of PyGAMMA code block
-
 /*************************************************************************
 **									**
 **                    Additional Mathematical Details			**

@@ -895,16 +895,4 @@ std::ostream &operator << (std::ostream& ostr, const decomp& dec)
   { return dec.print(ostr); }
 
 
-// ____________________________________________________________________________
-// S                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBaseDecomp()
-  {
-  }
-
-#endif						// End of PyGAMMA code block
-
 #endif					// Class decomp implementation

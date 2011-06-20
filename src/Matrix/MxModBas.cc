@@ -37,10 +37,6 @@
   #include <stdio.h>			// know about sprintf function
 #endif
 
-#ifdef PYGAMMA				// If compiling PyGAMMA
-# include <boost/python/errors.hpp>
-#endif					//   (we need it in this file!)
-
 // ____________________________________________________________________________ 
 // A                Matrix Module Generic Error Handling Functions
 // ____________________________________________________________________________
@@ -124,14 +120,8 @@ void MxModError(const std::string& hdr, int eidx, const std::string& pname, int 
  
 volatile void MxModFatal()
   {
-  #ifdef PYGAMMA					// If compiling PyGAMMA
-     std::string s = "Stopping PyGAMMA Script\n";	//   Set error string
-     PyErr_SetString(PyExc_RuntimeError, s.c_str());	//   Set as Python error msg
-     throw boost::python::argument_error();		//   Throw the error
-  #else							// Otherwise for C++
-     std::cout << std::endl;				//   Add a linefeed
-     exit(-1);						//   Abort the program
-  #endif                     
+   std::cout << std::endl;				//   Add a linefeed
+   exit(-1);						//   Abort the program
   }
 
 // ____________________________________________________________________________ 

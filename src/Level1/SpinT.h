@@ -881,26 +881,6 @@ MSVCDLL friend std::ostream& operator<< (std::ostream& ostr, const spin_T &SphT)
 	// Return		     : stream, prints spin tensor components
 	///F_list <<		     - standard output for spin tensors
 
-// ____________________________________________________________________________
-//                                  PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string Print();
-
-#endif						// End of PyGAMMA code block
-
   };
-
-// _________________________________________________________________________
-// N                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySpinT();
-
-#endif						// End PyGAMMA code block
 
 #endif						// SpinT.h

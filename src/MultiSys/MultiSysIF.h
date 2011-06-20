@@ -38,12 +38,4 @@
 #include <MultiSys/MultiWBR.h>			// Include BWR relaxation
 #include <MultiSys/MultiExch.h>			// Include non-mutual exchange
 
-/* The Python interface file adds funtionality to Python via Boost.Python
-   It does so by specifying which functions are exported into Python from
-   a general Python module, PyModule. Since this module must first be built
-   (see src/PyGAMMAIF.cc and src/PyGAMMAIF.h) we cannot use the header
-   until after the compilation of PyGAMMAIF.cc.                          */
-
-//#include <MultiSys/PyMultiSys.h>		// Include Python interface
-
 #endif 						// MultiSysIF.h

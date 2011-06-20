@@ -156,16 +156,4 @@ MSVCDLL row_vector square_wave (int size, int start, int finish);
 MSVCDLL row_vector Noise(int npts,         double maxN);
 MSVCDLL void       Noise(row_vector& data, double maxN);
 
-// ____________________________________________________________________________
-//                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-row_vector Noise1(int npts,         double maxN);
-void       Noise2(row_vector& data, double maxN);
-void PyWindow();
-
-#endif						// End of PyGAMMA code block
-
 #endif 						// WindowFct.h

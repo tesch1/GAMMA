@@ -824,28 +824,8 @@ MSVCDLL        bool operator!=(const coord& pt) const;
 MSVCDLL        bool operator>(const  coord& pt) const;
 MSVCDLL        bool operator<(const  coord& pt) const;
 
-// ____________________________________________________________________________
-// N                                PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-friend coord operator / (const coord &pt1, double r);
-
-std::string PyPrint();
-
-#endif						// End of PyGAMMA code block
 };
 
-// _________________________________________________________________________
-// O                         PyGAMMA Code (Non-Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyCoord();
-
-#endif						// End PyGAMMA code block
 
 /*****************************************************************************/
 /*****************************************************************************/

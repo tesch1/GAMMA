@@ -275,56 +275,5 @@ return T22(sys, spin, spin, m);
 l=0;				// Compiler likes this used
 }
 
-// ____________________________________________________________________________
-//                            PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-spin_T  T_DA(const spin_sys &sys, int spin1, int spin2)        { return T_D(sys,spin1,spin2); }
-spin_op T_DC(const spin_sys &sys, int spin1, int spin2, int m) { return T_D(sys,spin1,spin2,m); }
-spin_T  T_DB(const spin_sys &sys, spin_op &Im1, spin_op &Iz1, spin_op &Ip1,
-                                  spin_op &Im2, spin_op &Iz2, spin_op &Ip2)
-  { return T_D(sys,Im1,Iz1,Ip1,Im2,Iz2,Ip2); }
-
-spin_T  T_CS2P1(const spin_sys &sys, int spin)                         { return T_CS2(sys,spin);       }
-spin_T  T_CS2P2(const spin_sys &sys, int spin, coord &B)               { return T_CS2(sys,spin,B);     }
-spin_op T_CS2P3(const spin_sys &sys, int spin, coord &B, int l, int m) { return T_CS2(sys,spin,B,l,m); }
-
-spin_T  T_CSP1(const spin_sys &sys, int spin)         { return T_CS(sys,spin); }
-spin_op T_CSP2(const spin_sys &sys, int spin, int m)  { return T_CS(sys,spin,m); }
-
-spin_T  T_RFA(const spin_sys &sys, int spin)               { return T_RF(sys,spin); }
-spin_op T_RFB(const spin_sys &sys, int spin, int l, int m) { return T_RF(sys,spin,l,m); }
-
-spin_T  T_QA(const spin_sys &sys, int spin)               { return T_Q(sys,spin); }
-spin_op T_QB(const spin_sys &sys, int spin, int l, int m) { return T_Q(sys,spin,l,m); }
-
-void PyNMRTensor()
-  {
-  def("T_D",  T_DA);
-  def("T_D",  T_DB);
-  def("T_D",  T_DC);
-
-  def("T_CSA", T_CSA);
-  def("T_CS2", T_CS2P1);
-  def("T_CS2", T_CS2P2);
-  def("T_CS2", T_CS2P3);
-  def("T_CS",  T_CSP1);
-  def("T_CS",  T_CSP2);
-
-  def("T_RF",  T_RFA);
-  def("T_RF",  T_RFB);
-
-  def("T_Q",   T_QA);
-  def("T_Q",   T_QB);
-  }
-
-#endif						// End of PyGAMMA code block
-
 #endif						// nmr_tensor.cc
 

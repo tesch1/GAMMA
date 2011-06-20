@@ -541,17 +541,6 @@ virtual _matrix* convert(matrix_type mxtype);
 	//				  whose elements are the same as _mx
         //				  if possible.
 
-// _________________________________________________________________
-//                            PyGAMMA Code
-// _________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-
-virtual std::string PyPrint(const   MxPrint& PFlgs) const;
-virtual std::string PyPicture(const MxPrint& PFlgs) const;
-
-#endif					  // End PyGAMMA code block
-
 };
 
 static       complex ZNULL(0,0);		   // Complex changable value

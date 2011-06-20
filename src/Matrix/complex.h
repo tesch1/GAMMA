@@ -424,62 +424,7 @@ MSVCDLL inline bool operator!= (const complex& z) const;
 MSVCDLL        bool operator<  (const complex& z) const;
 MSVCDLL        bool operator>  (const complex& z) const;
 
-// ____________________________________________________________________________
-// I                             PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string PyPrint();
-
-friend double Re1(const complex& z);
-friend void   Re2(      complex& z, double r);
-friend double Im1(const complex& z);
-friend void   Im2(      complex& z, double r);
-
-// -------------------------------------------------------------------------
-//              Bypass For Transcendental Friend Functions
-// -------------------------------------------------------------------------
-
-friend complex sqrt1(const complex& z);
-friend complex exp1(const  complex& z);
-friend complex log1(const  complex& z);
-friend complex pow1(const  complex& z, const complex& z1);
-
-// -------------------------------------------------------------------------
-//              Bypass For Trigonometric Friend Functions
-// -------------------------------------------------------------------------
-
-/* The names of the class trigonometric functions produce collisions with
-   standard C++ function names when exported using Boost.Python under some
-   compilers. These functions exist to avoid such conflicts if needed.    */
-
-friend complex sin1(const complex& z);
-friend complex cos1(const complex& z);
-friend complex tan1(const complex& z);
-friend complex asin1(const complex& z);
-friend complex acos1(const complex& z);
-friend complex atan1(const complex& z);
-friend complex sinh1(const complex& z);
-friend complex cosh1(const complex& z);
-friend complex tanh1(const complex& z);
-friend complex asinh1(const complex& z);
-friend complex acosh1(const complex& z);
-friend complex atanh1(const complex& z);
-
-#endif						// End PyGAMMA code block
-
   };
-
-// ____________________________________________________________________________
-// H                         PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyComplex();
-
-#endif						// End PyGAMMA code block
 
 /************************************************************************/
 /************************************************************************/
