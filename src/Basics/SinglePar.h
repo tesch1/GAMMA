@@ -271,49 +271,7 @@ MSVCDLL bool operator!=(const SinglePar& par) const;
 MSVCDLL bool operator< (const SinglePar& par) const;
 MSVCDLL bool operator> (const SinglePar& par) const;
 
-// _____________________________________________________________________________
-// F                        PYGAMMA CODE (Member)
-// _____________________________________________________________________________
-
-/* There are two reasons for this section. First, the Python export of
-   overloaded functions does not work real well. So, some functions must
-   be redefined so that when (the original) function is called it will just
-   use this one because that is what is set in the Python interface. The
-   end result is we just need a unique name for each function (ugh). Second,
-   the I/O functions don't work real well either, so usually output is set.  */
-
-#ifdef PYGAMMA					// If compiling PyGAMMA
-
-// -----------------------------------------------------------------------------
-//                Code For Overloaded parse Functions
-// -----------------------------------------------------------------------------
-
-MSVCDLL int parseSPAR1(std::string name, int i, std::string state, int warn=0) const;
-MSVCDLL int parseSPAR2(std::string name, double d, std::string state, int warn=0) const;
-MSVCDLL int parseSPAR3(std::string name, std::string val, std::string stat, int warn=0) const;
-MSVCDLL int parseSPAR4(std::string name, double dx, double dy, double dz, std::string state, int warn=0) const;
-MSVCDLL int parseSPAR5(std::string name, int rank, double diso, double delz, double deta, double alpha, double beta, double gamma, std::string state, int warn = 0) ;
-
-// -----------------------------------------------------------------------------
-//                             Code For __str__
-// -----------------------------------------------------------------------------
-
-MSVCDLL std::string PyPrint();
-
-#endif					// End PyGAMMA code block
-
 };
-
-// ____________________________________________________________________________
-// G                       PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-
-#ifdef PYGAMMA					// If compiling PyGAMMA
-
-MSVCDLL void PySinglePar();
-
-#endif						// End PyGAMMA code block
 
 /*****************************************************************************/
 /*****************************************************************************/

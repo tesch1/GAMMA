@@ -79,36 +79,4 @@ const string DEFISO = "1H";		// Default spin isotope symbol
 const double PLANCK  = 6.6260755e-34;	// Plancks constant (h)         (J-sec)
 const double HBAR    = 1.05457266e-34;	// Plancks constant (h/2PI)     (J-sec)
 
-// ____________________________________________________________________________
-//                              PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/class.hpp>
-#include <boost/python/scope.hpp>
-
-void PyGconstants()
-  {
-  boost::python::scope().attr("PIx2")      = PIx2;
-  boost::python::scope().attr("DEG2RAD")   = DEG2RAD;
-  boost::python::scope().attr("RAD2DEG")   = RAD2DEG;
-  boost::python::scope().attr("HZ2RAD")    = HZ2RAD;
-  boost::python::scope().attr("RAD2HZ")    = RAD2HZ;
-  boost::python::scope().attr("HZ2GAUSS")  = HZ2GAUSS;
-  boost::python::scope().attr("GAUSS2HZ")  = GAUSS2HZ;
-  boost::python::scope().attr("GHZ2GAUSS") = GHZ2GAUSS;
-  boost::python::scope().attr("GAUSS2GHZ") = GAUSS2GHZ;
-  boost::python::scope().attr("MU_E")      = MU_E;
-  boost::python::scope().attr("BOHRMAG")   = BOHRMAG;
-  boost::python::scope().attr("GFREE")     = GFREE;
-  boost::python::scope().attr("GAMMAe")    = GAMMAe;
-  boost::python::scope().attr("GAMMA1H")   = GAMMA1H;
-  boost::python::scope().attr("DEFISO")    = DEFISO;
-  boost::python::scope().attr("HBAR")      = HBAR;
-  boost::python::scope().attr("PLANCK")    = PLANCK;
-  }
-
-#endif						// End of PyGAMMA code block
-
 #endif                  		                // Gconstants.cc

@@ -154,39 +154,8 @@ MSVCDLL std::ostream& print(std::ostream& ostr, int lf=1, bool hdr=true) const;
 MSVCDLL friend  std::ostream& operator<< (std::ostream& ostr, const IsotopeData& ID);
 
 
-// ____________________________________________________________________________
-// D	                         PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-MSVCDLL std::string PyPrint() const;
-
-#endif
-
 };						// End IsotopeData Class
 
-// ___________________________________________________________________________
-// E	                 PyGAMMA Code (Non-Member)
-// ___________________________________________________________________________
-
-// ---------------------------------------------------------------------------
-//                             Isotope Data Class
-// ---------------------------------------------------------------------------
-
-// Currently no IsotopeData class functions are required to be exported into
-// Python. The functions will still be used by (Py)GAMMA internals, e.g. by
-// class Isotope. Most of the functionality in this class is never accessed by
-// the typical GAMMA user, and class Isotope provides similar functionality
-// anyway. However, below are a few exports anyway, mainly used in testing the
-// viability of PyGAMMA. Since class Isotope uses an STL vector of IsotopeData
-// we may need the class definition anyway.
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-MSVCDLL void PyIsotopeData();
-
-#endif							// End PyGAMMA code
 
 #endif							// IsotopeData.h
 

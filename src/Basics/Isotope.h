@@ -282,45 +282,8 @@ MSVCDLL bool enpair(const Isotope& S) const;
 MSVCDLL bool eepair(const Isotope& S) const;
 MSVCDLL bool nnpair(const Isotope& S) const;
 
-// ____________________________________________________________________________
-// I                        PyGAMMA Code (Member)
-// ____________________________________________________________________________
-
-/* These functions are only for the PyGAMMA compilation. Since the Python
-   interpreter does not handle standard output & ostreams well, these next
-   functions are to replace the class operator << and print function. Both
-   << and print accomplish the same thing, the former is a friend function
-   while the latter is a member function. They add information about the
-   isotope into the output stream. Alternatively, only the "Print" function
-   below will be exported into Python and it returns a string rather than
-   an ostream. The other functions simply support the "Print" function. As
-   such, there is no coupling of output statmenets (e.g. cout << I << J)
-   so there is no reason to worry about such issues in this instance.
-  
-           Input                I       : An isotope (this) 
-                                ostr    : Output stream 
-           Output               none    : Isotope info placed into the
-                                          output stream ostr                 */
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-std::string PyPrint();
-std::string PyPrintList();
-
-#endif						// End PyGAMMA code
-
 
 };						// End class Isotope
-
-// ____________________________________________________________________________
-// J                     PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-MSVCDLL void PyIsotope();
-
-#endif						// End PyGAMMA code
 
 
 #endif								// Isotope.h

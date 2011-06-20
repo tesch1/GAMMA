@@ -42,13 +42,6 @@ using std::cout;			// Using libstdc++ standard output
 using std::cin;				// Using libstdc++ standard input
 using std::endl;			// Using libstdc++ line endings
 
-#ifdef PYGAMMA				// If compiling PyGAMMA
-#include <boost/python.hpp>
-
-
-//# include <boost/python/errors.hpp>	//   Include for PyError
-#endif					//   (we need it in this file!)
-
 // _____________________________________________________________________________
 // A              Interactive Parameter Request Functions
 // _____________________________________________________________________________
@@ -207,30 +200,9 @@ void GAMMAerror(const string& hdr, int eidx, const string& pname, int noret)
   }  
  
 volatile void GAMMAfatal()
-  {
-  #ifdef PYGAMMA					// If compiling PyGAMMA
-     string s = "Stopping PyGAMMA Script\n";		//   Set error string
-     PyErr_SetString(PyExc_RuntimeError, s.c_str());	//   Set as Python error msg
-     throw boost::python::argument_error();		//   Throw the error
-  #else							// Otherwise for C++
+  {						
      cout << endl;					//   Add a linefeed
      exit(-1);						//   Abort the program
-  #endif                                                             
   }
-
-// ____________________________________________________________________________
-//                              PyGAMMA Code
-// ____________________________________________________________________________
-
-/* There are currently no functions exported from this file into Python. That
-   is because the provided functions of consequence are handled easily using
-   standard Python functionality anyway. Function PyGutils is just a place-
-   holder. The function currently does not do anything.                      */
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyGutils() {};
-
-#endif						// End of PyGAMMA code block
 
 #endif							// Gutils.cc

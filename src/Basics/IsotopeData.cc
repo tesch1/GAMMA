@@ -187,10 +187,7 @@ string IsotopeData::momentum() const
 // C                    SINGLE ISOTOPE I/O FUNCTIONS
 // ____________________________________________________________________________
 
-/* These send basic information about the isotope to the output stream.
-   Note that this output is NOT what is used for PyGAMMA. The PyGAMMA output
-   is analagous but routes through the print statements found later in this
-   file.                                                                    */
+/* These send basic information about the isotope to the output stream.*/
 
         // Input               ID : An IsotopeData (this)
         //                   ostr : An output stream ostr
@@ -239,87 +236,5 @@ std::ostream& IsotopeData::print(std::ostream& ostr, int lf, bool hdr) const
 std::ostream& operator<< (std::ostream& ostr, const IsotopeData& ID)
   { return ID.print(ostr); }
 
-// ___________________________________________________________________________
-// D	                   PyGAMMA Code (Member)
-// ___________________________________________________________________________
-
-#ifdef PYGAMMA				// If we are compiling PyGAMMA
-
-#include <sstream>			//   Include string stream for Python
-using std::stringstream;		// Using libstdc++ string streams
-
-string IsotopeData::PyPrint() const
-  {
-  std::vector<string> PStrings;		// Array of strings to print
-  PStrings = printStrings();		// Get our print strings
-  stringstream sstr;			// Like ostream but with strings
-  unsigned ns = PStrings.size();	// No. of strings to print
-  for(unsigned i=0; i<ns; i++)		// Loop over strings and send
-    sstr << PStrings[i] << std::endl;	// to our string stream
-  return sstr.str();			// Return as Python printable string
-  }
-
-// ___________________________________________________________________________
-// E	                 PyGAMMA Code (Non-Member)
-// ___________________________________________________________________________
-
-// ----------------------------------------------------------------------------
-//                             Isotope Data Class
-// ----------------------------------------------------------------------------
-
-// Currently no IsotopeData class functions are required to be exported into
-// Python. The functions will still be used by (Py)GAMMA internals, e.g. by
-// class Isotope. Most of the functionality in this class is never accessed by
-// the typical GAMMA user, and class Isotope provides similar functionality
-// anyway. However, below are a few exports anyway, mainly used in testing the
-// viability of PyGAMMA. Since class Isotope uses an STL vector of IsotopeData
-// we may need the class definition anyway.
-
-#include <boost/python/class.hpp>			// Boost.Python classes
-#include <boost/python/copy_const_reference.hpp>	// Boost.Python call policy
-#include <boost/python/return_value_policy.hpp>		// Boost.Python return policy
-#include <boost/python/self.hpp>
-//#include <boost/python/operators.hpp>			// Boost.Python operators
-
-using boost::python::class_;				// Boost.Python class
-using boost::python::init;				// Boost.Python class constructor
-using boost::python::return_value_policy;
-using boost::python::copy_const_reference;
-using boost::python::self;				// Boost.Python *this
-
-void PyIsotopeData()
-  {
-//                                  The Class
-
-
-  class_<IsotopeData>("IsotopeData", init<>())
-
-//                                Constructors
-
-    .def(init<const IsotopeData&>())
-    .def(init<const std::string&>())
-
-//                              Member Functions
-
-    .def("qn",       &IsotopeData::qn)
-    .def("HS",       &IsotopeData::HS)
-    .def("momentum", &IsotopeData::momentum)
-    .def("symbol",   &IsotopeData::symbol,  return_value_policy<copy_const_reference>())
-    .def("name",     &IsotopeData::name,    return_value_policy<copy_const_reference>())
-    .def("element",  &IsotopeData::element, return_value_policy<copy_const_reference>())
-    .def("number",   &IsotopeData::number)
-    .def("mass",     &IsotopeData::mass)
-    .def("weight",   &IsotopeData::weight)
-    .def("recept",   &IsotopeData::recept)
-    .def("electron", &IsotopeData::electron)
-    .def("rel_freq", &IsotopeData::rel_freq)
-
-//                          Python Specialty Functions
-
-    .def("__str__", &IsotopeData::PyPrint)
-    ;
-  }
-
-#endif							// End PyGAMMA code
 
 #endif							// IsotopeData.cc

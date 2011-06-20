@@ -258,71 +258,7 @@ MSVCDLL bool getString(const std::string& name, std::string& value) const;
 MSVCDLL bool getInt(const    std::string& name, int&         value) const;
 MSVCDLL bool getDouble(const std::string& name, double&      value) const;
 
-// __________________________________________________________________________
-// I                            PyGAMMA Code
-// __________________________________________________________________________
-
-#ifdef PYGAMMA				// Begin PyGAMMA code block
-// -------------------------------------------------------------------------
-//                      Bypass STL List Functions
-// -------------------------------------------------------------------------
-
-void pushback(const SinglePar& par);
-
-// -------------------------------------------------------------------------
-//                      Bypass For Overloaded Contains()
-// -------------------------------------------------------------------------
-
-int containsPSET1(const std::string& pname) const;
-int containsPSET2(const SinglePar&   par)   const;
-
-// -------------------------------------------------------------------------
-//                      Bypass For Overloaded seek()
-// -------------------------------------------------------------------------
-
-stdlistSP::const_iterator seekPSET1(const std::string& pname) const;
-stdlistSP::const_iterator seekPSET2(const SinglePar&   par)   const;
-
-// -------------------------------------------------------------------------
-//                      Bypass For Overloaded write()
-// -------------------------------------------------------------------------
-
-bool writePSET1(const std::string& fileout) const;
-//bool writePSET1(const std::string& fileout, int warn=2) const;
-//bool writePSET2(std::ofstream& sstr,        int warn=2) const;
-
-// -------------------------------------------------------------------------
-//                      Bypass For Overloaded read()
-// -------------------------------------------------------------------------
-
-int readPSET1(const std::string& filein);
-//int readPSET2(const std::string& filein, int fflag);
-//int readPSET3(std::ifstream& inp,        int fflag=0);
-
-std::string getStringPSET(const std::string& name);
-int         getIntPSET(const    std::string& name);
-double      getDoublePSET(const std::string& name);
-
-// -------------------------------------------------------------------------
-//                      Bypass For Standard Output
-// -------------------------------------------------------------------------
-
-std::string PyPrint();
-
-#endif						// End PyGAMMA code block
-
 };
-
-// _________________________________________________________________________
-// I                         PyGAMMA Code (Member)
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PySPlist();
-void PyParameterSet();
-
-#endif						// End PyGAMMA code block
 
 //   typedef std::multimap<std::string, std::string> Map;
 //   typedef Map::iterator iterator;

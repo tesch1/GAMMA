@@ -106,14 +106,5 @@ extern const MSVCDLL std::string DEFISO;	// Default spin isotope symbol
 
 extern const MSVCDLL double PLANCK;		// Plancks constant (h)         (J-sec)
 extern const MSVCDLL double HBAR;   		// Plancks constant (h/2PI)     (J-sec)
-// ____________________________________________________________________________
-//                              PyGAMMA Code
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyGconstants();
-
-#endif						// End of PyGAMMA code block
 
 #endif						// Gconstants.h

@@ -79,19 +79,5 @@ MSVCDLL void GAMMAerror(const std::string& hdr, int eidx,                       
 MSVCDLL void GAMMAerror(const std::string& hdr, int eidx, const std::string& pname, int noret=0);
 MSVCDLL volatile void GAMMAfatal();
 
-// ____________________________________________________________________________
-//                              PyGAMMA Code
-// ____________________________________________________________________________
-
-/* There are currently no functions exported from this file into Python. That
-   is because the provided functions of consequence are handled easily using
-   standard Python functionality anyway. Function PyGutils is just a place
-   holder, the function does not do anything currently.                      */
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyGutils();
-
-#endif						// End of PyGAMMA code block
 
 #endif								// Gutils.h
