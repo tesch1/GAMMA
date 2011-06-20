@@ -1,6 +1,6 @@
-
 %include "ExProcess.i"
-/* %include "MultiAux.i" */
+// Note: MultiAux.i intentionally left out.
+// It was causing problems with the build...
 %include "MultiSys.i"
 %include "MultiLib.i"
 %include "MultiSOp.i"
