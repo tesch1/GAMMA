@@ -120,12 +120,10 @@ MATRIXUL    = ------
 MATRIXBASE  = complex MxModBas _matrix i_matrix d_matrix h_matrix n_matrix\
               matrix col_vector row_vector py_matrix pyy_matrix
 MATRIXHDR   = MatrixIF.h
-MATRIXPY    = PyMatrixIF.h
 ALLFILES   += $(MATRIXBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(MATRIX)/, $(MATRIXBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(MATRIX)/, $(MATRIXBASE)))
 ALLHFILES  += $(addprefix $(MATRIX)/, $(MATRIXHDR))
-ALLHFILES  += $(addprefix $(MATRIX)/, $(MATRIXPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(MATRIX)/, $(MATRIXBASE)))
 ALLMODDIRS += $(MATRIX)
 ALLMODHDRS += $(MATRIXHDR) 
