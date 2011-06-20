@@ -459,12 +459,10 @@ ESRUL       = ------
 ESRBASE     = CubicIonData CubicIon
 # CubicSys ESRHam AngleSet Fibre
 ESRHDR      = ESRIF.h
-ESRPY       = PyESRLibIF.h
 ALLFILES   += $(ESRBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(ESR)/, $(ESRBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(ESR)/, $(ESRBASE)))
 ALLHFILES  += $(addprefix $(ESR)/, $(ESRHDR))
-#ALLHFILES  += $(addprefix $(ESR)/, $(ESRPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(ESR)/, $(ESRBASE)))
 ALLMODDIRS += $(ESR)
 ALLMODHDRS += $(ESRHDR)
