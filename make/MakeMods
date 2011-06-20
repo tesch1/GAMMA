@@ -93,7 +93,6 @@ BASICS      = Basics
 BASICSUL    = ------
 BASICSBASE  = Gutils Gconstants StringCut SinglePar ParamSet IsotopeData Isotope
 BASICSHDR   = GBasicsIF.h
-BASICSPY    = PyBasicsIF.h
 ALLFILES   += $(BASICSBASE)
 ALLCCFILES += $(addsuffix .cc, $(addprefix $(BASICS)/, $(BASICSBASE)))
 ALLHFILES  += $(addsuffix .h,  $(addprefix $(BASICS)/, $(BASICSBASE)))
@@ -102,7 +101,6 @@ ALLHFILES  += $(addprefix $(BASICS)/, $(BASICSPY))
 ALLOFILES  += $(addsuffix .o,  $(addprefix $(BASICS)/, $(BASICSBASE)))
 ALLMODDIRS += $(BASICS)
 ALLMODHDRS += $(BASICSHDR)
-ALLPYFILES += $(BASICSPY)
 BASICSTBAS  = TestBasics TestGconst TestGconstA TestSingPar TestSingParA TestSingParB\
               TestIsoData TestStringCut
 
