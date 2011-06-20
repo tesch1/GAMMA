@@ -147,24 +147,8 @@ BlochProp BlochProp::operator/  (double r);
 void      BlochProp::operator/= (const complex& z);
 void      BlochProp::operator/= (double r);
 
-// ____________________________________________________________________________
-// I				Basics Python Code
-// ____________________________________________________________________________
-
 int BlochProp::NComps() const;
 
-// ____________________________________________________________________________
-// I				Basics Python Code
-// ____________________________________________________________________________
-
-/* These functions are only for the PyUAMMA compilation. Since the Python
-   interpreter does not handle standard output & ostreams well.              */
-
-#ifdef PYGAMMA						// If compiling PyUAMMA
-
-std::string BlochProp::PyPrint() const;
-
-#endif							// End of PyUAMMA code
 };
 
 #endif							// BlochProp.h

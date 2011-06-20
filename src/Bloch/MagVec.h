@@ -327,26 +327,6 @@ MSVCDLL        MagVec MzVec() const;
 // ____________________________________________________________________________
 
 
-// _________________________________________________________________________
-// I                              PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string PyPrint() const;
-
-#endif						// End PyGAMMA code block
-
 };
-
-// ____________________________________________________________________________
-// J                     PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-void PyMagVec();
-
-#endif						// End PyGAMMA code
 
 #endif						// MagVec.h

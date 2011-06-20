@@ -262,39 +262,4 @@ BlochProp exp(const BlochProp& U, double t)
 
 int BlochProp::NComps() const { return rows()/3; }
 
-// ____________________________________________________________________________
-// I				Basics Python Code
-// ____________________________________________________________________________
-
-/* These functions are only for the PyGAMMA compilation. Since the Python
-   interpreter does not handle standard output & ostreams well.              */
-
-#ifdef PYGAMMA						// If compiling PyGAMMA
-
-#include <sstream>					// Include string streams
-
-std::string BlochProp::PyPrint() const
-  {
-  std::stringstream sstr;
-  std::string hdr;
-  if(!rows())
-    {
-    hdr = std::string("Empty Bloch Propagator");
-    sstr << CenterString(hdr) << std::endl;
-    return sstr.str();
-    }
-  hdr = std::string("Bloch Propagator - ");
-  int n = NComps();
-  hdr += Udec(n) + " Component";
-  if(n > 1) hdr += "s";
-  hdr += ", Evolve Time ";
-  hdr += Gform("%8.3f", Ut) + " s";
-  sstr << CenterString(hdr) << std::endl;
-
-  sstr << (matrix)*this;
-  return sstr.str();
-  }
-
-#endif							// End of PyGAMMA code
-
 #endif								// BlochProp.cc

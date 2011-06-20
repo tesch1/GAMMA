@@ -323,35 +323,5 @@ matrix R_matrix(int argc, char* argv[], double& T1, double& T2, int& qn)
   return BlochR(argc, argv, T1, T2, qn);
   }
 
-// _________________________________________________________________________
-// G                              PyGAMMA Code
-// _________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-#include <boost/python/overloads.hpp>
-
-using boost::python::def;
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(BlochR_AFBeforeR, AFBeforeR, 2, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(BlochR_BlochR,    BlochR,    2, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(BlochR_BlochR1,   BlochR,    4, 5)
-
-void PyBlochR()
-  {
-  def("AFBeforeR", (BlochMx(*)(double, double, bool))0,                 BlochR_AFBeforeR());
-  def("BlochR",    (BlochMx(*)(double, double, bool))0,                 BlochR_BlochR());
-  def("BlochR",    (BlochMx(*)(double, double, double, double, bool))0, BlochR_BlochR1());
-//  def("BlochR",    (BlochMx(*)(std::vector<double>, std::vector<double>, bool))0,                  BlochR_BlochR());
-//  def("BlochR",    (BlochMx(*)(const BlochSys&)) &BlochR);
-
-  def("R_matrix",  (matrix(*)(double, double)) &R_matrix);
-
-  }
-
-#endif						// End PyGAMMA code block
-
 #endif							// BlochR.cc
 

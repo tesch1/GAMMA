@@ -153,28 +153,6 @@ MSVCDLL void    operator/= (double r);
 
 MSVCDLL int NComps() const;
 
-// ____________________________________________________________________________
-// I				Basics Python Code
-// ____________________________________________________________________________
-
-/* These functions are only for the PyGAMMA compilation. Since the Python
-   interpreter does not handle standard output & ostreams well.              */
-
-#ifdef PYGAMMA						// If compiling PyGAMMA
-
-std::string PyPrint() const;
-
-#endif							// End of PyGAMMA code
 };
-
-// ____________________________________________________________________________
-// J                     PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA						// If compiling PyGAMMA
-
-void PyBlochMx();
-
-#endif							// End PyGAMMA code
 
 #endif							// BlochMx.h

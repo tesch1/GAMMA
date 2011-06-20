@@ -103,14 +103,5 @@ MSVCDLL coord_vec MTraj(const MagVec& Mo, const matrix& G, const MagVec& Minf,
 
 MSVCDLL row_vector MNormTraj(const MagVec& Mo, const matrix& G, const MagVec& Minf,
                                                              int N, double td);
-// ____________________________________________________________________________
-// D                     PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-void PyBlochTraj();
-
-#endif						// End PyGAMMA code
 
 #endif						// BlochTraj.h

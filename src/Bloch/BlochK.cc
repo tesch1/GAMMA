@@ -137,21 +137,5 @@ matrix BlochK(double k)
 
 matrix BlochK(const BlochSys& sys) { return sys.K(); }
 
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-void PyBlochK()
-  {
-  def("BlochK",  (matrix(*)(double))          &BlochK);
-  def("BlochK",  (matrix(*)(const BlochSys&)) &BlochK);
-  }
-
-#endif						// End PyGAMMA code block
-
-
-
 #endif							// BlockK.cc
 

@@ -130,14 +130,4 @@ MSVCDLL matrix BlochK(double k);
 
 MSVCDLL matrix BlochK(const BlochSys& sys);
 
-// _________________________________________________________________________
-//                               PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBlochK();
-
-#endif						// End PyGAMMA code block
-
 #endif						// BlochK.h

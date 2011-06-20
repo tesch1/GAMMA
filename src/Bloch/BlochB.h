@@ -159,15 +159,4 @@ MSVCDLL matrix K_matrix(matrix& R, double gamB1, double w, double phi);
 MSVCDLL matrix K_matrix(int argc, char* argv[], matrix& R,
                                double& gamB1, double& w, double& phi, int& qn);
 
-// _________________________________________________________________________
-// I                              PyGAMMA Code
-// _________________________________________________________________________
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBlochB();
-
-#endif						// End PyGAMMA code block
-
 #endif								// BlochB.h

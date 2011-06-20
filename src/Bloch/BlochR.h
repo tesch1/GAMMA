@@ -171,14 +171,4 @@ MSVCDLL BlochMx BlochR(int argc, char* argv[], double& T1, double& T2, int& qn, 
 MSVCDLL matrix R_matrix(double T1, double T2);
 MSVCDLL matrix R_matrix(int argc, char* argv[], double& T1, double& T2, int& qn);
 
-// _________________________________________________________________________
-// G                              PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-void PyBlochR();
-
-#endif						// End PyGAMMA code block
-
 #endif						// BlochR.h

@@ -321,28 +321,8 @@ MSVCDLL        DetVec DzVec() const;
 // G                Bloch Detection Vector Evolution Functions
 // ____________________________________________________________________________	
 
-// ____________________________________________________________________________	
-// H                       PyGAMMA Code (Member)
-// ____________________________________________________________________________	
-
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-std::string PyPrint() const;
-
-#endif						// End PyGAMMA include.	
 
 };
-
-// ____________________________________________________________________________
-// I                     PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-void PyDetVec();
-
-#endif						// End PyGAMMA include.	
 
 #endif						// DetVec.h
 

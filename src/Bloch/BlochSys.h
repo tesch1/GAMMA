@@ -376,15 +376,4 @@ MSVCDLL friend std::ostream& operator<<(std::ostream& out, const BlochSys& sys);
 
 };
 
-// _________________________________________________________________________
-// N                             PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-MSVCDLL void PyBlochSys();
-
-#endif						// End PyGAMMA code block
-
-
 #endif						// BlochSys.h

@@ -347,44 +347,5 @@ matrix tmp1;
   return NormVec;
   }
 
-// ____________________________________________________________________________
-// D                     PyGAMMA Code (Non-Member)
-// ____________________________________________________________________________
-
-#ifdef PYGAMMA					// If we are compiling PyGAMMA
-
-#include <boost/python/def.hpp>
-
-using boost::python::def;
-
-void PyBlochTraj()
-  {
-  def("MxDetection", (DetVec (*)(const MagVec&)) &MxDetection);
-  def("MyDetection", (DetVec (*)(const MagVec&)) &MyDetection);
-  def("MzDetection", (DetVec (*)(const MagVec&)) &MzDetection);
-  def("MpDetection", (DetVec (*)(const MagVec&)) &MpDetection);
-  def("MmDetection", (DetVec (*)(const MagVec&)) &MmDetection);
-
-  def("MxTraj", (row_vector (*)(const MagVec&, const matrix&, int, double)) &MxTraj);
-  def("MyTraj", (row_vector (*)(const MagVec&, const matrix&, int, double)) &MyTraj);
-  def("MzTraj", (row_vector (*)(const MagVec&, const matrix&, int, double)) &MzTraj);
-  def("MpTraj", (row_vector (*)(const MagVec&, const matrix&, int, double)) &MpTraj);
-  def("MmTraj", (row_vector (*)(const MagVec&, const matrix&, int, double)) &MmTraj);
-
-  def("MxTraj", (row_vector (*)(const MagVec&, const matrix&, const MagVec&, int, double)) &MxTraj);
-  def("MyTraj", (row_vector (*)(const MagVec&, const matrix&, const MagVec&, int, double)) &MyTraj);
-  def("MzTraj", (row_vector (*)(const MagVec&, const matrix&, const MagVec&, int, double)) &MzTraj);
-  def("MpTraj", (row_vector (*)(const MagVec&, const matrix&, const MagVec&, int, double)) &MpTraj);
-  def("MmTraj", (row_vector (*)(const MagVec&, const matrix&, const MagVec&, int, double)) &MmTraj);
-
-  def("MTraj", (row_vector (*)(const DetVec&, const MagVec&, const matrix&,                int, double)) &MTraj);
-  def("MTraj", (row_vector (*)(const DetVec&, const MagVec&, const matrix&, const MagVec&, int, double)) &MTraj);
-  def("MTraj", (coord_vec  (*)(const MagVec&, const matrix&, const MagVec&, int, double)) &MTraj);
-
-  def("MNormTraj", &MNormTraj);
-  }
-
-#endif						// End PyGAMMA code
-
 #endif						// BlochTraj.cc
 

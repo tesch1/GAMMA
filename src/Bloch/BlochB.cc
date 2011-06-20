@@ -278,33 +278,5 @@ matrix K_matrix(int argc, char* argv[], matrix& R,
   return R + BlochB(argc, argv, gamB1, w, phi, qn);
   }
 
-// _________________________________________________________________________
-// G                              PyGAMMA Code
-// _________________________________________________________________________
-
-#ifdef PYGAMMA					// Begin PyGAMMA code block
-
-#include <boost/python/def.hpp>
-#include <boost/python/overloads.hpp>
-
-using boost::python::def;
-
-BOOST_PYTHON_FUNCTION_OVERLOADS(BlochB_BlochB,  BlochB, 2, 3)
-BOOST_PYTHON_FUNCTION_OVERLOADS(BlochB_BlochB1, BlochB, 5, 6)
-
-void PyBlochB()
-  {
-  def("BlochB", (BlochMx(*)(double, double, double))0,                         BlochB_BlochB());
-  def("BlochB", (BlochMx(*)(double, double, double, double))                  &BlochB);
-  def("BlochB", (BlochMx(*)(double, double, double, double, double, double))0, BlochB_BlochB1());
-
-//  def("BlochB", (BlochMx(*)(std::vector<double>, std::vector<double>))                       &BlochB);
-//  def("BlochB", (BlochMx(*)(std::vector<double>, std::vector<double>, std::vector<double>))  &BlochB);
-
-  def("BlochB", (BlochMx(*)(const BlochSys&)) &BlochB);
-  }
-
-#endif						// End PyGAMMA code block
-
 #endif								// BlochB.cc
 
