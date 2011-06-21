@@ -826,7 +826,6 @@ _matrix* n_matrix::multiply(_matrix* mx)
 #ifdef _USING_BLAS_
             int A_rows = rows();
             int A_cols = cols();            
-            int B_rows = mx->rows();
             int B_cols = mx->cols();
             int C_rows = A_rows;
             int C_cols = B_cols;
@@ -1018,7 +1017,6 @@ _matrix* n_matrix::multiply(_matrix* mx)
 #ifdef _USING_BLAS_
         int A_rows = rows();
         int A_cols = cols();            
-        int B_rows = mx->rows();
         int B_cols = mx->cols();
         int C_rows = A_rows;
         int C_cols = B_cols;
@@ -1639,7 +1637,6 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
 #ifdef _USING_BLAS_
             int A_rows = rows();
             int A_cols = cols();            
-            int B_rows = mx->rows();
             int B_cols = mx->cols();
             int C_rows = A_rows;
             int C_cols = B_cols;
@@ -1730,8 +1727,6 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
          int C_rows = A_rows;
          int C_cols = B_cols;
 
-         int r = rows();					// Rows of product matrix (& of nmx)
-         int c = mx->cols();				// Columns of product matrix (& of mx)
          n_matrix* pdt =	new n_matrix(C_rows, C_cols);
 
          if(C_rows * C_cols > 16)  //4*4 = 16
@@ -1801,7 +1796,6 @@ _matrix* n_matrix::adjoint_times(_matrix* mx)
 #ifdef _USING_BLAS_
         int A_rows = rows();
         int A_cols = cols();            
-        int B_rows = mx->rows();
         int B_cols = mx->cols();
         int C_rows = A_rows;
         int C_cols = B_cols;
@@ -1884,7 +1878,6 @@ _matrix* n_matrix::times_adjoint(_matrix* mx)
 #ifdef _USING_BLAS_
             int A_rows = rows();
             int A_cols = cols();            
-            int B_rows = mx->rows();
             int B_cols = mx->cols();
             int C_rows = A_rows;
             int C_cols = B_cols;
@@ -1971,7 +1964,6 @@ _matrix* n_matrix::times_adjoint(_matrix* mx)
 #ifdef _USING_BLAS_
         int A_rows = rows();
         int A_cols = cols();            
-        int B_rows = mx->rows();
         int B_cols = mx->cols();
         int C_rows = A_rows;
         int C_cols = B_cols;

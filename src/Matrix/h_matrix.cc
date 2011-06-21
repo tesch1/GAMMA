@@ -1014,7 +1014,6 @@ _matrix* h_matrix::multiply(_matrix* mx)
 #ifdef _USING_BLAS_
         int A_rows = rows();
         int A_cols = cols();            
-        int B_rows = mx->rows();
         int B_cols = mx->cols();
         int C_rows = A_rows;
         int C_cols = B_cols;
@@ -1103,7 +1102,6 @@ _matrix* h_matrix::multiply(_matrix* mx)
 #ifdef _USING_BLAS_
         int A_rows = rows();
         int A_cols = cols();            
-        int B_rows = mx->rows();
         int B_cols = mx->cols();
         int C_rows = A_rows;
         int C_cols = B_cols;
@@ -1853,7 +1851,6 @@ _matrix* h_matrix::times_adjoint(_matrix* mx)
 #ifdef _USING_BLAS_
         int A_rows = rows();
         int A_cols = cols();            
-        int B_rows = mx->rows();
         int B_cols = mx->cols();
         int C_rows = A_rows;
         int C_cols = B_cols;
@@ -1956,7 +1953,6 @@ _matrix* h_matrix::times_adjoint(_matrix* mx)
 #ifdef _USING_BLAS_
         int A_rows = rows();
         int A_cols = cols();            
-        int B_rows = mx->rows();
         int B_cols = mx->cols();
         int C_rows = A_rows;
         int C_cols = B_cols;
