@@ -1,27 +1,30 @@
 #########################################################################
 #
-#          Linux GAMMA Makefile for the (Py)GAMMA Library
+#          Linux Makefile for the GAMMA and PyGAMMA Libraries
 #
 # This builds GAMMA and PyGAMMA. It assumes that one is using the GCC C++
-# compiler. As for PyGAMMA, one must have Python available.
+# compiler. To build PyGAMMA and to run the tests one must have Python 
+# available.
 #
 # ---------------------------------------------------------------------
 #
 #                             Quick Info
 #
-#  1. Type "make" to build GAMMA static and shared library.
-#  2. Type "make pysg" to compile the PyGAMMA shared library.
-#  3. Type "make test" to compile and run the GAMMA test program(s).
-#  4. Type "make clean" to remove all object files.
-#  5. Type "make distclean" to remove all object files libraries, exes.
-#  6. The sources are assumed in SRCDIR
-#  7. The object are be produced in BINDIR
-#  8. The lib files are produced in BINDIR
-#  9. Any executable files are produced in BINDIR.
-# 10. The important static library file is libgamma.a
-# 11. The important dynamic library file is libgamma.so
-# 12. The important PyGAMMA shared library file is _pygamma.so
-# 13. Produces the following: a.) libgamma.a - The GAMMA static library
+#  1. Type "make" or "make all" to build GAMMA static and shared libraries.
+#  2. Type "make install" to install the libraries, gamma script, and
+#     the necessary include files. May require sudo or root privileges.
+#  3. Type "make pysg" to compile the PyGAMMA shared library.
+#  4. Type "make test" to compile and run the GAMMA test program(s).
+#  5. Type "make clean" to remove all object files.
+#  6. Type "make distclean" to remove all object files libraries, exes.
+#  7. The sources are assumed in SRCDIR
+#  8. The object are be produced in BINDIR
+#  9. The lib files are produced in BINDIR
+# 10. Any executable files are produced in BINDIR.
+# 11. The important static library file is libgamma.a
+# 12. The important dynamic library file is libgamma.so
+# 13. The important PyGAMMA shared library file is _pygamma.so
+# 14. Produces the following: a.) libgamma.a - The GAMMA static library
 #                             b.) libgamma.so  - The GAMMA shared library
 #                             c.) _pygamma.so - The PyGAMMA shared library
 #
