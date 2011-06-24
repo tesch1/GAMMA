@@ -746,8 +746,10 @@ force:
 # New Test routines
 #
 
-test:  ${BINDIR}/${LIB_NAME} $(BINDIR)/runtests $(BINDIR)/hstat \
-       $(BINDIR)/sl_exchange7_L $(BINDIR)/par_xixA $(BINDIR)/xix_dec run
+TEST_PGM = $(BINDIR)/runtests $(BINDIR)/hstat \
+       $(BINDIR)/sl_exchange7_L $(BINDIR)/par_xixA $(BINDIR)/xix_dec
+
+test:  ${BINDIR}/${LIB_NAME} $(TEST_PGM) run
 
 
 TESTS       = Tests
@@ -1065,11 +1067,6 @@ clean:
 	@rm -f $(ALLTESTOBJFILES)
 	@rm -f *.asc
 	@rm -f *.gnu
-	@rm -f ${BINDIR}/${SO_NAME}
-	@rm -f ${BINDIR}/${SO_NAMEX}
-	@rm -f ${BINDIR}/${SO_NAMEXX}
-	@rm -f ${BINDIR}/${SO_NAMEXXX}
-	@rm -f ${BINDIR}/${PYS_NAME}
 
 strip:
 	@strip ${BINDIR}/${LIB_NAME}
@@ -1079,10 +1076,14 @@ strip:
 testclean:
 	@rm -f $(ALLTESTOBJFILES)
 
-distclean:
-	@rm -f $(LIB_OBJS)
-	@rm -f ${LIB_NAME}
-	@rm -f $(TEST_OBJ)
+distclean: 
+	@${MAKE} clean
+	@rm -f ${BINDIR}/${LIB_NAME}
 	@rm -f $(TEST_PGM)
+	@rm -f ${BINDIR}/${SO_NAME}
+	@rm -f ${BINDIR}/${SO_NAMEX}
+	@rm -f ${BINDIR}/${SO_NAMEXX}
+	@rm -f ${BINDIR}/${SO_NAMEXXX}
+	@rm -f ${BINDIR}/${PYS_NAME}
 
 force:
