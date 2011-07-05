@@ -1,3 +1,28 @@
+Version 4.3.0 - 5 July 2011
+------------------------------------------------------------------------------
+This release features an expanded PyGAMMA which exposes most of GAMMA 
+via Python. A full list of enhancements is below. Special thanks go to 
+Matthias Ernst for all of his help with this release.
+
+- Most of GAMMA is now available via Python. For a full list of what is and 
+isn't available, see here:
+http://scion.duhs.duke.edu/vespa/gamma/wiki/SwiggedGammaListing
+
+- BLAS/LAPACK integration is automatically enabled under OS X and Solaris and 
+it's easy to enable for some Linuxes. See here for more information:
+http://scion.duhs.duke.edu/vespa/gamma/wiki/GammaWithBlasLapack
+
+- We fixed a number of Makefile problems and made the Makefiles easier to 
+maintain.
+
+- We fixed the gamma script (on all platforms) for those of you that like to 
+write and compile your own C++ GAMMA code.
+
+- We cleaned all references to Boost (the old, unused Python interface) from 
+the Makefiles and code.
+
+
+
 Version 4.2.2 - 11 May 2011
 ------------------------------------------------------------------------------
 This release fixes the broken 32 bit Python 2.6 and 2.7 libraries for OS X
