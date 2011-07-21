@@ -30,12 +30,67 @@
 
 #include <Pulses/PulAuxil.h>		// Include our own header
 #include <Basics/StringCut.h>		// Include string cutting functions
+#include <Basics/Gconstants.h>
 #include <stdlib.h>
 
 // ____________________________________________________________________________
 // A                  PULSE AUXILIARY WAVEFORM FUNCTIONS
 // ____________________________________________________________________________
 
+
+row_vector pulseshift(row_vector& p, row_vector& ptime, const double& FreqOffset)
+//created by LK, Dec. 2007
+
+// * FreqOffset is in Hz
+// * ptime contains dwell time in seconds. 
+//   This is not cumulative, just the dwell time for that step.
+
+// * p is a vector of complex number that describes a pulse profile. 
+//   First column is the norm or absolute value,
+//   Second column is the angle or phase(in degrees). 
+
+{
+	row_vector vector_points(p.size());
+	row_vector data1(p.size());
+		 
+	  // Loop through points
+	  for(int i=0; i<p.size(); i++)	
+		{
+      // Store integer count (1,2,3...p.size)
+			vector_points.put(i+1, i);
+		}
+
+	// Theta is the argument of the freq. offset	
+	row_vector theta1=2*PI*FreqOffset*ptime(0)*vector_points; 
+		  
+	// Now make it complex
+	// Loop through points
+	for(int i=0; i<p.size(); i++)
+  {
+	 		double evalue1 = Re(theta1(i)) ;
+			double evalue2 = Im(theta1(i)) ;
+			complex a(evalue2,evalue1);
+
+			complex rev=exp(a);
+	
+			// Store this value
+      data1.put(complex(norm(rev),RAD2DEG*phase(rev)), i);
+   }
+
+	//data1 contains the exponential evolution factor to shift frequency
+	
+	//data is the final vector
+	row_vector data(p.size());
+	
+	// Loop through points
+	for(int i=0; i<p.size(); i++)
+  {
+		// Store this value
+		data.put(complex(Re(p(i))*Re(data1(i)),Im(p(i))+Im(data1(i))), i);
+  }
+
+	return data;
+}
 
 // ____________________________________________________________________________
 // Z                     PULSE AUXILIARY I/O FUNCTIONS

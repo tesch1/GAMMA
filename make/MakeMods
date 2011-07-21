@@ -322,7 +322,7 @@ ALLMODHDRS += $(PULSEHDR)
 
 PULSE_IBASE  = pulses PulWaveform PulComposite PulGauss PulSinc PulCycle \
                PulMLEV Pulse PulTrain PulSupCycle PulCHIRP PulTrainSCyc \
-               PulGARP PulWALTZ PulDANTE
+               PulGARP PulWALTZ PulDANTE PulAuxil
 ALLIFILES  += $(addsuffix .i,  $(addprefix $(PULSE)/, $(PULSE_IBASE)))
 
 ###############################################################################

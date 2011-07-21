@@ -29,12 +29,16 @@
 #  endif
 
 #include <GamGen.h>			// Know MSVCDLL (__declspec)
+#include <Matrix/row_vector.h>
 #include <iostream>			// Include filestreams
 #include <string>			// Include stdlibc++ strings
 
 // ____________________________________________________________________________
 // A                  PULSE AUXILIARY WAVEFORM FUNCTIONS
 // ____________________________________________________________________________
+
+
+MSVCDLL row_vector pulseshift(row_vector& p, row_vector& ptime, const double& FreqOffset);
 
 
 // ____________________________________________________________________________

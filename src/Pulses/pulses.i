@@ -13,3 +13,4 @@
 %include "PulWALTZ.i"
 %include "PulTrainSCyc.i"
 %include "PulDANTE.i"
+%include "PulAuxil.i"
