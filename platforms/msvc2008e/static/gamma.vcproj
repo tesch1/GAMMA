@@ -177,10 +177,6 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
-			<File
-				RelativePath="..\..\..\src\PyGammaIF.cc"
-				>
-			</File>
 			<Filter
 				Name="Basics"
 				Filter=".cc"
@@ -613,10 +609,6 @@
 				Name="BWR"
 				Filter=".cc"
 				>
-				<File
-					RelativePath="..\..\..\src\BWRRelax\PyBWRIF.cc"
-					>
-				</File>
 				<File
 					RelativePath="..\..\..\src\BWRRelax\relaxanalyze.cc"
 					>
@@ -1073,10 +1065,6 @@
 				RelativePath="..\..\..\src\ms_stdint.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\src\PyGammaIF.h"
-				>
-			</File>
 			<Filter
 				Name="Basicsh"
 				Filter=".h"
@@ -1519,10 +1507,6 @@
 				Name="BWRh"
 				Filter=".h"
 				>
-				<File
-					RelativePath="..\..\..\src\BWRRelax\PyBWR.h"
-					>
-				</File>
 				<File
 					RelativePath="..\..\..\src\BWRRelax\PyBWRIF.h"
 					>
