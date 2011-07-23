@@ -536,10 +536,10 @@ gen_op gen_op::operator+ (const gen_op &Op2) const
   return gen_op(WBR->RepMx + Op2.WBR->RepMx, WBR->RepBs);// Return Op1 + Op2
   }
 
-void gen_op::operator+= (const gen_op &Op1)
+gen_op & gen_op::operator+= (const gen_op &Op1)
   {
-  if(!Op1.WBR) return;			// Don't add if Op1 is NULL
-  if(!WBR) { *this=Op1; return; }	// If Op is NULL, result is Op1
+  if(!Op1.WBR) return (*this);			// Don't add if Op1 is NULL
+  if(!WBR) { *this=Op1; return (*this); }	// If Op is NULL, result is Op1
   if(!OpCheck(Op1, 1))			// Insure Op & Op1 compatible
     {
     GenOperror(40, 1);		 	// Error during Op-Op operation 
@@ -553,7 +553,8 @@ void gen_op::operator+= (const gen_op &Op1)
     if(Op1.EBR==NULL) EBR = NULL;	//   Can't be EBR if Op1 had no EBR 
     else if(Op1.EBR->RepBs != EBR->RepBs)//  NM
       EBR = NULL;
-// sosiz - Must Adjust The Representation Priority!
+  // sosiz - Must Adjust The Representation Priority!
+  return (*this);
   }
 
 gen_op gen_op::operator- (const gen_op &Op2) const
@@ -586,10 +587,10 @@ gen_op operator - (const gen_op &Op1)
   }
 */
 
-void gen_op::operator -= (const gen_op &Op1)
+gen_op & gen_op::operator -= (const gen_op &Op1)
   {
-  if(!Op1.WBR) return;			// Do nothing if Op1 NULL
-  if(!WBR) { *this = -Op1; return; }	// If No Op, result is -Op1 
+  if(!Op1.WBR) return (*this);			// Do nothing if Op1 NULL
+  if(!WBR) { *this = -Op1; return (*this); }	// If No Op, result is -Op1 
   if(!OpCheck(Op1,1))			// Check dimensions
     {
     GenOperror(40, 1);		 	// Error during Op-Op operation 
@@ -610,6 +611,7 @@ void gen_op::operator -= (const gen_op &Op1)
       WBR->RepPty = Op1.WBR->RepPty;
       }
   OpName = std::string("");
+  return (*this);
   }
 
 
@@ -629,10 +631,10 @@ gen_op gen_op::operator* (const gen_op& Op) const
   return PdtOp;
   }
 
-void gen_op::operator *= (const gen_op &Op1)
+gen_op & gen_op::operator *= (const gen_op &Op1)
   {
   if(!Op1.WBR || !WBR) 			// If Op or Op1 NULL, result NUll
-    { *this=gen_op(); return; }
+    { *this=gen_op(); return (*this); }
   if(!OpCheck(Op1,1))			// Check dimensions
     {
     GenOperror(40, 1);			// Error Op-Op use
@@ -655,12 +657,14 @@ void gen_op::operator *= (const gen_op &Op1)
       }
     }
   OpName = std::string("");
+
+  return (*this);
   }
 
-void gen_op::operator &= (const gen_op &Op1)
+gen_op & gen_op::operator &= (const gen_op &Op1)
   {
   if(!Op1.WBR || !WBR) 			// If Op or Op1 NULL, result NUll
-    { *this=gen_op(); return; }
+    { *this=gen_op(); return (*this); }
   if(!OpCheck(Op1,1))			// Check dimensions
     {
     GenOperror(40, 1); 			// Error during Op-Op operation 
@@ -670,6 +674,8 @@ void gen_op::operator &= (const gen_op &Op1)
   setOnlyWBR();				// Delete all reps by WBR of Op
   WBR->RepMx = Op1.WBR->RepMx*WBR->RepMx;	// Apply "reverse" mutiplication
   OpName = std::string("");
+
+  return (*this);
   }
 
 
@@ -710,17 +716,24 @@ void gen_op::operator= (const spin_op &SOp)
 gen_op operator + (const gen_op& Op1, const spin_op& SOp)
   { gen_op Op(Op1); Op += SOp; return Op; }
 
-void gen_op::operator += (const spin_op &SOp)
+gen_op & gen_op::operator += (const spin_op &SOp)
 //  { matrix mx = SOp.get_mx(); (*this) += mx; }
   {
   matrix mx = SOp.get_mx();
   (*this) += mx;
+
+  return (*this);
   }
 
 gen_op operator - (const gen_op& Op1, const spin_op& SOp)
   { gen_op Op(Op1); Op -= SOp; return Op; }
 
-void gen_op::operator -= (const spin_op &SOp) {(*this) -= SOp.get_mx();}
+gen_op & gen_op::operator -= (const spin_op &SOp) 
+{
+  (*this) -= SOp.get_mx();
+
+  return (*this);
+}
 
 
 // ____________________________________________________________________________
@@ -1043,11 +1056,25 @@ gen_op operator / (const gen_op& Op1, const complex& z)
 
 gen_op operator / (const gen_op &Op1, double r) { return Op1/(complex)r; }
 
-void gen_op::operator /= (const complex& z)
-  { if(WBR) { setOnlyWBR(); WBR->RepMx /= z; } }
+gen_op & gen_op::operator /= (const complex& z)
+{ 
+  if(WBR) 
+  { 
+    setOnlyWBR(); 
+    WBR->RepMx /= z; 
+  } 
+  return (*this);
+}
 
-void gen_op::operator /= (double r)
-  { if(WBR) { setOnlyWBR(); WBR->RepMx /= (complex)r; } }
+gen_op & gen_op::operator /= (double r)
+{ 
+  if(WBR) 
+  { 
+    setOnlyWBR(); 
+    WBR->RepMx /= (complex)r; 
+  } 
+  return (*this);
+}
 
                                                                       
 // ____________________________________________________________________________

@@ -217,13 +217,13 @@ MSVCDLC virtual ~gen_op( );			// Floquet needs this virtual
           &=        Op1,Op2    Op1 = Op2*Op1 in WBR of Op1                   */
 
 MSVCDLL gen_op operator+  (const gen_op& Op)  const;
-MSVCDLL void   operator+= (const gen_op& Op);
+MSVCDLL gen_op &   operator+= (const gen_op& Op);
 MSVCDLL gen_op operator-  (const gen_op& Op)  const;
 MSVCDLL gen_op operator-  ()                  const;
-MSVCDLL void   operator-= (const gen_op& Op);
+MSVCDLL gen_op &   operator-= (const gen_op& Op);
 MSVCDLL gen_op operator*  (const gen_op& Op)  const;
-MSVCDLL void   operator*= (const gen_op &Op);
-MSVCDLL void   operator&= (const gen_op &Op);
+MSVCDLL gen_op &   operator*= (const gen_op &Op);
+MSVCDLL gen_op &   operator&= (const gen_op &Op);
 
 //MSVCDLL friend gen_op operator- (const gen_op& Op);
 
@@ -244,8 +244,8 @@ MSVCDLL void operator = (const gen_op &Op1);
 MSVCDLL void   operator = (const spin_op &SOp);
 MSVCDLL friend gen_op operator + (const gen_op &Op1, const spin_op &SOp);
 MSVCDLL friend gen_op operator - (const gen_op &Op1, const spin_op &SOp);
-MSVCDLL void   operator += (const spin_op &SOp);
-MSVCDLL void   operator -= (const spin_op &SOp);
+MSVCDLL gen_op &   operator += (const spin_op &SOp);
+MSVCDLL gen_op &   operator -= (const spin_op &SOp);
 
 // ____________________________________________________________________________
 // C                 OPERATOR FUNCTIONS, OPERATOR WITH MATRIX
@@ -348,8 +348,8 @@ MSVCDLL friend gen_op operator / (const gen_op& Op1, double r);
 	// Note			     : Result EXCLUSIVELY in WBR of Op1
      
 
-MSVCDLL void operator /= (const complex& z);
-MSVCDLL void operator /= (double r);
+MSVCDLL gen_op & operator /= (const complex& z);
+MSVCDLL gen_op & operator /= (double r);
 
 // ____________________________________________________________________________
 // E                       COMPLEX OPERATOR FUNCTIONS

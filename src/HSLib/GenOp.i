@@ -30,7 +30,8 @@
 typedef std::vector <genoprep> genoprep_vec;
 
 class gen_op : public genoprep_vec
-{
+{
+
 public:
 
 gen_op();
@@ -52,13 +53,13 @@ virtual ~gen_op( );			// Floquet needs this virtual
 
 
 gen_op operator+  (const gen_op& Op)  const;
-void   operator+= (const gen_op& Op);
+gen_op &   operator+= (const gen_op& Op);
 gen_op operator-  (const gen_op& Op)  const;
 gen_op operator-  ()                  const;
-void   operator-= (const gen_op& Op);
+gen_op &   operator-= (const gen_op& Op);
 gen_op operator*  (const gen_op& Op)  const;
-void   operator*= (const gen_op &Op);
-void   operator&= (const gen_op &Op);
+gen_op &   operator*= (const gen_op &Op);
+gen_op &   operator&= (const gen_op &Op);
 
 //friend gen_op operator- (const gen_op& Op);
 
@@ -68,8 +69,8 @@ void   operator&= (const gen_op &Op);
 
 //void   operator = (const spin_op &SOp);
 
-void   operator += (const spin_op &SOp);
-void   operator -= (const spin_op &SOp);
+gen_op &   operator += (const spin_op &SOp);
+gen_op &   operator -= (const spin_op &SOp);
 
 //friend gen_op operator + (const gen_op &Op1, const spin_op &SOp);
 //friend gen_op operator - (const gen_op &Op1, const spin_op &SOp);
@@ -103,9 +104,11 @@ gen_op & operator *= (const complex &z);
 gen_op & operator *= (double r);
 
 //friend gen_op operator / (const gen_op &Op1, const complex &z);
-//friend gen_op operator / (const gen_op& Op1, double r);
-void operator /= (const complex& z);
-void operator /= (double r);
+//friend gen_op operator / (const gen_op& Op1, double r);
+
+gen_op & operator /= (const complex& z);
+gen_op & operator /= (double r);
+
 complex det() const;
 complex trace() const;
 complex trace(const gen_op& Op2) const;
@@ -118,18 +121,21 @@ int dim_LS() const;		// Liouville space
   
 gen_op exp() const;
 
-gen_op exp(const complex& t, double cutoff=1.e-12) const;
+gen_op exp(const complex& t, double cutoff=1.e-12) const;
+
 gen_op Pow(int power) const;
 
 /*
-friend gen_op tensor_product(const gen_op &Op1, const gen_op &Op2);friend gen_op log(const gen_op &Op1);
+friend gen_op tensor_product(const gen_op &Op1, const gen_op &Op2);
+friend gen_op log(const gen_op &Op1);
 */
 
 gen_op sim_trans(const gen_op &Op2) const;
   
 void sim_trans_ip(const gen_op &Op1);
 
-// gen_op adjoint();  // Disabled!!
+// gen_op adjoint();  // Disabled!!
+
 row_vector eigvals() const;
 void eigvals(double* vx, int sort=0) const;
 
@@ -150,7 +156,8 @@ friend gen_op sim_trans(const gen_op &Op1, const gen_op &Op2);		//**
 friend gen_op adjoint(const gen_op &Op1);				//**
 */
 //***************************************************************************
-//***************************************************************************
+//***************************************************************************
+
 //matrix get_mx( )     const;
 //matrix get_matrix( ) const;
 //void   put_mx(const matrix &mx);
@@ -170,7 +177,8 @@ std::string name() const;
 void name(const   std::string& n);
 void bsname(const std::string& bn);
 
-int exists( ) const;
+int exists( ) const;
+
 col_vector superket() const;
 void desuperket(const col_vector& mS);
 
@@ -186,10 +194,12 @@ void set_EBR() const;
 void Op_base(const gen_op &Op1, double cutoff=1.e-12) const; 
 void Op_base(const basis  &bs) const;
 
-void status(int pf=0) const;
+void status(int pf=0) const;
+
 void setOnlyWBR( );
 
-void Op_priority (int pty);
+void Op_priority (int pty);
+
 void SetLimits(int limit) const;
   
 int  OpCheck(const gen_op& Op1, int warn=2) const;
@@ -226,7 +236,8 @@ bool is_complex(const   double d=GMxCut) const;
 bool is_zero(const      double d=GMxCut) const;
 bool is_diagonal(const  double d=GMxCut) const;
 bool is_square()                         const;
-
+
+
 /* Aside for providing basic tests as to whether to operators are equvalent or
    not, these operators are necessary if any STL container classes are to
    be used based on operators (e.g. list<gen_op> or vector<gen_op>)          */  
@@ -239,7 +250,8 @@ bool operator>  (const gen_op& Op) const;
 };
 
 
-inline gen_op I_gen_op(const basis& bs)// Input		bs   : Basis
+inline gen_op I_gen_op(const basis& bs)
+// Input		bs   : Basis
 // Return		Op   : Identity Operator with basis bs 
 { 
     return gen_op(matrix(bs.size(),bs.size(),i_matrix_type),bs); 

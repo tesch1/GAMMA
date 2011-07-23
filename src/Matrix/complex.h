@@ -110,6 +110,9 @@ MSVCDLL inline        double& Ielem();
 MSVCDLL inline const  double& Rec();
 MSVCDLL inline const  double& Imc();
 
+MSVCDLL inline        double real();
+MSVCDLL inline        double imag();
+
 MSVCDLL friend inline double& zRe(complex& z);
 MSVCDLL friend inline double& zIm(complex& z);
 MSVCDLL friend inline double  Re(const complex& z);
@@ -489,6 +492,10 @@ inline        double& complex::Relem()     { return re; }
 inline        double& complex::Ielem()     { return im; }
 inline const  double& complex::Rec()       { return re; }
 inline const  double& complex::Imc()       { return im; }
+
+inline        double complex::real()       { return re; }
+inline        double complex::imag()       { return im; }
+
 inline        double& zRe(complex& z)      { return z.re; }
 inline        double& zIm(complex& z)      { return z.im; }
 inline        double  Re(const complex& z) { return z.re; }

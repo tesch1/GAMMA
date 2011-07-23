@@ -47,6 +47,10 @@ inline        double& Ielem();
 inline const  double& Rec();
 inline const  double& Imc();
 
+// For PyGAMMA
+inline        double real();
+inline        double imag();
+
 /*
 friend inline double& zRe(complex& z);
 friend inline double& zIm(complex& z);
@@ -198,7 +202,8 @@ inline bool operator!= (const complex& z) const;
 
 extern const complex complex0;		// z = 0 : (0,0)
 extern const complex complex1;		// z = 1 : (1,0)
-extern const complex complexi;		// z = i : (0,1)
+extern const complex complexi;		// z = i : (0,1)
+
 /*
 inline complex::complex() { }
 inline complex::complex(double r, double i) :re(r),im(i) { }
@@ -262,7 +267,8 @@ inline complex  complex::operator-  (const complex& z) const
 inline complex& complex::operator-= (const complex& z)
                { re -= z.re; im -= z.im; return (*this); }
 
-inline complex& complex::operator-= (double r)                { re -= r;  return (*this); }
+inline complex& complex::operator-= (double r) 
+               { re -= r;  return (*this); }
 
 inline complex  complex::operator* (const complex& z) const
                { return complex(re*z.re - im*z.im, re*z.im + im*z.re); } 
@@ -273,7 +279,8 @@ inline complex  complex::operator* (double r) const
 inline complex& complex::operator*= (const complex& z)
                { double r = re*z.re - im*z.im; im = re*z.im + im*z.re; re = r;  return (*this);}
 
-inline complex& complex::operator*= (double r) { 
+inline complex& complex::operator*= (double r) 
+{ 
   re *= r; im *= r;  return (*this); 
 }
 
@@ -340,7 +347,8 @@ inline void add(complex& z, const complex& z1,       double   r)
 }
 
 
-inline void sub(complex& z, const complex& z1, const complex& z2)
+inline void sub(complex& z, const complex& z1, const complex& z2)
+
 { 
   z.re = z1.re - z2.re;
   z.im = z1.im - z2.im;

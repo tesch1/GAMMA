@@ -116,6 +116,7 @@ void complex::SetForm()				// Sets _form from three values
 //  {						// well as the three values
 //  }
 
+
 // ____________________________________________________________________________
 // B                   COMPLEX ELEMENT ACCESS FUNCTIONS
 // ____________________________________________________________________________
