@@ -81,9 +81,13 @@
 #
 #########################################################################
 
-SHELL  = /bin/bash
-PYTHON = python
-SWIG   = swig
+SHELL         = /bin/bash
+PYTHON        = python
+SWIG          = swig
+# If you have SWIG >= 2.0.4, you can add -builtin to the SWIG_OPTIONS for
+# a (very) modest performance gain. See here for details:
+# http://scion.duhs.duke.edu/vespa/gamma/wiki/SwigBuiltinTypesBenefit
+SWIG_OPTIONS  = -c++ -python 
 
 GAMMA_ARCH    = mac-darwin
 INSTALLDIR    = /usr/local
@@ -255,7 +259,7 @@ OTHERDOTIFILES = $(addprefix $(SRCDIR)/, $(ALLIFILES))
 
 $(PYSG_WRAP_SRC) : ${SRCDIR}/pygamma.i $(OTHERDOTIFILES)
 	@echo
-	${SWIG} -c++ -python -outdir $(BINDIR) -o $@ \
+	${SWIG} ${SWIG_OPTIONS} -outdir $(BINDIR) -o $@ \
          -I../../src $<
 
 #########################################################################
