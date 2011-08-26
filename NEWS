@@ -1,3 +1,18 @@
+Version 4.3.1 - 29 August 2011
+------------------------------------------------------------------------------
+The main feature of this release is the new pulseshift() function added
+to PulAuxil. It's available to both GAMMA and PyGAMMA.
+
+Additionally -- 
+
+- In GenOp, completed SWIG-ing the functions of type /=, +=, etc. (so they 
+return a "gen_op &"). This allows these functions to be accessed from PyGAMMA.
+
+- Added real() and imag() functions to the GAMMA (PyGAMMA) class "complex"
+to allow retrieval of the internal components from Python.
+
+
+
 Version 4.3.0 - 5 July 2011
 ------------------------------------------------------------------------------
 This release features an expanded PyGAMMA which exposes most of GAMMA 
