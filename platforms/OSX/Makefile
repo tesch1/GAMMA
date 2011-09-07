@@ -102,7 +102,7 @@ SRCDIR  = ../../src
 
 # We use OS X's built-in BLAS/LAPACK/ATLAS libraries by default.
 BLASINCL_FLAG   = -D_USING_BLAS_
-LAPACKINCL_FLAG = -I/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/ -D_USING_LAPACK_
+LAPACKINCL_FLAG = -I/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/ -D_USING_LAPACK_
 # Uncomment the next two lines to disable use of OS X's built-in
 # BLAS/LAPACK/ATLAS libraries.
 # BLASINCL_FLAG   =
@@ -116,7 +116,7 @@ BINDIR        = ./../../${GAMMA_ARCH}
 DEBUG    =
 OPTIMIZE = -O3
 WARNINGS = -Wall
-PLATFORM_FLAGS = -mmacosx-version-min=10.5
+PLATFORM_FLAGS = -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk
 
 
 CC       = gcc
