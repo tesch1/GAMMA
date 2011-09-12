@@ -137,7 +137,7 @@ class PlatformSniffer(object):
         #     http://stackoverflow.com/questions/3411079/why-does-the-python-2-7-amd-64-installer-seem-to-run-python-in-32-bit-mode
         #     http://mail.python.org/pipermail/python-list/2010-October/1258275.html
         #     http://groups.google.com/group/comp.lang.python/msg/5e363fcd9131dec4
-        if hastattr(sys, "maxsize"):
+        if hasattr(sys, "maxsize"):
             # This works under Python >= 2.6
             self.bits = 64 if (sys.maxsize > 2**32) else 32
         else:
