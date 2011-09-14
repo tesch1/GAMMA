@@ -730,7 +730,7 @@ $(PYSGAMMA_CHK):
 		false; \
 	fi
 	@echo
-PYS_LDFLAGS = -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup $(PYTHONARCH)
+PYS_LDFLAGS = -mmacosx-version-min=10.5 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup $(PYTHONARCH)
 PYS_LDLIBS  = $(LAB_LIBS)
 
 
