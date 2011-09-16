@@ -102,7 +102,7 @@ SRCDIR  = ../../src
 
 # We use OS X's built-in BLAS/LAPACK/ATLAS libraries by default.
 BLASINCL_FLAG   = -D_USING_BLAS_
-LAPACKINCL_FLAG = -I/Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/vecLib.framework/Versions/A/Headers/ -D_USING_LAPACK_
+LAPACKINCL_FLAG = -D_USING_LAPACK_
 # Uncomment the next two lines to disable use of OS X's built-in
 # BLAS/LAPACK/ATLAS libraries.
 # BLASINCL_FLAG   =
@@ -116,7 +116,13 @@ BINDIR        = ./../../${GAMMA_ARCH}
 DEBUG    =
 OPTIMIZE = -O3
 WARNINGS = -Wall
-PLATFORM_FLAGS = -mmacosx-version-min=10.5 -isysroot /Developer/SDKs/MacOSX10.5.sdk
+# MIN_OSX_VERSION determines the oldest version of OS X on which this code
+# will run. Our code works fine on OS X 10.5, but Apple dropped support for
+# the 10.5 SDK with Xcode 4.0. Since Xcode 4 is what most people have these
+# days, we set MIN_OSX_VERSION to a value compatible with that. If you have
+# Xcode 3.x, feel free to set MIN_OSX_VERSION = 10.5.
+MIN_OSX_VERSION = 10.6
+PLATFORM_FLAGS = -mmacosx-version-min=${MIN_OSX_VERSION} -isysroot /Developer/SDKs/MacOSX${MIN_OSX_VERSION}.sdk
 
 
 CC       = gcc
@@ -139,7 +145,7 @@ RANLIB   = ranlib
 LDCONFIG = /sbin/ldconfig
 
 LAPACK_LIBS =
-BLAS_LIBS  = -framework veclib
+BLAS_LIBS  = -framework Accelerate
 LAB_LIBS = $(BLAS_LIBS) $(LAPACK_LIBS)
 # If you want to disable use of OS X's built-in BLAS/ATLAS/LAPACK libraries,
 # it's sufficient to change BLASINCL_FLAG and LAPACKINCL_FLAG (above). But
@@ -730,7 +736,7 @@ $(PYSGAMMA_CHK):
 		false; \
 	fi
 	@echo
-PYS_LDFLAGS = -mmacosx-version-min=10.5 -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup $(PYTHONARCH)
+PYS_LDFLAGS = -mmacosx-version-min=${MIN_OSX_VERSION} -dynamiclib -Wl,-headerpad_max_install_names -undefined dynamic_lookup $(PYTHONARCH)
 PYS_LDLIBS  = $(LAB_LIBS)
 
 
@@ -975,7 +981,7 @@ installhdrs: force
 
 SEDSUB_VERSION = 's|VERSION_NUMBER_GOES_HERE|${GAMMAVERSION}|g'
 
-${BININSTALLDIR}/gamma: gamma
+${BININSTALLDIR}/gamma: gamma force
 	@echo Copying The GAMMA Script To The Bin Directory ${BININSTALLDIR}
 	@cp -f ./${GSCRIPT} ${BININSTALLDIR}
 	@perl -i -p -e ${SEDSUB_VERSION} ${BININSTALLDIR}/${GSCRIPT}

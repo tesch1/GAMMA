@@ -46,12 +46,16 @@
 #include <stdlib.h>
 
 #ifdef _USING_BLAS_
-  #ifdef _USING_GOTOBLAS2_
-  extern "C"{
-  #endif
-  #include <cblas.h>
-  #ifdef _USING_GOTOBLAS2_
-  }
+  #if defined(__APPLE__)
+    #include <Accelerate/Accelerate.h>
+  #else  
+    #ifdef _USING_GOTOBLAS2_
+    extern "C"{
+    #endif
+    #include <cblas.h>
+    #ifdef _USING_GOTOBLAS2_
+    }
+    #endif
   #endif
 #endif
 
@@ -60,7 +64,11 @@
 #endif 
 
 #ifdef _USING_LAPACK_
- #include <clapack.h>
+ #if defined(__APPLE__)
+  #include <Accelerate/Accelerate.h>
+ #else
+  #include <clapack.h>
+ #endif  
 #endif
 
 #ifdef _USING_GOTOBLAS2_
