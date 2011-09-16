@@ -966,7 +966,7 @@ installhdrs: force
 
 SEDSUB_VERSION = 's|VERSION_NUMBER_GOES_HERE|${GAMMAVERSION}|g'
 
-${BININSTALLDIR}/gamma: gamma
+${BININSTALLDIR}/gamma: gamma force
 	@echo Copying The GAMMA Script To The Bin Directory ${BININSTALLDIR}
 	@cp -f ./${GSCRIPT} ${BININSTALLDIR}
 	@perl -i -p -e ${SEDSUB_VERSION} ${BININSTALLDIR}/${GSCRIPT}
