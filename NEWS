@@ -1,3 +1,11 @@
+Version 4.3.2 - 27 Jan 2012
+------------------------------------------------------------------------------
+There are no new features in this release. The only change is in the OS X 
+build process. Under OS X, the PyGAMMA library no longer uses BLAS. This 
+bypasses a problem where PyGAMMA crashsed when calling BLAS under OS X Lion 
+(10.7) given certain conditions.
+
+
 Version 4.3.1 - 29 August 2011
 ------------------------------------------------------------------------------
 The main feature of this release is the new pulseshift() function added
