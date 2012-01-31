@@ -10,23 +10,28 @@
 #
 #                             Quick Info
 #
-#  1. Type "make" or "make all" to build GAMMA static and shared libraries.
-#  2. Type "make install" to install the libraries, gamma script, and
-#     the necessary include files. May require sudo or root privileges.
-#  3. Type "make pysg" to compile the PyGAMMA shared library.
-#  4. Type "make test" to compile and run the GAMMA test program(s).
-#  5. Type "make clean" to remove all object files.
-#  6. Type "make distclean" to remove all object files libraries, exes.
-#  7. The sources are assumed in SRCDIR
-#  8. The object are be produced in BINDIR
-#  9. The lib files are produced in BINDIR
-# 10. Any executable files are produced in BINDIR.
-# 11. The important static library file is libgamma.a
-# 12. The important dynamic library file is libgamma.so
-# 13. The important PyGAMMA shared library file is _pygamma.so
-# 14. Produces the following: a.) libgamma.a - The GAMMA static library
-#                             b.) libgamma.so  - The GAMMA shared library
-#                             c.) _pygamma.so - The PyGAMMA shared library
+#  - Type "make" or "make all" to build GAMMA static and shared libraries.
+#  - Type "make install" to install the libraries, gamma script, and
+#    the necessary include files. May require sudo or root privileges.
+#  - Type "make pysg" to compile the PyGAMMA shared library.
+#  - Type "make pysgdist" to compile the PyGAMMA shared library and copy
+#    the output files to the pygamma/homemade directory to prepare for 
+#    installation via `python setup.py install`. This also copies files to
+#    the appropriate prebuilt directory for building a PyGAMMA bundle for
+#    distribution.
+#  - Type "make test" to compile and run the GAMMA test program(s).
+#  - Type "make clean" to remove all object files.
+#  - Type "make distclean" to remove all object files libraries, exes.
+#  - The sources are assumed to be in SRCDIR
+#  - The object files are produced in BINDIR
+#  - The lib files are produced in BINDIR
+#  - Any executable files are produced in BINDIR.
+#  - The important static library file is libgamma.a
+#  - The important dynamic library file is libgamma.so
+#  - The important PyGAMMA shared library file is _pygamma.so
+#  - Produces the following: a.) libgamma.a - The GAMMA static library
+#                            b.) libgamma.so - The GAMMA shared library
+#                            c.) _pygamma.so - The PyGAMMA shared library
 #
 # ---------------------------------------------------------------------
 #

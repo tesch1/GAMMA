@@ -10,23 +10,28 @@
 #
 #                             Quick Info
 #
-#  1. Type "make" or "make all" to build GAMMA static and shared libraries.
-#  2. Type "make install" to install the libraries, gamma script, and
-#     the necessary include files. May require sudo or root privileges.
-#  3. Type "make pysg" to compile the PyGAMMA shared library.
-#  4. Type "make test" to compile and run the GAMMA test program(s).
-#  5. Type "make clean" to remove all object files.
-#  6. Type "make distclean" to remove all object files libraries, exes.
-#  8. The sources are assumed in SRCDIR
-#  8. The object are be produced in BINDIR
-#  9. The lib files are produced in BINDIR
-# 10. Any executable files are produced in BINDIR.
-# 11. The important static library file is libgamma.a
-# 12. The important dynamic library file is libgamma.dylib
-# 13. The important PyGAMMA shared library file is _pygamma.dylib
-# 14. Produces the following: a.) libgamma.a - The GAMMA static library
-#                             b.) libgamma.dylib - The GAMMA shared library
-#                             c.) _pygamma.so - The PyGAMMA shared library
+#  - Type "make" or "make all" to build GAMMA static and shared libraries.
+#  - Type "make install" to install the libraries, gamma script, and
+#    the necessary include files. May require sudo or root privileges.
+#  - Type "make pysg" to compile the PyGAMMA shared library.
+#  - Type "make pysgdist" to compile the PyGAMMA shared library and copy
+#    the output files to the pygamma/homemade directory to prepare for 
+#    installation via `python setup.py install`. This also copies files to
+#    the appropriate prebuilt directory for building a PyGAMMA bundle for
+#    distribution.
+#  - Type "make test" to compile and run the GAMMA test program(s).
+#  - Type "make clean" to remove all object files.
+#  - Type "make distclean" to remove all object files libraries, exes.
+#  - The sources are assumed to be in SRCDIR
+#  - The object files are produced in BINDIR
+#  - The lib files are produced in BINDIR
+#  - Any executable files are produced in BINDIR.
+#  - The important static library file is libgamma.a
+#  - The important dynamic library file is libgamma.dylib
+#  - The important PyGAMMA shared library file is _pygamma.dylib
+#  - Produces the following: a.) libgamma.a - The GAMMA static library
+#                            b.) libgamma.dylib - The GAMMA shared library
+#                            c.) _pygamma.so - The PyGAMMA shared library
 #
 # ---------------------------------------------------------------------
 #
@@ -712,7 +717,7 @@ PYTHONLIBDIRS := ${shell ${PYTHON} -c "import distutils.sysconfig; print distuti
 # setting PYTHONARCH to '-arch i386 -arch x86_64'. But with our current
 # setup routine for PyGAMMA, a universal binary doesn't provide any
 # advantages.
-PYTHONARCH := ${shell ${PYTHON} -c "import sys; print 'i386' if sys.maxint==2147483647 else 'x86_64'"}
+PYTHONARCH := ${shell ${PYTHON} -c "import struct; print 'i386' if (32==(8 * struct.calcsize('P'))) else 'x86_64'"}
 PYTHONARCH :=  -arch $(PYTHONARCH)
 
 PYSGCXXFLAGS += $(PYTHONARCH)
@@ -1071,15 +1076,45 @@ install: force
 	@echo
 
 
-# PYSGDISTDIR is the destination directory for the binary (and pygamma.py)
-# that the SWIG process creates.
-PYSGDISTDIR = $(ROOTDIR)/pygamma/homemade
+# PYSGHOMEMADE is the destination directory for the binary (and pygamma.py)
+# that the build creates. It's use when someone builds a custom PyGAMMA.
+PYSGHOMEMADE := $(ROOTDIR)/pygamma/homemade
+# PYSGPREBUILT is the directory where prebuilt libs should reside. It's used
+# when the Vespa team builds a PyGAMMA installation bundle.
+# PYSGPREBUILT depends on the operating system, whether Python is 32 or 64 
+# bit, and the Python version. Some examples: 
+#     osx-64-py27, win-32-py25, linux-32-py26
+# OSINFO, PYTHONINFO, and UNDERLINE help to construct the build notes (which
+# are just informative and only need to be human-readable, not 
+# programmatically readable).
+PYSGPREBUILT := $(ROOTDIR)/pygamma/prebuilt
+PYSGPREBUILT := $(PYSGPREBUILT)/osx-
+PYSGPREBUILT := $(PYSGPREBUILT)${shell ${PYTHON} -c "import struct; print '%d-' % (8 * struct.calcsize('P'))"}
+PYSGPREBUILT := $(PYSGPREBUILT)py${shell ${PYTHON} -c "import sys; print '%d%d' % sys.version_info[:2]"}
+OSINFO := ${shell uname -a}
+PYTHONINFO := ${shell ${PYTHON} -c "import sys; print sys.version"}
+UNDERLINE := "------------------------------------------"
 
 pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
-	@cp -f  ${BINDIR}/pygamma.py   $(PYSGDISTDIR)
-	@cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGDISTDIR)
+	@# Copy files to homemade
+	@cp -f  ${BINDIR}/pygamma.py   $(PYSGHOMEMADE)
+	@cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGHOMEMADE)
 	@# Write a tiny Python file that contains the PyGAMMA version
-	@echo "__version__ = '$(GAMMAVERSION)'" > $(PYSGDISTDIR)/pygamma_version.py
+	@echo "__version__ = '$(GAMMAVERSION)'" > $(PYSGHOMEMADE)/pygamma_version.py
+	@# Copy files to prebuilt and construct the build notes
+	@cp -f  ${BINDIR}/pygamma.py   $(PYSGPREBUILT)
+	@cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGPREBUILT)
+	@# Note that the first line below creates build_notes.txt, the 
+	@# second and subsequent lines append to it.
+	@echo "OS Info (uname -a)"        >  $(PYSGPREBUILT)/build_notes.txt
+	@echo $(UNDERLINE)                >> $(PYSGPREBUILT)/build_notes.txt
+	@echo "${OSINFO}"                 >> $(PYSGPREBUILT)/build_notes.txt
+	@echo "Compiler Info (${CXX} -v)" >> $(PYSGPREBUILT)/build_notes.txt
+	@echo $(UNDERLINE)                >> $(PYSGPREBUILT)/build_notes.txt
+	@echo "${shell ${CXX} -v 2>&1}"   >> $(PYSGPREBUILT)/build_notes.txt
+	@echo "Python Info (sys.version)" >> $(PYSGPREBUILT)/build_notes.txt
+	@echo $(UNDERLINE)                >> $(PYSGPREBUILT)/build_notes.txt
+	@echo "${PYTHONINFO}"             >> $(PYSGPREBUILT)/build_notes.txt
 
 
 ########################################################################
