@@ -1095,7 +1095,13 @@ OSINFO := ${shell uname -a}
 PYTHONINFO := ${shell ${PYTHON} -c "import sys; print sys.version"}
 UNDERLINE := "------------------------------------------"
 
-pysgdist: ${BINDIR} ${BINDIR}/$(PYS_NAME)
+${PYSGPREBUILT}: force
+	@if (test ! -d ./$(PYSGPREBUILT)) then \
+          mkdir $(PYSGPREBUILT); \
+          chmod ug+w $(BINDIR); \
+	fi
+
+pysgdist: ${PYSGPREBUILT} ${BINDIR} ${BINDIR}/$(PYS_NAME)
 	@# Copy files to homemade
 	@cp -f  ${BINDIR}/pygamma.py   $(PYSGHOMEMADE)
 	@cp -f  ${BINDIR}/$(PYS_NAME)  $(PYSGHOMEMADE)

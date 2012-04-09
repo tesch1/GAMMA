@@ -24,6 +24,11 @@ bitiness = 8 * struct.calcsize("P")
 prebuilt_dir = "win-%d-py%d%d" % (bitiness, sys.version_info[0], 
                                             sys.version_info[1])
 
+# Ensure destination dir exists.
+path = "../../../pygamma/prebuilt/%s" % prebuilt_dir
+if not os.path.exists(path):
+    os.mkdir(path)
+
 copy_these = ( ("../../../i686-pc-msvc/_pygamma.pyd", 
                 "../../../pygamma/homemade/_pygamma.pyd"),
                ("../../../i686-pc-msvc/pygamma.py", 
