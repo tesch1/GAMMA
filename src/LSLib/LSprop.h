@@ -43,8 +43,13 @@
 #include <HSLib/HSprop.h>		// Know Hilbert space propagators
 
 
-MSVCDLL super_op R_prop(super_op& eLt, gen_op sigmaeq);
-MSVCDLL super_op R_prop(super_op& L, gen_op& sigmaeq, double t);
+MSVCDLL extern super_op R_prop(super_op& eLt, gen_op sigmaeq);
+MSVCDLL extern super_op R_prop(super_op& L, gen_op& sigmaeq, double t);
+
+MSVCDLL extern void evolve_ip(gen_op &sigma, super_op &GOp);
+MSVCDLL extern gen_op evolve(const gen_op &sigma, super_op &LOp, const double time);
+MSVCDLL extern gen_op evolve(gen_op &sigma, super_op &GOp);
+
 
 
 class LSprop
