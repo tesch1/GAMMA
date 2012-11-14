@@ -94,7 +94,7 @@ SWIG          = swig
 # http://scion.duhs.duke.edu/vespa/gamma/wiki/SwigBuiltinTypesBenefit
 SWIG_OPTIONS  = -c++ -python 
 
-GAMMA_ARCH    = i686-pc-linux-gnu
+GAMMA_ARCH    = linux-gnu
 INSTALLDIR    = /usr/local
 
 BININSTALLDIR = ${INSTALLDIR}/bin
@@ -656,7 +656,7 @@ ${SO_NAME}: ${BINDIR}/${SO_NAME}
 ${BINDIR}/${SO_NAME}: ${BINDIR}/${SO_NAMEXXX}
 	@echo "Making Links For Shared Library"
 	@rm -f ${BINDIR}/${SO_NAME}
-	@ln -s ${BINDIR}/${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
+	@ln -s ${SO_NAMEXXX} ${BINDIR}/${SO_NAME}
 
 $(BINDIR)/$(SO_NAMEXXX): $(SO_OBJS)
 	@echo
@@ -849,7 +849,7 @@ pytest: force
 # (e.g. /usr/include/gamma-4.2.0) or they are left in a GAMMA directory
 # (e.g. /E/gamma/gamma-4.2.0/src). Similarly the library itself is put
 # in either the Linux system directory (e.g. /usr/lib) or left in a
-# GAMMA directory (e.g. /E/gamma/gamma-4.2.0/i686-pc-linux-gnu). Since
+# GAMMA directory (e.g. /E/gamma/gamma-4.2.0/linux-gnu). Since
 # shared obeject libraries are preferable on Linux systems, the system
 # directories are best because then their location is standard. If, for
 # reasons unknown, a static library is preferred then the either the
@@ -883,7 +883,7 @@ pytest: force
 # them.	All that is required for all this to work is that the gamma
 # script (or the compilation command) used to build GAMMA based
 # programs know where the static library is located. This can be either
-# a GAMMA directory (e.g /E/gamma/gamma-4.2.0/i686-pc-linux-gnu) or a
+# a GAMMA directory (e.g /E/gamma/gamma-4.2.0/linux-gnu) or a
 # Linux system directory (e.g. /usr/lib)
 #
 # The same is NOT true when GAMMA based programs link to the shared
@@ -911,7 +911,7 @@ pytest: force
 # a symbolic link to the physical library, and the basic library
 # /usr/lib/libgamma.so will be a symbolic link to the library having
 # the soname name, /usr/lib/libgamma.so.#. Whew. In any event, the
-# GAMMA directory (e.g /E/gamma/gamma-4.2.0/i686-pc-linux-gnu) is NOT
+# GAMMA directory (e.g /E/gamma/gamma-4.2.0/linux-gnu) is NOT
 # used in this case to keep the shared object libraries on the system,
 # although they may be built in such a directory.
 #
@@ -1079,7 +1079,7 @@ UNDERLINE := "------------------------------------------"
 ${PYSGPREBUILT}: force
 	@if (test ! -d ./$(PYSGPREBUILT)) then \
           mkdir $(PYSGPREBUILT); \
-          chmod ug+w $(BINDIR); \
+          chmod ug+w $(PYSGPREBUILT); \
 	fi
 
 pysgdist: ${PYSGPREBUILT} ${BINDIR} ${BINDIR}/$(PYS_NAME)

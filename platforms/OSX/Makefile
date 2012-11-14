@@ -1098,7 +1098,7 @@ UNDERLINE := "------------------------------------------"
 ${PYSGPREBUILT}: force
 	@if (test ! -d ./$(PYSGPREBUILT)) then \
           mkdir $(PYSGPREBUILT); \
-          chmod ug+w $(BINDIR); \
+          chmod ug+w $(PYSGPREBUILT); \
 	fi
 
 pysgdist: ${PYSGPREBUILT} ${BINDIR} ${BINDIR}/$(PYS_NAME)
