@@ -2311,7 +2311,7 @@ void h_matrix::cred(_matrix* &U)
   n_matrix* nmx = NMX();			// Copy hmx to nmx for now
   complex *n00  = nmx->data;			// n00  = <0|nmx|0>
   complex *nend = n00+rows_*rows_;		// nend = <rows_|nmx|rows_>+1
-  complex *ni0, *nij, *nji, *nil, *nli;		// To access nmx elements
+  complex *ni0, *nij, *nji, *nnil, *nli;		// To access nmx elements
   complex *nl0, *nlend, *nll, *nlp1l; 		// To access nmx elements
 
   //                      Householder Reduction Section
@@ -2331,9 +2331,9 @@ void h_matrix::cred(_matrix* &U)
  
     csf = 0.0;					// Column scaling factor
     nll = n00 + l*rows_ + l; 			// Diagonal this l: <l|nmx|l>
-    nil = nll + rows_ + rows_;			// Start at <l+2|nmx|l> 
-    for(; nil<nend; nil+=rows_)			// Get scaling factor from col
-      csf += AbsNorm(*nil);			// elements not tri-diagonal
+    nnil = nll + rows_ + rows_;			// Start at <l+2|nmx|l> 
+    for(; nnil<nend; nnil+=rows_)			// Get scaling factor from col
+      csf += AbsNorm(*nnil);			// elements not tri-diagonal
 
     /*            Next Generate The Vector W For Column l If Needed
 
@@ -2346,9 +2346,9 @@ void h_matrix::cred(_matrix* &U)
       nlp1l = nll + rows_;			// This is <l+1|nmx|l> 
       csf += AbsNorm(*nlp1l); 			// Adjust scaling factor
       sw = 0.0;
-      nil = nlp1l + rows_;			// Start at <l+2|nmx|l>
-      for(; nil<nend; nil+=rows_)		// Loop down column l using
-        sw += square_norm(*nil/csf);		// lower non-tridiagonals
+      nnil = nlp1l + rows_;			// Start at <l+2|nmx|l>
+      for(; nnil<nend; nnil+=rows_)		// Loop down column l using
+        sw += square_norm(*nnil/csf);		// lower non-tridiagonals
   
       s = sw + square_norm(*nlp1l/csf);
       s = csf*sqrt(s);
@@ -2363,10 +2363,10 @@ void h_matrix::cred(_matrix* &U)
 
       s = sw + square_norm(*wlp1/csf);
       s = sqrt(2/s)/csf;
-      nil = nlp1l + rows_;			// Start at <l+2|nmx|l>
+      nnil = nlp1l + rows_;			// Start at <l+2|nmx|l>
       wi = wlp1 + 1;				// Begin with <l+2|W>
-      for(; nil<nend; wi++,nil+=rows_)		// Loop column l, lower non-
-        mul(*wi, *nil, s);			// tridiags: <i|W>=s*<i|nmx|l>
+      for(; nnil<nend; wi++,nnil+=rows_)		// Loop column l, lower non-
+        mul(*wi, *nnil, s);			// tridiags: <i|W>=s*<i|nmx|l>
 
       (*wlp1) *= s; 				// <l+1|W> *= s
          
@@ -2476,12 +2476,12 @@ void h_matrix::cred(_matrix* &U)
                              3. wend = <rows_|W>+1  4. wlp1 = <l+1|W>        */
 
       ni0 = n00 + l*rows_;				// <i|nmx|0>=<l|nmx|0>
-      nil = ni0 + l;					// <i|nmx|l>=<l|nmx|l>
-      for(nil=ni0+l; ni0<nend; ni0+=rows_,nil=ni0+l)	// Loop rows >= l
+      nnil = ni0 + l;					// <i|nmx|l>=<l|nmx|l>
+      for(nnil=ni0+l; ni0<nend; ni0+=rows_,nnil=ni0+l)	// Loop rows >= l
       {
         register double ssi=0, ssr=0;			// Real & imag scaling
         wj = wlp1;					// Start at <l+1|W>
-        nij = nil+1;					// Start at <i|nmx|l+1>
+        nij = nnil+1;					// Start at <i|nmx|l+1>
         for(; wj<wend; wj++,nij++) 			// Loop over nmx row i
         {						// and sum <j|W><i|nmx|j>
           register double wr = Re(*wj);			// Re(<j|W>)
@@ -2492,7 +2492,7 @@ void h_matrix::cred(_matrix* &U)
           ssi += wr*ti + wi*tr;
         }
         wj = wlp1;					// Start at <l+1|W>
-        nij = nil+1;					// Start at <i|nmx|l+1>
+        nij = nnil+1;					// Start at <i|nmx|l+1>
         for(; wj<wend; wj++,nij++) 			// Loop over nmx row i & subt.
         {						// ss*<j|W*> from <i|nmx|j>
           register double wr = Re(*wj);			// Re(<j|W>)
