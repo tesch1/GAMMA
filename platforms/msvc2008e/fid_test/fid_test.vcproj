@@ -59,7 +59,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="gamma.lib"
-				OutputFile="&quot;..\..\..\i686-pc-msvc\fid_msvc_test.exe&quot;"
+				OutputFile="&quot;..\..\..\i686-pc-msvc\fid_msvc_test_ch3_n14.exe&quot;"
 				LinkIncremental="0"
 				AdditionalLibraryDirectories="&quot;..\..\..\i686-pc-msvc&quot;"
 				IgnoreAllDefaultLibraries="false"
@@ -172,7 +172,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\fid_test.cc"
+				RelativePath="..\test1\fid_test_ch3_n14.cc"
 				>
 			</File>
 		</Filter>
