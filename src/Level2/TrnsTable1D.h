@@ -47,6 +47,10 @@
 #include <vector>			// Knowledge of stdlibc++ STL vectors
 #include <list>
 
+//forward definitions
+class TTable1D;
+MSVCDLL TTable1D sum(const TTable1D& TT1, const TTable1D& TT2, double res=1.e-6);
+void offset(matrix& mx, double F, double LWR, int inHz=0);
 
 class TTable1D: private matrix 
   {
@@ -587,7 +591,7 @@ MSVCDLL double Imax()        const;
 MSVCDLL double Noisemax()    const;
 MSVCDLL matrix mx()	       const;
 
-MSVCDLL friend TTable1D sum(const TTable1D& TT1, const TTable1D& TT2, double res=1.e-6);
+MSVCDLL friend TTable1D sum(const TTable1D& TT1, const TTable1D& TT2, double res);
 
 	// Input	TT1	: A transitions table
 	// 		TT2	: Another transitions table
@@ -806,11 +810,8 @@ MSVCDLL std::ostream& printF(std::ostream& ostr, int npts, double Fst, double Ff
 
 // sosi  this is deprecated.... ever used?
 
-friend void offset(matrix& mx, double F, double LWR, int inHz=0);
+friend void offset(matrix& mx, double F, double LWR, int inHz);
 
   };
-
-extern TTable1D sum(const TTable1D&, const TTable1D&, double);
-extern void offset(matrix&mx, double, double, int);
 
 #endif							// TrnsTable1D.h

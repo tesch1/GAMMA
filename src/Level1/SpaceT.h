@@ -76,14 +76,14 @@ MSVCDLL space_T SphA1(coord &pt);
 // No longer supported *** Marked for deletion 
 MSVCDLL space_T SphA1(col_vector &vx);
 
-MSVCDLL space_T A2(double Aiso, double delzz, double eta,
-			double alpha, double beta, double gamma);
+MSVCDLL space_T A2(double Aiso, double delzz, double eta=0,
+			double alpha=0, double beta=0, double gamma=0);
 
 MSVCDLL space_T A2(coord &Tcomps);
 
 MSVCDLL space_T A2(coord &Tcomps, coord &Tangles);
 
-MSVCDLL space_T A2(const matrix &mx, double prec);
+MSVCDLL space_T A2(const matrix &mx, double prec=1e-10);
 
 MSVCDLL complex A2(int l, int m, double Aiso, double delzz, double eta);
 
@@ -548,8 +548,8 @@ MSVCDLL friend space_T SphA1(col_vector &vx);
 
 // ********************* Whole Tensor Production ************************
 
-MSVCDLL friend space_T A2(double Aiso, double delzz, double eta=0,
-			double alpha=0, double beta=0, double gamma=0);
+MSVCDLL friend space_T A2(double Aiso, double delzz, double eta,
+			double alpha, double beta, double gamma);
 
 	// Input		Aiso  : Isotropic component
 	//			delzz : Anisotropy parameter
@@ -577,7 +577,7 @@ MSVCDLL friend space_T A2(coord &Tcomps, coord &Tangles);
 	// Output		SphT   : Rank 2 Spatial Tensor
 
 
-MSVCDLL friend space_T A2(const matrix &mx, double prec=1.e-10);
+MSVCDLL friend space_T A2(const matrix &mx, double prec);
 
 	// Input		mx    : Cartesian rank two tensor
 	// Output		SphT  : rank 2 Spatial Tensor

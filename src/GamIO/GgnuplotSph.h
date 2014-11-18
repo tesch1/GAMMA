@@ -37,6 +37,11 @@
 #include <string>                       // Know libstdc++ strings
 #include <vector>                       // Know libstdc++ STL vectors
 
+//forward declarations
+class GPSphere;
+MSVCDLL void GP_sphere(const std::string& name, const coord_vec& data, bool old=false);
+MSVCDLL void GP_sphereplot(const std::string& gnumacro, const std::string& Aname, bool old=false);
+
 class GPSphere: public GPControls	// Gnuplot info
   {
   bool   degrees;			// Flag angles in degrees/radians
@@ -164,8 +169,8 @@ MSVCDLL friend  std::ostream& operator<< (std::ostream&     ostr, GPSphere& GPS)
 /* These are functions built prior to construction of this class. Some of
    them are deprecated and will issue warnings if utilized.                  */
 
-MSVCDLL friend void GP_sphere(const std::string& name, const coord_vec& data, bool old=false);
-MSVCDLL friend void GP_sphereplot(const std::string& gnumacro, const std::string& Aname, bool old=false);
+MSVCDLL friend void GP_sphere(const std::string& name, const coord_vec& data, bool old);
+MSVCDLL friend void GP_sphereplot(const std::string& gnumacro, const std::string& Aname, bool old);
 MSVCDLL friend void GP_sphereplot(const std::string& gnumacro, int N, std::string* files);
 MSVCDLL friend void GnuplotSphere(const std::string& name, const coord_vec& data);
 

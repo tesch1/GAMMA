@@ -80,6 +80,11 @@ extern const double RT5O24PI;		// Needed constant sqrt[5/(24*PI)];
 #include <iostream>			// Include libstdc++ file streams
 #include <vector>			// Include libstdc++ STL vectors
 
+//forward declarations
+class IntRank2A;
+MSVCDLL void GetEtaDelzz(const matrix& A, 
+            double& Aeta, double& Adelz, double ecut=1.e-5, double dcut=1.e-9);
+
 class IntRank2A
   {
   double ETA;				// Spatial tensor eta [0, 1]
@@ -672,7 +677,7 @@ MSVCDLL void rotate(const EAngles& EA);
    generation of the spatial tensor from the 3x3 array.                      */
 
 MSVCDLL friend void GetEtaDelzz(const matrix& A, 
-            double& Aeta, double& Adelz, double ecut=1.e-5, double dcut=1.e-9);
+            double& Aeta, double& Adelz, double ecut, double dcut);
 
 MSVCDLL friend bool GetEAngles(const matrix& A, const EAngles& EA);
 

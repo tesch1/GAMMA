@@ -41,6 +41,12 @@
 #include <string>
 //class ostream;				// Know output streams exist
 
+//forward declarations
+class FM_stack;
+
+MSVCDLL void FM_stack(const std::string& filename, const matrix &mx, double xinc, 
+          double yinc, int RI=1, double xsize=14, double ysize=14, int grid=0, int CI=1);
+
 // ____________________________________________________________________________
 // ____________________________________________________________________________
 // ____________________________________________________________________________
@@ -824,7 +830,7 @@ MSVCDLL friend void FM_stack(const std::string& filename, const matrix &mx, FMSt
 
 
 MSVCDLL friend void FM_stack(const std::string& filename, const matrix &mx, double xinc, 
-          double yinc, int RI=1, double xsize=14, double ysize=14, int grid=0, int CI=1);
+          double yinc, int RI, double xsize, double ysize, int grid, int CI);
 
 
  

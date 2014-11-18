@@ -67,6 +67,13 @@
 #include <fstream>			// Include stdlibc++ file streams
 #include <list>				// Include stdlibc++ STL lists
 
+
+//forward declarations
+class IntDip;
+MSVCDLL matrix HD0(double qn, double wCo, double eta=0, 
+                                                 double theta=0, double phi=0);
+MSVCDLL matrix HD1(double Om, double qn, double wCo, double eta,
+                                             double theta=0.0, double phi=0.0);
 class IntDip: public IntRank2
   {
   matrix T20wh;				// Spherical T20 weak heteronuclear
@@ -1446,8 +1453,8 @@ MSVCDLL std::ostream& printCartesian(std::ostream& ostr, double theta, double ph
 // Mimic The Class' Hamiltonian Generation.
 
 
-MSVCDLL friend matrix HD0(double qn, double wCo, double eta=0, 
-                                                 double theta=0, double phi=0);
+MSVCDLL friend matrix HD0(double qn, double wCo, double eta, 
+                                                 double theta, double phi);
  
         // Input                qn      : Quantum number (1, 1.5, 2.5,...)
         //                      wCo     : PAS Dipolar frequency
@@ -1485,7 +1492,7 @@ MSVCDLL friend matrix HD0(double qn, double wCo, double eta=0,
 
 
 MSVCDLL friend matrix HD1(double Om, double qn, double wCo, double eta,
-                                             double theta=0.0, double phi=0.0);
+                                             double theta, double phi);
                                                         
         // Input                Om      : Field Strength (Larmor in Hz)
 	//                      qn      : Quantum number (1, 1.5, 2.5,...)

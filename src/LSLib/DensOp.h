@@ -45,11 +45,12 @@
 #include <LSLib/SuperOp.h>		// Know about superoperator class
 #include <HSLib/SpinSys.h>		// Know about spin system class
 
-
+//forward declarations
+class densop;
 
 MSVCDLL gen_op SigmaEq(const spin_sys& sys);
-MSVCDLL gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int wrn);
-MSVCDLL gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq, int wrn);
+MSVCDLL gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int wrn=0);
+MSVCDLL gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq, int wrn=0);
 
 class densop : public gen_op
   {
@@ -283,8 +284,8 @@ MSVCDLL friend gen_op SigmaEq(const spin_sys& sys);
 //         ss       eq		                   ss       eq
 
 
-MSVCDLL friend gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int wrn=0);
-MSVCDLL friend gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq,         int wrn=0);
+MSVCDLL friend gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int wrn);
+MSVCDLL friend gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq,         int wrn);
 
 
 // ____________________________________________________________________________

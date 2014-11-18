@@ -58,6 +58,12 @@
 #include <string>			// Include stdlibc++ strings
 #include <fstream>			// Include stdlibc++ file streams
 
+//forward declarations
+class IntCSA;
+MSVCDLL matrix HC0(double qn, double wCo, double eta=0, 
+                                                 double theta=0, double phi=0);
+MSVCDLL matrix HC1(double Om, double qn, double wCo, double eta,
+                                              double theta=0.0, double phi=0.0);
 class IntCSA: public IntRank2
   {
   double SISO;                          // Shift isotropy   (PPM)
@@ -1144,8 +1150,8 @@ MSVCDLL matrix H0(const std::vector<int>& HSs, int i, const EAngles& EA)        
 // Mimic The Class' Hamiltonian Generation.
 
 
-MSVCDLL friend matrix HC0(double qn, double wCo, double eta=0, 
-                                                 double theta=0, double phi=0);
+MSVCDLL friend matrix HC0(double qn, double wCo, double eta, 
+                                                 double theta, double phi);
  
         // Input                qn      : Quantum number (1, 1.5, 2.5,...)
         //                      wCo     : PAS Shift anisotropy frequency
@@ -1183,7 +1189,7 @@ MSVCDLL friend matrix HC0(double qn, double wCo, double eta=0,
 
 
 MSVCDLL friend matrix HC1(double Om, double qn, double wCo, double eta,
-                                              double theta=0.0, double phi=0.0);
+                                              double theta, double phi);
                                                         
         // Input                Om      : Field Strength (Larmor in Hz)         
         //                      qn      : Quantum number (1, 1.5, 2.5,...)
