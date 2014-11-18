@@ -860,8 +860,9 @@ void spin_system::A(int spin1, int spin2, double Aval)
   check_spin(spin1);                            // Insure 1st spin exists
   check_spin(spin2);                            // Insure 2nd spin exists
   if(!enpair(spin1, spin2))
-    if(electron(spin1)) SYSTfatality(42);	// Can't be e-/e- pair
+  { if(electron(spin1)) SYSTfatality(42);	// Can't be e-/e- pair
     else                SYSTfatality(43);	// Can't be nucleus/nucleus pair
+  }
   if(spin1 == spin2)    SYSTfatality(14);	// Can't be the same spin
   Acouplings[pairidx(spin1, spin2)] = Aval;	// Set hyperfine coupling
   } 
@@ -874,8 +875,9 @@ double spin_system::A(int spin1, int spin2) const
   check_spin(spin1);                            // Insure 1st spin exists
   check_spin(spin2);                            // Insure 2nd spin exists
   if(!enpair(spin1, spin2))
-    if(electron(spin1)) SYSTfatality(42);	// Can't be e-/e- pair
+  { if(electron(spin1)) SYSTfatality(42);	// Can't be e-/e- pair
     else                SYSTfatality(43);	// Can't be nucleus/nucleus pair
+  }
   if(spin1 == spin2)    SYSTfatality(14);	// Can't be the same spin
   return Acouplings[pairidx(spin1,spin2)];	// Return hyperfine coupling
   }
