@@ -1426,7 +1426,7 @@ sort=0;
 complex det(const gen_op& Op)                        { return Op.det(); }
 complex trace(const gen_op& Op)                      { return Op.trace(); }
 complex trace(const gen_op& Op, const gen_op &Op1)   { return Op.trace(Op1); }
-complex proj(const gen_op &Op,  const gen_op &Op1, int N=0)
+complex proj(const gen_op &Op,  const gen_op &Op1, int N)
                                                      { return Op.proj(Op1,N); }
 int dim(const gen_op &Op)                            { return Op.dim(); }
 gen_op exp(const gen_op &Op)                         { return Op.exp(); }

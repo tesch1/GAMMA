@@ -36,6 +36,10 @@
 #include <HSLib/SpinOp.h> 		// Include until spin_op -> tp_matrix!
 #include <vector>			// Include stdlibc++ STL vectors
 
+//forward declaration
+class gen_op;
+MSVCDLL complex proj(const gen_op &Op1, const gen_op &Op2, int norm=0);  //**
+
 class gen_op : public std::vector <genoprep>
 {
     
@@ -502,8 +506,7 @@ MSVCDLL void       eigvals(double* vx, int sort=0) const;
 MSVCDLL friend complex det(const gen_op &Op);					//**
 MSVCDLL friend complex trace(const gen_op &Op);					//**
 MSVCDLL friend complex trace(const gen_op &Op1, const gen_op &Op2);		//**
-MSVCDLL friend complex proj(const gen_op &Op1, const gen_op &Op2, int norm);  //**
-MSVCDLL friend complex proj(const gen_op &Op1, const gen_op &Op2);  //**
+MSVCDLL friend complex proj(const gen_op, const gen_op, int);  //**
 MSVCDLL friend int dim(const gen_op &Op);  					//**
 MSVCDLL friend gen_op exp(const gen_op &Op1);					//**
 MSVCDLL friend gen_op pow(const gen_op &Op1, int power);			//**
