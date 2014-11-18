@@ -502,7 +502,8 @@ MSVCDLL void       eigvals(double* vx, int sort=0) const;
 MSVCDLL friend complex det(const gen_op &Op);					//**
 MSVCDLL friend complex trace(const gen_op &Op);					//**
 MSVCDLL friend complex trace(const gen_op &Op1, const gen_op &Op2);		//**
-MSVCDLL friend complex proj(const gen_op &Op1, const gen_op &Op2, int norm=0);  //**
+MSVCDLL friend complex proj(const gen_op &Op1, const gen_op &Op2, int norm);  //**
+MSVCDLL friend complex proj(const gen_op &Op1, const gen_op &Op2);  //**
 MSVCDLL friend int dim(const gen_op &Op);  					//**
 MSVCDLL friend gen_op exp(const gen_op &Op1);					//**
 MSVCDLL friend gen_op pow(const gen_op &Op1, int power);			//**

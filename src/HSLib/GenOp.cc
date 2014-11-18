@@ -550,9 +550,14 @@ gen_op & gen_op::operator+= (const gen_op &Op1)
   WBR->RepMx += Op1.WBR->RepMx;		// Add arrays in mutual WBR basis
   OpName = std::string("");		// No longer has a name
   if(EBR)				// Check if eigenbasis destroyed
-    if(Op1.EBR==NULL) EBR = NULL;	//   Can't be EBR if Op1 had no EBR 
-    else if(Op1.EBR->RepBs != EBR->RepBs)//  NM
-      EBR = NULL;
+  { if(Op1.EBR==NULL)
+    { EBR = NULL;	          	//   Can't be EBR if Op1 had no EBR 
+    }
+    else
+    { if(Op1.EBR->RepBs != EBR->RepBs)//  NM
+        EBR = NULL;
+    }
+  }
   // sosiz - Must Adjust The Representation Priority!
   return (*this);
   }
@@ -600,7 +605,7 @@ gen_op & gen_op::operator -= (const gen_op &Op1)
   setOnlyWBR();				// Put Op exclusively in WBR
   WBR->RepMx -= Op1.WBR->RepMx;	
   if(EBR)				// Check if eigenbasis destroyed
-    if(Op1.EBR==NULL)
+  { if(Op1.EBR==NULL)
       {
       EBR = NULL;
       WBR->RepPty = Op1.WBR->RepPty;
@@ -610,6 +615,7 @@ gen_op & gen_op::operator -= (const gen_op &Op1)
       EBR = NULL;
       WBR->RepPty = Op1.WBR->RepPty;
       }
+  }
   OpName = std::string("");
   return (*this);
   }
@@ -1420,7 +1426,7 @@ sort=0;
 complex det(const gen_op& Op)                        { return Op.det(); }
 complex trace(const gen_op& Op)                      { return Op.trace(); }
 complex trace(const gen_op& Op, const gen_op &Op1)   { return Op.trace(Op1); }
-complex proj(const gen_op &Op,  const gen_op &Op1, int N)
+complex proj(const gen_op &Op,  const gen_op &Op1, int N=0)
                                                      { return Op.proj(Op1,N); }
 int dim(const gen_op &Op)                            { return Op.dim(); }
 gen_op exp(const gen_op &Op)                         { return Op.exp(); }
