@@ -42,7 +42,7 @@
 #include <HSLib/SpinOpCmp.h>			// Must know Fz operator
 #include <string> 				// Must know about strings
 #include <HSLib/SpinSys.h>			// Know about spin systems
-#include <Basics/StringCut.h>			// Know about the Gdec function
+#include <Basics/StringCut.h>			// Know about the Gdec functio
 #include <stdlib.h>
 
 // ----------------------------------------------------------------------------
@@ -330,234 +330,335 @@ gen_op SigmaEq(const spin_sys& sys)
 //  return;
 //} 
 
+// replaced by new routine from Riccardo Balzan balzan.riccardo@parisdescartes.fr
+// since this routine give different results if the operators are in different 
+// bases. New routine seems to work well.
+// 11/2014 MAER
 
-gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int warn)
-
-	// Input		sys   : Spin system
-	// 			L     : Full Liouvillian (rad/sec)
-	//			R     : Relaxation Superoperator (rad/sec)
-        // Return		sss   : Steady state density matrix
-	// Note			      : Careful R & L units, usually Ho is Hz!
-	// Note			      : L is singular, thus steady state must
-	//				be determined in a reduced Liouville
-	//				space.  Best done with matrix routines
-	//				not (code simple) superop. functions!
-	// Note			      : Algorithm needs density matrix trace = 1
-	//				Function insures this then returns trace
-	//				back to the original value.
-
+//gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int warn)
+//
+//	// Input		sys   : Spin system
+//	// 			L     : Full Liouvillian (rad/sec)
+//	//			R     : Relaxation Superoperator (rad/sec)
+//        // Return		sss   : Steady state density matrix
+//	// Note			      : Careful R & L units, usually Ho is Hz!
+//	// Note			      : L is singular, thus steady state must
+//	//				be determined in a reduced Liouville
+//	//				space.  Best done with matrix routines
+//	//				not (code simple) superop. functions!
+//	// Note			      : Algorithm needs density matrix trace = 1
+//	//				Function insures this then returns trace
+//	//				back to the original value.
+//
+////	L|s  > = R|s  >    -------> [L - L|S><E|]|s  > = R|s  > - |L1>
+////         ss       eq		                   ss       eq
+//
+//  {
+//  gen_op seq;
+//  double d = 1.e-9; 
+//  R.LOp_base(L);			// Insure R in Liouville base of L
+//  if(R.below(d))			// If R==0, |s  > = 0
+//    {					//            ss
+//    densop X;
+//    if(warn)
+//      {
+//      densop X;
+//      X.SIGMAerror(10);
+//      }
+//    return seq;
+//    }
+//  else if(L == R)			// If R==L, |s  > = s  >
+//    return SigmaEq(sys);		//	      ss     eq	
+//  else
+//    {
+//    basis Lbs = L.get_basis();		// Store the Hilbert basis of L
+//    seq = SigmaEq(sys);			// Equilibrium density matrix
+//    int hs = seq.dim();			// Get the Hilbert space size
+//    int ls = hs*hs;			// Compute the Liouville space
+//    matrix Emx(hs,hs,i_matrix_type);	// Temporary Identity matrix
+//    matrix trace1 = Emx/complex(hs);	// Scale by dimension
+//    seq += trace1;			// Set trace to 1 for this
+//    seq.Op_base(Lbs);			// Put operator into L basis
+//
+////	Calculate Equation Right Hand Side of Steady State Equation
+////
+////			  '
+////			|s  > = R|s  > - |L1>
+////			  eq       eq
+//
+//    matrix L1, ssp, sub_ssp;
+//    L1=(L.get_mx()).get_block(0,0,ls,1);// L1 matrix = 1st column of L
+//    ssp=((R*seq).get_mx()).resize(ls,1);// Modified seq, basis of R
+//    ssp -= L1;				// |ssp> = R|seq> - |L1>
+//    sub_ssp = ssp.get_block(1,0,ls-1,1);// Reduced space seq (as matrix)
+//
+////	Calculate Equation Left Hand Side of Steady State Equation
+////
+////			X = L - L|S><E|
+////
+//
+//    matrix Smx(hs, hs, 0.0);		// Temproray Null matrix
+//    Smx.put(1.0, 0, 0);			// 1st element of Smx set to 1 
+//    gen_op S(Smx, Lbs);			// Create the S operator
+//    gen_op E(Emx, Lbs);			// Create the S operator
+//    super_op SE(S,E);			// SE = |S><E|
+//    super_op X = L;
+//    X -= L*SE; 				// X = L - L|S><E|
+//    matrix sub_X((X.get_mx()).		// Reduced space X
+//	    get_block(1,1,ls-1,ls-1));
+//
+//// Form the LU Decomposition of the Reduced & Modified Liouville Matrix
+//  
+///*                      '                    -1  '
+//  	     X|s  > = |s  >  ---->  |s  > = X  |s  >
+//             - -ss     -eq           -ss    -   -eq
+//  
+//                       '                       -1  '
+//           LU|s  > = |s  >  ---->  |s  > = (LU)  |s  >
+//           -- -ss     -eq           -ss     --    -eq
+//*/
+//
+//    matrix ALU = sub_X;
+//    int *indx;
+//    indx = new int[ls-1];
+//    LU_decomp(ALU,indx);
+//
+///*		Calculate the Steady State Density Matrix
+//  
+//                         -1  '               trace
+//  	     |s  > = (LU)  |s  >  ;   |s  > ------> |s  >
+//              -ss     --   -eq         -ss            ss
+//*/
+//
+//
+//    matrix sub_sss = sub_ssp;		// Steady state in subspace
+//    LU_backsub(ALU,indx,sub_sss);	// Back solve for steady state
+//    matrix sssmx(hs, hs, 0.0);		// Reform the full steady state
+//    int k=0;				// density matrix in Hilbert
+//    for(int i=0; i<hs; i++)		// space.
+//      for(int j=0; j<hs; j++)
+//        if(i!=0 || j!=0)		// All but first element
+//          {
+//          sssmx.put(sub_sss.get(k,0),i,j);
+//          k++;
+//          }
+//    sssmx.put(1.0-trace(sssmx),0,0);	// First element from trace
+//    sssmx.resize(hs,hs);		// Back to a square array
+//    sssmx -= trace1;			// Set trace back to 0
+//    gen_op sss(sssmx, seq.get_basis()); // Put this into a gen. op.
+//    delete [] indx;
+//    return sss;
+//    }
+//  }
+//
+//
+//gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq, int warn)
+//
+//	// Input 		L     : Full Liouvillian (rad/sec)
+//	//			R     : Relaxation Superoperator (rad/sec)
+//	//			seq   : Equilibrium density operator
+//        // Return		sss   : Steady state density matrix
+//	// Note			      : Careful R & L units, usually Ho is Hz!
+//	// Note			      : L is singular, thus steady state must
+//	//				be determined in a reduced Liouville
+//	//				space.  Best done with matrix routines
+//	//				not (code simple) superop. functions!
+//	// Note			      : Algorithm needs density matrix trace = 1
+//	//				Function insures this then returns trace
+//	//				back to the original value.
+//
 //	L|s  > = R|s  >    -------> [L - L|S><E|]|s  > = R|s  > - |L1>
 //         ss       eq		                   ss       eq
-
-  {
-  gen_op seq;
-  double d = 1.e-9; 
-  R.LOp_base(L);			// Insure R in Liouville base of L
-  if(R.below(d))			// If R==0, |s  > = 0
-    {					//            ss
-    densop X;
-    if(warn)
-      {
-      densop X;
-      X.SIGMAerror(10);
-      }
-    return seq;
-    }
-  else if(L == R)			// If R==L, |s  > = s  >
-    return SigmaEq(sys);		//	      ss     eq	
-  else
-    {
-    basis Lbs = L.get_basis();		// Store the Hilbert basis of L
-    seq = SigmaEq(sys);			// Equilibrium density matrix
-    int hs = seq.dim();			// Get the Hilbert space size
-    int ls = hs*hs;			// Compute the Liouville space
-    matrix Emx(hs,hs,i_matrix_type);	// Temporary Identity matrix
-    matrix trace1 = Emx/complex(hs);	// Scale by dimension
-    seq += trace1;			// Set trace to 1 for this
-    seq.Op_base(Lbs);			// Put operator into L basis
-
-//	Calculate Equation Right Hand Side of Steady State Equation
 //
-//			  '
-//			|s  > = R|s  > - |L1>
-//			  eq       eq
-
-    matrix L1, ssp, sub_ssp;
-    L1=(L.get_mx()).get_block(0,0,ls,1);// L1 matrix = 1st column of L
-    ssp=((R*seq).get_mx()).resize(ls,1);// Modified seq, basis of R
-    ssp -= L1;				// |ssp> = R|seq> - |L1>
-    sub_ssp = ssp.get_block(1,0,ls-1,1);// Reduced space seq (as matrix)
-
-//	Calculate Equation Left Hand Side of Steady State Equation
+//  {
+//  double d = 1.e-9; 
+//  R.LOp_base(L);			// Insure R in Liouville base of L
+//  if(R.below(d))			// If R==0, |s  > = 0
+//    {					//            ss
+//    if(warn)
+//      {
+//      densop X;
+//      X.SIGMAerror(10);
+//      }
+//    return gen_op();
+//    }
+//  else if(L == R)			// If R==L, |s  > = s  >
+//    return seq;				//	      ss     eq	
+//  else
+//    {
+//    basis Lbs = L.get_basis();		// Store the Hilbert basis of L
+//    int hs = seq.dim();			// Get the Hilbert space size
+//    int ls = hs*hs;			// Compute the Liouville space
+//    matrix Emx(hs,hs,i_matrix_type);	// Temporary Identity matrix
+//    matrix trace1 = Emx/complex(hs);	// Scale by dimension
+//    seq += trace1;			// Set trace to 1 for this
+//    seq.Op_base(Lbs);			// Put operator into L basis
 //
-//			X = L - L|S><E|
+////	Calculate Equation Right Hand Side of Steady State Equation
+////
+////			  '
+////			|s  > = R|s  > - |L1>
+////			  eq       eq
 //
-
-    matrix Smx(hs, hs, 0.0);		// Temproray Null matrix
-    Smx.put(1.0, 0, 0);			// 1st element of Smx set to 1 
-    gen_op S(Smx, Lbs);			// Create the S operator
-    gen_op E(Emx, Lbs);			// Create the S operator
-    super_op SE(S,E);			// SE = |S><E|
-    super_op X = L;
-    X -= L*SE; 				// X = L - L|S><E|
-    matrix sub_X((X.get_mx()).		// Reduced space X
-	    get_block(1,1,ls-1,ls-1));
-
-// Form the LU Decomposition of the Reduced & Modified Liouville Matrix
-  
-/*                      '                    -1  '
-  	     X|s  > = |s  >  ---->  |s  > = X  |s  >
-             - -ss     -eq           -ss    -   -eq
-  
-                       '                       -1  '
-           LU|s  > = |s  >  ---->  |s  > = (LU)  |s  >
-           -- -ss     -eq           -ss     --    -eq
-*/
-
-    matrix ALU = sub_X;
-    int *indx;
-    indx = new int[ls-1];
-    LU_decomp(ALU,indx);
-
-/*		Calculate the Steady State Density Matrix
-  
-                         -1  '               trace
-  	     |s  > = (LU)  |s  >  ;   |s  > ------> |s  >
-              -ss     --   -eq         -ss            ss
-*/
-
-
-    matrix sub_sss = sub_ssp;		// Steady state in subspace
-    LU_backsub(ALU,indx,sub_sss);	// Back solve for steady state
-    matrix sssmx(hs, hs, 0.0);		// Reform the full steady state
-    int k=0;				// density matrix in Hilbert
-    for(int i=0; i<hs; i++)		// space.
-      for(int j=0; j<hs; j++)
-        if(i!=0 || j!=0)		// All but first element
-          {
-          sssmx.put(sub_sss.get(k,0),i,j);
-          k++;
-          }
-    sssmx.put(1.0-trace(sssmx),0,0);	// First element from trace
-    sssmx.resize(hs,hs);		// Back to a square array
-    sssmx -= trace1;			// Set trace back to 0
-    gen_op sss(sssmx, seq.get_basis()); // Put this into a gen. op.
-    delete [] indx;
-    return sss;
-    }
-  }
-
-
-gen_op SigmaSS(super_op& L, super_op& R, gen_op& seq, int warn)
-
-	// Input 		L     : Full Liouvillian (rad/sec)
-	//			R     : Relaxation Superoperator (rad/sec)
-	//			seq   : Equilibrium density operator
-        // Return		sss   : Steady state density matrix
-	// Note			      : Careful R & L units, usually Ho is Hz!
-	// Note			      : L is singular, thus steady state must
-	//				be determined in a reduced Liouville
-	//				space.  Best done with matrix routines
-	//				not (code simple) superop. functions!
-	// Note			      : Algorithm needs density matrix trace = 1
-	//				Function insures this then returns trace
-	//				back to the original value.
-
-//	L|s  > = R|s  >    -------> [L - L|S><E|]|s  > = R|s  > - |L1>
-//         ss       eq		                   ss       eq
-
-  {
-  double d = 1.e-9; 
-  R.LOp_base(L);			// Insure R in Liouville base of L
-  if(R.below(d))			// If R==0, |s  > = 0
-    {					//            ss
-    if(warn)
-      {
-      densop X;
-      X.SIGMAerror(10);
-      }
-    return gen_op();
-    }
-  else if(L == R)			// If R==L, |s  > = s  >
-    return seq;				//	      ss     eq	
-  else
-    {
-    basis Lbs = L.get_basis();		// Store the Hilbert basis of L
-    int hs = seq.dim();			// Get the Hilbert space size
-    int ls = hs*hs;			// Compute the Liouville space
-    matrix Emx(hs,hs,i_matrix_type);	// Temporary Identity matrix
-    matrix trace1 = Emx/complex(hs);	// Scale by dimension
-    seq += trace1;			// Set trace to 1 for this
-    seq.Op_base(Lbs);			// Put operator into L basis
-
-//	Calculate Equation Right Hand Side of Steady State Equation
+//    matrix L1, ssp, sub_ssp;
+//    L1=(L.get_mx()).get_block(0,0,ls,1);// L1 matrix = 1st column of L
+//    ssp=((R*seq).get_mx()).resize(ls,1);// Modified seq, basis of R
+//    ssp -= L1;				// |ssp> = R|seq> - |L1>
+//    sub_ssp = ssp.get_block(1,0,ls-1,1);// Reduced space seq (as matrix)
 //
-//			  '
-//			|s  > = R|s  > - |L1>
-//			  eq       eq
-
-    matrix L1, ssp, sub_ssp;
-    L1=(L.get_mx()).get_block(0,0,ls,1);// L1 matrix = 1st column of L
-    ssp=((R*seq).get_mx()).resize(ls,1);// Modified seq, basis of R
-    ssp -= L1;				// |ssp> = R|seq> - |L1>
-    sub_ssp = ssp.get_block(1,0,ls-1,1);// Reduced space seq (as matrix)
-
-//	Calculate Equation Left Hand Side of Steady State Equation
+////	Calculate Equation Left Hand Side of Steady State Equation
+////
+////			X = L - L|S><E|
+////
 //
-//			X = L - L|S><E|
+//    matrix Smx(hs, hs, 0.0);		// Temproray Null matrix
+//    Smx.put(1.0, 0, 0);			// 1st element of Smx set to 1 
+//    gen_op S(Smx, Lbs);			// Create the S operator
+//    gen_op E(Emx, Lbs);			// Create the S operator
+//    super_op SE(S,E);			// SE = |S><E|
+//    super_op X = L;
+//    X -= L*SE; 				// X = L - L|S><E|
+//    matrix sub_X((X.get_mx()).		// Reduced space X
+//	    get_block(1,1,ls-1,ls-1));
 //
-
-    matrix Smx(hs, hs, 0.0);		// Temproray Null matrix
-    Smx.put(1.0, 0, 0);			// 1st element of Smx set to 1 
-    gen_op S(Smx, Lbs);			// Create the S operator
-    gen_op E(Emx, Lbs);			// Create the S operator
-    super_op SE(S,E);			// SE = |S><E|
-    super_op X = L;
-    X -= L*SE; 				// X = L - L|S><E|
-    matrix sub_X((X.get_mx()).		// Reduced space X
-	    get_block(1,1,ls-1,ls-1));
-
-// Form the LU Decomposition of the Reduced & Modified Liouville Matrix
-//
-//                      '                    -1  '
+//// Form the LU Decomposition of the Reduced & Modified Liouville Matrix
+////
+////                      '                    -1  '
 //	     X|s  > = |s  >  ---->  |s  > = X  |s  >
 //           - -ss     -eq           -ss    -   -eq
 //
 //                     '                       -1  '
 //         LU|s  > = |s  >  ---->  |s  > = (LU)  |s  >
 //         -- -ss     -eq           -ss     --    -eq
-
-    matrix ALU = sub_X;
-    int *indx;
-    indx = new int[ls-1];
-    LU_decomp(ALU,indx);
-
-//		Calculate the Steady State Density Matrix
 //
-//                       -1  '               trace
-//	     |s  > = (LU)  |s  >  ;   |s  > ------> |s  >
-//            -ss     --   -eq         -ss            ss
+//    matrix ALU = sub_X;
+//    int *indx;
+//    indx = new int[ls-1];
+//    LU_decomp(ALU,indx);
+//
+////		Calculate the Steady State Density Matrix
+////
+////                       -1  '               trace
+////	     |s  > = (LU)  |s  >  ;   |s  > ------> |s  >
+////            -ss     --   -eq         -ss            ss
+//
+//
+//    matrix sub_sss = sub_ssp;		// Steady state in subspace
+//    LU_backsub(ALU,indx,sub_sss);	// Back solve for steady state
+//    matrix sssmx(hs, hs, 0.0);		// Reform the full steady state
+//    int k=0;				// density matrix in Hilbert
+//    for(int i=0; i<hs; i++)		// space.
+//      for(int j=0; j<hs; j++)
+//        if(i!=0 || j!=0)		// All but first element
+//          {
+//          sssmx.put(sub_sss.get(k,0),i,j);
+//          k++;
+//          }
+//    sssmx.put(1.0-trace(sssmx),0,0);	// First element from trace
+//    sssmx.resize(hs,hs);		// Back to a square array
+//    sssmx -= trace1;			// Set trace back to 0
+//    gen_op sss(sssmx, seq.get_basis()); // Put this into a gen. op.
+//    delete [] indx;
+//    return sss;
+//    }
+//  }
 
 
-    matrix sub_sss = sub_ssp;		// Steady state in subspace
-    LU_backsub(ALU,indx,sub_sss);	// Back solve for steady state
-    matrix sssmx(hs, hs, 0.0);		// Reform the full steady state
-    int k=0;				// density matrix in Hilbert
-    for(int i=0; i<hs; i++)		// space.
-      for(int j=0; j<hs; j++)
-        if(i!=0 || j!=0)		// All but first element
-          {
-          sssmx.put(sub_sss.get(k,0),i,j);
-          k++;
-          }
-    sssmx.put(1.0-trace(sssmx),0,0);	// First element from trace
-    sssmx.resize(hs,hs);		// Back to a square array
-    sssmx -= trace1;			// Set trace back to 0
-    gen_op sss(sssmx, seq.get_basis()); // Put this into a gen. op.
-    delete [] indx;
-    return sss;
+gen_op SigmaSS(super_op& L, super_op& R, gen_op& s_eq, int warn){
+
+  // Input 		L     : Full Liouvillian (rad/sec)
+  //			R     : Relaxation Superoperator (rad/sec)
+  //			seq   : Equilibrium density operator
+  // Return		sss   : Steady state density matrix
+  // Note		      : Careful R & L units, usually Ho is Hz!
+  // Note                     : Direct calculation in Liouvillian eigenbasis
+
+  //Note                      : Solving L|s_ss>=R|s_eq> for |s_ss>
+
+  //Note                      : L is set to eigenbasis
+  //Note                      : R is modified to same Hilbert space as L and default Liouvillian space
+  //Note                      : s_eq is not modified (copied to seq)
+  //Note                      : sss has the same hilbert space as s_eq
+
+  const double dm = 1.e-9;    // Threshold to determine if a Liouvillian matrix is negligible
+  const double dv = 1.e-9;    // Threshold to determine if an eigenvalue is null
+  const int ls=L.LS();        //Liouville space dimension
+  const int hs=L.HS();        //Hilbert space dimension   
+
+//0) Quick dimensional check
+  if((R.HS()!=hs)||(s_eq.HS()!=hs)){
+    if(warn){				
+      densop X;
+//    X.SIGMAerror(10);
     }
+    return s_eq; 
   }
+//CASE 1: negligible relaxation; steady state is null
+  if(R.below(dm)) {			// If R==0, |s  > = 0
+    if(warn){				//               ss
+      densop X;
+//    X.SIGMAerror(10);
+    }
+    return gen_op(); 
+  }
+//CASE 2: negligible evolution; steady state is equilibrium
+  if((L-R).below(dm)){			// If (L-R)==0, |s  > = s  >
+    return s_eq;			//	             ss     eq	
+  }
+//CASE 3: calculation of steady state operators
+
+  gen_op seq=s_eq;                        //copy of equilibrium density matrix
+
+//1) Ensure all of relevant operators in correct basis
+  L.set_EBR();                            //Set L in eigenbasis representation
+  R.LOp_base(L); R.set_HBR();             //Set R to same Hilbert base of L and then to default Liouvillian representation
+  seq.Op_base(L.get_basis());             //Set equilibrium density matrix to same Hilbert space as L
+                                          //NOTE: In equations R'|s'_eq>=(B^-1)R|s_eq> so no need to calculate
+                                          //|s'_eq> if R is in HBR
+//2) Extraction of relevant matrices
+  matrix mL=L.get_mx();                           //Diagonal Liouvillian
+  matrix mR=R.get_mx();                           //Relaxation term
+  matrix mB=L.get_Lbasis().get_mx();              //Transformation to Diagonal Liouvillian basis
+  matrix mB_inv(ls,ls,i_matrix_type);mB_inv/=mB;  //Inverse transformation
+  matrix vseq=seq.get_mx().resize(ls,1);          //Equilibrium density matrix in vector form
+  matrix vI(ls, 1, complex(1,0));                 //Identity vector
+
+//3) Performing calculations
+  matrix vR=mB_inv*mR*vseq;                       //Right hand side of equation R'|s'_eq> = (B^-1)R|s_eq>
+  matrix vL=mL*vI;                                //vector containing the eigenvalues on the diagonal of L'
+
+//4) Determining vsss' (in L eigenbasis)
+  matrix vsss(ls,1);                              //Steady state vector in Liouvillian eigenbasis
+  for(int i=0; i<ls; i++){                        //for every eigenvalue
+    if(norm(vL.get(i,0))<dv){                     //If it is null
+      if(norm(vR.get(i,0))<dv){                   //And if also the right hand side term (R'|s_eq>) is null
+	vsss.put(complex(0,0),i,0);               //The element of the vsss vector is null
+      }
+      else{                                       //Otherwise (null eigenvalue && non-null right hand side) a problem appeared
+	if(warn){				  //Throws an error "steady state does not exist"
+	  densop X;
+//        X.SIGMAerror(10);  
+	}                                         //the impossibility to determine the steady state (divergent evolution)
+	return gen_op();                          //And returns a null generic_operator
+      }
+    }
+    else{vsss.put(vR.get(i,0)/vL.get(i,0),i,0);}  //Otherwise, if the eigenvalue is non-null then calculates the relative steady state element
+  }
+
+//5) Arranging for gen_op output
+  matrix msss=(mB*vsss).resize(hs,hs);   //calculatin |s_ss>=B|s'_ss> (default Liouvillian representation) in matrix form
+  gen_op sss=seq;                        //creating output operator in same hilbert basis as all the previous calculations
+  sss.put_mx(msss);                      //placing matrix in operator
+  sss.Op_base(s_eq);                     //Setting output density matrix in input basis
+  return sss;                            //output operator
+}
+
+
+gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int warn)
+{  gen_op seq = SigmaEq(sys);
+  return SigmaSS(L, R, seq, warn);  
+}
+
 
 // ____________________________________________________________________________
 // Y                 DENSITY OPERATOR AUXILIARY FUNCTIONS
