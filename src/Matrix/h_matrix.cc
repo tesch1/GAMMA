@@ -251,8 +251,9 @@ bool h_matrix::put(const complex& z, int i, int j)
 //
 //    return false;			// cannot stay Hermitian
 //
-      std::cout << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Im(z) << "). Aborting put_h ...\n\n";
-      exit(99);
+      std::cerr << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Re(z) <<","<< Im(z) << "). \n Discarding imaginary part ...\n\n";
+//    exit(99);
+      z=Re(z);
       }
 
     data[i*cols_-(i*(i-1))/2] = z;	// Set the element
@@ -277,8 +278,9 @@ bool h_matrix::put_h(const complex& z, int i, int j)
 //
 //    return false;			// cannot stay Hermitian
 //
-      std::cout << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Im(z) << "). Aborting put_h ...\n\n";
-      exit(99);
+      std::cerr << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Re(z) <<","<< Im(z) << "). \n Discarding imaginary part ...\n\n";
+//    exit(99);
+      z=Re(z);
       }
 
     data[i*cols_-(i*(i-1))/2] = z;
