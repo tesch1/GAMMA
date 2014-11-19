@@ -253,10 +253,9 @@ bool h_matrix::put(const complex& z, int i, int j)
 //
       std::cerr << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Re(z) <<","<< Im(z) << "). \n Discarding imaginary part ...\n\n";
 //    exit(99);
-      z=Re(z);
       }
 
-    data[i*cols_-(i*(i-1))/2] = z;	// Set the element
+    data[i*cols_-(i*(i-1))/2] = Re(z);	// Set the element
 
     return true;
     }
@@ -265,9 +264,9 @@ bool h_matrix::put(const complex& z, int i, int j)
   }
 
 bool h_matrix::put_h(const complex& z, int i, int j) 
-  {
+  { 
   if(i==j)					// If setting a diagonal
-    {						// it must be real or it
+    { 
     if (fabs(Im(z)) > 1e-12) 			// If not real or off-diagonal
       {
 //
@@ -280,10 +279,9 @@ bool h_matrix::put_h(const complex& z, int i, int j)
 //
       std::cerr << "\n\nGAMMA ERROR: diagonal matrix element is too big for Hermitian matrix (" << Re(z) <<","<< Im(z) << "). \n Discarding imaginary part ...\n\n";
 //    exit(99);
-      z=Re(z);
       }
 
-    data[i*cols_-(i*(i-1))/2] = z;
+    data[i*cols_-(i*(i-1))/2] = Re(z);
     }
   else if(i<j)					// This for upper triangle
     data[i*cols_-(i*(i-1))/2+j-i] = z;
