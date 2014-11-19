@@ -30,7 +30,7 @@
 *****************************************************************/
 
 #ifndef _relax_EXCH_cc_			// Is this file already included?
-#define _relax_EXCH_cc_1		// If no, then remember that it
+#define _relax_EXCH_cc_ 1		// If no, then remember that it
 #  if defined(GAMPRAGMA)		// Using the GNU compiler?
 #    pragma implementation		// This is the implementation
 #endif

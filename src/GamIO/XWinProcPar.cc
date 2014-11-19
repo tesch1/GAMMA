@@ -137,7 +137,7 @@ void XWinProcPar::SetDefaults(const string& fname)
   _ORIGIN   = "UXNMR, Bruker Analytische Messtechnik GmbH";
   _OWNER    = "GAMMA";
   time_t longtime;              // Need a time structure
-  longtime = time('\0');	//
+  longtime = NULL;	//
 
 #ifdef _MSC_VER
   struct tm newtime;		// For setting current date
@@ -691,7 +691,7 @@ int XWinProcPar::writePPar(int warn) const
   if(_OWNER != "")
     ofstr << nn << "OWNER= "    << _OWNER << "\n";
   time_t longtime;                              // Need a time structure
-  longtime = time('\0');
+  longtime = NULL;
 
 #ifdef _MSC_VER
   struct tm newtime;		// For setting current date

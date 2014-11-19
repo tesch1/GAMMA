@@ -386,10 +386,11 @@ std::string FMFind(bool vocal)
     if(gexec.good() == true) 
 			found=true;			// If so, use this command
     if(vocal)
-      if(found) 
+    { if(found) 
 				std::cout << " - Success!"; 
       else      
 				std::cout << " - Not Found"; 
+    }
     }
   if(found) 
 		{ 
@@ -405,11 +406,12 @@ std::string FMFind(bool vocal)
 		gexec.open(FME.c_str(), ios_base::binary);
     if( gexec.good() == true )
 			found=true;			// If so, use this command
-		if(vocal)
-			if(found) 
-				std::cout << " - Success!"; 
-			else      
-				std::cout << " - Not Found"; 
+	if(vocal)
+	{  if(found) 
+		std::cout << " - Success!"; 
+	  else      
+		std::cout << " - Not Found"; 
+        }
     }
   if(found) 
 		{ 
@@ -426,10 +428,11 @@ std::string FMFind(bool vocal)
 		if( gexec.good() == true ) 
 			found=true;			// If so, use this command
     if(vocal)
-      if(found) 
-				std::cout << " - Success!"; 
+    { if(found) 
+	std::cout << " - Success!"; 
       else      
-				std::cout << " - Not Found"; 
+	std::cout << " - Not Found"; 
+    }
     }
   if(found) 
 	{ 
@@ -1665,13 +1668,13 @@ void FM_histogram(const std::string& filename, row_vector &vx, int bins,
         hist.put(hist(bins-1) + complex(0, y), bins-1);
         search = 0;
         }
-      else if((x == xst))
+      else if(x == xst)
         {
         hist.put(hist(bin)+0.5*complex(0, y), bin);
         hist.put(hist(bin+1)+0.5*complex(0, y), bin+1);
         search = 0;
         }
-      else if((x == xfi))
+      else if(x == xfi)
         {
         hist.put(hist(bin) + 0.5*complex(0, y), bin);
         hist.put(hist(bin+1) + 0.5*complex(0, y), bin+1);

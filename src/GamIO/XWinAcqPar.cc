@@ -140,7 +140,7 @@ void XWinAcqPar::SetDefaults(const string& fname)
   _OWNER    = "GAMMA";
   //struct tm *ptr;               	// For setting current date
   time_t longtime;              	// Need a time structure
-  longtime  = time('\0'); 
+  longtime  = NULL; 
 
 #ifdef _MSC_VER
   struct tm newtime;

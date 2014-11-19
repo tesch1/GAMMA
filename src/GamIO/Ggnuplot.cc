@@ -179,10 +179,11 @@ string GPFind(bool vocal)
 			found = true;			
 
     if(vocal)
-      if(found) 
+    { if(found) 
 				cout << " - Success!"; 
       else      
 				cout << " - Not Found"; 
+    }
     }
 
   if(found) 
@@ -197,15 +198,17 @@ string GPFind(bool vocal)
     if(vocal)
       cout << "\n\t Seeking Gnuplot Executable " << GPE;
 
-	  gexec.open(GPE.c_str(), ifstream::binary);
+    gexec.open(GPE.c_str(), ifstream::binary);
     if(gexec.good()== true)
-			found = true;	
+	found = true;	
     
-		if(vocal)
+    if(vocal)
+      {
       if(found) 
 				cout << " - Success!"; 
       else      
 				cout << " - Not Found"; 
+      }
     }
 
   if(found) 
@@ -225,10 +228,11 @@ string GPFind(bool vocal)
 			found = true;	
 
     if(vocal)
-      if(found) 
+    { if(found) 
 				cout << " - Success!"; 
       else      
 				cout << " - Not Found"; 
+    }
     }
   if(found) 
 	  { 

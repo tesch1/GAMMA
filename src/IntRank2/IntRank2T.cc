@@ -1590,7 +1590,7 @@ int IntRank2T::morethan(double Iqn, double Sqn) const
   {
   int newI = int(2.0*Iqn + 1);			// To compare Ival's
   if     (Ival > newI) return 1;		// True if IST(Iqn) > Iqn
-  else if(Ival < Ival) return 0;		// False if IST(Iqn) < Iqn
+  else if(Ival < newI) return 0;		// False if IST(Iqn) < Iqn
   else 						// Check S quantum values
     {						// if the I values are equal
     if(!Sqn) return 0;				// False if I's match & no S's

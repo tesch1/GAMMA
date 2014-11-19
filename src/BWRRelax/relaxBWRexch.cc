@@ -1864,7 +1864,7 @@ else
 // --------------------------------------------------------------------------------
 
 if(!fext)
-   if(QC)
+{  if(QC)
      {
      REXij(LOpX, sys, Ho, w, xiCs, xiQs, ACSA, AQuad,
                   TCSA, TQuad, taus, chi, 0, level, QCdfs);
@@ -1872,8 +1872,9 @@ if(!fext)
        REXij(LOpX, sys, Ho, w, xiQs, xiCs, AQuad, ACSA,
                     TQuad, TCSA, taus, chi, 0, level, QCdfs);
      }
+}
 else
-   if(QC)
+{  if(QC)
      {
      Rij(LOpX, sys, Ho, w, xiCs, xiQs, ACSA, AQuad,
                   TCSA, TQuad, taus, chi, 0, level);
@@ -1889,6 +1890,7 @@ else
                       TQuad, TCSA, taus, chi, 0, level);
        }
     }
+}
 
 
 // --------------------------------------------------------------------------------

@@ -35,7 +35,7 @@
 #  endif
 
 #include <BWRRelax/relaxNMR.h>		// Include the header file
-#include <Basics/Gconstants.h>		// Include GAMMA1H definition
+#include <Basics/Gconstants.h>		// Include GAMMA1H definitio
 #include <stdlib.h>
 #include <string>			// Include libstdc++ strings
 
@@ -1403,8 +1403,9 @@ void Rmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, double* w, int hs,
      default:					// Lev 0 mu1-mu2: double comm.
        J0 = J_reduced(taus,c1s,c2s,0.0,1);	// Need J(0) only, ext. narrow.
        if(fabs(xi1xi2*J0) > 1.e-6)		// Only calc. if it contributes
-         if(autoc) R_AC_0(T1s,    LOp,l,xi1xi2*J0);
+       { if(autoc) R_AC_0(T1s,    LOp,l,xi1xi2*J0);
          else      R_CC_0(T1s,T2s,LOp,l,xi1xi2*J0);
+       }
        break;
      }
    return;
@@ -1494,10 +1495,11 @@ void Rmumu(super_op& LOp, gen_op* T1s, gen_op* T2s, double* w,
      default:					// Lev 0 mu1-mu2: double commutator
        J0 = J_gen(tau, 0.0, 1)/pi4;		// Need J(0) only, extreme narrowing
        if(fabs(xi1xi2*J0) > 1.e-6)
-         if(autoc)
+       { if(autoc)
            R_AC_0(T1s, LOp, l, xi1xi2*J0);
          else
            R_CC_0(T1s,T2s,LOp,l,xi1xi2*J0);
+       }
        break;
      }
    return;
@@ -2410,10 +2412,11 @@ void Rmumuds(super_op& LOp, gen_op* T1s, gen_op* T2s, double* w, int hs,
      default:					// Level 0 mu1-mu2: double commutator
        J0 = Q_reduced(taus,c1s,c2s,0.0,1);	// Need J(0) only, extreme narrowing
        if(fabs(xi1xi2*J0) > 1.e-6)
-         if(autoc)
+       { if(autoc)
            R_AC_0(T1s, LOp, rank, xi1xi2*J0);
          else
            R_CC_0(T1s,T2s,LOp,rank,xi1xi2*J0);
+       }
        break;
      }
    return;

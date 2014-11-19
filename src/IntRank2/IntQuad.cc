@@ -224,7 +224,8 @@ bool IntQuad::getQI(const ParameterSet& pset,
     if(!SpinCheck(Iqn,TFI,0)) return false;	//    Insure Iz > 1/2
     }
   else if(!getIqn(pset,"",Iqn,idx,0))           // 2. Try for spin quant. #
-    if(!SpinCheck(Iqn,true,0)) return false;	//    Insure valid  qn
+  { if(!SpinCheck(Iqn,true,0)) return false;	//    Insure valid  qn
+  }
   else { Iqn = 1.0; }                           // 3. Use default qn of 1.0
 
 //  Try To Directly Read Quadrupolar Cartesian Spatial Tensor Components
@@ -334,7 +335,7 @@ bool IntQuad::getQCC(const ParameterSet& pset, double& qcc,
         case 10: case 11: case 12:              //      Here if QCC in kHz
         qcc = qcc*1.e3;       break;
         case  8: case 13:                       //      Here if QCC in Hz
-        qcc = qcc;            break;
+        break;
         case  9: case 14:                       //      Here if QCC in MHz
         qcc = qcc*1.e6;       break;
         }

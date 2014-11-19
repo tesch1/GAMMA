@@ -241,24 +241,28 @@ int XWin2D::ReadPars(int warn)
   {
   int TF  = Acqs.readAPar(Nacqus, warn?1:0);	// Read in acqus file
   if(!TF)
-    if(warn>1) XWin2Dfatality(23, Nacqus);	// Troubles with NAcqus
+  { if(warn>1) XWin2Dfatality(23, Nacqus);	// Troubles with NAcqus
     else if(warn) XWin2Derror(23,Nacqus,1);
 
       TF *= Acq2s.readAPar(Nacqu2s, warn?1:0);	// Read in acqu2s file
+  }
   if(!TF)
-    if(warn>1) XWin2Dfatality(23, Nacqu2s);	// Troubles with NAcqu2s
+  { if(warn>1) XWin2Dfatality(23, Nacqu2s);	// Troubles with NAcqu2s
     else if(warn) XWin2Derror(23,Nacqu2s,1);
 
       TF *= Procs.readPPar(Nprocs, warn?1:0);	// Read in procs file
+  }
   if(!TF)
-    if(warn>1) XWin2Dfatality(23, Nprocs);	// Troubles with procs 
+  { if(warn>1) XWin2Dfatality(23, Nprocs);	// Troubles with procs 
     else if(warn) XWin2Derror(23,Nprocs,1);
 
       TF *= Proc2s.readPPar(Nproc2s,warn?1:0);	// Read in the proc2s file 
+  }
   if(!TF)
-    if(warn>1) XWin2Dfatality(23, Nproc2s);	// Troubles with proc2s 
+  { if(warn>1) XWin2Dfatality(23, Nproc2s);	// Troubles with proc2s 
     else if(warn) XWin2Derror(23,Nproc2s,1);
 
+  }
   if(TF) SetConsistent();
   return TF;
   }

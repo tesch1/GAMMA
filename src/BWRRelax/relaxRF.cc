@@ -39,7 +39,7 @@
 #include <BWRRelax/relaxNMR.h>		// Include relaxation controls
 #include <LSLib/DensOp.h>		// Include density operators
 #include <LSLib/LSAux.h>		// Include inversion routines
-#include <HSLib/HSauxil.h>		// Inlcude sigma_eq function
+#include <HSLib/HSauxil.h>		// Inlcude sigma_eq functio
 #include <stdlib.h>
 
 // ____________________________________________________________________________ 
@@ -799,10 +799,11 @@ het=0;
        break;
      default:					// Level 0 mu1-mu2: double commutator
        if(fabs(J[0]) > cutoff)
-         if(autoc)
+       { if(autoc)
            R_AC_0(T1s, LOp, rank, J[0]);
          else
            R_CC_0(T1s,T2s,LOp,rank,J[0]);
+       }
        break;
      }
    return;

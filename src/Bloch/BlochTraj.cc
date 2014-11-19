@@ -113,7 +113,10 @@ row_vector MTraj(const DetVec& D, const MagVec& Mo,
   G.Diagonalize(GD, S);				// Diagonalize G
   matrix     Sinv = inv(S);			// Get inverse of S
   DetVec Det  = row_vector(D)*S;		// <D| --> <D*S| 
-  col_vector M    = Sinv*M;			// |M> --> |inv(S)*M>
+// The following line makes no sense. Changed M on RHS to Mo.
+// I am not sure anybody is using the Bloch stuff at all.
+// MAER 11/2014
+  col_vector M    = Sinv*Mo;			// |M> --> |inv(S)*M>
   int         bd   = Mo.size();			// Bloch dimension
   std::vector<int> OK;				// Array of indices 
   int i,j;					// Temp indeices

@@ -348,7 +348,7 @@ int MatLab4Tag::read(std::fstream& fp, int warn)
     return 0;
     }
   Type2MOPT();					// Set MOPT from type
-  if(!MLM && WeRBigEnd() || MLM && !WeRBigEnd())// If read data is little
+  if((!MLM && WeRBigEnd()) ||( MLM && !WeRBigEnd()))// If read data is little
     {						// endian yet we are big
     Swap(mrows);				// endian (or vice-versa)
     Swap(ncols);				// we must do byte swapping

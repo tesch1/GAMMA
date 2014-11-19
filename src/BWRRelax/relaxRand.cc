@@ -34,7 +34,7 @@
 #include <BWRRelax/relaxRand.h>		// Include the header file
 #include <BWRRelax/relaxNMR.h>		// Generic relaxation  routines
 #include <Level1/nmr_tensor.h>		// Include common spin tensors
-#include <LSLib/sys_dynamic.h>		// Include aniostropic systems
+#include <LSLib/sys_dynamic.h>		// Include aniostropic system
 #include <stdlib.h>
 
 
@@ -386,15 +386,13 @@ void Rij_rdm(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
      default:					// Level 0 mu1-mu2: double commutator
        J0 = J_reduced(taus,c1s,c2s,0.0,1);	// Need J(0) only, extreme narrowing
        if(fabs(xi1xi2*J0) > 1.e-6)
-         if(autoc)
-{
-std::cout << xi1xi2;
-std::cout << rank;
-std::cout << J0;
-           //R_AC_0(T1s, LOp, rank, xi1xi2*J0);
-}
+       { if(autoc)
+         {
+           R_AC_0(T1s, LOp, rank, xi1xi2*J0);
+         }
          else
            R_CC_0(T1s,T2s,LOp,rank,xi1xi2*J0);
+       }
        break;
      }
    return;
