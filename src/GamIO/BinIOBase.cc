@@ -138,9 +138,9 @@ bool WeRBigEnd()
    will do nothing but return the same integer!                     */
 
 #if (__GNUG__ == 3 || __GNUG__ ==4 )
-  const std::_Ios_Openmode Int2Mode(int mode)
+  const std::ios_base::openmode Int2Mode(int mode)
     {
-    return(std::_Ios_Openmode(mode));
+    return(std::ios_base::openmode(mode));
     }
 #else
   int Int2Mode(int mode) { return mode; }
