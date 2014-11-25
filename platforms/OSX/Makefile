@@ -127,7 +127,7 @@ WARNINGS = -Wall
 # days, we set MIN_OSX_VERSION to a value compatible with that. If you have
 # Xcode 3.x, feel free to set MIN_OSX_VERSION = 10.5.
 MIN_OSX_VERSION = 10.6
-PLATFORM_FLAGS = -mmacosx-version-min=${MIN_OSX_VERSION} -isysroot /Developer/SDKs/MacOSX${MIN_OSX_VERSION}.sdk
+PLATFORM_FLAGS = -mmacosx-version-min=${MIN_OSX_VERSION} 
 
 
 CC       =    gcc
