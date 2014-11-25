@@ -1,5 +1,8 @@
 %module pygamma
 
+%{
+#include <cstddef>
+%}
 
 %include "Basics/basics.i"
 %include "Matrix/matrix_inc.i"
