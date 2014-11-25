@@ -1,1 +1,1 @@
-add_test (test1 ${PYTHON_EXECUTABLE} run_tests.py -v -p ${PROJECT_BINARY_DIR})
+add_test (test1 ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/run_tests.py -v -p ${PROJECT_BINARY_DIR})

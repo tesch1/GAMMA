@@ -26,16 +26,25 @@ set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/"
 set (CMAKE_MACOSX_RPATH 1)
 
 find_package (BLAS)
-
 find_package (PythonLibs)
 find_package (PythonInterp)
 find_package (SWIG)
-if (SWIG_EXECUTABLE)
+
+#
+# Options
+#
+option (ENABLE_PYGAMMA "Build pyGAMMA as well as GAMMA" ON)
+
+if (NOT SWIG_EXECUTABLE OR NOT PYTHON_INCLUDE_PATH)
+  set (ENABLE_PYGAMMA OFF)
+endif (NOT SWIG_EXECUTABLE OR NOT PYTHON_EXECUTABLE)
+
+if (ENABLE_PYGAMMA)
   include (${SWIG_USE_FILE})
   #set (SWIG_CXX_EXTENSION "cc")
   set (CMAKE_SWIG_FLAGS "-c++")
 else (SWIG_EXECUTABLE)
-  message (WARNING "swig not found, not building pygamma")
+  message (WARNING "not building pygamma")
 endif (SWIG_EXECUTABLE)
 
 #
