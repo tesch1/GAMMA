@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6.8)
+cmake_minimum_required (VERSION 2.8.8)
 
 # on macos, try to find gfortran from MacPorts
 find_program (FORTRAN_COMPILER_MAC "gfortran-mp-4.8" )
@@ -22,6 +22,9 @@ project (GAMMA CXX)
 enable_language (C)
 enable_testing ()
 
+set (CMAKE_CXX_FLAGS " -g -O3 ")
+#set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall ")
+
 set (CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 set (CMAKE_MACOSX_RPATH 1)
 
@@ -34,6 +37,7 @@ find_package (SWIG)
 # Options
 #
 option (ENABLE_PYGAMMA "Build pyGAMMA as well as GAMMA" ON)
+option (ENABLE_STATIC  "Build static libgamma" OFF)
 
 if (NOT SWIG_EXECUTABLE OR NOT PYTHON_INCLUDE_PATH)
   set (ENABLE_PYGAMMA OFF)
