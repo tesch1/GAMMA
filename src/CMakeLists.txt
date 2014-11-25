@@ -498,22 +498,31 @@ set (gamma_xx_SOURCES ${gamma_xx_SOURCES}
   )
 install (FILES TestingIF.h DESTINATION include)
 
-#include_directories (Basics Bloch BWRRelax Deprecated ESRLib Floquet
-#  GamIO Gradients HSLib IntRank2 Level1 Level2 LSLib Matrix MultiSys
-#  Pulses Solids)
+###############################################################################
+#                                                                             #
+#                        libgamma.a and libgamma.so                           #
+#                                                                             #
+###############################################################################
 include_directories (${CMAKE_SOURCE_DIR}/src)
 
-#add_library (_pygamma SHARED ${gamma_SOURCES})
-add_library (gamma ${gamma_xx_SOURCES})
+add_library (gamma        SHARED ${gamma_xx_SOURCES})
+if (ENABLE_STATIC)
+  add_library (gamma_static STATIC ${gamma_xx_SOURCES})
+  set_target_properties (gamma_static PROPERTIES OUTPUT_NAME gamma)
+endif (ENABLE_STATIC)
 
-#
+###############################################################################
+#                                                                             #
+#                                pyGAMMA MODULE                               #
+#                                                                             #
+###############################################################################
 # SWIG setup
-#
-
-set_source_files_properties (pygamma.i PROPERTIES OBJECT_DEPENDS ${pygamma_ALLIFILES})
-set_source_files_properties (pygamma.i PROPERTIES CPLUSPLUS ON)
-swig_add_module (pygamma python pygamma.i)
-#swig_link_libraries (pygamma ${PYTHON_LIBRARIES})
+if (ENABLE_PYGAMMA)
+  set_source_files_properties (pygamma.i PROPERTIES OBJECT_DEPENDS ${pygamma_ALLIFILES})
+  set_source_files_properties (pygamma.i PROPERTIES CPLUSPLUS ON)
+  swig_add_module (pygamma python pygamma.i)
+  swig_link_libraries (pygamma gamma ${PYTHON_LIBRARIES})
+endif (ENABLE_PYGAMMA)
 
 ###############################################################################
 #                                                                             #
@@ -531,6 +540,6 @@ endforeach (testp)
 #                                 GAMMA TESTS                                 #
 #                                                                             #
 ###############################################################################
-add_subdirectory (Tests)
 add_subdirectory (pyTests)
+add_subdirectory (Tests)
 
