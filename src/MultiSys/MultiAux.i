@@ -7,8 +7,10 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) spin_pair::operator=;
 %rename(__assign__) process::operator=;
+#endif
 
 class spin_pair
   {

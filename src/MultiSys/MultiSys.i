@@ -7,7 +7,9 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) multi_sys::operator=;
+#endif
 
 class multi_sys
 
