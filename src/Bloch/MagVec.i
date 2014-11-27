@@ -14,7 +14,7 @@
 %rename(__iadd__) MagVec::operator+=;
 %rename(__sub__)  MagVec::operator- const;
 %rename(__isub__) MagVec::operator-=;
-#endif
+#endif
 
 class MagVec : public col_vector
 {
