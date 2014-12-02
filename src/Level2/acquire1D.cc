@@ -1165,8 +1165,10 @@ ofstream& acquire1D::write(ofstream& fp) const
   fp.write((char*)&pos,sizeof(int));		// Write ACQ1D dim. (pos <= ls)
   A.write(fp);					// Write ACQ1D complex array A
   B.write(fp);					// Write ACQ1D complex array B
-  for(int i=0; i<pos; i++)
-    fp.write((char*)I[i],sizeof(int));		// Write ACQ1D int array I
+  for(int i=0; i<pos; i++) {
+    int val = I[i];
+    fp.write((char*)&val,sizeof(int));		// Write ACQ1D int array I
+  }
   fp.write((char*)&DCUTOFF,sizeof(double));	// Write ACQ1D cutoff
   LOp.write(fp);					// Write system Liouvillian
   Sm1.write(fp);			// Write inverse eigenverctor array

@@ -9,10 +9,12 @@
 %include "std_string.i"
 %include "std_vector.i"
 
-%rename(__add__)  gen_op::operator+ const;
-%rename(__iadd__) gen_op::operator+=;
-%rename(__sub__)  gen_op::operator- const;
-%rename(__isub__) gen_op::operator-=;
+#ifdef SWIGPYTHON
+%rename(__add__)  MagVec::operator+ const;
+%rename(__iadd__) MagVec::operator+=;
+%rename(__sub__)  MagVec::operator- const;
+%rename(__isub__) MagVec::operator-=;
+#endif
 
 class MagVec : public col_vector
 {

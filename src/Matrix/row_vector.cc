@@ -1471,7 +1471,7 @@ int row_vector::is_decimal (const char *cp)
   if (*cp == '\0')
     return 0;
 
-  for ( ; *cp != '\0'; *cp++) {
+  for ( ; *cp != '\0'; cp++) {
     if ( isalpha(*cp) || iscntrl(*cp) ) {
       return 0;
     }
