@@ -130,7 +130,7 @@ void XWinOutd::SetDefaults()
   _JCAMPDX  = "5.0";
   _DATATYPE = "Parameter Values";
   time_t longtime;              // Need a time structure
-  longtime = NULL;        //
+  longtime = 0;        //
 
 #ifdef _MSC_VER
 	struct tm newtime;
@@ -272,7 +272,7 @@ int XWinOutd::write(int warn) const
   ofstr << nn << "JCAMPDX= "  << _JCAMPDX << "\n";
   ofstr << nn << "DATATYPE= " << _DATATYPE << "\n";
   time_t longtime;				// Need a time structure
-  longtime = NULL;
+  longtime = 0;
 
 #ifdef _MSC_VER
 	struct tm newtime;
