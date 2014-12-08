@@ -22,7 +22,7 @@ PulWaveform(const PulWaveform& PT1);
 
 virtual ~PulWaveform();
 
-PulWaveform& operator = (const PulWaveform& PWF1);
+PulWaveform& operator = (const PulWaveform& PWF1);
 virtual int         steps()   const;
 virtual std::string name()    const;
 virtual double      length()  const;

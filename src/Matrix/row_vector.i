@@ -16,7 +16,7 @@
 
 %rename(__mul__)  row_vector::operator*;
 %rename(__imul__) row_vector::operator*=;
-
+
 //class col_vector;
 
 class row_vector : public matrix

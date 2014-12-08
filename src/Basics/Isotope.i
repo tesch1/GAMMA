@@ -62,7 +62,7 @@ const  std::string& element()            const;
        bool         electron()           const;
 
 virtual  bool read(const std::string& filename, int idx=-1, int warn=2);
-virtual  bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
+virtual  bool read(const ParameterSet& pset,    int idx=-1, int warn=2);
 
 std::vector<std::string> printStrings(bool hdr=true) const;
 

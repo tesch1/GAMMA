@@ -54,7 +54,7 @@ const std::string&  state() const;		// Can't alter state here
 int type() const;		                // Can't alter type here
 
 void name(const  std::string& Name);	// This sets name to Name
-void state(const std::string& State);	// This sets state to State
+void state(const std::string& State);	// This sets state to State
 void GetNS(std::string& name, std::string& state) const;
  
 bool parse(std::string& name, int& val, std::string& state, int warn=0) const;
@@ -124,7 +124,7 @@ MSVCDLL const std::string&  state() const;		// Can't alter state here
 MSVCDLL int type() const;		                // Can't alter type here
 
 MSVCDLL void name(const  std::string& Name);	// This sets name to Name
-MSVCDLL void state(const std::string& State);	// This sets state to State
+MSVCDLL void state(const std::string& State);	// This sets state to State
 MSVCDLL void GetNS(std::string& name, std::string& state) const;
  
 MSVCDLL bool parse(std::string& name, int& val, std::string& state, int warn=0) const;

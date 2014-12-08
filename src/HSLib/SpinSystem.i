@@ -53,7 +53,7 @@ double efield_lab(int spin) const;
 virtual void   Js(double Jval=0);
 virtual void   J(int, int, double);
 virtual void   J(double, int, int);
-        double J(int, int) const;
+        double J(int, int) const;
 
 virtual void   As(double Aval=0);
 virtual void   A(int, int, double);
@@ -95,15 +95,15 @@ double Nyquist(const Isotope& iso,     double fact, double lwhh) const;
 
 virtual void PSetAdd(ParameterSet& pset, int idx=-1) const;
 
-void setJs(const ParameterSet& pset);
-void setAs(const ParameterSet& pset);
-void setShifts(const ParameterSet& pset);
+void setJs(const ParameterSet& pset);
+void setAs(const ParameterSet& pset);
+void setShifts(const ParameterSet& pset);
 void setGs(const ParameterSet& pset);
 
 //virtual void operator= (const ParameterSet& pset);
 
 virtual int write(const std::string &filename, int idx=-1, int warn=2) const;
-//virtual int write(std::ofstream& ofstr,        int idx=-1, int warn=2) const; 
+//virtual int write(std::ofstream& ofstr,        int idx=-1, int warn=2) const; 
 virtual int read(const std::string& fn,    int idx=-1, int warn=2);
 virtual int read(const ParameterSet& pset, int idx=-1, int warn=2);
 
@@ -119,7 +119,7 @@ virtual std::string ask_read(int argc, char* argv[], int argn,
 
 
 //virtual std::ostream& print(std::ostream& out, bool hdr=true) const;
-//friend  std::ostream& operator<<(std::ostream& out, const spin_system& sys);
+//friend  std::ostream& operator<<(std::ostream& out, const spin_system& sys);
 
 virtual std::vector<std::string> SYSStrings(int w1=10,int w2=12,int w3=1) const;
 std::vector<std::string> VStrings(int   colwd=12, int digs=2) const;

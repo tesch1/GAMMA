@@ -107,7 +107,7 @@ super_op& operator *= (double d);
 //friend super_op  operator /  (const super_op& LOp1, double d);
 
 super_op& operator /= (const complex& z);
-super_op& operator /= (double d);
+super_op& operator /= (double d);
 /*
 friend super_op left(const gen_op& Op); 	// LOp*Op1 = Op*Op1
 friend super_op left(const matrix& mx, const basis& bs);
@@ -183,7 +183,7 @@ basis LBs()        const;
 basis get_Lbasis() const;
 
 void put_Lbasis(const basis& Lbs);
-
+
 complex operator() (int row, int col) const;
 
 void put(int row, int col, const complex& z);

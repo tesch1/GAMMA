@@ -18,7 +18,7 @@ class basis : private matrix
 { 
 
 public:
-  
+  
 basis();
 basis(int dim);
 basis(const std::vector<int> dims);

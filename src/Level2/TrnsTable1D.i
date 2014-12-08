@@ -55,7 +55,7 @@ std::vector<int>        TCutoffs(int npts,  double tinc) const;
 
 row_vector              F(int npts,        double Fst,double Ffi) const;
 void                    F(row_vector& data,double Fst,double Ffi) const;
-std::vector<row_vector> Fs(int npts,       double Fst,double Ffi) const;
+std::vector<row_vector> Fs(int npts,       double Fst,double Ffi) const;
 row_vector FD(int N,            double fstart, double fend) const;
 void       FD(row_vector& data, double fstart, double fend) const;
 
@@ -116,7 +116,7 @@ bool   getFreqRev() const;
 std::vector<std::string> printStrings()           const;
 //std::ostream&            print(std::ostream& out) const;
 
-//friend std::ostream& operator << (std::ostream &ostr, const TTable1D& TTab);
+//friend std::ostream& operator << (std::ostream &ostr, const TTable1D& TTab);
 //std::ostream& status(std::ostream& ostr) const;
 
 void           write(const std::string& fn) const;
@@ -156,6 +156,6 @@ void           read(const std::string& fn);
 //std::ostream& printF(std::ostream& ostr, int npts, double Fst, double Ffi);
 
 // sosi  this is deprecated.... ever used?
-//friend void offset(matrix& mx, double F, double LWR, int inHz=0);
+//friend void offset(matrix& mx, double F, double LWR, int inHz=0);
 };
 

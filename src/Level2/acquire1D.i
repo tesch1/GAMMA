@@ -31,7 +31,7 @@ acquire1D(gen_op& D, super_op& L, gen_op& sigi, double cut=1.e-12);
 acquire1D(gen_op& D, super_op& L,               double cut=1.e-12);
 
 //acquire1D(matrix& D, super_op& L,               double cut=1.e-12);
-//acquire1D(gen_op& D, LSprop&   G,               double cut=1.e-12);
+//acquire1D(gen_op& D, LSprop&   G,               double cut=1.e-12);
 
 ~acquire1D();
 acquire1D& operator= (const acquire1D& ACQ1);
@@ -77,7 +77,7 @@ complex pcorrect(double& w0, double w1, int order=5);
 double Wmax()  const;
 double LWmax() const;
 void   setSort(int sf);
-void   setConv(int cf);
+void   setConv(int cf);
 //void table(const gen_op& sigma, std::ostream& ostr);
 
 //void table(std::ostream& ostr) const;
@@ -88,7 +88,7 @@ int full_size()   const;		// Full acquisition size
 int transitions() const;		// Number of transitions
 
 //void parameters(matrix& mx, double& SW, double& LW,
-//                                     double& dt, int N, int pf=0) const;
+//                                     double& dt, int N, int pf=0) const;
 //std::ostream& print(std::ostream&  ostr) const;
 //std::ostream& print(std::ostream&  ostr, gen_op& sigmap);
 //std::ostream& printT(std::ostream& ostr, gen_op& sigmap,

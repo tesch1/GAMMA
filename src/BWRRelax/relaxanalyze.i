@@ -1,7 +1,7 @@
 /* relaxanalyze.i */
 
-%{
-#include "BWRRelax/relaxanalyze.h"
+%{
+#include "BWRRelax/relaxanalyze.h"
 %}
 
 
