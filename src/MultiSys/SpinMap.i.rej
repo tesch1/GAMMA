@@ -1,0 +1,12 @@
+--- src/MultiSys/SpinMap.i
++++ src/MultiSys/SpinMap.i
+@@ -7,7 +7,9 @@
+ %include "std_string.i"
+ %include "std_vector.i"
+ 
++#ifdef SWIGPYTHON
+ %rename(__assign__) SpinMap::operator=;
++#endif
+ 
+ class SpinMap
+   {

@@ -1,0 +1,13 @@
+--- src/MultiSys/MultiAux.i
++++ src/MultiSys/MultiAux.i
+@@ -7,8 +7,10 @@
+ %include "std_vector.i"
+ %include "std_string.i"
+ 
++#ifdef SWIGPYTHON
+ %rename(__assign__) spin_pair::operator=;
+ %rename(__assign__) process::operator=;
++#endif
+ 
+ class spin_pair
+   {

@@ -1,0 +1,12 @@
+--- src/MultiSys/ExProcess.i
++++ src/MultiSys/ExProcess.i
+@@ -7,7 +7,9 @@
+ %include "std_vector.i"
+ %include "std_string.i"
+ 
++#ifdef SWIGPYTHON
+ %rename(__assign__) ExchProc::operator=;
++#endif
+ 
+ class ExchProc
+   {
