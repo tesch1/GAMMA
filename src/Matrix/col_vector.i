@@ -10,7 +10,7 @@
 %include "std_vector.i"
 %include "std_string.i"
 
-
+#ifdef SWIGPYTHON
 %rename(__add__)  col_vector::operator+;
 %rename(__iadd__) col_vector::operator+=;
 %rename(__sub__)  col_vector::operator-;
@@ -18,7 +18,7 @@
 
 %rename(__mul__)  col_vector::operator*;
 %rename(__imul__) col_vector::operator*=;
-
+#endif
 
 
 //class row_vector;			 // Know that row_vector is a class

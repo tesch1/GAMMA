@@ -9,6 +9,7 @@
 %include "std_string.i"
 
 
+#ifdef SWIGPYTHON
 %rename(__add__)  complex::operator+;
 %rename(__iadd__) complex::operator+=;
 %rename(__sub__)  complex::operator-;
@@ -26,7 +27,7 @@
 %rename(__ne__)  complex::operator!= const;
 %rename(__lt__)  complex::operator<  const;
 %rename(__gt__)  complex::operator>  const;
-
+#endif
 
 class complex
 {

@@ -5,7 +5,9 @@
 #include "Level1/SpinT.h"
 %}
 
+#ifdef SWIGPYTHON
 %rename(__assign__) spin_T::operator=;
+#endif
 
 class spin_T;
 

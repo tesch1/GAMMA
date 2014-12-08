@@ -7,8 +7,9 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) MLEV::operator=;
-
+#endif
 
 class MLEV : public Pulse
 {

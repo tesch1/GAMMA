@@ -10,13 +10,13 @@
 %include "std_string.i"
 %include "std_vector.i"
 
+#ifdef SWIGPYTHON
 %rename(__eq__)  SinglePar::operator== const;
 %rename(__ne__)  SinglePar::operator!= const;
 %rename(__lt__)  SinglePar::operator<  const;
 %rename(__gt__)  SinglePar::operator>  const;
-
 %rename(__assign__) SinglePar::operator=;
-
+#endif
 
 class SinglePar
 {

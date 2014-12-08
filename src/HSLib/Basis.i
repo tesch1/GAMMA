@@ -8,11 +8,11 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__eq__)  basis::operator== const;
 %rename(__ne__)  basis::operator!= const;
-
 %rename(__assign__) basis::operator=;
-
+#endif
 
 class basis : private matrix
 { 

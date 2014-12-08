@@ -35,7 +35,7 @@ command: sl_exchange7_L 3spin_HH_ex.sys 0 0 0 0 5000 0 0 0 0 0 0 0 2500 0 1500 1
 compare: test_exchange.log, golden/test_exchange.log
 compare: test_exchange.mat, golden/test_exchange.mat
 
-command: hstat 2spin_HH.sys  20000 0 0 0  0 8000 0 0 0 0  0 8000 0 0 0 0 12 2048 5e-6 test_stat > test_stat.log
+command: homo_stat 2spin_HH.sys  20000 0 0 0  0 8000 0 0 0 0  0 8000 0 0 0 0 12 2048 5e-6 test_stat > test_stat.log
 
 compare: test_stat.log, golden/test_stat.log
 compare: test_stat.mat, golden/test_stat.mat

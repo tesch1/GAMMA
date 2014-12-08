@@ -4,7 +4,9 @@
 #include "Level2/BaseDecomp.h"
 %}
 
+#ifdef SWIGPYTHON
 %rename(__assign__) decomp::operator=;
+#endif
 
 %include "std_vector.i"
 %include "std_string.i"

@@ -4,7 +4,9 @@
 #include "Level1/SpaceT.h"
 %}
 
+#ifdef SWIGPYTHON
 %rename(__assign__) space_T::operator=;
+#endif
 
 class space_T;
 

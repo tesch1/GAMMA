@@ -7,7 +7,9 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) PulComposite::operator=;
+#endif
 
 // Note: the comment "///" is used in this file to indicate that
 // the commented out line has a method that was already commented

@@ -7,6 +7,7 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__add__)  coord_vec::operator+ const;
 %rename(__iadd__) coord_vec::operator+=;
 %rename(__sub__)  coord_vec::operator- const;
@@ -18,7 +19,7 @@
 %rename(__idiv__) coord_vec::operator/=;
 
 %rename(__assign__) coord_vec::operator=;
-
+#endif
 
 
 class coord_vec
@@ -138,7 +139,9 @@ void      put_block(int index, const coord_vec& cv) const;
 //operator ParameterSet( ) const;
 //friend void operator+= (ParameterSet& pset, const coord_vec& cvec);
 
+#ifndef SWIGMATLAB
 void PSetAdd(ParameterSet& pset, int idx=-1) const;
+#endif
 
 //int operator= (const ParameterSet& pset);
 //int write(const std::string &filename, int idx=-1, int warn=2) const;

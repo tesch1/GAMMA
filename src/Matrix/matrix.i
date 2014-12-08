@@ -8,6 +8,7 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__add__)  Matrix::operator+;
 %rename(__iadd__) Matrix::operator+=;
 %rename(__sub__)  Matrix::operator-;
@@ -22,7 +23,7 @@
 %rename(__ne__)  Matrix::operator!= const;
 %rename(__lt__)  Matrix::operator<  const;
 %rename(__gt__)  Matrix::operator>  const;
-
+#endif
 
 void enable_blockdiag();
 void disable_blockdiag();

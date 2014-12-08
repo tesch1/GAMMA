@@ -4,10 +4,12 @@
 #include "LSLib/LSprop.h"
 %}
 
+#ifdef SWIGPYTHON
 %rename(__assign__) LSprop::operator=;
 %rename(__mul__)  LSprop::operator* const;
 %rename(__imul__) LSprop::operator*=;
 %rename(__iand__) LSprop::operator&=;
+#endif
 
 super_op R_prop(super_op& eLt, gen_op sigmaeq);
 super_op R_prop(super_op& L, gen_op& sigmaeq, double t);

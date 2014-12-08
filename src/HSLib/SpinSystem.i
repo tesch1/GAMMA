@@ -10,8 +10,9 @@
 %include "std_vector.i"
 %include "HSLib/SpinSys.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) spin_system::operator=;
-
+#endif
 
 class spin_system: public spin_sys
 {

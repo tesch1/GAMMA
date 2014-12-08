@@ -8,8 +8,9 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) spin_sys::operator=;
-
+#endif
 
 class spin_sys
 {
@@ -118,8 +119,9 @@ public:
 	//operator ParameterSet( ) const;
 	//friend  void operator+=(ParameterSet& pset, const spin_sys &ss);
 
-
+#ifndef SWIGMATLAB
 	virtual void PSetAdd(ParameterSet& pset, int idx=-1) const;
+#endif
 
 	int getSpins(const ParameterSet& pset, int warn=0) const;
  

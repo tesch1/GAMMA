@@ -8,8 +8,9 @@
 %include "std_string.i"
 %include "std_vector.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) IsotopeData::operator=;
-
+#endif
 
 class IsotopeData
 {

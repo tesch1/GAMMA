@@ -1,5 +1,5 @@
 infile = 'gsh_test.sys' 
-outfile = 'gsh_fid_pytest.txt' 
+outfile = 'gsh_fid_mattest.txt' 
 h1 = 'FID Simulation Test'
 h2 = ['using input sys file: ' infile]
 outname = 'test_lines'

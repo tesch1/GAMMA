@@ -8,14 +8,14 @@
 %include "std_vector.i"
 %include "std_string.i"
 
-
+#ifdef SWIGPYTHON
 %rename(__add__)  row_vector::operator+;
 %rename(__iadd__) row_vector::operator+=;
 %rename(__sub__)  row_vector::operator-;
 %rename(__isub__) row_vector::operator-=;
-
 %rename(__mul__)  row_vector::operator*;
 %rename(__imul__) row_vector::operator*=;
+#endif
 
 //class col_vector;
 

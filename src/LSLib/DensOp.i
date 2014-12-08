@@ -4,7 +4,9 @@
 #include "LSLib/DensOp.h"
 %}
 
+#ifdef SWIGPYTHON
 %rename(__assign__) densop::operator=;
+#endif
 
 gen_op SigmaEq(const spin_sys& sys);
 gen_op SigmaSS(const spin_sys& sys, super_op& L, super_op& R, int wrn);

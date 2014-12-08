@@ -9,6 +9,7 @@
 %include "std_string.i"
 
 
+#ifdef SWIGPYTHON
 %rename(__mul__)  HSprop::operator* const;
 %rename(__imul__) HSprop::operator*=;
 %rename(__iand__) complex::operator&=;
@@ -19,7 +20,7 @@
 %rename(__gt__)  HSprop::operator>  const;
 
 %rename(__assign__) HSprop::operator=;
-
+#endif
 
 extern gen_op prop(const gen_op& ham, double time); 
 extern void prop_ip(gen_op& U, double time);

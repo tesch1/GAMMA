@@ -6,13 +6,14 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__eq__)  genoprep::operator== const;
 %rename(__ne__)  genoprep::operator!= const;
 %rename(__lt__)  genoprep::operator<  const;
 %rename(__gt__)  genoprep::operator>  const;
 
 %rename(__assign__) genoprep::operator=;
-
+#endif
 
 class genoprep
 {

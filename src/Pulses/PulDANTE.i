@@ -7,7 +7,9 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) DANTE::operator=;
+#endif
 
 class PulWaveform;
 class PulComposite;

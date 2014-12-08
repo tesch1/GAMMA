@@ -7,6 +7,7 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__add__)  coord::operator+ const;
 %rename(__iadd__) coord::operator+=;
 %rename(__sub__)  coord::operator- const;
@@ -23,7 +24,7 @@
 %rename(__gt__)  coord::operator>  const;
 
 %rename(__assign__) coord::operator=;
-
+#endif
 
 
 matrix Rmx(double alpha, double beta, double gamma);

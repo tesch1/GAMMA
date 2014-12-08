@@ -7,6 +7,7 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__add__)  spin_op::operator+;
 %rename(__iadd__) spin_op::operator+=;
 %rename(__isub__) spin_op::operator-=;
@@ -16,7 +17,7 @@
 %rename(__idiv__) spin_op::operator/=;
 
 %rename(__assign__) spin_op::operator=;
-
+#endif
 
 class spin_op 
 {

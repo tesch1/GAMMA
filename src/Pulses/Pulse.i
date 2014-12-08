@@ -7,8 +7,9 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) Pulse::operator=;
-
+#endif
 
 
 class Pulse

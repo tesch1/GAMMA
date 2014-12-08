@@ -7,8 +7,9 @@
 
 %include "std_vector.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) BlochAcq::operator=;
-
+#endif
 
 class BlochAcq 
 {

@@ -7,8 +7,9 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) PulCycle::operator=;
-
+#endif
 
 class PulCycle : public PulComposite
 {

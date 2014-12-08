@@ -8,22 +8,18 @@
 %include "std_vector.i"
 %include "std_string.i"
 
-
+#ifdef SWIGPYTHON
 %rename(__add__)  super_op::operator+ const;
 %rename(__iadd__) super_op::operator+=;
-
 %rename(__sub__)  super_op::operator- const;
 %rename(__isub__) super_op::operator-=;
 %rename(__neg__)  super_op::operator- ();
-
 %rename(__mul__)  super_op::operator* const;
 %rename(__imul__) super_op::operator*=;
 %rename(__iand__) super_op::operator &=;
-
 %rename(__idiv__) super_op::operator/=;
-
 %rename(__eq__)   super_op::operator== const;
-
+#endif
 
 class super_op;  // Forward declaration so following functions will compile
 

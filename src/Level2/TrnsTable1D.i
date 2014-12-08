@@ -8,7 +8,9 @@
 %include "std_string.i"
 %include "std_list.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) TTable1D::operator=;
+#endif
 
 namespace std {
    %template(StringVector) vector<string>;

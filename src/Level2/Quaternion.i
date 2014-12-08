@@ -4,7 +4,9 @@
 #include "Level2/Quaternion.h"
 %}
 
+#ifdef SWIGPYTHON
 %rename(__assign__) quatern::operator=;
+#endif
 
 class quatern
 {

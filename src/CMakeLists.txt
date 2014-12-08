@@ -506,10 +506,23 @@ install (FILES TestingIF.h DESTINATION include)
 include_directories (${CMAKE_SOURCE_DIR}/src)
 
 add_library (gamma        SHARED ${gamma_xx_SOURCES})
-if (ENABLE_STATIC)
+if (ENABLE_STATIC OR ENABLE_PYGAMMA OR ENABLE_GAMMAT)
   add_library (gamma_static STATIC ${gamma_xx_SOURCES})
   set_target_properties (gamma_static PROPERTIES OUTPUT_NAME gamma)
-endif (ENABLE_STATIC)
+endif (ENABLE_STATIC OR ENABLE_PYGAMMA OR ENABLE_GAMMAT)
+
+###############################################################################
+#                                                                             #
+#                                GAMMAT MODULE                                #
+#                                                                             #
+###############################################################################
+if (ENABLE_GAMMAT)
+  set_source_files_properties (gammat.i PROPERTIES OBJECT_DEPENDS ${pygamma_ALLIFILES})
+  set_source_files_properties (gammat.i PROPERTIES CPLUSPLUS ON)
+  swig_add_module (gammat matlab gammat.i)
+  swig_link_libraries (gammat gamma_static)
+  include_directories (${MATLAB_ROOT}/extern/include)
+endif (ENABLE_GAMMAT)
 
 ###############################################################################
 #                                                                             #
@@ -540,6 +553,7 @@ endforeach (testp)
 #                                 GAMMA TESTS                                 #
 #                                                                             #
 ###############################################################################
+add_subdirectory (matTests)
 add_subdirectory (pyTests)
 add_subdirectory (Tests)
 

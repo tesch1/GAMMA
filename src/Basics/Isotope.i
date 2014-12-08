@@ -8,10 +8,12 @@
 %include "std_string.i"
 %include "std_vector.i"
 
+#ifdef SWIGPYTHON
 %rename(__eq__)  Isotope::operator== const;
 %rename(__ne__)  Isotope::operator!= const;
 %rename(__lt__)  Isotope::operator<  const;
 %rename(__gt__)  Isotope::operator>  const;
+#endif
 
 class Isotope
 {

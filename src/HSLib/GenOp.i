@@ -8,6 +8,7 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__add__)  gen_op::operator+ const;
 %rename(__iadd__) gen_op::operator+=;
 
@@ -25,7 +26,7 @@
 %rename(__ne__)  gen_op::operator!= const;
 %rename(__lt__)  gen_op::operator<  const;
 %rename(__gt__)  gen_op::operator>  const;
-
+#endif
 
 typedef std::vector <genoprep> genoprep_vec;
 

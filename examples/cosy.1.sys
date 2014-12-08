@@ -1,0 +1,11 @@
+SysName(2) : COSY3      - Name of the Spin System
+NSpins(0) : 3           - Number of Spins in the System
+Iso(0)(2) : 1H          - Spin Isotope Type
+Iso(1)(2) : 1H          - Spin Isotope Type
+Iso(2)(2) : 1H          - Spin Isotope Type
+v(0)(1) : 200.0         - Chemical Shifts in Hz
+v(1)(1) : 100.0         - Chemical Shifts in Hz
+v(2)(1) : 40.0          - Chemical Shifts in Hz
+J(0,1)(1) : 10.0        - Coupling Constants in Hz
+J(1,2)(1) : 15.0        - Coupling Constants in Hz
+Omega(1) : 400          - Spectrometer Frequency in MHz (1H based)

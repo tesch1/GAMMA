@@ -8,8 +8,9 @@
 %include "std_vector.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) sys_dynamic::operator=;
-
+#endif
 
 class sys_dynamic: public spin_system, public coord_vec 
 {

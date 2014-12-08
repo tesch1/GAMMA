@@ -7,13 +7,13 @@
 %include "HSLib/GenOp.i"
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) acquire1D::operator=;
-
+#endif
 
 class acquire1D 
 {
-public:
-
+public:
 
 acquire1D();				// Null constructor
 acquire1D(const acquire1D& ACQ1);	// Self constructor

@@ -280,11 +280,13 @@ parser.add_option("-v", "--verbose", dest="verbose",
 
 (options, args) = parser.parse_args()
 
-
 filelist = glob.glob('*.suite')
 total_failures = 0
 total_comparisons = 0
 is_verbose = options.verbose
+print 'pwd:',os.getcwd()
+print 'suites:',filelist
+print 'args:',args
 
 print ""
 
@@ -309,10 +311,11 @@ for filename in filelist:
             continue  # ignore totally blank lines
 
         #split into command and detailed information.
-        substrings = line.split(':')
+        substrings = line.split(':',1)
 
         # validate that this data line has a valid format.
         if len(substrings) != 2:
+            print 'INVALID LINE:',line
             continue
 
         s = substrings[0].strip()
@@ -361,7 +364,7 @@ for filename in filelist:
 
         # A little duplication here, but it's faster to code...for now.
 
-        substrings = line.split(':')
+        substrings = line.split(':',1)
 
         # double check that there are two items in this list.
         if len(substrings) != 2:
@@ -379,9 +382,6 @@ for filename in filelist:
             print ""
             print "running command: " + command
             sys.stdout.flush()
-
-
-
             t1 = time.time()
             retcode = subprocess.call(command, shell=True)
             t2 = time.time()
@@ -456,3 +456,4 @@ print "\tRan a total of " + str(total_comparisons) + " comparisons"
 print "\tThere was " + str(total_failures) + " failure(s)"
 print ""
 
+sys.exit(total_failures)

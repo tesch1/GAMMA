@@ -6,7 +6,9 @@
 
 %include "std_string.i"
 
+#ifdef SWIGPYTHON
 %rename(__assign__) WBRExch::operator=;
+#endif
 
 void REXijkl(super_op& LOp, const sys_dynamic& sys, gen_op& Ho, double* w,
          matrix& xi1s, matrix& xi2s, space_T* A1, space_T* A2,
