@@ -1,4 +1,9 @@
-README
+
+OBSOLETE: This repo was long ago just a mirror of the canonical SVN repo, back in 2014.
+
+GAMMA/pyGAMMA has since moved to github, go there: https://github.com/pygamma-mrs/gamma
+
+# README
 
 
 GAMMA is a C++ library for the simulation of Magnetic Resonance experiments. 
